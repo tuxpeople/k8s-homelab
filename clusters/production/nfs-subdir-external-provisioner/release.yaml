@@ -4,8 +4,6 @@ metadata:
   name: nfs-subdir-external-provisioner
   namespace: nfs-subdir-external-provisioner
 spec:
-  dependsOn:
-    - name: sources
   releaseName: nfs-subdir-external-provisioner
   chart:
     spec:
