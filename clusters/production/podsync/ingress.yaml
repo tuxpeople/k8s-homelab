@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: podsync
+  labels:
+    app: podsync
+  name: podsync-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - secretName: podsync-eighty-three-me-tls
+      hosts:
+        - podsync.eighty-three.me
+  rules:
+  - host: podsync.eighty-three.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: podsync-svc
+            port:
+              number: 8080
