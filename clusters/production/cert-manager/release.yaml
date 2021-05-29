@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+spec:
+  interval: 5m
+  releaseName: cert-manager
+  chart:
+    spec:
+      chart: cert-manager
+      version: v1.3.1
+      sourceRef:
+        name: jetstack
+        kind: HelmRepository
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    installCRDs: true
+    webhook:
+      enabled: true
+    extraArgs:
+      - --dns01-recursive-nameservers=8.8.8.8:53
+      - --dns01-recursive-nameservers-only
+    cainjector:
+      replicaCount: 1
+      # extraArgs:
+      #   - --leader-elect=false
+    # prometheus:
+    #   enabled: true
+    #   servicemonitor:
+    #     enabled: true
+    #     prometheusInstance: monitoring
