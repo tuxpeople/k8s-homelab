@@ -17,8 +17,12 @@ spec:
     remediation:
       retries: 3
   values:
-    pod.resources.limits.memory=200Mi
-    keepalived.vrrpInterfaceName=eth0
-    keepalived.vipInterfaceName=eth0
-    keepalived.vipAddressCidr="192.168.8.8/24"
-    keepalived.checkServiceUrl=http://localhost:80/ping
+    pod:
+      resources:
+        limits:
+          memory: 100Mi
+    keepalived:
+      vrrpInterfaceName: eth0
+      vipInterfaceName: eth0
+      vipAddressCidr: "192.168.8.8/24"
+      checkServiceUrl: http://localhost:80/ping
