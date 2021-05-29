@@ -17,7 +17,7 @@ spec:
     remediation:
       retries: 3
   values:
-    pod.resources.limits.memory=100Mi
+    pod.resources.limits.memory=200Mi
     keepalived.vrrpInterfaceName=eth0
     keepalived.vipInterfaceName=eth0
     keepalived.vipAddressCidr="192.168.8.8/24"
