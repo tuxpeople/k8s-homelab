@@ -10,7 +10,7 @@ spec:
       chart: chart
       sourceRef:
         kind: GitRepository
-        name: chart
+        name: keepalived-ingress-vip
         namespace: flux-system
   interval: 5m
   install:
