@@ -4,8 +4,6 @@ metadata:
   name: keepalived-ingress-vip
   namespace: keepalived-ingress-vip
 spec:
-  dependsOn:
-    - name: sources
   releaseName: keepalived-ingress-vip
   chart:
     spec:
