@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: keepalived-ingress-vip
+  namespace: keepalived-ingress-vip
+spec:
+  dependsOn:
+    - name: sources
+  releaseName: keepalived-ingress-vip
+  chart:
+    spec:
+      chart: chart
+      sourceRef:
+        kind: GitRepository
+        name: chart
+        namespace: flux-system
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  values:
+    pod.resources.limits.memory=100Mi
+    keepalived.vrrpInterfaceName=eth0
+    keepalived.vipInterfaceName=eth0
+    keepalived.vipAddressCidr="192.168.8.8/24"
+    keepalived.checkServiceUrl=http://localhost:80/ping
