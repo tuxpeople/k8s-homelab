@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./deploaments/production/infrastructure
+  path: ./deployments/production/infrastructure
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,7 +22,7 @@ spec:
   dependsOn:
     - name: infrastructure
   interval: 10m0s
-  path: ./deploaments/production/apps
+  path: ./deployments/production/apps
   prune: true
   sourceRef:
     kind: GitRepository
