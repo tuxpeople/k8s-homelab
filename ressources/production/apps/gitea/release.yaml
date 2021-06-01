@@ -19,8 +19,8 @@ spec:
   values:
     gitea:
       admin:
-        username: tdeutsch
-        email: "thomas@tuxpeople.org"
+        username: initadmin
+        email: "initadmin@example.org"
       config:
         APP_NAME: "Tuxpeople's GIT"
         repository:
