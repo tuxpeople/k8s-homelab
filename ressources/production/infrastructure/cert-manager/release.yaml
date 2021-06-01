@@ -13,6 +13,7 @@ spec:
       sourceRef:
         name: jetstack
         kind: HelmRepository
+        namespace: flux-system
   install:
     remediation:
       retries: 3
