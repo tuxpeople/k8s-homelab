@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: speedtest-plotter
+  labels:
+    app: speedtest-plotter
+  name: speedtest-plotter
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: speed-stage.192.168.8.222.xip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: speedtest-plotter
+            port:
+              number: 8000
