@@ -13,7 +13,7 @@ spec:
       version: ">=1.15.0-0"
   interval: 1h0m0s
   releaseName: sealed-secrets
-  targetNamespace: flux-system
+  targetNamespace: sealed-secrets
   install:
     crds: Create
   upgrade:
