@@ -54,14 +54,9 @@ spec:
         enabled: true
         pathType: Prefix
       hosts:
-        - prometheus.eighty-three.me
+        - prometheus.192.168.8.8.nip.io
       annotations:
         kubernetes.io/ingress.class: traefik
-        cert-manager.io/cluster-issuer: letsencrypt-production
-      tls:
-      - secretName: prometheus-eighty-three-me-tls
-        hosts:
-          - prometheus.eighty-three.me
       prometheusSpec:
         ruleSelector: {}
         ruleNamespaceSelector: {}
