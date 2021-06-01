@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: onetimesecret
+  name: onetimesecret-redis
+spec:
+  selector:
+    matchLabels:
+      app: onetimesecret
+      component: redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: onetimesecret
+        component: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine
+        imagePullPolicy: Always
+        command:
+        - redis-server
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 200Mi
+        ports:
+        - containerPort: 6379
