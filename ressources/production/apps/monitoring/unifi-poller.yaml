@@ -5,7 +5,6 @@ metadata:
   name: unifi-poller
   namespace: monitoring
 spec:
-  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
@@ -15,13 +14,16 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
   values:
     image:
       repository: golift/unifi-poller
       tag: 2.1.3
     env:
-      TZ: "America/New_York"
+      TZ: "Europe/Zurich"
       UP_UNIFI_DEFAULT_ROLE: "sky"
       UP_UNIFI_DEFAULT_URL: "https://10.20.30.1"
       UP_UNIFI_DEFAULT_VERIFY_SSL: false
