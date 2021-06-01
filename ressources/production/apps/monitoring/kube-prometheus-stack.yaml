@@ -40,11 +40,10 @@ spec:
                 requests:
                   storage: 10Gi
         additionalScrapeConfigs:
-          scrape_configs:
-            - job_name: 'unifipoller'
-              scrape_interval: 30s
-              static_configs:
-              - targets: ['unifi-poller:9130']
+          - job_name: 'unifipoller'
+            scrape_interval: 30s
+            static_configs:
+            - targets: ['unifi-poller:9130']
 
     grafana:
       adminPassword: highly-secure-production-password
