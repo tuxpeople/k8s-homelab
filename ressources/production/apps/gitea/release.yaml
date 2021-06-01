@@ -1,0 +1,56 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: gitea
+  namespace: gitea
+spec:
+  releaseName: gitea
+  chart:
+    spec:
+      chart: gitea
+      sourceRef:
+        kind: HelmRepository
+        name: gitea
+        namespace: flux-system
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  values:
+    gitea:
+      admin:
+        username: tdeutsch
+        email: "thomas@tuxpeople.org"
+      config:
+        APP_NAME: "Tuxpeople's GIT"
+        repository:
+          ROOT: "~/gitea-repositories"
+        repository.pull-request:
+          WORK_IN_PROGRESS_PREFIXES: "WIP:,[WIP]:"
+        cache:
+          builtIn:
+            enabled: true
+        service:
+            DISABLE_REGISTRATION: true
+    persistence:
+      enabled: true
+      size: 50Gi
+    ingress:
+      enabled: true
+      hosts:
+        - git.eighty-three.me
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      tls:
+      - secretName: git-eighty-three-me-tls
+        hosts:
+          - git.eighty-three.me
+    cache: redis-master.redis:6379
+    replicaCount: 1
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
