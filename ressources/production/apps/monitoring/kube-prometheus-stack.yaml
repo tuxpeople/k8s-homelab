@@ -66,3 +66,4 @@ spec:
             memory: 20Mi
       ingress:
         enabled: "false"
+        pathType: Prefix
