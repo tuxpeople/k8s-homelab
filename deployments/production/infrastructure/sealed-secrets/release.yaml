@@ -4,16 +4,17 @@ metadata:
   name: sealed-secrets
   namespace: kube-system
 spec:
+  interval: 5m
+  releaseName: sealed-secrets
   chart:
     spec:
       chart: sealed-secrets
+      version: 1.13.2
       sourceRef:
+        name: bitnami
         kind: HelmRepository
-        name: sealed-secrets
-      version: ">=1.15.0-0"
-  interval: 1h0m0s
-  releaseName: sealed-secrets
-  targetNamespace: kube-system
+  #     version: ">=1.15.0-0"
+  # interval: 1h0m0s
   install:
     crds: Create
   upgrade:
