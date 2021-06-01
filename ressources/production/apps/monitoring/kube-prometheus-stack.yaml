@@ -55,4 +55,4 @@ spec:
                 - grafana.eighty-three.me
       grafana.ini:
         server:
-          root_url: https://grafana.example.com
+          root_url: https://grafana.eighty-three.me
