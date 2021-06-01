@@ -71,3 +71,11 @@ spec:
           root_url: https://grafana.eighty-three.me
       plugins:
         - grafana-piechart-panel
+      datasources:
+        datasources.yaml:
+          apiVersion: 1
+          datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki:3100
