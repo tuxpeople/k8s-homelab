@@ -9,6 +9,7 @@ metadata:
     ingress.kubernetes.io/auth-realm: traefik
     ingress.kubernetes.io/auth-secret: code-server-basic-auth
     cert-manager.io/cluster-issuer: letsencrypt-production
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
 spec:
   tls:
     - secretName: code-eighty-three-me-tls
