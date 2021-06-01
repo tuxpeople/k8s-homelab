@@ -4,12 +4,10 @@ metadata:
   namespace: speedtest-plotter
   name: speedtest-plotter
 spec:
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app: speedtest-plotter
-  replicas: 0
+  replicas: 1
   template:
     metadata:
       labels:
@@ -21,7 +19,8 @@ spec:
         imagePullPolicy: Always
         env:
           - name: TESTSERVER
-            value: "speedtest.wingo.ch:8080"
+            value: "speedtest.ggamaur.net:8080"
+            #value: "sonic.wingo.ch:8080"
           - name: MARKER_DOWNLOAD
             value: "1000"
           - name: MARKER_UPLOAD
@@ -29,7 +28,7 @@ spec:
           - name: TZ
             value: "Europe/Zurich"
           - name: SCHEDULE
-            value: "0 0,6,12,18 * * *"
+            value: "0 */2 * * *"
         resources:
           requests:
             cpu: 100m
