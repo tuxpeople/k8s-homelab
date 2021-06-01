@@ -41,6 +41,12 @@ spec:
                   storage: 10Gi
     grafana:
       adminPassword: highly-secure-production-password
+      persistence:
+        type: pvc
+        enabled: true
+        accessModes:
+          - ReadWriteOnce
+        size: 10Gi
       enabled: true
       ingress:
         enabled: true
