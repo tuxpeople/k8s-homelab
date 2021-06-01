@@ -4,15 +4,17 @@ metadata:
   name: sealed-secrets
   namespace: sealed-secrets
 spec:
-  releaseName: sealed-secrets
   chart:
     spec:
       chart: sealed-secrets
       sourceRef:
         kind: HelmRepository
         name: sealed-secrets
-        namespace: flux-system
-  interval: 5m
+      version: ">=1.15.0-0"
+  interval: 1h0m0s
+  releaseName: sealed-secrets
+  targetNamespace: flux-system
   install:
-    remediation:
-      retries: 3
+    crds: Create
+  upgrade:
+    crds: CreateReplace
