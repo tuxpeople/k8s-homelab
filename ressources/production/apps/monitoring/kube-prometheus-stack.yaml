@@ -69,3 +69,5 @@ spec:
       grafana.ini:
         server:
           root_url: https://grafana.eighty-three.me
+      plugins:
+        - grafana-piechart-panel
