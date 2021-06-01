@@ -9,8 +9,8 @@ metadata:
 data:
   config: |
     :site:
-      :host: secret.10.20.30.235.xip.io
-      :domain: secret.10.20.30.235.xip.io
+      :host: secret.eighty-three.me
+      :domain: secret.eighty-three.me
       :ssl: false
       # NOTE Once the secret is set, do not change it (keep a backup offsite)
       :secret: CHANGEME
