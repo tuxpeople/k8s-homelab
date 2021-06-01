@@ -42,6 +42,7 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/redirect-entry-point: https
       tls:
       - secretName: git-eighty-three-me-tls
         hosts:
