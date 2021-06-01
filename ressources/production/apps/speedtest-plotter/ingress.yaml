@@ -7,9 +7,14 @@ metadata:
   name: speedtest-plotter
   annotations:
     kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
+  tls:
+    - secretName: speed-eighty-three-me-tls
+      hosts:
+        - speed.eighty-three.me
   rules:
-  - host: speed-stage.192.168.8.222.xip.io
+  - host: speed.eighty-three.me
     http:
       paths:
       - path: /
