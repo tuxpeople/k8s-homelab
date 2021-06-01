@@ -47,7 +47,7 @@ spec:
         hosts:
           - git.eighty-three.me
     cache: redis-master.redis:6379
-    replicaCount: 0
+    replicaCount: 1
     resources:
       limits:
         memory: 256Mi
