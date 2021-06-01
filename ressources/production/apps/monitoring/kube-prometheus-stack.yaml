@@ -19,3 +19,17 @@ spec:
   install:
     remediation:
       retries: 3
+  values:
+grafana:
+  enabled: true
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.eighty-three.me
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    tls:
+    - secretName: grafana-eighty-three-me-tls
+      hosts:
+        - grafana.eighty-three.me
