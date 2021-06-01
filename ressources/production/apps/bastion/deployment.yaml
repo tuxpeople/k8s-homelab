@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bastion
+  name: bastion
+  namespace: bastion
+spec:
+  selector:
+    matchLabels:
+      app: bastion
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bastion
+    spec:
+      containers:
+      - image: neochrome/bastion:latest
+        imagePullPolicy: Always
+        name: bastion
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 200Mi
+        ports:
+        - containerPort: 22
+        volumeMounts:
+        - mountPath: /etc/ssh
+          name: bastion-keys
+        - mountPath: /.google_authenticator
+          name: bastion-googleauth
+          subPath: .google_authenticator
+        - mountPath: /etc/ssh/sshd_config
+          name: bastion-config
+          subPath: sshd_config
+        - mountPath: /authorized_keys
+          name: bastion-config
+          subPath: authorized_keys
+      volumes:
+        - name: bastion-config
+          configMap:
+            name: bastion-config
+            items:
+              - key: sshd_config
+                path: sshd_config
+                mode: 0644
+              - key: authorized_keys
+                path: authorized_keys
+                mode: 0644
+        - name: bastion-keys
+          persistentVolumeClaim:
+            claimName: bastion-keys
+        - name: bastion-googleauth
+          secret:
+            secretName: bastion-googleauth
