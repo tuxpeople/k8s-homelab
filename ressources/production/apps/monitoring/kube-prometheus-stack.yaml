@@ -37,8 +37,9 @@ spec:
     prometheus:
       ingress:
         enabled: "true"
-        hosts:
-          - prometheus.192.168.8.8.nip.io
+        pathType: Prefix
+      hosts:
+        - prometheus.192.168.8.8.nip.io
       podDisruptionBudget:
         enabled: false
       prometheusSpec:
