@@ -52,6 +52,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
+        pathType: Prefix
       hosts:
         - prometheus.eighty-three.me
       annotations:
