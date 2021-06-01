@@ -21,6 +21,7 @@ spec:
       retries: 3
   values:
     grafana:
+      adminPassword: highly-secure-production-password
       enabled: true
       ingress:
         enabled: true
@@ -32,4 +33,7 @@ spec:
         tls:
         - secretName: grafana-eighty-three-me-tls
           hosts:
-            - grafana.eighty-three.me
+                - grafana.eighty-three.me
+      grafana.ini:
+        server:
+          root_url: https://grafana.example.com
