@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: jdownloader
+  name: jdownloader
+spec:
+  selector:
+    matchLabels:
+      app: jdownloader
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jdownloader
+    spec:
+      containers:
+      - env:
+        - name: MYJD_DEVICE_NAME
+          value: kubernetes
+        - name: MYJD_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: myjd-creds
+              key: MYJD_PASSWORD
+        - name: MYJD_USER
+          valueFrom:
+            secretKeyRef:
+              name: myjd-creds
+              key: MYJD_USER
+        - name: TZ
+          value: Europe/Zurich
+        - name: XDG_DOWNLOAD_DIR
+          value: /Downloads
+        image: quay.io/tdeutsch/jdownloader-headless:latest
+        imagePullPolicy: Always
+        name: jdownloader
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /Downloads
+          name: downloads
+        - mountPath: /opt/JDownloader/
+          name: jdownloader
+      volumes:
+      - hostPath:
+          path: /mnt/multimedia/input/jdownloader
+          type: Directory
+        name: downloads
+      - name: jdownloader
+        persistentVolumeClaim:
+          claimName: jdownloader
