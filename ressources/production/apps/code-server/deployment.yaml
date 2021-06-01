@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: code-server
+  name: code-server
+  namespace: code-server
+spec:
+  selector:
+    matchLabels:
+      app: code-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+      - image: ghcr.io/linuxserver/code-server:latest
+        imagePullPolicy: Always
+        name: code-server
+        env:
+        - name: "TZ"
+          value: "Europe/Zurich"
+        - name: "DOCKER_MODS"
+          value: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:universal-git"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 200Mi
+        ports:
+        - containerPort: 8443
+        volumeMounts:
+        - mountPath: /config
+          name: code-server
+      volumes:
+        - name: code-server
+          persistentVolumeClaim:
+            claimName: code-server-data
