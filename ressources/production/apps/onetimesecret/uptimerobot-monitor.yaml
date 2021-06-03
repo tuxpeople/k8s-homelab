@@ -5,7 +5,7 @@ metadata:
   name: onetimesecret
   namespace: onetimesecret
 spec:
-  friendlyName: "onetimesecret"
+  friendlyName: "K8S onetimesecret"
   url: "https://secret.eighty-three.me"
   type: HTTPS
   httpMethod: GET
