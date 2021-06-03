@@ -8,6 +8,5 @@ spec:
   friendlyName: "K8S bastion"
   url: "asgard.eighty-three.me"
   type: 4
-  sub_type: 99
   port: 22
   interval: 300
