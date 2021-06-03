@@ -1,0 +1,12 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: speedtest-plotter
+  namespace: speedtest-plotter
+spec:
+  friendlyName: "K8S speedtest-plotter"
+  url: "https://speed.eighty-three.me"
+  type: HTTPS
+  httpMethod: GET
+  interval: 300

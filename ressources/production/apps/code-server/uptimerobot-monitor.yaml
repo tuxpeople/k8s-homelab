@@ -1,0 +1,12 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: code-server
+  namespace: code-server
+spec:
+  friendlyName: "K8S code-server"
+  url: "https://code.eighty-three.me"
+  type: HTTPS
+  httpMethod: GET
+  interval: 300

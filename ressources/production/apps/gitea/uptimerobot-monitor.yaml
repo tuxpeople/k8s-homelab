@@ -1,0 +1,12 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: gitea
+  namespace: gitea
+spec:
+  friendlyName: "K8S gitea"
+  url: "https://git.eighty-three.me"
+  type: HTTPS
+  httpMethod: GET
+  interval: 300

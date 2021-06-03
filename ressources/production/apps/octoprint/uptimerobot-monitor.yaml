@@ -1,0 +1,12 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: octoprint
+  namespace: octoprint
+spec:
+  friendlyName: "K8S octoprint"
+  url: "https://print.eighty-three.me"
+  type: HTTPS
+  httpMethod: GET
+  interval: 300

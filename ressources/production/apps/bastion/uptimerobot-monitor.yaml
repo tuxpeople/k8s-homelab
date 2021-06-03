@@ -1,0 +1,13 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: bastion
+  namespace: bastion
+spec:
+  friendlyName: "K8S bastion"
+  url: "asgard.eighty-three.me"
+  type: 4
+  sub_type: 99
+  port: 22
+  interval: 300

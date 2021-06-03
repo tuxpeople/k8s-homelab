@@ -1,0 +1,12 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: dokuwiki
+  namespace: dokuwiki
+spec:
+  friendlyName: "K8S dokuwiki"
+  url: "https://wiki.eighty-three.me"
+  type: HTTPS
+  httpMethod: GET
+  interval: 300
