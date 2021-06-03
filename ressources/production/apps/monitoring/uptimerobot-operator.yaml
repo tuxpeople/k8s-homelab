@@ -30,4 +30,4 @@ spec:
   valuesFrom:
   - secretKeyRef:
     kind: Secret
-    name: uptimeRobotApiKey
+    name: uptimerobotapikey
