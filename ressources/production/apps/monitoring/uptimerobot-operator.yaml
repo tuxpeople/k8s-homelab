@@ -28,7 +28,7 @@ spec:
       limits:
         memory: 250Mi
   valuesFrom:
-  - secretKeyRef:
+    - secretKeyRef:
       kind: Secret
       name: uptimeRobotApiKey
       namespace: monitoring
