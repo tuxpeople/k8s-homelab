@@ -9,4 +9,4 @@ spec:
   url: "https://secret.eighty-three.me"
   type: HTTPS
   httpMethod: GET
-  interval: 120
+  interval: 300
