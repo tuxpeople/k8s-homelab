@@ -8,6 +8,6 @@ spec:
   friendlyName: "K8S bastion"
   url: "asgard.eighty-three.me"
   type: PORT
-  #sub_type: "Custom Port"
+  key: "Custom Port"
   port: 22
   interval: 300
