@@ -7,6 +7,6 @@ metadata:
 spec:
   friendlyName: "K8S bastion"
   url: "asgard.eighty-three.me"
-  type: 4
+  type: PORT
   port: 22
   interval: 300
