@@ -29,7 +29,7 @@ spec:
         memory: 250Mi
   valuesFrom:
   - secretKeyRef:
-    kind: Secret
-    name: uptimeRobotApiKey
-    namespace: monitoring
-    key: values.yaml
+      kind: Secret
+      name: uptimeRobotApiKey
+      namespace: monitoring
+      key: values.yaml
