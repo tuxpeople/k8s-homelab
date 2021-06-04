@@ -5,7 +5,7 @@ metadata:
   name: plex
   namespace: plex
 spec:
-  friendlyName: "K8S "
+  friendlyName: "K8S Plex"
   url: "http://asgard.eighty-three.me:32400/identity"
   type: HTTP
   httpMethod: GET
