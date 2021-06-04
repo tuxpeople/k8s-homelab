@@ -7,7 +7,6 @@ spec:
   releaseName: nfs-subdir-external-provisioner
   chart:
     spec:
-      # renovate: registryUrl=https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
       chart: nfs-subdir-external-provisioner
       sourceRef:
         kind: HelmRepository

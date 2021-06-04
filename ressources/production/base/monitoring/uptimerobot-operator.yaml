@@ -8,7 +8,6 @@ spec:
   releaseName: uptimerobot-operator
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: uptimerobot-operator
       version: 0.3.0
       sourceRef:

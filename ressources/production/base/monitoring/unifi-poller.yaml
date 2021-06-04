@@ -8,7 +8,6 @@ spec:
   releaseName: unifi-poller
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: unifi-poller
       version: 7.4.0
       sourceRef:
