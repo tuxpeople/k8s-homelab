@@ -32,17 +32,17 @@ spec:
           name: web
           protocol: TCP
         volumeMounts:
-        # - mountPath: /dev/dri
-        #   name: dri
+        - mountPath: /dev/dri
+          name: dri
         - mountPath: /data
           name: nas-multimedia
         - mountPath: /config
           name: config
       volumes:
-      # - hostPath:
-      #     path: /dev/dri
-      #     type: Directory
-      #   name: dri
+      - hostPath:
+          path: /dev/dri
+          type: Directory
+        name: dri
       - hostPath:
           path: /mnt/multimedia
           type: Directory

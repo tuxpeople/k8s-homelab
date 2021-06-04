@@ -22,7 +22,7 @@ spec:
         limits:
           memory: 100Mi
     keepalived:
-      vrrpInterfaceName: ens3
-      vipInterfaceName: ens3
+      vrrpInterfaceName: eth0
+      vipInterfaceName: eth0
       vipAddressCidr: "192.168.8.8/24"
       checkServiceUrl: http://localhost:80/ping
