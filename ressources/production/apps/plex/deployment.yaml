@@ -20,8 +20,6 @@ spec:
         env:
         - name: "TZ"
           value: "Europe/Zurich"
-        - name: "PLEX_CLAIM"
-          value: "claim-xyjvyn5KxPUK7PGuiFC8"
         resources:
           requests:
             cpu: 100m
