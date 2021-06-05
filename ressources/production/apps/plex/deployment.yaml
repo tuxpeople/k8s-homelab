@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: plex
-  replicas: 1
+  replicas: 0
   template:
     metadata:
       labels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: plex
-        image: linuxserver/plex
+        image: linuxserver/plex:latest
         imagePullPolicy: Always
         env:
         - name: "TZ"
