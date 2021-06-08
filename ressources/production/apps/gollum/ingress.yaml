@@ -9,6 +9,9 @@ metadata:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: letsencrypt-production
     traefik.ingress.kubernetes.io/redirect-entry-point: https
+    ingress.kubernetes.io/auth-type: basic
+    ingress.kubernetes.io/auth-realm: traefik
+    ingress.kubernetes.io/auth-secret: gollum-basic-auth
 spec:
   tls:
     - secretName: wiki2-eighty-three-me-tls
