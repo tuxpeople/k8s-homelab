@@ -11,3 +11,4 @@ spec:
   subType: CUSTOM
   port: 22
   interval: 300
+  alertContacts: "0283188_0_0-2432738_0_0-2655991_0_0-3069202_0_0"
