@@ -9,9 +9,5 @@ spec:
   url: "https://wiki2.eighty-three.me"
   type: HTTPS
   httpMethod: GET
-<<<<<<< HEAD
   interval: 300
   alertContacts: "0283188_0_0-2432738_0_0-2655991_0_0-3069202_0_0"
-=======
-  interval: 300
->>>>>>> fa53e59c8e6bfcbd11fefe4d8cd54cff10a09abf
