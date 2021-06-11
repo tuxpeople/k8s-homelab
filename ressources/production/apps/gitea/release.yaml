@@ -19,7 +19,8 @@ spec:
   values:
     gitea:
       admin:
-        existingSecret: gitea-admin-secret
+        username: initadmin
+        email: "initadmin@example.org"
       config:
         APP_NAME: "Tuxpeople's GIT"
         repository:
