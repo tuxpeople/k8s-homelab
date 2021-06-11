@@ -24,6 +24,11 @@ spec:
           value: "Europe/Zurich"
         - name: "DOCKER_MODS"
           value: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:universal-git"
+        - name: "PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: code-server-password
+              key: password
         resources:
           requests:
             cpu: 100m
