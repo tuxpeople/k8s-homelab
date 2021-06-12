@@ -16,7 +16,7 @@ spec:
         app: code-server
     spec:
       containers:
-      - image: ghcr.io/linuxserver/code-server:latest
+      - image: ghcr.io/linuxserver/code-server:v3.10.2-ls81
         imagePullPolicy: Always
         name: code-server
         env:

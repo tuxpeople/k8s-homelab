@@ -18,7 +18,7 @@ spec:
         env:
         - name: "TZ"
           value: "Europe/Zurich"
-        image: ghcr.io/linuxserver/dokuwiki
+        image: ghcr.io/linuxserver/dokuwiki:2020-07-29-ls83
         imagePullPolicy: Always
         resources:
           requests:
