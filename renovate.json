@@ -31,7 +31,7 @@
   "packageRules": [
     // setup datasources
     {
-      "matchDatasources": ["helm"],
+      "matchDatasources": ["helm"]
     },
     // global docker datasource settings
     {
@@ -39,38 +39,38 @@
       "enabled": true,
       "commitMessageTopic": "container image {{depName}}",
       "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "matchUpdateTypes": ["major", "minor", "patch"],
+      "matchUpdateTypes": ["major", "minor", "patch"]
     },
     // add labels according to package and update types
     {
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["major"],
-      "labels": ["renovate/image", "dep/major"],
+      "labels": ["renovate/image", "dep/major"]
     },
     {
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/image", "dep/minor"],
+      "labels": ["renovate/image", "dep/minor"]
     },
     {
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/image", "dep/patch"],
+      "labels": ["renovate/image", "dep/patch"]
     },
     {
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["major"],
-      "labels": ["renovate/helm", "dep/major"],
+      "labels": ["renovate/helm", "dep/major"]
     },
     {
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/helm", "dep/minor"],
+      "labels": ["renovate/helm", "dep/minor"]
     },
     {
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/helm", "dep/patch"],
-    },
-  ],
+      "labels": ["renovate/helm", "dep/patch"]
+    }
+  ]
 }
