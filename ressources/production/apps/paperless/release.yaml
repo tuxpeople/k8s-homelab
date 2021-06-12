@@ -24,14 +24,7 @@ spec:
     image:
       pullPolicy: Always
     persistence:
-      consume:
-        enabled: true
-      data:
-        enabled: true
-      export:
-        enabled: true
-      media:
-        enabled: true
+      enabled: true
     # ingress:
     #   enabled: true
     #   hosts:
