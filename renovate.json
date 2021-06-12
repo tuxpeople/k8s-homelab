@@ -9,11 +9,11 @@
   "kubernetes": {
     "fileMatch": ["ressources/production/.+\\.yaml$"],
     "ignorePaths": [
-      "cluster/base/",
+      "cluster/base/"
     ]
   },
   "helm-values": {
-    "fileMatch": ["ressources/production/.+\\.yaml$"],
+    "fileMatch": ["ressources/production/.+\\.yaml$"]
   },
   "regexManagers": [
     // regexManager to read and process helm repositories
@@ -26,7 +26,7 @@
       ],
       // tell renovatebot to search helm repositories
       "datasourceTemplate": "helm"
-    },
+    }
   ],
   "packageRules": [
     // setup datasources
