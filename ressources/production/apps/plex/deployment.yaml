@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: plex
-        image: linuxserver/plex:latest
+        image: ghcr.io/linuxserver/plex:1.23.2.4656-85f0adf5b-ls55
         imagePullPolicy: Always
         env:
         - name: "TZ"

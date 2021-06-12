@@ -7,7 +7,9 @@ spec:
   releaseName: nfs-subdir-external-provisioner
   chart:
     spec:
+      # renovate: registryUrl=https://charts.jetstack.io
       chart: nfs-subdir-external-provisioner
+      version: "4.0.10"
       sourceRef:
         kind: HelmRepository
         name: nfs-subdir-external-provisioner

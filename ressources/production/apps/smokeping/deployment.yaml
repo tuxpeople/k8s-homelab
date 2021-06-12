@@ -18,7 +18,7 @@ spec:
         env:
         - name: "TZ"
           value: "Europe/Zurich"
-        image: ghcr.io/linuxserver/smokeping
+        image: ghcr.io/linuxserver/smokeping:version-2.7.3-r5
         imagePullPolicy: Always
         resources:
           requests:

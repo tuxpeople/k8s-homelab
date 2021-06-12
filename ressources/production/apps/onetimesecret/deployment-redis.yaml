@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: redis:alpine
+        image: redis:alpine3.13
         imagePullPolicy: Always
         command:
         - redis-server
