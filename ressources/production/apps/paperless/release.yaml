@@ -7,7 +7,7 @@ spec:
   releaseName: paperless
   chart:
     spec:
-      #version: "3.1.2"
+      version: "5.4.0"
       chart: paperless
       sourceRef:
         kind: HelmRepository
