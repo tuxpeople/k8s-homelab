@@ -1,7 +1,4 @@
 {
-   "extends": [
-     "config:base"
-   ]
    "regexManagers": [
     // regexManager to read and process helm repositories
     {
