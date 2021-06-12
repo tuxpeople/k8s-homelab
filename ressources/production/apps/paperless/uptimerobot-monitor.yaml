@@ -1,0 +1,13 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: paperless
+  namespace: paperless
+spec:
+  friendlyName: "K8S paperless"
+  url: "https://paperless.eighty-three.me"
+  type: HTTPS
+  httpMethod: GET
+  interval: 300
+  alertContacts: "0283188_0_0-2432738_0_0-2655991_0_0-3069202_0_0"
