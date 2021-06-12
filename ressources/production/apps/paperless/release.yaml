@@ -17,30 +17,30 @@ spec:
   install:
     remediation:
       retries: 3
-  values:
-    env:
-      TZ: "Europe/Zurich"
-      PAPERLESS_OCR_LANGUAGE: "deu"
-    image:
-      pullPolicy: Always
-    persistence:
-      consume:
-        enabled: true
-      data:
-        enabled: true
-      export:
-        enabled: true
-      media:
-        enabled: true
-    ingress:
-      enabled: true
-      hosts:
-        - paperless.eighty-three.me
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        cert-manager.io/cluster-issuer: letsencrypt-production
-        traefik.ingress.kubernetes.io/redirect-entry-point: https
-      tls:
-      - secretName: paperless-eighty-three-me-tls
-        hosts:
-          - paperless.eighty-three.me
+  # values:
+  #   env:
+  #     TZ: "Europe/Zurich"
+  #     PAPERLESS_OCR_LANGUAGE: "deu"
+  #   image:
+  #     pullPolicy: Always
+  #   persistence:
+  #     consume:
+  #       enabled: true
+  #     data:
+  #       enabled: true
+  #     export:
+  #       enabled: true
+  #     media:
+  #       enabled: true
+  #   ingress:
+  #     enabled: true
+  #     hosts:
+  #       - paperless.eighty-three.me
+  #     annotations:
+  #       kubernetes.io/ingress.class: traefik
+  #       cert-manager.io/cluster-issuer: letsencrypt-production
+  #       traefik.ingress.kubernetes.io/redirect-entry-point: https
+  #     tls:
+  #     - secretName: paperless-eighty-three-me-tls
+  #       hosts:
+  #         - paperless.eighty-three.me
