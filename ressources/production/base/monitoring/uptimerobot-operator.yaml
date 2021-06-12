@@ -8,6 +8,7 @@ spec:
   releaseName: uptimerobot-operator
   chart:
     spec:
+      # renovate: registryUrl=https://brennerm.github.io/uptimerobot-operator/helm
       chart: uptimerobot-operator
       version: 0.3.0
       sourceRef:
