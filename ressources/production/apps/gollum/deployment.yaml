@@ -30,10 +30,9 @@ spec:
         - mountPath: /wiki
           name: gollum-data
         livenessProbe:
-          exec:
-            command:
-            - wget
-            - "--spider -S 127.0.0.1:8080/Home -O -"
+          httpGet:
+            path: /Home
+            port: 8080
           initialDelaySeconds: 20
           periodSeconds: 5
       volumes:
