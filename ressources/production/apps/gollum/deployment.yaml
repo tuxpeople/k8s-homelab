@@ -29,6 +29,13 @@ spec:
         volumeMounts:
         - mountPath: /wiki
           name: gollum-data
+        livenessProbe:
+          exec:
+            command:
+            - wget
+            - "--spider -S 127.0.0.1:8080/Home -O -"
+          initialDelaySeconds: 20
+          periodSeconds: 5
       volumes:
         - name: gollum-data
           persistentVolumeClaim:
