@@ -33,7 +33,13 @@ spec:
           httpGet:
             path: /Home
             port: 8080
-          initialDelaySeconds: 20
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        startupProbe:
+          httpGet:
+            path: /Home
+            port: 8080
+          failureThreshold: 30
           periodSeconds: 10
       volumes:
         - name: gollum-data
