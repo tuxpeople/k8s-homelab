@@ -19,11 +19,9 @@ spec:
     timezone: "Europe/Zurich"
     plexUid: "8675309"
     plexGid: "8675309"
-    ingress:
-      enabled: true
-      hosts:
-        - plex.192.168.8.8.nip.io
-      path: /
+    service:
+      main:
+        type: NodePort
     persistence:
       config:
         enabled: true
