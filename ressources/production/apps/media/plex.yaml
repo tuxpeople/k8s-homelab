@@ -20,6 +20,10 @@ spec:
     timezone: "Europe/Zurich"
     plexUid: "8675309"
     plexGid: "8675309"
+    service:
+      main:
+        type: NodePort
+        nodePort: 32400
     persistence:
       config:
         enabled: true
