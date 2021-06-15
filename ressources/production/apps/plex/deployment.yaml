@@ -19,11 +19,16 @@ spec:
     timezone: "Europe/Zurich"
     plexUid: "8675309"
     plexGid: "8675309"
-    ingress:
-      enabled: true
-      hosts:
-        - plex.kube.com
-      path: /
+  service:
+    main:
+      primary: true
+      type: NodePort
+      ports:
+        http:
+          port: 32400
+          enabled: true
+          protocol: TCP
+          targetPort: 32400
     persistence:
       config:
         enabled: true
