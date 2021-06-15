@@ -22,6 +22,14 @@ spec:
     service:
       main:
         type: NodePort
+        enabled: true
+        ports:
+          pms:
+            enabled: true
+            port: 32400
+            protocol: tcp
+            targetPort: 32400
+            NodePort: 32400
     persistence:
       config:
         enabled: true
