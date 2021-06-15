@@ -22,7 +22,8 @@ spec:
     plexGid: "8675309"
     persistence:
       config:
-        enabled: false
+        enabled: true
+        size: 2Gi
       transcode:
         enabled: false
       data:
