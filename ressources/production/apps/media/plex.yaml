@@ -22,9 +22,15 @@ spec:
     plexGid: "8675309"
     service:
       main:
+        enabled: true
+        primary: true
         type: NodePort
         ports:
           pms:
+            enabled: true
+            primary: true
+            port: 32400
+            protocol: TCP
             nodePort: 32400
     persistence:
       config:
