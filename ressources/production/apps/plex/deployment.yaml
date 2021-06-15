@@ -1,0 +1,48 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: plex
+      version: "2.3.0"
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 1m
+  values:
+    timezone: "Europe/Zurich"
+    plexUid: "8675309"
+    plexGid: "8675309"
+    ingress:
+      enabled: true
+      hosts:
+        - plex.kube.com
+      path: /
+    persistence:
+      config:
+        enabled: true
+        size: 1Gi
+      transcode:
+        enabled: false
+      host-dev:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+        mountPath: /dev/dri
+        hostPathType: "Directory"
+        readOnly: false
+      custom-mount:
+        enabled: true
+        type: custom
+        mountPath: /data
+        readOnly: false
+        volumeSpec:
+          hostPath:
+            path: /mnt/multimedia
+            type: Directory
