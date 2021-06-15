@@ -27,15 +27,6 @@ spec:
       transcode:
         enabled: false
       data:
-        enabled: false
-      host-dev:
-        enabled: true
-        type: hostPath
-        hostPath: /dev/dri
-        mountPath: /dev/dri
-        hostPathType: "Directory"
-        readOnly: false
-      custom-mount:
         enabled: true
         type: custom
         mountPath: /data
@@ -44,6 +35,13 @@ spec:
           hostPath:
             path: /mnt/multimedia
             type: Directory
+      host-dev:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+        mountPath: /dev/dri
+        hostPathType: "Directory"
+        readOnly: false
 ---
 apiVersion: v1
 kind: Service
