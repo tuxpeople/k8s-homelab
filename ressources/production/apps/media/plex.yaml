@@ -23,7 +23,9 @@ spec:
     service:
       main:
         type: NodePort
-        nodePort: 32400
+        ports:
+          pms:
+            nodePort: 32400
     persistence:
       config:
         enabled: true
