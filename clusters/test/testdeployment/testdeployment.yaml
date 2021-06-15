@@ -1,16 +1,7 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: test-deployment
-  annotations:
-      field.cattle.io/projectId: c-g9q7w:p-q6n57
-  labels:
-    field.cattle.io/projectId: p-q6n57
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: test-deployment
+  namespace: ucpdeu-test
   name: test-deployment
 spec:
   selector:
