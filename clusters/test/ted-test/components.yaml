@@ -3337,7 +3337,7 @@ metadata:
   namespace: ted-test
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
   labels:
     app.kubernetes.io/instance: ted-test
@@ -3415,15 +3415,15 @@ rules:
   - delete
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   labels:
     app.kubernetes.io/instance: ted-test
   name: cluster-reconciler
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
+  kind: Role
+  name: crd-controller
 subjects:
 - kind: ServiceAccount
   name: kustomize-controller
@@ -3433,14 +3433,14 @@ subjects:
   namespace: ted-test
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   labels:
     app.kubernetes.io/instance: ted-test
   name: crd-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: crd-controller
 subjects:
 - kind: ServiceAccount
