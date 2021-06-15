@@ -22,12 +22,12 @@ spec:
     plexGid: "8675309"
     persistence:
       config:
-        enabled: true
-        size: 1Gi
-        readOnly: false
+        enabled: false
       transcode:
         enabled: false
       data:
+        enabled: false
+      media:
         type: hostPath
         mountPath: /data
         readOnly: true
