@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: debugtest1
-  annotations:
-      field.cattle.io/projectId: c-g9q7w:p-q6n57
-  labels:
-    field.cattle.io/projectId: p-q6n57
