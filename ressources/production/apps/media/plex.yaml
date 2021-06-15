@@ -28,11 +28,12 @@ spec:
       data:
         enabled: false
       media:
+        enabled: true
         type: hostPath
-        mountPath: /data
-        readOnly: true
         hostPath: /mnt/multimedia
-        hostPathType: Directory
+        mountPath: /data
+        hostPathType: "Directory"
+        readOnly: false
       dri:
         enabled: true
         type: hostPath
