@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: plex
-  namespace: plex
+  namespace: media
 spec:
   interval: 5m
   chart:
@@ -42,3 +42,36 @@ spec:
           hostPath:
             path: /mnt/multimedia
             type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: media
+  name: plex-nodeport
+  labels:
+    app.kubernetes.io/instance: plex
+    app.kubernetes.io/name: plex
+spec:
+  type: NodePort
+  ports:
+    - name: web
+      nodePort: 32400
+      port: 32400
+      protocol: TCP
+      targetPort: 32400
+  selector:
+    app.kubernetes.io/instance: plex
+    app.kubernetes.io/name: plex
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: plex
+  namespace: media
+spec:
+  friendlyName: "K8S Plex"
+  url: "http://asgard.eighty-three.me:32400/identity"
+  type: HTTP
+  httpMethod: GET
+  interval: 300
+  alertContacts: "0283188_0_0-2432738_0_0-2655991_0_0-3069202_0_0"

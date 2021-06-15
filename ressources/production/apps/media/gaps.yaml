@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: gaps
-  namespace: gaps
+  namespace: media
 spec:
   releaseName: gaps
   interval: 5m
@@ -18,9 +18,6 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      repository: housewrecker/gaps
-      tag: latest
     env:
       TZ: "Europe/Zurich"
     ingress:
