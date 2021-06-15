@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 1m
+      interval: 2m
   values:
     timezone: "Europe/Zurich"
     plexUid: "8675309"
