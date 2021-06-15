@@ -28,13 +28,11 @@ spec:
         enabled: false
       data:
         enabled: true
-        type: custom
+        type: hostPath
         mountPath: /data
-        readOnly: false
-        volumeSpec:
-          hostPath:
-            path: /mnt/multimedia
-            type: Directory
+        readOnly: true
+        hostPath: /mnt/multimedia
+        hostPathType: Directory
       host-dev:
         enabled: true
         type: hostPath
