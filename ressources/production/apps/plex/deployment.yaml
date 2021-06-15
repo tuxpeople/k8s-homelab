@@ -19,16 +19,6 @@ spec:
     timezone: "Europe/Zurich"
     plexUid: "8675309"
     plexGid: "8675309"
-    service:
-      main:
-        primary: true
-        type: NodePort
-        ports:
-          http:
-            port: 32400
-            enabled: true
-            protocol: TCP
-            targetPort: 32400
     persistence:
       config:
         enabled: true
