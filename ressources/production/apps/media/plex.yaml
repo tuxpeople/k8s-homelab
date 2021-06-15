@@ -27,8 +27,6 @@ spec:
       transcode:
         enabled: false
       data:
-        enabled: false
-      media:
         enabled: true
         type: hostPath
         mountPath: /data
