@@ -7,8 +7,8 @@ spec:
   releaseName: nextcloud
   chart:
     spec:
-      version: "2.6.4"
       # renovate: registryUrl=https://nextcloud.github.io/helm/
+      version: "2.6.4"
       chart: nextcloud
       sourceRef:
         kind: HelmRepository

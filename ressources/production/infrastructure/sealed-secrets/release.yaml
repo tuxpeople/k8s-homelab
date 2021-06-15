@@ -13,7 +13,6 @@ spec:
         kind: HelmRepository
         name: sealed-secrets
         namespace: flux-system
-      version: ">=1.15.0-0"
   interval: 1h0m0s
   releaseName: sealed-secrets
   targetNamespace: sealed-secrets
