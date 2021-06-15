@@ -27,7 +27,9 @@ spec:
       transcode:
         enabled: false
       data:
-        enabled: disable
+        enabled: false
+      media:
+        enabled: true
         type: hostPath
         mountPath: /data
         readOnly: true
