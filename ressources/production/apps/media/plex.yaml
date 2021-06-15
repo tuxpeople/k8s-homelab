@@ -44,7 +44,7 @@ spec:
         hostPath: /mnt/multimedia
         mountPath: /data
         hostPathType: "Directory"
-        readOnly: false
+        readOnly: true
       dri:
         enabled: true
         type: hostPath
