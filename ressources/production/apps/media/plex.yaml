@@ -27,11 +27,7 @@ spec:
       transcode:
         enabled: false
       data:
-        type: hostPath
-        mountPath: /data
-        readOnly: true
-        hostPath: /mnt/multimedia
-        hostPathType: Directory
+        enabled: false
       dri:
         enabled: true
         type: hostPath
