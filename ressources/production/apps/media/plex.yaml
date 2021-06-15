@@ -69,3 +69,29 @@ spec:
   interval: 300
   alertContacts: "0283188_0_0-2432738_0_0-2655991_0_0-3069202_0_0"
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: plex
+  name: plex-data-pvc
+spec:
+  accessModes:
+    - ReadOnlyMany
+  volumeName: plex-data-pv
+  resources:
+    requests:
+      storage: 1Ti
+  storageClassName: ""
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata: 
+  name: plex-data-pv
+  namespace: media
+spec:
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadOnlyMany
+  hostPath:
+    path: /mnt/multimedia
