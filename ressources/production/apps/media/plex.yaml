@@ -43,26 +43,6 @@ spec:
         hostPathType: "Directory"
         readOnly: false
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: media
-  name: plex-nodeport
-  labels:
-    app.kubernetes.io/instance: plex
-    app.kubernetes.io/name: plex
-spec:
-  type: NodePort
-  ports:
-    - name: web
-      nodePort: 32400
-      port: 32400
-      protocol: TCP
-      targetPort: 32400
-  selector:
-    app.kubernetes.io/instance: plex
-    app.kubernetes.io/name: plex
----
 apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
