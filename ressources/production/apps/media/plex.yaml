@@ -24,6 +24,7 @@ spec:
       config:
         enabled: true
         size: 1Gi
+        readOnly: false
       transcode:
         enabled: false
       data:
