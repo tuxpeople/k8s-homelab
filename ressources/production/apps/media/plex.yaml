@@ -27,7 +27,8 @@ spec:
       transcode:
         enabled: false
       data:
-        enabled: false
+        enabled: true
+        existingClaim: "plex-data-pvc"
       dri:
         enabled: true
         type: hostPath
