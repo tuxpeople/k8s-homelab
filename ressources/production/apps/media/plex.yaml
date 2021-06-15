@@ -18,8 +18,6 @@ spec:
       interval: 1m
   values:
     timezone: "Europe/Zurich"
-    plexUid: "8675309"
-    plexGid: "8675309"
     service:
       main:
         enabled: true
