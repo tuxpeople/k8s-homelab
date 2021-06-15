@@ -72,7 +72,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: plex
+  namespace: media
   name: plex-data-pvc
 spec:
   accessModes:
