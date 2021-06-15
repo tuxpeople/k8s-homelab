@@ -3579,7 +3579,7 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: temp
-      serviceAccountName: ted-test-user
+      serviceAccountName: helm-controller
       terminationGracePeriodSeconds: 600
       volumes:
       - emptyDir: {}
@@ -3650,7 +3650,7 @@ spec:
           name: temp
       securityContext:
         fsGroup: 1337
-      serviceAccountName: ted-test-user
+      serviceAccountName: image-automation-controller
       terminationGracePeriodSeconds: 10
       volumes:
       - emptyDir: {}
@@ -3723,7 +3723,7 @@ spec:
           name: data
       securityContext:
         fsGroup: 1337
-      serviceAccountName: ted-test-user
+      serviceAccountName: image-reflector-controller
       terminationGracePeriodSeconds: 10
       volumes:
       - emptyDir: {}
@@ -3796,7 +3796,7 @@ spec:
           name: temp
       securityContext:
         fsGroup: 1337
-      serviceAccountName: ted-test-user
+      serviceAccountName: kustomize-controller
       terminationGracePeriodSeconds: 60
       volumes:
       - emptyDir: {}
@@ -3868,7 +3868,7 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: temp
-      serviceAccountName: ted-test-user
+      serviceAccountName: notification-controller
       terminationGracePeriodSeconds: 10
       volumes:
       - emptyDir: {}
@@ -3946,7 +3946,7 @@ spec:
           name: tmp
       securityContext:
         fsGroup: 1337
-      serviceAccountName: ted-test-user
+      serviceAccountName: source-controller
       terminationGracePeriodSeconds: 10
       volumes:
       - emptyDir: {}
