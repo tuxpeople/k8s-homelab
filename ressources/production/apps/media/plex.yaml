@@ -35,7 +35,7 @@ spec:
         readOnly: true
         hostPath: /mnt/multimedia
         hostPathType: Directory
-      host-dev:
+      dri:
         enabled: true
         type: hostPath
         hostPath: /dev/dri
