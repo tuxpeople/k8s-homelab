@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: debugtest
+  name: debugtest
+spec:
+  selector:
+    matchLabels:
+      app: debugtest
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: debugtest
+    spec:
+      containers:
+      - image: tdeutsch/debugcontainer:latest
+        imagePullPolicy: Always
+        name: debugtest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
