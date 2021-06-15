@@ -26,6 +26,13 @@ spec:
         size: 1Gi
       transcode:
         enabled: false
+      data:
+        enabled: true
+        type: hostPath
+        hostPath: /mnt/multimedia
+        mountPath: /data
+        hostPathType: "Directory"
+        readOnly: false
       host-dev:
         enabled: true
         type: hostPath
@@ -33,15 +40,6 @@ spec:
         mountPath: /dev/dri
         hostPathType: "Directory"
         readOnly: false
-      custom-mount:
-        enabled: true
-        type: custom
-        mountPath: /data
-        readOnly: false
-        volumeSpec:
-          hostPath:
-            path: /mnt/multimedia
-            type: Directory
 ---
 apiVersion: v1
 kind: Service
