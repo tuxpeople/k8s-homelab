@@ -4,3 +4,4 @@ metadata:
   name: debugtest
   labels:
     field.cattle.io/projectId: p-q6n57
+    app.kubernetes.io/instance: debugtest
