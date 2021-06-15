@@ -3369,6 +3369,7 @@ rules:
   - '*'
 - apiGroups:
   - image.toolkit.fluxcd.io
+  - source.toolkit.fluxcd.io
   resources:
   - '*'
   verbs:
