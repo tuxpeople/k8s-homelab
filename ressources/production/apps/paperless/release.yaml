@@ -25,19 +25,19 @@ spec:
     persistence:
       consume:
         enabled: true
-        accessMode: RWX
+        accessMode: ReadWriteOnce
         size: 10G
       data:
         enabled: true
-        accessMode: RWX
+        accessMode: ReadWriteOnce
         size: 10G
       export:
         enabled: true
-        accessMode: RWX
+        accessMode: ReadWriteOnce
         size: 10G
       media:
         enabled: true
-        accessMode: RWX
+        accessMode: ReadWriteOnce
         size: 10G
     image:
       pullPolicy: Always
