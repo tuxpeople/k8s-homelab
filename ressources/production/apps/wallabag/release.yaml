@@ -23,6 +23,11 @@ spec:
       TZ: "Europe/Zurich"
     image:
       pullPolicy: Always
+    persistence:
+      cache:
+        enabled: true
+      images:
+        enabled: true
     ingress:
       enabled: true
       annotations:
