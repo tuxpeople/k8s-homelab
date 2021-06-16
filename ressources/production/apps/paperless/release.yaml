@@ -22,6 +22,15 @@ spec:
     env:
       TZ: "Europe/Zurich"
       PAPERLESS_OCR_LANGUAGE: "deu"
+    persistence:
+      consume:
+        enabled: true
+      data:
+        enabled: true
+      export:
+        enabled: true
+      media:
+        enabled: true
     image:
       pullPolicy: Always
     ingress:
