@@ -29,14 +29,8 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: "traefik"
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          traefik.ingress.kubernetes.io/redirect-entry-point: https
         hosts:
         - host: "paperless.192.168.8.8.nip.io"
           paths:
           - path: /
             pathType: Prefix
-        tls:
-        - secretName: paperless-eighty-three-me-tls
-          hosts:
-            - paperless.eighty-three.me
