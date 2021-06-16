@@ -29,11 +29,12 @@ spec:
         accessMode: ReadWriteOnce
         size: 1G
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "traefik"
-      hosts:
-      - host: "homer.192.168.8.8.nip.io"
-        paths:
-        - path: /
-          pathType: Prefix
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+        hosts:
+        - host: "homer.192.168.8.8.nip.io"
+          paths:
+          - path: /
+            pathType: Prefix
