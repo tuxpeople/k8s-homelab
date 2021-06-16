@@ -37,8 +37,7 @@ spec:
         primary:
           persistence:
             enabled: true
-            accessMode: ReadWriteOnce
-            size: 5G
+            accessModes: ReadWriteOnce
       redis:
         enabled: true
     ingress:
