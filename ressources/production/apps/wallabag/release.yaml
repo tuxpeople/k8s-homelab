@@ -33,10 +33,7 @@ spec:
         accessMode: ReadWriteOnce
         size: 5G
       mariadb:
-        enabled: true
-        persistence:
-          enabled: true
-          accessMode: ReadWriteOnce
+        enabled: false
       redis:
         enabled: true
     ingress:
