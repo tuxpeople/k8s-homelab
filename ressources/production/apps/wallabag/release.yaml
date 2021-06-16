@@ -36,9 +36,6 @@ spec:
       enabled: true
       persistence:
         enabled: true
-        accessMode: ReadWriteOnce
-    redis:
-      enabled: true
     ingress:
       enabled: true
       annotations:
