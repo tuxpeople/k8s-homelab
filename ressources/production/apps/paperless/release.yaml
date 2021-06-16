@@ -27,6 +27,7 @@ spec:
     ingress:
       main:
         enabled: true
+        primary: true
         ingressClassName: "traefik"
         hosts:
           - host: "paperless1.192.168.8.8.nip.io"
