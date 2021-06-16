@@ -27,7 +27,9 @@ spec:
     ingress:
       main:
         enabled: true
-        annotations:
-          kubernetes.io/ingress.class: "traefik"
+        ingressClassName: "traefik"
         hosts:
-        - host: "paperless.192.168.8.8.nip.io"
+          - host: "paperless.192.168.8.8.nip.io"
+            paths:
+              - path: /
+                pathType: Prefix
