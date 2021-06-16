@@ -21,6 +21,7 @@ spec:
   values:
     env:
       TZ: "Europe/Zurich"
+      POPULATE_DATABASE: true
     image:
       pullPolicy: Always
     persistence:
