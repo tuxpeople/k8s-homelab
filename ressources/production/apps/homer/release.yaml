@@ -1,0 +1,39 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: homer
+  namespace: homer
+spec:
+  releaseName: homer
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: homer
+      version: 4.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  values:
+    env:
+      TZ: "Europe/Zurich"
+    image:
+      pullPolicy: Always
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1G
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "traefik"
+      hosts:
+      - host: "homer.192.168.8.8.nip.io"
+        paths:
+        - path: /
+          pathType: Prefix
