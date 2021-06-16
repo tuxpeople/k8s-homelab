@@ -35,7 +35,7 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-production
         traefik.ingress.kubernetes.io/redirect-entry-point: https
       hosts:
-      - host: "wallabag.192.168.8.8.nip.io"
+      - host: "wallabag.eighty-three.me"
         paths:
         - path: /
           pathType: Prefix
