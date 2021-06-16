@@ -23,6 +23,16 @@ spec:
       TZ: "Europe/Zurich"
     image:
       pullPolicy: Always
+    persistence:
+      cache:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1G
+      images:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 5G
+    ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: "traefik"
