@@ -34,6 +34,11 @@ spec:
         size: 5G
       mariadb:
         enabled: true
+        primary:
+          persistence:
+            enabled: true
+            accessMode: ReadWriteOnce
+            size: 5G
       redis:
         enabled: true
     ingress:
