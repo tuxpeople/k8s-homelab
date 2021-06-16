@@ -37,7 +37,7 @@ spec:
         primary:
           persistence:
             enabled: true
-            accessModes: ReadWriteOnce
+            accessMode: ReadWriteOnce
       redis:
         enabled: true
     ingress:
