@@ -27,6 +27,7 @@ spec:
           pms:
             enabled: true
             primary: true
+            port: 32400
             protocol: TCP
             nodePort: 32400
     persistence:
