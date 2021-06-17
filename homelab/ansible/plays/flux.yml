@@ -27,13 +27,16 @@
       delegate_to: localhost
       become: false
 
-    - name: Deploy Sealed Secrets key
+    - name: Copy Sealed Secrets key
       ansible.builtin.copy:
         src: "{{ sealed_secrets_key }}"
-        dest: /var/lib/rancher/k3s/server/manifests/sealed_secrets_key.yaml
+        dest: /tmp/sealed_secrets_key.yaml
         owner: root
         group: root
         mode: "0600"
+
+    - name: deploy Sealed Secrets key
+      shell: "/usr/local/bin/kubectl apply -f /tmp/sealed_secrets_key.yaml && rm -f /tmp/sealed_secrets_key.yaml"
 
     - name: Bootstrap Flux
       shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=homelab/kubernetes/flux --private-key-file=~/.ssh/id_rsa_github"
