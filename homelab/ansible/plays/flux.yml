@@ -9,14 +9,14 @@
         dest: "{{ local_kubeconfig }}"
         flat: yes
 
-    - name: Replace server address in kubeconfig
-      replace:
-        path: "{{ local_kubeconfig }}"
-        regexp: '0.0.0.0:6443'
-        replace: "{{ vrrp_vip }}:6443"
-        backup: no
-      delegate_to: localhost
-      become: false
+    # - name: Replace server address in kubeconfig
+    #   replace:
+    #     path: "{{ local_kubeconfig }}"
+    #     regexp: '0.0.0.0:6443'
+    #     replace: "{{ vrrp_vip }}:6443"
+    #     backup: no
+    #   delegate_to: localhost
+    #   become: false
 
     - name: Set cluster name in kubeconfig
       replace:

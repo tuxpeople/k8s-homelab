@@ -12,6 +12,7 @@ k3s_server:
   disable:
     - local-storage
   bind-address: 0.0.0.0
+  advertise-address: "{{ vrrp_vip }}"
 k3s_agent:
   node-label:
     - "region=sky"
