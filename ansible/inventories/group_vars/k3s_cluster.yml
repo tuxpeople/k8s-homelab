@@ -1,5 +1,5 @@
 vrrp_vip: 192.168.8.222
-vrrp_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,punctuation length=15') }}"
+vrrp_password: "mae9aikieJ"
 cluster_name: k3s-prod
 
 k3s_install_hard_links: true
