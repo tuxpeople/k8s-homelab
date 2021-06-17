@@ -1,6 +1,7 @@
 vrrp_vip: 192.168.8.222
 vrrp_password: "mae9aikieJ"
 cluster_name: k3s-prod
+nfs_package: "nfs-utils"
 
 k3s_install_hard_links: true
 k3s_become_for_all: true

@@ -21,16 +21,6 @@
         permanent: yes
       when: ansible_os_family == "RedHat"
 
-    - name: Set nfs client package name for Debian
-      set_fact:
-        nfs_package: "nfs-common"
-      when: ansible_os_family == "Debian"
-
-    - name: Set nfs client package name for RedHat
-      set_fact:
-        nfs_package: "nfs-utils"
-      when: ansible_os_family == "RedHat"
-
     - name: Ensure nfs client is installed
       package:
         name: "{{ nfs_package }}"
