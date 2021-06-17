@@ -1,0 +1,12 @@
+collections:
+  - community.general
+  - ansible.posix
+  - oasis_roles.system
+  - robertdebock.roles
+
+roles:
+  - name: ansible-keepalived
+    src: https://github.com/tuxpeople/ansible-keepalived
+  - src: xanmanning.k3s
+  - src: frzk.chrony
+  - src: geerlingguy.repo-epel

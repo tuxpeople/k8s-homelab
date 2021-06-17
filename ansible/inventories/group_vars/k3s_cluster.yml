@@ -1,0 +1,47 @@
+vrrp_vip: 192.168.8.222
+vrrp_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,punctuation length=15') }}"
+cluster_name: k3s-prod
+
+k3s_install_hard_links: true
+k3s_become_for_all: true
+k3s_etcd_datastore: true
+k3s_control_node: true
+k3s_registration_address: 
+k3s_server:
+  tls-san: "{{ vrrp_vip }},{{ cluster_name }}.{{ vrrp_vip }}.nip.io"
+  disable:
+    - local-storage
+  bind-address: 0.0.0.0
+k3s_agent:
+  node-label:
+    - "region=sky"
+
+firewall_services:
+  - name: ssh
+  - name: http
+  - name: https
+  - name: 6443
+    protocol: tcp
+  - name: 10250
+    protocol: tcp
+  - name: 2379
+    protocol: tcp
+  - name: 2380
+    protocol: tcp
+  - name: 8472
+    protocol: udp
+  - name: 32400
+    protocol: tcp
+
+local_kubeconfig: /Users/tdeutsch/iCloudDrive/Allgemein/kubectl/k3os.conf
+sealed_secrets_key: /Users/tdeutsch/git/ansible-sky/master.yaml
+github_user: tuxpeople
+github_repo: k8s-server
+github_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38633835663238613636313862653236613133643832393862656464366235303763643732643462
+          3339346434653737626536636238623236333539376662320a306162333136303661343237386665
+          35323234663235633639653039656537383532656332343331326633353033336338633037326265
+          3863313530646533610a323936303130626136333531366235643863633565396465663034613163
+          62663532333062396132383265393535633966666235623065396363653932643066636539663362
+          6136363336663564376661326431383665376465393530323037

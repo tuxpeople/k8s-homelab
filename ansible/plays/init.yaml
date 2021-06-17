@@ -1,0 +1,13 @@
+---
+- name: Make a great machine
+  hosts: all
+
+  roles:
+    - oasis_roles.system.hostname
+    - robertdebock.roles.bootstrap
+    - robertdebock.roles.common
+    - geerlingguy.repo-epel
+    - frzk.chrony
+    - ansible-role-homelab-basics
+    - oasis_roles.system.package_updater
+    - robertdebock.roles.keepalived

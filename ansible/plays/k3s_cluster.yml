@@ -1,0 +1,58 @@
+---
+- name: Basis configuration for k3s_cluster
+  hosts: k3s_cluster
+
+  tasks:
+    - name: Add Pod-Network to trusted zone
+      ansible.posix.firewalld:
+        source: "10.42.0.0/16"
+        zone: trusted
+        state: enabled
+        immediate: yes
+        permanent: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Add Services-Network to trusted zone
+      ansible.posix.firewalld:
+        source: "10.43.0.0/16"
+        zone: trusted
+        state: enabled
+        immediate: yes
+        permanent: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Set nfs client package name for Debian
+      set_fact:
+        nfs_package: "nfs-common"
+      when: ansible_os_family == "Debian"
+
+    - name: Set nfs client package name for RedHat
+      set_fact:
+        nfs_package: "nfs-utils"
+      when: ansible_os_family == "RedHat"
+
+    - name: Ensure nfs client is installed
+      package:
+        name: "{{ nfs_package }}"
+        state: present 
+
+    - name: Mount Multimedia nfs share
+      mount:
+        path: /mnt/multimedia
+        src: diskstation.home:/volume1/Multimedia
+        opts: users,noauto,x-systemd.automount,x-systemd.mount-timeout=30,_netdev,timeo=14,noatime
+        state: mounted
+        fstype: nfs
+
+    - name: Disable SWAP since kubernetes can't work with swap enabled (1/2)
+      shell: |
+        swapoff -a
+
+    - name: Disable SWAP in fstab since kubernetes can't work with swap enabled (2/2)
+      replace:
+        path: /etc/fstab
+        regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
+        replace: '#\1\2\3swap\4'
+
+  roles:
+    - xanmanning.k3s

@@ -1,0 +1,44 @@
+---
+- name: Flux Bootstrap
+  hosts: k3s_cluster[0]
+
+  tasks:
+    - name: Get Kubeconfig
+      ansible.builtin.fetch:
+        src: /etc/rancher/k3s/k3s.yaml
+        dest: "{{ local_kubeconfig }}"
+        flat: yes
+
+    - name: Replace server address in kubeconfig
+      replace:
+        path: "{{ local_kubeconfig }}"
+        regexp: '0.0.0.0:6443'
+        replace: "{{ vrrp_vip }}:6443"
+        backup: no
+      delegate_to: localhost
+      become: false
+
+    - name: Set cluster name in kubeconfig
+      replace:
+        path: "{{ local_kubeconfig }}"
+        regexp: 'default'
+        replace: "{{ cluster_name }}"
+        backup: no
+      delegate_to: localhost
+      become: false
+
+    - name: Deploy Sealed Secrets key
+      ansible.builtin.copy:
+        src: "{{ sealed_secrets_key }}"
+        dest: /var/lib/rancher/k3s/server/manifests/sealed_secrets_key.yaml
+        owner: root
+        group: root
+        mode: "0600"
+
+    - name: Bootstrap Flux
+      shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=kubernetes/cluster --private-key-file=~/.ssh/id_rsa_github"
+      delegate_to: localhost
+      become: false
+      environment:
+        KUBECONFIG: "{{ local_kubeconfig }}"
+        GITHUB_TOKEN: "{{ github_token }}"
