@@ -29,7 +29,7 @@ spec:
             primary: true
             port: 32400
             protocol: TCP
-            nodePort: 32400
+            targetPort: 32400
     persistence:
       config:
         enabled: true
