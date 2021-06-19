@@ -20,9 +20,7 @@ spec:
     remediation:
       retries: 3
   values:
-    # This job is meant primarily for cleaning up CRDs on CI systems.
-    # Using this on production systems, especially those that have multiple releases of Velero, will be destructive.
-    cleanUpCRDs: false
+    cleanUpCRDs: true
     configuration:
       provider: aws
       backupStorageLocation:  
@@ -32,7 +30,6 @@ spec:
           region: minio
           s3ForcePathStyle: true
           s3Url: http://minio.lab:9091
-          publicUrl: http://minio.lab:9091
     credentials:
       useSecret: true
       existingSecret: minio-credentials
