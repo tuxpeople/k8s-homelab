@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: vmware-tanzu
         namespace: flux-system
-  interval: 1h0m0s
+  interval: 5m
   releaseName: velero
   targetNamespace: velero
   install:
