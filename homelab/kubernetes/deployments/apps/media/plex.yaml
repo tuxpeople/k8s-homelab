@@ -34,6 +34,7 @@ spec:
         ports:
           main:
             port: 32400
+            nodePort: 32400
     persistence:
       config:
         enabled: true
