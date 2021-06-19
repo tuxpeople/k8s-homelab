@@ -55,8 +55,6 @@ spec:
         schedule: "10 6 * * *"
         template:
           ttl: "360h"
-          includedNamespaces:
-          - default
   valuesFrom:
   - kind: Secret
     name: "velero-values"
