@@ -17,6 +17,8 @@ spec:
   releaseName: sealed-secrets
   targetNamespace: sealed-secrets
   install:
+    remediation:
+      retries: 3
     crds: Create
   upgrade:
     crds: CreateReplace
