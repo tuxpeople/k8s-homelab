@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: plex
-  replicas: 1
+  replicas: 0
   template:
     metadata:
       labels:
@@ -37,7 +37,7 @@ spec:
         - mountPath: /data
           name: nas-multimedia
         - mountPath: /config
-          name: config
+          name: plex-config
       volumes:
       - hostPath:
           path: /dev/dri
@@ -47,9 +47,9 @@ spec:
           path: /mnt/multimedia
           type: Directory
         name: nas-multimedia
-      - name: config
+      - name: plex-config
         persistentVolumeClaim:
-          claimName: config
+          claimName: plex-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -57,7 +57,7 @@ metadata:
   namespace: media
   labels:
     app: plex
-  name: config
+  name: plex-config
 spec:
   accessModes:
   - ReadWriteOnce
