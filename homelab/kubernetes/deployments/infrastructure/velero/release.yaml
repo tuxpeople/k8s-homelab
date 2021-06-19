@@ -24,7 +24,6 @@ spec:
     configuration:
       provider: aws
       backupStorageLocation:  
-        name: homelab
         bucket: k8s-backup
         config:
           region: minio
