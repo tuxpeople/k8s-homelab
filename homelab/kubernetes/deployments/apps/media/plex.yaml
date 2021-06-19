@@ -19,6 +19,8 @@ spec:
   values:
     image:
       repository: ghcr.io/linuxserver/plex
+      tag: latest
+      pullPolicy: Always
     allowedNetworks:
     - 127.0.0.1/8
     - 192.168.8.0/24
