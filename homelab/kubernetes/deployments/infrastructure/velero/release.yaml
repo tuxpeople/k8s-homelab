@@ -31,7 +31,6 @@ spec:
           s3Url: http://minio.lab:9091
     credentials:
       useSecret: true
-      existingSecret: minio-credentials
     initContainers:
     - name: velero-plugin-for-aws
       image: velero/velero-plugin-for-aws:v1.2.0
