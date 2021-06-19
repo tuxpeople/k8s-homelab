@@ -44,3 +44,6 @@ spec:
         schedule: "10 6 * * *"
         template:
           ttl: "360h"
+  valuesFrom:
+  - kind: Secret
+    name: "velero-values"
