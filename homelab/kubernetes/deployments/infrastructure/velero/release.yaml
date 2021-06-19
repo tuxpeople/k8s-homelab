@@ -30,6 +30,10 @@ spec:
           region: minio
           s3ForcePathStyle: true
           s3Url: http://minio.lab:9091
+      volumeSnapshotLocation:
+        name: default
+        config:
+          region: minio
     credentials:
       useSecret: true
     initContainers:
@@ -43,7 +47,8 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-    snapshotsEnabled: false
+    snapshotsEnabled: true
+    deployRestic: true
     installCRDs: true
     schedules:
       daily:
