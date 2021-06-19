@@ -16,7 +16,3 @@ spec:
   interval: 1h0m0s
   releaseName: k8up-operator
   targetNamespace: k8up-operator
-  install:
-    crds: Create
-  upgrade:
-    crds: CreateReplace
