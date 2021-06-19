@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://bitnami-labs.github.io/k8up
+      # renovate: registryUrl=https://charts.appuio.ch
       chart: k8up
       version: 1.0.0
       sourceRef:
