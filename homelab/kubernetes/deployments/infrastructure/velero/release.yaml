@@ -24,7 +24,7 @@ spec:
     # Using this on production systems, especially those that have multiple releases of Velero, will be destructive.
     cleanUpCRDs: false
     configuration:
-      provider: homelab
+      provider: aws
       backupStorageLocation:  
         name: homelab
         bucket: k8s-backup
