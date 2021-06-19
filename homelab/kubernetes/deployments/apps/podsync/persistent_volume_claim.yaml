@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     app: podsync
+  annotations:
+    k8up.syn.tools/backup: false
   name: podsync-data
   namespace: podsync
 spec:
