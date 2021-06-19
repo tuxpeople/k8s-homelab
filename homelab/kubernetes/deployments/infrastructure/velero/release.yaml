@@ -34,6 +34,7 @@ spec:
         name: default
         config:
           region: minio
+      defaultvolumestorestic: true
     credentials:
       useSecret: true
     initContainers:
