@@ -29,6 +29,11 @@ spec:
           region: minio
           s3ForcePathStyle: true
           s3Url: http://minio.lab:9091
+      volumeSnapshotLocation:
+        name: aws
+        config:
+          region: us-east-1
+      resticTimeout: 6h
     credentials:
       useSecret: true
     initContainers:
@@ -38,11 +43,20 @@ spec:
       volumeMounts:
         - mountPath: /target
           name: plugins
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    snapshotsEnabled: true
+    deployRestic: true
+    installCRDs: true
     schedules:
       daily:
         schedule: "10 6 * * *"
         template:
           ttl: "360h"
+          includedNamespaces:
+          - default
   valuesFrom:
   - kind: Secret
     name: "velero-values"
