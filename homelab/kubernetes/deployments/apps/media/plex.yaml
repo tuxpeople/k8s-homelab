@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: plex
-  replicas: 1
+  replicas: 0
   template:
     metadata:
       labels:
