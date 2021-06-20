@@ -7,7 +7,7 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "commitBody": "Signed-off-by: Thomas Deutsch <tuxpeople@users.noreply.github.com>",
   "assignees": ["@tuxpeople"],
-  "helm-values": {"fileMatch": ["homelab/kubernetes/deployments/.+\\.yaml$"]},
+  "docker": {"fileMatch": ["homelab/kubernetes/deployments/.+\\.yaml$"]},
   "kubernetes": {
     "fileMatch": ["homelab/kubernetes/deployments/.+\\.yaml$"],
     "ignorePaths": [
