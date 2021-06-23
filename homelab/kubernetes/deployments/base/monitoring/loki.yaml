@@ -85,21 +85,27 @@ spec:
           up_client-dpi:
             gnetId: 11310
             datasource: Prometheus
+            uid: 11310
           up_client-insights:
             gnetId: 11315
             datasource: Prometheus
+            uid: 11315
           up_network-sites:
             gnetId: 11311
             datasource: Prometheus
+            uid: 11311
           up_uap_insights:
             gnetId: 11314
             datasource: Prometheus
+            uid: 11314
           up_usg_insights:
             gnetId: 11313
             datasource: Prometheus
+            uid: 11313
           up_usw_insights:
             gnetId: 11312
             datasource: Prometheus
+            uid: 11312
     loki:
       config:
         table_manager:
