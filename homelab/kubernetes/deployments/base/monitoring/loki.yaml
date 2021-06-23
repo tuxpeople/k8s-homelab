@@ -42,7 +42,6 @@ spec:
             static_configs:
             - targets: ['unifi-poller:9130']
     grafana:
-      enabled: true
       adminPassword: highly-secure-production-password
       persistence:
         type: pvc
