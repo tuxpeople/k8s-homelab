@@ -67,6 +67,39 @@ spec:
           root_url: https://grafana.eighty-three.me
       plugins:
         - grafana-piechart-panel
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: default
+              orgId: 1
+              folder: ''
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
+      defaultDashboardsEnabled: true
+      dashboards:
+        default:
+          up_client-dpi:
+            gnetId: 11310
+            datasource: Prometheus   
+          up_client-insights:
+            gnetId: 11315
+            datasource: Prometheus   
+          up_network-sites:
+            gnetId: 11311
+            datasource: Prometheus   
+          up_uap_insights:
+            gnetId: 11314
+            datasource: Prometheus   
+          up_usg_insights:
+            gnetId: 11313
+            datasource: Prometheus   
+          up_usw_insights:
+            gnetId: 11312
+            datasource: Prometheus
     loki:
       config:
         table_manager:
