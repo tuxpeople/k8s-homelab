@@ -18,29 +18,19 @@ spec:
       interval: 5m
   values:
     alertmanager:
-      alertmanagerSpec:
-        storage:
-          volumeClaimTemplate:
-            spec:
-              accessModes: ["ReadWriteOnce"]
-              resources:
-                requests:
-                  storage: 10Gi
+      enabled: true
     prometheus:
       enabled: true
-      prometheusSpec:
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              accessModes: ["ReadWriteOnce"]
-              resources:
-                requests:
-                  storage: 10Gi
-        additionalScrapeConfigs:
-          - job_name: 'unifipoller'
-            scrape_interval: 30s
-            static_configs:
-            - targets: ['unifi-poller:9130']
+      persistentVolume:
+        enabled: true
+        size: 10Gi
+      serverFiles:
+        prometheus.yml:
+          scrape_configs:
+            - job_name: 'unifipoller'
+              scrape_interval: 30s
+              static_configs:
+              - targets: ['unifi-poller:9130']
     grafana:
       adminPassword: highly-secure-production-password
       persistence:
