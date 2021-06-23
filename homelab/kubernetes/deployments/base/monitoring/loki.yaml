@@ -61,17 +61,25 @@ spec:
         dashboardproviders.yaml:
           apiVersion: 1
           providers:
-            - name: default
+            - name: unifi-poller
               orgId: 1
-              folder: ''
+              folder: 'unifi-poller'
               type: file
               disableDeletion: false
               editable: true
               options:
-                path: /var/lib/grafana/dashboards/default
+                path: /var/lib/grafana/dashboards/unifi-poller
+            - name: kubernetes
+              orgId: 1
+              folder: 'kubernetes'
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/kubernetes
       defaultDashboardsEnabled: true
       dashboards:
-        default:
+        unifi-poller:
           up_client-dpi:
             gnetId: 11310
             datasource: Prometheus
@@ -96,6 +104,81 @@ spec:
             gnetId: 11312
             datasource: Prometheus
             revision: 8
+        kubernetes:
+          alertmanager-overview:
+            file: dashboards/alertmanager-overview.json
+            datasource: Prometheus
+          apiserver:
+            file: dashboards/apiserver.json
+            datasource: Prometheus
+          cluster-total:
+            file: dashboards/cluster-total.json
+            datasource: Prometheus
+          controller-manager:
+            file: dashboards/controller-manager.json
+            datasource: Prometheus
+          etcd:
+            file: dashboards/etcd.json
+            datasource: Prometheus
+          k8s-coredns:
+            file: dashboards/k8s-coredns.json
+            datasource: Prometheus
+          k8s-resources-cluster:
+            file: dashboards/k8s-resources-cluster.json
+            datasource: Prometheus
+          k8s-resources-namespace:
+            file: dashboards/k8s-resources-namespace.json
+            datasource: Prometheus
+          k8s-resources-node:
+            file: dashboards/k8s-resources-node.json
+            datasource: Prometheus
+          k8s-resources-pod:
+            file: dashboards/k8s-resources-pod.json
+            datasource: Prometheus
+          k8s-resources-workload:
+            file: dashboards/k8s-resources-workload.json
+            datasource: Prometheus
+          k8s-resources-workloads-namespace:
+            file: dashboards/k8s-resources-workloads-namespace.json
+            datasource: Prometheus
+          kubelet:
+            file: dashboards/kubelet.json
+            datasource: Prometheus
+          namespace-by-pod:
+            file: dashboards/namespace-by-pod.json
+            datasource: Prometheus
+          namespace-by-workload:
+            file: dashboards/namespace-by-workload.json
+            datasource: Prometheus
+          node-cluster-rsrc-use:
+            file: dashboards/node-cluster-rsrc-use.json
+            datasource: Prometheus
+          node-rsrc-use:
+            file: dashboards/node-rsrc-use.json
+            datasource: Prometheus
+          nodes:
+            file: dashboards/nodes.json
+            datasource: Prometheus
+          persistentvolumesusage:
+            file: dashboards/persistentvolumesusage.json
+            datasource: Prometheus
+          pod-total:
+            file: dashboards/pod-total.json
+            datasource: Prometheus
+          prometheus:
+            file: dashboards/prometheus.json
+            datasource: Prometheus
+          proxy:
+            file: dashboards/proxy.json
+            datasource: Prometheus
+          scheduler:
+            file: dashboards/scheduler.json
+            datasource: Prometheus
+          statefulset:
+            file: dashboards/statefulset.json
+            datasource: Prometheus
+          workload-total:
+            file: dashboards/workload-total.json
     loki:
       config:
         table_manager:
