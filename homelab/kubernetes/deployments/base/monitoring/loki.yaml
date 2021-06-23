@@ -17,6 +17,57 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    alertmanager:
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 10Gi
+    prometheus:
+      enabled: true
+      prometheusSpec:
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 10Gi
+        additionalScrapeConfigs:
+          - job_name: 'unifipoller'
+            scrape_interval: 30s
+            static_configs:
+            - targets: ['unifi-poller:9130']
+    grafana:
+      enabled: true
+      adminPassword: highly-secure-production-password
+      persistence:
+        type: pvc
+        enabled: true
+        accessModes:
+          - ReadWriteOnce
+        size: 10Gi
+      enabled: true
+      ingress:
+        enabled: true
+        hosts:
+          - grafana.eighty-three.me
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+        tls:
+        - secretName: grafana-eighty-three-me-tls
+          hosts:
+                - grafana.eighty-three.me
+      grafana.ini:
+        server:
+          root_url: https://grafana.eighty-three.me
+      plugins:
+        - grafana-piechart-panel
     loki:
       config:
         table_manager:
