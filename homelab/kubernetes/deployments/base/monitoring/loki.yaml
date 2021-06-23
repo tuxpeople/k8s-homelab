@@ -84,19 +84,19 @@ spec:
         default:
           up_client-dpi:
             gnetId: 11310
-            datasource: Prometheus   
+            datasource: Prometheus
           up_client-insights:
             gnetId: 11315
-            datasource: Prometheus   
+            datasource: Prometheus
           up_network-sites:
             gnetId: 11311
-            datasource: Prometheus   
+            datasource: Prometheus
           up_uap_insights:
             gnetId: 11314
-            datasource: Prometheus   
+            datasource: Prometheus
           up_usg_insights:
             gnetId: 11313
-            datasource: Prometheus   
+            datasource: Prometheus
           up_usw_insights:
             gnetId: 11312
             datasource: Prometheus
