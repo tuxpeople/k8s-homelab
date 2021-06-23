@@ -42,11 +42,12 @@ spec:
     image:
       pullPolicy: Always
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "traefik"
-      hosts:
-      - host: "paperless.192.168.8.8.nip.io"
-        paths:
-        - path: /
-          pathType: Prefix
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+        hosts:
+        - host: "paperless.192.168.8.8.nip.io"
+          paths:
+          - path: /
+            pathType: Prefix
