@@ -112,6 +112,7 @@ spec:
             gnetId: 11312
             datasource: Prometheus
             revision: 8
+        various:
           flux-cluster:
             url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
             datasource: Prometheus
@@ -125,7 +126,14 @@ spec:
         datasources:
           enabled: true
           searchNamespace: ALL
-        various:
+        provider:
+          name: sidecarProvider
+          orgid: 1
+          folder: 'kubernetes'
+          type: file
+          disableDelete: false
+          allowUiUpdates: true
+          foldersFromFilesStructure: false
     loki:
       config:
         table_manager:
