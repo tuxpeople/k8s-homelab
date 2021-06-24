@@ -24,6 +24,10 @@ spec:
       persistentVolume:
         enabled: true
         size: 10Gi
+      ingress:
+        enabled: true
+        hosts:
+          - prometheus.192.168.8.8.nip.io
       serverFiles:
         prometheus.yml:
           scrape_configs:
