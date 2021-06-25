@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   encryptedData:
-    uptimeRobotApiKey: AgBh97Uw3JF/AhVr8vKgGh+W8755iZcWuO3he6/NxifgCeMmjYKMc+9b8reXNJwtDyFqWc7oCU6lVFyDL9cdN5YInmLSfb127olVz1OzD3lZQMv3zOCfxb+3+YtvPv8ERsIo7zAlglK8YA4lfUf6I9+TKrgHjaA8Lo2HZQ/pfH1Jcwr7GoYyWCIJDd6w+VsU71BqReHQw8KLsxDrYoZBdoRM2aZ5RL8kuwDu89TnDkE7SGPDawzarcIedDUR6SxP58XIAikVVHMKx5jXfG1hfNTehDLxY8mQW48QeEYacbNFjXtT2oUH6FsKGcSDDkW3movZgzXeG8RZsFf+J4+UlHw5VIhCjOW00d06U+rB0KG7vhG5C2rA1l8JPYRyq4SZgKaH6K6bi4wWWhEUSQSGxt083QreJJzop1Zft48paBEX6yCnH4CUDu5ZTyBs/GIKPjqWfpne+Qb9HnYi9bQRoTcRcfA6WarkjnqtIMGYvYZ0HzRgt9TNPIGTGIsnmYTZhzAfVGLnDIqMWxo1b/x78cQWBBXWQKOnyd1kB1QhAW7nEVHJFYmdkgdXkAG3HMHgqZktkziSw1LTdGrNC++KTpf1LASZk3oUHsZ/g0esyg3m0RjPd6nqBtCU2VEsN+G95QdDsju9Jel7z80QG7JLSL1LhhiG0dpMHm0Io9Mh1RaIfaw4hJ+C80USCF9iUGmvC7x+2QZhXvTg837kp0gtN1aNtlEDpT7OMEPEGx80X8x2bw==
+    uptimerobotapikey: AgAc9hl4jx6Yl6cPTz9OtkhZRA2T9l7eK2fPCfzZxxEBv+C6hvmNhbr5nCbBUiMmlUUyrlwQcC+tfUc2/kk/I6ewnMdI8tX3YRCiXVklkS7O2xm44olkCp34YePKwvrQzkusoqn8xuFixQ1acPa4hiyLzX+5eDR2tK2/H+VjP/yuAjTfIlkJVxkj1OfZZv9rF9Hg7SpsfXLgSH6vEBc6SbVSYLgAqbo9tV1kAlMZWipiARwlCh8qkKnK0sGQNfNESDHIrmaU+Z7r6ZmIYZnp3/rVCuElSNcvPYKseRv4v8+DwO8n1zSudOKb2k247Iw3bMg4o/XQEOb5YHdoQ6wmKM1DvVYXa99xYfhKpEHAZKiUzijvfTrgNFwxlCldHhs0MGSa5PMlsGzh7KbEzzzdCgEywS3K6Om1yNb9J6XpGj0wy4uGE0R4d93WqJhIgAZsfV24AvWyiRlY8uSYiIH1UkDd+ROvslVQZC0gAWt/jdOOFTWCic00QhIY6BoZtsJCKRzTQAAxlJBagkzkfjSojoqFh3G0XY1NP+lQOJpuccr87iv0LaH2UBLnyTPj49RbU6g35jPX5+yt1wL+MTQznWMTMGQW+fXt9WGQQoBiwPq0r9i/AhtsA+MIdwUJy25XJf2JTrJLaHrfOFn+5eD57pnDmH4Upf0UG/2bX5XXpqEY6dVss6xmlCaDA7mEwcgmxEBscCKuBUMgaQ3ZNj8iEEN7B/zfo96I+YZzPbUYmOl6FA==
   template:
     data: null
     metadata:
@@ -34,7 +34,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: uptimerobotapikey_exporter
-              key: uptimeRobotApiKey
+              key: uptimerobotapikey
         image: lekpamartin/uptimerobot_exporter
         imagePullPolicy: Always
         name: uptimerobot_exporter
