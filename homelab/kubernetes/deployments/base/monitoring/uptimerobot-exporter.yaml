@@ -10,7 +10,7 @@ spec:
     data: null
     metadata:
       creationTimestamp: null
-      name: uptimerobotapikey_exporter
+      name: uptimerobotapikey-exporter
       namespace: monitoring
 ---
 apiVersion: apps/v1
@@ -33,7 +33,7 @@ spec:
         - name: UPTIMEROBOT_API_KEY
           valueFrom:
             secretKeyRef:
-              name: uptimerobotapikey_exporter
+              name: uptimerobotapikey-exporter
               key: uptimerobotapikey
         image: lekpamartin/uptimerobot_exporter
         imagePullPolicy: Always
