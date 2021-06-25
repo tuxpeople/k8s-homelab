@@ -1,7 +1,7 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  name: uptimerobotapikey_exporter
+  name: uptimerobot-exporter
   namespace: monitoring
 spec:
   encryptedData:
@@ -17,16 +17,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: monitoring
-  name: uptimerobotapikey-exporter
+  name: uptimerobot-exporter
 spec:
   selector:
     matchLabels:
-      app: uptimerobotapikey-exporter
+      app: uptimerobot-exporter
   replicas: 1
   template:
     metadata:
       labels:
-        app: uptimerobotapikey-exporter
+        app: uptimerobot-exporter
     spec:
       containers:
       - env:
@@ -37,7 +37,7 @@ spec:
               key: uptimerobotapikey
         image: lekpamartin/uptimerobot_exporter
         imagePullPolicy: Always
-        name: uptimerobotapikey-exporter
+        name: uptimerobot-exporter
         resources:
           requests:
             cpu: 50m
