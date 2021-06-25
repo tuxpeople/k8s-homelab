@@ -61,6 +61,6 @@ spec:
     - port: 9705
       targetPort: 9705
       protocol: TCP
-      name: prom_exporter
+      name: prom-exporter
   selector:
     app: uptimerobot-exporter
