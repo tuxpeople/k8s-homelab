@@ -47,3 +47,20 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 9705
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: uptimerobot-exporter
+  name: uptimerobot-exporter
+  labels:
+    app: uptimerobot-exporter
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9705
+      targetPort: 9705
+      protocol: TCP
+      name: prom_exporter
+  selector:
+    app: uptimerobot-exporter
