@@ -39,37 +39,37 @@ spec:
               scrape_interval: 30s
               static_configs:
               - targets: ['uptimerobot-exporter:9705']
-            - job_name: 'kubernetes-service-endpoints'
+            - job_name: 'kubernetes-pods'
               kubernetes_sd_configs:
-                - role: endpoints
+                - role: pod
               relabel_configs:
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
                   action: keep
                   regex: true
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
+                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
                   action: replace
-                  target_label: __scheme__
                   regex: (https?)
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+                  target_label: __scheme__
+                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
                   action: replace
                   target_label: __metrics_path__
                   regex: (.+)
-                - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+                - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
                   action: replace
-                  target_label: __address__
                   regex: ([^:]+)(?::\d+)?;(\d+)
                   replacement: $1:$2
+                  target_label: __address__
                 - action: labelmap
-                  regex: __meta_kubernetes_service_label_(.+)
+                  regex: __meta_kubernetes_pod_label_(.+)
                 - source_labels: [__meta_kubernetes_namespace]
                   action: replace
                   target_label: kubernetes_namespace
-                - source_labels: [__meta_kubernetes_service_name]
+                - source_labels: [__meta_kubernetes_pod_name]
                   action: replace
-                  target_label: kubernetes_name
-                - source_labels: [__meta_kubernetes_pod_node_name]
-                  action: replace
-                  target_label: kubernetes_node
+                  target_label: kubernetes_pod_name
+                - source_labels: [__meta_kubernetes_pod_phase]
+                  regex: Pending|Succeeded|Failed
+                  action: drop
     grafana:
       adminPassword: highly-secure-production-password
       persistence:
