@@ -17,16 +17,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: monitoring
-  name: uptimerobot_exporter
+  name: uptimerobotapikey-exporter
 spec:
   selector:
     matchLabels:
-      app: uptimerobot_exporter
+      app: uptimerobotapikey-exporter
   replicas: 1
   template:
     metadata:
       labels:
-        app: uptimerobot_exporter
+        app: uptimerobotapikey-exporter
     spec:
       containers:
       - env:
@@ -37,7 +37,7 @@ spec:
               key: uptimerobotapikey
         image: lekpamartin/uptimerobot_exporter
         imagePullPolicy: Always
-        name: uptimerobot_exporter
+        name: uptimerobotapikey-exporter
         resources:
           requests:
             cpu: 50m
