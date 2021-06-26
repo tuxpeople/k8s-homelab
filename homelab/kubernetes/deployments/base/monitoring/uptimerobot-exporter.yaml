@@ -35,7 +35,7 @@ spec:
             secretKeyRef:
               name: uptimerobot-exporter
               key: uptimerobotapikey
-        image: lekpamartin/uptimerobot_exporter
+        image: ukwa/uptimerobot-prometheus-exporter
         imagePullPolicy: Always
         name: uptimerobot-exporter
         resources:
@@ -46,7 +46,7 @@ spec:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 9705
+        - containerPort: 9429
 ---
 apiVersion: v1
 kind: Service
@@ -58,8 +58,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 9705
-      targetPort: 9705
+    - port: 9429
+      targetPort: 9429
       protocol: TCP
       name: prom-exporter
   selector:

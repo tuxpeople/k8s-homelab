@@ -40,7 +40,7 @@ spec:
             - job_name: 'uptimerobotexporter'
               scrape_interval: 30s
               static_configs:
-              - targets: ['uptimerobot-exporter:9705']
+              - targets: ['uptimerobot-exporter:9429']
             - job_name: 'kubernetes-service-endpoints'
               kubernetes_sd_configs:
                 - role: endpoints
