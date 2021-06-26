@@ -102,7 +102,6 @@ spec:
                   regex: Pending|Succeeded|Failed
                   action: drop
     grafana:
-      adminPassword: highly-secure-production-password
       persistence:
         type: pvc
         enabled: true
@@ -222,3 +221,7 @@ spec:
     promtail:
       serviceMonitor:
         enabled: true
+  valuesFrom:
+  - secretKeyRef:
+    kind: Secret
+    name: grafanavalues
