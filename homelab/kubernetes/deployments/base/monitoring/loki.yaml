@@ -37,10 +37,10 @@ spec:
               scrape_interval: 30s
               static_configs:
               - targets: ['unifi-poller:9130']
-            - job_name: 'uptimerobotexporter'
+            - job_name: 'uptimerobot-prometheus'
               scrape_interval: 30s
               static_configs:
-              - targets: ['uptimerobot-exporter:9429']
+              - targets: ['uptimerobot-prometheus:9705']
             - job_name: 'kubernetes-service-endpoints'
               kubernetes_sd_configs:
                 - role: endpoints
