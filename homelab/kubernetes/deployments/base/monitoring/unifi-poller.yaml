@@ -20,9 +20,6 @@ spec:
     remediation:
       retries: 3
   values:
-    image:
-      repository: golift/unifi-poller
-      tag: 2.1.3
     env:
       TZ: "Europe/Zurich"
       UP_UNIFI_DEFAULT_ROLE: "sky"
