@@ -22,7 +22,8 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
         hosts:
         - host: "tautulli.192.168.8.222.nip.io"
           paths:
