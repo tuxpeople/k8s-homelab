@@ -80,6 +80,8 @@ spec:
         volumeMounts:
         - mountPath: /etc/ssl
           name: etc-ssl
+        - mountPath: /etc/pki
+          name: etc-pki
       serviceAccountName: system-upgrade
       tolerations:
       - key: CriticalAddonsOnly
@@ -92,3 +94,7 @@ spec:
           path: /etc/ssl
           type: Directory
         name: etc-ssl
+      - hostPath:
+          path: /etc/pki
+          type: Directory
+        name: etc-pki
