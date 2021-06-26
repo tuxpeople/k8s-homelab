@@ -80,10 +80,17 @@ spec:
         volumeMounts:
         - mountPath: /etc/ssl
           name: etc-ssl
-        - mountPath: /tmp
-          name: tmp
-        - mountPath: /etc/ca-certificates/extracted
-          name: etc-extracted
+        - mountPath: /var/lib/ca-certificates
+          name: var-lib
+      volumes:
+      - hostPath:
+          path: /etc/ssl
+          type: Directory
+        name: etc-ssl
+      - hostPath:
+          path: /var/lib/ca-certificates
+          type: Directory
+        name: var-lib
       serviceAccountName: system-upgrade
       tolerations:
       - key: CriticalAddonsOnly
@@ -91,14 +98,3 @@ spec:
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
         operator: Exists
-      volumes:
-      - hostPath:
-          path: /etc/ssl
-          type: Directory
-        name: etc-ssl
-      - emptyDir: {}
-        name: tmp
-      - hostPath:
-          path: /etc/ca-certificates/extracted
-          type: Directory
-        name: etc-extracted
