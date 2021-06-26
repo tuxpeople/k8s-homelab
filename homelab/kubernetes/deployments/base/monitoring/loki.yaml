@@ -37,7 +37,7 @@ spec:
               scrape_interval: 30s
               static_configs:
               - targets: ['unifi-poller:9130']
-            - job_name: 'uptimerobot-exporter'
+            - job_name: 'uptimerobotexporter'
               scrape_interval: 30s
               static_configs:
               - targets: ['uptimerobot-exporter:9705']
