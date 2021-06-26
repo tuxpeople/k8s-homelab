@@ -24,5 +24,5 @@ spec:
     keepalived:
       vrrpInterfaceName: eth0
       vipInterfaceName: eth0
-      vipAddressCidr: "192.168.8.8/24"
+      vipAddressCidr: "192.168.8.222/24"
       checkServiceUrl: http://localhost:80/ping

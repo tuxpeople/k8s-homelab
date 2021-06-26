@@ -24,7 +24,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         hosts:
-        - host: "tautulli.192.168.8.8.nip.io"
+        - host: "tautulli.192.168.8.222.nip.io"
           paths:
           - path: /
             pathType: Prefix

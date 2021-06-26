@@ -27,7 +27,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - prometheus.192.168.8.8.nip.io
+          - prometheus.192.168.8.222.nip.io
         annotations:
           kubernetes.io/ingress.class: traefik
       serverFiles:
