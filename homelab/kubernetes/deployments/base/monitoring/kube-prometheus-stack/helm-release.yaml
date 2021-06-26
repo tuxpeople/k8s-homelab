@@ -1,0 +1,88 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      version: 16.11.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    nodeExporter:
+      serviceMonitor:
+        relabelings:
+        - action: replace
+          regex: (.*)
+          replacement: $1
+          sourceLabels:
+          - __meta_kubernetes_pod_node_name
+          targetLabel: kubernetes_node
+    grafana:
+      enabled: false
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+        - action: replace
+          sourceLabels:
+          - node
+          targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+    prometheus:
+      enabled: true
+      persistentVolume:
+        enabled: true
+        size: 10Gi
+      ingress:
+        enabled: true
+        pathType: Prefix
+        hosts:
+          - prometheus.192.168.8.222.nip.io
+        annotations:
+          kubernetes.io/ingress.class: traefik
+      prometheusSpec:
+        ruleSelector: {}
+        ruleNamespaceSelector: {}
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelector: {}
+        podMonitorNamespaceSelector: {}
+        podMonitorSelectorNilUsesHelmValues: false
+        retention: 14d
+        enableAdminAPI: true
+        walCompression: true
+        additionalScrapeConfigs:
+        - job_name: 'node-exporter'
+          honor_timestamps: true
+          static_configs:
+          - targets:
+            # nas
+            - 10.20.30.40:9100
+        # - job_name: 'unifipoller'
+        #   scrape_interval: 30s
+        #   static_configs:
+        #   - targets: ['unifi-poller:9130']
+        # - job_name: 'uptimerobot-prometheus'
+        #   scrape_interval: 30s
+        #   static_configs:
+        #   - targets: ['uptimerobot-prometheus:9705']
