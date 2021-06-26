@@ -2,14 +2,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prometheus-uptimerobot-exporter
+  name: uptimerobot-prometheus
   namespace: monitoring
 spec:
-  releaseName: prometheus-uptimerobot-exporter
+  releaseName: uptimerobot-prometheus
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts
-      chart: prometheus-uptimerobot-exporter
+      chart: uptimerobot-prometheus
       version: 3.0.0
       sourceRef:
         kind: HelmRepository
@@ -26,4 +26,4 @@ spec:
   valuesFrom:
   - secretKeyRef:
     kind: Secret
-    name: prometheus-uptimerobot-exporter-values
+    name: uptimerobot-prometheus-values
