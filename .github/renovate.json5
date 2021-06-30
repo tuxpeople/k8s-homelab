@@ -8,7 +8,6 @@
   "commitBody": "Signed-off-by: Thomas Deutsch <tuxpeople@users.noreply.github.com>",
   "assignees": ["@tuxpeople"],
   "rebaseWhen": "conflicted",
-  "docker": {"fileMatch": ["cluster/.+\\.yaml$"]},
   "kubernetes": {
     "fileMatch": ["cluster/.+\\.yaml$"],
     "ignorePaths": [
