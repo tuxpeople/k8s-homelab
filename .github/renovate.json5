@@ -8,19 +8,19 @@
   "commitBody": "Signed-off-by: Thomas Deutsch <tuxpeople@users.noreply.github.com>",
   "assignees": ["@tuxpeople"],
   "rebaseWhen": "conflicted",
-  "docker": {"fileMatch": ["kubernetes/deployments/.+\\.yaml$"]},
+  "docker": {"fileMatch": ["kubernetes/.+\\.yaml$"]},
   "kubernetes": {
-    "fileMatch": ["kubernetes/deployments/.+\\.yaml$"],
+    "fileMatch": ["kubernetes/.+\\.yaml$"],
     "ignorePaths": [
       "cluster/base/"
     ]
   },
   "helm-values": {
-    "fileMatch": ["kubernetes/deployments/.+\\.yaml$"]
+    "fileMatch": ["kubernetes/.+\\.yaml$"]
   },
   "regexManagers": [
     {
-      "fileMatch": ["kubernetes/deployments/.+\\.yaml$"],
+      "fileMatch": ["kubernetes/.+\\.yaml$"],
       "matchStrings": [
         "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
       ],
