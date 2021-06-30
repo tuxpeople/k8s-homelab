@@ -7,19 +7,19 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "commitBody": "Signed-off-by: Thomas Deutsch <tuxpeople@users.noreply.github.com>",
   "assignees": ["@tuxpeople"],
-  "docker": {"fileMatch": ["homelab/kubernetes/deployments/.+\\.yaml$"]},
+  "docker": {"fileMatch": ["kubernetes/deployments/.+\\.yaml$"]},
   "kubernetes": {
-    "fileMatch": ["homelab/kubernetes/deployments/.+\\.yaml$"],
+    "fileMatch": ["kubernetes/deployments/.+\\.yaml$"],
     "ignorePaths": [
       "cluster/base/"
     ]
   },
   "helm-values": {
-    "fileMatch": ["homelab/kubernetes/deployments/.+\\.yaml$"]
+    "fileMatch": ["kubernetes/deployments/.+\\.yaml$"]
   },
   "regexManagers": [
     {
-      "fileMatch": ["homelab/kubernetes/deployments/.+\\.yaml$"],
+      "fileMatch": ["kubernetes/deployments/.+\\.yaml$"],
       "matchStrings": [
         "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
       ],
