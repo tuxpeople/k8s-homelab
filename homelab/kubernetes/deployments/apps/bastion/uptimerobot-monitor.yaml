@@ -6,7 +6,7 @@ metadata:
   namespace: bastion
 spec:
   friendlyName: "K8S bastion"
-  url: "asgard.eighty-three.me"
+  url: "vpn.eighty-three.me"
   type: PORT
   subType: CUSTOM
   port: 22
