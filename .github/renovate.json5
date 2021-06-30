@@ -12,7 +12,7 @@
   "kubernetes": {
     "fileMatch": ["kubernetes/.+\\.yaml$"],
     "ignorePaths": [
-      "cluster/base/"
+      "kubernetes/flux/"
     ]
   },
   "helm-values": {
@@ -30,7 +30,11 @@
   "packageRules": [
     {
       "addLabels": ["renovate/image-release"],
-      "matchUpdateTypes": ["docker"]
+      "matchUpdateTypes": ["docker"],
+      "enabled": true,
+      "commitMessageTopic": "container image {{depName}}",
+      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+      "matchUpdateTypes": ["major", "minor", "patch"]
     },
     {
       "addLabels": ["renovate/github-release"],
@@ -38,7 +42,8 @@
     },
     {
       "addLabels": ["renovate/helm-release"],
-      "matchUpdateTypes": ["helm"]
+      "matchUpdateTypes": ["helm"],
+      "separateMinorPatch": true
     },
     {
       "addLabels": ["dependency/major"],
