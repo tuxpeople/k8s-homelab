@@ -7,6 +7,7 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "commitBody": "Signed-off-by: Thomas Deutsch <tuxpeople@users.noreply.github.com>",
   "assignees": ["@tuxpeople"],
+  "rebaseWhen": "conflicted",
   "docker": {"fileMatch": ["kubernetes/deployments/.+\\.yaml$"]},
   "kubernetes": {
     "fileMatch": ["kubernetes/deployments/.+\\.yaml$"],
