@@ -1,0 +1,59 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: networking
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: external-dns
+      version: 5.1.
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      interval: 5m
+  values:
+    nameOverride: external-dns
+    interval: "5m"
+    # logLevel: debug
+    sources:
+    - ingress
+    provider: cloudflare
+    cloudflare:
+      secretName: cloudflare-api-key
+      email: thomas@tuxpeople.org
+      proxied: true
+    policy: sync
+    txtPrefix: "k8s."
+    domainFilters:
+    - "eighty-three.me"
+    crd:
+      create: false
+      apiversion: externaldns.k8s.io/v1alpha1
+      kind: DNSEndpoint
+    annotationFilter: "external-dns/is-public in (true)"
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 25m
+      limits:
+        memory: 250Mi
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: cloudflare-api-key
+  namespace: networking
+spec:
+  encryptedData:
+    cloudflare-api-key: AgBssYvarrt8VUyt4gUeVWLhPNBtYY+FwKVHPBYYOe2yN7TGvqUcl7AWG4Rkj8smDnk8UObj0Ww0u9wPv7nmML9c8IWRc9c93rlaA0JPpGRkvGtX0TYObxhW2hOZhnTkfakfnnzz1LcyXZXu48K9fwp9xT80cVGXw6h13BzRXEcRdn6aqj1ubZRB3b/mbinwJajwtWSALSVgqzMLVK0f3NvHPm3F9rLzsYS2O5aHr+EaR3jB8AJLIr6OYZT31fy70GkkfjO69vhA5b5D95E5koFCIs9h2NCdRjF1wpw033FS29MswQ67WW5OUEMqQIg4jd3vEOU+ZclyE3trAXAnj3MhUAxr7dJds6CVILa9MX1tyudxU4UbDLV8OU3VvhdzvuLLjliNm7XJlNtXVdRzUYkTVkJuUw8v4J2ppbU9wC77d+2t5ACm/LnnYnAc98AoSSEZmwQleG5YVtk7K7eelrOQcN1hMHcaCJfd49vniU/O1nyGbRMBnLvhtzCU+qbeq5KkWS0uFexQtpDbCKOykCGGTUxVvRUu1RjSz8d4SORK5t9tIZbz4efmZzEPsgYIsIWVs7qcbRCF6POIWiYlq75uhucOjUBtZCQqGHW56bqrNTwzbK6i6GJPZCaRE4SEkG/LIMgUniqQYSPYrRQMI4S7YCqw80oIullIlqXuPnfIrdY7AE0dlrmax3shrsQ2mU1i6ZO+axdZlcggJzMYmLzODlyyoQgIShzUwIxErS5cq62U+gBkRcwm
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: cloudflare-api-key
+      namespace: networking
