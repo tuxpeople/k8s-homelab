@@ -15,7 +15,10 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      interval: 5m
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
   values:
     nameOverride: external-dns
     interval: "5m"
