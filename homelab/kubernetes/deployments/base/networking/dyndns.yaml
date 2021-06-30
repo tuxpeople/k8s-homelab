@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: networking
+  name: cloudflare-ddns
+spec:
+  selector:
+    matchLabels:
+      app: cloudflare-ddns
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cloudflare-ddns
+    spec:
+      containers:
+      - name: cloudflare-ddns
+        env:
+        - name: "TZ"
+          value: "Europe/Zurich"
+        image: timothyjmiller/cloudflare-ddns:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+          limits:
+            cpu: 500m
+            memory: 200Mi
+        volumeMounts:
+        - mountPath: /config.json
+          name: cloudflare-ddns-config
+          subPath: config.json
+      volumes:
+        - name: cloudflare-ddns-config
+          secret:
+            secretName: cloudflare-ddns-config
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: cloudflare-ddns-config
+  namespace: networking
+spec:
+  encryptedData:
+    config.json: AgABlyfK4OtGVx171biIJl5E99klyYFVjjGNr0rYD7viYBXNNuo7S7WEQHhAeCriIoNNmmcSmJnw/kPapRqTICNQF8nwcPpQX2LvcVxv7HgvpdhPi0Cvr2gG7hIxeskszBHyG7hfcN7CwqAodpM17JKGw9qbuqEQtvG3ZV4yiyTm7EqdxoBHZ4NgyqXiN4RkAPmPU77ADLtO0LtaNEhwhse15KJzSmntkV1cWuzBeZHkE3upcYmEcxvBCgbBXRhvC/aY1Cbi97cT+5OFs+rythsUqeC6iAtsRhlpX68xmMfo/Gw63eDzl7KTRlGebDzuWVpd76vALkW1pgJq4yjfNMPlpO3aVaUTlc/3k7EBYZnTH43HFuTi98F89UFBsvHvHYSc5/3CId3bdnJmc27m7sit0R6Od8tFMNMX8ZywaF6ZP912id+nnocwSAuXz5+iiAfaR24zkUGlrOrG6X5rTeLTGKmttbj11/iVcxW17W4t96rsR5J7crVNXZNtduZiTvIA9XRTaFFBNmLVSZBGyZ3BpvBAu5PLkIybggAQXVnQXMKFf5swEnFaj5gSt9SFKdbM6ZUZB0e9ZsiBc23dZZkTYc5bT06L9TuKBZeM+lXil1F+XgAnUeI8ybksCFVDPByLchZ1fMdXzG1+maIg68K0zVJ/bsOl+z9btBqPp2IiKsoP1H7uYlenfuGZwp7soLYCputYQk+0oQF2tV9woP25VBbGzCeYVO/nNIJCbDe9iweTaWC2OGvMwleVh7gGfDdSUts3RwRq9EgHmxGROJrPhIXUQDe7QYxbVCjXqVFVd7aF0FuxcQyR/m2RZaqF0xEIw0/rOCjKcLCFuA5qlJcXQ96dNPw1W2Wxw30IgOTalVg9RMvZ5dNOTDl+cPDbFbnK7gS1iQM1432Qu9F22P/8I0IAKq/7VEmx62oKBINNJQ8auaW2PCuGvi38Kf42E8M6LJOhhhn96EJz+7aSgtmN1qbeX1WXIP0f0fhSIf3REf85/hbf857I/MCLO2eJwStDKAT8L5wQ0SaSfIpGYX2r9C+ocCX2c2fZtUi2PQHIlwajFvKQTE1KMd7nsoOpnF8BOr5PwGTUP38ahA==
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: cloudflare-ddns-config
+      namespace: networking
