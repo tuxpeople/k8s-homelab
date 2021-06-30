@@ -33,8 +33,7 @@
       "matchUpdateTypes": ["docker"],
       "enabled": true,
       "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "matchUpdateTypes": ["major", "minor", "patch"]
+      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}"
     },
     {
       "addLabels": ["renovate/github-release"],
