@@ -33,7 +33,8 @@
       "matchUpdateTypes": ["docker"],
       "enabled": true,
       "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}"
+      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+      "matchUpdateTypes": ["major", "minor", "patch"]
     },
     {
       "addLabels": ["renovate/github-release"],
@@ -41,8 +42,7 @@
     },
     {
       "addLabels": ["renovate/helm-release"],
-      "matchUpdateTypes": ["helm"],
-      "separateMinorPatch": true
+      "matchUpdateTypes": ["helm"]
     },
     {
       "addLabels": ["dependency/major"],
