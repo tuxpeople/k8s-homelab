@@ -34,7 +34,7 @@ spec:
     domainFilters:
     - "eighty-three.me"
     crd:
-      create: false
+      create: true
       apiversion: externaldns.k8s.io/v1alpha1
       kind: DNSEndpoint
     annotationFilter: "external-dns/is-public in (true)"
@@ -52,7 +52,7 @@ metadata:
   namespace: networking
 spec:
   encryptedData:
-    cloudflare-api-key: AgBssYvarrt8VUyt4gUeVWLhPNBtYY+FwKVHPBYYOe2yN7TGvqUcl7AWG4Rkj8smDnk8UObj0Ww0u9wPv7nmML9c8IWRc9c93rlaA0JPpGRkvGtX0TYObxhW2hOZhnTkfakfnnzz1LcyXZXu48K9fwp9xT80cVGXw6h13BzRXEcRdn6aqj1ubZRB3b/mbinwJajwtWSALSVgqzMLVK0f3NvHPm3F9rLzsYS2O5aHr+EaR3jB8AJLIr6OYZT31fy70GkkfjO69vhA5b5D95E5koFCIs9h2NCdRjF1wpw033FS29MswQ67WW5OUEMqQIg4jd3vEOU+ZclyE3trAXAnj3MhUAxr7dJds6CVILa9MX1tyudxU4UbDLV8OU3VvhdzvuLLjliNm7XJlNtXVdRzUYkTVkJuUw8v4J2ppbU9wC77d+2t5ACm/LnnYnAc98AoSSEZmwQleG5YVtk7K7eelrOQcN1hMHcaCJfd49vniU/O1nyGbRMBnLvhtzCU+qbeq5KkWS0uFexQtpDbCKOykCGGTUxVvRUu1RjSz8d4SORK5t9tIZbz4efmZzEPsgYIsIWVs7qcbRCF6POIWiYlq75uhucOjUBtZCQqGHW56bqrNTwzbK6i6GJPZCaRE4SEkG/LIMgUniqQYSPYrRQMI4S7YCqw80oIullIlqXuPnfIrdY7AE0dlrmax3shrsQ2mU1i6ZO+axdZlcggJzMYmLzODlyyoQgIShzUwIxErS5cq62U+gBkRcwm
+    CF_API_KEY: AgAPlZT5BRuPvKlIUJVmPFX3LQFv2p7vhnomDMP9YZwk9ylUQXNMBQUF6QB8crC18IsKqUpibK2u3BCX+o/rX6DQDckeYpP3xUSjdM42g5ix3JPdDoHPOjHg1MUHX7+MWFoQCBT6MiR+xmXTIzGnWSaGwcTOPYJS+hA066kJj49JXOabjMD3dZkEQbihs4xh2jXfpG7vKfFL+zrPTECTYd7T+G8xQLooXyjYI7aCZNtJdpJqYpmKwsyUgyKzgcI3ueue0BfOxKK3fVGWVFPpN0+a0tCR0zORwOondhIZtA07ovkLbTXTR43hdRnqwSdKNo1bdl8iFKOdnQi+mtJ+82RhFYWuKDbamOOv+e6LXGB2+Tbp4+Mee8uzDtRrsMFYgekVued+Uh8xGWT7ja72ZPkcAN7gZD92i54KbUN0ryhxMq3gt/QmNu1fmLhOY1Kk0tddndJhrbzDD/FZEDZkBgIRvNx+RSeEBq1VWWyfmINqrwPPFvPENNeZnOizbQiq58GNdHHNxwndJtrKkYfUspBotQUlG0jtF8s+KzRYBdvKnIwmRBo+EPeTIUq0zFnTYqP40vuSdPEEimmIXxrCVFy1YsmWQ2knq5Nj7lFsWiqO4X28K36b2kBwQ3bAeH2cMZxf/gLvgrwFH87VxbWXrHUT1hevnpiSDacZLEkHQ+90b2fi0QHeEzwtPgoUrXrhUQfBUG5945PgtnLKkeLxPGC2xQZ38KQydCbGo5rEgyHxROwpL6mpI59r
   template:
     data: null
     metadata:
