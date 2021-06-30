@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-ansible-galaxy install -r ansible/requirements.yml --ignore-errors
+ansible-galaxy install -r server/requirements.yml --ignore-errors
 
 # Create VMs
 ssh lab1 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node1"
