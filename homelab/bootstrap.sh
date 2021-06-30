@@ -15,7 +15,7 @@ for i in k3s-node1 k3s-node2 k3s-node3; do
 done
 
 # Change into ansible dir
-cd ansible
+cd infra
 
 # Delete facts cache
 rm -rf .cache
