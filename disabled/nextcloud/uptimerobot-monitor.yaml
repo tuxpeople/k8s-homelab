@@ -6,7 +6,7 @@ metadata:
   namespace: nextcloud
 spec:
   friendlyName: "K8S nextcloud"
-  url: "https://cloud.eighty-three.me"
+  url: "https://cloud.${SECRET_DOMAIN}"
   type: HTTPS
   httpMethod: GET
   interval: 300

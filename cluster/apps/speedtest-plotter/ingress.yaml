@@ -10,14 +10,14 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-production
     traefik.ingress.kubernetes.io/redirect-entry-point: https
     external-dns/is-public: true
-    external-dns.alpha.kubernetes.io/target: "asgard.eighty-three.me"
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET}"
 spec:
   tls:
     - secretName: speed-eighty-three-me-tls
       hosts:
-        - speed.eighty-three.me
+        - speed.${SECRET_DOMAIN}
   rules:
-  - host: speed.eighty-three.me
+  - host: speed.${SECRET_DOMAIN}
     http:
       paths:
       - path: /

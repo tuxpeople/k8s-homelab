@@ -31,7 +31,7 @@ spec:
     ingress:
       create: true
       class: traefik
-      host: k10.eighty-three.me
+      host: k10.${SECRET_DOMAIN}
       tls:
         enabled: true
         secretName: k10-tls

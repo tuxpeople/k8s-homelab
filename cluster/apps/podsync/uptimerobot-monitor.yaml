@@ -6,7 +6,7 @@ metadata:
   namespace: podsync
 spec:
   friendlyName: "K8S podsync"
-  url: "https://podsync.eighty-three.me"
+  url: "https://podsync.${SECRET_DOMAIN}"
   type: HTTPS
   httpMethod: GET
   interval: 300

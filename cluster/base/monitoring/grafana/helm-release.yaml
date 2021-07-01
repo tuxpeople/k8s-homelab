@@ -27,7 +27,7 @@ spec:
       type: Recreate
     grafana.ini:
       server:
-        root_url: https://grafana.eighty-three.me
+        root_url: https://grafana.${SECRET_DOMAIN}
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
@@ -137,7 +137,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-        - grafana.eighty-three.me
+        - grafana.${SECRET_DOMAIN}
       annotations:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: letsencrypt-production
@@ -145,7 +145,7 @@ spec:
       tls:
       - secretName: grafana-eighty-three-me-tls
         hosts:
-              - grafana.eighty-three.me
+              - grafana.${SECRET_DOMAIN}
     persistence:
       type: pvc
       enabled: true

@@ -6,7 +6,7 @@ metadata:
   namespace: octoprint
 spec:
   friendlyName: "K8S octoprint"
-  url: "https://print.eighty-three.me"
+  url: "https://print.${SECRET_DOMAIN}"
   type: HTTPS
   httpMethod: GET
   interval: 300

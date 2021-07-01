@@ -36,7 +36,7 @@ spec:
     policy: sync
     txtPrefix: "k8s."
     domainFilters:
-    - "eighty-three.me"
+    - "${SECRET_DOMAIN}"
     crd:
       create: true
       apiversion: externaldns.k8s.io/v1alpha1

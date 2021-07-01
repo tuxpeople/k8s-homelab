@@ -35,9 +35,9 @@ spec:
       tls:
         - secretName: nextcloud-tls
           hosts:
-            - cloud.eighty-three.me
+            - cloud.${SECRET_DOMAIN}
     nextcloud:
-      host: cloud.eighty-three.me
+      host: cloud.${SECRET_DOMAIN}
       existingSecret:
         enabled: true
         secretName: nextcloud-passwords
@@ -45,7 +45,7 @@ spec:
         passwordKey: password
       extraEnv:
         - name: NEXTCLOUD_TRUSTED_DOMAINS
-          value: "cloud.eighty-three.me localhost"
+          value: "cloud.${SECRET_DOMAIN} localhost"
         - name: TRUSTED_PROXIES
           value: 10.42.0.0/15
     nginx:

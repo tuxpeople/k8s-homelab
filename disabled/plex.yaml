@@ -68,7 +68,7 @@ metadata:
   namespace: media
 spec:
   friendlyName: "K8S Plex"
-  url: "http://asgard.eighty-three.me:32400/identity"
+  url: "http://${SECRET_DOMAIN_TARGET}:32400/identity"
   type: HTTP
   httpMethod: GET
   interval: 300

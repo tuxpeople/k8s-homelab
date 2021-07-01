@@ -6,7 +6,7 @@ metadata:
   namespace: speedtest-plotter
 spec:
   friendlyName: "K8S speedtest-plotter"
-  url: "https://speed.eighty-three.me"
+  url: "https://speed.${SECRET_DOMAIN}"
   type: HTTPS
   httpMethod: GET
   interval: 300

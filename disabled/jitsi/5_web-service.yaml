@@ -28,9 +28,9 @@ spec:
   tls:
     - secretName: meet-eighty-three-me-tls
       hosts:
-        - meet.eighty-three.me
+        - meet.${SECRET_DOMAIN}
   rules:
-  - host: meet.eighty-three.me
+  - host: meet.${SECRET_DOMAIN}
     http:
       paths:
       - path: /
