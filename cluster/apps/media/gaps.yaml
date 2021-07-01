@@ -6,7 +6,6 @@ metadata:
   namespace: media
 spec:
   releaseName: gaps
-  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts
@@ -16,7 +15,14 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
+        interval: 5m
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     env:
       TZ: "Europe/Zurich"

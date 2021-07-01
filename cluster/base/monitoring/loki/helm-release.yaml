@@ -5,7 +5,6 @@ metadata:
   name: loki
   namespace: monitoring
 spec:
-  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
@@ -15,7 +14,14 @@ spec:
         kind: HelmRepository
         name: grafana-charts
         namespace: flux-system
-      interval: 5m
+        interval: 5m
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     loki:
       config:
