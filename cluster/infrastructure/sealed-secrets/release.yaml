@@ -20,7 +20,7 @@ spec:
   install:
     remediation:
       retries: 3
-      crds: Create
+    crds: Create
   upgrade:
     remediation:
       retries: 3
