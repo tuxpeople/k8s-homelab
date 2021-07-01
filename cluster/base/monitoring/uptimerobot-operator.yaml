@@ -29,7 +29,7 @@ spec:
         kind: HelmRepository
         name: uptimerobot-operator-charts
         namespace: flux-system
-        interval: 5m
+      interval: 5m
   interval: 5m
   install:
     remediation:
