@@ -9,8 +9,6 @@ metadata:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: letsencrypt-production
     traefik.ingress.kubernetes.io/redirect-entry-point: https
-    external-dns/is-public: true
-    external-dns.alpha.kubernetes.io/target: asgard.eighty-three.me
 spec:
   tls:
     - secretName: wiki-eighty-three-me-tls
