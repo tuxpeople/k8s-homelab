@@ -1,57 +1,57 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: paperless
   namespace: paperless
 spec:
-  releaseName: paperless
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
       chart: paperless
-      version: 6.0.0
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 6.0.0
   install:
     remediation:
       retries: 3
+  interval: 5m
+  releaseName: paperless
   upgrade:
     remediation:
       retries: 3
   values:
     env:
-      TZ: "Europe/Zurich"
-      PAPERLESS_OCR_LANGUAGE: "deu"
-    persistence:
-      consume:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
-      data:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
-      export:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
-      media:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
+      PAPERLESS_OCR_LANGUAGE: deu
+      TZ: Europe/Zurich
     image:
       pullPolicy: Always
     ingress:
       main:
-        enabled: true
         annotations:
-          kubernetes.io/ingress.class: "traefik"
+          kubernetes.io/ingress.class: traefik
+        enabled: true
         hosts:
-        - host: "paperless.${INTERNAL_DOMAIN}"
+        - host: paperless.${INTERNAL_DOMAIN}
           paths:
           - path: /
             pathType: Prefix
+    persistence:
+      consume:
+        accessMode: ReadWriteOnce
+        enabled: true
+        size: 10G
+      data:
+        accessMode: ReadWriteOnce
+        enabled: true
+        size: 10G
+      export:
+        accessMode: ReadWriteOnce
+        enabled: true
+        size: 10G
+      media:
+        accessMode: ReadWriteOnce
+        enabled: true
+        size: 10G

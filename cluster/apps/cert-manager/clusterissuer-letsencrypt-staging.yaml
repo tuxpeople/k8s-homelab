@@ -1,3 +1,4 @@
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -9,7 +10,7 @@ spec:
       name: staging-issuer-account-key
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     solvers:
-      - http01:
-          ingress:
-            class: traefik
-        selector: {}
+    - http01:
+        ingress:
+          class: traefik
+      selector: {}

@@ -1,85 +1,83 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: nextcloud
   namespace: nextcloud
 spec:
-  releaseName: nextcloud
   chart:
     spec:
-      # renovate: registryUrl=https://nextcloud.github.io/helm/
-      version: 2.6.4
       chart: nextcloud
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: nextcloud
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 2.6.4
   install:
     remediation:
       retries: 3
+  interval: 5m
+  releaseName: nextcloud
   upgrade:
     remediation:
       retries: 3
   values:
+    cronjob:
+      enabled: true
     image:
+      pullPolicy: Always
       repository: nextcloud
       tag: fpm-alpine
-      pullPolicy: Always
     ingress:
-      enabled: true
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
         kubernetes.io/ingress.class: traefik
-      tls:
-        - secretName: nextcloud-tls
-          hosts:
-            - cloud.${SECRET_DOMAIN}
-    nextcloud:
-      host: cloud.${SECRET_DOMAIN}
-      existingSecret:
-        enabled: true
-        secretName: nextcloud-passwords
-        usernameKey: username
-        passwordKey: password
-      extraEnv:
-        - name: NEXTCLOUD_TRUSTED_DOMAINS
-          value: "cloud.${SECRET_DOMAIN} localhost"
-        - name: TRUSTED_PROXIES
-          value: 10.42.0.0/15
-    nginx:
       enabled: true
-      image:
-        repository: nginx
-        tag: alpine
-        pullPolicy: Always
+      tls:
+      - hosts:
+        - cloud.${SECRET_DOMAIN}
+        secretName: nextcloud-tls
     internalDatabase:
       enabled: false
     mariadb:
-      enabled: true
       db:
         name: nextcloud
         user: nextcloud
+      enabled: true
       master:
         persistence:
-          enabled: true
           accessMode: ReadWriteOnce
+          enabled: true
           size: 8Gi
+    metrics:
+      enabled: true
+    nextcloud:
+      existingSecret:
+        enabled: true
+        passwordKey: password
+        secretName: nextcloud-passwords
+        usernameKey: username
+      extraEnv:
+      - name: NEXTCLOUD_TRUSTED_DOMAINS
+        value: cloud.${SECRET_DOMAIN} localhost
+      - name: TRUSTED_PROXIES
+        value: 10.42.0.0/15
+      host: cloud.${SECRET_DOMAIN}
+    nginx:
+      enabled: true
+      image:
+        pullPolicy: Always
+        repository: nginx
+        tag: alpine
+    persistence:
+      accessMode: ReadWriteOnce
+      enabled: true
+      size: 100Gi
     redis:
       enabled: true
       usePassword: true
-    cronjob:
-      enabled: true
-    persistence:
-      # Nextcloud Data (/var/www/html)
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 100Gi
-    metrics:
-      enabled: true
-
   valuesFrom:
-  - secretKeyRef:
-    kind: Secret
+  - kind: Secret
     name: secretvalues
+    secretKeyRef: null

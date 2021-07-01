@@ -27,4 +27,3 @@ To expose the webapp, we can use Ingress (replace the `host` value with your act
 `kubectl create -f web-service.yaml`
 
 You can either use "https" or "http" service port, depending on whether your ingress allows self-signed certs.
-

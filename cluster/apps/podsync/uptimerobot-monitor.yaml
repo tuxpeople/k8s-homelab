@@ -5,9 +5,9 @@ metadata:
   name: podsync
   namespace: podsync
 spec:
-  friendlyName: "K8S podsync"
-  url: "https://podsync.${SECRET_DOMAIN}"
-  type: HTTPS
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}
+  friendlyName: K8S podsync
   httpMethod: GET
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  type: HTTPS
+  url: https://podsync.${SECRET_DOMAIN}

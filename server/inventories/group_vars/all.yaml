@@ -1,3 +1,4 @@
+---
 ansible_user: ansible
 ansible_python_interpreter: /usr/bin/python3
 
@@ -25,7 +26,7 @@ ansible_linux_redhat7_base__packages:
   - yum-cron
   - yum-plugin-keys
   - yum-utils
-  - dstat 
+  - dstat
 ansible_linux_redhat_base__packages:
   - bind-utils
   - nc
@@ -79,7 +80,7 @@ ansible_linux_base__packages:
   - smartmontools
   - python3
 ansible_linux_vm_base__packages:
- - qemu-guest-agent
+  - qemu-guest-agent
 ansible_linux_physical_base__packages:
   - microcode_ctl
   - linux-firmware

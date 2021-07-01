@@ -7,18 +7,17 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: loki-stack
-      version: 2.4.1
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 2.4.1
   install:
     remediation:
       retries: 3
+  interval: 5m
   upgrade:
     remediation:
       retries: 3

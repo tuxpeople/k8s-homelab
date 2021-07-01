@@ -1,3 +1,4 @@
+---
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
@@ -6,12 +7,3 @@ metadata:
 spec:
   interval: 1m
   url: https://k8s-at-home.com/charts
----
-apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: HelmRepository
-metadata:
-  name: k8s-at-home-library
-  namespace: flux-system
-spec:
-  interval: 1m
-  url: https://library-charts.k8s-at-home.com

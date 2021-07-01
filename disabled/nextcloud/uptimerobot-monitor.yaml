@@ -5,9 +5,9 @@ metadata:
   name: nextcloud
   namespace: nextcloud
 spec:
-  friendlyName: "K8S nextcloud"
-  url: "https://cloud.${SECRET_DOMAIN}"
-  type: HTTPS
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}
+  friendlyName: K8S nextcloud
   httpMethod: GET
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  type: HTTPS
+  url: https://cloud.${SECRET_DOMAIN}

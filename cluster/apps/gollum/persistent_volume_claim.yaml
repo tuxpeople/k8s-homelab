@@ -1,10 +1,11 @@
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: gollum
   labels:
     app: gollum
   name: gollum-data
+  namespace: gollum
 spec:
   accessModes:
   - ReadWriteOnce

@@ -7,200 +7,114 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: loki-stack
-      version: 2.4.1
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 2.4.1
   install:
     remediation:
       retries: 3
+  interval: 5m
   upgrade:
     remediation:
       retries: 3
   values:
     alertmanager:
       enabled: true
-    prometheus:
-      enabled: true
-      persistentVolume:
-        enabled: true
-        size: 10Gi
-      ingress:
-        enabled: true
-        hosts:
-          - prometheus.${INTERNAL_DOMAIN}
-        annotations:
-          kubernetes.io/ingress.class: traefik
-      serverFiles:
-        prometheus.yml:
-          scrape_configs:
-            - job_name: 'unifipoller'
-              scrape_interval: 30s
-              static_configs:
-              - targets: ['unifi-poller:9130']
-            - job_name: 'uptimerobot-prometheus'
-              scrape_interval: 30s
-              static_configs:
-              - targets: ['uptimerobot-prometheus:9705']
-            - job_name: 'kubernetes-service-endpoints'
-              kubernetes_sd_configs:
-                - role: endpoints
-              relabel_configs:
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-                  action: keep
-                  regex: true
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
-                  action: replace
-                  target_label: __scheme__
-                  regex: (https?)
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-                  action: replace
-                  target_label: __metrics_path__
-                  regex: (.+)
-                - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-                  action: replace
-                  target_label: __address__
-                  regex: ([^:]+)(?::\d+)?;(\d+)
-                  replacement: $1:$2
-                - action: labelmap
-                  regex: __meta_kubernetes_service_label_(.+)
-                - source_labels: [__meta_kubernetes_namespace]
-                  action: replace
-                  target_label: kubernetes_namespace
-                - source_labels: [__meta_kubernetes_service_name]
-                  action: replace
-                  target_label: kubernetes_name
-                - source_labels: [__meta_kubernetes_pod_node_name]
-                  action: replace
-                  target_label: kubernetes_node
-            - job_name: 'kubernetes-pods'
-              kubernetes_sd_configs:
-                - role: pod
-              relabel_configs:
-                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-                  action: keep
-                  regex: true
-                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
-                  action: replace
-                  regex: (https?)
-                  target_label: __scheme__
-                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-                  action: replace
-                  target_label: __metrics_path__
-                  regex: (.+)
-                - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-                  action: replace
-                  regex: ([^:]+)(?::\d+)?;(\d+)
-                  replacement: $1:$2
-                  target_label: __address__
-                - action: labelmap
-                  regex: __meta_kubernetes_pod_label_(.+)
-                - source_labels: [__meta_kubernetes_namespace]
-                  action: replace
-                  target_label: kubernetes_namespace
-                - source_labels: [__meta_kubernetes_pod_name]
-                  action: replace
-                  target_label: kubernetes_pod_name
-                - source_labels: [__meta_kubernetes_pod_phase]
-                  regex: Pending|Succeeded|Failed
-                  action: drop
     grafana:
-      persistence:
-        type: pvc
-        enabled: true
-        accessModes:
-          - ReadWriteOnce
-        size: 10Gi
-      enabled: true
-      ingress:
-        enabled: true
-        hosts:
-          - grafana.${SECRET_DOMAIN}
-        annotations:
-          kubernetes.io/ingress.class: traefik
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          traefik.ingress.kubernetes.io/redirect-entry-point: https
-        tls:
-        - secretName: grafana-eighty-three-me-tls
-          hosts:
-                - grafana.${SECRET_DOMAIN}
-      grafana.ini:
-        server:
-          root_url: https://grafana.${SECRET_DOMAIN}
-      plugins:
-        - grafana-piechart-panel
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
           providers:
-            - name: unifi-poller
-              orgId: 1
-              folder: 'unifi-poller'
-              type: file
-              disableDeletion: false
-              editable: true
-              options:
-                path: /var/lib/grafana/dashboards/unifi-poller
-            - name: kubernetes
-              orgId: 1
-              folder: 'kubernetes'
-              type: file
-              disableDeletion: false
-              editable: true
-              options:
-                path: /var/lib/grafana/dashboards/kubernetes
-            - name: various
-              orgId: 1
-              folder: 'various'
-              type: file
-              disableDeletion: false
-              editable: true
-              options:
-                path: /var/lib/grafana/dashboards/various
-      defaultDashboardsEnabled: true
+          - disableDeletion: false
+            editable: true
+            folder: unifi-poller
+            name: unifi-poller
+            options:
+              path: /var/lib/grafana/dashboards/unifi-poller
+            orgId: 1
+            type: file
+          - disableDeletion: false
+            editable: true
+            folder: kubernetes
+            name: kubernetes
+            options:
+              path: /var/lib/grafana/dashboards/kubernetes
+            orgId: 1
+            type: file
+          - disableDeletion: false
+            editable: true
+            folder: various
+            name: various
+            options:
+              path: /var/lib/grafana/dashboards/various
+            orgId: 1
+            type: file
       dashboards:
         unifi-poller:
           up_client-dpi:
-            gnetId: 11310
             datasource: Prometheus
+            gnetId: 11310
             revision: 4
           up_client-insights:
-            gnetId: 11315
             datasource: Prometheus
+            gnetId: 11315
             revision: 8
           up_network-sites:
-            gnetId: 11311
             datasource: Prometheus
+            gnetId: 11311
             revision: 4
           up_uap_insights:
-            gnetId: 11314
             datasource: Prometheus
+            gnetId: 11314
             revision: 9
           up_usg_insights:
-            gnetId: 11313
             datasource: Prometheus
+            gnetId: 11313
             revision: 8
           up_usw_insights:
-            gnetId: 11312
             datasource: Prometheus
+            gnetId: 11312
             revision: 8
         various:
           flux-cluster:
+            datasource: Prometheus
             url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
-            datasource: Prometheus
           flux-control-plane:
+            datasource: Prometheus
             url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
-            datasource: Prometheus
           uptimerobot:
-            # URL https://grafana.com/grafana/dashboards/9955/revisions
-            gnetId: 9955
             datasource: Prometheus
+            gnetId: 9955
             revision: 1
+      defaultDashboardsEnabled: true
+      enabled: true
+      grafana.ini:
+        server:
+          root_url: https://grafana.${SECRET_DOMAIN}
+      ingress:
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+        enabled: true
+        hosts:
+        - grafana.${SECRET_DOMAIN}
+        tls:
+        - hosts:
+          - grafana.${SECRET_DOMAIN}
+          secretName: grafana-eighty-three-me-tls
+      persistence:
+        accessModes:
+        - ReadWriteOnce
+        enabled: true
+        size: 10Gi
+        type: pvc
+      plugins:
+      - grafana-piechart-panel
       sidecar:
         dashboards:
           enabled: true
@@ -209,13 +123,13 @@ spec:
           enabled: true
           searchNamespace: ALL
         provider:
+          allowUiUpdates: true
+          disableDelete: false
+          folder: kubernetes
+          foldersFromFilesStructure: false
           name: sidecarProvider
           orgid: 1
-          folder: 'kubernetes'
           type: file
-          disableDelete: false
-          allowUiUpdates: true
-          foldersFromFilesStructure: false
     loki:
       config:
         table_manager:
@@ -226,10 +140,112 @@ spec:
         size: 25Gi
       serviceMonitor:
         enabled: true
+    prometheus:
+      enabled: true
+      ingress:
+        annotations:
+          kubernetes.io/ingress.class: traefik
+        enabled: true
+        hosts:
+        - prometheus.${INTERNAL_DOMAIN}
+      persistentVolume:
+        enabled: true
+        size: 10Gi
+      serverFiles:
+        prometheus.yaml:
+          scrape_configs:
+          - job_name: unifipoller
+            scrape_interval: 30s
+            static_configs:
+            - targets:
+              - unifi-poller:9130
+          - job_name: uptimerobot-prometheus
+            scrape_interval: 30s
+            static_configs:
+            - targets:
+              - uptimerobot-prometheus:9705
+          - job_name: kubernetes-service-endpoints
+            kubernetes_sd_configs:
+            - role: endpoints
+            relabel_configs:
+            - action: keep
+              regex: true
+              source_labels:
+              - __meta_kubernetes_service_annotation_prometheus_io_scrape
+            - action: replace
+              regex: (https?)
+              source_labels:
+              - __meta_kubernetes_service_annotation_prometheus_io_scheme
+              target_label: __scheme__
+            - action: replace
+              regex: (.+)
+              source_labels:
+              - __meta_kubernetes_service_annotation_prometheus_io_path
+              target_label: __metrics_path__
+            - action: replace
+              regex: ([^:]+)(?::\d+)?;(\d+)
+              replacement: $1:$2
+              source_labels:
+              - __address__
+              - __meta_kubernetes_service_annotation_prometheus_io_port
+              target_label: __address__
+            - action: labelmap
+              regex: __meta_kubernetes_service_label_(.+)
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_namespace
+              target_label: kubernetes_namespace
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_service_name
+              target_label: kubernetes_name
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_pod_node_name
+              target_label: kubernetes_node
+          - job_name: kubernetes-pods
+            kubernetes_sd_configs:
+            - role: pod
+            relabel_configs:
+            - action: keep
+              regex: true
+              source_labels:
+              - __meta_kubernetes_pod_annotation_prometheus_io_scrape
+            - action: replace
+              regex: (https?)
+              source_labels:
+              - __meta_kubernetes_pod_annotation_prometheus_io_scheme
+              target_label: __scheme__
+            - action: replace
+              regex: (.+)
+              source_labels:
+              - __meta_kubernetes_pod_annotation_prometheus_io_path
+              target_label: __metrics_path__
+            - action: replace
+              regex: ([^:]+)(?::\d+)?;(\d+)
+              replacement: $1:$2
+              source_labels:
+              - __address__
+              - __meta_kubernetes_pod_annotation_prometheus_io_port
+              target_label: __address__
+            - action: labelmap
+              regex: __meta_kubernetes_pod_label_(.+)
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_namespace
+              target_label: kubernetes_namespace
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_pod_name
+              target_label: kubernetes_pod_name
+            - action: drop
+              regex: Pending|Succeeded|Failed
+              source_labels:
+              - __meta_kubernetes_pod_phase
     promtail:
       serviceMonitor:
         enabled: true
   valuesFrom:
-  - secretKeyRef:
-    kind: Secret
+  - kind: Secret
     name: grafanavalues
+    secretKeyRef: null

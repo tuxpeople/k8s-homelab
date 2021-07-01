@@ -1,17 +1,17 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: gollum
-  name: gollum
   labels:
     app: gollum
+  name: gollum
+  namespace: gollum
 spec:
-  type: ClusterIP
   ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: TCP
-      name: http
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
   selector:
     app: gollum
-
+  type: ClusterIP

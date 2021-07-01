@@ -7,18 +7,17 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
       chart: plex
-      version: 5.2.0
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 5.2.0
   install:
     remediation:
       retries: 3
+  interval: 5m
   upgrade:
     remediation:
       retries: 3
@@ -29,47 +28,34 @@ spec:
     - 10.20.30.0/24
     - 10.42.0.0/16
     - 10.43.0.0/16
-    timezone: "Europe/Zurich"
-    service:
-      main:
-        primary: true
-        type: NodePort
-        ports:
-          http:
-            port: 32400
-            nodePort: 32400
     persistence:
       config:
         enabled: true
         size: 2Gi
-      transcode:
-        enabled: false
       data:
         enabled: false
-      media:
-        enabled: true
-        type: hostPath
-        hostPath: /mnt/multimedia
-        mountPath: /data
-        hostPathType: "Directory"
-        readOnly: true
       dri:
         enabled: true
-        type: hostPath
         hostPath: /dev/dri
+        hostPathType: Directory
         mountPath: /dev/dri
-        hostPathType: "Directory"
         readOnly: false
----
-apiVersion: uroperator.brennerm.github.io/v1beta1
-kind: UptimeRobotMonitor
-metadata:
-  name: plex
-  namespace: media
-spec:
-  friendlyName: "K8S Plex"
-  url: "http://${SECRET_DOMAIN_TARGET}:32400/identity"
-  type: HTTP
-  httpMethod: GET
-  interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+        type: hostPath
+      media:
+        enabled: true
+        hostPath: /mnt/multimedia
+        hostPathType: Directory
+        mountPath: /data
+        readOnly: true
+        type: hostPath
+      transcode:
+        enabled: false
+    service:
+      main:
+        ports:
+          http:
+            nodePort: 32400
+            port: 32400
+        primary: true
+        type: NodePort
+    timezone: Europe/Zurich

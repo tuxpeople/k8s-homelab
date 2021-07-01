@@ -5,27 +5,26 @@ metadata:
   name: speedtest-exporter
   namespace: monitoring
 spec:
-  releaseName: speedtest-exporter
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
       chart: speedtest-exporter
-      version: 2.0.0
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 2.0.0
   install:
     remediation:
       retries: 3
+  interval: 5m
+  releaseName: speedtest-exporter
   upgrade:
     remediation:
       retries: 3
   values:
     env:
-      TZ: "Europe/Zurich"
+      TZ: Europe/Zurich
     prometheus:
       serviceMonitor:
         enabled: true

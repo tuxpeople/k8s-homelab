@@ -1,14 +1,7 @@
 ---
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: snmp-exporter
-  namespace: monitoring
-  labels:
-    app.kubernetes.io/name: snmp-exporter
-    app.kubernetes.io/instance: snmp-exporter
 data:
-  snmp.yml: |
+  snmp.yaml: |
     synology:
       retries: 3
       timeout: 60s
@@ -2602,3 +2595,10 @@ data:
           type: DisplayString
         - labels: []
           labelname: serviceInfoIndex
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/instance: snmp-exporter
+    app.kubernetes.io/name: snmp-exporter
+  name: snmp-exporter
+  namespace: monitoring

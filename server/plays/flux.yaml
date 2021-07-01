@@ -14,7 +14,7 @@
         path: "{{ local_kubeconfig }}"
         regexp: '0.0.0.0:6443'
         replace: "{{ vrrp_vip }}:6443"
-        backup: no
+        backup: false
       delegate_to: localhost
       become: false
 
@@ -23,7 +23,7 @@
         path: "{{ local_kubeconfig }}"
         regexp: 'default'
         replace: "{{ cluster_name }}"
-        backup: no
+        backup: false
       delegate_to: localhost
       become: false
 

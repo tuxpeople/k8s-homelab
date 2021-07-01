@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,29 +7,29 @@ metadata:
   name: podsync
   namespace: podsync
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: podsync
-  replicas: 1
   template:
     metadata:
       labels:
         app: podsync
     spec:
       containers:
-      - name: podsync
-        image: quay.io/tdeutsch/podsync:latest
+      - image: quay.io/tdeutsch/podsync:latest
         imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
-            cpu: 500m
-            memory: 200Mi
+        name: podsync
         ports:
         - containerPort: 8080
           protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
         volumeMounts:
         - mountPath: /app/config.toml
           name: podsync-config
@@ -36,16 +37,13 @@ spec:
         - mountPath: /app/data/
           name: podsync-data
       volumes:
-        # - name: podsync-config
-        #   secret:
-        #     secretName: podsync-config
-        - name: podsync-config
-          configMap:
-            name: podsync-config
-            items:
-              - key: config.toml
-                path: config.toml
-                mode: 0644
-        - name: podsync-data
-          persistentVolumeClaim:
-            claimName: podsync-data
+      - configMap:
+          items:
+          - key: config.toml
+            mode: 420
+            path: config.toml
+          name: podsync-config
+        name: podsync-config
+      - name: podsync-data
+        persistentVolumeClaim:
+          claimName: podsync-data

@@ -1,24 +1,11 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  namespace: smokeping
-  labels:
-    app: smokeping
-  name: smokeping-data
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: smokeping
   labels:
     app: smokeping
-  name: smokeping-config
+  name: smokeping-data
+  namespace: smokeping
 spec:
   accessModes:
   - ReadWriteOnce

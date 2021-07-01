@@ -5,9 +5,8 @@ metadata:
   name: k3s-server
   namespace: system-upgrade
 spec:
-  serviceAccountName: system-upgrade
-  concurrency: 1
   channel: https://update.k3s.io/v1-release/channels/v1.21
+  concurrency: 1
   cordon: true
   nodeSelector:
     matchExpressions:
@@ -15,8 +14,9 @@ spec:
       operator: In
       values:
       - "true"
+  serviceAccountName: system-upgrade
   tolerations:
-  - key: "node-role.kubernetes.io/master"
-    operator: "Exists"
+  - key: node-role.kubernetes.io/master
+    operator: Exists
   upgrade:
     image: rancher/k3s-upgrade

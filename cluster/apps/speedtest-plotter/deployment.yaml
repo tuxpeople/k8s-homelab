@@ -1,47 +1,47 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: speedtest-plotter
   name: speedtest-plotter
+  namespace: speedtest-plotter
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: speedtest-plotter
-  replicas: 1
   template:
     metadata:
       labels:
         app: speedtest-plotter
     spec:
       containers:
-      - name: speedtest-plotter
+      - env:
+        - name: TESTSERVER
+          value: speedtest.ggamaur.net:8080
+        - name: MARKER_DOWNLOAD
+          value: "1000"
+        - name: MARKER_UPLOAD
+          value: "1000"
+        - name: TZ
+          value: Europe/Zurich
+        - name: SCHEDULE
+          value: 0 */2 * * *
         image: ansemjo/speedtest:0.2.2
         imagePullPolicy: Always
-        env:
-          - name: TESTSERVER
-            value: "speedtest.ggamaur.net:8080"
-            #value: "sonic.wingo.ch:8080"
-          - name: MARKER_DOWNLOAD
-            value: "1000"
-          - name: MARKER_UPLOAD
-            value: "1000"
-          - name: TZ
-            value: "Europe/Zurich"
-          - name: SCHEDULE
-            value: "0 */2 * * *"
+        name: speedtest-plotter
+        ports:
+        - containerPort: 8000
         resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
           limits:
             cpu: 500m
             memory: 500Mi
-        ports:
-        - containerPort: 8000
+          requests:
+            cpu: 100m
+            memory: 100Mi
         volumeMounts:
         - mountPath: /data
           name: speedtest-plotter-data
       volumes:
-        - name: speedtest-plotter-data
-          persistentVolumeClaim:
-            claimName: speedtest-plotter-data
+      - name: speedtest-plotter-data
+        persistentVolumeClaim:
+          claimName: speedtest-plotter-data

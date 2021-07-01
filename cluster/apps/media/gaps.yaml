@@ -5,39 +5,38 @@ metadata:
   name: gaps
   namespace: media
 spec:
-  releaseName: gaps
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
       chart: gaps
-      version: 4.2.0
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 4.2.0
   install:
     remediation:
       retries: 3
+  interval: 5m
+  releaseName: gaps
   upgrade:
     remediation:
       retries: 3
   values:
     env:
-      TZ: "Europe/Zurich"
+      TZ: Europe/Zurich
     ingress:
       main:
-        enabled: true
         annotations:
-          kubernetes.io/ingress.class: "traefik"
+          kubernetes.io/ingress.class: traefik
+        enabled: true
         hosts:
-        - host: "gaps.${INTERNAL_DOMAIN}"
+        - host: gaps.${INTERNAL_DOMAIN}
           paths:
           - path: /
             pathType: Prefix
     persistence:
       data:
-        enabled: true
         accessMode: ReadWriteOnce
+        enabled: true
         size: 1Gi

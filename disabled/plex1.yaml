@@ -1,36 +1,37 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: media
   name: plex
+  namespace: media
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: plex
-  replicas: 1
   template:
     metadata:
       labels:
         app: plex
     spec:
       containers:
-      - name: plex
+      - env:
+        - name: TZ
+          value: Europe/Zurich
         image: ghcr.io/linuxserver/plex:1.23.2.4656-85f0adf5b-ls55
         imagePullPolicy: Always
-        env:
-        - name: "TZ"
-          value: "Europe/Zurich"
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
-            cpu: 3000m
-            memory: 1000Mi
+        name: plex
         ports:
         - containerPort: 32400
           name: web
           protocol: TCP
+        resources:
+          limits:
+            cpu: 3000m
+            memory: 1000Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
         volumeMounts:
         - mountPath: /dev/dri
           name: dri
@@ -50,35 +51,3 @@ spec:
       - name: plex-config
         persistentVolumeClaim:
           claimName: plex-config
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  namespace: media
-  labels:
-    app: plex
-  name: plex-config
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: media
-  name: plex
-  labels:
-    app: plex
-spec:
-  type: NodePort
-  ports:
-    - name: web
-      nodePort: 32400
-      port: 32400
-      protocol: TCP
-      targetPort: 32400
-  selector:
-    app: plex

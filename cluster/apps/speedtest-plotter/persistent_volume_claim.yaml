@@ -1,10 +1,11 @@
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: speedtest-plotter
   labels:
     app: speedtest-plotter
   name: speedtest-plotter-data
+  namespace: speedtest-plotter
 spec:
   accessModes:
   - ReadWriteOnce

@@ -1,11 +1,5 @@
-kind: ConfigMap
+---
 apiVersion: v1
-metadata:
-  labels:
-    app: onetimesecret
-    component: frontend
-  name: onetimesecret-config
-  namespace: onetimesecret
 data:
   config: |
     :site:
@@ -102,3 +96,10 @@ data:
     #    - - basic_v1
     #      - professional_v2
     #      - agency_v2
+kind: ConfigMap
+metadata:
+  labels:
+    app: onetimesecret
+    component: frontend
+  name: onetimesecret-config
+  namespace: onetimesecret

@@ -1,38 +1,39 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: dokuwiki
   name: dokuwiki
+  namespace: dokuwiki
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: dokuwiki
-  replicas: 1
   template:
     metadata:
       labels:
         app: dokuwiki
     spec:
       containers:
-      - name: dokuwiki
-        env:
-        - name: "TZ"
-          value: "Europe/Zurich"
+      - env:
+        - name: TZ
+          value: Europe/Zurich
         image: ghcr.io/linuxserver/dokuwiki:2020-07-29-ls83
         imagePullPolicy: Always
+        name: dokuwiki
+        ports:
+        - containerPort: 80
         resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
           limits:
             cpu: 500m
             memory: 200Mi
-        ports:
-        - containerPort: 80
+          requests:
+            cpu: 100m
+            memory: 100Mi
         volumeMounts:
         - mountPath: /config
           name: dokuwiki-data
       volumes:
-        - name: dokuwiki-data
-          persistentVolumeClaim:
-            claimName: dokuwiki-data
+      - name: dokuwiki-data
+        persistentVolumeClaim:
+          claimName: dokuwiki-data

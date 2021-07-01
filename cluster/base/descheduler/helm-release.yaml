@@ -7,32 +7,31 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://kubernetes-sigs.github.io/descheduler
       chart: descheduler
-      version: 0.21.0
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: kubernetes-sigs-descheduler-charts
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 0.21.0
   install:
     remediation:
       retries: 3
+  interval: 5m
   upgrade:
     remediation:
       retries: 3
   values:
     deschedulerPolicy:
       strategies:
+        LowNodeUtilization:
+          enabled: false
         RemoveDuplicates:
+          enabled: false
+        RemovePodsViolatingInterPodAntiAffinity:
           enabled: false
         RemovePodsViolatingNodeAffinity:
           enabled: true
           params:
             nodeAffinityType:
             - requiredDuringSchedulingIgnoredDuringExecution
-        RemovePodsViolatingInterPodAntiAffinity:
-          enabled: false
-        LowNodeUtilization:
-          enabled: false

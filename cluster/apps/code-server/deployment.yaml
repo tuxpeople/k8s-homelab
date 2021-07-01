@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,42 +7,42 @@ metadata:
   name: code-server
   namespace: code-server
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: code-server
-  replicas: 1
   template:
     metadata:
       labels:
         app: code-server
     spec:
       containers:
-      - image: ghcr.io/linuxserver/code-server:v3.10.2-ls81
-        imagePullPolicy: Always
-        name: code-server
-        env:
-        - name: "TZ"
-          value: "Europe/Zurich"
-        - name: "DOCKER_MODS"
-          value: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:universal-git"
-        - name: "PASSWORD"
+      - env:
+        - name: TZ
+          value: Europe/Zurich
+        - name: DOCKER_MODS
+          value: linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:universal-git
+        - name: PASSWORD
           valueFrom:
             secretKeyRef:
-              name: code-server-password
               key: password
+              name: code-server-password
+        image: ghcr.io/linuxserver/code-server:v3.10.2-ls81
+        imagePullPolicy: Always
+        name: code-server
+        ports:
+        - containerPort: 8443
         resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
           limits:
             cpu: 500m
             memory: 200Mi
-        ports:
-        - containerPort: 8443
+          requests:
+            cpu: 100m
+            memory: 100Mi
         volumeMounts:
         - mountPath: /config
           name: code-server
       volumes:
-        - name: code-server
-          persistentVolumeClaim:
-            claimName: code-server-data
+      - name: code-server
+        persistentVolumeClaim:
+          claimName: code-server-data

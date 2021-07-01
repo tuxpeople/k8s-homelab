@@ -1,10 +1,5 @@
-kind: ConfigMap
+---
 apiVersion: v1
-metadata:
-  labels:
-    app: podsync
-  name: podsync-config
-  namespace: podsync
 data:
   config.toml: |
     [server]
@@ -13,7 +8,7 @@ data:
     hostname = "podsync.${SECRET_DOMAIN}"
 
     [database]
-    badger = { truncate = true, file_io = true } 
+    badger = { truncate = true, file_io = true }
 
     [tokens]
     youtube = "${SECRET_YOUTUBE_TOKEN}"
@@ -93,4 +88,9 @@ data:
 
     [downloader]
     self_update = true
-    
+kind: ConfigMap
+metadata:
+  labels:
+    app: podsync
+  name: podsync-config
+  namespace: podsync

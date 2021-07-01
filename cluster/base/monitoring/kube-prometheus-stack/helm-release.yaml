@@ -7,32 +7,32 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
-      version: 16.12.0
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 16.12.0
   install:
     remediation:
       retries: 3
+  interval: 5m
   upgrade:
     remediation:
       retries: 3
   values:
-    nodeExporter:
-      serviceMonitor:
-        relabelings:
-        - action: replace
-          regex: (.*)
-          replacement: $1
-          sourceLabels:
-          - __meta_kubernetes_pod_node_name
-          targetLabel: kubernetes_node
     grafana:
+      enabled: false
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeScheduler:
       enabled: false
     kubelet:
       enabled: true
@@ -42,115 +42,121 @@ spec:
           sourceLabels:
           - node
           targetLabel: instance
-    kubeApiServer:
-      enabled: true
-    kubeControllerManager:
-      enabled: false
-    kubeScheduler:
-      enabled: false
-    kubeProxy:
-      enabled: false
-    kubeEtcd:
-      enabled: false
+    nodeExporter:
+      serviceMonitor:
+        relabelings:
+        - action: replace
+          regex: (.*)
+          replacement: $1
+          sourceLabels:
+          - __meta_kubernetes_pod_node_name
+          targetLabel: kubernetes_node
     prometheus:
       enabled: true
+      ingress:
+        annotations:
+          kubernetes.io/ingress.class: traefik
+        enabled: true
+        hosts:
+        - prometheus.${INTERNAL_DOMAIN}
+        pathType: Prefix
       persistentVolume:
         enabled: true
         size: 10Gi
-      ingress:
-        enabled: true
-        pathType: Prefix
-        hosts:
-          - prometheus.${INTERNAL_DOMAIN}
-        annotations:
-          kubernetes.io/ingress.class: traefik
       prometheusSpec:
-        ruleSelector: {}
-        ruleNamespaceSelector: {}
-        ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelector: {}
-        serviceMonitorNamespaceSelector: {}
-        serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelector: {}
-        podMonitorNamespaceSelector: {}
-        podMonitorSelectorNilUsesHelmValues: false
-        retention: 14d
-        enableAdminAPI: true
-        walCompression: true
         additionalScrapeConfigs:
-        - job_name: 'node-exporter'
-          honor_timestamps: true
+        - honor_timestamps: true
+          job_name: node-exporter
           static_configs:
           - targets:
-            # nas
             - 10.20.30.40:9100
-        # - job_name: 'unifipoller'
-        #   scrape_interval: 30s
-        #   static_configs:
-        #   - targets: ['unifi-poller:9130']
-        # - job_name: 'uptimerobot-prometheus'
-        #   scrape_interval: 30s
-        #   static_configs:
-        #   - targets: ['uptimerobot-prometheus:9705']
-        - job_name: 'kubernetes-service-endpoints'
+        - job_name: kubernetes-service-endpoints
           kubernetes_sd_configs:
-            - role: endpoints
+          - role: endpoints
           relabel_configs:
-            - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-              action: keep
-              regex: true
-            - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
-              action: replace
-              target_label: __scheme__
-              regex: (https?)
-            - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-              action: replace
-              target_label: __metrics_path__
-              regex: (.+)
-            - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-              action: replace
-              target_label: __address__
-              regex: ([^:]+)(?::\d+)?;(\d+)
-              replacement: $1:$2
-            - action: labelmap
-              regex: __meta_kubernetes_service_label_(.+)
-            - source_labels: [__meta_kubernetes_namespace]
-              action: replace
-              target_label: kubernetes_namespace
-            - source_labels: [__meta_kubernetes_service_name]
-              action: replace
-              target_label: kubernetes_name
-            - source_labels: [__meta_kubernetes_pod_node_name]
-              action: replace
-              target_label: kubernetes_node
-        - job_name: 'kubernetes-pods'
+          - action: keep
+            regex: true
+            source_labels:
+            - __meta_kubernetes_service_annotation_prometheus_io_scrape
+          - action: replace
+            regex: (https?)
+            source_labels:
+            - __meta_kubernetes_service_annotation_prometheus_io_scheme
+            target_label: __scheme__
+          - action: replace
+            regex: (.+)
+            source_labels:
+            - __meta_kubernetes_service_annotation_prometheus_io_path
+            target_label: __metrics_path__
+          - action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            source_labels:
+            - __address__
+            - __meta_kubernetes_service_annotation_prometheus_io_port
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_service_label_(.+)
+          - action: replace
+            source_labels:
+            - __meta_kubernetes_namespace
+            target_label: kubernetes_namespace
+          - action: replace
+            source_labels:
+            - __meta_kubernetes_service_name
+            target_label: kubernetes_name
+          - action: replace
+            source_labels:
+            - __meta_kubernetes_pod_node_name
+            target_label: kubernetes_node
+        - job_name: kubernetes-pods
           kubernetes_sd_configs:
-            - role: pod
+          - role: pod
           relabel_configs:
-            - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-              action: keep
-              regex: true
-            - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
-              action: replace
-              regex: (https?)
-              target_label: __scheme__
-            - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-              action: replace
-              target_label: __metrics_path__
-              regex: (.+)
-            - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-              action: replace
-              regex: ([^:]+)(?::\d+)?;(\d+)
-              replacement: $1:$2
-              target_label: __address__
-            - action: labelmap
-              regex: __meta_kubernetes_pod_label_(.+)
-            - source_labels: [__meta_kubernetes_namespace]
-              action: replace
-              target_label: kubernetes_namespace
-            - source_labels: [__meta_kubernetes_pod_name]
-              action: replace
-              target_label: kubernetes_pod_name
-            - source_labels: [__meta_kubernetes_pod_phase]
-              regex: Pending|Succeeded|Failed
-              action: drop
+          - action: keep
+            regex: true
+            source_labels:
+            - __meta_kubernetes_pod_annotation_prometheus_io_scrape
+          - action: replace
+            regex: (https?)
+            source_labels:
+            - __meta_kubernetes_pod_annotation_prometheus_io_scheme
+            target_label: __scheme__
+          - action: replace
+            regex: (.+)
+            source_labels:
+            - __meta_kubernetes_pod_annotation_prometheus_io_path
+            target_label: __metrics_path__
+          - action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            source_labels:
+            - __address__
+            - __meta_kubernetes_pod_annotation_prometheus_io_port
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - action: replace
+            source_labels:
+            - __meta_kubernetes_namespace
+            target_label: kubernetes_namespace
+          - action: replace
+            source_labels:
+            - __meta_kubernetes_pod_name
+            target_label: kubernetes_pod_name
+          - action: drop
+            regex: Pending|Succeeded|Failed
+            source_labels:
+            - __meta_kubernetes_pod_phase
+        enableAdminAPI: true
+        podMonitorNamespaceSelector: {}
+        podMonitorSelector: {}
+        podMonitorSelectorNilUsesHelmValues: false
+        retention: 14d
+        ruleNamespaceSelector: {}
+        ruleSelector: {}
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorNamespaceSelector: {}
+        serviceMonitorSelector: {}
+        serviceMonitorSelectorNilUsesHelmValues: false
+        walCompression: true

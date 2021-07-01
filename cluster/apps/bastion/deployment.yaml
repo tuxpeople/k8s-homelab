@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,10 +7,10 @@ metadata:
   name: bastion
   namespace: bastion
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: bastion
-  replicas: 1
   template:
     metadata:
       labels:
@@ -19,15 +20,15 @@ spec:
       - image: neochrome/bastion:1.4
         imagePullPolicy: Always
         name: bastion
+        ports:
+        - containerPort: 22
         resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
           limits:
             cpu: 500m
             memory: 200Mi
-        ports:
-        - containerPort: 22
+          requests:
+            cpu: 100m
+            memory: 100Mi
         volumeMounts:
         - mountPath: /etc/ssh
           name: bastion-keys
@@ -41,19 +42,19 @@ spec:
           name: bastion-config
           subPath: authorized_keys
       volumes:
-        - name: bastion-config
-          configMap:
-            name: bastion-config
-            items:
-              - key: sshd_config
-                path: sshd_config
-                mode: 0644
-              - key: authorized_keys
-                path: authorized_keys
-                mode: 0644
-        - name: bastion-keys
-          persistentVolumeClaim:
-            claimName: bastion-keys
-        - name: bastion-googleauth
-          secret:
-            secretName: bastion-googleauth
+      - configMap:
+          items:
+          - key: sshd_config
+            mode: 420
+            path: sshd_config
+          - key: authorized_keys
+            mode: 420
+            path: authorized_keys
+          name: bastion-config
+        name: bastion-config
+      - name: bastion-keys
+        persistentVolumeClaim:
+          claimName: bastion-keys
+      - name: bastion-googleauth
+        secret:
+          secretName: bastion-googleauth

@@ -5,21 +5,20 @@ metadata:
   name: kube-prometheus-stack
   namespace: monitoring
 spec:
-  releaseName: kube-prometheus-stack
   chart:
     spec:
-      # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
-      version: 16.10.0
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 16.10.0
   install:
     remediation:
       retries: 3
+  interval: 5m
+  releaseName: kube-prometheus-stack
   upgrade:
     remediation:
       retries: 3
@@ -29,57 +28,58 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              accessModes: ["ReadWriteOnce"]
+              accessModes:
+              - ReadWriteOnce
               resources:
                 requests:
                   storage: 10Gi
-    
-    prometheus:
-      prometheusSpec:
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              accessModes: ["ReadWriteOnce"]
-              resources:
-                requests:
-                  storage: 10Gi
-        additionalScrapeConfigs:
-          - job_name: 'unifipoller'
-            scrape_interval: 30s
-            static_configs:
-            - targets: ['unifi-poller:9130']
-
     grafana:
       adminPassword: highly-secure-production-password
-      persistence:
-        type: pvc
-        enabled: true
-        accessModes:
-          - ReadWriteOnce
-        size: 10Gi
-      enabled: true
-      ingress:
-        enabled: true
-        hosts:
-          - grafana.${SECRET_DOMAIN}
-        annotations:
-          kubernetes.io/ingress.class: traefik
-          cert-manager.io/cluster-issuer: letsencrypt-production
-          traefik.ingress.kubernetes.io/redirect-entry-point: https
-        tls:
-        - secretName: grafana-eighty-three-me-tls
-          hosts:
-                - grafana.${SECRET_DOMAIN}
-      grafana.ini:
-        server:
-          root_url: https://grafana.${SECRET_DOMAIN}
-      plugins:
-        - grafana-piechart-panel
       datasources:
         datasources.yaml:
           apiVersion: 1
           datasources:
-          - name: Loki
+          - access: proxy
+            name: Loki
             type: loki
-            access: proxy
             url: http://loki:3100
+      enabled: true
+      grafana.ini:
+        server:
+          root_url: https://grafana.${SECRET_DOMAIN}
+      ingress:
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+        enabled: true
+        hosts:
+        - grafana.${SECRET_DOMAIN}
+        tls:
+        - hosts:
+          - grafana.${SECRET_DOMAIN}
+          secretName: grafana-eighty-three-me-tls
+      persistence:
+        accessModes:
+        - ReadWriteOnce
+        enabled: true
+        size: 10Gi
+        type: pvc
+      plugins:
+      - grafana-piechart-panel
+    prometheus:
+      prometheusSpec:
+        additionalScrapeConfigs:
+        - job_name: unifipoller
+          scrape_interval: 30s
+          static_configs:
+          - targets:
+            - unifi-poller:9130
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Gi

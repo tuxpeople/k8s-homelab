@@ -7,59 +7,42 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: external-dns
-      version: 5.1.3
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 5.1.3
   install:
     remediation:
       retries: 3
+  interval: 5m
   upgrade:
     remediation:
       retries: 3
   values:
-    nameOverride: external-dns
-    interval: "5m"
-    # logLevel: debug
-    sources:
-    - ingress
-    provider: cloudflare
+    annotationFilter: external-dns/is-public in (true)
     cloudflare:
-      secretName: cloudflare-api-key
       email: thomas@tuxpeople.org
       proxied: true
-    policy: sync
-    txtPrefix: "k8s."
-    domainFilters:
-    - "${SECRET_DOMAIN}"
+      secretName: cloudflare-api-key
     crd:
-      create: true
       apiversion: externaldns.k8s.io/v1alpha1
+      create: true
       kind: DNSEndpoint
-    annotationFilter: "external-dns/is-public in (true)"
+    domainFilters:
+    - ${SECRET_DOMAIN}
+    interval: 5m
+    nameOverride: external-dns
+    policy: sync
+    provider: cloudflare
     resources:
-      requests:
-        memory: 100Mi
-        cpu: 25m
       limits:
         memory: 250Mi
----
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  name: cloudflare-api-key
-  namespace: networking
-spec:
-  encryptedData:
-    cloudflare_api_token: AgAgNenmXAlXlnoGlm8DfVglaG1ZUv1GySjtnr+nA93n16838/qHK0G1h9TY5xG7wBu3jId0ze9BMi0gYbUIYLWFCHz4duDWlw59G8gh8vBFKx2wUxJ1gtZ0b3YDbFZ+FJaHQe8ceDWQEpN3pQewB0lBxgbi9a/5GmpYhA0CA2YIsTcGdL75tz5dmKx2MF5G9MKAK9HQgyhvLBTLayiwvpw1Ea2SNj6M4Zbsvn7ENJG81Y1TbWcv9HmgGN5jgsLFmnPsQRhlMyvplSNYbe5POoN/x4Nl2wDA3EkEHy1yjECmks44+soSY3rzYiFBF7BL8bxJbAbo6bgKijHN0rXHnu355cmCmzmD2sCjGJPQ4f3SDiHV7rqm4tZSy0DcyFSCZ4Z0lFdXiny7U/aer05IVNJtxFqU4M/e/l4ah4ZL+u+CqivDnqMqoFpa9EkeN/yxsHIANV9KkcasU3BsPLEUjP39qiBS4oBeSwdwioiD2fsMBwbPy3l8LC/T3fif8TMmaX+TuKxHRD+rxobnTR1z3g7hZTWC0ec/hJtj9GX0o7SA+tYhDUnh0V0Cd+ttzPxcTWB5XoCQX30qWVD8k/kXVT1ySJa6QqSdE8GjA67z4l0yxOHR/TOL5k7yoy8tndNMsUeIlRqu9eoUwG+zk3lrJ8GJ0ZkgY28eV4EK2EF0Sgyrqvvcmk4q1v5beXBEIuTEbpjO6uS5JOe5lT/L7PKsyBxZDjS+4bHxDCgWV1icFuc5/sfux5R49eUT
-  template:
-    data: null
-    metadata:
-      creationTimestamp: null
-      name: cloudflare-api-key
-      namespace: networking
+      requests:
+        cpu: 25m
+        memory: 100Mi
+    sources:
+    - ingress
+    txtPrefix: k8s.

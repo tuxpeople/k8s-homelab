@@ -5,21 +5,20 @@ metadata:
   name: uptimerobot-prometheus
   namespace: monitoring
 spec:
-  releaseName: uptimerobot-prometheus
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
       chart: uptimerobot-prometheus
-      version: 3.0.0
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 3.0.0
   install:
     remediation:
       retries: 3
+  interval: 5m
+  releaseName: uptimerobot-prometheus
   upgrade:
     remediation:
       retries: 3
@@ -28,6 +27,6 @@ spec:
       serviceMonitor:
         enabled: true
   valuesFrom:
-  - secretKeyRef:
-    kind: Secret
+  - kind: Secret
     name: uptimerobot-prometheus-values
+    secretKeyRef: null

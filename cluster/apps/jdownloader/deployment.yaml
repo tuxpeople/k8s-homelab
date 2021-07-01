@@ -1,13 +1,14 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: jdownloader
   name: jdownloader
+  namespace: jdownloader
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: jdownloader
-  replicas: 1
   template:
     metadata:
       labels:
@@ -20,13 +21,13 @@ spec:
         - name: MYJD_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: myjd-creds
               key: MYJD_PASSWORD
+              name: myjd-creds
         - name: MYJD_USER
           valueFrom:
             secretKeyRef:
-              name: myjd-creds
               key: MYJD_USER
+              name: myjd-creds
         - name: TZ
           value: Europe/Zurich
         - name: XDG_DOWNLOAD_DIR
@@ -34,15 +35,15 @@ spec:
         image: quay.io/tdeutsch/jdownloader-headless:latest
         imagePullPolicy: Always
         name: jdownloader
+        ports:
+        - containerPort: 80
         resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
           limits:
             cpu: 500m
             memory: 600Mi
-        ports:
-        - containerPort: 80
+          requests:
+            cpu: 100m
+            memory: 100Mi
         volumeMounts:
         - mountPath: /Downloads
           name: downloads

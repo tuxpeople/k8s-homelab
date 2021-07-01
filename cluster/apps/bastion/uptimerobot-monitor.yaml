@@ -5,10 +5,10 @@ metadata:
   name: bastion
   namespace: bastion
 spec:
-  friendlyName: "K8S bastion"
-  url: "vpn.${SECRET_DOMAIN}"
-  type: PORT
-  subType: CUSTOM
-  port: 22
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}
+  friendlyName: K8S bastion
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  port: 22
+  subType: CUSTOM
+  type: PORT
+  url: vpn.${SECRET_DOMAIN}

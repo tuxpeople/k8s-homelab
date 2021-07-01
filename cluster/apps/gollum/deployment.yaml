@@ -1,47 +1,48 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: gollum
   name: gollum
+  namespace: gollum
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: gollum
-  replicas: 1
   template:
     metadata:
       labels:
         app: gollum
     spec:
       containers:
-      - name: gollum
-        image: tdeutsch/gollum-small:edge
+      - image: tdeutsch/gollum-small:edge
         imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
-            cpu: 500m
-            memory: 200Mi
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - mountPath: /wiki
-          name: gollum-data
         livenessProbe:
           httpGet:
             path: /Home
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 10
+        name: gollum
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
         startupProbe:
+          failureThreshold: 30
           httpGet:
             path: /Home
             port: 8080
-          failureThreshold: 30
           periodSeconds: 10
+        volumeMounts:
+        - mountPath: /wiki
+          name: gollum-data
       volumes:
-        - name: gollum-data
-          persistentVolumeClaim:
-            claimName: gollum-data
+      - name: gollum-data
+        persistentVolumeClaim:
+          claimName: gollum-data

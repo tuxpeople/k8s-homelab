@@ -1,32 +1,33 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: gollum
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_TARGET}
+    external-dns/is-public: true
+    ingress.kubernetes.io/auth-realm: traefik
+    ingress.kubernetes.io/auth-secret: gollum-basic-auth
+    ingress.kubernetes.io/auth-type: basic
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
   labels:
     app: gollum
   name: gollum
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    cert-manager.io/cluster-issuer: letsencrypt-production
-    traefik.ingress.kubernetes.io/redirect-entry-point: https
-    ingress.kubernetes.io/auth-type: basic
-    ingress.kubernetes.io/auth-realm: traefik
-    ingress.kubernetes.io/auth-secret: gollum-basic-auth
-    external-dns/is-public: true
-    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET}"
+  namespace: gollum
 spec:
-  tls:
-    - secretName: wiki2-eighty-three-me-tls
-      hosts:
-        - wiki2.${SECRET_DOMAIN}
   rules:
   - host: wiki2.${SECRET_DOMAIN}
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
+      - backend:
           service:
             name: gollum
             port:
               number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - wiki2.${SECRET_DOMAIN}
+    secretName: wiki2-eighty-three-me-tls

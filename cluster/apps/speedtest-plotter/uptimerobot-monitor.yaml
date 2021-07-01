@@ -5,9 +5,9 @@ metadata:
   name: speedtest-plotter
   namespace: speedtest-plotter
 spec:
-  friendlyName: "K8S speedtest-plotter"
-  url: "https://speed.${SECRET_DOMAIN}"
-  type: HTTPS
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}
+  friendlyName: K8S speedtest-plotter
   httpMethod: GET
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  type: HTTPS
+  url: https://speed.${SECRET_DOMAIN}

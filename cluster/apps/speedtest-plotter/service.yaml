@@ -1,16 +1,17 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: speedtest-plotter
-  name: speedtest-plotter
   labels:
     app: speedtest-plotter
+  name: speedtest-plotter
+  namespace: speedtest-plotter
 spec:
-  type: ClusterIP
   ports:
-    - port: 8000
-      targetPort: 8000
-      protocol: TCP
-      name: http
+  - name: http
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
   selector:
     app: speedtest-plotter
+  type: ClusterIP
