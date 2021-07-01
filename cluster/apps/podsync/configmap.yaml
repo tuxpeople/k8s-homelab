@@ -1,0 +1,96 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  labels:
+    app: podsync
+  name: podsync-config
+  namespace: podsync
+data:
+  config.toml: |
+    [server]
+    port = 8080
+    data_dir = "/app/data/"
+    hostname = "podsync.${SECRET_DOMAIN}"
+
+    [database]
+    badger = { truncate = true, file_io = true } 
+
+    [tokens]
+    youtube = "${SECRET_YOUTUBE_TOKEN}"
+
+    [feeds]
+      [feeds.bares]
+      url = "https://www.youtube.com/channel/UC53bIpnef1pwAx69ERmmOLA"
+      page_size = 10 # The number of episodes to query each update (keep in mind, that this might drain API token)
+      update_period = "12h" # How often query for updates, examples: "60m", "4h", "2h45m"
+      quality = "high" # or "low"
+      format = "video" # or "audio"
+      clean = { keep_last = 10 }
+
+      [feeds.spotfightnews]
+      url = "https://www.youtube.com/channel/UCdsHMu1VHhZ8SlrdUQa457w"
+      page_size = 5
+      update_period = "1h"
+      quality = "high"
+      format = "audio"
+      clean = { keep_last = 5 }
+
+      [feeds.automateallthethings]
+      url = "https://www.youtube.com/playlist?list=PLuNyVxp8vlDKGy1d5O8aDfB6qopI91jX7"
+      page_size = 10
+      update_period = "24h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 10 }
+
+      [feeds.mytowatch]
+      url = "https://www.youtube.com/playlist?list=PL7qBQ0Mi2xAp-alNW5mJ7z4X9Zko9rpWJ"
+      page_size = 30
+      update_period = "12h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 30 }
+
+      [feeds.adriangoins]
+      url="https://www.youtube.com/channel/UCjjwExYSPRWwjj9WwydrVmA"
+      page_size = 20
+      update_period = "18h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 20 }
+
+      [feeds.cgw-predigt]
+      url="https://www.youtube.com/playlist?list=PL9JD2T8AJBbBecAKlPtxxhWUcHp5iRDcy"
+      page_size = 5
+      update_period = "24h"
+      quality = "high"
+      format = "audio"
+      clean = { keep_last = 5 }
+
+    [feeds.SmarterEveryDay]
+      url="https://www.youtube.com/user/destinws2/videos"
+      page_size = 20
+      update_period = "18h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 20 }
+
+    [feeds.MyMechanicsInsights]
+      url="https://www.youtube.com/channel/UC4EQCwfH54ieNPswtXh5K0w"
+      page_size = 10
+      update_period = "18h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 10 }
+
+    [feeds.MyMechanics]
+      url="https://www.youtube.com/channel/UCMrMVIBtqFW6O0-MWq26gqw"
+      page_size = 10
+      update_period = "18h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 10 }
+
+    [downloader]
+    self_update = true
+    
