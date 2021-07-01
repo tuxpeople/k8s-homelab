@@ -9,7 +9,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: smoke.192.168.8.222.nip.io
+  - host: smoke.${INTERNAL_DOMAIN}
     http:
       paths:
       - path: /

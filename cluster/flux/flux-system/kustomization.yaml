@@ -5,3 +5,4 @@ resources:
 - gotk-sync.yaml
 - deployments.yaml
 - cluster-secrets.yaml
+- cluster-settings.yaml

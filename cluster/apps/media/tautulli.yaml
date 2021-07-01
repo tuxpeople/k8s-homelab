@@ -31,7 +31,7 @@ spec:
         annotations:
           kubernetes.io/ingress.class: "traefik"
         hosts:
-        - host: "tautulli.192.168.8.222.nip.io"
+        - host: "tautulli.${INTERNAL_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
