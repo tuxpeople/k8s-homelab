@@ -24,7 +24,6 @@ jobs:
         CLI_VERSION="$(flux -v)"
         VERSION="v${CLI_VERSION#*flux version }"
         flux install --version="${VERSION}" \
-          --network-policy=false \
           --export > ./cluster/core/flux-system/gotk-components.yaml
         echo "::set-output name=flux_version::$VERSION"
 
