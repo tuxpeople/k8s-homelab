@@ -4,14 +4,11 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     app: podsync
-  annotations:
-    k8up.syn.tools/backup: false
   name: podsync-data
-  namespace: podsync
+  namespace: media
 spec:
   accessModes:
   - ReadWriteOnce
-  # storageClassName: nfs-client
   resources:
     requests:
       storage: 65Gi

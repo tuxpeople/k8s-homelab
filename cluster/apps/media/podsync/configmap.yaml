@@ -1,17 +1,11 @@
 ---
-kind: ConfigMap
 apiVersion: v1
-metadata:
-  labels:
-    app: podsync
-  name: podsync-config
-  namespace: podsync
 data:
   config.toml: |
     [server]
     port = 8080
     data_dir = "/app/data/"
-    hostname = "podsync.${SECRET_DOMAIN}"
+    hostname = "podsync.${SECRET_DOMAIN_ME}"
 
     [database]
     badger = { truncate = true, file_io = true }
@@ -94,3 +88,9 @@ data:
 
     [downloader]
     self_update = true
+kind: ConfigMap
+metadata:
+  labels:
+    app: podsync
+  name: podsync-config
+  namespace: media

@@ -2,42 +2,44 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: gaps
+  name: tautulli
   namespace: media
 spec:
-  releaseName: gaps
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
-      chart: gaps
-      version: 4.2.0
+      chart: tautulli
+      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
-  interval: 5m
+      version: 10.0.0
   install:
     remediation:
       retries: 3
+  interval: 5m
   upgrade:
     remediation:
       retries: 3
   values:
     env:
-      TZ: "Europe/Zurich"
+      TZ: Europe/Zurich
     ingress:
       main:
-        enabled: true
         annotations:
-          kubernetes.io/ingress.class: "traefik"
+          kubernetes.io/ingress.class: traefik
+        enabled: true
         hosts:
-        - host: "gaps.${INTERNAL_DOMAIN}"
+        - host: tautulli.${INTERNAL_DOMAIN}
           paths:
           - path: /
             pathType: Prefix
     persistence:
-      data:
+      config:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 1Gi
+    resources:
+      limits:
+        memory: 750Mi
+      requests:
+        cpu: 500m
+        memory: 250Mi
