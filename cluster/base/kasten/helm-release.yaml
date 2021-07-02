@@ -31,7 +31,6 @@ spec:
     auth:
       basicAuth:
         enabled: true
-        secretName: k10-htpasswd
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
