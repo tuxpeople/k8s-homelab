@@ -1,0 +1,50 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: k10
+  namespace: kasten-io
+spec:
+  chart:
+    spec:
+      chart: k10
+      interval: 5m
+      sourceRef:
+        kind: HelmRepository
+        name: kasten
+        namespace: flux-system
+      version: 4.0.4
+  install:
+    remediation:
+      retries: 3
+  interval: 5m
+  releaseName: k10
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    auth:
+      basicAuth:
+        enabled: true
+        secretName: k10-htpasswd
+    eula:
+      accept: true
+      company: tuxpeople-k8s-homelab
+      email: ${SECRET__EMAIL}
+    global:
+      persistence:
+        storageClass: nfs-client
+    prometheus:
+      enabled: true
+      server:
+        persistentVolume:
+          enabled: false
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        kubernetes.io/ingress.class: traefik
+      create: true
+      host: k10.${SECRET_DOMAIN_ME}
+      tls:
+        enabled: true
+        secretName: k10-tls
