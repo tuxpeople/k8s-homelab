@@ -28,6 +28,10 @@ spec:
       accept: true
       company: tuxpeople-k8s-homelab
       email: ${SECRET_EMAIL}
+    auth:
+      basicAuth:
+        enabled: true
+        secretName: k10-htpasswd
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
