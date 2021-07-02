@@ -12,9 +12,9 @@ spec:
       filters:
         includeResources:
         - resource: persistentvolumeclaims
-        excludeResources:
-        - resource: persistentvolumeclaims
-          name: nfs-media-franxx-pvc
+        # excludeResources:
+        # - resource: persistentvolumeclaims
+        #   name: nfs-media-franxx-pvc
       profile:
         namespace: kasten-io
         name: minio

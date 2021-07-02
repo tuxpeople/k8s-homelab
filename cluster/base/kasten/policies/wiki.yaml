@@ -13,12 +13,12 @@ spec:
       filters:
         includeResources:
         - resource: persistentvolumeclaims
-        excludeResources:
-        - matchExpressions:
-          - key: app.kubernetes.io/name
-            operator: In
-            values:
-            - redis
+        # excludeResources:
+        # - matchExpressions:
+        #   - key: app.kubernetes.io/name
+        #     operator: In
+        #     values:
+        #     - redis
       profile:
         namespace: kasten-io
         name: minio
