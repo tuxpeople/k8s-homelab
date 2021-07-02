@@ -9,14 +9,14 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-production
     traefik.ingress.kubernetes.io/redirect-entry-point: https
     external-dns/is-public: true
-    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET}"
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
 spec:
   tls:
     - secretName: code-eighty-three-me-tls
       hosts:
-        - code.${SECRET_DOMAIN}
+        - code.${SECRET_DOMAIN_ME}
   rules:
-    - host: code.${SECRET_DOMAIN}
+    - host: code.${SECRET_DOMAIN_ME}
       http:
         paths:
           - path: /

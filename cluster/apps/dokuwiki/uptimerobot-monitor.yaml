@@ -6,7 +6,7 @@ metadata:
   namespace: dokuwiki
 spec:
   friendlyName: "K8S dokuwiki"
-  url: "https://wiki.${SECRET_DOMAIN}"
+  url: "https://wiki.${SECRET_DOMAIN_ME}"
   type: HTTPS
   httpMethod: GET
   interval: 300

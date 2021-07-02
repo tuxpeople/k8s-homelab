@@ -6,7 +6,7 @@ metadata:
   namespace: bastion
 spec:
   friendlyName: "K8S bastion"
-  url: "vpn.${SECRET_DOMAIN}"
+  url: "vpn.${SECRET_DOMAIN_ME}"
   type: PORT
   subType: CUSTOM
   port: 22

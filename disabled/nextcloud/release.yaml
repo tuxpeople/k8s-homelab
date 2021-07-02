@@ -35,9 +35,9 @@ spec:
       tls:
         - secretName: nextcloud-tls
           hosts:
-          - cloud.${SECRET_DOMAIN}
+          - cloud.${SECRET_DOMAIN_ME}
     nextcloud:
-      host: cloud.${SECRET_DOMAIN}
+      host: cloud.${SECRET_DOMAIN_ME}
       existingSecret:
         enabled: true
         secretName: nextcloud-passwords
@@ -45,7 +45,7 @@ spec:
         passwordKey: password
       extraEnv:
         - name: NEXTCLOUD_TRUSTED_DOMAINS
-          value: "cloud.${SECRET_DOMAIN} localhost"
+          value: "cloud.${SECRET_DOMAIN_ME} localhost"
         - name: TRUSTED_PROXIES
           value: 10.42.0.0/15
     nginx:

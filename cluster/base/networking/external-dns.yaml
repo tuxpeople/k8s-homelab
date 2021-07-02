@@ -31,12 +31,12 @@ spec:
     provider: cloudflare
     cloudflare:
       secretName: cloudflare-api-key
-      email: thomas@tuxpeople.org
+      email: ${SECRET_EMAIL}
       proxied: true
     policy: sync
     txtPrefix: "k8s."
     domainFilters:
-    - "${SECRET_DOMAIN}"
+    - "${SECRET_DOMAIN_ME}"
     crd:
       create: true
       apiversion: externaldns.k8s.io/v1alpha1

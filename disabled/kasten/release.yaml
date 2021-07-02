@@ -27,11 +27,11 @@ spec:
     eula:
       accept: true
       company: tuxpeople-k8s-server
-      email: thomas@tuxpeople.org
+      email: ${SECRET_EMAIL}
     ingress:
       create: true
       class: traefik
-      host: k10.${SECRET_DOMAIN}
+      host: k10.${SECRET_DOMAIN_ME}
       tls:
         enabled: true
         secretName: k10-tls

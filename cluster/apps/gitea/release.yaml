@@ -44,17 +44,17 @@ spec:
     ingress:
       enabled: true
       hosts:
-      - git.${SECRET_DOMAIN}
+      - git.${SECRET_DOMAIN_ME}
       annotations:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: letsencrypt-production
         traefik.ingress.kubernetes.io/redirect-entry-point: https
         external-dns/is-public: true
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET}"
+        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
       tls:
       - secretName: git-eighty-three-me-tls
         hosts:
-        - git.${SECRET_DOMAIN}
+        - git.${SECRET_DOMAIN_ME}
     cache: redis-master.redis:6379
     replicaCount: 1
     resources:

@@ -49,13 +49,13 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-production
         traefik.ingress.kubernetes.io/redirect-entry-point: https
         external-dns/is-public: true
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET}"
+        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
       hosts:
-      - host: "wallabag1.${SECRET_DOMAIN}"
+      - host: "wallabag1.${SECRET_DOMAIN_ME}"
         paths:
         - path: /
           pathType: Prefix
       tls:
       - secretName: wallabag1-eighty-three-me-tls
         hosts:
-      - wallabag1.${SECRET_DOMAIN}
+      - wallabag1.${SECRET_DOMAIN_ME}

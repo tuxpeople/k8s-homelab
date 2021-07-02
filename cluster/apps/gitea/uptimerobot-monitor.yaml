@@ -6,7 +6,7 @@ metadata:
   namespace: gitea
 spec:
   friendlyName: "K8S gitea"
-  url: "https://git.${SECRET_DOMAIN}"
+  url: "https://git.${SECRET_DOMAIN_ME}"
   type: HTTPS
   httpMethod: GET
   interval: 300

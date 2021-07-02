@@ -5,7 +5,7 @@ metadata:
   name: letsencrypt-production
 spec:
   acme:
-    email: thomas@tuxpeople.org
+    email: ${SECRET_EMAIL}
     privateKeySecretRef:
       name: staging-issuer-account-key
     server: https://acme-staging-v02.api.letsencrypt.org/directory

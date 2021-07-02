@@ -68,7 +68,7 @@ metadata:
   namespace: media
 spec:
   friendlyName: "K8S Plex"
-  url: "http://${SECRET_DOMAIN_TARGET}:32400/identity"
+  url: "http://${SECRET_DOMAIN_TARGET_SKY}:32400/identity"
   type: HTTP
   httpMethod: GET
   interval: 300

@@ -14,14 +14,14 @@ metadata:
     ingress.kubernetes.io/auth-realm: traefik
     ingress.kubernetes.io/auth-secret: gollum-basic-auth
     external-dns/is-public: true
-    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET}"
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
 spec:
   tls:
     - secretName: wiki2-eighty-three-me-tls
       hosts:
-        - wiki2.${SECRET_DOMAIN}
+        - wiki2.${SECRET_DOMAIN_ME}
   rules:
-    - host: wiki2.${SECRET_DOMAIN}
+    - host: wiki2.${SECRET_DOMAIN_ME}
       http:
         paths:
           - path: /
