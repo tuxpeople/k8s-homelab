@@ -28,3 +28,8 @@ spec:
       accept: true
       company: tuxpeople-k8s-homelab
       email: ${SECRET_EMAIL}
+    ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik
+      create: true
+      host: k10.${INTERNAL_DOMAIN}
