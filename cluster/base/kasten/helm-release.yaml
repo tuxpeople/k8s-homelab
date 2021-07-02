@@ -31,6 +31,7 @@ spec:
     auth:
       basicAuth:
         enabled: true
+        htpasswd: 'test:$2y$10$bZFHAqXMBjBtPLMS7TWwyOf5x3LC68OS9LSwXCMRDNGUBheC6XfeK'
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
