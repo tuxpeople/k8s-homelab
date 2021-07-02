@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: k10
+  namespace: kasten-io
+spec:
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.kasten.io/
+      version: 4.0.5
+      chart: k10
+      interval: 5m
+      sourceRef:
+        kind: HelmRepository
+        name: kasten
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  interval: 5m
+  releaseName: k10
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    eula:
+      accept: true
+      company: tuxpeople-k8s-homelab
+      email: ${SECRET_EMAIL}
