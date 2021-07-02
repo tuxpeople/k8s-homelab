@@ -2,7 +2,7 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: security-backup
+  name: wiki-backup
   namespace: kasten-io
 spec:
   comment: ""
@@ -40,4 +40,5 @@ spec:
     - key: k10.kasten.io/appNamespace
       operator: In
       values:
-      - security
+      - dokuwiki
+      - gollum

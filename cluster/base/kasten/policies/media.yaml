@@ -40,7 +40,7 @@ spec:
   retention:
     daily: 7
     weekly: 2
-    monthly: 2
+    monthly: 1
     yearly: 0
   selector:
     matchExpressions:
