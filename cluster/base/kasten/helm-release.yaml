@@ -7,13 +7,14 @@ metadata:
 spec:
   chart:
     spec:
+      # renovate: registryUrl=https://charts.kasten.io/
+      version: 4.0.5
       chart: k10
       interval: 5m
       sourceRef:
         kind: HelmRepository
         name: kasten
         namespace: flux-system
-      version: 4.0.4
   install:
     remediation:
       retries: 3
@@ -43,6 +44,8 @@ spec:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-production
         kubernetes.io/ingress.class: traefik
+        external-dns/is-public: true
+        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
       create: true
       host: k10.${SECRET_DOMAIN_ME}
       tls:
