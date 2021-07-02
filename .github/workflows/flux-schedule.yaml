@@ -25,7 +25,7 @@ jobs:
         VERSION="v${CLI_VERSION#*flux version }"
         flux install --version="${VERSION}" \
           --network-policy=false \
-          --export > ./cluster/flux/flux-system/gotk-components.yaml
+          --export > ./cluster/core/flux-system/gotk-components.yaml
         echo "::set-output name=flux_version::$VERSION"
 
     - name: Create pull request for Flux upgrade
