@@ -74,8 +74,8 @@ spec:
           containerPort: 9116
         volumeMounts:
         - name: snmp-etc
-          mountPath: /etc/snmp_exporter/snmp.yml
-          subPath: snmp.yml
+          mountPath: /etc/snmp_exporter/snmp.yaml
+          subPath: snmp.yaml
           readOnly: true
       volumes:
       - name: snmp-etc
@@ -85,5 +85,5 @@ spec:
           - configMap:
               name: snmp-exporter
               items:
-              - key: snmp.yml
-                path: snmp.yml
+              - key: snmp.yaml
+                path: snmp.yaml

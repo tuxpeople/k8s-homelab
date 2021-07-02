@@ -1,3 +1,4 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -17,13 +18,13 @@ spec:
       hosts:
         - wiki.${SECRET_DOMAIN}
   rules:
-  - host: wiki.${SECRET_DOMAIN}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: dokuwiki
-            port:
-              number: 80
+    - host: wiki.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dokuwiki
+                port:
+                  number: 80

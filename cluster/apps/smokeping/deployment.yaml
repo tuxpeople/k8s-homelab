@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,9 +36,9 @@ spec:
         - mountPath: /data
           name: smokeping-data
       volumes:
-        - name: smokeping-config
-          persistentVolumeClaim:
-            claimName: smokeping-config
-        - name: smokeping-data
-          persistentVolumeClaim:
-            claimName: smokeping-data
+      - name: smokeping-config
+        persistentVolumeClaim:
+          claimName: smokeping-config
+      - name: smokeping-data
+        persistentVolumeClaim:
+          claimName: smokeping-data

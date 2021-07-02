@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -27,8 +28,8 @@ spec:
     cleanUpCRDs: true
     configuration:
       provider: aws
-      backupStorageLocation: 
-        name: default 
+      backupStorageLocation:
+        name: default
         bucket: k8s-backup
         config:
           region: minio
@@ -46,8 +47,8 @@ spec:
       image: velero/velero-plugin-for-aws:v1.2.0
       imagePullPolicy: IfNotPresent
       volumeMounts:
-        - mountPath: /target
-          name: plugins
+      - mountPath: /target
+        name: plugins
     metrics:
       enabled: true
       serviceMonitor:

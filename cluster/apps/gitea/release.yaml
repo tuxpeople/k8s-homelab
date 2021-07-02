@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -36,14 +37,14 @@ spec:
           builtIn:
             enabled: true
         service:
-            DISABLE_REGISTRATION: true
+          DISABLE_REGISTRATION: true
     persistence:
       enabled: true
       size: 50Gi
     ingress:
       enabled: true
       hosts:
-        - git.${SECRET_DOMAIN}
+      - git.${SECRET_DOMAIN}
       annotations:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: letsencrypt-production
@@ -53,7 +54,7 @@ spec:
       tls:
       - secretName: git-eighty-three-me-tls
         hosts:
-          - git.${SECRET_DOMAIN}
+        - git.${SECRET_DOMAIN}
     cache: redis-master.redis:6379
     replicaCount: 1
     resources:
@@ -62,4 +63,3 @@ spec:
       requests:
         cpu: 100m
         memory: 64Mi
-

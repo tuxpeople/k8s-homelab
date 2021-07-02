@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: snmp-exporter
     app.kubernetes.io/instance: snmp-exporter
 data:
-  snmp.yml: |
+  snmp.yaml: |
     synology:
       retries: 3
       timeout: 60s

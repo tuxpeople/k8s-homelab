@@ -1,5 +1,8 @@
+---
 ignore: |
   .github/
+  server/
+  disabled/
   crds.yaml
 extends: default
 rules:

@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,9 +33,9 @@ spec:
           name: cloudflare-ddns-config
           subPath: config.json
       volumes:
-        - name: cloudflare-ddns-config
-          secret:
-            secretName: cloudflare-ddns-config
+      - name: cloudflare-ddns-config
+        secret:
+          secretName: cloudflare-ddns-config
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret

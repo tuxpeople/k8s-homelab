@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,6 +34,6 @@ spec:
         - mountPath: /config
           name: dokuwiki-data
       volumes:
-        - name: dokuwiki-data
-          persistentVolumeClaim:
-            claimName: dokuwiki-data
+      - name: dokuwiki-data
+        persistentVolumeClaim:
+          claimName: dokuwiki-data

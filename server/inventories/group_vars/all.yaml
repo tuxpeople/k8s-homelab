@@ -25,7 +25,7 @@ ansible_linux_redhat7_base__packages:
   - yum-cron
   - yum-plugin-keys
   - yum-utils
-  - dstat 
+  - dstat
 ansible_linux_redhat_base__packages:
   - bind-utils
   - nc

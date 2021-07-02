@@ -24,7 +24,7 @@
     - name: Ensure nfs client is installed
       package:
         name: "{{ nfs_package }}"
-        state: present 
+        state: present
 
     - name: Mount Multimedia nfs share
       mount:

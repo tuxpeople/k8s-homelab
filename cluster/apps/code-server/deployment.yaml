@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,6 +43,6 @@ spec:
         - mountPath: /config
           name: code-server
       volumes:
-        - name: code-server
-          persistentVolumeClaim:
-            claimName: code-server-data
+      - name: code-server
+        persistentVolumeClaim:
+          claimName: code-server-data

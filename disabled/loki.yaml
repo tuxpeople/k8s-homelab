@@ -33,11 +33,11 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - prometheus.${INTERNAL_DOMAIN}
+        - prometheus.${INTERNAL_DOMAIN}
         annotations:
           kubernetes.io/ingress.class: traefik
       serverFiles:
-        prometheus.yml:
+        prometheus.yaml:
           scrape_configs:
             - job_name: 'unifipoller'
               scrape_interval: 30s
@@ -120,7 +120,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - grafana.${SECRET_DOMAIN}
+        - grafana.${SECRET_DOMAIN}
         annotations:
           kubernetes.io/ingress.class: traefik
           cert-manager.io/cluster-issuer: letsencrypt-production
@@ -128,7 +128,7 @@ spec:
         tls:
         - secretName: grafana-eighty-three-me-tls
           hosts:
-                - grafana.${SECRET_DOMAIN}
+              - grafana.${SECRET_DOMAIN}
       grafana.ini:
         server:
           root_url: https://grafana.${SECRET_DOMAIN}

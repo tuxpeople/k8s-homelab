@@ -27,7 +27,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: infrastructure
+  - name: infrastructure
   interval: 10m0s
   path: ./cluster/base
   prune: true
@@ -50,7 +50,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: base
+  - name: base
   interval: 10m0s
   path: ./cluster/apps
   prune: true

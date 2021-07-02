@@ -137,7 +137,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-        - grafana.${SECRET_DOMAIN}
+      - grafana.${SECRET_DOMAIN}
       annotations:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: letsencrypt-production
@@ -145,12 +145,12 @@ spec:
       tls:
       - secretName: grafana-eighty-three-me-tls
         hosts:
-              - grafana.${SECRET_DOMAIN}
+        - grafana.${SECRET_DOMAIN}
     persistence:
       type: pvc
       enabled: true
       accessModes:
-        - ReadWriteOnce
+      - ReadWriteOnce
       size: 10Gi
     enabled: true
   valuesFrom:

@@ -1,7 +1,7 @@
 ---
 - name: Make a great machine
   hosts: all
-  
+
   tasks:
     - name: Merge packages lists
       set_fact:
@@ -35,7 +35,7 @@
         - ansible_architecture != "armv7l"
         - ansible_architecture != "aarch64"
         - ansible_board_vendor != "Apple Inc."
-            
+
     - name: Remove packages for VMs
       package: name={{ ansible_linux_vm_base__packages }} state=absent
       when: ansible_linux_vm_base__packages is defined and ansible_virtualization_role != "guest"

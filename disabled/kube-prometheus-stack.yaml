@@ -33,7 +33,7 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
-    
+
     prometheus:
       prometheusSpec:
         storageSpec:
@@ -61,7 +61,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - grafana.${SECRET_DOMAIN}
+        - grafana.${SECRET_DOMAIN}
         annotations:
           kubernetes.io/ingress.class: traefik
           cert-manager.io/cluster-issuer: letsencrypt-production
@@ -69,7 +69,7 @@ spec:
         tls:
         - secretName: grafana-eighty-three-me-tls
           hosts:
-                - grafana.${SECRET_DOMAIN}
+              - grafana.${SECRET_DOMAIN}
       grafana.ini:
         server:
           root_url: https://grafana.${SECRET_DOMAIN}

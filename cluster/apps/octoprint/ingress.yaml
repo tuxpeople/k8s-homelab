@@ -1,3 +1,4 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -15,13 +16,13 @@ spec:
       hosts:
         - print.${SECRET_DOMAIN}
   rules:
-  - host: print.${SECRET_DOMAIN}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: octoprint
-            port:
-              number: 80
+    - host: print.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: octoprint
+                port:
+                  number: 80

@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,6 +43,6 @@ spec:
           failureThreshold: 30
           periodSeconds: 10
       volumes:
-        - name: gollum-data
-          persistentVolumeClaim:
-            claimName: gollum-data
+      - name: gollum-data
+        persistentVolumeClaim:
+          claimName: gollum-data
