@@ -37,3 +37,6 @@ spec:
         kubernetes.io/ingress.class: traefik
       create: true
       host: k10.${INTERNAL_DOMAIN}
+    global:
+      persistence:
+        storageClass: nfs-client
