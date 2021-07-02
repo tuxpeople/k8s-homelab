@@ -31,7 +31,7 @@ spec:
     eula:
       accept: true
       company: tuxpeople-k8s-homelab
-      email: ${SECRET__EMAIL}
+      email: ${SECRET_EMAIL}
     global:
       persistence:
         storageClass: nfs-client
