@@ -34,5 +34,3 @@ parameters:
   share: /volume1/Kubernetes
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
-mountOptions:
-  - hard
