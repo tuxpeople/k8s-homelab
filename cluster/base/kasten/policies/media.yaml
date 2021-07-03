@@ -10,7 +10,7 @@ spec:
   - action: backup
     backupParameters:
       filters:
-        includeResources:
+        excludeResources:
         - resource: persistentvolumeclaims
         # excludeResources:
         # - resource: persistentvolumeclaims
