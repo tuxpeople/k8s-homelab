@@ -10,7 +10,7 @@ spec:
   - action: backup
     backupParameters:
       filters:
-        includeResources:
+        excludeResources:
         - resource: persistentvolumeclaims
         # excludeResources:
         # - resource: persistentvolumeclaims
@@ -25,7 +25,7 @@ spec:
         name: minio
         namespace: kasten-io
       exportData:
-        enabled: true
+        enabled: false
   subFrequency:
     minutes:
     - 0
