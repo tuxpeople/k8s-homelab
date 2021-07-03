@@ -11,7 +11,7 @@ spec:
   - action: backup
     backupParameters:
       filters:
-        excludeResources:
+        includeResources:
         - resource: persistentvolumeclaims
         # excludeResources:
         # - matchExpressions:
