@@ -7,8 +7,8 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://charts.kasten.io/
       version: 4.0.5
+      # renovate: registryUrl=https://charts.kasten.io/
       chart: k10
       interval: 5m
       sourceRef:
