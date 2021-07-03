@@ -21,7 +21,10 @@
     {
       "fileMatch": ["cluster/.+\\.yaml$"],
       "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
+        // helm releases
+        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n",
+        // cert-manager crd
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
       ],
       "datasourceTemplate": "helm"
     }
