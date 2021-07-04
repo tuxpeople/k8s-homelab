@@ -11,7 +11,7 @@ spec:
       endpoint: "http://minio.lab:9091"
       name: k10
       objectStoreType: S3
-      path: k10/4b0389fd-837e-4d19-8fa0-bd221706238c/migration
+      path: homelab/migration
       pathType: Directory
     credential:
       secretType: AwsAccessKey
