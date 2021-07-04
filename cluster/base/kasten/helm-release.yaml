@@ -50,7 +50,7 @@ spec:
       create: true
       host: k10.${SECRET_DOMAIN_ME}
       tls:
-      - secretName: k10-tls
+        secretName: k10-tls
         hosts:
         - k10.${SECRET_DOMAIN_ME}
     global:
