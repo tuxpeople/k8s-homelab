@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: dokuwiki
   labels:
-    k10/injectKanisterSidecar: "true"
+    k10/injectKanisterSidecar: "yes"
