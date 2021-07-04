@@ -40,5 +40,6 @@ spec:
     global:
       persistence:
         storageClass: nfs-client
-    injectKanisterSidecar.enabled: true
+    injectKanisterSidecar:
+      enabled: true
     # injectKanisterSidecar.namespaceSelector.matchLabels.k10/injectKanisterSidecar: true
