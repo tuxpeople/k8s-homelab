@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - namespace.yaml
 - helm-release.yaml
-- prometheus-rule.yaml
-- service-monitor.yaml
-- policies
-- profiles
+# - prometheus-rule.yaml
+# - service-monitor.yaml
+# - policies
+# - profiles
