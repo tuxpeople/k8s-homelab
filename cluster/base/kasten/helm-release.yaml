@@ -61,3 +61,6 @@ spec:
       namespaceSelector:
         matchLabels:
           k10/injectKanisterSidecar: "true"
+    prometheus:
+      server:
+        enabled: false
