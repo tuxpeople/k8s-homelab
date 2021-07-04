@@ -39,12 +39,20 @@ spec:
     auth:
       basicAuth:
         enabled: true
-        htpasswd: 'test:$2y$10$bZFHAqXMBjBtPLMS7TWwyOf5x3LC68OS9LSwXCMRDNGUBheC6XfeK'
+        secretName: k10-login-secret
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/redirect-entry-point: https
+        external-dns/is-public: "true"
+        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
       create: true
-      host: k10.${INTERNAL_DOMAIN}
+      host: k10.${SECRET_DOMAIN_ME}
+      tls:
+      - secretName: k10-tls
+        hosts:
+        - k10.${SECRET_DOMAIN_ME}
     global:
       persistence:
         storageClass: nfs-client
