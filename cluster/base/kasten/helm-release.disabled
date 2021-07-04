@@ -51,3 +51,6 @@ spec:
       tls:
         enabled: true
         secretName: k10-tls
+    prometheus:
+      server:
+        enabled: false
