@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   namespace: dokuwiki
   name: dokuwiki
+  annotations:
+    k10.kasten.io/forcegenericbackup: "true"
 spec:
   selector:
     matchLabels:
@@ -13,8 +15,6 @@ spec:
     metadata:
       labels:
         app: dokuwiki
-    annotations:
-      k10.kasten.io/forcegenericbackup: "true"
     spec:
       containers:
       - name: dokuwiki
