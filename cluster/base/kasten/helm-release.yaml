@@ -60,4 +60,4 @@ spec:
       enabled: true
       namespaceSelector:
         matchLabels:
-          k10/injectKanisterSidecar: yes
+          k10/injectKanisterSidecar: "true"
