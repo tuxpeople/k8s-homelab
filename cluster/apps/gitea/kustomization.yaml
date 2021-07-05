@@ -6,4 +6,3 @@ resources:
 - release.yaml
 - sealed-secret.yaml
 - uptimerobot-monitor.yaml
-- https://raw.githubusercontent.com/kanisterio/kanister/master/examples/stable/postgresql/postgres-blueprint.yaml
