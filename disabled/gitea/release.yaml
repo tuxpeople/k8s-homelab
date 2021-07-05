@@ -52,7 +52,7 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: letsencrypt-production
-        q/redirect-entry-point: https
+        traefik.ingress.kubernetes.io/redirect-entry-point: https
         external-dns/is-public: "true"
         external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
       tls:
