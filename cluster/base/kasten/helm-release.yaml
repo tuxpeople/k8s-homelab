@@ -39,7 +39,6 @@ spec:
     auth:
       basicAuth:
         enabled: true
-        secretName: k10-login-secret
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
@@ -61,3 +60,7 @@ spec:
       namespaceSelector:
         matchLabels:
           k10/injectKanisterSidecar: "true"
+  valuesFrom:
+  - secretKeyRef:
+    kind: Secret
+    name: k10-secret-values
