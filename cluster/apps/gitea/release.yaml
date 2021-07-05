@@ -77,10 +77,10 @@ spec:
         - op: add
           path: "/metadata/annotations/k10.kasten.io~1forcegenericbackup"
           value: "true"
-      # - target:
-      #     kind: statefulset
-      #     name: gitea-postgresql
-      #   patch:
-      #   - op: add
-      #     path: "/metadata/annotations/kanister.kasten.io~1blueprint"
-      #     value: "postgres-bp"
+      - target:
+          kind: statefulset
+          name: gitea-postgresql
+        patch:
+        - op: add
+          path: "/metadata/annotations/kanister.kasten.io~1blueprint"
+          value: "postgres-bp"
