@@ -70,9 +70,9 @@ spec:
           kind: statefulset
           name: gitea-postgresql
         patch:
-      - op: add
-        path: "/metadata/annotations/kanister.kasten.io~1blueprint"
-        value: postgres-bp
+        - op: add
+          path: "/metadata/annotations/kanister.kasten.io~1blueprint"
+          value: postgres-bp
     # patchesJson6902:
     #   - target:
     #       kind: statefulset
