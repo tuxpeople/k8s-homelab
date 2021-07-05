@@ -65,7 +65,7 @@ spec:
         memory: 64Mi
   postRenderers:
   - kustomize:
-      patchesJson6902:
+    - patchesJson6902:
       - target:
           kind: statefulset
           name: gitea-postgresql
@@ -73,8 +73,7 @@ spec:
       - op: add
         path: "/metadata/annotations/kanister.kasten.io~1blueprint"
         value: postgres-bp
-  - kustomize:
-      patchesJson6902:
+    - patchesJson6902:
       - target:
           kind: statefulset
           name: gitea
