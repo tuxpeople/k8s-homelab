@@ -8,10 +8,10 @@ spec:
   locationSpec:
     type: ObjectStore
     objectStore:
-      endpoint: "http://minio.lab:9091"
+      endpoint: "http://minio:9091"
       name: k10
       objectStoreType: S3
-      path: homelab/migration
+      path: homelab
       pathType: Directory
     credential:
       secretType: AwsAccessKey
