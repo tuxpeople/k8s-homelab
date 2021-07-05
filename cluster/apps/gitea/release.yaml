@@ -40,7 +40,7 @@ spec:
           DISABLE_REGISTRATION: true
     postgresql:
       primary:
-        anotations:
+        annotations:
           kanister.kasten.io/blueprint: postgres-bp
     persistence:
       enabled: true
