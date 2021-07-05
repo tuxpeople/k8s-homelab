@@ -24,7 +24,7 @@ spec:
         name: minio
   - action: export
     exportParameters:
-      frequency: "@hourly"
+      frequency: "@daily"
       profile:
         name: minio
         namespace: kasten-io
@@ -34,7 +34,7 @@ spec:
     daily: 7
     weekly: 2
     monthly: 2
-    hourly: 24
+    yearly: 0
   selector:
     matchExpressions:
     - key: k10.kasten.io/appNamespace
