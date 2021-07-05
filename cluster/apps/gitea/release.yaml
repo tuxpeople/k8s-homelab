@@ -63,3 +63,22 @@ spec:
       requests:
         cpu: 100m
         memory: 64Mi
+  postRenderers:
+  - kustomize:
+      patchesJson6902:
+      - target:
+          kind: statefulset
+          name: gitea-postgresql
+        patch:
+      - op: add
+        path: "/metadata/annotations/kanister.kasten.io~1blueprint"
+        value: postgres-bp
+  - kustomize:
+      patchesJson6902:
+      - target:
+          kind: statefulset
+          name: gitea
+        patch:
+      - op: add
+        path: "/metadata/annotations/k10.kasten.io~1forcegenericbackup"
+        value: "true"

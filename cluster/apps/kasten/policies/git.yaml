@@ -40,5 +40,4 @@ spec:
     - key: k10.kasten.io/appNamespace
       operator: In
       values:
-      - dokuwiki
-      - gollum
+      - gitea
