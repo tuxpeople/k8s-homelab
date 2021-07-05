@@ -38,6 +38,10 @@ spec:
             enabled: true
         service:
           DISABLE_REGISTRATION: true
+    postgresql:
+      primary:
+        anotations:
+          kanister.kasten.io/blueprint: postgres-bp
     persistence:
       enabled: true
       size: 50Gi
@@ -73,10 +77,10 @@ spec:
         - op: add
           path: "/metadata/annotations/k10.kasten.io~1forcegenericbackup"
           value: "true"
-      - target:
-          kind: statefulset
-          name: gitea-postgresql
-        patch:
-        - op: add
-          path: "/metadata/annotations/kanister.kasten.io~1blueprint"
-          value: "postgres-bp"
+      # - target:
+      #     kind: statefulset
+      #     name: gitea-postgresql
+      #   patch:
+      #   - op: add
+      #     path: "/metadata/annotations/kanister.kasten.io~1blueprint"
+      #     value: "postgres-bp"
