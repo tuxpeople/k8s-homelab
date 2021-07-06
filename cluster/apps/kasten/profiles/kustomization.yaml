@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
 - minio-sealed-secret.yaml
 - minio.yaml
-- persistent_volume_claim.yaml
