@@ -8,7 +8,7 @@ spec:
   locationSpec:
     type: ObjectStore
     objectStore:
-      endpoint: "http://minio:9091"
+      endpoint: "http://192.168.8.9:9091"
       name: k10
       objectStoreType: S3
       path: homelab
