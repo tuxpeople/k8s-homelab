@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: "kasten-io"
 resources:
 - k10-disaster-recovery-policy.yaml
-- media.yaml
+#- media.yaml
 - wiki.yaml
 - k10-dr-sealed-secret.yaml
 - https://raw.githubusercontent.com/kanisterio/kanister/master/examples/stable/postgresql/postgres-blueprint.yaml
