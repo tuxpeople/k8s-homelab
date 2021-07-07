@@ -22,7 +22,6 @@ spec:
         profile:
           name: minio
           namespace: kasten-io
-        receiveString: bIzAPpoanmEO0ztClT0+seFaQXRFIVuF2Rmx32lqOpQjJrgavnnifr+QWJ7XkqsmKgTGzKuNGWik9SNd1g6xyGY0+A8UKu+rYYq0+7XF2NSCqa5p51tfOB7hscDSAKArSYUEvF1Snv1du6ye4o7H2FPgXJrIkRAAs3nLYgzNkNPLktdJCA3WyWnd9myCak8iq+l0ZISh+mgb2V9dMneO/8y9XXSzHSW8uG5B9MTDJ8FFrJOJIjXYS8AOv5qUh8WyZNHRab+ZdMJ7R3W/6Aon4CHX7fuUa/3F0gq0BHVkQmp9FCqWptfG7+fzfI1D9kfdF1Urc7I
         exportData:
           enabled: true
       retention: {}
