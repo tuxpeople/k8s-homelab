@@ -3,7 +3,7 @@ apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
   name: media-backup
-  namespace: kasten-io
+  namespace: media
 spec:
   comment: ""
   frequency: "@daily"
@@ -17,19 +17,15 @@ spec:
       exportParameters:
         frequency: "@daily"
         migrationToken:
-          name: ""
-          namespace: ""
+          name: media-migration-token-smx5j
+          namespace: kasten-io
         profile:
           name: minio
           namespace: kasten-io
-        receiveString: ""
+        receiveString: bIzAPpoanmEO0ztClT0+seFaQXRFIVuF2Rmx32lqOpQjJrgavnnifr+QWJ7XkqsmKgTGzKuNGWik9SNd1g6xyGY0+A8UKu+rYYq0+7XF2NSCqa5p51tfOB7hscDSAKArSYUEvF1Snv1du6ye4o7H2FPgXJrIkRAAs3nLYgzNkNPLktdJCA3WyWnd9myCak8iq+l0ZISh+mgb2V9dMneO/8y9XXSzHSW8uG5B9MTDJ8FFrJOJIjXYS8AOv5qUh8WyZNHRab+ZdMJ7R3W/6Aon4CHX7fuUa/3F0gq0BHVkQmp9FCqWptfG7+fzfI1D9kfdF1Urc7I
         exportData:
           enabled: true
-      retention:
-        daily: 0
-        weekly: 0
-        monthly: 0
-        yearly: 0
+      retention: {}
   retention:
     daily: 7
     weekly: 4

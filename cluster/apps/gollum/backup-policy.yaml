@@ -2,8 +2,8 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: wiki-backup
-  namespace: kasten-io
+  name: gollum-backup
+  namespace: gollum
 spec:
   comment: ""
   frequency: "@hourly"
@@ -32,5 +32,4 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - dokuwiki
           - gollum
