@@ -1,0 +1,34 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ansible-semaphore-mysql
+  namespace: ansible-semaphore
+spec:
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: mysql
+      version: 8.6.3
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      interval: 5m
+  releaseName: mysql
+  targetNamespace: ansible-semaphore
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    auth:
+      database: semaphore
+      user: semaphore
+      existingSecret: ansible-semaphore-secret
+    metrics:
+      enabled: true
+    architecture: standalone

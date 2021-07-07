@@ -1,0 +1,106 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: semaphore
+  name: semaphore
+  namespace: ansible-semaphore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: semaphore
+  template:
+    metadata:
+      labels:
+        app: semaphore
+    spec:
+      containers:
+      - image: ansiblesemaphore/semaphore:v2.7.0
+        imagePullPolicy: Always
+        env:
+        - name: "SEMAPHORE_DB_USER"
+          value: "semaphore"
+        - name: "SEMAPHORE_DB_PASS"
+          valueFrom:
+            secretKeyRef:
+              name: ansible-semaphore-secret
+              key: mysql-password
+        - name: "SEMAPHORE_DB_HOST"
+          value: "mysql"
+        - name: "SEMAPHORE_DB_PORT"
+          value: "3306"
+        - name: "SEMAPHORE_DB"
+          value: "semaphore"
+        - name: "SEMAPHORE_PLAYBOOK_PATH"
+          value: "/tmp/semaphore/"
+        - name: "SEMAPHORE_ADMIN_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: ansible-semaphore-secret
+              key: semaphore-admin-password
+        - name: "SEMAPHORE_ADMIN_NAME"
+          value: "admin"
+        - name: "SEMAPHORE_ADMIN_EMAIL"
+          value: "${SECRET_EMAIL}"
+        - name: "SEMAPHORE_ADMIN"
+          value: "admin"
+        name: semaphore
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: semaphore
+  name: semaphore-svc
+  namespace: ansible-semaphore
+spec:
+  ports:
+  - name: http
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: semaphore
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+    external-dns/is-public: "true"
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+  labels:
+    app: semaphore
+  name: semaphore-ingress
+  namespace: ansible-semaphore
+spec:
+  rules:
+  - host: semaphore.${SECRET_DOMAIN_ME}
+    http:
+      paths:
+      - backend:
+          service:
+            name: semaphore-svc
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - semaphore.${SECRET_DOMAIN_ME}
+    secretName: semaphore-tls
