@@ -27,6 +27,9 @@ spec:
     protocolHttp: true
     # service:
     #   externalPort: 9090
+    extraArgs:
+      --tls-key-file=/dashboard.key
+      --tls-cert-file=/dashboard.crt
     ingress:
       enabled: true
       hosts:
