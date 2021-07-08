@@ -41,6 +41,6 @@ spec:
         external-dns/is-public: "true"
         external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
       tls:
-      - secretName: dashy-eighty-three-me-tls
+      - secretName: kubernetes-dashboard-certs
         hosts:
         - dashy.${SECRET_DOMAIN_ME}
