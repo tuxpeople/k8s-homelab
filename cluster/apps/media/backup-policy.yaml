@@ -6,11 +6,25 @@ metadata:
   namespace: media
 spec:
   frequency: "@daily"
+  subFrequency:
+    minutes:
+      - 0
+    hours:
+      - 2
+      - 8
+      - 14
+      - 20
+    weekdays:
+      - 0
+    days:
+      - 1
+    months:
+      - 1
   retention:
     daily: 7
     weekly: 4
-    monthly: 12
-    yearly: 7
+    monthly: 6
+    yearly: 1
   selector:
     matchExpressions:
       - key: k10.kasten.io/appNamespace
