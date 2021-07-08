@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kubernetes-dashboard-ingressroute
+spec:
+  entryPoints:
+    - https
+  routes:
+    - match: Host(`dashy-eighty-three-me-tls`)
+      kind: Rule
+      priority: 12
+      services:
+        - name: s2
+          port: 433
+          serversTransport: kubernetes-dashboard-transport
+  tls:
+    secretName: supersecret
+    options:
+      name: my-tls-option
+      namespace: default
