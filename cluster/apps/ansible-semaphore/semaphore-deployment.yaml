@@ -63,12 +63,12 @@ spec:
           requests:
             cpu: 100m
             memory: 100Mi
-        volumes:
-        - name: semaphore-etc
-          persistentVolumeClaim:
-            claimName: semaphore-data
-        - name: tmp
-          emptyDir:
+      volumes:
+      - name: semaphore-etc
+        persistentVolumeClaim:
+          claimName: semaphore-data
+      - name: tmp
+        emptyDir:
 ---
 apiVersion: v1
 kind: Service
