@@ -31,4 +31,3 @@ spec:
       existingSecret: ansible-semaphore-secret
     metrics:
       enabled: true
-    architecture: standalone
