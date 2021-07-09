@@ -21,12 +21,12 @@ spec:
         imagePullPolicy: Always
         env:
         - name: "SEMAPHORE_DB_USER"
-          value: "semaphore"
+          value: "root"
         - name: "SEMAPHORE_DB_PASS"
           valueFrom:
             secretKeyRef:
               name: ansible-semaphore-secret
-              key: mariadb-password
+              key: mariadb-root-password
         - name: "SEMAPHORE_DB_HOST"
           value: "mariadb"
         - name: "SEMAPHORE_DB_PORT"
