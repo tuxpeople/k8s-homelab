@@ -28,7 +28,7 @@ spec:
               name: ansible-semaphore-secret
               key: mysql-password
         - name: "SEMAPHORE_DB_HOST"
-          value: "mysql-svc"
+          value: "mysql"
         - name: "SEMAPHORE_DB_PORT"
           value: "3306"
         - name: "SEMAPHORE_DB"
