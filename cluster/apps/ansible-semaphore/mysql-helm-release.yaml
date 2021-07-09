@@ -8,14 +8,14 @@ spec:
   chart:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
-      chart: mysql
-      version: 8.7.1
+      chart: mariadb
+      version: 9.3.16
       sourceRef:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
       interval: 5m
-  releaseName: mysql
+  releaseName: mariadb
   targetNamespace: ansible-semaphore
   interval: 5m
   install:
