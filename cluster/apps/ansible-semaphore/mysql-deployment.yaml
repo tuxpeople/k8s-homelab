@@ -43,8 +43,8 @@ spec:
           name: mysql-data
         resources:
           limits:
-            cpu: 500m
-            memory: 200Mi
+            cpu: 600m
+            memory: 600Mi
           requests:
             cpu: 100m
             memory: 100Mi
