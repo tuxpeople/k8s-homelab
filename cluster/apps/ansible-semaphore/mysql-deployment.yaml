@@ -27,12 +27,12 @@ spec:
         - name: "MYSQL_PASSWORD"
           valueFrom:
             secretKeyRef:
-              name: ansible-mysql-secret
+              name: ansible-semaphore-secret
               key: mysql-password
         - name: "MYSQL_ROOT_PASSWORD"
           valueFrom:
             secretKeyRef:
-              name: ansible-mysql-secret
+              name: ansible-semaphore-secret
               key: mysql-root-password
         name: mysql
         ports:
