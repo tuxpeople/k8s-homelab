@@ -26,7 +26,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: ansible-semaphore-secret
-              key: mysql-password
+              key: mariadb-password
         - name: "SEMAPHORE_DB_HOST"
           value: "mysql"
         - name: "SEMAPHORE_DB_PORT"
