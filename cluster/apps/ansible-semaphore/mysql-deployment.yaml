@@ -59,7 +59,7 @@ metadata:
   labels:
     app: mysql
   name: mysql-svc
-  namespace: ansible-mysql
+  namespace: ansible-semaphore
 spec:
   ports:
   - name: http
