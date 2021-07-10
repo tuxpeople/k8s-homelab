@@ -108,7 +108,7 @@ spec:
           service:
             name: semaphore-svc
             port:
-              number: 8080
+              number: 3000
         path: /
         pathType: Prefix
   tls:
