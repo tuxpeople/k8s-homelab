@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: insecuretls@kubernetescrd
+  name: insecuretls-kubernetescrd
 spec:
   forwardAuth:
     address: http://dashy.${INTERNAL_DOMAIN}
