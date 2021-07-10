@@ -26,7 +26,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
   tls:
-    - secretName: meet-eighty-three-me-tls
+    - secretName: meet-tls
       hosts:
       - meet.${SECRET_DOMAIN_ME}
   rules:

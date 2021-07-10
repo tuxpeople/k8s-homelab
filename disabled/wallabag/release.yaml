@@ -56,6 +56,6 @@ spec:
         - path: /
           pathType: Prefix
       tls:
-      - secretName: wallabag1-eighty-three-me-tls
+      - secretName: wallabag1-tls
         hosts:
       - wallabag1.${SECRET_DOMAIN_ME}

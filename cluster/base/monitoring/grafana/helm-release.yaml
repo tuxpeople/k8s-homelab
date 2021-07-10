@@ -143,7 +143,7 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-production
         traefik.ingress.kubernetes.io/redirect-entry-point: https
       tls:
-      - secretName: grafana-eighty-three-me-tls
+      - secretName: grafana-tls
         hosts:
         - grafana.${SECRET_DOMAIN_ME}
     persistence:

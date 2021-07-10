@@ -14,7 +14,7 @@ metadata:
     external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
 spec:
   tls:
-    - secretName: speed-eighty-three-me-tls
+    - secretName: speed-tls
       hosts:
         - speed.${SECRET_DOMAIN_ME}
   rules:

@@ -27,4 +27,4 @@ spec:
   tls:
   - hosts:
     - podsync.${SECRET_DOMAIN_ME}
-    secretName: podsync-eighty-three-me-tls
+    secretName: podsync-tls
