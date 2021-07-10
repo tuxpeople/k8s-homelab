@@ -14,7 +14,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: dashboard_ir
+  name: dashboard-ir
 spec:
   entryPoints:
     - web
