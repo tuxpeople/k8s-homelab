@@ -23,17 +23,17 @@ spec:
   upgrade:
     remediation:
       retries: 3
-  values:
+    # values:
     # protocolHttp: true
     # service:
     #   externalPort: 9090
     # extraArgs:
     #   --tls-key-file=/dashboard.key
     #   --tls-cert-file=/dashboard.crt
-    ingress:
-      enabled: true
-      hosts:
-      - dashy.${INTERNAL_DOMAIN}
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/router.middlewares: default-insecuretls@kubernetescrd
+    # ingress:
+    #   enabled: true
+    #   hosts:
+    #   - dashy.${INTERNAL_DOMAIN}
+    #   annotations:
+    #     kubernetes.io/ingress.class: traefik
+    #     traefik.ingress.kubernetes.io/router.middlewares: default-insecuretls@kubernetescrd
