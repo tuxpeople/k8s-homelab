@@ -2,9 +2,9 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: insecuretls
-  namespace: kubernetes-dashboard
 spec:
   forwardAuth:
     address: http://dashy.${INTERNAL_DOMAIN}
     tls:
       insecureSkipVerify: true
+    trustForwardHeader: true

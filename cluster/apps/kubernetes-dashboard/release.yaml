@@ -36,4 +36,4 @@ spec:
       - dashy.${INTERNAL_DOMAIN}
       annotations:
         kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/router.middlewares: kubernetes-dashboard-insecuretls@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: default-insecuretls@kubernetescrd
