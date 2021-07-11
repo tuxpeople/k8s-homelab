@@ -27,6 +27,14 @@
       delegate_to: localhost
       become: false
 
+    - name: Copy additional Traefik-Config
+      ansible.builtin.copy:
+        src: ~/git/k8s-homelab/server/manifests/traefik-config.yaml
+        dest: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
+        owner: root
+        group: root
+        mode: "0600"
+
     - name: Copy Sealed Secrets key
       ansible.builtin.copy:
         src: "{{ sealed_secrets_key }}"
