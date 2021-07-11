@@ -30,27 +30,13 @@ spec:
     # extraArgs:
     #   --tls-key-file=/dashboard.key
     #   --tls-cert-file=/dashboard.crt
-    # ingress:
-    #   enabled: true
-    #   hosts:
-    #   - dashy.${INTERNAL_DOMAIN}
-    #   annotations:
-    #     kubernetes.io/ingress.class: traefik
+    ingress:
+      enabled: true
+      hosts:
+      - dashy.${INTERNAL_DOMAIN}
+      annotations:
+        kubernetes.io/ingress.class: traefik
     #     traefik.ingress.kubernetes.io/router.middlewares: default-insecuretls@kubernetescrd
     # service:
     #   type: NodePort
     #   externalPort: 32323
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: ingressroutetcpfoo
-  namespace: kubernetes-dashboard
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: HostSNI(`dashy.${INTERNAL_DOMAIN}`)
-      services:
-        - name: kubernetes-dashboard
-          port: 443
