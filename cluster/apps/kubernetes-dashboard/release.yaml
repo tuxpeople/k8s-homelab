@@ -39,4 +39,4 @@ spec:
     #     traefik.ingress.kubernetes.io/router.middlewares: default-insecuretls@kubernetescrd
     service:
       type: NodePort
-      externalPort: 33333
+      externalPort: 32323
