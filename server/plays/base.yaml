@@ -59,6 +59,27 @@
         state: enabled
         immediate: yes
 
+    - name: Open firewall for Nodes
+      firewalld:
+        port: "{{ item }}"
+        permanent: true
+        immediate: true
+        state: enabled
+      with_items:
+        - 22/tcp
+        - 80/tcp
+        - 443/tcp
+        - 2376/tcp
+        - 2379/tcp
+        - 2380/tcp
+        - 6443/tcp
+        - 8472/udp
+        - 9099/tcp
+        - 10250/tcp
+        - 10254/tcp
+        - 30000-32767/tcp
+        - 30000-32767/udp
+
     - name: Reboot
       import_role:
         name: oasis_roles.system.reboot
