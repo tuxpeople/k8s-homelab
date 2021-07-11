@@ -54,14 +54,6 @@ data:
       format = "video"
       clean = { keep_last = 20 }
 
-      [feeds.cgw-predigt]
-      url="https://www.youtube.com/playlist?list=PL9JD2T8AJBbBecAKlPtxxhWUcHp5iRDcy"
-      page_size = 5
-      update_period = "24h"
-      quality = "high"
-      format = "audio"
-      clean = { keep_last = 5 }
-
     [feeds.SmarterEveryDay]
       url="https://www.youtube.com/user/destinws2/videos"
       page_size = 20
