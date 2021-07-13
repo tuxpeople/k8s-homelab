@@ -35,6 +35,8 @@ spec:
     existingSecret: ldap-admin
     persistence:
       enabled: true
+    phpldapadmin:
+      enabled: false
     customLdifFiles:
       initial-ous.ldif: |-
         dn: ou=People,dc=ssotest,dc=sky,dc=lab
