@@ -2,8 +2,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: openldap
+  name: adfinis
   namespace: flux-system
 spec:
   interval: 1h0m0s
-  url: https://jp-gouin.github.io/helm-openldap/
+  url: https://charts.adfinis.com
