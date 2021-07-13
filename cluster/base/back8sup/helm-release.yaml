@@ -1,0 +1,36 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: back8sup
+  namespace: back8sup
+spec:
+  chart:
+    spec:
+      version: 0.3.3
+      # renovate: registryUrl=https://charts.adfinis.com
+      chart: back8sup
+      interval: 5m
+      sourceRef:
+        kind: HelmRepository
+        name: adfinis
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  interval: 5m
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    configMaps:
+      config.yaml: |
+        global:
+          - pvc
+          - pv
+        namespaces:
+          - name: default
+            kind:
+              - deployment
+              - cm
+              - secret
