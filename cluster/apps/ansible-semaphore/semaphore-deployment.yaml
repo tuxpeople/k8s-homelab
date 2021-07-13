@@ -17,7 +17,7 @@ spec:
         app: semaphore
     spec:
       containers:
-      - image: ansiblesemaphore/semaphore:v2.6.9
+      - image: ansiblesemaphore/semaphore:v2.7.0
         imagePullPolicy: Always
         env:
         - name: "SEMAPHORE_DB_USER"
