@@ -1,0 +1,35 @@
+---
+apiVersion: config.kio.kasten.io/v1alpha1
+kind: Policy
+metadata:
+  name: static-backup
+  namespace: static
+spec:
+  comment: ""
+  frequency: "@hourly"
+  actions:
+    - action: backup
+      backupParameters:
+        profile:
+          namespace: kasten-io
+          name: minio
+    - action: export
+      exportParameters:
+        frequency: "@hourly"
+        profile:
+          name: minio
+          namespace: kasten-io
+        exportData:
+          enabled: true
+  retention:
+    hourly: 24
+    daily: 7
+    weekly: 4
+    monthly: 12
+    yearly: 7
+  selector:
+    matchExpressions:
+      - key: k10.kasten.io/appNamespace
+        operator: In
+        values:
+          - static
