@@ -26,7 +26,7 @@ spec:
   values:
     env:
       TZ: "Europe/Zurich"
-    DOCUMENTS: "about=./about.md,loc=./loc.md"
+      DOCUMENTS: "about=./about.md,loc=./loc.md"
     persistence:
       config:
         enabled: true
