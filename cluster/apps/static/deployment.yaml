@@ -21,7 +21,7 @@ spec:
         env:
         - name: "TZ"
           value: "Europe/Zurich"
-        image: tdeutsch/minilighttpd_latest
+        image: tdeutsch/minilighttpd:latest
         imagePullPolicy: Always
         resources:
           requests:
