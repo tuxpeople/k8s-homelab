@@ -38,6 +38,8 @@ spec:
             enabled: true
         service:
           DISABLE_REGISTRATION: true
+        server:
+          ROOT_URL: https://git.${SECRET_DOMAIN_ME}
     postgresql:
       primary:
         annotations:
