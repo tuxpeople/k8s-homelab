@@ -31,8 +31,9 @@ spec:
           - pvc
           - pv
         namespaces:
-          - name: default
+          - name: media
             kind:
               - deployment
               - cm
               - secret
+              - ingress
