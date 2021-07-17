@@ -82,6 +82,10 @@ spec:
           - targets:
             # nas
             - 10.20.30.40:9100
+            # lab1
+            - 192.168.8.11:9100
+            # lab2
+            - 192.168.8.12:9100
         # - job_name: 'unifipoller'
         #   scrape_interval: 30s
         #   static_configs:
