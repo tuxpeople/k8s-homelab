@@ -37,9 +37,18 @@ spec:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: "traefik"
+          kubernetes.io/ingress.class: traefik
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
         hosts:
-        - host: "homer.${INTERNAL_DOMAIN}"
+        - host: "homer.${SECRET_DOMAIN_ME}"
           paths:
           - path: /
             pathType: Prefix
+        tls:
+        - secretName: homer-tls
+          hosts:
+          - homer.${SECRET_DOMAIN_ME}
