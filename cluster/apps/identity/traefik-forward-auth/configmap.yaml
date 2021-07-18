@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-forward-auth
+  namespace: identity
+data:
+  INSECURE_COOKIE: 'false'
+  COOKIE_DOMAIN: ${SECRET_DOMAIN_ME}
+  DOMAINS: ${SECRET_DOMAIN_ME}
+  AUTH_HOST: auth.${SECRET_DOMAIN_ME}
+  URL_PATH: /_oauth
+  DEFAULT_PROVIDER: oidc
+  PROVIDERS_OIDC_ISSUER_URL: https://sso.${SECRET_DOMAIN_ME}/auth/realms/SKY
+  PROVIDERS_OIDC_CLIENT_ID: idp-4-ocp
