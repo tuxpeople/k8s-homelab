@@ -13,7 +13,7 @@ metadata:
     external-dns/is-public: "true"
     external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
     ingress.kubernetes.io/auth-type: forward
-    ingress.kubernetes.io/auth-url: http://traefik-forward-auth.kube-system.svc.cluster.local
+    ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN_ME}
     ingress.kubernetes.io/auth-response-headers: X-Forwarded-User
 spec:
   tls:
