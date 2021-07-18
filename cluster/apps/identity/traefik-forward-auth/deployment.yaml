@@ -15,8 +15,6 @@ spec:
     metadata:
       labels:
         app: traefik-forward-auth
-      annotations:
-        container.apparmor.security.beta.kubernetes.io/traefik-forward-auth: runtime/default
     spec:
       containers:
         - name: traefik-forward-auth
