@@ -36,13 +36,16 @@ spec:
       limits:
         memory: 2Gi
         cpu: 500m
+    # auth:
+    #   basicAuth:
+    #     enabled: true
     auth:
-      basicAuth:
+      oidcAuth:
         enabled: true
-# auth.oidcAuth.enabled=true
-# auth.oidcAuth.providerURL=<provider URL>
-# auth.oidcAuth.redirectURL=https://<URL to k10 gateway service>/<k10 release name>/auth-svc/v0/oidc/redirect
-# auth.oidcAuth.clientID=<client id string>
+        providerURL: https://sso.eighty-three.me/auth/realms/SKY
+        redirectURL: https://k10.eighty-three.me/k10/auth-svc/v0/oidc/redirect
+        clientID: ${SECRET_OIDC_CLIENT_ID}
+        clientSecret: ${SECRET_OIDC_CLIENT_SECRET}
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
@@ -64,7 +67,7 @@ spec:
       namespaceSelector:
         matchLabels:
           k10/injectKanisterSidecar: "true"
-  valuesFrom:
-  - secretKeyRef:
-    kind: Secret
-    name: k10-secret-values
+  # valuesFrom:
+  # - secretKeyRef:
+  #   kind: Secret
+  #   name: k10-secret-values

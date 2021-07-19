@@ -32,7 +32,7 @@ spec:
       oidc:
         enabled: true
         issuerUrl: "https://sso.${SECRET_DOMAIN_ME}/auth/realms/SKY"
-        clientId: "idp-4-ocp"
+        clientId: "${SECRET_OIDC_CLIENT_ID}"
     ingress:
       enabled: true
       annotations:
