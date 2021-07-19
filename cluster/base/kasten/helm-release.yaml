@@ -39,6 +39,10 @@ spec:
     auth:
       basicAuth:
         enabled: true
+# auth.oidcAuth.enabled=true
+# auth.oidcAuth.providerURL=<provider URL>
+# auth.oidcAuth.redirectURL=https://<URL to k10 gateway service>/<k10 release name>/auth-svc/v0/oidc/redirect
+# auth.oidcAuth.clientID=<client id string>
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
