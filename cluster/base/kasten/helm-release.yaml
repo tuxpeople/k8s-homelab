@@ -46,11 +46,9 @@ spec:
         redirectURL: https://k10.eighty-three.me
         clientID: ${SECRET_OIDC_CLIENT_ID}
         clientSecret: ${SECRET_OIDC_CLIENT_SECRET}
-        scopes: "groups profile email"
+        scopes: "openid profile email"
         usernameClaim: "email"
         usernamePrefix: "-"
-        groupClaim: "groups"
-        groupPrefix: ""
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
