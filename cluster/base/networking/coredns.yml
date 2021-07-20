@@ -61,7 +61,7 @@ spec:
         configBlock: |-
           stubzones
           path /skydns
-          endpoint https://192.168.8.222:2379
+          endpoint http://k3s-node1.lab:2379 http://k3s-node2.lab:2379 http://k3s-node3.lab:2379
       # Set up cache
       - name: cache
         parameters: 30
