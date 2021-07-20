@@ -34,7 +34,8 @@ spec:
         external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
       rules:
         - host: sso.${SECRET_DOMAIN_ME}
-          paths: "/"
+          paths:
+            - /
       tls:
         - hosts:
             - sso.${SECRET_DOMAIN_ME}
