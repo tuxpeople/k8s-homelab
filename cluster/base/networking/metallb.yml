@@ -7,12 +7,12 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      # renovate: registryUrl=https://metallb.github.io/metallb
       chart: metallb
-      version: 2.3.7
+      version: 0.10.2
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name:
         namespace: flux-system
       interval: 5m
   interval: 5m
@@ -29,3 +29,11 @@ spec:
         protocol: layer2
         addresses:
         - "${SECRET_METALLB_LB_RANGE}"
+    prometheusRule:
+      enabled: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
