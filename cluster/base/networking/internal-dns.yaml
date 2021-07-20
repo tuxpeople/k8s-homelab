@@ -31,9 +31,6 @@ spec:
     provider: coredns
     coredns:
       etcdEndpoints: "https://10.43.43.43:2379"
-      etcdTLS:
-        enabled: true
-        secretName: coredns-etcd
     policy: sync
     txtPrefix: "k8s."
     domainFilters:
