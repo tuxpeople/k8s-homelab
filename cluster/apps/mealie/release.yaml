@@ -37,7 +37,7 @@ spec:
         annotations:
           kubernetes.io/ingress.class: "traefik"
         hosts:
-        - host: "mealie.${INTERNAL_DOMAIN}"
+        - host: "mealie.${SECRET_DOMAIN_INTERNAL}"
           paths:
           - path: /
             pathType: Prefix

@@ -31,7 +31,7 @@ spec:
           kubernetes.io/ingress.class: traefik
         enabled: true
         hosts:
-        - host: tautulli.${INTERNAL_DOMAIN}
+        - host: tautulli.${SECRET_DOMAIN_INTERNAL}
           paths:
           - path: /
             pathType: Prefix

@@ -58,7 +58,7 @@ spec:
         enabled: true
         pathType: Prefix
         hosts:
-        - prometheus.${INTERNAL_DOMAIN}
+        - prometheus.${SECRET_DOMAIN_INTERNAL}
         annotations:
           kubernetes.io/ingress.class: traefik
       prometheusSpec:

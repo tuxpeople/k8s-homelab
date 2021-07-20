@@ -32,7 +32,7 @@ spec:
           kubernetes.io/ingress.class: traefik
         enabled: true
         hosts:
-        - host: gaps.${INTERNAL_DOMAIN}
+        - host: gaps.${SECRET_DOMAIN_INTERNAL}
           paths:
           - path: /
             pathType: Prefix

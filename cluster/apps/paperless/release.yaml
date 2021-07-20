@@ -52,7 +52,7 @@ spec:
         annotations:
           kubernetes.io/ingress.class: "traefik"
         hosts:
-        - host: "paperless.${INTERNAL_DOMAIN}"
+        - host: "paperless.${SECRET_DOMAIN_INTERNAL}"
           paths:
           - path: /
             pathType: Prefix

@@ -33,7 +33,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-      - dashy.${INTERNAL_DOMAIN}
+      - dashy.${SECRET_DOMAIN_INTERNAL}
       annotations:
         kubernetes.io/ingress.class: traefik
     #     traefik.ingress.kubernetes.io/router.middlewares: default-insecuretls@kubernetescrd
