@@ -39,9 +39,7 @@ spec:
     domainFilters:
     - "${SECRET_DOMAIN_INTERNAL}"
     crd:
-      create: true
-      apiversion: externaldns.k8s.io/v1alpha1
-      kind: DNSEndpoint
+      create: false
     annotationFilter: "external-dns/is-private in (true)"
     resources:
       requests:
