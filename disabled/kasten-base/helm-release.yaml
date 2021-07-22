@@ -69,7 +69,7 @@ spec:
       enabled: true
       namespaceSelector:
         matchLabels:
-          k10/injectKanisterSidecar: "true"
+
   # valuesFrom:
   # - secretKeyRef:
   #   kind: Secret

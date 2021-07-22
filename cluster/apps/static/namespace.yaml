@@ -3,5 +3,3 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: static
-  labels:
-    k10/injectKanisterSidecar: "true"
