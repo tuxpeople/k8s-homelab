@@ -50,7 +50,7 @@ spec:
           adminFilter: cn=admin,ou=users,o=skylab,c=ch
           emailAttribute: mail
           bindDn: ${SECRET_LDAP_BIND_DN}
-          bindPassword: ${SECRET_LDAP_BIND_PASSWORD}
+          bindPassword: ${SECRET_LDAP_BIND_PW}
           usernameAttribute: uid
           sshPublicKeyAttribute: sshPublicKey
     persistence:
