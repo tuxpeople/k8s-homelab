@@ -4,8 +4,6 @@ kind: Deployment
 metadata:
   namespace: gollum
   name: gollum
-  annotations:
-    k10.kasten.io/forcegenericbackup: "true"
 spec:
   selector:
     matchLabels:

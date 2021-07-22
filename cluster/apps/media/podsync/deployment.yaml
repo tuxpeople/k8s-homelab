@@ -6,8 +6,6 @@ metadata:
     app: podsync
   name: podsync
   namespace: media
-  annotations:
-    k10.kasten.io/forcegenericbackup: "true"
 spec:
   replicas: 1
   selector:
