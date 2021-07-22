@@ -54,6 +54,8 @@ spec:
             items:
               - key: 01-default-users.ldif
                 path: 01-default-users.ldif
+              - key: 02-gitlab.ldif
+                path: 02-gitlab.ldif
 ---
 apiVersion: v1
 kind: Service
