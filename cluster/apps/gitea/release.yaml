@@ -40,6 +40,20 @@ spec:
           DISABLE_REGISTRATION: true
         server:
           ROOT_URL: https://git.${SECRET_DOMAIN_ME}
+        ldap:
+          enabled: true
+          name: 'MyAwesomeGiteaLdap'
+          securityProtocol: unencrypted
+          host: "openldap.identity.svc.cluster.local"
+          port: "1389"
+          userSearchBase: ou=users,o=skylab,c=ch
+          userFilter: cn=gitlab,ou=users,o=skylab,c=ch
+          adminFilter: cn=admin,ou=users,o=skylab,c=ch
+          emailAttribute: mail
+          bindDn: ${SECRET_LDAP_BIND_DN}
+          bindPassword: ${SECRET_LDAP_BIND_PASSWORD}
+          usernameAttribute: uid
+          sshPublicKeyAttribute: sshPublicKey
     persistence:
       enabled: true
       size: 50Gi
