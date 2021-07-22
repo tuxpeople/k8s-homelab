@@ -46,8 +46,7 @@ spec:
           securityProtocol: unencrypted
           host: "openldap.identity.svc.cluster.local"
           port: "1389"
-          userSearchBase: ou=users,o=skylab,c=ch
-          userFilter: cn=gitlab,ou=users,o=skylab,c=ch
+          userSearchBase: cn=gitlab,ou=users,o=skylab,c=ch
           adminFilter: cn=admin,ou=users,o=skylab,c=ch
           emailAttribute: mail
           bindDn: ${SECRET_LDAP_BIND_DN}
