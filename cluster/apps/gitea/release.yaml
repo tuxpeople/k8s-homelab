@@ -42,17 +42,17 @@ spec:
           ROOT_URL: https://git.${SECRET_DOMAIN_ME}
         ldap:
           enabled: true
-          name: 'MyAwesomeGiteaLdap'
+          name: k8s-ldap
           securityProtocol: unencrypted
           host: "openldap.identity.svc.cluster.local"
           port: "1389"
           userSearchBase: cn=gitlab,ou=users,o=skylab,c=ch
-          adminFilter: (&(objectClass=inetOrgPerson)(uid=%s)(cn=admin))
+          # adminFilter: (&(objectClass=inetOrgPerson)(uid=%s)(cn=admin))
           emailAttribute: mail
           bindDn: ${SECRET_LDAP_BIND_DN}
           bindPassword: ${SECRET_LDAP_BIND_PW}
           usernameAttribute: uid
-          sshPublicKeyAttribute: sshPublicKey
+          # sshPublicKeyAttribute: sshPublicKey
     persistence:
       enabled: true
       size: 50Gi
