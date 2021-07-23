@@ -59,7 +59,7 @@ spec:
         bindDn: ${SECRET_LDAP_BIND_DN}
         bindPassword: ${SECRET_LDAP_BIND_PW}
         usernameAttribute: uid
-        sshPublicKeyAttribute: sshPublicKey
+        # sshPublicKeyAttribute: sshPublicKey
     persistence:
       enabled: true
       size: 50Gi
