@@ -52,9 +52,9 @@ spec:
         securityProtocol: unencrypted
         host: "openldap.identity.svc.cluster.local"
         port: "1389"
-        userSearchBase: "cn=gitlab,ou=users,o=skylab,c=ch"
-        userFilter: (&(objectClass=inetOrgPerson)(uid=%s))
-        adminFilter: (memberOfcn=admin,ou=users,o=skylab,c=ch)
+        userSearchBase: "ou=users,o=skylab,c=ch"
+        userFilter: (&(memberOf=cn=gitlab,ou=users,o=skylab,c=ch)(objectClass=inetOrgPerson)(uid=%s))
+        adminFilter: (memberOf=cn=admin,ou=users,o=skylab,c=ch)
         emailAttribute: mail
         bindDn: ${SECRET_LDAP_BIND_DN}
         bindPassword: ${SECRET_LDAP_BIND_PW}
