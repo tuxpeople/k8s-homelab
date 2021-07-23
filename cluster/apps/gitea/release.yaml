@@ -47,7 +47,7 @@ spec:
           host: "openldap.identity.svc.cluster.local"
           port: "1389"
           userSearchBase: cn=gitlab,ou=users,o=skylab,c=ch
-          adminFilter: cn=admin,ou=users,o=skylab,c=ch
+          adminFilter: (&(objectClass=inetOrgPerson)(uid=%s)(cn=admin))
           emailAttribute: mail
           bindDn: ${SECRET_LDAP_BIND_DN}
           bindPassword: ${SECRET_LDAP_BIND_PW}
