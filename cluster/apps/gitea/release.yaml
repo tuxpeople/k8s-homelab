@@ -42,6 +42,7 @@ spec:
           ROOT_URL: https://git.${SECRET_DOMAIN_ME}
       ldap:
         enabled: true
+        id: 1
         name: 'k8s-ldap'
         securityProtocol: unencrypted
         host: "openldap.identity.svc.cluster.local"
