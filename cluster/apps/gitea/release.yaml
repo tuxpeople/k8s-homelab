@@ -43,6 +43,8 @@ spec:
         cron.sync_external_users:
           ENABLED: true
           RUN_AT_START: true
+          SCHEDULE: "@every 24h"
+          UPDATE_EXISTING: true
       ldap:
         enabled: true
         name: 'k8s-ldap'
