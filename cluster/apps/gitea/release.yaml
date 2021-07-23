@@ -54,7 +54,7 @@ spec:
         port: "1389"
         userSearchBase: gitlab,ou=users,o=skylab,c=ch
         userFilter: (&(objectClass=inetOrgPerson)(uid=%s))
-        adminFilter: (&(objectClass=inetOrgPerson)(uid=%s)(ou=admin))
+        adminFilter: (memberOfcn=admin,ou=users,o=skylab,c=ch)
         emailAttribute: mail
         bindDn: ${SECRET_LDAP_BIND_DN}
         bindPassword: ${SECRET_LDAP_BIND_PW}
