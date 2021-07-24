@@ -7,7 +7,7 @@ metadata:
 spec:
   acme:
     # The ACME server URL
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     # Email address used for ACME registration
     email: ${SECRET_EMAIL}
     # Name of a secret used to store the ACME account private key
@@ -15,6 +15,12 @@ spec:
       name: letsencrypt-production
     # Enable the HTTP-01 challenge provider
     solvers:
-    - http01:
-        ingress:
-          class:
+    # - http01:
+    #     ingress:
+    #       class:
+    - dns01:
+        cloudflare:
+          email: ${SECRET_CLOUDFLARE_EMAIL}
+          apiTokenSecretRef:
+            name: cloudflare-api-key
+            key: cloudflare_api_token
