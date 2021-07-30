@@ -59,4 +59,4 @@ spec:
         tls:
         - secretName: wallabag-tls
           hosts:
-        - wallabag.${SECRET_DOMAIN_ME}
+          - wallabag.${SECRET_DOMAIN_ME}
