@@ -6,7 +6,7 @@ metadata:
   namespace: wallabag
 spec:
   friendlyName: "K8S wallabag"
-  url: "https://wallabag1.${SECRET_DOMAIN_ME}"
+  url: "https://wallabag.${SECRET_DOMAIN_ME}"
   type: HTTPS
   httpMethod: GET
   interval: 300
