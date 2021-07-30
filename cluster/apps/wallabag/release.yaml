@@ -43,19 +43,20 @@ spec:
       persistence:
         enabled: true
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "traefik"
-        cert-manager.io/cluster-issuer: letsencrypt-production
-        traefik.ingress.kubernetes.io/redirect-entry-point: https
-        external-dns/is-public: "true"
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-      hosts:
-      - host: "wallabag.${SECRET_DOMAIN_ME}"
-        paths:
-        - path: /
-          pathType: Prefix
-      tls:
-      - secretName: wallabag-tls
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
         hosts:
-      - wallabag.${SECRET_DOMAIN_ME}
+        - host: "wallabag.${SECRET_DOMAIN_ME}"
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - secretName: wallabag-tls
+          hosts:
+        - wallabag.${SECRET_DOMAIN_ME}
