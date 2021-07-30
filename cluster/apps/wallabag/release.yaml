@@ -8,7 +8,7 @@ spec:
   releaseName: wallabag
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: wallabag
       version: 3.1.0
       sourceRef:
