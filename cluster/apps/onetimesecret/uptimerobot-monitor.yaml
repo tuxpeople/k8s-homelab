@@ -6,7 +6,7 @@ metadata:
   namespace: onetimesecret
 spec:
   friendlyName: "K8S onetimesecret"
-  url: "https://secret.${SECRET_DOMAIN_ME}"
+  url: "https://secrets.${SECRET_DOMAIN_CH}"
   type: HTTPS
   httpMethod: GET
   interval: 300

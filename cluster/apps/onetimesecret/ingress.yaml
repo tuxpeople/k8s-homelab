@@ -17,9 +17,9 @@ spec:
   tls:
     - secretName: secret-tls
       hosts:
-        - secret.${SECRET_DOMAIN_CH}
+        - secrets.${SECRET_DOMAIN_CH}
   rules:
-    - host: secret.${SECRET_DOMAIN_CH}
+    - host: secrets.${SECRET_DOMAIN_CH}
       http:
         paths:
           - path: /

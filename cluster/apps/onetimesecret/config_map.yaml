@@ -10,8 +10,8 @@ metadata:
 data:
   config: |
     :site:
-      :host: secret.${SECRET_DOMAIN_ME}
-      :domain: secret.${SECRET_DOMAIN_ME}
+      :host: secrets.${SECRET_DOMAIN_CH}
+      :domain: secrets.${SECRET_DOMAIN_CH}
       :ssl: false
       # NOTE Once the secret is set, do not change it (keep a backup offsite)
       :secret: CHANGEME
