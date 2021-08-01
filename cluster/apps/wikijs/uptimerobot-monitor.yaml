@@ -6,7 +6,7 @@ metadata:
   namespace: wikijs
 spec:
   friendlyName: "K8S wikijs"
-  url: "https://wikijs.${SECRET_DOMAIN_CH}"
+  url: "https://wikijs.${SECRET_DOMAIN_ME}"
   type: HTTPS
   httpMethod: GET
   interval: 300
