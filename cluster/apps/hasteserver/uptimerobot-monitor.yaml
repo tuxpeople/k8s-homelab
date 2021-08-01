@@ -1,0 +1,13 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: hasteserver
+  namespace: hasteserver
+spec:
+  friendlyName: "K8S hasteserver"
+  url: "https://paste.${SECRET_DOMAIN_CH}"
+  type: HTTPS
+  httpMethod: GET
+  interval: 300
+  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
