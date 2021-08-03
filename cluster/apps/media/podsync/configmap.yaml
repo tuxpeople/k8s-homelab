@@ -30,6 +30,14 @@ data:
       format = "audio"
       clean = { keep_last = 5 }
 
+      [feeds.headlock]
+      url = "https://www.youtube.com/playlist?list=PLmscAdSi8ov0vNz-O0_8N5ppxnuvZY4sX"
+      page_size = 5
+      update_period = "7h"
+      quality = "high"
+      format = "audio"
+      clean = { keep_last = 5 }
+
       [feeds.automateallthethings]
       url = "https://www.youtube.com/playlist?list=PLuNyVxp8vlDKGy1d5O8aDfB6qopI91jX7"
       page_size = 10
