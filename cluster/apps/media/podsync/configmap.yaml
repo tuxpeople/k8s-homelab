@@ -31,7 +31,7 @@ data:
       clean = { keep_last = 5 }
 
       [feeds.headlock]
-      url = "https://www.youtube.com/playlist?list=PLmscAdSi8ov0vNz-O0_8N5ppxnuvZY4sX"
+      url = "https://www.youtube.com/channel/UC4A1tkY5mw9MWYa9SnDi3CQ"
       page_size = 5
       update_period = "7h"
       quality = "high"
