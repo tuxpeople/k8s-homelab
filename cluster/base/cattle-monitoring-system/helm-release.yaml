@@ -23,20 +23,20 @@ spec:
   upgrade:
     remediation:
       retries: 3
-  # values:
-  #   grafana:
-  #     ingress:
-  #       enabled: true
-  #       hosts:
-  #       - grafana2.${SECRET_DOMAIN_ME}
-  #       annotations:
-  #         kubernetes.io/ingress.class: traefik
-  #         cert-manager.io/cluster-issuer: letsencrypt-production
-  #         traefik.ingress.kubernetes.io/redirect-entry-point: https
-  #       tls:
-  #       - secretName: grafana2-tls
-  #         hosts:
-  #         - grafana2.${SECRET_DOMAIN_ME}
+  values:
+    grafana:
+      ingress:
+        enabled: true
+        hosts:
+        - grafana2.${SECRET_DOMAIN_ME}
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+        tls:
+        - secretName: grafana2-tls
+          hosts:
+          - grafana2.${SECRET_DOMAIN_ME}
   #     plugins:
   #     - natel-discrete-panel
   #     - pr0ps-trackmap-panel
