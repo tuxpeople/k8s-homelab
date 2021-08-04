@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: gollum
-        image: tdeutsch/gollum-small:edge
+        image: tdeutsch/gollum-small:20210804142158
+
         imagePullPolicy: Always
         resources:
           requests:
