@@ -40,3 +40,24 @@ spec:
         - secretName: share-tls
           hosts:
           - "share.${SECRET_DOMAIN_ME}"
+    config: |
+      sharry.restserver {
+        # base-url = "https://share.${SECRET_DOMAIN_ME}"
+        bind {
+          address = "0.0.0.0"
+          port = {{ .Values.service.main.ports.http.port }}
+        }
+        sharry.restserver.backend.signup {
+          mode = "closed"
+        }
+        backend {
+          auth {
+            fixed {
+              enabled = true  # set to true to enable this auth provider
+              user = "admin"
+              password = "admin"
+              order = 10
+            }
+          }
+        }
+      }
