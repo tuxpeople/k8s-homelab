@@ -3,7 +3,7 @@ apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
   name: sharry
-  namespace: utils
+  namespace: sharry
 spec:
   friendlyName: "K8S sharry"
   url: "https://share.${SECRET_DOMAIN_ME}"
