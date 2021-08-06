@@ -53,7 +53,7 @@ spec:
           }
           auth {
             fixed {
-              enabled = true  # set to true to enable this auth provider
+              enabled = false  # set to true to enable this auth provider
               user = "admin"
               password = "admin"
               order = 10
