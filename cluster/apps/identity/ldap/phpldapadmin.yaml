@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: phpldapadmin
+  name: phpldapadmin
+  namespace: identity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpldapadmin
+  template:
+    metadata:
+      labels:
+        app: phpldapadmin
+    spec:
+      containers:
+      - image: osixia/phpldapadmin:latest
+        imagePullPolicy: Always
+        name: phpldapadmin
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: phpldapadmin
+  name: phpldapadmin-svc
+  namespace: identity
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: phpldapadmin
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: identity
+  labels:
+    app: phpldapadmin
+  name: phpldapadmin
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: phpldapadmin.${SECRET_DOMAIN_INTERNAL}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: phpldapadmin
+            port:
+              number: 80
