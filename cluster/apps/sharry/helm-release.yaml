@@ -58,20 +58,20 @@ spec:
               password = "admin"
               order = 10
             }
+            oauth = [
+                {
+                  enabled = true
+                  id = "internal"
+                  name = "Internal"
+                  icon = "fas fa-address-book"
+                  authorize-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/auth"
+                  token-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/token"
+                  user-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/userinfo"
+                  user-id-key = "login"
+                  client-id = "${SECRET_OIDC_CLIENT_ID}"
+                  client-secret = "${SECRET_OIDC_CLIENT_SECRET}"
+                }
+            ]
           }
-          oauth = [
-              {
-                enabled = true
-                id = "internal"
-                name = "Internal"
-                icon = "fas fa-address-book"
-                authorize-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/auth"
-                token-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/token"
-                user-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/userinfo"
-                user-id-key = "login"
-                client-id = "${SECRET_OIDC_CLIENT_ID}"
-                client-secret = "${SECRET_OIDC_CLIENT_SECRET}"
-              }
-          ]
         }
       }
