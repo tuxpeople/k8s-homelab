@@ -63,7 +63,7 @@ spec:
       }
       oauth = [
           {
-            enabled = false
+            enabled = true
             id = "internal"
             name = "Internal"
             icon = "fas fa-address-book"
