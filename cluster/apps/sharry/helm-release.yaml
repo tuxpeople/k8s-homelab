@@ -47,10 +47,10 @@ spec:
           address = "0.0.0.0"
           port = {{ .Values.service.main.ports.http.port }}
         }
-        sharry.restserver.backend.signup {
-          mode = "closed"
-        }
         backend {
+          signup {
+            mode = "closed"
+          }
           auth {
             fixed {
               enabled = true  # set to true to enable this auth provider
@@ -61,3 +61,17 @@ spec:
           }
         }
       }
+      oauth = [
+          {
+            enabled = false
+            id = "internal"
+            name = "Internal"
+            icon = "fas fa-address-book"
+            authorize-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/auth"
+            token-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/token"
+            user-url = "https://sso.eighty-three.me/auth/realms/SKY/protocol/openid-connect/userinfo"
+            user-id-key = "login"
+            client-id = "${SECRET_OIDC_CLIENT_ID}"
+            client-secret = "${SECRET_OIDC_CLIENT_SECRET}"
+          }
+      ]
