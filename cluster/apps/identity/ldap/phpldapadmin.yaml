@@ -20,6 +20,11 @@ spec:
       - image: osixia/phpldapadmin:latest
         imagePullPolicy: Always
         name: phpldapadmin
+        env:
+        - name: PHPLDAPADMIN_LDAP_HOSTS
+          value: openldap
+        - name: PHPLDAPADMIN_HTTPS
+          value: false
         ports:
         - containerPort: 80
           protocol: TCP
