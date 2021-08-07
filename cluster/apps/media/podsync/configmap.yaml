@@ -38,6 +38,7 @@ data:
       format = "audio"
       clean = { keep_last = 5 }
       filters = { title = "(B|b)reaking)" }
+      custom = { title = "Headlock Breaking News }
 
       [feeds.automateallthethings]
       url = "https://www.youtube.com/playlist?list=PLuNyVxp8vlDKGy1d5O8aDfB6qopI91jX7"
