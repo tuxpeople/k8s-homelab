@@ -58,7 +58,7 @@ spec:
           stubzones
           path /skydns
           endpoint http://k3s-node1.lab:2379 http://k3s-node2.lab:2379 http://k3s-node3.lab:2379
-          tls /etc/coredns/coredns-etcd/cert.pem /etc/coredns/coredns-etcd/key.pem /etc/coredns/coredns-etcd/ca.crt
+      # tls /etc/coredns/coredns-etcd/cert.pem /etc/coredns/coredns-etcd/key.pem /etc/coredns/coredns-etcd/ca.crt
       # Set up cache
       - name: cache
         parameters: 30
