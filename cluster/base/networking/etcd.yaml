@@ -24,6 +24,3 @@ spec:
       retries: 3
   values:
     replicaCount: 3
-    auth:
-      rbac:
-        rootPassword: secretpassword
