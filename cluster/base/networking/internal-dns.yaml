@@ -30,7 +30,7 @@ spec:
     - ingress
     provider: coredns
     coredns:
-      etcdEndpoints: "etcd:2379"
+      etcdEndpoints: "http://etcd:2379"
     policy: sync
     txtPrefix: "k8s."
     domainFilters:
