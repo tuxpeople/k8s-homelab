@@ -62,9 +62,9 @@ spec:
       # Set up cache
       - name: cache
         parameters: 30
-    extraSecrets:
-    - name: coredns-etcd
-      mountPath: /etc/coredns/coredns-etcd
+    # extraSecrets:
+    # - name: coredns-etcd
+    #   mountPath: /etc/coredns/coredns-etcd
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
