@@ -30,13 +30,14 @@ data:
       format = "audio"
       clean = { keep_last = 5 }
 
-      [feeds.headlock]
+      [feeds.headlock_breaking]
       url = "https://www.youtube.com/channel/UC4A1tkY5mw9MWYa9SnDi3CQ"
       page_size = 5
       update_period = "7h"
       quality = "high"
       format = "audio"
       clean = { keep_last = 5 }
+      filters = { title = "(B|b)reaking)" }
 
       [feeds.automateallthethings]
       url = "https://www.youtube.com/playlist?list=PLuNyVxp8vlDKGy1d5O8aDfB6qopI91jX7"
