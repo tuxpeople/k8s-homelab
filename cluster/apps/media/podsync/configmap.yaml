@@ -37,7 +37,7 @@ data:
       quality = "high"
       format = "audio"
       clean = { keep_last = 5 }
-      filters = { title = "(B|b)reaking)" }
+      filters = { title = "(B|b)reaking" }
       custom = { title = "Headlock Breaking News" }
 
       [feeds.automateallthethings]
