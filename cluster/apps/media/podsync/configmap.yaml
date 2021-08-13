@@ -33,7 +33,7 @@ data:
       [feeds.headlock_breaking]
       url = "https://www.youtube.com/channel/UC4A1tkY5mw9MWYa9SnDi3CQ"
       page_size = 5
-      update_period = "7h"
+      update_period = "6h"
       quality = "high"
       format = "audio"
       clean = { keep_last = 5 }
@@ -43,7 +43,7 @@ data:
       [feeds.automateallthethings]
       url = "https://www.youtube.com/playlist?list=PLuNyVxp8vlDKGy1d5O8aDfB6qopI91jX7"
       page_size = 10
-      update_period = "24h"
+      update_period = "15h"
       quality = "high"
       format = "video"
       clean = { keep_last = 10 }
@@ -51,7 +51,7 @@ data:
       [feeds.mytowatch]
       url = "https://www.youtube.com/playlist?list=PL7qBQ0Mi2xAp-alNW5mJ7z4X9Zko9rpWJ"
       page_size = 30
-      update_period = "12h"
+      update_period = "7h"
       quality = "high"
       format = "video"
       clean = { keep_last = 30 }
@@ -59,7 +59,7 @@ data:
       [feeds.adriangoins]
       url="https://www.youtube.com/channel/UCjjwExYSPRWwjj9WwydrVmA"
       page_size = 20
-      update_period = "18h"
+      update_period = "15h"
       quality = "high"
       format = "video"
       clean = { keep_last = 20 }
@@ -67,7 +67,7 @@ data:
     [feeds.SmarterEveryDay]
       url="https://www.youtube.com/user/destinws2/videos"
       page_size = 20
-      update_period = "18h"
+      update_period = "16h"
       quality = "high"
       format = "video"
       clean = { keep_last = 20 }
@@ -75,7 +75,7 @@ data:
     [feeds.MyMechanicsInsights]
       url="https://www.youtube.com/channel/UC4EQCwfH54ieNPswtXh5K0w"
       page_size = 10
-      update_period = "18h"
+      update_period = "17h"
       quality = "high"
       format = "video"
       clean = { keep_last = 10 }
@@ -91,7 +91,7 @@ data:
     [feeds.sammyvlog]
       url="https://youtube.com/playlist?list=PLPjr81MfHO9uAob4pVd_a3YrUB21uYCAM"
       page_size = 10
-      update_period = "18h"
+      update_period = "19h"
       quality = "high"
       format = "video"
       clean = { keep_last = 10 }
