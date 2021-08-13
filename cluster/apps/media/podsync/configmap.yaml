@@ -42,59 +42,59 @@ data:
 
       [feeds.automateallthethings]
       url = "https://www.youtube.com/playlist?list=PLuNyVxp8vlDKGy1d5O8aDfB6qopI91jX7"
-      page_size = 10
+      page_size = 5
       update_period = "15h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 10 }
+      clean = { keep_last = 5 }
 
       [feeds.mytowatch]
       url = "https://www.youtube.com/playlist?list=PL7qBQ0Mi2xAp-alNW5mJ7z4X9Zko9rpWJ"
-      page_size = 30
+      page_size = 20
       update_period = "7h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 30 }
+      clean = { keep_last = 20 }
 
       [feeds.adriangoins]
       url="https://www.youtube.com/channel/UCjjwExYSPRWwjj9WwydrVmA"
-      page_size = 20
+      page_size = 5
       update_period = "15h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 20 }
+      clean = { keep_last = 5 }
 
     [feeds.SmarterEveryDay]
       url="https://www.youtube.com/user/destinws2/videos"
-      page_size = 20
+      page_size = 5
       update_period = "16h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 20 }
+      clean = { keep_last = 5 }
 
     [feeds.MyMechanicsInsights]
       url="https://www.youtube.com/channel/UC4EQCwfH54ieNPswtXh5K0w"
-      page_size = 10
+      page_size = 5
       update_period = "17h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 10 }
+      clean = { keep_last = 5 }
 
     [feeds.MyMechanics]
       url="https://www.youtube.com/channel/UCMrMVIBtqFW6O0-MWq26gqw"
-      page_size = 10
+      page_size = 5
       update_period = "18h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 10 }
+      clean = { keep_last = 5 }
 
     [feeds.sammyvlog]
       url="https://youtube.com/playlist?list=PLPjr81MfHO9uAob4pVd_a3YrUB21uYCAM"
-      page_size = 10
+      page_size = 5
       update_period = "19h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 10 }
+      clean = { keep_last = 5 }
 
     [downloader]
     self_update = true
