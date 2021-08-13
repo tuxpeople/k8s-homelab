@@ -88,6 +88,14 @@ data:
       format = "video"
       clean = { keep_last = 10 }
 
+    [feeds.sammyvlog]
+      url="https://youtube.com/playlist?list=PLPjr81MfHO9uAob4pVd_a3YrUB21uYCAM"
+      page_size = 10
+      update_period = "18h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 10 }
+
     [downloader]
     self_update = true
 kind: ConfigMap
