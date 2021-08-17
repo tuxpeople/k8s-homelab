@@ -31,9 +31,9 @@ spec:
     cleanupOnFail: true
     recreate: true
   # Depends on having the sealed secret dex-helm-values un-encrypted.
-  dependsOn:
-    - name: sealed-secrets
-      namespace: kube-system
+  # dependsOn:
+  #   - name: sealed-secrets
+  #     namespace: kube-system
   values:
     env:
       KUBERNETES_POD_NAMESPACE: identity
