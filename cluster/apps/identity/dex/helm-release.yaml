@@ -55,7 +55,7 @@ spec:
     env:
       KUBERNETES_POD_NAMESPACE: identity
     config:
-      issuer: https://dex.eighty-three.me
+      issuer: https://sso.eighty-three.me
       storage:
         type: kubernetes
         config:
@@ -68,7 +68,7 @@ spec:
         http: 0.0.0.0:5556
       frontend:
         theme: 'tectonic'
-        issuer: 'Raspbernetes'
+        issuer: 'eighty-three'
         issuerUrl: 'https://eighty-three.me'
         logoUrl: https://camo.githubusercontent.com/5b298bf6b0596795602bd771c5bddbb963e83e0f/68747470733a2f2f692e696d6775722e636f6d2f7031527a586a512e706e67
       expiry:
