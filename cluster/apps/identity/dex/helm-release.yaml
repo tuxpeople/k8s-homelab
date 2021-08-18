@@ -51,7 +51,7 @@ spec:
       tls:
         - hosts:
             - sso.${SECRET_DOMAIN_ME}
-          secretName: keycloak-tls
+          secretName: sso-tls
     env:
       KUBERNETES_POD_NAMESPACE: identity
     config:
