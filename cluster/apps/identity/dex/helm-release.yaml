@@ -84,7 +84,7 @@ spec:
       staticClients:
         - id: ${SECRET_OIDC_CLIENT_ID}
           redirectURIs:
-            - 'http://127.0.0.1:5555/callback'
+            - 'https://wiki2.eighty-three.me/_oauth'
           name: 'Example App'
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
