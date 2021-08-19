@@ -85,7 +85,8 @@ spec:
         - id: ${SECRET_OIDC_CLIENT_ID}
           redirectURIs:
             - 'https://wiki2.eighty-three.me/_oauth'
-          name: 'Example App'
+            - 'https://code.eighty-three.me/_oauth'
+          name: 'SKY'
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
         - type: ldap
