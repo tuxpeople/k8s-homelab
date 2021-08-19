@@ -41,11 +41,11 @@ spec:
         server:
           ROOT_URL: https://git.${SECRET_DOMAIN_ME}
         cron.sync_external_users:
-          ENABLED: true
-          RUN_AT_START: true
+          ENABLED: "true"
+          RUN_AT_START: "true"
           SCHEDULE: "@every 10m"
-          UPDATE_EXISTING: true
-          NO_SUCCESS_NOTICE: true
+          UPDATE_EXISTING: "true"
+          NO_SUCCESS_NOTICE: "true"
       ldap:
         enabled: true
         name: 'k8s-ldap'
