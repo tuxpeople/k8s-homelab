@@ -42,7 +42,7 @@ spec:
     auth:
       oidcAuth:
         enabled: true
-        providerURL: https://sso.eighty-three.me/auth/realms/SKY
+        providerURL: https://sso.eighty-three.me/auth/ldap
         redirectURL: https://k10.eighty-three.me
         clientID: ${SECRET_OIDC_CLIENT_ID}
         clientSecret: ${SECRET_OIDC_CLIENT_SECRET}

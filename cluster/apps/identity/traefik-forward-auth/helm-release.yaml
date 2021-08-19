@@ -31,7 +31,7 @@ spec:
     providers:
       oidc:
         enabled: true
-        issuerUrl: "https://sso.${SECRET_DOMAIN_ME}/auth/realms/SKY"
+        issuerUrl: "https://sso.${SECRET_DOMAIN_ME}/auth/ldap"
         clientId: "${SECRET_OIDC_CLIENT_ID}"
     ingress:
       enabled: true
