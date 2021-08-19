@@ -43,7 +43,7 @@ spec:
         cron.sync_external_users:
           ENABLED: true
           RUN_AT_START: true
-          SCHEDULE: "@hourly"
+          SCHEDULE: "@every 10m"
           UPDATE_EXISTING: true
           NO_SUCCESS_NOTICE: true
       ldap:
