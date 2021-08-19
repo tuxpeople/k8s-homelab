@@ -31,7 +31,7 @@ spec:
     providers:
       oidc:
         enabled: true
-        issuerUrl: "https://sso.${SECRET_DOMAIN_ME}/auth/ldap"
+        issuerUrl: "https://sso.${SECRET_DOMAIN_ME}"
         clientId: "${SECRET_OIDC_CLIENT_ID}"
     ingress:
       enabled: true
