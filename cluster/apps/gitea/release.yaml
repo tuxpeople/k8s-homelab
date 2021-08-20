@@ -52,13 +52,13 @@ spec:
         securityProtocol: unencrypted
         host: "openldap.identity.svc.cluster.local"
         port: "1389"
-        userSearchBase: "ou=users,dc=sky,dc=lab"
-        userFilter: (objectClass=Person)
-        adminFilter: (memberOf=cn=admins,ou=users,dc=sky,dc=lab)
+        userSearchBase: "OU=users,DC=sky,DC=lab"
+        userFilter: (&(objectCategory=Person)(memberOf=CN=gitlab,OU=users,DC=sky,DC=lab)(sn=%s)
+        adminFilter: (memberOf=CN=admins,OU=users,DC=sky,DC=lab)
         emailAttribute: mail
         bindDn: ${SECRET_LDAP_BIND_DN}
         bindPassword: ${SECRET_LDAP_BIND_PW}
-        usernameAttribute: uid
+        usernameAttribute: sn
         # sshPublicKeyAttribute: sshPublicKey
     persistence:
       enabled: true
