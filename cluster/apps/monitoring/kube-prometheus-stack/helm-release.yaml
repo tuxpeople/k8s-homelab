@@ -148,6 +148,9 @@ spec:
         additionalScrapeConfigs:
         - job_name: 'node-exporter'
           honor_timestamps: true
+          basic_auth:
+            username: randomuser
+            password: examplepassword
           static_configs:
           - targets:
             # nas
