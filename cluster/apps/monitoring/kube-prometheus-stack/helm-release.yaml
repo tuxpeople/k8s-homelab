@@ -42,7 +42,7 @@ spec:
           routes:
           - match:
               alertname: Watchdog
-            receiver: 'null'
+            receiver: 'DeadMansSnitch'
           - match:
               alertname: CPUThrottlingHigh
             receiver: 'email'
@@ -64,7 +64,7 @@ spec:
             to: youremail@gmail.com
         - name: DeadMansSnitch
           webhook_config:
-          - url: deadmanssnitch.com
+          - url: https://nosnch.in/c15491ac44
 
         # Inhibition rules allow to mute a set of alerts given that another alert is firing.
         # We use this to mute any warning-level notifications if the same alert is already critical.
