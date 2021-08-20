@@ -26,6 +26,7 @@ spec:
   values:
     env:
       TZ: "Europe/Zurich"
+      MYSQL_ROOT_PASSWORD: wallabag-rootpass
       SYMFONY__ENV__DATABASE_DRIVER: pdo_mysql
       SYMFONY__ENV__DATABASE_HOST: wallabag-mariadb
       SYMFONY__ENV__DATABASE_PORT: 3306
@@ -50,11 +51,6 @@ spec:
         size: 5G
     mariadb:
       enabled: true
-      architecture: standalone
-      auth:
-        database: wallabag
-        username: wallabag
-        password: wallabag-pass
       primary:
         persistence:
           enabled: true
