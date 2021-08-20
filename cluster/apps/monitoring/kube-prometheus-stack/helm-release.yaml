@@ -45,16 +45,16 @@ spec:
             receiver: 'null'
           - match:
               alertname: CPUThrottlingHigh
-            receiver: 'null'
+            receiver: 'email'
           - match:
               alertname: KubeMemoryOvercommit
-            receiver: 'null'
+            receiver: 'email'
           - match:
               alertname: KubeCPUOvercommit
-            receiver: 'null'
+            receiver: 'email'
           - match:
               alertname: KubeletTooManyPods
-            receiver: 'null'
+            receiver: 'email'
 
         receivers:
         - name: 'null'
@@ -62,6 +62,9 @@ spec:
           email_configs:
           - send_resolved: true
             to: youremail@gmail.com
+        - name: DeadMansSnitch
+          webhook_config:
+          - url: deadmanssnitch.com
 
         # Inhibition rules allow to mute a set of alerts given that another alert is firing.
         # We use this to mute any warning-level notifications if the same alert is already critical.
