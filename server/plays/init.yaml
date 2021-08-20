@@ -9,5 +9,6 @@
     - geerlingguy.repo-epel
     - frzk.chrony
     - ansible-role-homelab-basics
-    - oasis_roles.system.package_updater
+    # - oasis_roles.system.package_updater
     - robertdebock.roles.keepalived
+    # - oasis_roles.system.reboot
