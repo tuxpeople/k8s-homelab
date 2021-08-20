@@ -124,6 +124,11 @@ spec:
           gnetId: 1860
           datasource: Prometheus
           revision: 23
+        # Ref: https://grafana.com/grafana/dashboards/4475/revisions
+        traefik:
+          gnetId: 4475
+          datasource: Prometheus
+          revision: 5
     sidecar:
       dashboards:
         enabled: true
