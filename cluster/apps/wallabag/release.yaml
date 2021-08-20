@@ -50,6 +50,11 @@ spec:
         size: 5G
     mariadb:
       enabled: true
+      architecture: standalone
+      auth:
+        database: wallabag
+        username: wallabag
+        password: wallabag-pass
       primary:
         persistence:
           enabled: true
