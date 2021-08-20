@@ -1,0 +1,84 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: smtp
+  name: smtp
+  namespace: utils
+spec:
+  selector:
+    matchLabels:
+      app: smtp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: smtp
+    spec:
+      containers:
+      - image: bytemark/smtp
+        imagePullPolicy: Always
+        name: smtp
+        env:
+        - name: "TZ"
+          value: "Europe/Zurich"
+        - name: "RELAY_HOST"
+          value: "smtp.sendgrid.net"
+        - name: "RELAY_PORT"
+          value: "587"
+        - name: "RELAY_USERNAME"
+          value: "apikey"
+        - name: "RELAY_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: smtp-password
+              key: password
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 25
+        livenessProbe:
+          exec:
+            command:
+            - exim
+            - '-bt'
+            - 'test@tuxpeople.org || exit 1'
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smtp
+  namespace: utils
+spec:
+  type: ClusterIP
+  ports:
+  - port: 25
+    targetPort: 25
+    protocol: TCP
+    name: http
+  selector:
+    app: smtp
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: smtp-password
+  namespace: utils
+spec:
+  encryptedData:
+    password: AgB2trSLfNCSNXHxOtg06m4BaFZM+1BcLXxMIO/4Juao9j3GsKN42BUH1h2w35wArXhXP3IyytaaOxpyiYDHEHmtITbAAMr7srBN7+zwvRoHEuLq6xy1mejKPCwhcQQkLI21Hl/0Zx1OB7yItK5akRKVksZtmDvmUXRdaHfC6+zFHAneE8hCQpaa2UenK9A/M6O3+u4W343BlUQkFuiJB3qy+OOH1Lp9vat/VDwnej01tjok0deexXEAqw/X6eaJkpINHW+8ZQwZyWgF59DHb2j2x7dC9QJ2Fn0FKFDNX4jn+VqrPXogkBs9L4G2AYSB3AUllf4zg6+TZdxwMZhfl5SRLjssg8roMyZ9XcsWfQ1jrRD0A+rSffy/k/wbD2PCMdy1HU/RakeztH1hZFXrLFeWegdgTbZhJZ+NVwWahkpyoTKteVYpB1FlmJVvxd1SInys+us45zujOpueBHEmvRvaD02KodmzANmi2/7Q3ftPvmOQcxlGtOPc+88kqc/B7T7/L3+ru3C6wFbhNwEJ24tlcCwFfgY2be5vIEwjUNkAft6stVbsFWvmpFNihawAuGR2Ipgqr8Aw70hANtrZ6pkCNMvV0YG5oayfVBgqL5Q/flnMOViqcv6uXODPC0ntFfvvshyngU91siBILpQzIsolFtkwglAqyx2bDvJZ0ehT5d4cx8hZyZAmqRUrr3Zvjj0S4mv7ixx5DezCKOc3iKXSLbo77nvRFIoLqRoW+zdY04fi/SKC3+Mapq9JOE1H6UTrSBn29T8YWEXgSFQwRM9urRTEtMg=
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: smtp-password
+      namespace: utils
