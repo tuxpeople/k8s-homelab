@@ -26,15 +26,6 @@ spec:
   values:
     env:
       TZ: "Europe/Zurich"
-      MYSQL_ROOT_PASSWORD: wallabag-rootpass
-      SYMFONY__ENV__DATABASE_DRIVER: pdo_mysql
-      SYMFONY__ENV__DATABASE_HOST: wallabag-mariadb
-      SYMFONY__ENV__DATABASE_PORT: 3306
-      SYMFONY__ENV__DATABASE_NAME: wallabag
-      SYMFONY__ENV__DATABASE_USER: wallabag
-      SYMFONY__ENV__DATABASE_PASSWORD: wallabag-pass
-      SYMFONY__ENV__DATABASE_CHARSET: utf8mb4
-      SYMFONY__ENV__FROM_EMAIL: wallabag@example.com
       # SYMFONY__ENV__DOMAIN_NAME: https://wb.DOMAIN.net #fake url
       # SYMFONY__ENV__SERVER_NAME: "Your wallabag instance"
       # SYMFONY__ENV__FOSUSER_CONFIRMATION: FALSE
@@ -49,11 +40,10 @@ spec:
         enabled: true
         accessMode: ReadWriteOnce
         size: 5G
-    mariadb:
-      enabled: true
-      primary:
-        persistence:
-          enabled: true
+      data:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 5G
     ingress:
       main:
         enabled: true
