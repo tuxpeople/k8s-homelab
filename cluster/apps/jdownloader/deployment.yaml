@@ -32,7 +32,7 @@ spec:
           value: Europe/Zurich
         - name: XDG_DOWNLOAD_DIR
           value: /Downloads
-        image: quay.io/tdeutsch/jdownloader-headless:20210816134011
+        image: quay.io/tdeutsch/jdownloader-headless:20210820131251
         imagePullPolicy: Always
         name: jdownloader
         resources:
