@@ -120,7 +120,7 @@ spec:
             userSearch:
               baseDN: ou=users,dc=sky,dc=lab
               filter: "(objectClass=person)"
-              username: cn
+              username: sn
               # "DN" (case sensitive) is a special attribute name. It indicates that
               # this value should be taken from the entity's DN not an attribute on
               # the entity.
