@@ -24,6 +24,7 @@ spec:
       retries: 3
   values:
     alertmanager:
+      enabled: false
       config:
         global:
           smtp_to: ${SECRET_EMAIL}
