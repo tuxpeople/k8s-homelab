@@ -24,7 +24,7 @@ spec:
       hostNetwork: true
       containers:
       - name: node-problem-detector
-        image: k8s.gcr.io/node-problem-detector:v0.1
+        image: k8s.gcr.io/node-problem-detector:v0.3
         securityContext:
           privileged: true
         resources:
