@@ -24,6 +24,27 @@
         path: /tmp/haproxy-2.4.3-1.el8.x86_64.rpm
         state: absent
 
+    - name: modify selinux settings
+      block:
+        - name: add haproxy_stats_port to http_port_t selinux type
+          community.general.seport:
+            ports: "{{ haproxy_stats_port }}"
+            proto: tcp
+            setype: http_port_t
+            state: present
+          when:
+            - haproxy_stats_port is defined
+        - name: allow haproxy to open any port
+          ansible.posix.seboolean:
+            name: haproxy_connect_any
+            state: yes
+            persistent: yes
+          notify:
+            - reboot
+      when:
+        - ansible_selinux.status is defined
+        - ansible_selinux.status == "enabled"
+
     - name: Copy haproxy config
       ansible.builtin.copy:
         src: ~/git/k8s-homelab/server/files/haproxy.cfg
