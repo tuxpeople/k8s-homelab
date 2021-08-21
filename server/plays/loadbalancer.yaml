@@ -39,8 +39,7 @@
             name: haproxy_connect_any
             state: yes
             persistent: yes
-          notify:
-            - reboot
+          register: connect_any
       when:
         - ansible_selinux.status is defined
         - ansible_selinux.status == "enabled"
@@ -55,3 +54,7 @@
         name: haproxy
         enabled: yes
         state: restarted
+
+    - name: Reboot if needed
+      ansible.builtin.reboot:
+      when: connect_any
