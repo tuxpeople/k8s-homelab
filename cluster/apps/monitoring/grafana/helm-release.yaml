@@ -129,6 +129,11 @@ spec:
           gnetId: 4475
           datasource: Prometheus
           revision: 5
+        # Ref: https://grafana.com/grafana/dashboards/2428/revisions
+        haproxy:
+          gnetId: 2428
+          datasource: Prometheus
+          revision: 7
     sidecar:
       dashboards:
         enabled: true
