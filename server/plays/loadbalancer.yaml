@@ -1,0 +1,36 @@
+---
+- name: Basis configuration for loadbalancers
+  hosts: loadbalancers
+  become: yes
+
+  roles:
+    - role: robertdebock.roles.core_dependencies
+    - role: robertdebock.roles.keepalived
+
+  tasks:
+    - name: Copy haproxy rpm
+      ansible.builtin.copy:
+        src: ~/git/HAProxy-2-RPM-builder/RPMS/haproxy-2.4.3-1.el8.x86_64.rpm
+        dest: /tmp/haproxy-2.4.3-1.el8.x86_64.rpm
+
+    - name: Install haproxy rpm from a local file
+      ansible.builtin.yum:
+        name: /tmp/haproxy-2.4.3-1.el8.x86_64.rpm
+        state: present
+        disable_gpg_check: yes
+
+    - name: Remove haproxy rpm
+      ansible.builtin.file:
+        path: /tmp/haproxy-2.4.3-1.el8.x86_64.rpm
+        state: absent
+
+    - name: Copy haproxy config
+      ansible.builtin.copy:
+        src: ~/git/k8s-homelab/server/files/haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+
+    - name: Enable and start service haproxy
+      ansible.builtin.service:
+        name: haproxy
+        enabled: yes
+        state: restarted

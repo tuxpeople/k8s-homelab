@@ -1,5 +1,3 @@
-vrrp_vip: 192.168.8.222
-vrrp_password: "mae9aikieJ"
 cluster_name: k3s-prod
 nfs_package: "nfs-utils"
 
@@ -9,7 +7,7 @@ k3s_etcd_datastore: true
 k3s_control_node: true
 k3s_registration_address: "{{ vrrp_vip }}"
 k3s_server:
-  tls-san: "{{ vrrp_vip }},{{ cluster_name }}.{{ vrrp_vip }}.nip.io"
+  tls-san: "{{ vrrp_vip }},{{ cluster_name }}.{{ vrrp_vip }}.nip.io,k8s.sky.lab"
   disable:
     - local-storage
   bind-address: 0.0.0.0

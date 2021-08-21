@@ -1,5 +1,5 @@
 ---
-- name: Make a great machine
+- name: Base playbook
   hosts: all
 
   tasks:

@@ -1,6 +1,9 @@
 ansible_user: ansible
 ansible_python_interpreter: /usr/bin/python3
 
+vrrp_vip: 192.168.8.222
+vrrp_password: "mae9aikieJ"
+
 hostname: "{{ inventory_hostname }}"
 reboot_become: true
 reboot_become_user: root

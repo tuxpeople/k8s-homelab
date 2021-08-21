@@ -7,6 +7,8 @@ collections:
 roles:
   - name: ansible-keepalived
     src: https://github.com/tuxpeople/ansible-keepalived
+  - name: ansible-role-remi
+    src: https://github.com/tuxpeople/ansible-role-remi
   - name: ansible-role-k8s-rolling-update
     src: https://github.com/tuxpeople/ansible-role-k8s-rolling-update
   - src: xanmanning.k3s

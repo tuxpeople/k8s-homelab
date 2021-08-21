@@ -1,0 +1,12 @@
+firewall_services:
+  - name: ssh
+  - name: http
+  - name: https
+  - name: 1936
+    protocol: tcp
+  - name: 6443
+    protocol: tcp
+  - name: 9100
+    protocol: tcp
+  - name: 32400
+    protocol: tcp
