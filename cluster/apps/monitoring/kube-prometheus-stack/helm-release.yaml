@@ -154,8 +154,8 @@ spec:
         - job_name: 'haproxy'
           static_configs:
           - targets:
-            - http://k3s-lb1:1936
-            - http://k3s-lb2:1936
+            - k3s-lb1:1936
+            - k3s-lb2:1936
         - job_name: 'node-exporter'
           honor_timestamps: true
           basic_auth:

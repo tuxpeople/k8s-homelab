@@ -6,8 +6,9 @@
     - oasis_roles.system.hostname
     - robertdebock.roles.bootstrap
     - robertdebock.roles.common
-    - geerlingguy.repo-epel
-    - frzk.chrony
+    - robertdebock.roles.epel
+    - robertdebock.roles.ntp
+    #- frzk.chrony
     - ansible-role-homelab-basics
     # - oasis_roles.system.package_updater
     # - oasis_roles.system.reboot
