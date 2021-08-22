@@ -49,6 +49,7 @@ spec:
             - exim
             - '-bt'
             - 'test@tuxpeople.org'
+            - '|| exit 1'
           initialDelaySeconds: 10
           periodSeconds: 10
 ---
