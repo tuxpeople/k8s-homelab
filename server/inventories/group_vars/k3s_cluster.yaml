@@ -35,7 +35,7 @@ firewall_services:
   - name: 32400
     protocol: tcp
 
-local_kubeconfig: /Users/tdeutsch/iCloudDrive/Allgemein/kubectl/k3os.conf
+local_kubeconfig: /Users/tdeutsch/iCloudDrive/Allgemein/kubectl/k3os.yaml
 sealed_secrets_key: /Users/tdeutsch/git/ansible-sky/master.yaml
 github_user: tuxpeople
 github_repo: k8s-server
