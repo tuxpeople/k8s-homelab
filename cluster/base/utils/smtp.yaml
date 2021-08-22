@@ -48,7 +48,7 @@ spec:
             command:
             - exim
             - '-bt'
-            - 'test@tuxpeople.org || exit 1'
+            - 'test@tuxpeople.org'
           initialDelaySeconds: 10
           periodSeconds: 10
 ---
