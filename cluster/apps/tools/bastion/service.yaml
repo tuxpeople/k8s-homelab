@@ -11,7 +11,7 @@ spec:
   ports:
     - port: 22
       targetPort: 22
-      nodePort: 30222
+      nodePort: 30022
       protocol: TCP
       name: bastion
   selector:
