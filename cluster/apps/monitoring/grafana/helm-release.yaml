@@ -97,10 +97,10 @@ spec:
           datasource: Prometheus
           revision: 8
         # ?? Ref: https://grafana.com/grafana/dashboards/11310/revisions
-        up_client-dpi:
-          gnetId: 11310
-          datasource: Prometheus
-          revision: 4
+        #up_client-dpi:
+        #  gnetId: 11310
+        #  datasource: Prometheus
+        #  revision: 4
       various:
         # Ref: https://grafana.com/grafana/dashboards/13665/revisions
         speedtest:
