@@ -26,6 +26,7 @@ spec:
   values:
     env:
       TZ: "Europe/Zurich"
+      SPEEDTEST_SERVER: "3821" # speedtest.ggamaur.net
     prometheus:
       serviceMonitor:
         enabled: true
