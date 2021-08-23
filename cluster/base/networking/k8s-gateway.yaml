@@ -22,4 +22,4 @@ spec:
     ttl: 1
     service:
       type: NodePort
-      port: 30053
+      nodePort: 30053
