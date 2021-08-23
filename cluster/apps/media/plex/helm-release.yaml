@@ -83,6 +83,13 @@ spec:
             path: /volume1/Multimedia
         mountPath: /data
         readOnly: true
+      dri:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+        mountPath: /dev/dri
+        hostPathType: "Directory"
+        readOnly: false
     addons:
       promtail:
         enabled: true
