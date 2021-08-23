@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: code-server
+  namespace: development
   labels:
     app: code-server
   name: code-server-data

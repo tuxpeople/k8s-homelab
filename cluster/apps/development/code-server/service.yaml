@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: code-server
-  namespace: code-server
+  namespace: development
 spec:
   type: ClusterIP
   ports:
