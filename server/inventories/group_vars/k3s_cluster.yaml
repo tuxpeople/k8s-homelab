@@ -38,6 +38,14 @@ firewall_services:
     protocol: udp
   - name: 32400
     protocol: tcp
+  - name: 32410
+    protocol: tcp
+  - name: 32412
+    protocol: tcp
+  - name: 32413
+    protocol: tcp
+  - name: 32414
+    protocol: tcp
 
 local_kubeconfig: /Users/tdeutsch/iCloudDrive/Allgemein/kubectl/k3os.yaml
 sealed_secrets_key: /Users/tdeutsch/git/ansible-sky/master.yaml
