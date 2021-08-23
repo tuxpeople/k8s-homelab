@@ -1,0 +1,91 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: media
+spec:
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts
+      chart: plex
+      interval: 5m
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      version: 6.0.0
+  install:
+    remediation:
+      retries: 3
+  interval: 5m
+  releaseName: plex
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    env:
+      TZ: Europe/Zurich
+    service:
+      main:
+        primary: true
+        type: NodePort
+        ports:
+          http:
+            port: 32400
+            protocol: TCP
+            targetPort: 32400
+      gdm:
+        enabled: true
+        type: NodePort
+        ports:
+          gdm1:
+            enabled: true
+            port: 32410
+            protocol: UDP
+            targetPort: 32410
+          gdm2:
+            enabled: true
+            port: 32412
+            protocol: UDP
+            targetPort: 32412
+          gdm3:
+            enabled: true
+            port: 32413
+            protocol: UDP
+            targetPort: 32413
+          gdm4:
+            enabled: true
+            port: 32414
+            protocol: UDP
+            targetPort: 32414
+    ingress:
+      main:
+        annotations:
+          kubernetes.io/ingress.class: traefik
+        enabled: true
+        hosts:
+        - host: plex.${SECRET_DOMAIN_INTERNAL}
+          paths:
+          - path: /
+            pathType: Prefix
+    persistence:
+      config:
+        accessMode: ReadWriteOnce
+        enabled: true
+        size: 1Gi
+    addons:
+      promtail:
+        enabled: true
+        loki: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+        logs:
+          - name: promtail/plex
+            path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
+          - name: promtail/plex/plugins
+            path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
+        volumeMounts:
+          - name: config
+            mountPath: /config
+            readOnly: true
+        securityContext:
+          runAsUser: 0
