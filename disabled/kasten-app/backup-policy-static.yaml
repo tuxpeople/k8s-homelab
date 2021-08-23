@@ -3,7 +3,7 @@ apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
   name: static-backup
-  namespace: tools
+  namespace: static
 spec:
   comment: ""
   frequency: "@hourly"
