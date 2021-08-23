@@ -5,7 +5,7 @@ metadata:
   labels:
     app: code-server
   name: code-server
-  namespace: development
+  namespace: code-server
 spec:
   selector:
     matchLabels:
