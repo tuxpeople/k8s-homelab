@@ -106,7 +106,173 @@ spec:
           - __meta_kubernetes_pod_node_name
           targetLabel: kubernetes_node
     grafana:
-      enabled: false
+      enabled: true
+      deploymentStrategy:
+        type: Recreate
+      grafana.ini:
+        server:
+          root_url: https://grafana.${SECRET_DOMAIN_ME}
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+          - name: unifi
+            orgId: 1
+            folder: 'Unifi'
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/unifi
+          - name: gitops
+            orgId: 1
+            folder: 'GitOps'
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/gitops
+          - name: systems
+            orgId: 1
+            folder: 'Systems'
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/systems
+          - name: networking
+            orgId: 1
+            folder: 'Networking'
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/networking
+      datasources:
+        datasources.yaml:
+          apiVersion: 1
+          datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-operated:9090
+            access: proxy
+            isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki:3100
+      dashboards:
+        unifi:
+          # Ref: https://grafana.com/grafana/dashboards/11315/revisions
+          unifi-client-insights:
+            gnetId: 11315
+            revision: 8
+            datasource: Prometheus
+          # Ref: https://grafana.com/grafana/dashboards/11311/revisions
+          unifi-network-sites:
+            gnetId: 11311
+            revision: 4
+            datasource: Prometheus
+          # Ref: https://grafana.com/grafana/dashboards/11314/revisions
+          unifi-uap-insights:
+            gnetId: 11314
+            revision: 9
+            datasource: Prometheus
+          # Ref: https://grafana.com/grafana/dashboards/11312/revisions
+          unifi-usw-insights:
+            gnetId: 11312
+            revision: 8
+            datasource: Prometheus
+          # ?? Ref: https://grafana.com/grafana/dashboards/11313/revisions
+          up_usg_insights:
+            gnetId: 11313
+            datasource: Prometheus
+            revision: 8
+          # ?? Ref: https://grafana.com/grafana/dashboards/11310/revisions
+          #up_client-dpi:
+          #  gnetId: 11310
+          #  datasource: Prometheus
+          #  revision: 4
+        gitops:
+          flux-cluster:
+            url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
+            datasource: Prometheus
+          flux-control-plane:
+            url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
+            datasource: Prometheus
+        systems:
+          # Ref: https://grafana.com/grafana/dashboards/1860/revisions
+          node-exporter-full:
+            gnetId: 1860
+            datasource: Prometheus
+            revision: 23
+        networking:
+          # Ref: https://grafana.com/grafana/dashboards/4475/revisions
+          traefik:
+            gnetId: 4475
+            datasource: Prometheus
+            revision: 5
+          # Ref: https://grafana.com/grafana/dashboards/12693/revisions
+          haproxy:
+            gnetId: 12693
+            datasource: Prometheus
+            revision: 3
+          # Ref: https://grafana.com/grafana/dashboards/13665/revisions
+          speedtest:
+            gnetId: 13665
+            revision: 1
+            datasource: Prometheus
+          # Ref: https://grafana.com/grafana/dashboards/9955/revisions
+          uptimerobot:
+            gnetId: 9955
+            datasource: Prometheus
+            revision: 1
+      sidecar:
+        dashboards:
+          enabled: true
+          searchNamespace: ALL
+        datasources:
+          enabled: true
+          searchNamespace: ALL
+      plugins:
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - grafana-piechart-panel
+      - vonage-status-panel
+      - grafana-worldmap-panel
+      - grafana-clock-panel
+      serviceMonitor:
+        enabled: true
+      ingress:
+        enabled: true
+        hosts:
+        - grafana.${SECRET_DOMAIN_ME}
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+        tls:
+        - secretName: grafana-tls
+          hosts:
+          - grafana.${SECRET_DOMAIN_ME}
+      persistence:
+        type: pvc
+        enabled: true
+        accessModes:
+        - ReadWriteOnce
+        size: 10Gi
+    valuesFrom:
+    - secretKeyRef:
+      kind: Secret
+      name: grafanavalues
     # Disable etcd monitoring. See https://github.com/cablespaghetti/k3s-monitoring/issues/4
     kubeEtcd:
       enabled: false
