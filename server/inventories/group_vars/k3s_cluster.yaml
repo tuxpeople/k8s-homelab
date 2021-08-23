@@ -32,6 +32,10 @@ firewall_services:
     protocol: udp
   - name: 9100
     protocol: tcp
+  - name: 30022
+    protocol: tcp
+  - name: 30053
+    protocol: udp
   - name: 32400
     protocol: tcp
 

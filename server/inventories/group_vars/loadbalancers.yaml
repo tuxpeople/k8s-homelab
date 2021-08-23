@@ -8,5 +8,7 @@ firewall_services:
     protocol: tcp
   - name: 9100
     protocol: tcp
+  - name: 30022
+    protocol: tcp
   - name: 32400
     protocol: tcp

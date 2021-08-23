@@ -1,4 +1,18 @@
 ---
+- name: Flux Bootstrap
+  hosts: k3s_cluster[0]
+
+  tasks:
+    - name: Get certs
+      ansible.builtin.fetch:
+        src: "/var/lib/rancher/k3s/server/tls/{{ item }}"
+        dest: "/tmp/{{ item }}"
+        flat: yes
+      with_items:
+        - server-ca.crt
+        - client-admin.crt
+        - client-admin.key
+
 - name: Basis configuration for loadbalancers
   hosts: loadbalancers
   become: yes
