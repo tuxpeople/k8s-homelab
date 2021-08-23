@@ -9,6 +9,16 @@
         dest: "{{ local_kubeconfig }}"
         flat: yes
 
+    - name: Get certs
+      ansible.builtin.fetch:
+        src: "/var/lib/rancher/k3s/server/tls/{{ item }}"
+        dest: "/tmp/{{ item }}"
+        flat: yes
+      with_items:
+        - server-ca.crt
+        - client-admin.crt
+        - client-admin.key
+
     - name: Replace server address in kubeconfig
       replace:
         path: "{{ local_kubeconfig }}"

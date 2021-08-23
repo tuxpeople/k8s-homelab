@@ -46,7 +46,7 @@
 
     - name: Copy haproxy config
       ansible.builtin.copy:
-        src: ~/git/k8s-homelab/server/files/haproxy.cfg
+        src: ~/git/k8s-homelab/server/files/haproxy_init.cfg
         dest: /etc/haproxy/haproxy.cfg
 
     - name: Enable and start service haproxy
@@ -58,3 +58,4 @@
     - name: Reboot if needed
       ansible.builtin.reboot:
       when: connect_any
+      throttle: 1

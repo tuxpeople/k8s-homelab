@@ -1,0 +1,36 @@
+---
+- name: Basis configuration for loadbalancers
+  hosts: loadbalancers
+  become: yes
+
+  tasks:
+    - name: copy certs
+      ansible.builtin.copy:
+        src: "/tmp/{{ item.src }}"
+        dest: "/etc/haproxy/{{ item.dest }}"
+      with_items:
+        - src: server-ca.crt
+          dest: k3s.ca
+        - src: client-admin.crt
+          dest: k3s-client.crt
+        - src: client-admin.key
+          dest: k3s-client.crt.key
+
+    - name: delete local copy of certs
+      ansible.builtin.file:
+        path: "/tmp/{{ item }}"
+        state: absent
+      with_items:
+        - server-ca.crt
+        - client-admin.crt
+        - client-admin.key
+
+    - name: Copy haproxy config
+      ansible.builtin.copy:
+        src: ~/git/k8s-homelab/server/files/haproxy_ops.cfg
+        dest: /etc/haproxy/haproxy.cfg
+
+    - name: Restart service haproxy
+      ansible.builtin.service:
+        name: haproxy
+        state: restarted
