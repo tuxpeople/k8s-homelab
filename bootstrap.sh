@@ -28,3 +28,4 @@ ansible-playbook -i inventories/cluster.list plays/base.yaml
 ansible-playbook -i inventories/cluster.list plays/loadbalancer_init.yaml
 ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
 ansible-playbook -i inventories/cluster.list plays/flux.yaml
+ansible-playbook -i inventories/cluster.list plays/loadbalancer_finish.yaml
