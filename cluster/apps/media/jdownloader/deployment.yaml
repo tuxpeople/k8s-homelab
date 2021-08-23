@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: jdownloader
+  namespace: media
   name: jdownloader
 spec:
   selector:
