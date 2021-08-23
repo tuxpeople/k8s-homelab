@@ -159,22 +159,27 @@ spec:
           - targets: ['speedtest-exporter:9798']
         - job_name: 'haproxy'
           static_configs:
-          - targets:
-            - k3s-lb1:1936
-            - k3s-lb2:1936
+          - targets: ['k3s-lb1:1936'] # nas
+            labels:
+              alias: LB1
+          - targets: ['k3s-lb2:1936'] # nas
+            labels:
+              alias: LB2
         - job_name: 'node-exporter'
           honor_timestamps: true
           basic_auth:
             username: randomuser
             password: examplepassword
           static_configs:
-          - targets:
-            # nas
-            - 10.20.30.40:9100
-            # lab1
-            - 192.168.8.11:9100
-            # lab2
-            - 192.168.8.12:9100
+          - targets: ['10.20.30.40:9100'] # nas
+            labels:
+              alias: NAS
+          - targets: ['192.168.8.11:9100'] # lab1
+            labels:
+              alias: lab1
+          - targets: ['192.168.8.12:9100'] # lab2
+            labels:
+              alias: lab2
         # - job_name: 'unifipoller'
         #   scrape_interval: 30s
         #   static_configs:
