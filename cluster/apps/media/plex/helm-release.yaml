@@ -74,6 +74,15 @@ spec:
         accessMode: ReadWriteOnce
         enabled: true
         size: 1Gi
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: 10.20.30.40
+            path: /volume1/Multimedia
+        mountPath: /data
+        readOnly: true
     addons:
       promtail:
         enabled: true
