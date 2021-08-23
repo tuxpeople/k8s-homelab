@@ -102,6 +102,11 @@ spec:
         #  datasource: Prometheus
         #  revision: 4
       various:
+        # Ref: https://grafana.com/grafana/dashboards/12693/revisions
+        haproxy:
+          gnetId: 12693
+          datasource: Prometheus
+          revision: 3
         # Ref: https://grafana.com/grafana/dashboards/13665/revisions
         speedtest:
           gnetId: 13665
@@ -129,11 +134,6 @@ spec:
           gnetId: 4475
           datasource: Prometheus
           revision: 5
-        # Ref: https://grafana.com/grafana/dashboards/12693/revisions
-        haproxy:
-          gnetId: 12693
-          datasource: Prometheus
-          revision: 3
     sidecar:
       dashboards:
         enabled: true
