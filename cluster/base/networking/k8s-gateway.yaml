@@ -21,6 +21,5 @@ spec:
     domain: "test.tld"
     ttl: 1
     service:
-      type: LoadBalancer
-      port: 53
-      externalTrafficPolicy: Local
+      type: NodePort
+      port: 30053
