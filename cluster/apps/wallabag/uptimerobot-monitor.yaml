@@ -3,7 +3,7 @@ apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
   name: wallabag
-  namespace: home
+  namespace: wallabag
 spec:
   friendlyName: "K8S wallabag"
   url: "https://wallabag.${SECRET_DOMAIN_ME}"

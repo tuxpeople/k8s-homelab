@@ -2,15 +2,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: homer
-  namespace: home
+  name: wallabag
+  namespace: wallabag
 spec:
-  releaseName: homer
+  releaseName: wallabag
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts
-      chart: homer
-      version: 6.0.0
+      chart: wallabag
+      version: 4.0.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
@@ -26,29 +26,39 @@ spec:
   values:
     env:
       TZ: "Europe/Zurich"
+      # SYMFONY__ENV__DOMAIN_NAME: https://wb.DOMAIN.net #fake url
+      # SYMFONY__ENV__SERVER_NAME: "Your wallabag instance"
+      # SYMFONY__ENV__FOSUSER_CONFIRMATION: FALSE
     image:
       pullPolicy: Always
     persistence:
-      config:
+      cache:
         enabled: true
         accessMode: ReadWriteOnce
         size: 1G
+      images:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 5G
+      data:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 5G
     ingress:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: traefik
+          kubernetes.io/ingress.class: "traefik"
           cert-manager.io/cluster-issuer: letsencrypt-production
           traefik.ingress.kubernetes.io/redirect-entry-point: https
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
         hosts:
-        - host: "homer.${SECRET_DOMAIN_ME}"
+        - host: "wallabag.${SECRET_DOMAIN_ME}"
           paths:
           - path: /
             pathType: Prefix
         tls:
-        - secretName: homer-tls
+        - secretName: wallabag-tls
           hosts:
-          - homer.${SECRET_DOMAIN_ME}
+          - wallabag.${SECRET_DOMAIN_ME}
