@@ -32,30 +32,46 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-        - name: 'default'
+        - name: 'Kubernetes'
           orgId: 1
           folder: ''
           type: file
           disableDeletion: false
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/default
-        - name: unifi-poller
+            path: /var/lib/grafana/dashboards/kubernetes
+        - name: Unifi
           orgId: 1
-          folder: 'unifi-poller'
+          folder: 'unifi'
           type: file
           disableDeletion: false
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/unifi-poller
-        - name: various
+            path: /var/lib/grafana/dashboards/unifi
+        - name: GitOps
           orgId: 1
-          folder: 'various'
+          folder: 'gitops'
           type: file
           disableDeletion: false
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/various
+            path: /var/lib/grafana/dashboards/gitops
+        - name: Systems
+          orgId: 1
+          folder: 'systems'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/systems
+        - name: Networking
+          orgId: 1
+          folder: 'networking'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/networking
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -70,7 +86,7 @@ spec:
           access: proxy
           url: http://loki:3100
     dashboards:
-      unifi-poller:
+      Unifi:
         # Ref: https://grafana.com/grafana/dashboards/11315/revisions
         unifi-client-insights:
           gnetId: 11315
@@ -101,7 +117,25 @@ spec:
         #  gnetId: 11310
         #  datasource: Prometheus
         #  revision: 4
-      various:
+      GitOps:
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
+          datasource: Prometheus
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
+          datasource: Prometheus
+      Systems:
+        # Ref: https://grafana.com/grafana/dashboards/1860/revisions
+        node-exporter-full:
+          gnetId: 1860
+          datasource: Prometheus
+          revision: 23
+      Networking:
+        # Ref: https://grafana.com/grafana/dashboards/4475/revisions
+        traefik:
+          gnetId: 4475
+          datasource: Prometheus
+          revision: 5
         # Ref: https://grafana.com/grafana/dashboards/12693/revisions
         haproxy:
           gnetId: 12693
@@ -117,23 +151,6 @@ spec:
           gnetId: 9955
           datasource: Prometheus
           revision: 1
-        flux-cluster:
-          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
-          datasource: Prometheus
-        flux-control-plane:
-          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
-          datasource: Prometheus
-      default:
-        # Ref: https://grafana.com/grafana/dashboards/1860/revisions
-        node-exporter-full:
-          gnetId: 1860
-          datasource: Prometheus
-          revision: 23
-        # Ref: https://grafana.com/grafana/dashboards/4475/revisions
-        traefik:
-          gnetId: 4475
-          datasource: Prometheus
-          revision: 5
     sidecar:
       dashboards:
         enabled: true
