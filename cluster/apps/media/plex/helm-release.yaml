@@ -71,9 +71,12 @@ spec:
             pathType: Prefix
     persistence:
       config:
-        accessMode: ReadWriteOnce
         enabled: true
-        size: 1Gi
+        type: custom
+        volumeSpec:
+          nfs:
+            server: 10.20.30.40
+            path: /volume1/Plex
       media:
         enabled: true
         type: custom
