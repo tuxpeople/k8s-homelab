@@ -32,41 +32,41 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-        - name: 'Kubernetes'
+        - name: 'kubernetes'
           orgId: 1
-          folder: ''
+          folder: 'Kubernetes'
           type: file
           disableDeletion: false
           editable: true
           options:
             path: /var/lib/grafana/dashboards/kubernetes
-        - name: Unifi
+        - name: unifi
           orgId: 1
-          folder: 'unifi'
+          folder: 'Unifi'
           type: file
           disableDeletion: false
           editable: true
           options:
             path: /var/lib/grafana/dashboards/unifi
-        - name: GitOps
+        - name: gitops
           orgId: 1
-          folder: 'gitops'
+          folder: 'GitOps'
           type: file
           disableDeletion: false
           editable: true
           options:
             path: /var/lib/grafana/dashboards/gitops
-        - name: Systems
+        - name: systems
           orgId: 1
-          folder: 'systems'
+          folder: 'Systems'
           type: file
           disableDeletion: false
           editable: true
           options:
             path: /var/lib/grafana/dashboards/systems
-        - name: Networking
+        - name: networking
           orgId: 1
-          folder: 'networking'
+          folder: 'Networking'
           type: file
           disableDeletion: false
           editable: true
@@ -86,7 +86,7 @@ spec:
           access: proxy
           url: http://loki:3100
     dashboards:
-      Unifi:
+      unifi:
         # Ref: https://grafana.com/grafana/dashboards/11315/revisions
         unifi-client-insights:
           gnetId: 11315
@@ -117,20 +117,20 @@ spec:
         #  gnetId: 11310
         #  datasource: Prometheus
         #  revision: 4
-      GitOps:
+      gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
           datasource: Prometheus
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
           datasource: Prometheus
-      Systems:
+      systems:
         # Ref: https://grafana.com/grafana/dashboards/1860/revisions
         node-exporter-full:
           gnetId: 1860
           datasource: Prometheus
           revision: 23
-      Networking:
+      networking:
         # Ref: https://grafana.com/grafana/dashboards/4475/revisions
         traefik:
           gnetId: 4475
