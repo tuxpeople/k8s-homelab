@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: speedtest-plotter
+  namespace: networking
   name: speedtest-plotter
 spec:
   selector:

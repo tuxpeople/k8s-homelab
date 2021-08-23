@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: speedtest-plotter
+  namespace: networking
   labels:
     app: speedtest-plotter
   name: speedtest-plotter

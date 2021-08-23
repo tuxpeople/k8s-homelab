@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: speedtest-plotter
+  namespace: networking
   labels:
     app: speedtest-plotter
   name: speedtest-plotter-data
