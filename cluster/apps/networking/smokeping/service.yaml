@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: smokeping
+  namespace: networking
   name: smokeping
   labels:
     app: smokeping
