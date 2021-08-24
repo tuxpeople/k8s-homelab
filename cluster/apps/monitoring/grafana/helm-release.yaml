@@ -127,7 +127,7 @@ spec:
         #  revision: 4
       fun:
         octoprint:
-          url: https://github.com/tg44/OctoPrint-Prometheus-Exporter/raw/master/extras/octoprint-grafana.json
+          url: https://raw.githubusercontent.com/tg44/OctoPrint-Prometheus-Exporter/master/extras/octoprint-grafana.json
           datasource: Prometheus
       gitops:
         flux-cluster:
