@@ -72,6 +72,14 @@ spec:
           editable: true
           options:
             path: /var/lib/grafana/dashboards/networking
+        - name: fun
+          orgId: 1
+          folder: 'Fun'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/fun
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -117,6 +125,10 @@ spec:
         #  gnetId: 11310
         #  datasource: Prometheus
         #  revision: 4
+      fun:
+        octoprint:
+          url: https://github.com/tg44/OctoPrint-Prometheus-Exporter/raw/master/extras/octoprint-grafana.json
+          datasource: Prometheus
       gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
