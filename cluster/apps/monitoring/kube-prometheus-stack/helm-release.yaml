@@ -156,7 +156,7 @@ spec:
           scrape_interval: 5s
           metrics_path: '/plugin/prometheus_exporter/metrics'
           authorization:
-            type: X-Api-Key
+            type: apikey
             credentials: ${SECRET_OCTOPRINTAPI}
           static_configs:
           - targets: ['octopi.home:80']
