@@ -155,8 +155,9 @@ spec:
         - job_name: 'octoprint'
           scrape_interval: 5s
           metrics_path: '/plugin/prometheus_exporter/metrics'
-          params:
-            apikey: ${SECRET_OCTOPRINTAPI}
+          authorization:
+            type: X-Api-Key
+            credentials: ${SECRET_OCTOPRINTAPI}
           static_configs:
           - targets: ['octopi.home:80']
         - job_name: 'speedtest-exporter'
