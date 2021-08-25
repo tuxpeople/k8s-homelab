@@ -30,6 +30,14 @@ data:
       format = "audio"
       clean = { keep_last = 5 }
 
+      [feeds.spotfigsommerquiz]
+      url = "https://www.youtube.com/playlist?list=PLoAxl58aGuGqh6f2q81Yfi4h9DjOcn1GK"
+      page_size = 5
+      update_period = "6h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 5 }
+
       [feeds.headlock_breaking]
       url = "https://www.youtube.com/channel/UC4A1tkY5mw9MWYa9SnDi3CQ"
       page_size = 5
