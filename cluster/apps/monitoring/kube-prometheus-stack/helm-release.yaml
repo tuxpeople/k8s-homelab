@@ -26,11 +26,6 @@ spec:
     alertmanager:
       enabled: true
       config:
-        global:
-          smtp_to: ${SECRET_EMAIL}
-          smtp_from: prometheus@tuxpeople.org
-          smtp_smarthost: smtp.utils.svc.cluster.local:25
-          smtp_require_tls: false
         #  smtp_smarthost: smtp.gmail.com:587
         #  smtp_auth_username: you@gmail.com
         #  smtp_auth_password: yourapppassword # https://support.google.com/mail/answer/185833?hl=en-GB
@@ -64,6 +59,10 @@ spec:
           email_configs:
           - send_resolved: true
             to: youremail@gmail.com
+            smtp_to: ${SECRET_EMAIL}
+            smtp_from: prometheus@tuxpeople.org
+            smtp_smarthost: smtp.utils.svc.cluster.local:25
+            smtp_require_tls: false
         - name: DeadMansSnitch
           webhook_config:
           - url: https://nosnch.in/c15491ac44
