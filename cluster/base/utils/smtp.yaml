@@ -17,7 +17,7 @@ spec:
         app: smtp
     spec:
       containers:
-      - image: devture/exim-relay
+      - image: devture/exim-relay:4.94.2-r0-3
         imagePullPolicy: Always
         name: smtp
         env:
