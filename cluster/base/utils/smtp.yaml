@@ -41,7 +41,7 @@ spec:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 25
+        - containerPort: 8025
         livenessProbe:
           exec:
             command:
@@ -60,7 +60,7 @@ spec:
   type: ClusterIP
   ports:
   - port: 25
-    targetPort: 25
+    targetPort: 8025
     protocol: TCP
     name: http
   selector:
