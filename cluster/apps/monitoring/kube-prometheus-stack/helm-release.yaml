@@ -183,9 +183,9 @@ spec:
             username: randomuser
             password: examplepassword
           static_configs:
-          - targets: ['10.20.30.40:9100'] # nas
-            labels:
-              alias: NAS
+          # - targets: ['10.20.30.40:9100'] # nas
+          #   labels:
+          #     alias: NAS
           - targets: ['192.168.8.11:9100'] # lab1
             labels:
               alias: lab1
