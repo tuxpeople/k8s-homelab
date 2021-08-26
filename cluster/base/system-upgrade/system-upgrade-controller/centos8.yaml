@@ -1,0 +1,78 @@
+# based on https://github.com/robkooper/system-upgrade-controller/blob/os-upgrade/examples/upgrades/centos7.yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: centos8
+  namespace: system-upgrade
+type: Opaque
+stringData:
+  upgrade.sh: |
+    #!/bin/sh
+    set -e
+    # do actual upgrade
+    logger -t system-upgrade start upgrade
+    setenforce 0
+    yum upgrade -y
+    setenforce 1
+    logger -t system-upgrade finish upgrade
+    # needs-restarting returns 1 if reboot is needed
+    if ! needs-restarting -r &> /dev/null; then
+      needs-restarting -r || /bin/true  # otherwise script ends due to -e
+      logger -t system-upgrade restart system
+      reboot
+    fi
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: centos8-master
+  namespace: system-upgrade
+spec:
+  concurrency: 1
+  nodeSelector:
+    matchExpressions:
+      - {key: plan.upgrade.cattle.io/centos8, operator: Exists}
+      - {key: node-role.kubernetes.io/master, operator: In, values: ["true"]}
+  tolerations:
+    - key: "node-role.kubernetes.io/controlplane"
+      operator: "Exists"
+      effect: "NoSchedule"
+    - key: "node-role.kubernetes.io/etcd"
+      operator: "Exists"
+      effect: "NoExecute"
+  serviceAccountName: system-upgrade
+  secrets:
+    - name: centos8
+      path: /host/run/system-upgrade/secrets/centos8
+  drain:
+    force: true
+  version: centos8
+  upgrade:
+    image: centos8
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/centos8/upgrade.sh"]
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: centos8-worker
+  namespace: system-upgrade
+spec:
+  concurrency: 1
+  nodeSelector:
+    matchExpressions:
+      - {key: plan.upgrade.cattle.io/centos8, operator: Exists}
+      - {key: node-role.kubernetes.io/master, operator: NotIn, values: ["true"]}
+      - {key: node-role.kubernetes.io/controlplane, operator: NotIn, values: ["true"]}
+  serviceAccountName: system-upgrade
+  secrets:
+    - name: centos8
+      path: /host/run/system-upgrade/secrets/centos8
+  drain:
+    force: true
+  version: centos8
+  upgrade:
+    image: centos8
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/centos8/upgrade.sh"]
