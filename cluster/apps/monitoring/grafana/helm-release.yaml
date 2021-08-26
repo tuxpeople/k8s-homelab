@@ -142,6 +142,11 @@ spec:
           gnetId: 1860
           datasource: Prometheus
           revision: 23
+        # Ref: https://grafana.com/grafana/dashboards/6157/revisions
+        synology:
+          gnetId: 6157
+          datasource: Prometheus
+          revision: 1
       networking:
         # Ref: https://grafana.com/grafana/dashboards/4475/revisions
         traefik:
