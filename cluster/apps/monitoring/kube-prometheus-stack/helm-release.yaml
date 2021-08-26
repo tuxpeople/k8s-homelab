@@ -47,6 +47,9 @@ spec:
           - match:
               alertname: Watchdog
             receiver: 'email'
+            group_wait: 30s
+            group_interval: 5m
+            repeat_interval: 10m
           - match:
               alertname: CPUThrottlingHigh
             receiver: 'email'
