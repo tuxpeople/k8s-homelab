@@ -25,11 +25,12 @@ spec:
   values:
     cronjob:
       schedule: "15 * * * *"
+      environment:
+        - name: GENERATIONS
+          value: "12"
     configMaps:
       config.yaml: |
         global:
-          - pvc
-          - pv
           - secret
         namespaces:
           - name: media
