@@ -17,7 +17,7 @@ spec:
         app: smtp
     spec:
       containers:
-      - image: tdeutsch/smtp
+      - image: bytemark/smtp
         imagePullPolicy: Always
         name: smtp
         env:
