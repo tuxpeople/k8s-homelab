@@ -20,7 +20,7 @@ spec:
           value: 10.20.30.33
         - name: TZ
           value: Europe/Zurich
-        image: docker pull psmae/mystrom-exporter
+        image: psmae/mystrom-exporter
         imagePullPolicy: Always
         name: mystrom-exporter-printer
         resources:
