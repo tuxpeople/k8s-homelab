@@ -17,25 +17,22 @@ spec:
         app: smtp
     spec:
       containers:
-      - image: bytemark/smtp
+      - image: devture/exim-relay
         imagePullPolicy: Always
         name: smtp
         env:
         - name: "TZ"
           value: "Europe/Zurich"
-        - name: "RELAY_HOST"
-          value: "smtp.sendgrid.net"
-        - name: "RELAY_PORT"
-          value: "587"
-        - name: "RELAY_USERNAME"
+        - name: "smtp.k8s.sky.lab"
+        - name: "SMARTHOST"
+          value: "smtp.sendgrid.net::587"
+        - name: "SMTP_USERNAME"
           value: "apikey"
-        - name: "RELAY_PASSWORD"
+        - name: "SMTP_PASSWORD"
           valueFrom:
             secretKeyRef:
               name: smtp-password
               key: password
-        - name: "RELAY_NETS"
-          value: "10.0.0.0/8;172.16.0.0/12;192.168.0.0/16"
         resources:
           requests:
             cpu: 10m
