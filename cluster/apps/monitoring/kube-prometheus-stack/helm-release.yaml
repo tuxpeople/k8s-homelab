@@ -41,6 +41,9 @@ spec:
           - match:
               alertname: Watchdog
             receiver: 'DeadMansSnitch'
+            group_wait: 0s
+            group_interval: 1m
+            repeat_interval: 50s
           - match:
               alertname: Watchdog
             receiver: 'email'
@@ -69,6 +72,7 @@ spec:
         - name: DeadMansSnitch
           webhook_configs:
             - url: "https://nosnch.in/c15491ac44"
+              send_resolved: false
 
         # Inhibition rules allow to mute a set of alerts given that another alert is firing.
         # We use this to mute any warning-level notifications if the same alert is already critical.
