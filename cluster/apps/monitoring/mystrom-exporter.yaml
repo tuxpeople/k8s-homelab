@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: monitoring
+  name: mystrom-exporter-printer
+spec:
+  selector:
+    matchLabels:
+      app: mystrom-exporter-printer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mystrom-exporter-printer
+    spec:
+      containers:
+      - env:
+        - name: SWITCH_IP_ADDRESS
+          value: 10.20.30.33
+        - name: TZ
+          value: Europe/Zurich
+        image: docker pull psmae/mystrom-exporter
+        imagePullPolicy: Always
+        name: mystrom-exporter-printer
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+          limits:
+            cpu: 500m
+            memory: 100Mi
+        ports:
+        - containerPort: 9452
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: monitoring
+  name: mystrom-exporter-printer
+  labels:
+    app.kubernetes.io/name: mystrom-exporter-printer
+spec:
+  type: ClusterIP
+  ports:
+    - name: exporter
+      port: 9452
+      targetPort: exporter
+  selector:
+    app.kubernetes.io/name: mystrom-exporter-printer
+
