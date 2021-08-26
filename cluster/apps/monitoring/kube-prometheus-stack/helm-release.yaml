@@ -161,12 +161,12 @@ spec:
           - targets: ['octopi.home:80']
         - job_name: 'speedtest-exporter'
           scrape_interval: 30s
-          scrape_timeout: 1m
+          scrape_timeout: 10s
           static_configs:
           - targets: ['speedtest-exporter:9798']
         - job_name: 'mystrom-exporter-printer'
           scrape_interval: 30s
-          scrape_timeout: 1m
+          scrape_timeout: 10s
           static_configs:
           - targets: ['mystrom-exporter-printer:9452']
         - job_name: 'haproxy'
