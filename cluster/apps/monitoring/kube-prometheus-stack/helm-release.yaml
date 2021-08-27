@@ -64,15 +64,15 @@ spec:
         - name: 'null'
         - name: email
           email_configs:
-            - send_resolved: true
-              to: "${SECRET_EMAIL}"
-              from: "prometheus@tuxpeople.org"
-              smarthost: "smtp.utils.svc.cluster.local:25"
-              require_tls: false
+          - send_resolved: true
+            to: "${SECRET_EMAIL}"
+            from: "prometheus@tuxpeople.org"
+            smarthost: "smtp.utils.svc.cluster.local:25"
+            require_tls: false
         - name: DeadMansSnitch
           webhook_configs:
-            - url: "https://nosnch.in/c15491ac44"
-              send_resolved: false
+          - url: "https://nosnch.in/c15491ac44"
+            send_resolved: false
 
         # Inhibition rules allow to mute a set of alerts given that another alert is firing.
         # We use this to mute any warning-level notifications if the same alert is already critical.
@@ -117,9 +117,6 @@ spec:
           - alertmanager.${SECRET_DOMAIN_ME}
         hosts:
         - host: "alertmanager.${SECRET_DOMAIN_ME}"
-          paths:
-          - path: /
-            pathType: Prefix
     nodeExporter:
       serviceMonitor:
         relabelings:
@@ -310,6 +307,3 @@ spec:
           - prometheus.${SECRET_DOMAIN_ME}
         hosts:
         - host: "prometheus.${SECRET_DOMAIN_ME}"
-          paths:
-          - path: /
-            pathType: Prefix
