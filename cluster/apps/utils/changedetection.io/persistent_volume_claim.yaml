@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: utils.io
+  namespace: utils
   labels:
     app: changedetection
   name: changedetection-data
