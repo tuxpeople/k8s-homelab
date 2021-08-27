@@ -196,12 +196,6 @@ spec:
       - secretName: grafana-tls
         hosts:
         - grafana.${SECRET_DOMAIN_ME}
-    persistence:
-      type: pvc
-      enabled: true
-      accessModes:
-      - ReadWriteOnce
-      size: 10Gi
     enabled: true
   valuesFrom:
   - secretKeyRef:
