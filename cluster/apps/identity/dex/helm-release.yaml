@@ -86,6 +86,8 @@ spec:
           redirectURIs:
             - 'https://wiki2.eighty-three.me/_oauth'
             - 'https://code.eighty-three.me/_oauth'
+            - 'https://prometheus.eighty-three.me/_oauth'
+            - 'https://alertmanager.eighty-three.me/_oauth'
           name: 'SKY'
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
