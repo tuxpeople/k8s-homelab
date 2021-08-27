@@ -33,8 +33,8 @@ spec:
         #  smtp_auth_identity: you@gmail.com
         route:
           group_by: ['job']
-          group_wait: 30s
-          group_interval: 5m
+          group_wait: 5m
+          group_interval: 10m
           repeat_interval: 1h
           receiver: email
           routes:
