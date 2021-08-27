@@ -43,9 +43,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - name: exporter
-      port: 9452
-      targetPort: exporter
+  - name: exporter
+    port: 9452
+    targetPort: 9452
   selector:
     app.kubernetes.io/name: mystrom-exporter-printer
-
