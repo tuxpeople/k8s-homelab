@@ -46,5 +46,6 @@ spec:
   - name: exporter
     port: 9452
     targetPort: 9452
+    protocol: TCP
   selector:
     app.kubernetes.io/name: mystrom-exporter-printer
