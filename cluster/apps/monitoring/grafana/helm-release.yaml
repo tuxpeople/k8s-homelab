@@ -129,6 +129,9 @@ spec:
         octoprint:
           url: https://raw.githubusercontent.com/tg44/OctoPrint-Prometheus-Exporter/master/extras/octoprint-grafana.json
           datasource: Prometheus
+        mystrom:
+          url: https://raw.githubusercontent.com/tuxpeople/k8s-homelab/master/cluster/apps/monitoring/grafana/dashboards/mystrom.json
+          datasource: Prometheus
       gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
