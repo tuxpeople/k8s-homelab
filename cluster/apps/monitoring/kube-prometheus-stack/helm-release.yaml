@@ -64,15 +64,15 @@ spec:
         - name: 'null'
         - name: email
           email_configs:
-            - send_resolved: true
-              to: "${SECRET_EMAIL}"
-              from: "prometheus@tuxpeople.org"
-              smarthost: "smtp.utils.svc.cluster.local:25"
-              require_tls: false
+          - send_resolved: true
+            to: "${SECRET_EMAIL}"
+            from: "prometheus@tuxpeople.org"
+            smarthost: "smtp.utils.svc.cluster.local:25"
+            require_tls: false
         - name: DeadMansSnitch
           webhook_configs:
-            - url: "https://nosnch.in/c15491ac44"
-              send_resolved: false
+          - url: "https://nosnch.in/c15491ac44"
+            send_resolved: false
 
         # Inhibition rules allow to mute a set of alerts given that another alert is firing.
         # We use this to mute any warning-level notifications if the same alert is already critical.
@@ -102,6 +102,24 @@ spec:
     #        cpu: 25m
     #        memory: 32Mi
     #    priorityClassName: high-priority
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
+        tls:
+        - secretName: alertmanager-tls
+          hosts:
+          - alertmanager.${SECRET_DOMAIN_ME}
+        hosts:
+        - host: "alertmanager.${SECRET_DOMAIN_ME}"
+          paths:
+          - path: /
+            pathType: Prefix
     nodeExporter:
       serviceMonitor:
         relabelings:
@@ -135,13 +153,6 @@ spec:
       persistentVolume:
         enabled: true
         size: 10Gi
-      ingress:
-        enabled: true
-        pathType: Prefix
-        hosts:
-        - prometheus.${SECRET_DOMAIN_INTERNAL}
-        annotations:
-          kubernetes.io/ingress.class: traefik
       prometheusSpec:
         podAntiAffinity: "hard"
         ruleSelector: {}
@@ -284,3 +295,21 @@ spec:
             source_labels:
             - __meta_kubernetes_pod_name
             target_label: pod
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/redirect-entry-point: https
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
+        tls:
+        - secretName: prometheus-tls
+          hosts:
+          - prometheus.${SECRET_DOMAIN_ME}
+        hosts:
+        - host: "prometheus.${SECRET_DOMAIN_ME}"
+          paths:
+          - path: /
+            pathType: Prefix
