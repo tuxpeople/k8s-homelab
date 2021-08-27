@@ -39,7 +39,7 @@ metadata:
   namespace: monitoring
   name: mystrom-exporter-printer
   labels:
-    app.kubernetes.io/name: mystrom-exporter-printer
+    app: mystrom-exporter-printer
 spec:
   type: ClusterIP
   ports:
@@ -48,4 +48,4 @@ spec:
     targetPort: 9452
     protocol: TCP
   selector:
-    app.kubernetes.io/name: mystrom-exporter-printer
+    app: mystrom-exporter-printer
