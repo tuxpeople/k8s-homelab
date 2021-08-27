@@ -4,8 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: utils.io
   labels:
-    app: changedetection.io
-  name: changedetection.io-data
+    app: changedetection
+  name: changedetection-data
 spec:
   accessModes:
   - ReadWriteOnce
