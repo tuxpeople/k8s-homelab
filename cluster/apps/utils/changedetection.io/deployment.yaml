@@ -19,7 +19,7 @@ spec:
         env:
         - name: "TZ"
           value: "Europe/Zurich"
-        image: dgtlmoon/changedetection.io:0.39
+        image: dgtlmoon/changedetection.io:0.292
         imagePullPolicy: Always
         resources:
           requests:
