@@ -114,9 +114,9 @@ spec:
         tls:
         - secretName: alertmanager-tls
           hosts:
-          - alertmanager.${SECRET_DOMAIN_ME}
+          - alertmanwager.${SECRET_DOMAIN_ME}
         hosts:
-        - alertmanager.${SECRET_DOMAIN_ME}
+        - alertmanwager.${SECRET_DOMAIN_ME}
     nodeExporter:
       serviceMonitor:
         relabelings:
