@@ -406,16 +406,6 @@
           "intervalFactor": 1,
           "legendFormat": "{{instance}}",
           "refId": "A"
-        },
-        {
-          "exemplar": true,
-          "expr": "avg_over_time(mystrom_report_power[$__range])",
-          "hide": false,
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "W (avg over time)",
-          "refId": "B"
         }
       ],
       "title": "The current power consumption over time",
