@@ -165,7 +165,7 @@
           "valueHandler": "Number Threshold"
         }
       ],
-      "title": "Switch status",
+      "title": "Current Status",
       "type": "stat"
     },
     {
@@ -294,6 +294,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
+      "title": "Status History",
       "tooltip": {
         "shared": true,
         "sort": 0,
