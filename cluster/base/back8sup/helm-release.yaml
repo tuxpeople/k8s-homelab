@@ -28,6 +28,8 @@ spec:
       environment:
         - name: GENERATIONS
           value: "12"
+        - name: TOKEN_FILE
+          value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
     configMaps:
       config.yaml: |
         global:
