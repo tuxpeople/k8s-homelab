@@ -32,9 +32,9 @@ spec:
         oauth_auto_login: true
         anonymous:
           enabled: false
-        auth.basic:
+        basic:
           disable_login_form: true
-        auth.generic_oauth:
+        generic_oauth:
           enabled: true
           allow_sign_up: true
           name: Dex
