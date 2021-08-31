@@ -178,11 +178,13 @@ spec:
           scrape_timeout: 30s
           static_configs:
           - targets: ['speedtest-exporter:9798']
-        - job_name: 'mystrom-exporter-printer'
+        - job_name: 'mystrom-exporter'
           scrape_interval: 1m
           scrape_timeout: 30s
           static_configs:
           - targets: ['mystrom-exporter-printer:9452']
+            labels:
+              alias: "3D Drucker"
         - job_name: 'haproxy'
           static_configs:
           - targets: ['k3s-lb1:1936'] # nas
