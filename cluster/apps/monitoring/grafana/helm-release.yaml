@@ -170,11 +170,11 @@ spec:
           datasource: Prometheus
           revision: 1
       networking:
-        # Ref: https://grafana.com/grafana/dashboards/4475/revisions
+        # Ref: https://grafana.com/grafana/dashboards/11462/revisions
         traefik:
-          gnetId: 4475
+          gnetId: 11462
           datasource: Prometheus
-          revision: 5
+          revision: 1
         # Ref: https://grafana.com/grafana/dashboards/12693/revisions
         haproxy:
           gnetId: 12693
