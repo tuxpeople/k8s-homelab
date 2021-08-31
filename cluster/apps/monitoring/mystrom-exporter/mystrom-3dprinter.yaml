@@ -3,16 +3,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: monitoring
-  name: mystrom-exporter-printer
+  name: mystrom-3dprinter
 spec:
   selector:
     matchLabels:
-      app: mystrom-exporter-printer
+      app: mystrom-3dprinter
   replicas: 1
   template:
     metadata:
       labels:
-        app: mystrom-exporter-printer
+        app: mystrom-3dprinter
     spec:
       containers:
       - env:
@@ -22,7 +22,7 @@ spec:
           value: Europe/Zurich
         image: psmae/mystrom-exporter
         imagePullPolicy: Always
-        name: mystrom-exporter-printer
+        name: mystrom-3dprinter
         resources:
           requests:
             cpu: 10m
@@ -37,9 +37,9 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: monitoring
-  name: mystrom-exporter-printer
+  name: mystrom-3dprinter
   labels:
-    app: mystrom-exporter-printer
+    app: mystrom-3dprinter
 spec:
   type: ClusterIP
   ports:
@@ -48,4 +48,4 @@ spec:
     targetPort: 9452
     protocol: TCP
   selector:
-    app: mystrom-exporter-printer
+    app: mystrom-3dprinter

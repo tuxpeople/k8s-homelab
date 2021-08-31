@@ -182,7 +182,7 @@ spec:
           scrape_interval: 1m
           scrape_timeout: 30s
           static_configs:
-          - targets: ['mystrom-exporter-printer:9452']
+          - targets: ['mystrom-3dprinter:9452']
             labels:
               alias: "3D Drucker"
         - job_name: 'haproxy'
