@@ -25,7 +25,7 @@ metadata:
     app.kubernetes.io/name: snmp-exporter
     app.kubernetes.io/instance: snmp-exporter
 spec:
-  jobLabel: snmp-exporter
+  jobLabel: snmp
   selector:
     matchLabels:
       app.kubernetes.io/name: snmp-exporter
