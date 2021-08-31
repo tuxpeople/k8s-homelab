@@ -54,7 +54,7 @@ spec:
         port: "1389"
         userSearchBase: "ou=users,dc=sky,dc=lab"
         userFilter: "(sn=%s)"
-        adminFilter: "(memberOf=cn=admins,ou=users,dc=sky,dc=lab)"
+        adminFilter: "(&(objectClass=groupOfNames)(cn=admins)))"
         emailAttribute: mail
         bindDn: ${SECRET_LDAP_BIND_DN}
         bindPassword: ${SECRET_LDAP_BIND_PW}
