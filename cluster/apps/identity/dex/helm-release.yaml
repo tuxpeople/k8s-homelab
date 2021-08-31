@@ -84,11 +84,12 @@ spec:
       staticClients:
         - id: ${SECRET_OIDC_CLIENT_ID}
           redirectURIs:
-            - 'https://wiki2.eighty-three.me/_oauth'
-            - 'https://code.eighty-three.me/_oauth'
-            - 'https://prometheus.eighty-three.me/_oauth'
-            - 'https://alertmanager.eighty-three.me/_oauth'
-            - 'https://change.eighty-three.me/_oauth'
+            - 'https://wiki2.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://code.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://prometheus.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://alertmanager.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://change.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://grafana.${SECRET_DOMAIN_ME}/callback'
           name: 'SKY'
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
