@@ -30,6 +30,8 @@ spec:
           value: "12"
         - name: TOKEN_FILE
           value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        - name: API_ENDPOINT
+          value: "kubernetes.default.svc.cluster.local"
     configMaps:
       config.yaml: |
         global:
