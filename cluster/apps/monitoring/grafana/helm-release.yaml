@@ -32,17 +32,18 @@ spec:
         oauth_auto_login: true
         anonymous:
           enabled: false
-        generic_oauth:
+        auth.basic:
+          disable_login_form: true
+        auth.generic_oauth:
+          enabled: true
           allow_sign_up: true
-          api_url: https://sso.${SECRET_DOMAIN_ME}/userinfo
-          auth_url: https://sso.${SECRET_DOMAIN_ME}/auth
+          name: Dex
           client_id: ${SECRET_OIDC_CLIENT_ID}
           client_secret: ${SECRET_OIDC_CLIENT_SECRET}
-          enabled: true
-          name: Dex
           scopes: openid profile email groups
+          auth_url: https://sso.${SECRET_DOMAIN_ME}/auth
           token_url: https://sso.${SECRET_DOMAIN_ME}/token
-          email_attribute_path: email
+          api_url: https://sso.${SECRET_DOMAIN_ME}/userinfo
           group_mapping:
             role_attribute_path: contains(groups[*], 'sysstf') && 'Admin' || contains(groups[*], 'oscall') && 'Editor' || 'Viewer'
             org_id: 1
