@@ -32,21 +32,21 @@ spec:
         oauth_auto_login: true
         anonymous:
           enabled: false
-        basic:
-          disable_login_form: true
-        generic_oauth:
-          enabled: true
-          allow_sign_up: true
-          name: Dex
-          client_id: ${SECRET_OIDC_CLIENT_ID}
-          client_secret: ${SECRET_OIDC_CLIENT_SECRET}
-          scopes: openid profile email groups
-          auth_url: https://sso.${SECRET_DOMAIN_ME}/auth
-          token_url: https://sso.${SECRET_DOMAIN_ME}/token
-          api_url: https://sso.${SECRET_DOMAIN_ME}/userinfo
-          group_mapping:
-            role_attribute_path: contains(groups[*], 'sysstf') && 'Admin' || contains(groups[*], 'oscall') && 'Editor' || 'Viewer'
-            org_id: 1
+      auth.basic:
+        disable_login_form: true
+      auth.generic_oauth:
+        enabled: true
+        allow_sign_up: true
+        name: Dex
+        client_id: ${SECRET_OIDC_CLIENT_ID}
+        client_secret: ${SECRET_OIDC_CLIENT_SECRET}
+        scopes: openid profile email groups
+        auth_url: https://sso.${SECRET_DOMAIN_ME}/auth
+        token_url: https://sso.${SECRET_DOMAIN_ME}/token
+        api_url: https://sso.${SECRET_DOMAIN_ME}/userinfo
+        group_mapping:
+          role_attribute_path: contains(groups[*], 'sysstf') && 'Admin' || contains(groups[*], 'oscall') && 'Editor' || 'Viewer'
+          org_id: 1
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
