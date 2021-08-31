@@ -31,7 +31,7 @@ spec:
         - name: TOKEN_FILE
           value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
         - name: API_ENDPOINT
-          value: "kubernetes.default.svc.cluster.local"
+          value: "kubernetes.default.svc.cluster.local:443"
     configMaps:
       config.yaml: |
         global:
