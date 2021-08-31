@@ -73,7 +73,7 @@
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "Watts",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -153,7 +153,7 @@
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{instance}}",
           "refId": "On",
           "units": "none",
           "valueHandler": "Number Threshold"
@@ -216,7 +216,7 @@
           "exemplar": true,
           "expr": "mystrom_report_temperatur",
           "interval": "",
-          "legendFormat": "°C",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -280,7 +280,7 @@
           "expr": "mystrom_report_relay",
           "format": "heatmap",
           "interval": "",
-          "legendFormat": "State",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -488,7 +488,7 @@
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "°C",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
