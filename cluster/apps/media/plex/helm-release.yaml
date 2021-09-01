@@ -32,33 +32,10 @@ spec:
         type: NodePort
         ports:
           http:
-            port: 30400
+            nodePort: 30400
             protocol: TCP
             targetPort: 32400
-      gdm:
-        enabled: true
-        type: NodePort
-        ports:
-          gdm1:
-            enabled: true
-            port: 31410
-            protocol: UDP
-            targetPort: 32410
-          gdm2:
-            enabled: true
-            port: 31412
-            protocol: UDP
-            targetPort: 32412
-          gdm3:
-            enabled: true
-            port: 31413
-            protocol: UDP
-            targetPort: 32413
-          gdm4:
-            enabled: true
-            port: 31414
-            protocol: UDP
-            targetPort: 32414
+            port: 32400
     ingress:
       main:
         annotations:
