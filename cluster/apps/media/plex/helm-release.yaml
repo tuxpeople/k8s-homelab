@@ -32,7 +32,7 @@ spec:
         type: NodePort
         ports:
           http:
-            port: 31400
+            port: 30400
             protocol: TCP
             targetPort: 32400
       gdm:
