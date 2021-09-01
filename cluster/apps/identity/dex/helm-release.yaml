@@ -84,7 +84,7 @@ spec:
       staticClients:
         - id: ${SECRET_OIDC_CLIENT_ID}
           redirectURIs:
-            - 'https://wiki.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://wiki2.${SECRET_DOMAIN_ME}/_oauth'
             - 'https://code.${SECRET_DOMAIN_ME}/_oauth'
             - 'https://prometheus.${SECRET_DOMAIN_ME}/_oauth'
             - 'https://alertmanager.${SECRET_DOMAIN_ME}/_oauth'
