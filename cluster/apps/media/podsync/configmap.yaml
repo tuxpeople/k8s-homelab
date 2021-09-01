@@ -105,7 +105,7 @@ data:
       clean = { keep_last = 5 }
 
     [downloader]
-    self_update = true
+    self_update = false
 kind: ConfigMap
 metadata:
   labels:
