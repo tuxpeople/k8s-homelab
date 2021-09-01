@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: reloader
+  namespace: kube-system
+spec:
+  chart:
+    spec:
+      # renovate: registryUrl=https://stakater.github.io/stakater-charts
+      chart: reloader
+      version: 0.21.0
+      sourceRef:
+        kind: HelmRepository
+        name: stakater
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  # values:
+  #   reloaderPolicy:
+  #     strategies:
+  #       RemoveDuplicates:
+  #         enabled: false
+  #       RemovePodsViolatingNodeAffinity:
+  #         enabled: true
+  #         params:
+  #           nodeAffinityType:
+  #           - requiredDuringSchedulingIgnoredDuringExecution
+  #       RemovePodsViolatingInterPodAntiAffinity:
+  #         enabled: false
+  #       LowNodeUtilization:
+  #         enabled: false
