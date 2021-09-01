@@ -22,17 +22,4 @@ spec:
   upgrade:
     remediation:
       retries: 3
-  # values:
-  #   reloaderPolicy:
-  #     strategies:
-  #       RemoveDuplicates:
-  #         enabled: false
-  #       RemovePodsViolatingNodeAffinity:
-  #         enabled: true
-  #         params:
-  #           nodeAffinityType:
-  #           - requiredDuringSchedulingIgnoredDuringExecution
-  #       RemovePodsViolatingInterPodAntiAffinity:
-  #         enabled: false
-  #       LowNodeUtilization:
-  #         enabled: false
+  values:
