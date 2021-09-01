@@ -28,6 +28,8 @@ spec:
     grafana.ini:
       server:
         root_url: https://grafana.${SECRET_DOMAIN_ME}
+      log.console:
+        level: debug
       auth:
         oauth_auto_login: true
         anonymous:
