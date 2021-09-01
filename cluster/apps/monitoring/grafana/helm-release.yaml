@@ -42,7 +42,7 @@ spec:
         name: Dex
         client_id: ${SECRET_OIDC_CLIENT_ID}
         client_secret: ${SECRET_OIDC_CLIENT_SECRET}
-        scopes: openid profile email groups
+        scopes: "openid profile email groups"
         auth_url: https://sso.${SECRET_DOMAIN_ME}/auth
         token_url: https://sso.${SECRET_DOMAIN_ME}/token
         api_url: https://sso.${SECRET_DOMAIN_ME}/userinfo
