@@ -32,7 +32,7 @@ spec:
         type: NodePort
         ports:
           http:
-            port: 32400
+            port: 31400
             protocol: TCP
             targetPort: 32400
       gdm:
@@ -41,22 +41,22 @@ spec:
         ports:
           gdm1:
             enabled: true
-            port: 32410
+            port: 31410
             protocol: UDP
             targetPort: 32410
           gdm2:
             enabled: true
-            port: 32412
+            port: 31412
             protocol: UDP
             targetPort: 32412
           gdm3:
             enabled: true
-            port: 32413
+            port: 31413
             protocol: UDP
             targetPort: 32413
           gdm4:
             enabled: true
-            port: 32414
+            port: 31414
             protocol: UDP
             targetPort: 32414
     ingress:
@@ -98,13 +98,13 @@ spec:
         enabled: true
         loki: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
         logs:
-          - name: promtail/plex
-            path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
-          - name: promtail/plex/plugins
-            path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
+        - name: promtail/plex
+          path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
+        - name: promtail/plex/plugins
+          path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
         volumeMounts:
-          - name: config
-            mountPath: /config
-            readOnly: true
+        - name: config
+          mountPath: /config
+          readOnly: true
         securityContext:
           runAsUser: 0
