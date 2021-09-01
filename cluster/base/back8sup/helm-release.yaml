@@ -36,9 +36,9 @@ spec:
       config.yaml: |
         global:
           - secret
-        # namespaces:
-        #   - name: media
-        #     kind:
-        #       - deployment
-        #       - cm
-        #       - ingress
+        namespaces:
+          - name: default
+            kind:
+              - deployment
+              - cm
+              - ingress
