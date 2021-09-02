@@ -31,6 +31,10 @@ firewall_services:
     protocol: tcp
   - name: 2380
     protocol: tcp
+  - name: 7946
+    protocol: tcp
+  - name: 7946
+    protocol: udp
   - name: 8472
     protocol: udp
   - name: 9100
