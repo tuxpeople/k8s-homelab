@@ -7,5 +7,4 @@ resources:
   - plex
   - podsync
   - tautulli
-  - wildcard-certificate
   - namespace.yaml
