@@ -3,6 +3,21 @@
   hosts: k3s_cluster
 
   tasks:
+    - name: Use iptables backend in firewalld
+      when: ansible_distribution_major_version is version_compare('8', '>=') and ansible_os_family == "RedHat"
+      lineinfile:
+        dest: /etc/firewalld/firewalld.conf
+        regexp: '^FirewallBackend=nftables$'
+        line: 'FirewallBackend=iptables'
+      register: firewalld_restart
+
+    - name: Restart service firewalld
+      ansible.builtin.service:
+        name: firewalld
+        enabled: yes
+        state: restarted
+        when: firewalld_restart
+
     - name: Add Pod-Network to trusted zone
       ansible.posix.firewalld:
         source: "10.42.0.0/16"
