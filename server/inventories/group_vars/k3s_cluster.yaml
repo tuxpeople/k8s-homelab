@@ -10,6 +10,9 @@ k3s_server:
   tls-san: "{{ vrrp_vip }},{{ cluster_name }}.{{ vrrp_vip }}.nip.io,k8s.sky.lab"
   disable:
     - local-storage
+    - servicelb
+    - traefik
+    - metrics-server
   bind-address: 0.0.0.0
   advertise-address: "{{ vrrp_vip }}"
 k3s_agent:
