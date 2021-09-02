@@ -3,11 +3,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
     external-dns/is-public: "true"
-    kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/redirect-entry-point: https
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
   labels:
     app: podsync
   name: podsync-ingress
@@ -27,4 +25,4 @@ spec:
   tls:
   - hosts:
     - podsync.${SECRET_DOMAIN_ME}
-    secretName: podsync-tls
+    secretName: "${SECRET_DOMAIN_ME/./-}-tls"
