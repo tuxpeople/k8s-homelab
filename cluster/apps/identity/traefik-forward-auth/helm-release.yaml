@@ -43,7 +43,7 @@ spec:
           paths:
             - /
       tls:
-        - secretName: auth-cert
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
             - "auth.${SECRET_DOMAIN_ME}"
     middleware:
