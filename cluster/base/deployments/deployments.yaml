@@ -2,34 +2,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
-  name: infrastructure
+  name: core
   namespace: flux-system
 spec:
-  dependsOn:
-  - name: flux-system
-  interval: 10m0s
-  path: ./cluster/infrastructure
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  validation: client
-  postBuild:
-    substitute: {}
-    substituteFrom:
-    - kind: ConfigMap
-      name: cluster-settings
-    - kind: Secret
-      name: cluster-secrets
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-kind: Kustomization
-metadata:
-  name: base
-  namespace: flux-system
-spec:
-  dependsOn:
-  - name: infrastructure
   interval: 10m0s
   path: ./cluster/core
   prune: true
@@ -52,7 +27,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: base
+  - name: core
   interval: 10m0s
   path: ./cluster/apps
   prune: true
