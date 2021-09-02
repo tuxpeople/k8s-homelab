@@ -16,7 +16,7 @@
         name: firewalld
         enabled: yes
         state: restarted
-        when: firewalld_restart
+      when: firewalld_restart
 
     - name: Add Pod-Network to trusted zone
       ansible.posix.firewalld:
