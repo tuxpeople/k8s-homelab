@@ -29,8 +29,7 @@ spec:
       pullPolicy: Always
     ingress:
       enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-production
+      annotations:traefik.ingress.kubernetes.io/redirect-entry-point: websecure
         kubernetes.io/ingress.class: traefik
       tls:
         - secretName: nextcloud-tls
