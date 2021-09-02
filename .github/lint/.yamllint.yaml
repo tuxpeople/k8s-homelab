@@ -4,6 +4,8 @@ ignore: |
   server/
   disabled/
   crds.yaml
+  *.sops.*
+  gotk-components.yaml
 extends: default
 rules:
   truthy:
