@@ -1,8 +1,8 @@
 ---
 apiVersion: v1
 data:
-  INTERNAL_DOMAIN: 192.168.8.222.nip.io
-  METALLB_LB_RANGE: 192.168.8.80-99
+  INTERNAL_DOMAIN: 192.168.8.88.nip.io
+  METALLB_LB_RANGE: 192.168.8.80-192.168.8.99
   SVC_TRAEFIK_ADDR: 192.168.8.88
 kind: ConfigMap
 metadata:
