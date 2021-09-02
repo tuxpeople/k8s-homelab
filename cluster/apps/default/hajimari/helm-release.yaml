@@ -105,13 +105,14 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
         hosts:
-          - host: "hajimari.${SECRET_DOMAIN}"
+          - host: "hajimari.${SECRET_DOMAIN_ME}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "hajimari.${SECRET_DOMAIN}"
+              - "hajimari.${SECRET_DOMAIN_ME}"
+              secretName: "${SECRET_DOMAIN_ME/./-}-tls"
     persistence:
       data:
         enabled: true
