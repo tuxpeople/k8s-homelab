@@ -58,7 +58,7 @@
       ignore_errors: true
 
     - name: Bootstrap Flux
-      shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=cluster/base --private-key-file=~/.ssh/id_rsa_github"
+      shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=cluster/core --private-key-file=~/.ssh/id_rsa_github"
       delegate_to: localhost
       become: false
       environment:
