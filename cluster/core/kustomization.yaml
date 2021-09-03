@@ -6,3 +6,4 @@ resources:
   - nfs-subdir-external-provisioner
   - system-upgrade
   - uptimerobot-operator
+  - networking
