@@ -6,3 +6,4 @@ resources:
   - system-upgrade
   - uptimerobot-operator
   - networking
+  - cert-manager

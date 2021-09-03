@@ -18,7 +18,7 @@ spec:
       interval: 5m
   dependsOn:
     - name: cert-manager
-      namespace: cert-manager
+      namespace: networking
     - name: metallb
       namespace: networking
   values:

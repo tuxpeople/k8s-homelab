@@ -8,3 +8,4 @@ resources:
   - traefik
   - wildcard-certificate
   - metallb
+  - sealed-secret.yaml
