@@ -3,7 +3,7 @@ apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
   name: hasteserver
-  namespace: hasteserver
+  namespace: utils
 spec:
   friendlyName: "K8S hasteserver"
   url: "https://paste.${SECRET_DOMAIN_ME}"

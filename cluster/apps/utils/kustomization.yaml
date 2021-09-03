@@ -6,6 +6,10 @@ resources:
   - back8sup
   - bastion
   - changedetection.io
+  - hasteserver
   - namespace.yaml
-  - smtp
   - octoprint
+  - onetimesecret
+  - sharry
+  - smtp
+  - static

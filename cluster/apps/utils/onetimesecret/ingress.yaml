@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: onetimesecret
+  namespace: utils
   labels:
     app: onetimesecret
     component: frontend

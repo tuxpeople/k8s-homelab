@@ -6,7 +6,7 @@ metadata:
     app: onetimesecret
     component: redis
   name: onetimesecret-redis
-  namespace: onetimesecret
+  namespace: utils
 spec:
   ports:
   - port: 6379

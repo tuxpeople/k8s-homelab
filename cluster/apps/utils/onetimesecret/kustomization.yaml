@@ -1,0 +1,11 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - config_map.yaml
+  - deployment-onetimesecret.yaml
+  - deployment-redis.yaml
+  - ingress.yaml
+  - service-onetimesecret.yaml
+  - service-redis.yaml
+  - uptimerobot-monitor.yaml

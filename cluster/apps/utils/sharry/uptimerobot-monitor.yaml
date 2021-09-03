@@ -2,11 +2,11 @@
 apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
-  name: onetimesecret
-  namespace: onetimesecret
+  name: sharry
+  namespace: utils
 spec:
-  friendlyName: "K8S onetimesecret"
-  url: "https://secrets.${SECRET_DOMAIN_CH}"
+  friendlyName: "K8S sharry"
+  url: "https://share.${SECRET_DOMAIN_ME}"
   type: HTTPS
   httpMethod: GET
   interval: 300
