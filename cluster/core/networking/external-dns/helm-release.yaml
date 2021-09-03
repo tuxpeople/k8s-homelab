@@ -30,7 +30,7 @@ spec:
     - ingress
     provider: cloudflare
     cloudflare:
-      secretName: cloudflare-api-key
+      secretName: cloudflare-api-token
       email: ${SECRET_EMAIL}
       proxied: true
     policy: sync
