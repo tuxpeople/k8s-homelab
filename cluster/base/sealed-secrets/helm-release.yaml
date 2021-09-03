@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   releaseName: sealed-secrets
-  namespace: kube-system
+  targetNamespace: kube-system
   interval: 5m
   install:
     remediation:
