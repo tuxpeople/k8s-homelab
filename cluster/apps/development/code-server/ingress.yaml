@@ -2,10 +2,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: dokuwiki
-  labels:
-    app: dokuwiki
-  name: dokuwiki
+  name: code-server
+  namespace: development
   annotations:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: letsencrypt-staging
@@ -15,17 +13,17 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
 spec:
   tls:
-    - secretName: wiki-tls
+    - secretName: code-tls
       hosts:
-        - wiki.${SECRET_DOMAIN_ME}
+        - code.${SECRET_DOMAIN_ME}
   rules:
-    - host: wiki.${SECRET_DOMAIN_ME}
+    - host: code.${SECRET_DOMAIN_ME}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: dokuwiki
+                name: code-server
                 port:
-                  number: 80
+                  number: 8443

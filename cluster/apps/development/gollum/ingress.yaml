@@ -2,28 +2,33 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: code-server
-  namespace: code-server
+  namespace: development
+  labels:
+    app: gollum
+  name: gollum
   annotations:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: letsencrypt-staging
     traefik.ingress.kubernetes.io/redirect-entry-point: websecure
+    ingress.kubernetes.io/auth-type: basic
+    ingress.kubernetes.io/auth-realm: traefik
+    ingress.kubernetes.io/auth-secret: gollum-basic-auth
     external-dns/is-public: "true"
     external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
     traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
 spec:
   tls:
-    - secretName: code-tls
+    - secretName: wiki2-tls
       hosts:
-        - code.${SECRET_DOMAIN_ME}
+        - wiki2.${SECRET_DOMAIN_ME}
   rules:
-    - host: code.${SECRET_DOMAIN_ME}
+    - host: wiki2.${SECRET_DOMAIN_ME}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: code-server
+                name: gollum
                 port:
-                  number: 8443
+                  number: 8080

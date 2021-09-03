@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: gollum
+  namespace: development
   name: gollum
 spec:
   selector:

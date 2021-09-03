@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: dokuwiki
+  namespace: development
   name: dokuwiki
 spec:
   selector:

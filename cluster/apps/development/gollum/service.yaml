@@ -2,14 +2,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: code-server
-  namespace: code-server
+  namespace: development
+  name: gollum
+  labels:
+    app: gollum
 spec:
   type: ClusterIP
   ports:
-    - port: 8443
-      targetPort: 8443
+    - port: 8080
+      targetPort: 8080
       protocol: TCP
       name: http
   selector:
-    app: code-server
+    app: gollum
