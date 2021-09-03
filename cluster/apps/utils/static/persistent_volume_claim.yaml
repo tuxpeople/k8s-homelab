@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: static
+  namespace: utils
   labels:
     app: static
   name: static-data

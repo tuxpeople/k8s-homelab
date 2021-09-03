@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: static
+  namespace: utils
   name: static
 spec:
   selector:

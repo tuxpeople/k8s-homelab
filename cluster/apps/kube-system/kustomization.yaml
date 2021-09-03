@@ -5,3 +5,4 @@ resources:
   - metrics-server
   - node-problem-detector
   - descheduler
+  - reloader

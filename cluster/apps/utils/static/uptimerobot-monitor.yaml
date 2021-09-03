@@ -3,7 +3,7 @@ apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
   name: static
-  namespace: static
+  namespace: utils
 spec:
   friendlyName: "K8S static"
   url: "https://static.${SECRET_DOMAIN_ME}"
