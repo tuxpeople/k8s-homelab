@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bastion
   name: bastion-keys
-  namespace: bastion
+  namespace: utils
 spec:
   accessModes:
   - ReadWriteOnce

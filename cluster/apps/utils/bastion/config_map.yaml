@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bastion
   name: bastion-config
-  namespace: bastion
+  namespace: utils
 data:
   sshd_config: |
     AllowAgentForwarding            yes

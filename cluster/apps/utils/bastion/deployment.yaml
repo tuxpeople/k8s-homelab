@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bastion
   name: bastion
-  namespace: bastion
+  namespace: utils
 spec:
   selector:
     matchLabels:

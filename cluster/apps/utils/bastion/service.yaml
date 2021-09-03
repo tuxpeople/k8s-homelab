@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bastion
   name: bastion-svc
-  namespace: bastion
+  namespace: utils
 spec:
   type: NodePort
   ports:
