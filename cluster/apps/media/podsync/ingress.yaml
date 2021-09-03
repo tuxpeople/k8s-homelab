@@ -7,7 +7,6 @@ metadata:
     external-dns/is-public: "true"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     cert-manager.io/cluster-issuer: letsencrypt-production
-    kubernetes.io/ingress.class: traefik
   labels:
     app: podsync
   name: podsync-ingress
