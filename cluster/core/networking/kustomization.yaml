@@ -9,3 +9,4 @@ resources:
   - wildcard-certificate
   - metallb
   - sealed-secret.yaml
+  - cert-manager
