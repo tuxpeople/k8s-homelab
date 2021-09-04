@@ -5,3 +5,4 @@ resources:
   - system-upgrade
   - uptimerobot-operator
   - networking
+  - kube-system

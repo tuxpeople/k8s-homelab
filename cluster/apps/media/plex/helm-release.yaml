@@ -24,6 +24,7 @@ spec:
     remediation:
       retries: 3
   values:
+    priorityClassName: high-priority
     env:
       TZ: Europe/Zurich
     service:
