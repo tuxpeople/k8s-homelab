@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: smokeping
+  namespace: networking
   labels:
     app: smokeping
   name: smokeping
