@@ -62,3 +62,9 @@ spec:
         - secretName: wallabag-tls
           hosts:
           - wallabag.${SECRET_DOMAIN_ME}
+    redis:
+      enabled: true
+    postgresql:
+      enabled: true
+      persistence:
+        enabled: true
