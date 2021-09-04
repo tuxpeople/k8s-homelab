@@ -5,8 +5,6 @@ resources:
   - external-dns
   - k8s-gateway
   - namespace.yaml
-  - traefik
-  - wildcard-certificate
   - metallb
   - sealed-secret.yaml
   - cert-manager

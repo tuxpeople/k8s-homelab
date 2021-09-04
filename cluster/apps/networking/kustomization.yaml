@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - smokeping
   - speedtest-plotter
+  - traefik
+  - wildcard-certificate
