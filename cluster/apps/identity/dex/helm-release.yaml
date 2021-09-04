@@ -88,6 +88,7 @@ spec:
             - 'https://alertmanager.${SECRET_DOMAIN_ME}/_oauth'
             - 'https://change.${SECRET_DOMAIN_ME}/_oauth'
             - 'https://grafana.${SECRET_DOMAIN_ME}/login/generic_oauth'
+            - 'https://wiki.${SECRET_DOMAIN_ME}/_oauth'
           name: 'SKY'
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
