@@ -7,7 +7,7 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://charts.jetstack.io/
+      # renovate: registryUrl=https://charts.jetstack.io
       chart: cert-manager
       version: v1.5.3
       sourceRef:
