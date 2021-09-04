@@ -27,6 +27,7 @@ spec:
     env:
       TZ: "Europe/Zurich"
       SYMFONY__ENV__DOMAIN_NAME: https://wallabag.${SECRET_DOMAIN_ME}
+      POPULATE_DATABASE: "true"
       # SYMFONY__ENV__SERVER_NAME: "Your wallabag instance"
       # SYMFONY__ENV__FOSUSER_CONFIRMATION: FALSE
     image:
@@ -62,7 +63,3 @@ spec:
         - secretName: wallabag-tls
           hosts:
           - wallabag.${SECRET_DOMAIN_ME}
-    postgresql:
-      enabled: true
-      persistence:
-        enabled: true
