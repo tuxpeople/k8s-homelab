@@ -30,7 +30,7 @@ spec:
     ingress:
       enabled: true
       annotations:
-        traefik.ingress.kubernetes.io/redirect-entry-point: websecure
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
         kubernetes.io/ingress.class: traefik
       tls:
         - secretName: nextcloud-tls

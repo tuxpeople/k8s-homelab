@@ -93,7 +93,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
     external-dns/is-public: "true"
-    traefik.ingress.kubernetes.io/redirect-entry-point: websecure
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
   labels:
     app: semaphore
   name: semaphore-ingress
