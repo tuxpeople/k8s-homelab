@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - namespace.yaml
-  - sealed-secret.yaml
-  - helm-release.yaml
+  - uptimerobot-operator
