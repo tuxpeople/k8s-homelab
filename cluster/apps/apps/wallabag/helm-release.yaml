@@ -2,15 +2,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: paperless
-  namespace: tools
+  name: wallabag
+  namespace: apps
 spec:
-  releaseName: paperless
+  releaseName: wallabag
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts
-      chart: paperless
-      version: 7.0.0
+      chart: wallabag
+      version: 4.1.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
@@ -26,33 +26,39 @@ spec:
   values:
     env:
       TZ: "Europe/Zurich"
-      PAPERLESS_OCR_LANGUAGE: "deu"
+      # SYMFONY__ENV__DOMAIN_NAME: https://wb.DOMAIN.net #fake url
+      # SYMFONY__ENV__SERVER_NAME: "Your wallabag instance"
+      # SYMFONY__ENV__FOSUSER_CONFIRMATION: FALSE
+    image:
+      pullPolicy: Always
     persistence:
-      consume:
+      cache:
         enabled: true
         accessMode: ReadWriteOnce
-        size: 10G
+        size: 1G
+      images:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 5G
       data:
         enabled: true
         accessMode: ReadWriteOnce
-        size: 10G
-      export:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
-      media:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
-    image:
-      pullPolicy: Always
+        size: 5G
     ingress:
       main:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: "traefik"
+          cert-manager.io/cluster-issuer: letsencrypt-staging
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
         hosts:
-        - host: "paperless.${SECRET_DOMAIN_INTERNAL}"
+        - host: "wallabag.${SECRET_DOMAIN_ME}"
           paths:
           - path: /
             pathType: Prefix
+        tls:
+        - secretName: wallabag-tls
+          hosts:
+          - wallabag.${SECRET_DOMAIN_ME}

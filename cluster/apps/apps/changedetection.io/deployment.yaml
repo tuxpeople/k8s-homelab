@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: tools
+  namespace: apps
   name: changedetection
 spec:
   selector:

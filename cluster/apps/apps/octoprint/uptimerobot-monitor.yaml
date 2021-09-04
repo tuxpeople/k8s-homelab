@@ -2,11 +2,11 @@
 apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
-  name: changedetection
-  namespace: tools
+  name: octoprint
+  namespace: apps
 spec:
-  friendlyName: "K8S changedetection.io"
-  url: "https://change.${SECRET_DOMAIN_ME}"
+  friendlyName: "K8S octoprint"
+  url: "https://print.${SECRET_DOMAIN_ME}"
   type: HTTPS
   httpMethod: GET
   interval: 300

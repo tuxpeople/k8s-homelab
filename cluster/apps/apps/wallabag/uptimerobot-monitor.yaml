@@ -2,11 +2,11 @@
 apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
-  name: octoprint
-  namespace: tools
+  name: wallabag
+  namespace: apps
 spec:
-  friendlyName: "K8S octoprint"
-  url: "https://print.${SECRET_DOMAIN_ME}"
+  friendlyName: "K8S wallabag"
+  url: "https://wallabag.${SECRET_DOMAIN_ME}"
   type: HTTPS
   httpMethod: GET
   interval: 300
