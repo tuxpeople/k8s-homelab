@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: utils
+  namespace: tools
   labels:
     app: changedetection
   name: changedetection

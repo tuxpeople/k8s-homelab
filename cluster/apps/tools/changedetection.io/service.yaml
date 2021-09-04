@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: utils
+  namespace: tools
   name: changedetection
   labels:
     app: changedetection
