@@ -104,7 +104,7 @@ spec:
     - key: "node-role.kubernetes.io/master"
       operator: "Exists"
       effect: "NoSchedule"
-    providers:
-      kubernetesIngress:
-        publishedService:
-          enabled: true
+    # providers:
+    #   kubernetesIngress:
+    #     publishedService:
+    #       enabled: true
