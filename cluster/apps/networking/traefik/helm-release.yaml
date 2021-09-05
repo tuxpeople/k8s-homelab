@@ -5,6 +5,7 @@ metadata:
   name: traefik
   namespace: networking
 spec:
+  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://helm.traefik.io/traefik
@@ -15,13 +16,6 @@ spec:
         name: traefik-charts
         namespace: flux-system
       interval: 5m
-  interval: 5m
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    remediation:
-      retries: 3
   dependsOn:
     - name: cert-manager
       namespace: networking
@@ -32,7 +26,7 @@ spec:
       name: ghcr.io/k8s-at-home/traefik
     deployment:
       kind: Deployment
-      replicas: 2
+      replicas: 1
     service:
       enabled: true
       type: LoadBalancer
@@ -62,7 +56,7 @@ spec:
     additionalArguments:
       - "--providers.kubernetesingress.ingressendpoint.ip=${SVC_TRAEFIK_ADDR}"
       - "--providers.kubernetescrd.allowexternalnameservices=true"
-      - "--providers.kubernetesingress.allowexternalnameservices=true"
+      # - "--providers.kubernetesingress.allowexternalnameservices=true"
     ports:
       traefik:
         expose: true
@@ -76,11 +70,11 @@ spec:
         port: 8082
         expose: true
         exposedPort: 8082
-    # tlsOptions:
-    #   default:
-    #     minVersion: VersionTLS12
-    #     maxVersion: VersionTLS13
-    #     sniStrict: true
+    tlsOptions:
+      default:
+        minVersion: VersionTLS12
+        maxVersion: VersionTLS13
+        sniStrict: true
     pilot:
       enabled: false
     experimental:
@@ -92,19 +86,19 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
-    rbac:
-      enabled: true
-    priorityClassName: "system-cluster-critical"
-    tolerations:
-    - key: "CriticalAddonsOnly"
-      operator: "Exists"
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Exists"
-      effect: "NoSchedule"
-    - key: "node-role.kubernetes.io/master"
-      operator: "Exists"
-      effect: "NoSchedule"
-    providers:
-      kubernetesIngress:
-        publishedService:
-          enabled: true
+    # rbac:
+    #   enabled: true
+    # priorityClassName: "system-cluster-critical"
+    # tolerations:
+    # - key: "CriticalAddonsOnly"
+    #   operator: "Exists"
+    # - key: "node-role.kubernetes.io/control-plane"
+    #   operator: "Exists"
+    #   effect: "NoSchedule"
+    # - key: "node-role.kubernetes.io/master"
+    #   operator: "Exists"
+    #   effect: "NoSchedule"
+    # providers:
+    #   kubernetesIngress:
+    #     publishedService:
+    #       enabled: true
