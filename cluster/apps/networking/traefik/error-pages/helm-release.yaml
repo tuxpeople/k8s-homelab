@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://helm.error-pages.io/error-pages
+      # renovate: registryUrl=https://kiwigrid.github.io
       chart: error-pages
       version: 0.1.2
       sourceRef:
