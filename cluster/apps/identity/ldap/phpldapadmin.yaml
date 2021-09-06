@@ -60,6 +60,8 @@ metadata:
   labels:
     app: phpldapadmin
   name: phpldapadmin
+  annotations:
+    kubernetes.io/ingress.class: traefik
 spec:
   rules:
   - host: phpldapadmin.${SECRET_DOMAIN_INTERNAL}
