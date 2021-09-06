@@ -18,6 +18,8 @@ spec:
   dependsOn:
     - name: dex
       namespace: identity
+    - name: traefik
+      namespace: networking
   interval: 5m
   install:
     remediation:
