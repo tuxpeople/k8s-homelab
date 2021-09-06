@@ -16,6 +16,10 @@ for i in k3s-lb1 k3s-lb2 k3s-node1 k3s-node2 k3s-node3; do
   ssh $i -l ansible "sudo yum -y install python38"
 done
 
+# prepare pre-commit
+brew install pre-commit
+pre-commit install
+
 # Change into ansible dir
 cd server
 
