@@ -1,27 +1,21 @@
 # based on https://github.com/robkooper/system-upgrade-controller/blob/os-upgrade/examples/upgrades/centos7.yaml
 ---
-apiVersion: v1
-kind: Secret
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
 metadata:
+  creationTimestamp: null
   name: centos8
   namespace: system-upgrade
-type: Opaque
-stringData:
-  upgrade.sh: |
-    #!/bin/sh
-    set -e
-    # do actual upgrade
-    logger -t system-upgrade start upgrade
-    setenforce 0
-    yum upgrade -y
-    setenforce 1
-    logger -t system-upgrade finish upgrade
-    # needs-restarting returns 1 if reboot is needed
-    if ! needs-restarting -r &> /dev/null; then
-      needs-restarting -r || /bin/true  # otherwise script ends due to -e
-      logger -t system-upgrade restart system
-      reboot
-    fi
+spec:
+  encryptedData:
+    upgrade.sh: AgBYWvMAnLqQ5F2vQXV60ZcYe9+fZy6cNqIfb3seWcsrsqJsRVsyNHKJxN8nt4MveoLQfxW2hjccQL4htP9dHwDRRsRaplV3pZwBrB0pdUYv7yVzv09b4pwEKBXvYNoQRA8K+hCrPXgTBLdyMJR+DFzbsikU8wZsO26t0EvEa9Wk8OaJkX6ir50+DygRRQalY5SjR1XxvAOBXKNVr1pnoIPmfnacp27jdTl0JDZw+PnXx297UQgtC6QMhR0/LC4Sha6aK/xiaZBYtDD/KtBEw17cOdRZrahR1+nlTq4Lm5BaPpuwo8DeosPXTlfZJVbDTo7LmziubkkQDluN05eWnnAFKJ4PvpNEywCCbkfnybWewtJvV8Pm49uQmOY4nW6diekEJ0c+LAMCWXa3sVpkxaTlcyWftTHu3jDWPDYKkrwAty35H5Pn4gFdm1E6pMJGejj0uVQr1x1y9O85pbDjH93+vcx82ChvpEiBkqYBqDjX2rvhjLGqEjpehVBfSg+kdE3qJhxl9BpMJd3ObVKzmLFOHP9TaPgrQps5ZoAY507g0DBnWUWKnt7KettGcfR9DExQTd8EGYjCtm2pMro+IH2nGSAcsKXyG5kkeojUav6+zxMtnA0Z6Ee5DtfNl92lAsNX9VpM33zZZFKHsZWF/CT3UGDGBVR1Jk78tCgcZ2pmA5ezr6Y9xzPt7+CthybiDag3GI0kSlrPYipenF0p6sgv6P8R8qtUwDlJO7zjnqdjqGUocvkIsgkEpK2WK7630wgYOj5F4uWmIBrvdlZSGqWfRvSmKsrMgMmshcjIYcgdrSSGXPlygHatDsFJ+QZEyBBHwOdlWd7QTe2vFCkVqSfupeiAzRcgzDk5OFEltZYXGNy/yZU6LjOki/8JJt8/7r5pjwA0rghH98b3mGMHzyQufShyPTrBrGuuQqS1+SJOjvh+zdatLCLC8RwfGnULThbHDqzL14FsZM0ZyKQ3ZNCBmNazr4mHCftflScMVTrLCh3kuiQCrLNN/ECjqLZi5a4rX5YIC65MUD1qU/uBe7m/nOuH1Un42HZoF2cGlRDABqkndTv0PNAXWRy0IQNB2E7nQ2vjDg67sVdMkCiE6RCpuCnVgw2dDKevs5zmTPdYVaWv/ZJyks+oS8qZVjyw39NYGC3UX8jATUxpIt4HHcZJrZ7ismesJyfYM96Z6jKVP+NCpUKDZA==
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: centos8
+      namespace: system-upgrade
+    type: Opaque
 ---
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
