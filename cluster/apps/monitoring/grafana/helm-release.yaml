@@ -47,7 +47,7 @@ spec:
         token_url: https://sso.${SECRET_DOMAIN_ME}/token
         api_url: https://sso.${SECRET_DOMAIN_ME}/userinfo
         group_mapping:
-          role_attribute_path: "contains(info.groups[*], 'admins') && 'Admin' || 'Viewer'"
+          role_attribute_path: "contains(${SECRET_OIDC_CLIENT_ID}.groups[*], 'admins') && 'Admin' || 'Viewer'"
           org_id: 1
     dashboardProviders:
       dashboardproviders.yaml:
