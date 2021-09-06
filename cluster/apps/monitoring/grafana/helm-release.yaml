@@ -139,11 +139,11 @@ spec:
           gnetId: 11313
           datasource: Prometheus
           revision: 8
-        # ?? Ref: https://grafana.com/grafana/dashboards/11310/revisions
-        #up_client-dpi:
-        #  gnetId: 11310
-        #  datasource: Prometheus
-        #  revision: 4
+          # ?? Ref: https://grafana.com/grafana/dashboards/11310/revisions
+          # up_client-dpi:
+          #   gnetId: 11310
+          #   datasource: Prometheus
+          #   revision: 4
       fun:
         octoprint:
           url: https://raw.githubusercontent.com/tg44/OctoPrint-Prometheus-Exporter/master/extras/octoprint-grafana.json

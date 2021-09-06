@@ -26,7 +26,7 @@ spec:
     alertmanager:
       enabled: true
       config:
-#        global:
+        #  global:
         #  smtp_smarthost: smtp.gmail.com:587
         #  smtp_auth_username: you@gmail.com
         #  smtp_auth_password: yourapppassword # https://support.google.com/mail/answer/185833?hl=en-GB
@@ -85,8 +85,8 @@ spec:
           equal: ['alertname', 'namespace']
 
       alertmanagerSpec:
-    #    replicas: 3
-    #    podAntiAffinity: "soft"
+        # replicas: 3
+        # podAntiAffinity: "soft"
         storage:
           volumeClaimTemplate:
             spec:
@@ -94,14 +94,14 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
-    #    resources:
-    #      limits:
-    #        cpu: 500m
-    #        memory: 64Mi
-    #      requests:
-    #        cpu: 25m
-    #        memory: 32Mi
-    #    priorityClassName: high-priority
+        # resources:
+        #   limits:
+        #     cpu: 500m
+        #     memory: 64Mi
+        #   requests:
+        #     cpu: 25m
+        #     memory: 32Mi
+        # priorityClassName: high-priority
       ingress:
         enabled: true
         annotations:
