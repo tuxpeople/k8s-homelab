@@ -90,7 +90,8 @@ spec:
             - 'https://change.${SECRET_DOMAIN_ME}/_oauth'
             - 'https://grafana.${SECRET_DOMAIN_ME}/login/generic_oauth'
             - 'https://wiki.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://traefik.eighty-three.me/_oauth'
+            - 'https://traefik.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://homer.${SECRET_DOMAIN_ME}/_oauth'
           name: 'SKY'
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
