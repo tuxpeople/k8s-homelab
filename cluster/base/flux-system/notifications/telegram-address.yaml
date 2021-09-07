@@ -1,0 +1,16 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: telegram-address
+  namespace: flux-system
+spec:
+  encryptedData:
+    address: AgCAZRq5wP43i7rrKs1qIzbOySyJU7/XETD6XdQZdm7n2SxnEfqsrKv4LymkbuXSNbT0atT6n2MY2huN9qQ8mkNHi4+DpiPZsh78zbyokovsRvVRt3nptyP/h5SXkp75KWbqC+dji1INfkrrvoCul0AjvFu5jlLXOMmzStfKjtcxPBEQcPk10xOM/14+hDM2cfea4Q7hiDhVJsTwqDGojNhU1NSxsQNWd98uTV2SDSMhqCdnYveRsI0b9rknqGF1SG47cAcleM4eyoShmbjLCTVnh253V09kejxaD+j/2qrw1/35gOeSP0yYk82qHb9Q8QBasBj+hS3a1TNcS1Zbhqda6oGUSz55LoMAQMBk8uH4JbEXPyyox8MH5PCTiCm3lW5TA28+ZkxGNqCYPRV3o18iwX3ZlyXdNwtzubRL80rYI/GYsSPaxVMgeg+Jd/cSdjoFXxBZdvtBfOJzHIXnWuhCLqDcQKr9eCuEr27MEpdiDXqvvLYszAWAJQne0RPRWu1M1aRptuUh8Vrm6fwFp7cTGSKRFRFKfYylXLU9iNHO7Y/JJMeHkfqYMGjrnngNnPfbg3ptWoH2ZMpYH2ELrEKn4SL/68mj637n5VvABNaWX4NHKkENf5EgOGbtcxluNno1HTNUy8XUTA8xgNbkPrFfJ7DsPAj+36t9JcXKL+iR64yUso63gfaSpoOFBiBRbk1TJVkWznNjiUPWJ44VW0RtbmcpcYuAYI/3SiuUMn5wagjh+2p5Xbwc/vstj0JL/bl4YB7KS0xFoYkbY/WwmObWtduX52PmWK6mn+8boB06z1ZhM7RGUu9yd+/Yaqi0TVOJ9R6xOZ+9E47vYWD6JmlCKN0=
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: telegram-address
+      namespace: flux-system

@@ -18,4 +18,4 @@ metadata:
 spec:
   type: generic
   secretRef:
-    name: telegram-token
+    name: telegram-address
