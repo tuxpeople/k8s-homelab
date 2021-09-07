@@ -13,10 +13,9 @@ spec:
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Provider
 metadata:
-  name: telegram
+  name: fluxcdbot
   namespace: flux-system
 spec:
-  type: telegram
-  channel: "g506637741"
+  type: generic
   secretRef:
-    name: telegram-token
+    name: fluxcdbot

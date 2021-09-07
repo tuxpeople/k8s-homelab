@@ -22,11 +22,11 @@ spec:
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
 metadata:
-  name: notifications
   namespace: flux-system
+  name: fluxcdbot
 spec:
   providerRef:
-    name: telegram
+    name: fluxcdbot
   eventSeverity: info
   eventSources:
     - kind: Kustomization
