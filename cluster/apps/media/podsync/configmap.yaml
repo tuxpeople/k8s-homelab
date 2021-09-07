@@ -31,7 +31,7 @@ data:
       clean = { keep_last = 5 }
 
       [feeds.spotfigsommerquiz]
-      url = "https://youtube.com/playlist?list=PLoAxl58aGuGqh6f2q81Yfi4h9DjOcn1GK"
+      url = "https://www.youtube.com/playlist?list=PLoAxl58aGuGqh6f2q81Yfi4h9DjOcn1GK"
       page_size = 5
       update_period = "6h"
       quality = "high"
