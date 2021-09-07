@@ -2,7 +2,7 @@
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
 metadata:
-  name: podinfo
+  name: deployments
   namespace: flux-system
 spec:
   providerRef:
