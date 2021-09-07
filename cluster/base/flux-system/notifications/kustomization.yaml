@@ -6,3 +6,4 @@ resources:
 - providers.yaml
 - alert.yaml
 - telegram-token.yaml
+- fluxcdbot.yaml
