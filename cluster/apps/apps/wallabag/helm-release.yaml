@@ -41,10 +41,6 @@ spec:
     image:
       pullPolicy: Always
     persistence:
-      cache:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 1G
       images:
         enabled: true
         accessMode: ReadWriteOnce
