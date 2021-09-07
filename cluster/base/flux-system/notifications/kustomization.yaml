@@ -5,3 +5,4 @@ resources:
 - github-token.yaml
 - providers.yaml
 - alert.yaml
+- telegram-token.yaml

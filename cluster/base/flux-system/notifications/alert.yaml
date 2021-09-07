@@ -2,11 +2,31 @@
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
 metadata:
-  name: deployments
+  name: commit-status
   namespace: flux-system
 spec:
   providerRef:
     name: github
+  eventSeverity: info
+  eventSources:
+    - kind: Kustomization
+      name: apps
+      namespace: flux-system
+    - kind: Kustomization
+      name: core
+      namespace: flux-system
+    - kind: Kustomization
+      name: crds
+      namespace: flux-system
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Alert
+metadata:
+  name: notifications
+  namespace: flux-system
+spec:
+  providerRef:
+    name: telegram
   eventSeverity: info
   eventSources:
     - kind: Kustomization

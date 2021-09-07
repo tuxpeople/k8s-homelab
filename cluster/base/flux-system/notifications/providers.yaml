@@ -9,3 +9,14 @@ spec:
   address: https://github.com/tuxpeople/k8s-homelab
   secretRef:
     name: github
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Provider
+metadata:
+  name: telegram
+  namespace: flux-system
+spec:
+  type: telegram
+  channel: "@fluxtest"
+  secretRef:
+    name: telegram-token
