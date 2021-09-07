@@ -10,7 +10,7 @@ spec:
       - name: fluxcdbot
         args:
         - --token=$(TOKEN)
-        - --url=http://fluxcdbot.flux-system.svc.cluster.local
+        - --url=http://fluxcdbot.flux-system.svc.cluster.local:8080
         env:
         - name: TOKEN
           valueFrom:
