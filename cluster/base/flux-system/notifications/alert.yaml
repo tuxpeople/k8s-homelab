@@ -27,7 +27,7 @@ metadata:
 spec:
   providerRef:
     name: fluxcdbot
-  eventSeverity: error
+  eventSeverity: info
   eventSources:
     - kind: Kustomization
       name: apps
