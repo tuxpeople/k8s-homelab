@@ -18,4 +18,4 @@ metadata:
 spec:
   type: generic
   secretRef:
-    name: fluxcdbot
+    name: telegram-token

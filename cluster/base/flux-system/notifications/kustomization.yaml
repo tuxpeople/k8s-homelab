@@ -6,4 +6,6 @@ resources:
 - providers.yaml
 - alert.yaml
 - telegram-token.yaml
-- fluxcdbot.yaml
+- https://raw.githubusercontent.com/squat/fluxcdbot/master/manifest.yaml
+patchesStrategicMerge:
+- fluxcdbot-patch.yaml
