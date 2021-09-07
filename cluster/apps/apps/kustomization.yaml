@@ -9,5 +9,5 @@ resources:
   - namespace.yaml
   - octoprint
   - paperless
-  - wallabag
+  # - wallabag
   - hajimari
