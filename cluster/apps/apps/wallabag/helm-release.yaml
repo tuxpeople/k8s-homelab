@@ -27,12 +27,12 @@ spec:
     env:
       TZ: "Europe/Zurich"
       SYMFONY__ENV__DOMAIN_NAME: https://wallabag.${SECRET_DOMAIN_ME}
-      SYMFONY__ENV__DATABASE_DRIVER: pdo_pgsql
-      SYMFONY__ENV__DATABASE_HOST: postgresql
-      SYMFONY__ENV__DATABASE_PORT: 5432
-      SYMFONY__ENV__DATABASE_NAME: wallabag
-      SYMFONY__ENV__DATABASE_USER: wallabag
-      SYMFONY__ENV__DATABASE_PASSWORD: wallabag-pass
+      SYMFONY__ENV__DATABASE_DRIVER: pdo_sqlite
+      SYMFONY__ENV__DATABASE_HOST: 127.0.0.1
+      SYMFONY__ENV__DATABASE_PORT: null
+      SYMFONY__ENV__DATABASE_NAME: symfony
+      SYMFONY__ENV__DATABASE_USER: root
+      SYMFONY__ENV__DATABASE_PASSWORD: null
       SYMFONY__ENV__REDIS_HOST: wallabag-redis-master
       SYMFONY__ENV__SERVER_NAME: Wallabag
       SYMFONY__ENV__FOSUSER_REGISTRATION: "false"
@@ -71,13 +71,6 @@ spec:
         - secretName: wallabag-tls
           hosts:
           - wallabag.${SECRET_DOMAIN_ME}
-    postgresql:
-      enabled: true
-      postgresqlUsername: wallabag
-      postgresqlPassword: wallabag-pass
-      postgresqlDatabase: wallabag
-      persistence:
-        enabled: true
     redis:
       enabled: true
       architecture: standalone
