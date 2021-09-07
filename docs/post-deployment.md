@@ -1,4 +1,4 @@
-# Things to do after the intial deployment
+# Things to do after the initial deployment
 
 ## Update webhook address for fluxcdbot:
 
