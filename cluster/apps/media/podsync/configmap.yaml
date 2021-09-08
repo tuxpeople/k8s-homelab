@@ -41,7 +41,7 @@ data:
       [feeds.oralsessions]
       url = "https://www.youtube.com/playlist?list=PLquP20HDxBb0hSlkoKj6Zx6ifU5rYK_u3"
       page_size = 5
-      update_period = "6h"
+      update_period = "10h"
       quality = "high"
       format = "video"
       clean = { keep_last = 5 }
