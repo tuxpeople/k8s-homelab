@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpn
+  labels:
+    app.kubernetes.io/name: vpn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vpn
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vpn
+    spec:
+      containers:
+        - name: vpn
+          image: hwdsl2/ipsec-vpn-server:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+          ports:
+            - name: port500
+              containerPort: 500
+              protocol: UDP
+            - name: port4500
+              containerPort: 4500
+              protocol: UDP
+          env:
+            - name: VPN_IPSEC_PSK
+              valueFrom:
+                secretKeyRef:
+                  name: vpn
+                  key: VPN_IPSEC_PSK
+            - name: VPN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: vpn
+                  key: VPN_USER
+            - name: VPN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vpn
+                  key: VPN_PASSWORD
