@@ -40,7 +40,7 @@ spec:
               name: vpn-data
             - mountPath: /data/config.cfg
               name: vpn-config
-              subPath: /data/config.cfg
+              subPath: config.cfg
       volumes:
         - name: vpn-data
           persistentVolumeClaim:
