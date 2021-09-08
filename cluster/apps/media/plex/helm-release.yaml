@@ -38,9 +38,8 @@ spec:
       main:
         primary: true
         type: LoadBalancer
-        spec:
-          loadBalancerIP: "${SVC_PLEX_ADDR}"
-          externalTrafficPolicy: Local
+        loadBalancerIP: "${SVC_PLEX_ADDR}"
+        externalTrafficPolicy: Local
     persistence:
       config:
         enabled: true
