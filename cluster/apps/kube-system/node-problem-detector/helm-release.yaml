@@ -7,7 +7,7 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://stakater.github.io/stakater-charts
+      # renovate: registryUrl=https://charts.deliveryhero.io/
       chart: node-problem-detector
       version: 2.0.7
       sourceRef:
