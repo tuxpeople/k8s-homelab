@@ -46,6 +46,22 @@ data:
       format = "video"
       clean = { keep_last = 5 }
 
+      [feeds.aew_dark]
+      url = "https://www.youtube.com/playlist?list=PLILTWWX_AIJQCxpm3QYbdWVbkyNIoREGV"
+      page_size = 2
+      update_period = "10h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 2 }
+
+      [feeds.aew_dark_elevation]
+      url = "https://www.youtube.com/watch?v=E0juqB3F5AM&list=PLILTWWX_AIJQv06SbruvEDtLf1sUtmT7d"
+      page_size = 2
+      update_period = "10h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 2 }
+
       [feeds.headlock_breaking]
       url = "https://www.youtube.com/channel/UC4A1tkY5mw9MWYa9SnDi3CQ"
       page_size = 5
