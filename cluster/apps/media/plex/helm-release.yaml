@@ -37,23 +37,10 @@ spec:
     service:
       main:
         primary: true
-        type: NodePort
-        ports:
-          http:
-            nodePort: 30400
-            protocol: TCP
-            targetPort: 32400
-            port: 32400
-    ingress:
-      main:
-        annotations:
-          kubernetes.io/ingress.class: traefik
-        enabled: true
-        hosts:
-        - host: plex.${SECRET_DOMAIN_INTERNAL}
-          paths:
-          - path: /
-            pathType: Prefix
+        type: LoadBalancer
+        spec:
+          loadBalancerIP: "${SVC_PLEX_ADDR}"
+          externalTrafficPolicy: Local
     persistence:
       config:
         enabled: true
