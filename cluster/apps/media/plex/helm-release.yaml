@@ -24,6 +24,13 @@ spec:
     remediation:
       retries: 3
   values:
+    image:
+      # -- image repository
+      repository: ghcr.io/linuxserver/plex
+      # -- image tag
+      tag: latest
+      # -- image pull policy
+      pullPolicy: Always
     priorityClassName: high-priority
     env:
       TZ: Europe/Zurich
@@ -38,13 +45,6 @@ spec:
             targetPort: 32400
             port: 32400
     ingress:
-      image:
-        # -- image repository
-        repository: ghcr.io/linuxserver/plex
-        # -- image tag
-        tag: latest
-        # -- image pull policy
-        pullPolicy: Always
       main:
         annotations:
           kubernetes.io/ingress.class: traefik
