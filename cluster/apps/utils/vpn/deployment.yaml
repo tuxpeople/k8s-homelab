@@ -17,31 +17,38 @@ spec:
     spec:
       containers:
         - name: vpn
-          image: hwdsl2/ipsec-vpn-server:latest
+          image: trailofbits/algo:latest
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: true
             privileged: true
           ports:
-            - name: port500
+            - name: ssh
+              containerPort: 4160
+              protocol: TCP
+            - name: ipsec-IKEv2
               containerPort: 500
               protocol: UDP
-            - name: port4500
+            - name: ipsec-nat-t
               containerPort: 4500
               protocol: UDP
-          env:
-            - name: VPN_IPSEC_PSK
-              valueFrom:
-                secretKeyRef:
-                  name: vpn
-                  key: VPN_IPSEC_PSK
-            - name: VPN_USER
-              valueFrom:
-                secretKeyRef:
-                  name: vpn
-                  key: VPN_USER
-            - name: VPN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: vpn
-                  key: VPN_PASSWORD
+            - name: wiregurard
+              containerPort: 51820
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /data
+              name: vpn-data
+            - mountPath: /data/config.cfg
+              name: vpn-config
+              subPath: /data/config.cfg
+      volumes:
+        - name: vpn-data
+          persistentVolumeClaim:
+            claimName: vpn-data
+        - name: vpn-config
+          configMap:
+            name: vpn-config
+            items:
+              - key: config.cfg
+                path: config.cfg
+                mode: 0644
