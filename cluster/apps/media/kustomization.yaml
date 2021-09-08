@@ -5,7 +5,7 @@ namespace: media
 resources:
   - gaps
   - jdownloader
-  #- plex
+  - plex
   - podsync
   - tautulli
   - namespace.yaml
