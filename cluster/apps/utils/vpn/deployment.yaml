@@ -26,7 +26,7 @@ spec:
             - name: ssh
               containerPort: 4160
               protocol: TCP
-            - name: ipsec-IKEv2
+            - name: ipsec-ikev2
               containerPort: 500
               protocol: UDP
             - name: ipsec-nat-t
