@@ -28,7 +28,7 @@ spec:
       - name: default
         protocol: layer2
         addresses:
-        - "${SECRET_METALLB_LB_RANGE}"
+        - "${METALLB_LB_RANGE}"
     prometheusRule:
       enabled: true
     prometheus:
