@@ -81,9 +81,9 @@ items:
             name: data
         restartPolicy: Always
         volumes:
-        - name: alertmanager-bot
+        - name: data
           persistentVolumeClaim:
-            claimName: data
+            claimName: alertmanager-bot
     volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
