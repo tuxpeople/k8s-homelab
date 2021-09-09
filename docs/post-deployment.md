@@ -39,3 +39,10 @@ Log into paperless container and run `gosu paperless python3 manage.py createsup
 
 ## Default credentials for `mealie`
 As descreibed [here](https://hay-kot.github.io/mealie/documentation/admin/user-management/), the default username and password are `changeme@email.com` and `MyPassword`.
+
+## Configure `gaps`
+
+Either restore pvc content, or do the following:
+
+1. Go to `Settings` -> `TMDB` and enter the API key (v3 auth)
+2. Go to `Settings` -> `Plex` and enter the Plex IP Address `192.168.8.80` and the Plex Token.
