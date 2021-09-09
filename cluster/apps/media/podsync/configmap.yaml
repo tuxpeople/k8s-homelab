@@ -48,7 +48,7 @@ data:
 
       [feeds.aew_dark]
       url = "https://www.youtube.com/playlist?list=UUFN4JkGP_bVhAdBsoV9xftA"
-      page_size = 2
+      page_size = 10
       update_period = "10h"
       quality = "high"
       format = "video"
@@ -58,7 +58,7 @@ data:
 
       [feeds.aew_dark_elevation]
       url = "https://www.youtube.com/playlist?list=UUFN4JkGP_bVhAdBsoV9xftA"
-      page_size = 2
+      page_size = 10
       update_period = "10h"
       quality = "high"
       format = "video"
