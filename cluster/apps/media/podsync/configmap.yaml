@@ -38,6 +38,14 @@ data:
       format = "video"
       clean = { keep_last = 5 }
 
+      [feeds.TechWorldWithNana]
+      url = "https://www.youtube.com/playlist?list=UUdngmbVKX1Tgre699-XLlUA"
+      page_size = 5
+      update_period = "6h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 5 }
+
       [feeds.oralsessions]
       url = "https://www.youtube.com/playlist?list=PLquP20HDxBb0hSlkoKj6Zx6ifU5rYK_u3"
       page_size = 5
