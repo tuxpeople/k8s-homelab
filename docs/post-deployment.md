@@ -44,5 +44,5 @@ As descreibed [here](https://hay-kot.github.io/mealie/documentation/admin/user-m
 
 Either restore pvc content, or do the following:
 
-1. Go to `Settings` -> `TMDB` and enter the API key (v3 auth)
-2. Go to `Settings` -> `Plex` and enter the Plex IP Address `192.168.8.80` and the Plex Token.
+1. Go to `Settings` -> `TMDB` and enter the API key (v3 auth) -> `save`.
+2. Go to `Settings` -> `Plex` and enter the Plex IP Address `192.168.8.80` and the Plex Token -> `add`.
