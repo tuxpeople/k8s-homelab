@@ -47,7 +47,7 @@ data:
       clean = { keep_last = 5 }
 
       [feeds.aew_dark]
-      url = "https://www.youtube.com/c/AEW"
+      url = "https://www.youtube.com/c/AEW/videos"
       page_size = 2
       update_period = "10h"
       quality = "high"
@@ -57,7 +57,7 @@ data:
       custom = { title = "AEW Dark" }
 
       [feeds.aew_dark_elevation]
-      url = "https://www.youtube.com/c/AEW"
+      url = "https://www.youtube.com/c/AEW/videos"
       page_size = 2
       update_period = "10h"
       quality = "high"
