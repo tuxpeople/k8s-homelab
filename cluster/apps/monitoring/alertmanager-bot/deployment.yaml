@@ -2,7 +2,7 @@ apiVersion: v1
 items:
 - apiVersion: v1
   stringData:
-    admin: ${SECRET_PASSWORD}
+    admin: ${SECRET_TELEGRAMUSER}
     token: ${SECRET_TELEGRAMTOKEN}
   kind: Secret
   metadata:
@@ -48,7 +48,7 @@ items:
       spec:
         containers:
         - args:
-          - --alertmanager.url=http://localhost:9093
+          - --alertmanager.url=http://alertmanager-operated:9093
           - --log.level=info
           - --store=bolt
           - --bolt.path=/data/bot.db
