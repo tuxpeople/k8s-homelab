@@ -8,8 +8,8 @@ metadata:
   namespace: monitoring
 type: Opaque
 stringData:
-  admin: ${SECRET_TELEGRAMUSERID}
-  token: ${SECRET_TELEGRAMTOKEN}
+  admin: "${SECRET_TELEGRAMUSERID}"
+  token: "${SECRET_TELEGRAMTOKEN}"
 ---
 apiVersion: v1
 kind: Service
