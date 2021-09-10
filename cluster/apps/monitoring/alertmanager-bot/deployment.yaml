@@ -8,7 +8,7 @@ metadata:
   namespace: monitoring
 type: Opaque
 stringData:
-  admin: ${SECRET_TELEGRAMUSER}
+  admin: ${SECRET_TELEGRAMUSERID}
   token: ${SECRET_TELEGRAMTOKEN}
 ---
 apiVersion: v1
