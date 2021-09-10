@@ -36,7 +36,7 @@ spec:
           group_wait: 5m
           group_interval: 10m
           repeat_interval: 1h
-          receiver: email
+          receiver: alertmanager-bot
           routes:
           - match:
               alertname: Watchdog
