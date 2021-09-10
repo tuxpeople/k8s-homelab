@@ -26,7 +26,7 @@ spec:
     deschedulerPolicy:
       strategies:
         RemoveDuplicates:
-          enabled: false
+          enabled: true
         RemovePodsViolatingNodeAffinity:
           enabled: true
           params:
@@ -36,3 +36,15 @@ spec:
           enabled: true
         LowNodeUtilization:
           enabled: true
+          params:
+            nodeResourceUtilizationThresholds:
+              thresholds: 
+                cpu: 20
+                memory: 20
+                pods: 20
+              targetThresholds: 
+                cpu: 50
+                memory: 50
+                pods: 50
+# The RemoveDuplicates strategy ensures that there is only one pod associated with a Replica Set, Replication Controller, Deployment Configuration, or Job running on same node. If there are other pods associated with those objects, the duplicate pods are evicted. Removing duplicate pods results in better spreading of pods in a cluster.
+
