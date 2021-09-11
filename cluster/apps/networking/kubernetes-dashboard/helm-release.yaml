@@ -32,6 +32,8 @@ spec:
     #   --tls-cert-file=/dashboard.crt
     ingress:
       enabled: true
+      hosts:
+      - dashy.${SECRET_DOMAIN_ME}
       annotations:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: letsencrypt-staging
@@ -39,11 +41,6 @@ spec:
         external-dns/is-public: "true"
         external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
       tls: []
-      hosts:
-      - host: "dashy.${SECRET_DOMAIN_ME}"
-        paths:
-        - path: /
-          pathType: Prefix
     #     traefik.ingress.kubernetes.io/router.middlewares: default-insecuretls@kubernetescrd
     # service:
     #   type: NodePort
