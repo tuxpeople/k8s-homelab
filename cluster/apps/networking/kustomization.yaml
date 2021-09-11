@@ -6,3 +6,4 @@ resources:
   - speedtest-plotter
   - traefik
   - wildcard-certificate
+  - kubernetes-dashboard
