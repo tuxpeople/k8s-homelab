@@ -46,3 +46,8 @@ Either restore pvc content, or do the following:
 
 1. Go to `Settings` -> `TMDB` and enter the API key (v3 auth) -> `save`.
 2. Go to `Settings` -> `Plex` and enter the Plex IP Address `192.168.8.80` and the Plex Token -> `add`.
+
+
+## Get token of SA for kubernetes dashboard
+
+`kubectl -n networking get secret $(kubectl -n networking get sa/kubernetes-dashboard-admin -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"`
