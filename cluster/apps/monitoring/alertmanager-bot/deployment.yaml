@@ -21,6 +21,8 @@ metadata:
     app.kubernetes.io/name: alertmanager-bot
   name: alertmanager-bot
   namespace: monitoring
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
