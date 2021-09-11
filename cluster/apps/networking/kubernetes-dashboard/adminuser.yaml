@@ -16,4 +16,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: kubernetes-dashboard-admin
-  namespace: kubernetes-dashboard
+  namespace: networking
