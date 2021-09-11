@@ -28,6 +28,7 @@ spec:
       TZ: "Europe/Zurich"
       TELEGRAM_ADMIN: "${SECRET_TELEGRAMUSERID}"
       TELEGRAM_TOKEN: "${SECRET_TELEGRAMTOKEN}"
+      ALERTMANAGER_URL: "http://alertmanager-operated:9093"
     service:
       main:
         enabled: true
