@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: openldap
   namespace: identity
+  annotations:
+    reloader.stakater.com/auto: "true"
   labels:
     app.kubernetes.io/name: openldap
 spec:
