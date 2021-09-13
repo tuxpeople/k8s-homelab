@@ -24,9 +24,20 @@ spec:
     remediation:
       retries: 3
   values:
-    prometheus:
-      serviceMonitor:
+    metrics:
+      enabled: true
+      prometheusRule:
         enabled: true
+        rules:
+          - alert: UptimeRobotExporterAbsent
+            annotations:
+              description: Uptime Robot Exporter has disappeared from Prometheus service discovery.
+              summary: Uptime Robot Exporter is down.
+            expr: |
+              absent(up{job=~".*uptimerobot.*"} == 1)
+            for: 5m
+            labels:
+              severity: critical
   valuesFrom:
   - secretKeyRef:
     kind: Secret
