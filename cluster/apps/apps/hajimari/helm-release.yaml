@@ -106,6 +106,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
+          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
         hosts:
           - host: "hajimari.${SECRET_DOMAIN_ME}"
             paths:
