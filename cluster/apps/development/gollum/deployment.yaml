@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: gollum
-        image: tdeutsch/gollum-small:20210906141924
+        image: tdeutsch/gollum-small:20210913141946
 
         imagePullPolicy: Always
         resources:
