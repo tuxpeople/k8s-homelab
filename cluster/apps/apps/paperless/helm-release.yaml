@@ -25,8 +25,9 @@ spec:
       retries: 3
   values:
     env:
-      TZ: "Europe/Zurich"
+      PAPERLESS_TIME_ZONE: "Europe/Zurich"
       PAPERLESS_OCR_LANGUAGE: "deu"
+      PAPERLESS_OCR_LANGUAGES: "deu eng"
     persistence:
       consume:
         enabled: true
