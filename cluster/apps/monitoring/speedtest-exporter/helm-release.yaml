@@ -28,6 +28,7 @@ spec:
       TZ: "Europe/Zurich"
       # SPEEDTEST_SERVER: "3821" # speedtest.ggamaur.net
       # SPEEDTEST_SERVER: "28472" # sonic.wingo.ch
-    prometheus:
-      serviceMonitor:
+    metrics:
+      enabled: true
+      prometheusRule:
         enabled: true
