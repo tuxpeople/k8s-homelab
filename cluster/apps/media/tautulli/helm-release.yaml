@@ -29,6 +29,8 @@ spec:
       main:
         annotations:
           kubernetes.io/ingress.class: traefik
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "chart-bar"
         enabled: true
         hosts:
         - host: tautulli.${SECRET_DOMAIN_INTERNAL}

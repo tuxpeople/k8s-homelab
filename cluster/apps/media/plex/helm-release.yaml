@@ -66,6 +66,18 @@ spec:
         mountPath: /dev/dri
         hostPathType: "Directory"
         readOnly: false
+    ingress:
+      main:
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "plex"
+        enabled: true
+        hosts:
+        - host: plex.${SECRET_DOMAIN_INTERNAL}
+          paths:
+          - path: /
+            pathType: Prefix
     addons:
       promtail:
         enabled: true

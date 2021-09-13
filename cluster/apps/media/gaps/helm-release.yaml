@@ -30,6 +30,8 @@ spec:
       main:
         annotations:
           kubernetes.io/ingress.class: traefik
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "filmstrip"
         enabled: true
         hosts:
         - host: gaps.${SECRET_DOMAIN_INTERNAL}
