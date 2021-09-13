@@ -19,6 +19,8 @@ spec:
         env:
         - name: "TZ"
           value: "Europe/Zurich"
+        - name: BASE_URL
+          value: "https://change.${SECRET_DOMAIN_ME}"
         image: dgtlmoon/changedetection.io:latest
         imagePullPolicy: Always
         resources:
