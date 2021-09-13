@@ -37,6 +37,17 @@ spec:
       UP_PROMETHEUS_DISABLE: false
       UP_PROMETHEUS_NAMESPACE: "unifipoller"
       UP_LOKI_URL: http://loki:3100
-    prometheus:
-      serviceMonitor:
-        enabled: true
+metrics:
+  enabled: true
+  prometheusRule:
+    enabled: true
+    rules:
+      - alert: UnifiPollerAbsent
+        annotations:
+          description: Unifi Poller has disappeared from Prometheus service discovery.
+          summary: Unifi Poller is down.
+        expr: |
+          absent(up{job=~".*unifi-poller.*"} == 1)
+        for: 5m
+        labels:
+          severity: critical
