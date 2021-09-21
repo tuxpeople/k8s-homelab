@@ -21,7 +21,7 @@ spec:
           value: "Europe/Zurich"
         - name: BASE_URL
           value: "https://change.${SECRET_DOMAIN_ME}"
-        image: dgtlmoon/changedetection.io:latest
+        image: dgtlmoon/changedetection.io@sha256:c62e7a14f43a82939d8de774875f3a4c3c25a7ea45f702e1eb2a860eebfbfa8f
         imagePullPolicy: Always
         resources:
           requests:
