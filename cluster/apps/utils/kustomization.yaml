@@ -11,4 +11,4 @@ resources:
   - sharry
   - smtp
   - static
-  # - vpn
+  - vpn
