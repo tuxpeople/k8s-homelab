@@ -22,6 +22,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: true
             privileged: true
+          stdin: true 
+          tty: true 
           ports:
             - name: ssh
               containerPort: 4160
