@@ -32,7 +32,7 @@ data:
     # WireGuard will listen on 51820/UDP. You might need to change to another port
     # if your network blocks this one. Be aware that 53/UDP (DNS) is blocked on some
     # mobile data networks.
-    wireguard_enabled: true
+    wireguard_enabled: false
     wireguard_port: 51820
 
     # This feature allows you to configure the Algo server to send outbound traffic
@@ -82,7 +82,7 @@ data:
     # which case a reboot will take place if necessary at the time specified (as
     # HH:MM) in the time zone of your Algo server. The default time zone is UTC.
     unattended_reboot:
-      enabled: false
+      enabled: true
       time: 06:00
 
     ### Advanced users only below this line ###
