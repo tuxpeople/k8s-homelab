@@ -41,11 +41,13 @@ spec:
           - name: "VPN_DNS_NAME"
             value: "vpn.${SECRET_DOMAIN_ME}"
           ports:
-            - name: ipsec-ikev2
-              containerPort: 500
+            - containerPort: 500
+              hostPort: 500
+              name: vpn-isakmp
               protocol: UDP
-            - name: ipsec-nat-t
-              containerPort: 4500
+            - containerPort: 4500
+              hostPort: 4500
+              name: vpn-ike
               protocol: UDP
           volumeMounts:
             - mountPath: /etc/ipsec.d
