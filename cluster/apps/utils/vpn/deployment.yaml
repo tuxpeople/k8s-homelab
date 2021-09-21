@@ -19,6 +19,9 @@ spec:
         - name: vpn
           image: hwdsl2/ipsec-vpn-server
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
           env:
           - name: "VPN_IPSEC_PSK"
             valueFrom:
