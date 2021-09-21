@@ -17,46 +17,37 @@ spec:
     spec:
       containers:
         - name: vpn
-          image: trailofbits/algo:latest
+          image: hwdsl2/ipsec-vpn-server
           imagePullPolicy: Always
-          securityContext:
-            allowPrivilegeEscalation: true
-            privileged: true
-          stdin: true 
-          tty: true 
           env:
-          - name: "ALGO_ARGS"
+          - name: "VPN_IPSEC_PSK"
             valueFrom:
               secretKeyRef:
-                name: algo-secret
-                key: ALGO_ARGS
+                name: vpn-secret
+                key: VPN_IPSEC_PSK
+          - name: "VPN_USER"
+            valueFrom:
+              secretKeyRef:
+                name: vpn-secret
+                key: VPN_USER
+          - name: "VPN_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: vpn-secret
+                key: VPN_PASSWORD
+          - name: "VPN_DNS_NAME"
+            value: "vpn.${SECRET_DOMAIN_ME}"
           ports:
-            - name: ssh
-              containerPort: 4160
-              protocol: TCP
             - name: ipsec-ikev2
               containerPort: 500
               protocol: UDP
             - name: ipsec-nat-t
               containerPort: 4500
               protocol: UDP
-            - name: wiregurard
-              containerPort: 51820
-              protocol: UDP
           volumeMounts:
-            - mountPath: /data
+            - mountPath: /etc/ipsec.d
               name: vpn-data
-            - mountPath: /data/config.cfg
-              name: vpn-config
-              subPath: config.cfg
       volumes:
         - name: vpn-data
           persistentVolumeClaim:
             claimName: vpn-data
-        - name: vpn-config
-          configMap:
-            name: vpn-config
-            items:
-              - key: config.cfg
-                path: config.cfg
-                mode: 0644
