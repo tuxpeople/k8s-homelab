@@ -40,6 +40,8 @@ spec:
                 key: VPN_PASSWORD
           - name: "VPN_DNS_NAME"
             value: "vpn.${SECRET_DOMAIN_ME}"
+          - name: "VPN_DNS_SRV1"
+            value: "192.168.8.1"
           ports:
             - containerPort: 500
               hostPort: 500
