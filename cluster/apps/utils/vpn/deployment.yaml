@@ -26,15 +26,10 @@ spec:
           tty: true 
           env:
           - name: "ALGO_ARGS"
-            value: "-e
-    provider=local
-    server_name=algo
-    ondemand_cellular=false
-    ondemand_wifi=true
-    ondemand_wifi_exclude=Superairnet
-    dns_adblocking=false
-    ssh_tunneling=false
-    store_pki=true"
+            valueFrom:
+              secretKeyRef:
+                name: algo-secret
+                key: ALGO_ARGS
           ports:
             - name: ssh
               containerPort: 4160
