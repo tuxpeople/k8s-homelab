@@ -19,7 +19,7 @@ spec:
         app: podsync
     spec:
       containers:
-      - image: quay.io/tdeutsch/podsync:latest
+      - image: quay.io/tdeutsch/podsync@sha256:1d0adab67379e575d69478c1858f2e00403a9de3d2834770eaef382a1fe7dc3f
         imagePullPolicy: Always
         name: podsync
         ports:

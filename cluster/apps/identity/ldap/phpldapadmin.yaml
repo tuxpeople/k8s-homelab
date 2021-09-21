@@ -17,7 +17,7 @@ spec:
         app: phpldapadmin
     spec:
       containers:
-      - image: osixia/phpldapadmin:latest
+      - image: osixia/phpldapadmin@sha256:9831569a2f3d1d764aabcb5abe6e463771b9595f1565fe3007fe77c4c3979043
         imagePullPolicy: Always
         name: phpldapadmin
         env:
