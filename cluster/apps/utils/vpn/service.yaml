@@ -16,7 +16,6 @@ spec:
       targetPort: 500
       protocol: UDP
       name: isakmp
-  externalTrafficPolicy: Local
   loadBalancerIP: ${SVC_VPN_ADDRESS}
   selector:
     app.kubernetes.io/name: vpn
