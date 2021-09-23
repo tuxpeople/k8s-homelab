@@ -8,12 +8,12 @@ spec:
   releaseName: codimd
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
-      chart: haste-server
+      # renovate: registryUrl=https://helm.codimd.dev
+      chart: codimd
       version: 3.0.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: codimd
         namespace: flux-system
       interval: 5m
   interval: 5m
