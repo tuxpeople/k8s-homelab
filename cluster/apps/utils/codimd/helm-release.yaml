@@ -27,7 +27,7 @@ spec:
     env:
       TZ: "Europe/Zurich"
     image:
-      registry: registry.hub.docker.com
+      registry: docker.io
     service:
       type: ClusterIP
     ingress:
