@@ -8,7 +8,7 @@ spec:
   releaseName: codimd
   chart:
     spec:
-      # renovate: registryUrl=https://helm.codimd.dev
+      # renovate: registryUrl=https://charts.appuio.ch
       chart: codimd
       version: 0.1.10
       sourceRef:
