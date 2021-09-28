@@ -29,8 +29,8 @@ spec:
     image:
       pullPolicy: Always
       pullSecrets: []
-      registry: registry.hub.docker.com
-      repository: hackmdio/hackmd
+      registry: "registry.hub.docker.com"
+      repository: "hackmdio/hackmd"
       tag: latest
     service:
       type: ClusterIP
