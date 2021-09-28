@@ -22,10 +22,15 @@ spec:
       namespaceSelector:
         matchNames:
           - default
-          - networking
           - apps
-          - utils
+          - development
+          - identity
+          - kube-system
           - media
+          - monitoring
+          - networking
+          - system-upgrade
+          - utils
       name: "Thomas"
       customApps:
         - name: Some External Cluster Service
