@@ -17,9 +17,6 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      repository: ghcr.io/toboshii/hajimari
-      tag: v0.1.0
     hajimari:
       defaultEnable: false
       namespaceSelector:
