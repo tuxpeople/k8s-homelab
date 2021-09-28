@@ -27,8 +27,8 @@ spec:
     env:
       TZ: "Europe/Zurich"
     image:
-      registry: registry.hub.docker.com
-      repository: hackmdio/hackmd
+      registry: 'docker.io'
+      repository: 'hackmdio/hackmd'
     service:
       type: ClusterIP
     ingress:
