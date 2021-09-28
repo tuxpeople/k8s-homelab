@@ -27,8 +27,13 @@ spec:
     env:
       TZ: "Europe/Zurich"
     image:
-      registry: 'docker.io'
-      repository: 'hackmdio/hackmd'
+      registry: docker.io
+      repository: hackmdio/hackmd
+      # When you use export pdf with CJK character, please change the tag with postfix `-cjk`.
+      # for example 2.1.0-cjk
+      tag: latest
+      pullPolicy: Always
+      pullSecrets: []
     service:
       type: ClusterIP
     ingress:
