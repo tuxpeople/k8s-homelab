@@ -211,6 +211,12 @@ spec:
           - targets: ['192.168.8.12:9100'] # lab2
             labels:
               alias: lab2
+          - targets: ['192.168.8.13:9100'] # lab2
+            labels:
+              alias: lab3
+          - targets: ['192.168.8.14:9100'] # lab2
+            labels:
+              alias: lab4
         # - job_name: 'unifipoller'
         #   scrape_interval: 30s
         #   static_configs:
