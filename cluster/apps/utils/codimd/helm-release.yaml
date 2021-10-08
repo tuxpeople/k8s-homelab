@@ -27,11 +27,8 @@ spec:
     env:
       TZ: "Europe/Zurich"
     image:
-      pullPolicy: Always
-      pullSecrets: []
       registry: "docker.io"
       repository: "hackmdio/hackmd"
-      tag: "latest"
     service:
       type: ClusterIP
     ingress:
