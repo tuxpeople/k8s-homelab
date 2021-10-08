@@ -2,8 +2,8 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-│   name: fluxcdbot                                                                                                                                                                                                                        │
-│   namespace: flux-system
+  name: fluxcdbot                                                                                                                                                                                                                        │
+  namespace: flux-system
 spec:
   template:
     spec:
