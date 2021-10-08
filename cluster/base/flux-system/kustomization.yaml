@@ -6,3 +6,4 @@ resources:
 - gotk-sync.yaml
 - https://raw.githubusercontent.com/bitnami-labs/sealed-secrets/main/helm/sealed-secrets/crds/sealedsecret-crd.yaml
 - notifications
+- https://raw.githubusercontent.com/squat/fluxcdbot/master/manifest.yaml # belongs to notification, but is not liked there "must resolve to a file"
