@@ -188,14 +188,6 @@ spec:
           - targets: ['mystrom-3dprinter:9452']
             labels:
               alias: "3D Drucker"
-        - job_name: 'haproxy'
-          static_configs:
-          - targets: ['k3s-lb1:1936'] # nas
-            labels:
-              alias: LB1
-          - targets: ['k3s-lb2:1936'] # nas
-            labels:
-              alias: LB2
         - job_name: 'node-exporter'
           honor_timestamps: true
           basic_auth:

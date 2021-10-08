@@ -5,7 +5,3 @@ k3s_master
 k3s-node1
 k3s-node2
 k3s-node3
-
-[loadbalancers]
-k3s-lb1
-k3s-lb2

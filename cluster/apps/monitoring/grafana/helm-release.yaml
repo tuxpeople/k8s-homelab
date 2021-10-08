@@ -175,11 +175,6 @@ spec:
           gnetId: 11462
           datasource: Prometheus
           revision: 1
-        # Ref: https://grafana.com/grafana/dashboards/12693/revisions
-        haproxy:
-          gnetId: 12693
-          datasource: Prometheus
-          revision: 3
         # Ref: https://grafana.com/grafana/dashboards/13665/revisions
         speedtest:
           gnetId: 13665
