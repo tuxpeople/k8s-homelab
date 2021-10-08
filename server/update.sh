@@ -19,7 +19,7 @@ git commit -s -S -m "Update kube-vip deployment"
 git push
 
 step "Update cluster version in readme"
-K3S_VERSION=$(kubectl --kubeconfig=~/iCloudDrive/Allgemein/kubectl/homelab.yaml get nodes | grep node1 | awk '{ print $5 }' | cut -d'+' -f1)
+K3S_VERSION=$(kubectl --kubeconfig=/Users/tdeutsch/iCloudDrive/Allgemein/kubectl/homelab.yaml get nodes | grep node1 | awk '{ print $5 }' | cut -d'+' -f1)
 sed -i "" "s/k3s-v[^0-9]*\(\([0-9]\.\)\{0,4\}[0-9][^.]\).*-orange/k3s-${K3S_VERSION}-orange/g" ../readme.md
 git add ../readme.md
 git commit -s -S -m "Update cluster version in readme"
