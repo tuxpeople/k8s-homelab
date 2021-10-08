@@ -4,7 +4,8 @@ kind: StatefulSet
 metadata:
   name: fluxcdbot
   namespace: flux-system
-spec:
+  labels:
+    app.kubernetes.io/name: fluxcdbotspec:
   template:
     spec:
       containers:
