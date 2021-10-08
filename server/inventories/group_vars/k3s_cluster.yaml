@@ -2,9 +2,9 @@ cluster_name: k3s-prod
 nfs_package: "nfs-utils"
 
 k3s_server_manifests_urls:
-  - url: https://raw.githubusercontent.com/tuxpeople/k8s-homelab/master/server/manifests/rbac.yaml
+  - url: https://raw.githubusercontent.com/tuxpeople/k8s-homelab/master/server/files/rbac.yaml
     filename: rbac.yaml
-  - url: https://raw.githubusercontent.com/tuxpeople/k8s-homelab/master/server/manifests/vip.yaml
+  - url: https://raw.githubusercontent.com/tuxpeople/k8s-homelab/master/server/files/vip.yaml
     filename: vip.yaml
 
 k3s_install_hard_links: true
