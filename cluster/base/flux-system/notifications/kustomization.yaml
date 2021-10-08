@@ -8,6 +8,7 @@ resources:
 - alert.yaml
 - telegram-token.yaml
 - telegram-address.yaml
-- https://raw.githubusercontent.com/squat/fluxcdbot/master/manifest.yaml
+- https://raw.githubusercontent.com/squat/fluxcdbot/main/manifests/fluxcdbot.yaml
+- https://raw.githubusercontent.com/squat/fluxcdbot/main/manifests/podmonitor.yaml
 patchesStrategicMerge:
 - fluxcdbot-patch.yaml
