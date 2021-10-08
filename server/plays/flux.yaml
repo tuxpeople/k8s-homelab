@@ -3,11 +3,20 @@
   hosts: k3s_master[0]
 
   tasks:
+    - name: Create temporary file
+      ansible.builtin.tempfile:
+        state: file
+        suffix: temp
+      register: tmp_kubeconfig
+      delegate_to: localhost
+      become: false
+
     - name: Get Kubeconfig
       ansible.builtin.fetch:
         src: /etc/rancher/k3s/k3s.yaml
-        dest: "{{ local_kubeconfig }}"
+        dest: "{{ tmp_kubeconfig.path }}"
         flat: yes
+      when: tmp_kubeconfig.path is defined
 
     - name: Get certs
       ansible.builtin.fetch:
@@ -21,19 +30,27 @@
 
     - name: Replace server address in kubeconfig
       replace:
-        path: "{{ local_kubeconfig }}"
+        path: "{{ tmp_kubeconfig.path }}"
         regexp: '0.0.0.0:6443'
         replace: "{{ vrrp_vip }}:6443"
         backup: no
+      when: tmp_kubeconfig.path is defined
       delegate_to: localhost
       become: false
 
     - name: Set cluster name in kubeconfig
       replace:
-        path: "{{ local_kubeconfig }}"
+        path: "{{ tmp_kubeconfig.path }}"
         regexp: 'default'
         replace: "{{ cluster_name }}"
         backup: no
+      when: tmp_kubeconfig.path is defined
+      delegate_to: localhost
+      become: false
+
+    - name: Move kubeconfig in place
+      command: "mv {{ tmp_kubeconfig.path }} {{ local_kubeconfig }}"
+      when: tmp_kubeconfig.path is defined
       delegate_to: localhost
       become: false
 
@@ -44,6 +61,14 @@
     #     owner: root
     #     group: root
     #     mode: "0600"
+
+    - name: Remove the temporary file
+      ansible.builtin.file:
+        path: "{{ tmp_kubeconfig.path }}"
+        state: absent
+      when: tmp_kubeconfig.path is defined
+      delegate_to: localhost
+      become: false
 
     - name: Copy Sealed Secrets key
       ansible.builtin.copy:
