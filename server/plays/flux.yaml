@@ -54,14 +54,6 @@
       delegate_to: localhost
       become: false
 
-    # - name: Copy additional Traefik-Config
-    #   ansible.builtin.copy:
-    #     src: ~/git/k8s-homelab/server/files/traefik-config.yaml
-    #     dest: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
-    #     owner: root
-    #     group: root
-    #     mode: "0600"
-
     - name: Remove the temporary file
       ansible.builtin.file:
         path: "{{ tmp_kubeconfig.path }}"
