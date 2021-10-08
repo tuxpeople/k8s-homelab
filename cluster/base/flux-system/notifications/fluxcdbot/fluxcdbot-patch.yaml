@@ -3,10 +3,13 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: fluxcdbot
-  namespace: flux-system
   labels:
     app.kubernetes.io/name: fluxcdbot
 spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fluxcdbot
+  serviceName: fluxcdbot
   template:
     spec:
       containers:
