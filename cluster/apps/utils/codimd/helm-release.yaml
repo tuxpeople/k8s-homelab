@@ -57,3 +57,24 @@ spec:
         size: 10Gi
         storageClass: nfs-client
         volumeMode: Filesystem
+  connection:
+    protocolUseSSL: true
+  allowPDFExport: true
+  authentication:
+    local:
+      enabled: false
+      allowRegister: false
+    oauth2:
+      enabled: true
+      providerName: Dex
+      domain: ${SECRET_DOMAIN_ME}
+      clientId: ${SECRET_OIDC_CLIENT_ID}
+      secret: ${SECRET_OIDC_CLIENT_SECRET}
+      authorizationUrl: https://sso.${SECRET_DOMAIN_ME}/auth
+      tokenUrl: https://sso.${SECRET_DOMAIN_ME}/token
+      userProfileUrl: https://sso.${SECRET_DOMAIN_ME}/userinfo
+      scope: "openid profile email groups"
+      attributes:
+        username: uid
+        displayName: name
+        email: email
