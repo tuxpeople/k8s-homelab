@@ -5,7 +5,8 @@ metadata:
   name: fluxcdbot
   namespace: flux-system
   labels:
-    app.kubernetes.io/name: fluxcdbotspec:
+    app.kubernetes.io/name: fluxcdbot
+spec:
   template:
     spec:
       containers:
