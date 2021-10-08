@@ -1,6 +1,6 @@
 ---
 - name: Flux Bootstrap
-  hosts: k3s_cluster[0]
+  hosts: k3s_master[0]
 
   tasks:
     - name: Get Kubeconfig
