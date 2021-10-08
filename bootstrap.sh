@@ -15,12 +15,13 @@ step "Create VMs"
 ssh lab1 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node1"
 ssh lab2 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node2"
 ssh lab3 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node3"
+ssh lab4 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node-a"
 
 step "Sleep 30s and allow VMs to boot"
 sleep 30
 
 step "Update SSH Host-Keys"
-for i in k3s-node1 k3s-node2 k3s-node3; do
+for i in k3s-node1 k3s-node2 k3s-node3 k3s-node-a; do
   ssh-keygen -R $i; ssh-keygen -R `dig +short $i`; ssh-keyscan -t rsa $i,`dig +short $i` >> ~/.ssh/known_hosts
   ssh $i -l ansible "sudo yum -y install python38"
 done

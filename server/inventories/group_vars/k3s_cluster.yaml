@@ -10,7 +10,6 @@ k3s_server_manifests_urls:
 k3s_install_hard_links: true
 k3s_become_for_all: true
 k3s_etcd_datastore: true
-k3s_control_node: true
 k3s_registration_address: "{{ vrrp_vip }}"
 k3s_server:
   tls-san: "{{ vrrp_vip }},{{ cluster_name }}.{{ vrrp_vip }}.nip.io,k8s.sky.lab"

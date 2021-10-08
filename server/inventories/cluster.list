@@ -1,7 +1,11 @@
 [k3s_cluster:children]
 k3s_master
+k3s_worker
 
 [k3s_master]
 k3s-node1
 k3s-node2
 k3s-node3
+
+[k3s_worker]
+k3s-node-a
