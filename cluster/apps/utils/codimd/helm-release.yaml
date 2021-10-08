@@ -47,8 +47,6 @@ spec:
         - codimd.${SECRET_DOMAIN_ME}
       hosts:
       - host: "codimd.${SECRET_DOMAIN_ME}"
-        paths:
-        - path: /
     codimd:
       imageStorePersistentVolume:
         accessModes:
