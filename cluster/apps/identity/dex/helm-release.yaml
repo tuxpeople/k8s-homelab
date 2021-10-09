@@ -94,7 +94,7 @@ spec:
             - 'https://homer.${SECRET_DOMAIN_ME}/_oauth'
             - 'https://dashy.${SECRET_DOMAIN_ME}/_oauth'
             - 'https://hajimari.${SECRET_DOMAIN_ME}/_oauth'
-            - 'http://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback'
+            - 'https://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback'
           name: 'SKY'
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
