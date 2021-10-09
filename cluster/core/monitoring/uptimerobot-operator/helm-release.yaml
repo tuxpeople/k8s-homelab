@@ -33,5 +33,4 @@ spec:
         memory: 250Mi
   valuesFrom:
   - secretKeyRef:
-    kind: Secret
     name: uptimerobotapikey
