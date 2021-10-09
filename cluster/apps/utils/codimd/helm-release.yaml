@@ -75,6 +75,6 @@ spec:
           userProfileUrl: https://sso.${SECRET_DOMAIN_ME}/userinfo
           scope: "openid profile email groups"
           attributes:
-            username: uid
+            username: name
             displayName: name
             email: email
