@@ -38,7 +38,6 @@ spec:
             for: 5m
             labels:
               severity: critical
-  valuesFrom:
-  - secretKeyRef:
-    kind: Secret
-    name: uptimerobot-prometheus-values
+    env:
+      TZ: UTC
+      UPTIMEROBOT_API_KEY: ${SECRET_UPTIMEROBOT_APIKEY}
