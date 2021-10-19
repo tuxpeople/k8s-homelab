@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: vpn
-          image: hwdsl2/ipsec-vpn-server@sha256:72730c5a30d42584c91ff8ba6da5938019a30ee30b0f4403496d8d51d83043e8
+          image: hwdsl2/ipsec-vpn-server@sha256:2dc7829f179bffc48d47c2aa7b763943e0995feeff84a972b96ac913279070cd
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: true
