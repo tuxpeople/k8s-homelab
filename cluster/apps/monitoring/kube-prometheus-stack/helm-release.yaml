@@ -142,6 +142,7 @@ spec:
     kubeProxy:
       enabled: false
     kubelet:
+      enabled: true
       serviceMonitor:
         metricRelabelings:
         - action: replace
