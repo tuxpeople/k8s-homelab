@@ -37,6 +37,7 @@ spec:
     env:
       TZ: Europe/Zurich
       VERSION: public
+      PLEX_CLAIM: claim-NEyptCqECP4wp2kJjsJx
     service:
       main:
         primary: true
