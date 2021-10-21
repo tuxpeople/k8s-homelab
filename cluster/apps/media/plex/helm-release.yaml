@@ -43,47 +43,41 @@ spec:
         type: LoadBalancer
         loadBalancerIP: "${SVC_PLEX_ADDR}"
         externalTrafficPolicy: Local
+        annotations:
+          metallb.universe.tf/allow-shared-ip: plex
         ports:
           http:
             enabled: true
             port: 32400
             protocol: HTTP
-          port1900:
-            enabled: true
-            port: 1900
-            protocol: UDP
-          port3005:
-            enabled: true
-            port: 3005
-            protocol: TCP
-          port5353:
-            enabled: true
-            port: 5353
-            protocol: UDP
-          port8324:
-            enabled: true
-            port: 8324
-            protocol: TCP
-          port32410:
+      gdm:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: "${SVC_PLEX_ADDR}"
+        externalTrafficPolicy: Local
+        annotations:
+          metallb.universe.tf/allow-shared-ip: plex
+        ports:
+          gdm1:
             enabled: true
             port: 32410
             protocol: UDP
-          port32412:
+            targetPort: 32410
+          gdm2:
             enabled: true
             port: 32412
             protocol: UDP
-          port32413:
+            targetPort: 32412
+          gdm3:
             enabled: true
             port: 32413
             protocol: UDP
-          port32414:
+            targetPort: 32413
+          gdm4:
             enabled: true
             port: 32414
             protocol: UDP
-          port32469:
-            enabled: true
-            port: 32469
-            protocol: TCP
+            targetPort: 32414
     persistence:
       config:
         enabled: true
