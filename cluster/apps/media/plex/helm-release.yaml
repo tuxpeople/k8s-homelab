@@ -36,12 +36,54 @@ spec:
     priorityClassName: high-priority
     env:
       TZ: Europe/Zurich
+      VERSION: public
     service:
       main:
         primary: true
         type: LoadBalancer
         loadBalancerIP: "${SVC_PLEX_ADDR}"
         externalTrafficPolicy: Local
+        ports:
+          http:
+            enabled: true
+            port: 32400
+            protocol: HTTP
+          port1900:
+            enabled: true
+            port: 1900
+            protocol: UDP
+          port3005:
+            enabled: true
+            port: 3005
+            protocol: TCP
+          port5353:
+            enabled: true
+            port: 5353
+            protocol: UDP
+          port8324:
+            enabled: true
+            port: 8324
+            protocol: TCP
+          port32410:
+            enabled: true
+            port: 32410
+            protocol: UDP
+          port32412:
+            enabled: true
+            port: 32412
+            protocol: UDP
+          port32413:
+            enabled: true
+            port: 32413
+            protocol: UDP
+          port32414:
+            enabled: true
+            port: 32414
+            protocol: UDP
+          port32469:
+            enabled: true
+            port: 32469
+            protocol: TCP
     persistence:
       config:
         enabled: true
@@ -74,13 +116,17 @@ spec:
           hajimari.io/icon: "plex"
         enabled: true
         hosts:
-        - host: plex.${SECRET_DOMAIN_INTERNAL}
+        - host: plex.${SECRET_DOMAIN_ME}
           paths:
           - path: /
             pathType: Prefix
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "plex-promtail"
     addons:
       promtail:
         enabled: true
+        image:
+          repository: grafana/promtail
         loki: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
         logs:
         - name: promtail/plex
