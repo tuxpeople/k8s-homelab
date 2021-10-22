@@ -6,5 +6,4 @@ resources:
   - gaps
   - jdownloader
   - podsync
-  - tautulli
   - namespace.yaml
