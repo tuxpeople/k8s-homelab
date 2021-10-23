@@ -7,3 +7,4 @@ resources:
   - jdownloader
   - podsync
   - namespace.yaml
+  - tautulli
