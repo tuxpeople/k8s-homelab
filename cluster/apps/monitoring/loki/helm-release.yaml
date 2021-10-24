@@ -46,6 +46,8 @@ spec:
           kubernetes.io/ingress.class: traefik
         hosts:
         - host: loki.${SECRET_DOMAIN_INTERNAL}
+          paths:
+            - "/"
     promtail:
       serviceMonitor:
         enabled: true
