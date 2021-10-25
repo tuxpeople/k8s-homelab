@@ -151,6 +151,9 @@ spec:
         mystrom:
           url: https://raw.githubusercontent.com/tuxpeople/k8s-homelab/master/cluster/apps/monitoring/mystrom-exporter/mystrom.json
           datasource: Prometheus
+        plex:
+          url: https://raw.githubusercontent.com/tuxpeople/k8s-homelab/master/cluster/apps/media/plex-exporter/plex-exporter-grafana-dashboard.json
+          datasource: Prometheus
       gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
