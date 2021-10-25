@@ -7,3 +7,4 @@ resources:
   - deployment.yaml
   - service.yaml
   - service-monitor.yaml
+  - grafana-dashboard.yaml
