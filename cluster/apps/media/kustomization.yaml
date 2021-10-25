@@ -9,4 +9,4 @@ resources:
   - namespace.yaml
   - tautulli
   - plex
-  - plex_exporter
+  - plex-exporter
