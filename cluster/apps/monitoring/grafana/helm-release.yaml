@@ -188,7 +188,6 @@ spec:
         searchNamespace: ALL
         label: grafana_dashboard
         foldersFromFilesStructure: true
-        folder: /var/lib/grafana/dashboards
       datasources:
         enabled: true
         searchNamespace: ALL
