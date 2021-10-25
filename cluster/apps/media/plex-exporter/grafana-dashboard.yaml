@@ -6,6 +6,8 @@ metadata:
     grafana_dashboard: "1"
     app: plex-exporter
     namespace: media
+  annotations:
+    k8s-sidecar-target-directory: "/var/lib/grafana/dashboards/fun"
 data:
   plex-exporter-dashboard.json: |-
     {

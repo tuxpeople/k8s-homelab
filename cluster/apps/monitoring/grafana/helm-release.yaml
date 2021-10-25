@@ -189,6 +189,7 @@ spec:
       dashboards:
         enabled: true
         searchNamespace: ALL
+        label: grafana_dashboard
       datasources:
         enabled: true
         searchNamespace: ALL
