@@ -145,7 +145,7 @@ spec:
               disableDeletion: false
               editable: true
               options:
-                path: /tmp/dashboards/unifi-poller
+                path: /var/lib/grafana/dashboards/unifi-poller
             - name: kubernetes
               orgId: 1
               folder: 'kubernetes'
@@ -153,7 +153,7 @@ spec:
               disableDeletion: false
               editable: true
               options:
-                path: /tmp/dashboards/kubernetes
+                path: /var/lib/grafana/dashboards/kubernetes
             - name: various
               orgId: 1
               folder: 'various'
@@ -161,7 +161,7 @@ spec:
               disableDeletion: false
               editable: true
               options:
-                path: /tmp/dashboards/various
+                path: /var/lib/grafana/dashboards/various
       defaultDashboardsEnabled: true
       dashboards:
         unifi-poller:
