@@ -56,7 +56,7 @@ spec:
           folder: ''
           type: file
           disableDeletion: false
-          editable: true
+          editable: false
           options:
             path: /var/lib/grafana/dashboards/default
         - name: unifi
@@ -64,7 +64,7 @@ spec:
           folder: 'Unifi'
           type: file
           disableDeletion: false
-          editable: true
+          editable: false
           options:
             path: /var/lib/grafana/dashboards/unifi
         - name: gitops
@@ -72,7 +72,7 @@ spec:
           folder: 'GitOps'
           type: file
           disableDeletion: false
-          editable: true
+          editable: false
           options:
             path: /var/lib/grafana/dashboards/gitops
         - name: systems
@@ -80,7 +80,7 @@ spec:
           folder: 'Systems'
           type: file
           disableDeletion: false
-          editable: true
+          editable: false
           options:
             path: /var/lib/grafana/dashboards/systems
         - name: networking
@@ -88,7 +88,7 @@ spec:
           folder: 'Networking'
           type: file
           disableDeletion: false
-          editable: true
+          editable: false
           options:
             path: /var/lib/grafana/dashboards/networking
         - name: fun
@@ -96,7 +96,7 @@ spec:
           folder: 'Fun'
           type: file
           disableDeletion: false
-          editable: true
+          editable: false
           options:
             path: /var/lib/grafana/dashboards/fun
     datasources:
