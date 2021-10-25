@@ -1,0 +1,14 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: plex
+  namespace: media
+spec:
+  friendlyName: "K8S plex"
+  url: "plex.${SECRET_DOMAIN_ME}"
+  type: PORT
+  subType: CUSTOM
+  port: 32400
+  interval: 300
+  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"

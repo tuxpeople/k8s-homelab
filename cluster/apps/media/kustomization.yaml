@@ -8,3 +8,4 @@ resources:
   - podsync
   - namespace.yaml
   - tautulli
+  - plex
