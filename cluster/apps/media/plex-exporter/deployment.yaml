@@ -41,8 +41,8 @@ spec:
       volumes:
       - configMap:
           items:
-          - key: config.toml
+          - key: config.json
             mode: 420
-            path: config.toml
+            path: config.json
           name: plex-exporter-config
         name: plex-exporter-config
