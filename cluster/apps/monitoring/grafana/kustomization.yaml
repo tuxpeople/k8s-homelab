@@ -5,3 +5,4 @@ resources:
   - dashboards
   - helm-release.yaml
   - uptimerobot-monitor.yaml
+  - test.yaml
