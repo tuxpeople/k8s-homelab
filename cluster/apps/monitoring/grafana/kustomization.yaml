@@ -5,3 +5,14 @@ resources:
   - dashboards
   - helm-release.yaml
   - uptimerobot-monitor.yaml
+configMapGenerator:
+- name: octoprint-exporter-grafana-dashboard
+  files:
+    # configfile is used as key
+    - https://raw.githubusercontent.com/tg44/OctoPrint-Prometheus-Exporter/master/extras/octoprint-grafana.json
+generatorOptions:
+ disableNameSuffixHash: true
+ labels:
+    grafana_dashboard: "1"
+ annotations:
+    k8s-sidecar-target-directory: "/tmp/dashboards/fun"
