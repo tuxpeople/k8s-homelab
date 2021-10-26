@@ -30,14 +30,6 @@ data:
       format = "audio"
       clean = { keep_last = 5 }
 
-      [feeds.spotfigsommerquiz]
-      url = "https://www.youtube.com/playlist?list=PLoAxl58aGuGqh6f2q81Yfi4h9DjOcn1GK"
-      page_size = 5
-      update_period = "6h"
-      quality = "high"
-      format = "video"
-      clean = { keep_last = 5 }
-
       [feeds.TechWorldWithNana]
       url = "https://www.youtube.com/playlist?list=UUdngmbVKX1Tgre699-XLlUA"
       page_size = 10
@@ -53,26 +45,6 @@ data:
       quality = "high"
       format = "video"
       clean = { keep_last = 5 }
-
-      [feeds.aew_dark]
-      url = "https://www.youtube.com/playlist?list=UUFN4JkGP_bVhAdBsoV9xftA"
-      page_size = 10
-      update_period = "10h"
-      quality = "high"
-      format = "video"
-      clean = { keep_last = 2 }
-      filters = { title = "AEW Dark" }
-      custom = { title = "AEW Dark" }
-
-      [feeds.aew_dark_elevation]
-      url = "https://www.youtube.com/playlist?list=UUFN4JkGP_bVhAdBsoV9xftA"
-      page_size = 10
-      update_period = "10h"
-      quality = "high"
-      format = "video"
-      clean = { keep_last = 2 }
-      filters = { title = "AEW Elevation" }
-      custom = { title = "AEW Dark Elevation" }
 
       [feeds.headlock_breaking]
       url = "https://www.youtube.com/channel/UC4A1tkY5mw9MWYa9SnDi3CQ"
