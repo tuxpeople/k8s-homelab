@@ -193,6 +193,7 @@ spec:
         enabled: true
         searchNamespace: ALL
         label: grafana_dashboard
+        folder: /var/lib/grafana/dashboards/
         foldersFromFilesStructure: true
       datasources:
         enabled: true
