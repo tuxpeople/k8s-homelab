@@ -8,7 +8,7 @@ metadata:
     app: mystrom-exporter
     namespace: monitoring
   annotations:
-    k8s-sidecar-target-directory: "/tmp/dashboards/fun"
+    k8s-sidecar-target-directory: "/var/lib/grafana/dashboards/fun"
 data:
   mystrom-exporter-dashboard.json: |-
     {
