@@ -55,50 +55,62 @@ spec:
           orgId: 1
           folder: ''
           type: file
+          allowUiUpdates: true
           disableDeletion: false
-          editable: false
+          updateIntervalSeconds: 10
+          editable: true
           options:
-            path: /var/lib/grafana/dashboards/default
+            path: /tmp/dashboards/default
         - name: unifi
           orgId: 1
           folder: 'Unifi'
           type: file
+          allowUiUpdates: true
           disableDeletion: false
-          editable: false
+          updateIntervalSeconds: 10
+          editable: true
           options:
-            path: /var/lib/grafana/dashboards/unifi
+            path: /tmp/dashboards/unifi
         - name: gitops
           orgId: 1
           folder: 'GitOps'
           type: file
+          allowUiUpdates: true
           disableDeletion: false
-          editable: false
+          updateIntervalSeconds: 10
+          editable: true
           options:
-            path: /var/lib/grafana/dashboards/gitops
+            path: /tmp/dashboards/gitops
         - name: systems
           orgId: 1
           folder: 'Systems'
           type: file
+          allowUiUpdates: true
           disableDeletion: false
-          editable: false
+          updateIntervalSeconds: 10
+          editable: true
           options:
-            path: /var/lib/grafana/dashboards/systems
+            path: /tmp/dashboards/systems
         - name: networking
           orgId: 1
           folder: 'Networking'
           type: file
+          allowUiUpdates: true
           disableDeletion: false
-          editable: false
+          updateIntervalSeconds: 10
+          editable: true
           options:
-            path: /var/lib/grafana/dashboards/networking
+            path: /tmp/dashboards/networking
         - name: fun
           orgId: 1
           folder: 'Fun'
           type: file
+          allowUiUpdates: true
           disableDeletion: false
-          editable: false
+          updateIntervalSeconds: 10
+          editable: true
           options:
-            path: /var/lib/grafana/dashboards/fun
+            path: /tmp/dashboards/fun
     datasources:
       datasources.yaml:
         apiVersion: 1

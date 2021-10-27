@@ -60,7 +60,7 @@ spec:
   #           disableDeletion: false
   #           editable: true
   #           options:
-  #             path: /var/lib/grafana/dashboards/default
+  #             path: /tmp/dashboards/default
   #         - name: unifi-poller
   #           orgId: 1
   #           folder: 'unifi-poller'
@@ -68,7 +68,7 @@ spec:
   #           disableDeletion: false
   #           editable: true
   #           options:
-  #             path: /var/lib/grafana/dashboards/unifi-poller
+  #             path: /tmp/dashboards/unifi-poller
   #         - name: various
   #           orgId: 1
   #           folder: 'various'
@@ -76,7 +76,7 @@ spec:
   #           disableDeletion: false
   #           editable: true
   #           options:
-  #             path: /var/lib/grafana/dashboards/various
+  #             path: /tmp/dashboards/various
   #     dashboards:
   #       unifi-poller:
   #         # Ref: https://grafana.com/grafana/dashboards/11315/revisions
