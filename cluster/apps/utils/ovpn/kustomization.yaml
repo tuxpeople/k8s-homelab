@@ -6,3 +6,4 @@ resources:
   - service.yaml
   - persistent_volume_claim.yaml
   - sealed_secret.yaml
+  - config_map.yaml
