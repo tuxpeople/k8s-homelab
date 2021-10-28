@@ -16,7 +16,6 @@ spec:
         app.kubernetes.io/name: ovpn
     spec:
       containers:
-      containers:
         - name: openvpn
           image: docker.io/kylemanna/openvpn
           command: ["/etc/openvpn/setup/configure.sh"]
