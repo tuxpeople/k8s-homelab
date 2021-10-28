@@ -31,7 +31,7 @@ spec:
           privileged: true
       containers:
       - name: wait
-        image: k8s.gcr.io/pause:3.1
+        image: k8s.gcr.io/pause:3.6
       hostPID: true
       hostNetwork: true
       tolerations:
