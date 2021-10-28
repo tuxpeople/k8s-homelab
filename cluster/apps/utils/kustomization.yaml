@@ -13,4 +13,4 @@ resources:
   - smtp
   - static
   - vpn
-  - ovpn
+  - wireguard

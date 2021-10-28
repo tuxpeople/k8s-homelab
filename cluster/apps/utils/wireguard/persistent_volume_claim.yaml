@@ -1,14 +1,11 @@
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  labels:
-    app.kubernetes.io/name: ovpn
-  name: openvpncerts
+  name: pv-claim-wireguard 
   namespace: utils
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 50Mi
+      storage: 10M

@@ -7,7 +7,7 @@ data:
   SVC_PLEX_ADDR: 192.168.8.80
   SVC_COREDNS_ADDRESS: 192.168.8.81
   SVC_VPN_ADDRESS: 192.168.8.82
-  SVC_OVPN_ADDRESS: 192.168.8.83
+  SVC_WIREGUARD_ADDRESS: 192.168.8.83
 kind: ConfigMap
 metadata:
   name: cluster-settings

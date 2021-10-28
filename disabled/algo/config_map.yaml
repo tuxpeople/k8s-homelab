@@ -12,7 +12,7 @@ data:
 
     # This is the list of users to generate.
     # Every device must have a unique user.
-    # You can add up to 65,534 new users over the lifetime of an AlgoVPN.
+    # You can add up to 65,534 new users over the lifetime of an Algwireguard.
     # User names with leading 0's or containing only numbers should be escaped in double quotes, e.g. "000dan" or "123".
     # Email addresses are not allowed.
     users:
