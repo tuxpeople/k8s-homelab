@@ -9,6 +9,6 @@ data:
   TZ: "Europe/Zurich"
   SERVERPORT: "31820"
   PEERS: "2"
-  PEERDNS: "10.124.0.10"
+  PEERDNS: "10.43.0.10"
   ALLOWEDIPS: "0.0.0.0/0, ::/0"
   INTERNAL_SUBNET: "10.13.13.0"
