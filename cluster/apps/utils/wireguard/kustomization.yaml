@@ -6,3 +6,4 @@ resources:
   - service.yaml
   - persistent_volume_claim.yaml
   - config_map.yaml
+  - deamonset.yaml
