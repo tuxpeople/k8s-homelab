@@ -8,7 +8,7 @@ metadata:
     app: plex-exporter
     namespace: media
   annotations:
-    k8s-sidecar-target-directory: "/tmp/dashboards/fun"
+    k8s-sidecar-target-directory: "/tmp/dashboards/apps"
 data:
   plex-exporter-dashboard.json: |-
     {
