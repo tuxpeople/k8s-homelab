@@ -148,6 +148,11 @@ spec:
         octoprint:
           url: https://raw.githubusercontent.com/tg44/OctoPrint-Prometheus-Exporter/master/extras/octoprint-grafana.json
           datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11001
+        cert-manager:
+          gnetId: 11001
+          datasource: Prometheus
+          revision: 1
       gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
