@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - grafana
-  - kube-prometheus-stack
+  # - kube-prometheus-stack
   - loki
   - mystrom-exporter
   - prometheus-uptimerobot-exporter
