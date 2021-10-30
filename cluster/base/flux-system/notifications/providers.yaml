@@ -27,6 +27,7 @@ metadata:
   namespace: flux-system
 spec:
   type: discord
+  username: flux
   channel: kubernetes
   secretRef:
     name: discord-url
