@@ -14,4 +14,3 @@ spec:
       creationTimestamp: null
       name: telegram-address
       namespace: flux-system
-
