@@ -9,12 +9,11 @@ spec:
     name: fluxcdbot
   eventSeverity: error
   eventSources:
+    - kind: GitRepository
+      name: "*"
     - kind: Kustomization
-      name: apps
-      namespace: flux-system
-    - kind: Kustomization
-      name: core
-      namespace: flux-system
-    - kind: Kustomization
-      name: crds
-      namespace: flux-system
+      name: "*"
+    - kind: HelmRepository
+      name: "*"
+    - kind: HelmRelease
+      name: "*"
