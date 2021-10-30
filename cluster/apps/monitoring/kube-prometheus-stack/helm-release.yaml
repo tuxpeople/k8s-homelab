@@ -78,7 +78,7 @@ spec:
           - send_resolved: true
             url: 'http://alertmanager-bot:8080'
         - name: discord
-          webhookConfigs:
+          webhook_configs:
           - send_resolved: true
             url: 'http://alertmanager-discord:9094'
 
