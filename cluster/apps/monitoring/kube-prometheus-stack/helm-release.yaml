@@ -77,6 +77,10 @@ spec:
           webhook_configs:
           - send_resolved: true
             url: 'http://alertmanager-bot:8080'
+        - name: discord
+          webhookConfigs:
+          - send_resolved: true
+            url: 'http://alertmanager-discord:9094'
 
         # Inhibition rules allow to mute a set of alerts given that another alert is firing.
         # We use this to mute any warning-level notifications if the same alert is already critical.
