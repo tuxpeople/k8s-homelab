@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - sealed-secret.yaml
-  - failure
