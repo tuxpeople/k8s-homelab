@@ -17,3 +17,4 @@ spec:
       name: "*"
     - kind: HelmRelease
       name: "*"
+  suspend: false
