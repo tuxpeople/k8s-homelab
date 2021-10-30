@@ -5,3 +5,4 @@ resources:
   - helm-release.yaml
   - uptimerobot-monitor.yaml
   - sealed-secret.yaml
+  - deamonset.yaml

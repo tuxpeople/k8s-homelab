@@ -7,7 +7,7 @@ metadata:
   labels:
     app: wireguard
   annotations:
-    command: &cmd yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm && yum install kmod-wireguard
+    command: &cmd yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm && yum install -y kmod-wireguard
 spec:
   selector:
     matchLabels:
@@ -20,12 +20,12 @@ spec:
       initContainers:
       - name: init-node
         command:
-          - nsenter
-          - --mount=/proc/1/ns/mnt
-          - --
-          - sh
-          - -c
-          - *cmd
+        - nsenter
+        - --mount=/proc/1/ns/mnt
+        - --
+        - sh
+        - -c
+        - *cmd
         image: alpine:3.14
         securityContext:
           privileged: true
