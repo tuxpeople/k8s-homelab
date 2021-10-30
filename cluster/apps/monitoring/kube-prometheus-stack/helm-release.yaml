@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     alertmanager:
-      enabled: true
+      enabled: false
       config:
         #  global:
         #  smtp_smarthost: smtp.gmail.com:587
