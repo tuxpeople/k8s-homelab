@@ -13,9 +13,10 @@ spec:
     repeatInterval: 30s
     receiver: discord
     matchers:
-    - name: namespace
-      value: "*"
+      - name: namespace
+        value: "*"
+        regex: false
   receivers:
-  - name: discord
-    webhookConfigs:
-    - url: 'http://alertmanager-discord:9094'
+    - name: discord
+      webhookConfigs:
+        - url: 'http://alertmanager-discord:9094'
