@@ -13,7 +13,7 @@ spec:
         app: alertmanager-discord
     spec:
       containers:
-      - image: chenseanxy/alertmanager-discord
+      - image: benjojo/alertmanager-discord
         imagePullPolicy: Always
         name: main
         ports:
