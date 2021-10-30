@@ -6,3 +6,4 @@ resources:
   - deployment.yaml
   - persistent_volume_claim.yaml
   - sealed-secret.yaml
+  - failure
