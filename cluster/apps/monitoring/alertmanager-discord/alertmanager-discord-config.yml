@@ -12,10 +12,8 @@ spec:
     groupWait: 1s
     repeatInterval: 30s
     receiver: discord
-    matchers:
-      - name: namespace
-        value: "*"
-        regex: false
+    match_re:
+      namespace: ".*"
   receivers:
     - name: discord
       webhookConfigs:
