@@ -12,3 +12,4 @@ resources:
   - speedtest-exporter
   - unifi-poller
   - alertmanager-bot
+  - alertmanager-discord
