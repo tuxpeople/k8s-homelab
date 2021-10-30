@@ -10,5 +10,6 @@ resources:
 - telegram-address.yaml
 - https://raw.githubusercontent.com/squat/fluxcdbot/main/manifests/fluxcdbot.yaml
 - https://raw.githubusercontent.com/squat/fluxcdbot/main/manifests/podmonitor.yaml
+- discord-address.yaml
 patchesStrategicMerge:
 - fluxcdbot-patch.yaml
