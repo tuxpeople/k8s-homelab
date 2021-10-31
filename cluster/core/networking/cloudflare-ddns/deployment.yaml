@@ -19,7 +19,7 @@ spec:
         env:
         - name: "TZ"
           value: "Europe/Zurich"
-        image: timothyjmiller/cloudflare-ddns@sha256:8bd682a383014dfea17c8e2d32bac59e3a1e5a0e767cb737469056cba5d4bbac
+        image: timothyjmiller/cloudflare-ddns@sha256:765980970a01e79819d5676a31daa0baf9d05a563919c535a680f51b5fd125c0
         imagePullPolicy: Always
         resources:
           requests:
