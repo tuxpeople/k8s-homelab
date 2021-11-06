@@ -8,6 +8,7 @@ data:
   SVC_COREDNS_ADDRESS: 192.168.8.81
   SVC_VPN_ADDRESS: 192.168.8.82
   SVC_WIREGUARD_ADDRESS: 192.168.8.83
+  SVC_LONGHORN_ADDRESS: 192.168.8.84
 kind: ConfigMap
 metadata:
   name: cluster-settings
