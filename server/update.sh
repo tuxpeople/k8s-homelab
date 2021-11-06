@@ -6,6 +6,9 @@ step() {
         printf '\n\033[1;36m%d) %s\033[0m\n' $_step_counter "$@" >&2  # bold cyan
 }
 
+step "Update flux"
+brew upgrade flux
+
 step "Ensure Ansible dependencies are installed"
 ansible-galaxy install -r requirements.yaml --ignore-errors
 
