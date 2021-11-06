@@ -26,6 +26,8 @@ ansible-playbook -i inventories/cluster.list plays/flux.yaml
 
 sleep 20
 
+git pull
+
 step "Update cluster version in readme"
 K3S_VERSION=$(kubectl --kubeconfig=/Users/tdeutsch/iCloudDrive/Allgemein/kubectl/homelab.yaml get nodes | grep node1 | awk '{ print $5 }' | cut -d'+' -f1)
 sed -i "" "s/k3s-v[^0-9]*\(\([0-9]\.\)\{0,4\}[0-9][^.]\).*-orange/k3s-${K3S_VERSION}-orange/g" ../readme.md
