@@ -16,10 +16,14 @@ spec:
         name: longhorn
         namespace: flux-system
   values:
-    service:
-      ui:
-        type: LoadBalancer
-        loadBalancerIP: "${SVC_LONGHORN_ADDRESS}"
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      tls: false
+      host: "longhorn.${SECRET_DOMAIN_INTERNAL}"
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "content-save-outline"
     persistence:
       defaultClassReplicaCount: 2
       defaultClass: false
