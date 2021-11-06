@@ -22,3 +22,11 @@ spec:
         loadBalancerIP: "${SVC_LONGHORN_ADDRESS}"
     persistence:
       defaultClassReplicaCount: 2
+      defaultClass: false
+      defaultFsType: ext4
+    defaultSettings:
+      backupTarget: s3://backupbucket@us-east-1/backupstore
+      backupTargetCredentialSecret: minio-secret
+      defaultReplicaCount: 2
+      defaultDataLocality: disabled
+      concurrentAutomaticEngineUpgradePerNodeLimit: 1
