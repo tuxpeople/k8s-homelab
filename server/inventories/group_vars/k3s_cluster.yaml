@@ -1,6 +1,9 @@
 cluster_name: k3s-prod
 nfs_package: "nfs-utils"
 
+iscsi_package_debian: open-iscsi
+iscsi_package_redhat: iscsi-initiator-utils
+
 k3s_server_manifests_urls:
   - url: https://raw.githubusercontent.com/tuxpeople/k8s-homelab/master/server/files/rbac.yaml
     filename: rbac.yaml
