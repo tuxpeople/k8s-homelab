@@ -6,4 +6,3 @@ resources:
   - monitoring
   - networking
   - system-upgrade
-  # - longhorn-system
