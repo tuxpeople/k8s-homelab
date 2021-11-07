@@ -30,13 +30,9 @@ spec:
     settings:
       log_monitors:
         - /config/kernel-monitor.json
-        # - /config/health-checker-containerd.json
         - /config/abrt-adaptor.json
-        # - /config/health-checker-kubelet.json
-        # - /config/kernel-monitor-counter.json
-        - /config/kernel-monitor-filelog.json
-        - /config/net-cgroup-system-stats-monitor.json
         - /config/network-problem-monitor.json
         - /config/system-stats-monitor.json
-        - /config/systemd-monitor-counter.json
         - /config/systemd-monitor.json
+    nodeSelector:
+      kubernetes.io/arch: amd64
