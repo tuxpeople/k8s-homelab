@@ -32,7 +32,7 @@ spec:
         - /config/kernel-monitor.json
         # - /config/health-checker-containerd.json
         - /config/abrt-adaptor.json
-        - /config/health-checker-kubelet.json
+        # - /config/health-checker-kubelet.json
         - /config/kernel-monitor-counter.json
         - /config/kernel-monitor-filelog.json
         - /config/net-cgroup-system-stats-monitor.json
