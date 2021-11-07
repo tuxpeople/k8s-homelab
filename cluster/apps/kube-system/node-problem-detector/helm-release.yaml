@@ -30,7 +30,7 @@ spec:
     settings:
       log_monitors:
         - /config/kernel-monitor.json
-        - /config/health-checker-containerd.json
+        # - /config/health-checker-containerd.json
         - /config/abrt-adaptor.json
         - /config/health-checker-kubelet.json
         - /config/kernel-monitor-counter.json
