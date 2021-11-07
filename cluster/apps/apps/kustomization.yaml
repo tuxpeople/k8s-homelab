@@ -10,4 +10,4 @@ resources:
   - octoprint
   - paperless
   - wallabag
-  - hajimari
+  # - hajimari
