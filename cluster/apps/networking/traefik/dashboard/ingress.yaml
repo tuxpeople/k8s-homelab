@@ -12,7 +12,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
     hajimari.io/enable: "true"
     hajimari.io/icon: "web"
-    hajimari.io/appName: "Traefik"
+    hajimari.io/appName: "traefik"
 spec:
   tls:
     - hosts:

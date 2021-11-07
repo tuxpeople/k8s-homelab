@@ -39,6 +39,7 @@ spec:
       annotations:
         hajimari.io/enable: "true"
         hajimari.io/icon: "content-save-outline"
+        hajimari.io/appName: "Longhorn"
     persistence:
       defaultClassReplicaCount: 2
       defaultClass: false

@@ -42,6 +42,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
           hajimari.io/enable: "true"
           hajimari.io/icon: "notebook"
+          hajimari.io/appName: "hasteserver"
         tls:
         - secretName: paste-tls
           hosts:

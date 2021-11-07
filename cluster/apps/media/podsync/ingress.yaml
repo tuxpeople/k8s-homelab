@@ -10,6 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-staging
     hajimari.io/enable: "true"
     hajimari.io/icon: "podcast"
+    hajimari.io/appName: "podsync"
   labels:
     app: podsync
   name: podsync-ingress
