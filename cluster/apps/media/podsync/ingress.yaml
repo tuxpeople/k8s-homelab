@@ -8,6 +8,8 @@ metadata:
     external-dns/is-public: "true"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     cert-manager.io/cluster-issuer: letsencrypt-staging
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "podcast"
   labels:
     app: podsync
   name: podsync-ingress
