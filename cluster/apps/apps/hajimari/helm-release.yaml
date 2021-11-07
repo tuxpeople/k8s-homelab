@@ -21,11 +21,14 @@ spec:
       defaultEnable: false
       namespaceSelector:
         matchNames:
-          - default
           - apps
+          - default
           - development
           - identity
+          - kube-node-lease
+          - kube-public
           - kube-system
+          - longhorn-system
           - media
           - monitoring
           - networking
