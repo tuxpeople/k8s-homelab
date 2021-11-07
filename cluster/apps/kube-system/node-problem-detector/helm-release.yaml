@@ -31,7 +31,6 @@ spec:
       log_monitors:
         - /config/kernel-monitor.json
         - /config/abrt-adaptor.json
-        - /config/network-problem-monitor.json
         - /config/system-stats-monitor.json
         - /config/systemd-monitor.json
     nodeSelector:
