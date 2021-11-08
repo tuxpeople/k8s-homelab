@@ -93,6 +93,52 @@ firewall_services:
     protocol: tcp
   - name: 32414
     protocol: tcp
+  - name: 9001
+    protocol: tcp
+  - name: 9002
+    protocol: tcp
+  - name: 9003
+    protocol: tcp
+  - name: 9004
+    protocol: tcp
+  - name: 9005
+    protocol: tcp
+  - name: 9006
+    protocol: tcp
+  - name: 9007
+    protocol: tcp
+  - name: 9008
+    protocol: tcp
+  - name: 9009
+    protocol: tcp
+  - name: 9010
+    protocol: tcp
+  - name: 9011
+    protocol: tcp
+  - name: 9012
+    protocol: tcp
+  - name: 9013
+    protocol: tcp
+  - name: 9014
+    protocol: tcp
+  - name: 9015
+    protocol: tcp
+  - name: 9016
+    protocol: tcp
+  - name: 9017
+    protocol: tcp
+  - name: 9018
+    protocol: tcp
+  - name: 9019
+    protocol: tcp
+  - name: 9020
+    protocol: tcp
+  - name: 9021
+    protocol: tcp
+  - name: 9022
+    protocol: tcp
+  - name: 9002
+    protocol: udp
 
 local_kubeconfig: /Users/tdeutsch/iCloudDrive/Allgemein/kubectl/homelab.yaml
 sealed_secrets_key: /Users/tdeutsch/git/ansible-sky/master.yaml
