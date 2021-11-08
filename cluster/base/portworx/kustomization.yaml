@@ -1,0 +1,6 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - https://install.portworx.com/2.8?comp=pxoperator
+  - https://install.portworx.com/2.8?operator=true&mc=false&kbver=&oem=esse&user=${SECRET_PORTWORX_USER}&b=true&s=%2Fdev%2Fvdc&c=${SECRET_PORTWORX_CLUSTER}&stork=true&csi=true&lh=true&tel=true&st=k8s

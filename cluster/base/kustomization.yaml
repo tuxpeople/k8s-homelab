@@ -6,3 +6,4 @@ resources:
   - monitoring
   - networking
   - system-upgrade
+  - portworx
