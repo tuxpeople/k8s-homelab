@@ -9,7 +9,7 @@
 ```shell
 WEBHOOKURL="http://fluxcdbot.flux-system.svc.cluster.local:8080/api/v1/webhook/XXXXXXXXXXXXXXX/YYYYYYYYYYYYYYYYYYYYYYYYY"
 CERTIFICATE="./cluster/certificate.pem"
-OUTPUTFILE="./cluster/base/flux-system/notifications/telegram-address.yaml"
+OUTPUTFILE="./cluster/core/flux-system/notifications/telegram-address.yaml"
 cd ~/git/k8s-homelab
 echo "---" > ${OUTPUTFILE}
 kubectl -n flux-system create secret generic telegram-address --from-literal=address=${WEBHOOKURL} --dry-run=client -o yaml | kubeseal --cert ${CERTIFICATE} -o yaml >> ${OUTPUTFILE}
