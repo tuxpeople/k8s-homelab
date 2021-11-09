@@ -139,6 +139,8 @@ firewall_services:
     protocol: tcp
   - name: 9002
     protocol: udp
+  - name: 2049
+    protocol: tcp
 
 local_kubeconfig: /Users/tdeutsch/iCloudDrive/Allgemein/kubectl/homelab.yaml
 sealed_secrets_key: /Users/tdeutsch/git/ansible-sky/master.yaml
