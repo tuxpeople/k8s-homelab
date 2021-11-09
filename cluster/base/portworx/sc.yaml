@@ -5,6 +5,7 @@ metadata:
 provisioner: pxd.portworx.com
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
+allowVolumeExpansion: true
 parameters:
   repl: "1"
 ---
@@ -15,5 +16,6 @@ metadata:
 provisioner: pxd.portworx.com
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
+allowVolumeExpansion: true
 parameters:
   repl: "2"
