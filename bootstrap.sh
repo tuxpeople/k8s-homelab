@@ -17,8 +17,8 @@ ssh lab2 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-
 ssh lab3 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node3"
 ssh lab4 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node-a"
 
-step "Sleep 60s and allow VMs to boot"
-sleep 60
+step "Sleep 30s and allow VMs to boot"
+sleep 30
 
 ssh lab1 -l root "kvm-install-vm attach-disk -d 80 -t vdc k3s-node1"
 ssh lab2 -l root "kvm-install-vm attach-disk -d 80 -t vdc k3s-node2"
