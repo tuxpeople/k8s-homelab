@@ -1,3 +1,4 @@
+---
 kind: StorageCluster
 apiVersion: core.libopenstorage.org/v1
 metadata:
