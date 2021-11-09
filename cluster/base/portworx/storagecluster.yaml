@@ -24,6 +24,8 @@ spec:
   autopilot:
     enabled: true
   monitoring:
+    prometheus:
+      exportMetrics: true
     telemetry:
       enabled: true
   featureGates:
