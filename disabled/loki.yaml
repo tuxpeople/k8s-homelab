@@ -167,39 +167,39 @@ spec:
         unifi-poller:
           up_client-dpi:
             gnetId: 11310
-            datasource: Prometheus
+            datasource: prometheus
             revision: 4
           up_client-insights:
             gnetId: 11315
-            datasource: Prometheus
+            datasource: prometheus
             revision: 8
           up_network-sites:
             gnetId: 11311
-            datasource: Prometheus
+            datasource: prometheus
             revision: 4
           up_uap_insights:
             gnetId: 11314
-            datasource: Prometheus
+            datasource: prometheus
             revision: 9
           up_usg_insights:
             gnetId: 11313
-            datasource: Prometheus
+            datasource: prometheus
             revision: 8
           up_usw_insights:
             gnetId: 11312
-            datasource: Prometheus
+            datasource: prometheus
             revision: 8
         various:
           flux-cluster:
             url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
-            datasource: Prometheus
+            datasource: prometheus
           flux-control-plane:
             url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
-            datasource: Prometheus
+            datasource: prometheus
           uptimerobot:
             # URL https://grafana.com/grafana/dashboards/9955/revisions
             gnetId: 9955
-            datasource: Prometheus
+            datasource: prometheus
             revision: 1
       sidecar:
         dashboards:

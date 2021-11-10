@@ -103,7 +103,7 @@ spec:
       datasources.yaml:
         apiVersion: 1
         datasources:
-        - name: Prometheus
+        - name: prometheus
           type: prometheus
           url: http://prometheus-operated:9090
           access: proxy
@@ -118,69 +118,69 @@ spec:
         unifi-client-insights:
           gnetId: 11315
           revision: 8
-          datasource: Prometheus
+          datasource: prometheus
         # Ref: https://grafana.com/grafana/dashboards/11311/revisions
         unifi-network-sites:
           gnetId: 11311
           revision: 4
-          datasource: Prometheus
+          datasource: prometheus
         # Ref: https://grafana.com/grafana/dashboards/11314/revisions
         unifi-uap-insights:
           gnetId: 11314
           revision: 9
-          datasource: Prometheus
+          datasource: prometheus
         # Ref: https://grafana.com/grafana/dashboards/11312/revisions
         unifi-usw-insights:
           gnetId: 11312
           revision: 8
-          datasource: Prometheus
+          datasource: prometheus
         # ?? Ref: https://grafana.com/grafana/dashboards/11313/revisions
         up_usg_insights:
           gnetId: 11313
-          datasource: Prometheus
+          datasource: prometheus
           revision: 8
           # ?? Ref: https://grafana.com/grafana/dashboards/11310/revisions
           # up_client-dpi:
           #   gnetId: 11310
-          #   datasource: Prometheus
+          #   datasource: prometheus
           #   revision: 4
       apps:
         octoprint:
-          url: https://raw.githubusercontent.com/tg44/OctoPrint-Prometheus-Exporter/master/extras/octoprint-grafana.json
-          datasource: Prometheus
+          url: https://raw.githubusercontent.com/tg44/OctoPrint-prometheus-Exporter/master/extras/octoprint-grafana.json
+          datasource: prometheus
       gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
-          datasource: Prometheus
+          datasource: prometheus
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
-          datasource: Prometheus
+          datasource: prometheus
       systems:
         # Ref: https://grafana.com/grafana/dashboards/1860/revisions
         node-exporter-full:
           gnetId: 1860
-          datasource: Prometheus
+          datasource: prometheus
           revision: 23
         # Ref: https://grafana.com/grafana/dashboards/6157/revisions
         synology:
           gnetId: 6157
-          datasource: Prometheus
+          datasource: prometheus
           revision: 1
       networking:
         # Ref: https://grafana.com/grafana/dashboards/11462/revisions
         traefik:
           gnetId: 11462
-          datasource: Prometheus
+          datasource: prometheus
           revision: 1
         # Ref: https://grafana.com/grafana/dashboards/13665/revisions
         speedtest:
           gnetId: 13665
           revision: 1
-          datasource: Prometheus
+          datasource: prometheus
         # Ref: https://grafana.com/grafana/dashboards/9955/revisions
         uptimerobot:
           gnetId: 9955
-          datasource: Prometheus
+          datasource: prometheus
           revision: 1
     sidecar:
       dashboards:

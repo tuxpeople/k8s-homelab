@@ -30,7 +30,7 @@ data:
         {
           "type": "datasource",
           "id": "prometheus",
-          "name": "Prometheus",
+          "name": "prometheus",
           "version": "1.0.0"
         },
         {
