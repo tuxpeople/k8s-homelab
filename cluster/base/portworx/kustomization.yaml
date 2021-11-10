@@ -7,6 +7,7 @@ resources:
   - storagecluster.yaml
   - sc.yaml
   - ingress.yaml
+  - alertmanager-rules.yaml
 
 generatorOptions:
   labels:
