@@ -110,6 +110,9 @@ spec:
         #     cpu: 25m
         #     memory: 32Mi
         # priorityClassName: high-priority
+      alertmanagerConfigSelector:
+        matchLabels:
+          alertmanagerConfig: homelab
       ingress:
         enabled: true
         annotations:
