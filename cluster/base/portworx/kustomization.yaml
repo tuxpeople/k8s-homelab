@@ -8,6 +8,7 @@ resources:
   - sc.yaml
   - ingress.yaml
   - alertmanager-rules.yaml
+  - alertmanager-config.yaml
 
 generatorOptions:
   labels:
