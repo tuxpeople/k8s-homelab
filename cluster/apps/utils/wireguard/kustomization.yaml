@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - sealed-secret.yaml
-  - deamonset.yaml
+  # - deamonset.yaml
