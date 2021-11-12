@@ -25,6 +25,7 @@ spec:
           - default
           - development
           - identity
+          - kasten-io
           - kube-node-lease
           - kube-public
           - kube-system
