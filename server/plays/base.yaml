@@ -58,6 +58,23 @@
         permanent: yes
         state: enabled
         immediate: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: "Open Firewall for vrrp (keepalived)"
+      firewalld:
+        rich_rule: rule protocol value="vrrp" accept
+        permanent: yes
+        state: enabled
+        immediate: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Run expect to wait for a successful PXE boot via out-of-band CIMC
+      ansible.builtin.shell: |
+        /sbin/iptables -I INPUT -i eth0 -d 224.0.0.0/8 -j ACCEPT
+        /sbin/iptables -A INPUT -p 112 -i eth0 -j ACCEPT
+        /sbin/iptables -A OUTPUT -p 112 -o eth0 -j ACCEPT
+        /sbin/service iptables save
+      when: ansible_os_family == "Debian"
 
     - name: Open firewall for Nodes
       firewalld:

@@ -65,7 +65,7 @@
 
     - name: Ensure nfs client is installed
       package:
-        name: "{{ nfs_package }}"
+        name: "{{ lookup('vars', 'nfs_package_' + ansible_os_family | lower )}}"
         state: present
 
     - name: Mount Multimedia nfs share
@@ -85,43 +85,6 @@
         path: /etc/fstab
         regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
         replace: '#\1\2\3swap\4'
-
-    # - name: Install open-iscsi
-    #   package:
-    #     name: "{{ lookup('vars', 'iscsi_package_' + ansible_os_family | lower )}}"
-    #     state: present
-
-    # - name: Create a volume group on top of /dev/sdb with physical extent size = 128KiB
-    #   community.general.lvg:
-    #     vg: longhorn_vg
-    #     pvs: /dev/vdb
-
-    # - name: Create /var/lib/longhorn if it does not exist
-    #   file:
-    #     path: /var/lib/longhorn
-    #     state: directory
-    #     mode: '0755'
-
-    # - name: LONGHORN | Create a logical volume for longhorn
-    #   lvol:
-    #     vg: longhorn_vg
-    #     lv: lv_longhorn
-    #     size: 100%FREE
-    #     shrink: no
-    #     resizefs: yes
-
-    # - name: LONGHORN | Create a ext4 filesystem on /dev/mapper/longhorn_vg-lv_longhorn
-    #   filesystem:
-    #     fstype: ext4
-    #     dev: /dev/mapper/longhorn_vg-lv_longhorn
-
-    # - name: LONGHORN | Mount /dev/mapper/longhorn_vg-lv_longhorn
-    #   mount:
-    #     path: /var/lib/longhorn
-    #     src: /dev/mapper/longhorn_vg-lv_longhorn
-    #     opts: rw,nosuid
-    #     state: mounted
-    #     fstype: ext4
 
   roles:
     - xanmanning.k3s

@@ -1,5 +1,7 @@
 cluster_name: k3s-prod
-nfs_package: "nfs-utils"
+
+nfs_package_redhat: "nfs-utils"
+nfs_package_debian: "nfs-common"
 
 # iscsi_package_debian: open-iscsi
 # iscsi_package_redhat: iscsi-initiator-utils
