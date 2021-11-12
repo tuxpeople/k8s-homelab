@@ -1,7 +1,6 @@
 collections:
   - community.general
   - ansible.posix
-  - oasis_roles.system
   - robertdebock.roles
 
 roles:
