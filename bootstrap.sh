@@ -12,10 +12,10 @@ step "Ensure Ansible dependencies are installed"
 ansible-galaxy install -r server/requirements.yaml --ignore-errors
 
 step "Create VMs"
-ssh lab1 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node1"
-ssh lab2 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node2"
-ssh lab3 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node3"
-ssh lab4 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 40 -y -u ansible k3s-node-a"
+ssh lab1 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 50 -y -u ansible k3s-node1"
+ssh lab2 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 50 -y -u ansible k3s-node2"
+ssh lab3 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 50 -y -u ansible k3s-node3"
+ssh lab4 -l root "kvm-install-vm create -a -c 4 -m 8192 -d 50 -y -u ansible k3s-node-a"
 
 step "Sleep 30s and allow VMs to boot"
 sleep 30
