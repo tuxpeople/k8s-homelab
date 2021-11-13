@@ -26,8 +26,8 @@ spec:
   concurrency: 1
   nodeSelector:
     matchExpressions:
-      - {key: plan.upgrade.cattle.io/centos8, operator: Exists}
-      - {key: node-role.kubernetes.io/master, operator: In, values: ["true"]}
+      #- {key: plan.upgrade.cattle.io/centos8, operator: Exists}
+      - {key: region, operator: In, values: ["sky"]}
   tolerations:
     - key: "node-role.kubernetes.io/controlplane"
       operator: "Exists"
