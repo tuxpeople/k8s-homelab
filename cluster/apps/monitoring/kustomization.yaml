@@ -13,3 +13,4 @@ resources:
   - unifi-poller
   - alertmanager-discord
   - blackbox-exporter
+  - flux-system
