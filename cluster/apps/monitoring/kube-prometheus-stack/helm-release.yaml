@@ -73,10 +73,10 @@ spec:
           webhook_configs:
           - url: "https://nosnch.in/c15491ac44"
             send_resolved: false
-        - name: 'alertmanager-bot'
-          webhook_configs:
-          - send_resolved: true
-            url: 'http://alertmanager-bot:8080'
+        # - name: 'alertmanager-bot'
+        #   webhook_configs:
+        #   - send_resolved: true
+        #     url: 'http://alertmanager-bot:8080'
         - name: discord
           webhook_configs:
           - send_resolved: true
