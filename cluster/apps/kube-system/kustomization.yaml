@@ -8,3 +8,4 @@ resources:
   - reloader
   - kured
   - node-feature-discovery
+  - kube-cleanup-operator
