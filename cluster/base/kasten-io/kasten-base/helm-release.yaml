@@ -42,7 +42,7 @@ spec:
     auth:
       oidcAuth:
         enabled: true
-        providerURL: https://sso.${SECRET_DOMAIN_ME}/dex
+        providerURL: https://sso.${SECRET_DOMAIN_ME}
         redirectURL: https://k10.${SECRET_DOMAIN_ME}
         clientID: ${SECRET_OIDC_CLIENT_ID}
         clientSecret: ${SECRET_OIDC_CLIENT_SECRET}
