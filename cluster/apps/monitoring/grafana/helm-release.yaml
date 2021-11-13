@@ -182,6 +182,11 @@ spec:
           gnetId: 9955
           datasource: prometheus
           revision: 1
+        # Ref: https://grafana.com/grafana/dashboards/14127/revisions
+        metallb:
+          gnetId: 14127
+          revision: 1
+          datasource: Prometheus
     sidecar:
       dashboards:
         enabled: true

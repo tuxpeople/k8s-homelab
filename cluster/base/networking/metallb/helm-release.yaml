@@ -29,3 +29,29 @@ spec:
           protocol: layer2
           addresses:
             - "${METALLB_LB_RANGE}"
+    rbac:
+      create: true
+    psp:
+      create: true
+    prometheus:
+      podMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+    controller:
+      logLevel: debug
+    speaker:
+      logLevel: debug
+      tolerateMaster: true
+      tolerations:
+        - effect: "NoExecute"
+          operator: "Exists"
+        - effect: "NoSchedule"
+          operator: "Exists"
+    resources:
+      requests:
+        cpu: 25m
+        memory: 263M
+      limits:
+        cpu: 25m
+        memory: 263M
