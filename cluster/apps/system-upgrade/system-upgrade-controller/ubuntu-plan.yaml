@@ -18,7 +18,7 @@ metadata:
   name: focal
   namespace: system-upgrade
 spec:
-  concurrency: 2
+  concurrency: 1
   nodeSelector:
     matchExpressions:
       # - {key: plan.upgrade.cattle.io/focal, operator: Exists}
