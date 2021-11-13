@@ -6,6 +6,7 @@
     - robertdebock.roles.hostname
     - robertdebock.roles.bootstrap
     - robertdebock.roles.common
+    - robertdebock.roles.update_package_cache
     - robertdebock.roles.epel
     - robertdebock.roles.ntp
     #- frzk.chrony

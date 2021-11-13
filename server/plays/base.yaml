@@ -97,6 +97,26 @@
         - 30000-32767/tcp
         - 30000-32767/udp
 
+    - name: Wirguard repos (RHEL)
+      ansible.builtin.yum:
+        name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm"
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Wirguard packages (RHEL)
+      ansible.builtin.yum:
+        name: "kmod-wireguard"
+        state: present
+        update_cache: true
+      when: ansible_os_family == "RedHat"
+
+    - name: Wirguard packages (Debian)
+      ansible.builtin.apt:
+        name: "wireguard-linux-compat"
+        state: present
+        update_cache: true
+      when: ansible_os_family == "Debian"
+
     - name: Reboot
       import_role:
         name: oasis_roles.system.reboot
