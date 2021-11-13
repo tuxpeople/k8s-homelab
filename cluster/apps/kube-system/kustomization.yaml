@@ -6,3 +6,4 @@ resources:
   - node-problem-detector
   - descheduler
   - reloader
+  - kured
