@@ -3,6 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: k10
 resources:
-  - policies
-  - profiles
-  - monitoring
+  - helm-release.yaml
+  - namespace.yaml
+  - values-sealed-secret.yaml
