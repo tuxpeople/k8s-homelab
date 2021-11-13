@@ -12,5 +12,4 @@ resources:
   - sharry
   - smtp
   - static
-  - vpn
   - wireguard
