@@ -12,3 +12,4 @@ resources:
   - speedtest-exporter
   - unifi-poller
   - alertmanager-discord
+  - blackbox-exporter
