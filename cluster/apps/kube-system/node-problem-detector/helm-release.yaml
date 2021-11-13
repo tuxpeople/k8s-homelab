@@ -34,3 +34,10 @@ spec:
         - /config/systemd-monitor.json
     nodeSelector:
       kubernetes.io/arch: amd64
+    resources:
+      requests:
+        cpu: 50m
+        memory: 263M
+      limits:
+        cpu: 500m
+        memory: 512M
