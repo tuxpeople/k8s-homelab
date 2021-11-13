@@ -3,7 +3,7 @@ apiVersion: config.kio.kasten.io/v1alpha1
 kind: Profile
 metadata:
   name: kanister-profile
-  namespace: kasten-io
+  namespace: k10
 spec:
   type: Kanister
   kanister:
@@ -13,7 +13,7 @@ spec:
         apiVersion: v1
         kind: secret
         name: k10-minio-secret
-        namespace: kasten-io
+        namespace: k10
     location:
       type: ObjectStore
       objectStore:

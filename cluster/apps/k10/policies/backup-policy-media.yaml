@@ -2,8 +2,8 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: gitea-backup
-  namespace: gitea
+  name: media-backup
+  namespace: media
 spec:
   frequency: "@daily"
   subFrequency:
@@ -30,20 +30,20 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - gitea
+          - media
   actions:
     - action: backup
       backupParameters:
         filters: {}
         profile:
           name: minio
-          namespace: kasten-io
+          namespace: k10
     - action: export
       exportParameters:
         frequency: "@daily"
         profile:
           name: minio
-          namespace: kasten-io
+          namespace: k10
         exportData:
           enabled: true
       retention: {}

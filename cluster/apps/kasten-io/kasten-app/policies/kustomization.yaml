@@ -1,9 +1,0 @@
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: "kasten-io"
-resources:
-- k10-disaster-recovery-policy.yaml
-- k10-dr-sealed-secret.yaml
-- https://raw.githubusercontent.com/kanisterio/kanister/master/examples/stable/postgresql/postgres-blueprint.yaml
-- https://raw.githubusercontent.com/kanisterio/kanister/master/examples/stable/mysql/mysql-blueprint.yaml

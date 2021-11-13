@@ -7,4 +7,3 @@ resources:
   - networking
   - system-upgrade
   - portworx
-  - kasten-io

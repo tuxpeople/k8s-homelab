@@ -2,8 +2,8 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: static-backup
-  namespace: utils
+  name: dokuwiki-backup
+  namespace: dokuwiki
 spec:
   comment: ""
   frequency: "@hourly"
@@ -11,14 +11,14 @@ spec:
     - action: backup
       backupParameters:
         profile:
-          namespace: kasten-io
+          namespace: k10
           name: minio
     - action: export
       exportParameters:
         frequency: "@hourly"
         profile:
           name: minio
-          namespace: kasten-io
+          namespace: k10
         exportData:
           enabled: true
   retention:
@@ -32,4 +32,4 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - static
+          - dokuwiki

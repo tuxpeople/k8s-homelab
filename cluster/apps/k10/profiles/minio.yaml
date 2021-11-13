@@ -3,7 +3,7 @@ kind: Profile
 apiVersion: config.kio.kasten.io/v1alpha1
 metadata:
   name: minio
-  namespace: kasten-io
+  namespace: k10
 spec:
   locationSpec:
     type: ObjectStore
@@ -19,5 +19,5 @@ spec:
         apiVersion: v1
         kind: secret
         name: k10-minio-secret
-        namespace: kasten-io
+        namespace: k10
   type: Location
