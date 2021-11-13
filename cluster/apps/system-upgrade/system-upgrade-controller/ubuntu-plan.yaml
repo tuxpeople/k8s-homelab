@@ -1,0 +1,53 @@
+---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: focal
+#   namespace: system-upgrade
+# type: Opaque
+# stringData:
+#   upgrade.sh: |
+#     #!/bin/sh
+#     set -e
+#     apt-get --assume-yes update
+#     apt-get --assume-yes dist-upgrade
+# ---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: focal
+  namespace: system-upgrade
+spec:
+  concurrency: 2
+  nodeSelector:
+    matchExpressions:
+      # - {key: plan.upgrade.cattle.io/focal, operator: Exists}
+      - {key: region, operator: In, values: ["sky"]}
+  serviceAccountName: system-upgrade
+  secrets:
+    - name: focal
+      path: /host/run/system-upgrade/secrets/focal
+  drain:
+    force: true
+  version: focal
+  upgrade:
+    image: ubuntu
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/focal/upgrade.sh"]
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: focal
+  namespace: system-upgrade
+spec:
+  encryptedData:
+    upgrade.sh: AgAWij2WCHKr3OR1sZk3hPo1YpJe1CDeAcy77JWZ0Vss1s3TSlTotpTDuaD0N/MFxPnqCj0Lsl2fGnUlbOW5mggpYAhnnlT3PrbiAbfRqO9nOVjkYgDRSVO+yHEPyPFxUHFCBgo5rqY1D0XqdCw/g9UyvFB2+kvNkDXhvJAHGwPg4GMg+GM7BCdqWL7ZGATyYiQciDQSfQXu4UkTcgkKtvfAGLpLUZatw8Fcs5PxvVF91wCy+RP5QFK6C4ATgL7UkHar2PTh0FCKTzxsuJjzVAW134Gq3TCPRxKYYrudU/OI3XlJ7+OyTGCC8ZoCR6QsgDwIFjPLFr6ZGe1jCMPshvnRrt83W8S8YbKqgGvyaRQLjgbbaJo7gum7zQQBEP7Ftxg4HeDYfv9M2K5DvQbZYDVnyM/H+I0iCWDN/Lz6VWkerFtGQRSJwgoRXaKhW+viYJEqGgF0a1OLGPnyy3CFTHSFJiEJiN/nb+6NIhZurmA7T7OB4gdGRnper+c6lUmt5Tll/sBOP6YuO/zLfu45UFGr4R5fUUxf3SS2ftiusXGwsEUJyP4krwN+dNPw1ePj9PoNFwDBm9m75xkRf9fqEKSlLeBWzaLqfem/Wc2kYIXQMel3uYhkJiwH9vgkLciRudeE1tA49dsLo2bkDAgF826zRy3FcT2c6RQk3Bt7VQU9a3waI7panidZRlpiCeTutn3hNggNl8+XDkKqD6XXk/lpaibZmsmRWMRx9XcrResRiZkoVccHgXXe3OCmuU8IJqoBkIkD1AGRzBhqEE0+7VAufi6DlTg=
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: focal
+      namespace: system-upgrade
+    type: Opaque

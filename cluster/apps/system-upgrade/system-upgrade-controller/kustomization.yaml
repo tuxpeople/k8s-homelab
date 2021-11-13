@@ -5,4 +5,4 @@ namespace: system-upgrade
 resources:
   - server-plan.yaml
   - agent-plan.yaml
-  - centos8-plan.yaml
+  - ubuntu-plan.yaml
