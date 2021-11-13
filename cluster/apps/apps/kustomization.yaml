@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: apps
 resources:
   - changedetection.io
-  - homer
   - mealie
   - namespace.yaml
   - octoprint
