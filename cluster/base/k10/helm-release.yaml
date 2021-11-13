@@ -47,7 +47,7 @@ spec:
         clientID: ${SECRET_OIDC_CLIENT_ID}
         clientSecret: ${SECRET_OIDC_CLIENT_SECRET}
         scopes: "openid profile email"
-        # usernameClaim: "email"
+        usernameClaim: "email"
         # usernamePrefix: "-"
     ingress:
       annotations:
