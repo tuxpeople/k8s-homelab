@@ -5,7 +5,8 @@ metadata:
   name: keepalived-ingress-vip
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
+  timeout: 5m
   url: https://github.com/janeczku/keepalived-ingress-vip
   ref:
     branch: master

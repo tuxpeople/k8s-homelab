@@ -5,5 +5,6 @@ metadata:
   name: uptimerobot-operator-charts
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 1h
+  timeout: 5m
   url: https://brennerm.github.io/uptimerobot-operator/helm

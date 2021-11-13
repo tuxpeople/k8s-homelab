@@ -6,4 +6,5 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
+  timeout: 5m
   url: https://kubernetes-sigs.github.io/node-feature-discovery/charts

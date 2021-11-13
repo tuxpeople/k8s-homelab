@@ -6,5 +6,5 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
+  timeout: 5m
   url: https://metallb.github.io/metallb
-  timeout: 3m
