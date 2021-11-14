@@ -21,10 +21,10 @@
         replace: "{{ cluster_name }}"
 
     - name: Move kubeconfig in place
-      command: "mv {{ tmp_kubeconfig.path }} {{ local_kubeconfig }}"
-      when: tmp_kubeconfig.path is defined
+      command: "mv {{ repo_abs_path.stdout }}/provision/kubeconfig {{ local_kubeconfig }}"
       delegate_to: localhost
       become: false
+      run_once: true
 
     - name: Deploy Sealed Secrets key
       shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --force -f {{ sealed_secrets_key }}"
