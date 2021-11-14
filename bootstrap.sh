@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-step "Pull the git repo"
 git pull
 
 task infrastructure:create
