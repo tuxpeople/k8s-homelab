@@ -10,13 +10,13 @@ _basedir="${_pwd}/$(dirname $(which ${0}))"
 
 cd ${_basedir} && cd $(git rev-parse --show-toplevel)
 
-. server/files/settings.env
+. provision/infrastructure/settings.env
 
 step "Pull the git repo"
 git pull
 
 step "Ensure Ansible dependencies are installed"
-ansible-galaxy install -r server/requirements.yaml --ignore-errors
+ansible-galaxy install -r provision/ansible/requirements.yml --ignore-errors
 
 step "Create VMs"
 ssh lab1 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node1"
@@ -47,25 +47,10 @@ brew install pre-commit
 pre-commit install
 
 # Change into ansible dir
-cd server
-
-step "Prepare/Update KUBE-VIP"
-curl -sL https://kube-vip.io/manifests/rbac.yaml > files/rbac.yaml
-# export VIP=${VIP}
-# export INTERFACE=${INTERFACE}
-curl -sL kube-vip.io/k3s | vipAddress=${VIP} vipInterface=${INTERFACE} sh > files/vip.yaml
-git add files/vip.yaml files/rbac.yaml
-git commit -s -S -m "Update kube-vip deployment"
-git push
-
-step "Delete facts cache"
-rm -rf .cache
+cd provision/ansible
 
 step "Run the playbooks"
-ansible-playbook -i inventories/cluster.list plays/init.yaml
-ansible-playbook -i inventories/cluster.list plays/base.yaml
-ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
-ansible-playbook -i inventories/cluster.list plays/flux.yaml
-
+ansible-playbook -i inventory/cluster.list playbooks/ubuntu-prepare.yml
+ansible-playbook -i inventory/cluster.list playbooks/k3s-install.yml
 
 cd ${_pwd}
