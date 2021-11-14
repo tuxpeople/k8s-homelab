@@ -1,0 +1,33 @@
+---
+- name: Flux Bootstrap
+  hosts: master[0]
+  any_errors_fatal: true
+
+  tasks:
+    - name: Get absolute path to this Git repository
+      delegate_to: localhost
+      become: false
+      run_once: true
+      ansible.builtin.command: "git rev-parse --show-toplevel"
+      register: repo_abs_path
+
+    - name: Deploy Sealed Secrets key
+      shell: "/usr/local/bin/kubectl --kubeconfig={{ repo_abs_path.stdout }}/provision/kubeconfig apply --force -f {{ sealed_secrets_key }}"
+      ignore_errors: true
+      delegate_to: localhost
+      become: false
+
+    - name: Flux pre-check
+      shell: "flux check --pre"
+      delegate_to: localhost
+      become: false
+      environment:
+        KUBECONFIG: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+
+    - name: Bootstrap Flux
+      shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=cluster/core --private-key-file=~/.ssh/id_rsa_github"
+      delegate_to: localhost
+      become: false
+      environment:
+        KUBECONFIG: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        GITHUB_TOKEN: "{{ github_token }}"

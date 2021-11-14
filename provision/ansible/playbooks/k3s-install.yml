@@ -70,17 +70,3 @@
       when:
         - k3s_server_manifests_urls
         - k3s_server_manifests_urls | length > 0
-
-    - name: deploy Sealed Secrets key
-      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --force -f {{ sealed_secrets_key }}"
-      ignore_errors: true
-      delegate_to: localhost
-      become: false
-
-    - name: Bootstrap Flux
-      shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=cluster/core --private-key-file=~/.ssh/id_rsa_github"
-      delegate_to: localhost
-      become: false
-      environment:
-        KUBECONFIG: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
-        GITHUB_TOKEN: "{{ github_token }}"

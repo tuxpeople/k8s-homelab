@@ -7,7 +7,7 @@ k3s_control_node: true
 
 # (dict) k3s settings for all control-plane nodes
 k3s_server:
-  node-ip: "{{ ansible_host }}"
+  #node-ip: "{{ ansible_host }}"
   tls-san:
     # kube-vip
     - "{{ kubevip_address }}"

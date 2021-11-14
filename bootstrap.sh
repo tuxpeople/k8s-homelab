@@ -46,11 +46,13 @@ step "Prepare pre-commit"
 brew install pre-commit
 pre-commit install
 
-# Change into ansible dir
+# Change into ansible dir and remove ansible cache
 cd provision/ansible
+rm -rf .cache
 
 step "Run the playbooks"
 ansible-playbook -i inventory/cluster.list playbooks/ubuntu-prepare.yml
 ansible-playbook -i inventory/cluster.list playbooks/k3s-install.yml
+ansible-playbook -i inventory/cluster.list playbooks/deploy-flux.yml
 
 cd ${_pwd}

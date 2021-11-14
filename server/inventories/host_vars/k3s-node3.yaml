@@ -1,8 +1,0 @@
-# k3s_server:
-#   tls-san: "{{ vrrp_vip }},{{ cluster_name }}.{{ vrrp_vip }}.nip.io"
-#   disable:
-#     - local-storage
-#   bind-address: 0.0.0.0
-#   advertise-address: "{{ vrrp_vip }}"
-#   node-taint:
-#     - "CriticalAddonsOnly=true:NoExecute"

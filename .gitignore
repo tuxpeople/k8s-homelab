@@ -7,5 +7,3 @@ Thumbs.db
 kubeconfig
 # vscode-sops
 .decrypted~*.yaml
-
-provision/ansible/.cache

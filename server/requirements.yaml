@@ -1,9 +1,0 @@
-collections:
-  - community.general
-  - ansible.posix
-  - robertdebock.roles
-
-roles:
-  - name: ansible-role-k8s-rolling-update
-    src: https://github.com/tuxpeople/ansible-role-k8s-rolling-update
-  - src: xanmanning.k3s
