@@ -5,3 +5,4 @@ namespace: kube-system
 resources:
   - configurations
   - nfs-subdir-external-provisioner
+  - kube-vip
