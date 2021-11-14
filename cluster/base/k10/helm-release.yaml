@@ -69,7 +69,7 @@ spec:
       persistence:
         storageClass: portworx-csi-sc-replicated
     injectKanisterSidecar:
-      enabled: true
+      enabled: false
       namespaceSelector:
         matchLabels:
 
