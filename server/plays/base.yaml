@@ -68,11 +68,11 @@
         immediate: yes
       when: ansible_os_family == "RedHat"
 
-    - name: "Open Firewall for vrrp (keepalived) on Debian/Ubuntu"
-      ansible.builtin.shell: |
-        ufw allow from 224.0.0.18
-        ufw allow to 224.0.0.18
-      when: ansible_os_family == "Debian"
+    # - name: "Open Firewall for vrrp (keepalived) on Debian/Ubuntu"
+    #   ansible.builtin.shell: |
+    #     ufw allow from 224.0.0.18
+    #     ufw allow to 224.0.0.18
+    #   when: ansible_os_family == "Debian"
 
     - name: Open firewall for Nodes
       firewalld:
