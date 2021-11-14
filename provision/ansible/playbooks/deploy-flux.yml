@@ -11,8 +11,23 @@
       ansible.builtin.command: "git rev-parse --show-toplevel"
       register: repo_abs_path
 
+    - name: Update kubeconfig with the right cluster name
+      delegate_to: localhost
+      become: false
+      run_once: true
+      ansible.builtin.replace:
+        path: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        regexp: 'default'
+        replace: "{{ cluster_name }}"
+
+    - name: Move kubeconfig in place
+      command: "mv {{ tmp_kubeconfig.path }} {{ local_kubeconfig }}"
+      when: tmp_kubeconfig.path is defined
+      delegate_to: localhost
+      become: false
+
     - name: Deploy Sealed Secrets key
-      shell: "/usr/local/bin/kubectl --kubeconfig={{ repo_abs_path.stdout }}/provision/kubeconfig apply --force -f {{ sealed_secrets_key }}"
+      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --force -f {{ sealed_secrets_key }}"
       ignore_errors: true
       delegate_to: localhost
       become: false
@@ -22,12 +37,12 @@
       delegate_to: localhost
       become: false
       environment:
-        KUBECONFIG: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        KUBECONFIG: "{{ local_kubeconfig }}"
 
     - name: Bootstrap Flux
       shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=cluster/core --private-key-file=~/.ssh/id_rsa_github"
       delegate_to: localhost
       become: false
       environment:
-        KUBECONFIG: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        KUBECONFIG: "{{ local_kubeconfig }}"
         GITHUB_TOKEN: "{{ github_token }}"
