@@ -60,7 +60,7 @@
         immediate: yes
       when: ansible_os_family == "RedHat"
 
-    - name: "Open Firewall for vrrp (keepalived)"
+    - name: "Open Firewall for vrrp (keepalived) on RHEL"
       firewalld:
         rich_rule: rule protocol value="vrrp" accept
         permanent: yes
@@ -68,12 +68,10 @@
         immediate: yes
       when: ansible_os_family == "RedHat"
 
-    - name: Run expect to wait for a successful PXE boot via out-of-band CIMC
+    - name: "Open Firewall for vrrp (keepalived) on Debian/Ubuntu"
       ansible.builtin.shell: |
-        /sbin/iptables -I INPUT -i eth0 -d 224.0.0.0/8 -j ACCEPT
-        /sbin/iptables -A INPUT -p 112 -i eth0 -j ACCEPT
-        /sbin/iptables -A OUTPUT -p 112 -o eth0 -j ACCEPT
-        /sbin/service iptables save
+        ufw allow from 224.0.0.18
+        ufw allow to 224.0.0.18
       when: ansible_os_family == "Debian"
 
     - name: Open firewall for Nodes
@@ -96,6 +94,7 @@
         - 10254/tcp
         - 30000-32767/tcp
         - 30000-32767/udp
+      when: ansible_os_family == "RedHat"
 
     - name: Wirguard repos (RHEL)
       ansible.builtin.yum:
@@ -110,11 +109,109 @@
         update_cache: true
       when: ansible_os_family == "RedHat"
 
-    - name: Wirguard packages (Debian)
-      ansible.builtin.apt:
-        name: "wireguard-linux-compat"
+    # - name: Wirguard packages (Debian)
+    #   ansible.builtin.apt:
+    #     name: "wireguard-linux-compat"
+    #     state: present
+    #     update_cache: true
+    #   when: ansible_os_family == "Debian"
+
+    - name: Update max_user_watches
+      ansible.posix.sysctl:
+        name: fs.inotify.max_user_watches
+        value: "65536"
         state: present
-        update_cache: true
+        sysctl_file: /etc/sysctl.d/98-kubernetes-fs.conf
+
+    - name: Ubuntu stuff
+      block:
+        - name: Check for bridge-nf-call-iptables
+          ansible.builtin.stat:
+            path: /proc/sys/net/bridge/bridge-nf-call-iptables
+          register: bridge_nf_call_iptables_result
+
+        - name: Set Kubernetes network configuration
+          ansible.builtin.blockinfile:
+            path: /etc/sysctl.d/99-kubernetes-cri.conf
+            mode: 0644
+            create: true
+            block: |
+              net.ipv4.ip_forward = 1
+              net.bridge.bridge-nf-call-iptables = 1
+              net.ipv6.conf.all.forwarding = 1
+              net.bridge.bridge-nf-call-ip6tables = 1
+          when:
+            - bridge_nf_call_iptables_result.stat.exists
+          register: sysctl_network
+
+        - name: Reload Kubernetes network configuration
+          ansible.builtin.shell: sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
+          when:
+            - sysctl_network.changed
+            - bridge_nf_call_iptables_result.stat.exists
+
+        - name: Install common packages
+          ansible.builtin.apt:
+            name:
+              - apt-transport-https
+              - arptables
+              - ca-certificates
+              - curl
+              - ebtables
+              - iputils-ping
+              - ipvsadm
+              - lvm2
+              - net-tools
+              - nfs-common
+              - open-iscsi
+              - psmisc
+              - smartmontools
+              - software-properties-common
+              - unattended-upgrades
+            install_recommends: false
+            update_cache: true
+            cache_valid_time: 3600
+            autoclean: true
+            autoremove: true
+          register: apt_install_common
+          retries: 5
+          until: apt_install_common is success
+
+        - name: Copy 20auto-upgrades unattended-upgrades config
+          ansible.builtin.blockinfile:
+            path: /etc/apt/apt.conf.d/20auto-upgrades
+            mode: 0644
+            create: true
+            block: |
+              APT::Periodic::Update-Package-Lists "1";
+              APT::Periodic::Download-Upgradeable-Packages "1";
+              APT::Periodic::AutocleanInterval "7";
+              APT::Periodic::Unattended-Upgrade "1";
+        - name: Copy 50unattended-upgrades unattended-upgrades config
+          ansible.builtin.blockinfile:
+            path: /etc/apt/apt.conf.d/50unattended-upgrades
+            mode: 0644
+            create: true
+            block: |
+              Unattended-Upgrade::Automatic-Reboot "false";
+              Unattended-Upgrade::Remove-Unused-Dependencies "true";
+              Unattended-Upgrade::Allowed-Origins {
+                  "${distro_id} stable";
+                  "${distro_id} ${distro_codename}-security";
+                  "${distro_id} ${distro_codename}-updates";
+              };
+        - name: Start unattended-upgrades service
+          ansible.builtin.systemd:
+            name: unattended-upgrades
+            enabled: true
+            state: started
+
+        - name: Restart unattended-upgrades service
+          ansible.builtin.service:
+            name: unattended-upgrades.service
+            daemon_reload: true
+            enabled: true
+            state: restarted
       when: ansible_os_family == "Debian"
 
     - name: Reboot
