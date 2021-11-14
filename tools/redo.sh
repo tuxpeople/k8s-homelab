@@ -20,9 +20,9 @@ ssh-keygen -R k3s-node1; ssh-keygen -R `dig +short k3s-node1`; ssh-keyscan -t rs
 ssh lab1 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node1"
 step "Run the playbooks"
 rm -rf .cache/facts/k3s-node1
-ansible-playbook -i inventories/cluster.list plays/init.yaml
-ansible-playbook -i inventories/cluster.list plays/base.yaml
-ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
+ansible-playbook -i inventories/hosts.yml plays/init.yaml
+ansible-playbook -i inventories/hosts.yml plays/base.yaml
+ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
 
 step "Recreate k3s-node2"
 ssh lab2 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node2"
@@ -34,9 +34,9 @@ ssh-keygen -R k3s-node2; ssh-keygen -R `dig +short k3s-node2`; ssh-keyscan -t rs
 ssh lab2 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node2"
 step "Run the playbooks"
 rm -rf .cache/facts/k3s-node2
-ansible-playbook -i inventories/cluster.list plays/init.yaml
-ansible-playbook -i inventories/cluster.list plays/base.yaml
-ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
+ansible-playbook -i inventories/hosts.yml plays/init.yaml
+ansible-playbook -i inventories/hosts.yml plays/base.yaml
+ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
 
 step "Recreate k3s-node3"
 ssh lab3 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node3"
@@ -48,10 +48,10 @@ ssh-keygen -R k3s-node2; ssh-keygen -R `dig +short k3s-node2`; ssh-keyscan -t rs
 ssh lab3 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node3"
 step "Run the playbooks"
 rm -rf .cache/facts/k3s-node3
-ansible-playbook -i inventories/cluster.list plays/init.yaml
-ansible-playbook -i inventories/cluster.list plays/base.yaml
-ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
-ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
+ansible-playbook -i inventories/hosts.yml plays/init.yaml
+ansible-playbook -i inventories/hosts.yml plays/base.yaml
+ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
+ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
 
 step "Recreate k3s-node-a"
 ssh lab4 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node-a"
@@ -63,9 +63,9 @@ ssh-keygen -R k3s-node2; ssh-keygen -R `dig +short k3s-node2`; ssh-keyscan -t rs
 ssh lab4 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node-a"
 step "Run the playbooks"
 rm -rf .cache/facts/k3s-node-a
-ansible-playbook -i inventories/cluster.list plays/init.yaml
-ansible-playbook -i inventories/cluster.list plays/base.yaml
-ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
-ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
+ansible-playbook -i inventories/hosts.yml plays/init.yaml
+ansible-playbook -i inventories/hosts.yml plays/base.yaml
+ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
+ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
 
 cd ${_pwd}

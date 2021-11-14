@@ -22,10 +22,10 @@ git commit -s -S -m "Update kube-vip deployment"
 git push
 
 step "Run the playbooks"
-ansible-playbook -i inventories/cluster.list plays/init.yaml
-ansible-playbook -i inventories/cluster.list plays/base.yaml
-ansible-playbook -i inventories/cluster.list plays/k3s_cluster.yaml
-ansible-playbook -i inventories/cluster.list plays/flux.yaml
+ansible-playbook -i inventories/hosts.yml plays/init.yaml
+ansible-playbook -i inventories/hosts.yml plays/base.yaml
+ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
+ansible-playbook -i inventories/hosts.yml plays/flux.yaml
 
 sleep 20
 

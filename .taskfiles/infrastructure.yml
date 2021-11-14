@@ -1,0 +1,9 @@
+---
+version: "3"
+
+tasks:
+  create:
+    desc: Initialize pre-commit hooks
+    dir: provision/infrastructure
+    cmds:
+      - ./create.sh
