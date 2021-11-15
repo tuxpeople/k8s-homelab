@@ -25,7 +25,7 @@ spec:
       retries: 3
   values:
     storageClass:
-      defaultClass: true
+      defaultClass: false
     nfs:
       server: 10.20.30.40
       path: /volume1/Kubernetes
