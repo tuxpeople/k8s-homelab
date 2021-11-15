@@ -16,3 +16,7 @@ spec:
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: cloudflare_api_token
+        selector:
+          dnsZones:
+            - ${SECRET_DOMAIN_ME}
+            - ${SECRET_DOMAIN_CH}
