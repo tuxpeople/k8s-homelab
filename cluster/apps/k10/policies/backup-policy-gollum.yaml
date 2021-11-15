@@ -29,7 +29,7 @@ spec:
     yearly: 7
   selector:
     matchExpressions:
-      - key: k10.kasten.io/appNamespace
+      - key: app
         operator: In
         values:
           - gollum
