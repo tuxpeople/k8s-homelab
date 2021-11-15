@@ -19,8 +19,8 @@ spec:
   values:
     fullnameOverride: blackbox-exporter
     allowIcmp: true
-    nodeSelector:
-      region: sky
+    # nodeSelector:
+    #   region: sky
     config:
       modules:
         icmp:
