@@ -63,6 +63,7 @@ spec:
     persistence:
       enabled: true
       size: 50Gi
+      storageClass: "portworx-csi-sc-replicated"
     ingress:
       enabled: true
       hosts:
