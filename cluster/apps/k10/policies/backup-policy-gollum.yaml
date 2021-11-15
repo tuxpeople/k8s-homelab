@@ -3,7 +3,7 @@ apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
   name: gollum-backup
-  namespace: gollum
+  namespace: development
 spec:
   comment: ""
   frequency: "@hourly"
