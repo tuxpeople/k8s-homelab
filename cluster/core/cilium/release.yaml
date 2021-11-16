@@ -51,3 +51,12 @@ spec:
       enabled: true
       # Default port value (9090) needs to be changed since the RHEL cockpit also listens on this port.
       port: 19090
+---
+apiVersion: v1
+data:
+  keys: MyByZmM0MTA2KGdjbShhZXMpKSBjN2UyYjhhODVmNGE2OWY1YWE5MjcxOGRiOGZhYTZmMjYxMmI0N2VhIDEyOA==
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: cilium-ipsec-keys
+  namespace: kube-system
