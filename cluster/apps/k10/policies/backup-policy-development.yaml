@@ -2,8 +2,8 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: static-backup
-  namespace: utils
+  name: development
+  namespace: development
 spec:
   comment: ""
   frequency: "@hourly"
@@ -32,4 +32,4 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - static
+          - development
