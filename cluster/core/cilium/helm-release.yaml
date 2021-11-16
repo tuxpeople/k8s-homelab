@@ -29,9 +29,6 @@ spec:
   values:
     kubeProxyReplacement: "strict"
 
-    k8sServiceHost: 10.0.2.15
-    k8sServicePort: 6443
-
     global:
       encryption:
         enabled: true
