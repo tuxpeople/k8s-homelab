@@ -16,7 +16,7 @@ k3s_server:
   flannel-backend: "none" # This needs to be in quotes
   disable:
     # Disable flannel - replaced with Calico
-    # - flannel
+    - flannel
     # Disable traefik - installed with Flux
     - traefik
     # Disable servicelb - replaced with metallb and install with Flux
