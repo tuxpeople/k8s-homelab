@@ -3,6 +3,8 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: portworx-csi-sc
+  annotations:
+    k10.kasten.io/is-snapshot-class: "true"
 provisioner: pxd.portworx.com
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
@@ -16,6 +18,7 @@ metadata:
   name: portworx-csi-sc-replicated
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
+    k10.kasten.io/is-snapshot-class: "true"
 provisioner: pxd.portworx.com
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
