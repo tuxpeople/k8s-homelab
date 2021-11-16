@@ -1,0 +1,56 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  chart: rancher-monitoring
+  repo: https://helm.cilium.io/
+  targetNamespace: kube-system
+  valuesContent: |-
+    kubeProxyReplacement: "strict"
+
+    k8sServiceHost: 10.0.2.15
+    k8sServicePort: 6443
+
+    global:
+      encryption:
+        enabled: true
+        nodeEncryption: true
+
+    hubble:
+      metrics:
+        #serviceMonitor:
+        #  enabled: true
+        enabled:
+        - dns:query;ignoreAAAA
+        - drop
+        - tcp
+        - flow
+        - icmp
+        - http
+
+      ui:
+        enabled: true
+        replicas: 1
+        ingress:
+          enabled: true
+          hosts:
+            - hubble.sky.lab
+
+      relay:
+        enabled: true
+
+    operator:
+      replicas: 1
+
+    ipam:
+      mode: "cluster-pool"
+      operator:
+        clusterPoolIPv4PodCIDR: "{{ k3s_server['cluster-cidr'] }}"
+        clusterPoolIPv4MaskSize: 24
+
+    prometheus:
+      enabled: true
+      # Default port value (9090) needs to be changed since the RHEL cockpit also listens on this port.
+      port: 19090
