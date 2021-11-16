@@ -67,9 +67,6 @@ spec:
         secretName: k10-tls
         hosts:
         - k10.${SECRET_DOMAIN_ME}
-    global:
-      persistence:
-        storageClass: portworx-csi-sc-replicated
     injectKanisterSidecar:
       enabled: false
       namespaceSelector:
