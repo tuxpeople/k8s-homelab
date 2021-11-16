@@ -102,10 +102,10 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
-        # resources:
-        #   limits:
-        #     cpu: 500m
-        #     memory: 64Mi
+        resources:
+          limits:
+            cpu: 500m
+            memory: 64Mi
         #   requests:
         #     cpu: 25m
         #     memory: 32Mi
@@ -318,3 +318,7 @@ spec:
           - prometheus.${SECRET_DOMAIN_ME}
         hosts:
         - prometheus.${SECRET_DOMAIN_ME}
+      resources:
+        limits:
+          cpu: 200m
+          memory: 400Mi
