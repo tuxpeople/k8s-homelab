@@ -12,3 +12,4 @@ spec:
   resources:
     requests:
       storage: 65Gi
+  # storageClassName: "portworx-csi-sc-replicated"
