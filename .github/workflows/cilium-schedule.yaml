@@ -1,0 +1,48 @@
+---
+name: Schedule - Update Cilium
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *"
+
+jobs:
+  cilium-upgrade:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Setup Kubernetes Tools
+        uses: yokawasa/action-setup-kube-tools@v0.8.0
+        with:
+          setup-tools: |
+            helmv3
+            yq
+
+      - name: Upgrade Cilium
+        id: upgrade
+        run: |
+          helm repo add cilium https://helm.cilium.io/
+          helm repo update
+          VERSION=$(helm search repo cilium -o json | jq .[].version -r)
+          VALUES="$GITHUB_WORKSPACE/cluster/core/cilium/helm-values.txt"
+          OUTPUT="$GITHUB_WORKSPACE/cluster/core/cilium/deployment.yaml"
+          helm template cilium cilium/cilium --namespace kube-system -f ${VALUES} > ${OUTPUT}
+          echo "::set-output name=cilium_version::$VERSION"
+
+      - name: Create pull request for Cilium upgrade
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: "cilium/upgrade-${{ steps.upgrade.outputs.cilium_version }}"
+          delete-branch: true
+          title: "chore(deps): upgrade Cilium to ${{ steps.upgrade.outputs.cilium_version }}"
+          signoff: false
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit-message: "chore(deps): upgrade cilium to ${{ steps.upgrade.outputs.cilium_version }}"
+          body: |
+            Release notes: https://github.com/cilium/cilium/releases/tag/v${{ steps.upgrade.outputs.cilium_version }}
+          labels: cilium/upgrade
