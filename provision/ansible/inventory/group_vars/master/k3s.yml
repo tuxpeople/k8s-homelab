@@ -38,7 +38,7 @@ k3s_server:
     # Allow k8s services to contain TCP and UDP on the same port
     - "feature-gates=MixedProtocolLBService=true"
     # add support for VolumeSnapshotDataSource
-    - "VolumeSnapshotDataSource=true"
+    - "feature-gates=VolumeSnapshotDataSource=true"
   # Required to monitor kube-controller-manager with kube-prometheus-stack
   kube-controller-manager-arg:
     - "address=0.0.0.0"
