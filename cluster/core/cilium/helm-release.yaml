@@ -34,6 +34,9 @@ spec:
         enabled: true
         nodeEncryption: true
 
+    containerRuntime:
+      integration: containerd
+
     hubble:
       metrics:
         #serviceMonitor:
@@ -45,12 +48,18 @@ spec:
         - flow
         - icmp
         - http
+        - port-distribution
 
       ui:
         enabled: true
         replicas: 1
         ingress:
           enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "ftelescope"
           hosts:
           - hubble.sky.lab
 
