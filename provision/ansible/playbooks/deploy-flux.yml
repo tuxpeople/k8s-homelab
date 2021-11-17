@@ -47,8 +47,8 @@
         KUBECONFIG: "{{ local_kubeconfig }}"
         GITHUB_TOKEN: "{{ github_token }}"
 
-    - name: Delete Cilium
-      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} delete --force -f https://raw.githubusercontent.com/tuxpeople/k8s-homelab/feature/cilium/provision/ansible/playbooks/templates/cilium-installation.yaml.j2"
-      ignore_errors: true
-      delegate_to: localhost
-      become: false
+    # - name: Delete Cilium
+    #   shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} delete --force -f https://raw.githubusercontent.com/tuxpeople/k8s-homelab/feature/cilium/provision/ansible/playbooks/templates/cilium-installation.yaml.j2"
+    #   ignore_errors: true
+    #   delegate_to: localhost
+    #   become: false
