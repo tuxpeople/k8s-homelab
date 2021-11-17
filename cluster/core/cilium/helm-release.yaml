@@ -7,7 +7,7 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://bitnami-labs.github.io/sealed-secrets
+      # renovate: registryUrl=https://helm.cilium.io/
       chart: cilium
       version: 1.10.5
       sourceRef:
