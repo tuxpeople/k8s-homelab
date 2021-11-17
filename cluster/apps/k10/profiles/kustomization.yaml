@@ -5,3 +5,4 @@ resources:
 - minio-sealed-secret.yaml
 - minio.yaml
 - minio-kanister.yaml
+- volumesnapshotclass.yaml
