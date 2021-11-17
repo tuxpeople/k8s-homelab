@@ -1,0 +1,8 @@
+---
+apiVersion: snapshot.storage.k8s.io/v1beta1
+driver: hostpath.csi.k8s.io
+kind: VolumeSnapshotClass
+metadata:
+  annotations:
+    k10.kasten.io/is-snapshot-class: "true"
+  name: csi-hostpath-snapclass
