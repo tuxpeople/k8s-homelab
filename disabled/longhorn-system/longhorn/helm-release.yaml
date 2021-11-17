@@ -20,7 +20,7 @@ spec:
     enable: false # Enable helm test
   install:
     remediation: # perform remediation when helm install fails
-      retries: 3
+      retries: 5
   upgrade:
     remediation: # perform remediation when helm upgrade fails
       retries: 3
@@ -28,8 +28,8 @@ spec:
     cleanupOnFail: true
   rollback:
     timeout: 10m
-    recreate: true
     cleanupOnFail: true
+    recreate: true
   values:
     ingress:
       enabled: true
