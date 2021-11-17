@@ -20,6 +20,7 @@ jobs:
           setup-tools: |
             helmv3
             yq
+            kubectl
 
       - name: Upgrade Cilium base installation
         id: upgrade
@@ -27,11 +28,28 @@ jobs:
           helm repo add cilium https://helm.cilium.io/
           helm repo update
           VERSION=$(helm search repo cilium -o json | jq .[].version -r)
-          VALUES="$GITHUB_WORKSPACE/cluster/core/cilium/helm-values.txt"
-          helm template cilium cilium/cilium --namespace kube-system --set kubeProxyReplacement=strict --set ipam.operator.clusterPoolIPv4PodCIDR="10.42.0.0/16" > $GITHUB_WORKSPACE/provision/ansible/playbooks/templates/cilium-installation.yaml.j2
+          helm repo add cilium https://helm.cilium.io/
+          helm repo update
+          mkdir /tmp/cilium
+          helm template cilium cilium/cilium --namespace kube-system --set kubeProxyReplacement=strict --set ipam.operator.clusterPoolIPv4PodCIDR="10.42.0.0/16" > /tmp/cilium/cilium-installation.yaml
+          cat <<EOF > /tmp/cilium/kustomization.yaml
+          ---
+          apiVersion: kustomize.config.k8s.io/v1beta1
+          kind: Kustomization
+          commonLabels:
+            app.kubernetes.io/managed-by: Helm
+            helm.toolkit.fluxcd.io/name: cilium
+            helm.toolkit.fluxcd.io/namespace: kube-system
+          commonAnnotations:
+            meta.helm.sh/release-name: cilium
+            meta.helm.sh/release-namespace: kube-system
+          resources:
+            - /tmp/cilium/cilium-installation.yaml
+          EOF
+          kubectl kustomize /tmp/cilium/ -o $GITHUB_WORKSPACE/provision/ansible/playbooks/templates/cilium-installation.yaml.j2
           echo "::set-output name=cilium_version::$VERSION"
 
-      - name: Create pull request for Cilium upgrade
+      - name: Create pull request for Cilium base-install upgrade
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
