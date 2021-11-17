@@ -2,25 +2,11 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: 6hrs-backup
+  name: daily-backup
   namespace: k10
 spec:
   comment: ""
   frequency: "@daily"
-  subFrequency:
-    minutes:
-      - 0
-    hours:
-      - 0
-      - 12
-      - 6
-      - 18
-    weekdays:
-      - 0
-    days:
-      - 1
-    months:
-      - 1
   actions:
     - action: backup
       backupParameters:
