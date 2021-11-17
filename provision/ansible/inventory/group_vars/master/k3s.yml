@@ -17,6 +17,8 @@ k3s_server:
   disable:
     # Disable flannel - replaced with Calico
     - flannel
+    # Disable kube-proxy - replaced with Calico
+    - kube-proxy
     # Disable traefik - installed with Flux
     - traefik
     # Disable servicelb - replaced with metallb and install with Flux
