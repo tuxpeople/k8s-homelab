@@ -50,10 +50,10 @@ spec:
         interval: 30s
         scrapeTimeout: 30s
       targets:
-        - name: UDM
+        - name: udm
           url: 10.20.30.1
           module: icmp
-        - name: Diskstation
+        - name: diskstation
           url: 10.20.30.40
           module: icmp
     prometheusRule:
