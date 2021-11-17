@@ -170,6 +170,10 @@ spec:
         enabled: true
         size: 10Gi
       prometheusSpec:
+        resources:
+          limits:
+            cpu: 200m
+            memory: 400Mi
         podAntiAffinity: "hard"
         ruleSelector: {}
         ruleNamespaceSelector: {}
@@ -326,7 +330,3 @@ spec:
           - prometheus.${SECRET_DOMAIN_ME}
         hosts:
         - prometheus.${SECRET_DOMAIN_ME}
-      resources:
-        limits:
-          cpu: 200m
-          memory: 400Mi
