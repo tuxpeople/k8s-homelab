@@ -2,27 +2,47 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: development
-  namespace: development
+  name: 6hrs-backup
+  namespace: k10
 spec:
   comment: ""
-  frequency: "@hourly"
+  frequency: "@daily"
+  subFrequency:
+    minutes:
+      - 0
+    hours:
+      - 0
+      - 12
+      - 6
+      - 18
+    weekdays:
+      - 0
+    days:
+      - 1
+    months:
+      - 1
   actions:
     - action: backup
       backupParameters:
+        filters:
+          excludeResources:
+            - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - podsync
         profile:
           namespace: k10
           name: minio
     - action: export
       exportParameters:
-        frequency: "@hourly"
+        frequency: "@daily"
         profile:
           name: minio
           namespace: k10
         exportData:
           enabled: true
   retention:
-    hourly: 24
     daily: 7
     weekly: 4
     monthly: 12
@@ -32,4 +52,10 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
+          - apps
+          - identity
+          - utils
+          - monitoring
           - development
+          - networking
+          - media
