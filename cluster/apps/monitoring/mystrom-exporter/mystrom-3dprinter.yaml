@@ -20,7 +20,7 @@ spec:
           value: 10.20.30.33
         - name: TZ
           value: Europe/Zurich
-        image: psmae/mystrom-exporter
+        image: ghcr.io/peschmae/exporter-go-mystrom:1.1.4
         imagePullPolicy: Always
         name: mystrom-3dprinter
         resources:
