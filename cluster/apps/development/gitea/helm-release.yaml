@@ -70,7 +70,7 @@ spec:
         # sshPublicKeyAttribute: sshPublicKey
     persistence:
       annotations:
-        k8up.io/backup: 'true'
+        k8up.io/backup: yes
       enabled: true
       size: 50Gi
     ingress:
@@ -99,7 +99,7 @@ spec:
     postgresql:
       persistence:
         annotations:
-          k8up.io/backup: 'true'
+          k8up.io/backup: yes
       primary:
         annotations:
           k8up.io/backupcommand: pg_dumpall -U postgres -h 127.0.0.1
