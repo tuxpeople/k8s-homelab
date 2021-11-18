@@ -170,10 +170,10 @@ spec:
         enabled: true
         size: 10Gi
       prometheusSpec:
-        # resources:
-        #   limits:
-        #     cpu: 200m
-        #     memory: 1000Mi
+        resources:
+          limits:
+            cpu: 300m
+            memory: 1500Mi
         podAntiAffinity: "hard"
         ruleSelector: {}
         ruleNamespaceSelector: {}
