@@ -8,3 +8,4 @@ resources:
   - gitea
   - gollum
   - namespace.yaml
+  - schedule.yaml
