@@ -170,6 +170,7 @@ spec:
         enabled: true
         size: 10Gi
       prometheusSpec:
+        replicas: 2
         resources:
           limits:
             cpu: 300m
