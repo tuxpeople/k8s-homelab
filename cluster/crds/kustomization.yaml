@@ -7,3 +7,4 @@ resources:
   - sealed-secrets
   - traefik
   - external-snapshotter
+  - k8up
