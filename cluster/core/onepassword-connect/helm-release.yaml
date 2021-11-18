@@ -41,7 +41,7 @@ spec:
       create: true
       autoRestart: true
       token:
-        name: onepassword-token
+        name: op-token
         key: token
       pollingInterval: 10
       watchNamespace:
@@ -56,3 +56,35 @@ spec:
     service:
       type: ClusterIP
       port: 8080
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: op-credentials
+  namespace: kube-system
+spec:
+  encryptedData:
+    1password-credentials.json: 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
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: op-credentials
+      namespace: kube-system
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: op-token
+  namespace: kube-system
+spec:
+  encryptedData:
+    token: AgAzrPoeURKmk3CG4sA3aSN5mjW8zOMQ8MZt61pQBIATC20PSdeP/VsC82ZWEv+isX+V/YWk48k+P1q2vwkkFGwSlpYCYWrwASOLK6TxJtktShWzrnDrRwWMgov4bR3913NsGCysjB3aTmF8PGov7PUCLh9SvPVK8ZJwJkJejbynyb2gSg6ni4ekEf8hZYqPZpmZlHnlQdRlvGsWZ19F/PTmRHzXRHqYsLXY+xQk73/VP6KDTs4Dhjb51ggPgLHcy+E9YaS1uYQNeGI9M7Lfc36gWkZJc2vs9AIAnckx0ZGN8UmlLO0HHyaV/lxs2S92ZblGhq+pmofNU1IwhwWsQ0RUdPrhuxwUBfWYP0KL1alcYk200P542tIA+7+Nvu9zA3JhIMfq9BqRFImVgH7dS6JKTO0KSwnHzR05DHul63Ur7KE6MxEaIF1KLiA54/JWfRR2LN+3OVFS3nW96ucqbzUXEMHzK+U37ZQ7TptGFAbzxzdwz2iJlbgtbbvN9dk/QgbXfHXMb6ns8jhWH7bx+9v/zoZ+Q0Mj50Gp1eSNMudpgw0M1Je1+wCetoU7INltCyHpohVKbFsx89JHHFEQRu9Z7ujYQm3tl5lZIBHojIYxlpSBhQv53xR4wtsrGPyVWa4Q0evm+YmSQ611zSr8czLAoTLzTvA5FdLFZqWhPFH/YBGVKymeKdj3pIrsueT/g7W1IIcnsrUye5brKu2yRkk2MGWHzeob5COCJaikWb7LAjE4KhoFGlUXXrHZW2UaBGtThVrBGjwMgcJ9RU/vk5A1cxVNoGEpmTgvRldy8+Kp79C4aNgXErn/2cpEI1JjGdXYvARf2ze7NNbyW1NBb48e4bGvaHW3J7HMXQj7RzOZ09k4iwqt0OP0MuhV0EFPhJanEbrvVIC6/5e16VJxb3Y/yNABcT8cetuuHLvJdhHeHhkuSulXQmhWqGKQ65QMuR8r1g2GCAcIYoBXdx32zsCbXgk48MrZcqcKcoe6kuszC17MHg0XCzomTDODIPHxqN/PFmL/HMQF2VTkMM65ZI3MXGrs0mx+O59O32ZyN4+b2vL7qzi+xo5ZazYzK9jW/VNHv9kfMcQsJDD7hM+TjciqelKnC4jjWelJqJotQk+Cav3ScRdm774D4NFeErQg9OmiRmVp0ctDkKu3zM7DiTbpYMIhaJd33623vc+Gng/yLuILG0yeJYa/0fJ36gcJt3eGmCqHcMOF8oMLzpqGwuSWlPFtLc3+53IUqALAVmftHvd/ZW8otDpvWUjkLSa5bvllFldv3wdCPo7p96GKzhj59jyUBy8mEFkBJuYOWNUhO31MHrajhJ+psMzcqSgiK9gNXQ/GHFRTz3hzkm/fTueCcUsAzsbULkyL9wyYg9AkEp2eilOspNt1apEu5lu3CPBtIi8l4eAH3Xignca9sPKXU3oQPxM685B6PkA/WxfSJfxaZB/Z3jkt4vIm+9RjvrhQG5Z5k09I+hv3W6LJnVSclo1Uclg9P6lh48G2gu021MKAO2QMnYM4KDGy6yKLROlNM/I2c2Sl5HsQBa3QJe5QEgDMDyPsAyxdNw==
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: op-token
+      namespace: kube-system
