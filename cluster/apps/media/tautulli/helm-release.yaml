@@ -48,6 +48,8 @@ spec:
     persistence:
       config:
         enabled: true
+        accessMode: ReadWriteOnce
+        size: 5Gi
     resources:
       limits:
         memory: 750Mi
