@@ -39,8 +39,8 @@ spec:
 
     hubble:
       metrics:
-        #serviceMonitor:
-        #  enabled: true
+        serviceMonitor:
+          enabled: true
         enabled:
         - dns:query;ignoreAAAA
         - drop
@@ -77,5 +77,3 @@ spec:
 
     prometheus:
       enabled: true
-      # Default port value (9090) needs to be changed since the RHEL cockpit also listens on this port.
-      port: 19090
