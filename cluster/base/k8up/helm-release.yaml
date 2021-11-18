@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: k8up
-  namespace: k8up-operator
+  namespace: k8up
 spec:
   chart:
     spec:
@@ -16,10 +16,29 @@ spec:
       interval: 5m
   interval: 5m
   install:
+    crds: Skip
     remediation:
       retries: 3
   upgrade:
+    crds: Skip
     remediation:
       retries: 3
-  releaseName: k8up-operator
-  targetNamespace: k8up-operator
+  values:
+    k8up:
+      timezone: Europe/Zurich
+      envVars:
+        - name: BACKUP_GLOBALREPOPASSWORD
+          value: ${SECRET_GLOBALREPOPASSWORD}
+        - name: BACKUP_GLOBALACCESSKEYID
+          value: ${SECRET_MINIO_ACCESSKEY}
+        - name: BACKUP_GLOBALSECRETACCESSKEY
+          value: ${SECRET_MINIO_SECRETKEY}
+        - name: BACKUP_GLOBALS3ENDPOINT
+          value: http://minio.lab:9091
+    metrics:
+      prometheusRule:
+        enabled: true
+        namespace: monitoring
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring

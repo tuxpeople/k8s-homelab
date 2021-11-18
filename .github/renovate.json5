@@ -55,12 +55,11 @@
     // regexManager to read and process k8up CRD's
     {
       "fileMatch": [
-        "cluster/crds/k8up/.+\\.yaml$"
+          "crds\\/k8up\\/kustomization\\.yaml$"
       ],
       "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
-      ],
-      "datasourceTemplate": "helm"
+          "datasource=(?<datasource>.*) depName=(?<depName>.*)\\s.*\\/(?<currentValue>.*?)\\/"
+      ]
     },
   ],
   "packageRules": [

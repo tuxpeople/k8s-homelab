@@ -2,48 +2,22 @@
 apiVersion: k8up.io/v1
 kind: Schedule
 metadata:
-  name: schedule-test
+  name: development
+  namespace: development
 spec:
-  resourceRequirementsTemplate:
-    requests:
-      memory: "64Mi"
-      cpu: "250m"
-    limits:
-      memory: "128Mi"
-      cpu: "500m"
+  podSecurityContext:
+    runAsUser: 0
   backend:
-    repoPasswordSecretRef:
-      name: backup-repo
-      key: password
     s3:
-      endpoint: http://minio.lab:9091
-      bucket: k8up
-      accessKeyIDSecretRef:
-        name: backup-credentials
-        key: username
-      secretAccessKeySecretRef:
-        name: backup-credentials
-        key: password
+      bucket: k8up-development
   backup:
-    schedule: '* * * * *'
-    keepJobs: 4
-    promURL: http://minio.lab:9091
-    resources:
-      requests:
-        memory: "64Mi"
-        cpu: "250m"
-      limits:
-        memory: "256Mi"
-        cpu: "1000m"
+    schedule: "0 1,13 * * *"
   check:
-    resources:
-      requests:
-        memory: "64Mi"
-        cpu: "250m"
-    schedule: '@hourly-random'
-    promURL: http://minio.lab:9091
+    schedule: "0 3 * * *"
   prune:
-    schedule: '*/2 * * * *'
     retention:
-      keepLast: 5
-      keepDaily: 14
+      keepDaily: 2
+      keepLast: 14
+    schedule: "0 2 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
