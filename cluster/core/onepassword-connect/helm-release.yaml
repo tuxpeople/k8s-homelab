@@ -89,3 +89,11 @@ spec:
       name: op-credentials
       namespace: kube-system
     type: Opaque
+---
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  namespace: kube-system
+  name: ichbineintest
+spec:
+  itemPath: "vaults/homelab/items/test-secret"
