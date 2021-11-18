@@ -44,21 +44,6 @@ spec:
         name: op-token
         key: token
       pollingInterval: 10
-      watchNamespace:
-      - "apps"
-      - "default"
-      - "development"
-      - "flux-system"
-      - "identity"
-      - "k8up"
-      - "kube-node-lease"
-      - "kube-public"
-      - "kube-system"
-      - "media"
-      - "monitoring"
-      - "networking"
-      - "system-upgrade"
-      - "utils"
       serviceAccount:
         create: true
       roleBinding:
