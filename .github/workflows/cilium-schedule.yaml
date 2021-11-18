@@ -20,7 +20,7 @@ jobs:
           setup-tools: |
             helmv3
             yq
-            kubectl
+            kustomize
 
       - name: Upgrade Cilium base installation
         id: upgrade
@@ -46,7 +46,7 @@ jobs:
           resources:
             - /tmp/cilium/cilium-installation.yaml
           EOF
-          kubectl kustomize /tmp/cilium/ -o $GITHUB_WORKSPACE/provision/ansible/playbooks/templates/cilium-installation.yaml.j2
+          kustomize build /tmp/cilium/ > $GITHUB_WORKSPACE/provision/ansible/playbooks/templates/cilium-installation.yaml.j2
           echo "::set-output name=cilium_version::$VERSION"
 
       - name: Create pull request for Cilium base-install upgrade
