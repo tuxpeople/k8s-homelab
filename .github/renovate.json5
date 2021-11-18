@@ -52,6 +52,16 @@
       ],
       "datasourceTemplate": "helm"
     },
+    // regexManager to read and process k8up CRD's
+    {
+      "fileMatch": [
+        "cluster/crds/k8up/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
   ],
   "packageRules": [
     // setup datasources
