@@ -194,22 +194,22 @@ spec:
         metallb:
           gnetId: 14127
           revision: 1
-          datasource: Prometheus
+          datasource: prometheus
         # Ref: https://grafana.com/grafana/dashboards/14500/revisions
         agent-metrics-1.10:
           gnetId: 14500
           revision: 1
-          datasource: Prometheus
+          datasource: prometheus
         # Ref: https://grafana.com/grafana/dashboards/14502/revisions
         hubble-metrics-1.10:
           gnetId: 14502
           revision: 1
-          datasource: Prometheus
+          datasource: prometheus
         # Ref: https://grafana.com/grafana/dashboards/14501/revisions
         operator-metrics-1.10:
           gnetId: 14501
           revision: 1
-          datasource: Prometheus
+          datasource: prometheus
     sidecar:
       dashboards:
         enabled: true
