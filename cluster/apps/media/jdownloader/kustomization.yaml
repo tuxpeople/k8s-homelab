@@ -5,4 +5,4 @@ namespace: media
 resources:
   - deployment.yaml
   - persistent_volume_claim.yaml
-  - secret.yaml
+  - secret.sops.yaml

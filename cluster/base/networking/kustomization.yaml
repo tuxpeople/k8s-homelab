@@ -6,5 +6,5 @@ resources:
   - external-dns
   - namespace.yaml
   - metallb
-  - secret.yaml
+  - secret.sops.yaml
   - cert-manager
