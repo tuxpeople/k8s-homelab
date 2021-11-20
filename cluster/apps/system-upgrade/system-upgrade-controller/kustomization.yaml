@@ -6,3 +6,4 @@ resources:
   - server-plan.yaml
   - agent-plan.yaml
   - ubuntu-plan.yaml
+  - ubuntu-upgrade-secret.sops.yaml
