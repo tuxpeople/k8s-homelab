@@ -5,4 +5,4 @@ namespace: flux-system
 resources:
 - discord-provider.yaml
 - discord-alert.yaml
-- discord-address.yaml
+- discord-address.sops.yaml
