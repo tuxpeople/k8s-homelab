@@ -8,4 +8,3 @@ resources:
   - system-upgrade
   - portworx
   - k10
-  - k8up
