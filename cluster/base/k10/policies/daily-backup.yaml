@@ -17,7 +17,7 @@ spec:
                   operator: In
                   values:
                     - podsync
-                - key: app
+                - key: name
                   operator: In
                   values:
                     - tautulli
