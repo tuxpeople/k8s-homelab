@@ -17,6 +17,10 @@ spec:
                   operator: In
                   values:
                     - podsync
+                - key: app
+                  operator: In
+                  values:
+                    - tautulli
         profile:
           namespace: k10
           name: minio
