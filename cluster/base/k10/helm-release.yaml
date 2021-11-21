@@ -79,8 +79,3 @@ spec:
       enabled: false
       namespaceSelector:
         matchLabels:
-
-  # valuesFrom:
-  # - secretKeyRef:
-  #   kind: Secret
-  #   name: k10-secret-values
