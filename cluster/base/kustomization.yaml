@@ -7,4 +7,5 @@ resources:
   - networking
   - system-upgrade
   - portworx
+  - k10
   - k8up
