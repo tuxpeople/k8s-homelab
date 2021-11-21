@@ -7,6 +7,5 @@ resources:
   - jdownloader
   - podsync
   - namespace.yaml
-  - tautulli
   - plex
   - plex-exporter
