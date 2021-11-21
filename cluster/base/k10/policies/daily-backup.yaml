@@ -10,17 +10,6 @@ spec:
   actions:
     - action: backup
       backupParameters:
-        filters:
-          excludeResources:
-            - matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - podsync
-                - key: name
-                  operator: In
-                  values:
-                    - tautulli
         profile:
           namespace: k10
           name: minio
@@ -42,10 +31,4 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - apps
-          - identity
-          - utils
-          - monitoring
           - development
-          - networking
-          - media
