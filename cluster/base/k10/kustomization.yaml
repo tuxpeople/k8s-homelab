@@ -5,4 +5,7 @@ namespace: k10
 resources:
   - helm-release.yaml
   - namespace.yaml
-  - values-sealed-secret.yaml
+  - secret-values.sops.yaml
+  - policies
+  - profiles
+  - monitoring
