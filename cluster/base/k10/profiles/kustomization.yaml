@@ -6,3 +6,5 @@ resources:
 - minio.yaml
 - minio-kanister.yaml
 - volumesnapshotclass.yaml
+- portworx.yaml
+- portworx-secret.sops.yaml
