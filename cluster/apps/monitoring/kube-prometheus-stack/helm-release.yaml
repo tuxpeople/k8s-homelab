@@ -67,7 +67,11 @@ spec:
           - match:
               alertname: KubeletTooManyPods
             receiver: 'email'
-
+          # - receiver: discord
+          #   group_wait: 10s
+          #   match_re:
+          #     issue: Portworx*
+          #   continue: true
         receivers:
         - name: 'null'
         - name: email
