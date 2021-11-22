@@ -49,12 +49,6 @@ spec:
           - match:
               alertname: Watchdog
             receiver: 'DeadMansSnitch'
-            group_wait: 30s
-            group_interval: 5m
-            repeat_interval: 10m
-          - match:
-              alertname: Watchdog
-            receiver: 'email'
           - match:
               alertname: CPUThrottlingHigh
             receiver: 'email'
@@ -125,6 +119,7 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: traefik
+          cert-manager.io/cluster-issuer: letsencrypt-staging
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
