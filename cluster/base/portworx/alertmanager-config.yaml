@@ -10,7 +10,7 @@ metadata:
 spec:
   route:
     routes:
-      - receiver: "discord"
+      - receiver: discord
         group_wait: 10s
         match_re:
           issue: Portworx*

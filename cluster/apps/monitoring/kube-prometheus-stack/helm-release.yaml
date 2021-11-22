@@ -81,10 +81,6 @@ spec:
           webhook_configs:
           - url: "https://nosnch.in/c15491ac44"
             send_resolved: false
-        # - name: 'alertmanager-bot'
-        #   webhook_configs:
-        #   - send_resolved: true
-        #     url: 'http://alertmanager-bot:8080'
         - name: discord
           webhook_configs:
           - send_resolved: true
@@ -214,9 +210,6 @@ spec:
             username: randomuser
             password: examplepassword
           static_configs:
-          # - targets: ['10.20.30.40:9100'] # nas
-          #   labels:
-          #     alias: NAS
           - targets: ['192.168.8.11:9100'] # lab1
             labels:
               alias: lab1
@@ -229,14 +222,6 @@ spec:
           - targets: ['192.168.8.14:9100'] # lab2
             labels:
               alias: lab4
-        # - job_name: 'unifipoller'
-        #   scrape_interval: 30s
-        #   static_configs:
-        #   - targets: ['unifi-poller:9130']
-        # - job_name: 'uptimerobot-prometheus'
-        #   scrape_interval: 30s
-        #   static_configs:
-        #   - targets: ['uptimerobot-prometheus:9705']
         - job_name: 'kubernetes-service-endpoints'
           kubernetes_sd_configs:
           - role: endpoints
