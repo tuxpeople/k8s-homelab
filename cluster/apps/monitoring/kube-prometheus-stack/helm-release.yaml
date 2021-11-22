@@ -283,18 +283,18 @@ spec:
             regex: (.+):(?:\d+);(\d+)
             replacement: ${1}:${2}
             target_label: __address__
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: "traefik"
-          cert-manager.io/cluster-issuer: "letsencrypt-staging"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
-        tls:
-        - secretName: prometheus-tls
-          hosts:
-          - prometheus.${SECRET_DOMAIN_ME}
-        hosts:
-        - prometheus.${SECRET_DOMAIN_ME}
+      # ingress:
+      #   enabled: true
+      #   annotations:
+      #     kubernetes.io/ingress.class: traefik
+      #     cert-manager.io/cluster-issuer: letsencrypt-staging
+      #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      #     external-dns/is-public: "true"
+      #     external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+      #     traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
+      #   tls:
+      #   - secretName: prometheus-tls
+      #     hosts:
+      #     - prometheus.${SECRET_DOMAIN_ME}
+      #   hosts:
+      #   - prometheus.${SECRET_DOMAIN_ME}
