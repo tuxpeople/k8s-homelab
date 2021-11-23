@@ -95,7 +95,7 @@ spec:
           equal: ['alertname', 'namespace']
 
       alertmanagerSpec:
-        # replicas: 3
+        replicas: 1
         # podAntiAffinity: "soft"
         storage:
           volumeClaimTemplate:
