@@ -139,10 +139,6 @@ spec:
           - hosts:
               - "hajimari.${SECRET_DOMAIN_ME}"
             secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-    persistence:
-      data:
-        enabled: true
-        existingClaim: hajimari-config
     resources:
       requests:
         cpu: 100m
