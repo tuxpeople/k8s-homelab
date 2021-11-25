@@ -7,4 +7,3 @@ resources:
   - persistent_volume_claim.yaml
   - service.yaml
   - uptimerobot-monitor.yaml
-  - prebackuppod.yaml

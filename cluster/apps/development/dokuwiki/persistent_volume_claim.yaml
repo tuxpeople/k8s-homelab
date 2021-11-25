@@ -3,14 +3,14 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: dokuwiki
-  # annotations:
-  #   k8up.io/backup: "true"
+  annotations:
+    k8up.io/backup: "true"
   labels:
     app: dokuwiki
   name: dokuwiki-data
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 5Gi

@@ -5,12 +5,12 @@ metadata:
   namespace: development
   labels:
     app: code-server
-  # annotations:
-  #   k8up.io/backup: "true"
+  annotations:
+    k8up.io/backup: "true"
   name: code-server-data
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 5Gi

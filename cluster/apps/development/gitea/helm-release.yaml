@@ -73,10 +73,12 @@ spec:
         k8up.io/backup: yes
       enabled: true
       size: 50Gi
+      accessModes:
+        - ReadWriteMany
     ingress:
       enabled: true
       hosts:
-      - git.${SECRET_DOMAIN_ME}
+        - git.${SECRET_DOMAIN_ME}
       annotations:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
@@ -85,9 +87,9 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "git"
       tls:
-      - secretName: git-tls
-        hosts:
-        - git.${SECRET_DOMAIN_ME}
+        - secretName: git-tls
+          hosts:
+            - git.${SECRET_DOMAIN_ME}
     cache: redis-master.redis:6379
     replicaCount: 1
     resources:

@@ -7,4 +7,3 @@ resources:
   - persistent_volume_claim.yaml
   - sealed-secret.yaml
   - service.yaml
-  - prebackuppod.yaml
