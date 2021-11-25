@@ -11,7 +11,7 @@ spec:
     s3:
       bucket: k8up-development
   backup:
-    schedule: "*/5 * * * *"
+    schedule: "0 1,13 * * *"
   check:
     schedule: "0 3 * * *"
   prune:
