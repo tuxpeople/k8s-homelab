@@ -84,7 +84,7 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-    snapshotsEnabled: true
+    snapshotsEnabled: false
     backupsEnabled: true
     deployRestic: true
     installCRDs: true
