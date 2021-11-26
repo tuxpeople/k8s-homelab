@@ -40,6 +40,8 @@ spec:
           aws_access_key_id = ${SECRET_MINIO_ACCESSKEY}
           aws_secret_access_key = ${SECRET_MINIO_SECRETKEY}
     configuration:
+      extraEnvVars:
+        TZ: "Europe/Zurich"
       features: EnableCSI
       provider: aws
       backupStorageLocation:
@@ -98,6 +100,6 @@ spec:
           memory: 200Mi
           cpu: 15m
         limits:
-          memory: 3000Mi
+          memory: 1500Mi
     # This job upgrades the CRDs.
     upgradeCRDs: false
