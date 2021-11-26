@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: velero
-  namespace: backup
+  namespace: velero
 spec:
   chart:
     spec:
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   releaseName: velero
-  targetNamespace: backup
+  targetNamespace: velero
   interval: 5m
   test:
     enable: false # Enable helm test
