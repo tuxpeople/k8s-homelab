@@ -11,15 +11,17 @@ volumeBindingMode: Immediate
 allowVolumeExpansion: true
 parameters:
   repl: "1"
-# ---
-# kind: VolumeSnapshotClass
-# apiVersion: snapshot.storage.k8s.io/v1
-# metadata:
-#   name: portworx-csi-sc-vsc
-# driver: pxd.portworx.com
-# deletionPolicy: Retain
-# parameters:
-#   tags: 'foo=aaa,bar=bbb'
+---
+kind: VolumeSnapshotClass
+apiVersion: snapshot.storage.k8s.io/v1
+metadata:
+  name: portworx-csi-sc-vsc
+  labels:
+    velero.io/csi-volumesnapshot-class: "true"
+driver: pxd.portworx.com
+deletionPolicy: Retain
+parameters:
+  tags: 'foo=aaa,bar=bbb'
 ---
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
