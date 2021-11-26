@@ -73,11 +73,11 @@ spec:
       #   volumeMounts:
       #     - mountPath: /target
       #       name: plugins
-    # schedules:
-    #   daily-backup:
-    #     schedule: "0 6 * * *"
-    #     template:
-    #       ttl: "168h"
+    schedules:
+      daily-backup:
+        schedule: "0 6 * * *"
+        template:
+          ttl: "168h"
     resources:
       requests:
         memory: 300Mi
