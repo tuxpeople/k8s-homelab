@@ -33,7 +33,6 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    features: EnableCSI
     credentials:
       secretContents:
         cloud: |
@@ -41,6 +40,7 @@ spec:
           aws_access_key_id = ${SECRET_MINIO_ACCESSKEY}
           aws_secret_access_key = ${SECRET_MINIO_SECRETKEY}
     configuration:
+      features: EnableCSI
       provider: aws
       backupStorageLocation:
         name: default
