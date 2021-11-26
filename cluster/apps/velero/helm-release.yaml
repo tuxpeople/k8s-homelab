@@ -51,13 +51,6 @@ spec:
           region: us-east-1
           s3ForcePathStyle: true
           s3Url: "http://minio.lab:9091"
-      volumeSnapshotLocation:
-        name: default
-        config:
-          region: us-east-1
-          s3ForcePathStyle: true
-          s3Url: "http://minio.lab:9091"
-          publicUrl: "http://minio.lab:9099"
       resticTimeout: 6h
     initContainers:
       - name: velero-plugin-for-aws
@@ -92,7 +85,7 @@ spec:
       serviceMonitor:
         enabled: true
     backupsEnabled: true
-    snapshotsEnabled: true
+    snapshotsEnabled: false
     upgradeCRDs: true
     cleanUpCRDs: false
     deployRestic: true
