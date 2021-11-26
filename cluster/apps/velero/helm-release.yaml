@@ -51,9 +51,9 @@ spec:
           region: us-east-1
           s3ForcePathStyle: true
           s3Url: "http://minio.lab:9091"
-      # volumeSnapshotLocation:
-      #    name: default
-      #    provider: pxd.portworx.com
+      volumeSnapshotLocation:
+        name: default
+        provider: pxd.portworx.com
       resticTimeout: 6h
     initContainers:
       - name: velero-plugin-for-aws
@@ -88,7 +88,7 @@ spec:
       serviceMonitor:
         enabled: true
     backupsEnabled: true
-    snapshotsEnabled: false
+    snapshotsEnabled: true
     upgradeCRDs: true
     cleanUpCRDs: false
     deployRestic: true
