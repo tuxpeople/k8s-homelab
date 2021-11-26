@@ -62,6 +62,12 @@ spec:
       volumeMounts:
       - mountPath: /target
         name: plugins
+    - name: velero-plugin-for-csi
+      image: velero/velero-plugin-for-csi:v0.1.2
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+      - mountPath: /target
+        name: plugins
     resources:
       requests:
         memory: 300Mi
