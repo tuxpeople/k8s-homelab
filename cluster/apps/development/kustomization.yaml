@@ -8,4 +8,4 @@ resources:
   - gitea
   - gollum
   - namespace.yaml
-  - schedule.yaml
+  - velero-schedule.yaml
