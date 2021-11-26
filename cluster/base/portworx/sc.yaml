@@ -15,7 +15,7 @@ apiVersion: snapshot.storage.k8s.io/v1
 metadata:
   name: portworx-csi-sc-vsc
 driver: pxd.portworx.com
-reclaimPolicy: Retain
+deletionPolicy: Retain
 parameters:
   tags: 'foo=aaa,bar=bbb'
 ---
