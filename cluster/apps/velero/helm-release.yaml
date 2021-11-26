@@ -53,23 +53,30 @@ spec:
           s3Url: "http://minio.lab:9091"
           publicUrl: "http://minio.lab:9099"
       volumeSnapshotLocation:
-        name: aws
         config:
           region: us-east-1
+          s3ForcePathStyle: true
+          s3Url: "http://minio.lab:9091"
+          publicUrl: "http://minio.lab:9099"
       resticTimeout: 6h
     initContainers:
-    - name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws:v1.3.0
-      imagePullPolicy: IfNotPresent
-      volumeMounts:
-      - mountPath: /target
-        name: plugins
-    - name: velero-plugin-for-csi
-      image: velero/velero-plugin-for-csi:v0.1.2
-      imagePullPolicy: IfNotPresent
-      volumeMounts:
-      - mountPath: /target
-        name: plugins
+      - name: velero-plugin-for-aws
+        image: ghcr.io/k8s-at-home/velero-plugin-for-aws:v1.3.0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+      - name: velero-plugin-for-csi
+        image: velero/velero-plugin-for-csi:v0.2.0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+    schedules:
+      daily-backup:
+        schedule: "0 6 * * *"
+        template:
+          ttl: "168h"
     resources:
       requests:
         memory: 300Mi
@@ -84,23 +91,22 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-    snapshotsEnabled: false
     backupsEnabled: true
+    snapshotsEnabled: false
+    upgradeCRDs: true
+    cleanUpCRDs: false
     deployRestic: true
-    installCRDs: true
     restic:
       podVolumePath: /var/lib/kubelet/pods
       privileged: false
       tolerations:
-      - key: "arm"
-        operator: "Exists"
-      - key: "node-role.kubernetes.io/master"
-        operator: "Exists"
+        - key: "node-role.kubernetes.io/master"
+          operator: "Exists"
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
       resources:
         requests:
           memory: 200Mi
           cpu: 15m
         limits:
-          memory: 1500Mi
-    # This job upgrades the CRDs.
-    upgradeCRDs: false
+          memory: 3000Mi
