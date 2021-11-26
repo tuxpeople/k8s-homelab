@@ -5,3 +5,4 @@ resources:
   - namespace.yaml
   - helm-release.yaml
   - velero-schedule.yaml
+  - prometheus-rule.yaml
