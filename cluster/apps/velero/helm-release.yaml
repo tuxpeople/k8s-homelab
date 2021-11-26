@@ -51,7 +51,6 @@ spec:
           region: us-east-1
           s3ForcePathStyle: true
           s3Url: "http://minio.lab:9091"
-          publicUrl: "http://minio.lab:9099"
       volumeSnapshotLocation:
         config:
           region: us-east-1
