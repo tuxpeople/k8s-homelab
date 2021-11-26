@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   releaseName: velero
-  targetNamespace: velero
+  targetNamespace: backup
   interval: 5m
   test:
     enable: false # Enable helm test
@@ -33,30 +33,44 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    cleanUpCRDs: true
+    credentials:
+      secretContents:
+        cloud: |
+          [default]
+          aws_access_key_id = ${SECRET_MINIO_ACCESSKEY}
+          aws_secret_access_key = ${SECRET_MINIO_SECRETKEY}
     configuration:
       provider: aws
       backupStorageLocation:
         name: default
-        bucket: k8s-backup
+        bucket: velero
         config:
-          region: minio
+          region: us-east-1
           s3ForcePathStyle: true
-          s3Url: http://minio.lab:9091
+          s3Url: "http://minio.lab:9091"
+          publicUrl: "http://minio.lab:9099"
       volumeSnapshotLocation:
-        name: default
+        name: aws
         config:
-          region: minio
-      defaultvolumestorestic: true
-    credentials:
-      useSecret: true
+          region: us-east-1
+      resticTimeout: 6h
     initContainers:
     - name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws:v1.2.0
+      image: velero/velero-plugin-for-aws:v1.2.1
       imagePullPolicy: IfNotPresent
       volumeMounts:
       - mountPath: /target
         name: plugins
+    resources:
+      requests:
+        memory: 300Mi
+        cpu: 25m
+      limits:
+        memory: 1500Mi
+    # tolerations:
+    # - key: "arm"
+    #   operator: "Exists"
+    # enableHelmHooks: false
     metrics:
       enabled: true
       serviceMonitor:
@@ -64,11 +78,19 @@ spec:
     snapshotsEnabled: true
     deployRestic: true
     installCRDs: true
-    schedules:
-      daily:
-        schedule: "10 6 * * *"
-        template:
-          ttl: "360h"
-  valuesFrom:
-  - kind: Secret
-    name: "velero-values"
+    restic:
+      podVolumePath: /var/lib/kubelet/pods
+      privileged: false
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 15m
+        limits:
+          memory: 3000Mi
+    # This job upgrades the CRDs.
+    upgradeCRDs: false
