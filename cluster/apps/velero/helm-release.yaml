@@ -44,6 +44,7 @@ spec:
         TZ: "Europe/Zurich"
       features: EnableCSI
       provider: aws
+      defaultVolumesToRestic: true
       backupStorageLocation:
         name: default
         bucket: velero
@@ -52,7 +53,6 @@ spec:
           s3ForcePathStyle: true
           s3Url: "http://minio.lab:9091"
       volumeSnapshotLocation:
-        defaultVolumesToRestic: true
         name: default
         bucket: velero
         config:
