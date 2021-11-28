@@ -18,8 +18,6 @@ spec:
       labels:
         app: podsync
     spec:
-      securityContext:
-        fsGroup: 999
       containers:
       - image: ghcr.io/tuxpeople/podsync:v2.4.0
         imagePullPolicy: Always
