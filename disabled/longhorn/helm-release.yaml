@@ -45,8 +45,8 @@ spec:
       defaultClass: false
       defaultFsType: ext4
     defaultSettings:
-      backupTarget: s3://${SECRET_MINIO_ACCESSKEY}@minio.lab/longhornbackupstore
-      backupTargetCredentialSecret: minio-secret-key
+      backupTarget: s3://longhornbackup@us-east-1/
+      backupTargetCredentialSecret: minio-secrets
       defaultReplicaCount: 2
       defaultDataLocality: disabled
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
