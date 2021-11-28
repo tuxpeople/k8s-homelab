@@ -5,16 +5,21 @@ kind: Schedule
 # Standard Kubernetes metadata. Required.
 metadata:
   # Schedule name. May be any valid Kubernetes object name. Required.
-  name: development-hourly
+  name: half-daily
   # Schedule namespace. Must be the namespace of the Velero server. Required.
   namespace: velero
 # Parameters about the scheduled backup. Required.
 spec:
   # Schedule is a Cron expression defining when to run the Backup
-  schedule: "6 * * * *"
+  schedule: "6 0,12 * * *"
   # Template is the spec that should be used for each backup triggered by this schedule.
   template:
     # Array of namespaces to include in the scheduled backup. If unspecified, all namespaces are included.
     # Optional.
     includedNamespaces:
-    - 'development'
+      - apps
+      - development
+      - media
+      - monitoring
+      - networking
+      - utils
