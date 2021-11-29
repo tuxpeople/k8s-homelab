@@ -48,6 +48,7 @@ spec:
           DISABLE_REGISTRATION: true
         server:
           ROOT_URL: https://git.${SECRET_DOMAIN_ME}
+          DISABLE_SSH: true
         cron.sync_external_users:
           ENABLED: "true"
           RUN_AT_START: "true"
