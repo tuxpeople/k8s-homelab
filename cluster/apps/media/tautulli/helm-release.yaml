@@ -41,9 +41,7 @@ spec:
       enabled: true
       hosts:
       - host: tautulli.${SECRET_DOMAIN_INTERNAL}
-        paths:
-        - path: /
-          pathType: Prefix
+      paths: ['/']
     resources:
       limits:
         memory: 750Mi
