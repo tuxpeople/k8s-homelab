@@ -99,9 +99,9 @@ spec:
         cpu: 100m
         memory: 64Mi
     postgresql:
-      persistence:
-        annotations:
-          k8up.io/backup: yes
+      # persistence:
+      #   annotations:
+      #     k8up.io/backup: yes
       primary:
-        annotations:
-          k8up.io/backupcommand: pg_dumpall -U postgres -h 127.0.0.1
+        # annotations:
+        #   k8up.io/backupcommand: pg_dumpall -U postgres -h 127.0.0.1
