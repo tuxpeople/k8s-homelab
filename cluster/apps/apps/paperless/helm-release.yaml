@@ -36,6 +36,7 @@ spec:
       PAPERLESS_TIME_ZONE: "Europe/Zurich"
       PAPERLESS_OCR_LANGUAGE: "deu"
       PAPERLESS_OCR_LANGUAGES: "deu eng"
+      PAPERLESS_REDIS: redis://localhost:6379
     persistence:
       consume:
         enabled: true
@@ -67,7 +68,7 @@ spec:
           paths:
           - path: /
             pathType: Prefix
-    redis:
-      enabled: true
-      replica:
-        replicaCount: 0
+    additionalContainers:
+    - name: broker
+      image: redis:6.2
+      imagePullPolicy: IfNotPresent
