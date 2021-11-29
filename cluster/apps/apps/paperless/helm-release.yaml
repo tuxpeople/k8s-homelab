@@ -69,3 +69,5 @@ spec:
             pathType: Prefix
     redis:
       enabled: true
+      replica:
+        replicaCount: 0
