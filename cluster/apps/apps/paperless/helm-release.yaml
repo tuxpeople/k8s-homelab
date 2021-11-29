@@ -67,3 +67,5 @@ spec:
           paths:
           - path: /
             pathType: Prefix
+    redis:
+      enabled: true
