@@ -10,6 +10,11 @@ spec:
   actions:
     - action: backup
       backupParameters:
+        filters:
+          includeResources:
+            - group: ""
+              version: ""
+              resource: persistentvolumeclaims
         profile:
           namespace: k10
           name: minio
