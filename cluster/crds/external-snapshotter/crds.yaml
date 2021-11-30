@@ -8,7 +8,6 @@ spec:
   interval: 15m
   path: ./client/config/crd
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: external-snapshotter
