@@ -27,7 +27,7 @@ spec:
         monthly: 12
         yearly: 7
   retention:
-    daily: 2
+    daily: 1
   selector:
     matchExpressions:
       - key: k10.kasten.io/appNamespace
