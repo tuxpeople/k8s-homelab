@@ -21,11 +21,13 @@ spec:
           namespace: k10
         exportData:
           enabled: true
+      retention:
+        daily: 7
+        weekly: 4
+        monthly: 12
+        yearly: 7
   retention:
-    daily: 7
-    weekly: 4
-    monthly: 12
-    yearly: 7
+    daily: 2
   selector:
     matchExpressions:
       - key: k10.kasten.io/appNamespace
