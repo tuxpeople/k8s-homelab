@@ -55,7 +55,7 @@
     // regexManager to read and process k8up CRD's
     {
       "fileMatch": [
-          "crds\\/k8up\\/kustomization\\.yaml$"
+          "cluster/crds\\/k8up\\/kustomization\\.yaml$"
       ],
       "matchStrings": [
           "datasource=(?<datasource>.*) depName=(?<depName>.*)\\s.*\\/(?<currentValue>.*?)\\/"
@@ -64,8 +64,7 @@
     // Generic Flux Regex Manager
     {
       "fileMatch": [
-        "clusters/.+\\.yaml$",
-        "gitops/.+\\.yaml$"
+        "clusters/.+\\.yaml$"
       ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( registryUrl=(?<registryUrl>.*?))?( versioning=(?<versioning>.*=?))?\n *tag: (?<currentValue>.*=?)"
