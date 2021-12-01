@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   releaseName: mariadb
-  targetnamespace: development
+  targetNamespace: development
   interval: 5m
   test:
     enable: false # Enable helm test
