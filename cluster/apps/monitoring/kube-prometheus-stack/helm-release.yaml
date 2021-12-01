@@ -49,6 +49,7 @@ spec:
           - match:
               alertname: Watchdog
             receiver: 'DeadMansSnitch'
+            repeat_interval: 30m
           - match:
               alertname: CPUThrottlingHigh
             receiver: 'email'
