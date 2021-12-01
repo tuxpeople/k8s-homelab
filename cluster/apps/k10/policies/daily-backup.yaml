@@ -39,7 +39,3 @@ spec:
         operator: In
         values:
           - development
-          - apps
-          - utils
-          - networking
-          - media
