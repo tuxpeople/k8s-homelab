@@ -16,6 +16,9 @@ spec:
       labels:
         app: semaphore
     spec:
+      # Allow non-root user to access PersistentVolume
+      securityContext:
+        fsGroup: 1000
       containers:
       - image: ansiblesemaphore/semaphore:v2.7.0
         imagePullPolicy: Always
