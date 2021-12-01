@@ -5,7 +5,7 @@ metadata:
   labels:
     app: semaphore
   name: semaphore
-  namespace: ansible-semaphore
+  namespace: development
 spec:
   replicas: 1
   selector:
@@ -75,7 +75,7 @@ metadata:
   labels:
     app: semaphore
   name: semaphore-svc
-  namespace: ansible-semaphore
+  namespace: development
 spec:
   ports:
   - name: http
@@ -97,7 +97,7 @@ metadata:
   labels:
     app: semaphore
   name: semaphore-ingress
-  namespace: ansible-semaphore
+  namespace: development
 spec:
   rules:
   - host: semaphore.${SECRET_DOMAIN_ME}

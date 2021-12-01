@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mysql
   name: mysql-data
-  namespace: ansible-semaphore
+  namespace: development
 spec:
   accessModes:
   - ReadWriteOnce

@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: ansible-semaphore-mysql
-  namespace: ansible-semaphore
+  namespace: development
 spec:
   chart:
     spec:
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   releaseName: mariadb
-  targetNamespace: ansible-semaphore
+  targetnamespace: development
   interval: 5m
   test:
     enable: false # Enable helm test

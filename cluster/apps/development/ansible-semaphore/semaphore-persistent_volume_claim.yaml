@@ -5,7 +5,7 @@ metadata:
   labels:
     app: semaphore
   name: semaphore-data
-  namespace: ansible-semaphore
+  namespace: development
 spec:
   accessModes:
   - ReadWriteOnce

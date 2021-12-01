@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mysql
   name: mysql
-  namespace: ansible-semaphore
+  namespace: development
 spec:
   replicas: 1
   selector:
@@ -59,7 +59,7 @@ metadata:
   labels:
     app: mysql
   name: mysql-svc
-  namespace: ansible-semaphore
+  namespace: development
 spec:
   ports:
   - name: http
