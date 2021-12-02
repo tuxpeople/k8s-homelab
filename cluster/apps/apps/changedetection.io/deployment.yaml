@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: apps
+  name: changedetection
+spec:
+  selector:
+    matchLabels:
+      app: changedetection
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: changedetection
+    spec:
+      containers:
+      - name: changedetection
+        env:
+        - name: "TZ"
+          value: "Europe/Zurich"
+        - name: BASE_URL
+          value: "https://change.${SECRET_DOMAIN_ME}"
+        image: dgtlmoon/changedetection.io:0.39
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 200Mi
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: /datastore
+          name: changedetection-data
+      volumes:
+      - name: changedetection-data
+        persistentVolumeClaim:
+          claimName: changedetection-data
