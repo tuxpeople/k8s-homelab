@@ -7,17 +7,22 @@ metadata:
 spec:
   comment: ""
   frequency: "@daily"
+  retention:
+    daily: 1
+  selector:
+    matchExpressions:
+      - key: k10.kasten.io/appNamespace
+        operator: In
+        values:
+          - media
+          - development
   actions:
     - action: backup
       backupParameters:
-        filters:
-          includeResources:
-            - group: ""
-              version: ""
-              resource: persistentvolumeclaims
+        filters: {}
         profile:
-          namespace: k10
           name: minio
+          namespace: k10
     - action: export
       exportParameters:
         frequency: "@daily"
@@ -31,11 +36,3 @@ spec:
         weekly: 4
         monthly: 12
         yearly: 7
-  retention:
-    daily: 1
-  selector:
-    matchExpressions:
-      - key: k10.kasten.io/appNamespace
-        operator: In
-        values:
-          - development
