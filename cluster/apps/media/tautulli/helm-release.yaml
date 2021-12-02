@@ -7,14 +7,14 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://halkeye.github.io/helm-charts
+      # renovate: registryUrl=https://k8s-at-home.com/charts
       chart: tautulli
       interval: 5m
       sourceRef:
         kind: HelmRepository
-        name: halkeye
+        name: k8s-at-home
         namespace: flux-system
-      version: 1.1.4
+      version: 10.0.0
   interval: 5m
   test:
     enable: false # Enable helm test
@@ -31,16 +31,27 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    tautulli:
-      tz: Europe/Zurich
+    image:
+      tag: v2.7.7
+    env:
+      TZ: Europe/Zurich
     ingress:
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "chart-bar"
-      enabled: true
-      hosts:
-      - host: tautulli.${SECRET_DOMAIN_INTERNAL}
+      main:
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "chart-bar"
+        enabled: true
+        hosts:
+        - host: tautulli.${SECRET_DOMAIN_INTERNAL}
+          paths:
+          - path: /
+            pathType: Prefix
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 5Gi
     resources:
       limits:
         memory: 750Mi
