@@ -39,7 +39,7 @@ spec:
           - default
           - development
           - identity
-          - kasten-io
+          - k10
           - kube-node-lease
           - kube-public
           - kube-system
