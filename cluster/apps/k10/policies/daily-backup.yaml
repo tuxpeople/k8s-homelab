@@ -14,8 +14,11 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - media
+          - apps
           - development
+          - media
+          - networking
+          - utils
   actions:
     - action: backup
       backupParameters:
