@@ -26,6 +26,6 @@ kind: VolumeSnapshotClass
 metadata:
   name: portworx-csi-snapclass
   annotations:
-    k10.kasten.io/is-snapshot-class: "true"
+    snapshot.storage.kubernetes.io/is-default-class: "true"
 driver: pxd.portworx.com
 deletionPolicy: Delete
