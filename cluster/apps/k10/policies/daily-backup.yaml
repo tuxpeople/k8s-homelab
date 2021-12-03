@@ -2,7 +2,7 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: daily-media-backup
+  name: daily-backup
   namespace: k10
 spec:
   comment: ""
@@ -15,17 +15,7 @@ spec:
         operator: In
         values:
           - media
-  subFrequency:
-    minutes:
-      - 0
-    hours:
-      - 1
-    weekdays:
-      - 0
-    days:
-      - 1
-    months:
-      - 1
+          - development
   actions:
     - action: backup
       backupParameters:
