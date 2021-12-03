@@ -5,5 +5,5 @@ resources:
 - minio-secret.sops.yaml
 - minio.yaml
 - minio-kanister.yaml
-- portworx.yaml
-- portworx-secret.sops.yaml
+# - portworx.yaml
+# - portworx-secret.sops.yaml
