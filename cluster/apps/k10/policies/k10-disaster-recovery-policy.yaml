@@ -3,7 +3,6 @@ kind: Policy
 apiVersion: config.kio.kasten.io/v1alpha1
 metadata:
   name: k10-disaster-recovery-policy
-  namespace: k10
 spec:
   frequency: "@hourly"
   retention:

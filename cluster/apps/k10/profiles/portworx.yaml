@@ -2,7 +2,6 @@ kind: Profile
 apiVersion: config.kio.kasten.io/v1alpha1
 metadata:
   name: portworx
-  namespace: k10
 spec:
   infra:
     credential:

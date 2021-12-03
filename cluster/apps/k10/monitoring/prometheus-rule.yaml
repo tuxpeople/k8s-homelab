@@ -6,7 +6,6 @@ metadata:
     prometheus: k8s
     role: alert-rules
   name: k10
-  namespace: k10
 spec:
   groups:
     - name: kasten.rules

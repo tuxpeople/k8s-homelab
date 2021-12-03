@@ -3,7 +3,6 @@ apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
   name: daily-backup
-  namespace: k10
 spec:
   comment: ""
   frequency: "@daily"
