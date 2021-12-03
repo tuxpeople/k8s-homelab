@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: kasten-io
 resources:
   - daily-backup.yaml
-  - hourly-snapshot.yaml
+  # - hourly-snapshot.yaml
   - k10-disaster-recovery-policy.yaml
   - k10-dr-secret.sops.yaml
   - https://raw.githubusercontent.com/kanisterio/kanister/master/examples/stable/postgresql/postgres-blueprint.yaml
