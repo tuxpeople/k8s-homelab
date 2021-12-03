@@ -1,0 +1,48 @@
+---
+apiVersion: config.kio.kasten.io/v1alpha1
+kind: Policy
+metadata:
+  name: daily-development-backup
+  namespace: k10
+spec:
+  comment: ""
+  frequency: "@daily"
+  retention:
+    daily: 1
+  selector:
+    matchExpressions:
+      - key: k10.kasten.io/appNamespace
+        operator: In
+        values:
+          - development
+  subFrequency:
+    minutes:
+      - 0
+    hours:
+      - 2
+    weekdays:
+      - 0
+    days:
+      - 1
+    months:
+      - 1
+  actions:
+    - action: backup
+      backupParameters:
+        filters: {}
+        profile:
+          name: minio
+          namespace: k10
+    - action: export
+      exportParameters:
+        frequency: "@daily"
+        profile:
+          name: minio
+          namespace: k10
+        exportData:
+          enabled: true
+      retention:
+        daily: 7
+        weekly: 4
+        monthly: 12
+        yearly: 7

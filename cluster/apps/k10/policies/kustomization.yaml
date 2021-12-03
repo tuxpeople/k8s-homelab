@@ -2,7 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: kasten-io
 resources:
-  - daily-backup.yaml
+  - daily-media-backup.yaml
+  - daily-development-backup.yaml
   # - hourly-snapshot.yaml
   - k10-disaster-recovery-policy.yaml
   - k10-dr-secret.sops.yaml
