@@ -19,7 +19,18 @@ spec:
   actions:
     - action: backup
       backupParameters:
-        filters: {}
+        filters:
+          includeResources: []
+          excludeResources:
+            - group: ""
+              version: ""
+              resource: ""
+              name: ""
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - podsync
         profile:
           name: minio
           namespace: k10
