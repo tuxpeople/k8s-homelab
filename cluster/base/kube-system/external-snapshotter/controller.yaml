@@ -9,7 +9,7 @@ spec:
     - name: external-snapshotter-crds
       namespace: flux-system
   interval: 10m0s
-  path: ./deploy/kubernetes/csi-snapshotter
+  path: ./deploy/kubernetes/snapshot-controller
   prune: true
   wait: true
   targetNamespace: kube-system
