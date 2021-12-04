@@ -41,8 +41,8 @@ spec:
         memory: 250Mi
         cpu: 20m
       limits:
-        memory: 2Gi
-        cpu: 500m
+        memory: 3Gi
+        cpu: 1000m
     # auth:
     #   basicAuth:
     #     enabled: true
