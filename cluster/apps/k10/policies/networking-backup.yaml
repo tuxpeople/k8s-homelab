@@ -2,28 +2,38 @@
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: daily-backup
+  name: networking-backup
 spec:
   comment: ""
   frequency: "@daily"
+  subFrequency:
+    minutes:
+      - 0
+    hours:
+      - 0
+      - 12
+    weekdays:
+      - 0
+    days:
+      - 1
+    months:
+      - 1
   retention:
-    daily: 1
+    daily: 2
+    weekly: 0
+    monthly: 0
+    yearly: 0
   selector:
     matchExpressions:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - apps
-          - development
-          - media
-          - networking
           - utils
   actions:
     - action: backup
       backupParameters:
         filters:
-          includeResources: []
-          excludeResources:
+          includeResources:
             - group: ""
               version: ""
               resource: ""
@@ -32,7 +42,8 @@ spec:
                 - key: app
                   operator: In
                   values:
-                    - podsync
+                    - speedtest-plotter
+          excludeResources: []
         profile:
           name: minio
           namespace: k10
@@ -48,4 +59,4 @@ spec:
         daily: 7
         weekly: 4
         monthly: 12
-        yearly: 7
+        yearly: 0
