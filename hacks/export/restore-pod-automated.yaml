@@ -1,0 +1,48 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: development
+  name: datacopy-automated
+  labels:
+    app: datacopy-automated
+spec:
+  template:
+    metadata:
+      labels:
+        app: datacopy-automated
+    spec:
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - gollum
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      containers:
+        - name: datacopy-automated
+          image: ubuntu
+          command:
+            - '/bin/bash'
+            - '-c'
+            - 'cd /source; tar -czf /destination/gollum-data-$(date +"%Y-%m-%d_%H-%M-%S").tar.gz .'
+          volumeMounts:
+            - mountPath: "/destination"
+              name: backup
+            - mountPath: "/source"
+              name: pv
+      restartPolicy: Never
+      volumes:
+        - name: pv
+          persistentVolumeClaim:
+            claimName: gollum-data
+        - name: backup
+          nfs:
+            server: 10.20.30.40
+            path: /volume2/Kubernetes_backup
+  backoffLimit: 4
