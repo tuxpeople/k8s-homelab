@@ -5,24 +5,9 @@ metadata:
   name: apps-backup
 spec:
   comment: ""
-  frequency: "@daily"
-  subFrequency:
-    minutes:
-      - 0
-    hours:
-      - 0
-      - 12
-    weekdays:
-      - 0
-    days:
-      - 1
-    months:
-      - 1
+  frequency: "@hourly"
   retention:
-    daily: 2
-    weekly: 0
-    monthly: 0
-    yearly: 0
+    hourly: 3
   selector:
     matchExpressions:
       - key: k10.kasten.io/appNamespace
