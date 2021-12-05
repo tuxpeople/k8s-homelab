@@ -34,6 +34,7 @@ spec:
       enabled: true
     nodePort:
       enabled: true
+
     global:
       encryption:
         enabled: true
@@ -54,7 +55,6 @@ spec:
         - icmp
         - http
         - port-distribution
-
       ui:
         enabled: true
         replicas: 1
@@ -67,7 +67,6 @@ spec:
             hajimari.io/icon: "telescope"
           hosts:
           - hubble.sky.lab
-
       relay:
         enabled: true
 
