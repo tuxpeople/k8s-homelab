@@ -28,7 +28,14 @@ spec:
     crds: CreateReplace
   values:
     kubeProxyReplacement: "strict"
-
+    k8sServiceHost: 192.168.8.222
+    k8sServicePort: 6443
+    hostServices:
+      enabled: true
+    nodeinit:
+      enabled: true
+    nodePort:
+      enabled: true
     global:
       encryption:
         enabled: true
