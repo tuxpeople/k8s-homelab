@@ -34,7 +34,10 @@ spec:
       enabled: true
     nodePort:
       enabled: true
-
+    cgroup:
+      hostRoot: /sys/fs/cgroup
+      autoMount:
+        enabled: false
     global:
       encryption:
         enabled: true
