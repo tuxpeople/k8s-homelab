@@ -66,3 +66,7 @@ spec:
       requests:
         cpu: 100m
         memory: 128M
+    additionalContainers:
+      - name: webdriver
+        image: selenium/standalone-chrome
+        imagePullPolicy: Always
