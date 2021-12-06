@@ -69,5 +69,5 @@ spec:
         memory: 128M
     additionalContainers:
       - name: webdriver
-        image: selenium/standalone-chrome
+        image: selenium/standalone-chrome:96.0
         imagePullPolicy: Always
