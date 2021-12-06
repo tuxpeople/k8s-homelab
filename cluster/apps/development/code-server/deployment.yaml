@@ -17,7 +17,7 @@ spec:
         app: code-server
     spec:
       containers:
-      - image: ghcr.io/linuxserver/code-server@sha256:b87df97c40bf48609bd414accdbb5fc72f3db21f45321628bb2f93dd63233748
+      - image: ghcr.io/linuxserver/code-server@sha256:2fef7825846990c4adf8616e6b6a7650e9da61bc7b13bb37fc09d97eb7d4c9c2
         imagePullPolicy: Always
         name: code-server
         env:
