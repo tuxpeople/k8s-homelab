@@ -36,6 +36,8 @@ spec:
       enabled: true
     endpointRoutes:
       enabled: true
+    nodeinit:
+      enabled: true
     global:
       encryption:
         enabled: true
