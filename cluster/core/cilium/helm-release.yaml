@@ -34,7 +34,8 @@ spec:
       enabled: true
     nodePort:
       enabled: true
-
+    endpointRoutes:
+      enabled: true
     global:
       encryption:
         enabled: true
