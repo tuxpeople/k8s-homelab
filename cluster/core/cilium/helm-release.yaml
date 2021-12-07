@@ -27,7 +27,7 @@ spec:
       retries: 3
     crds: CreateReplace
   values:
-    kubeProxyReplacement: "partial"
+    kubeProxyReplacement: "strict"
     k8sServiceHost: 192.168.8.222
     k8sServicePort: 6443
     hostServices:
