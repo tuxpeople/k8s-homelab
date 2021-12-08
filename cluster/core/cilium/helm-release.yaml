@@ -27,6 +27,10 @@ spec:
       retries: 3
     crds: CreateReplace
   values:
+    global:
+      encryption:
+        enabled: false
+
     kubeProxyReplacement: "strict"
 
     rollOutCiliumPods: true
