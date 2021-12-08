@@ -37,8 +37,10 @@ spec:
     k8sServiceHost: 192.168.8.222
     k8sServicePort: 6443
 
-    encryption:
-      enabled: true
+    global:
+      encryption:
+        enabled: true
+        nodeEncryption: true
 
     hubble:
       metrics:
