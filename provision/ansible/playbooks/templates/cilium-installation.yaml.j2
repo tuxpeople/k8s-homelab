@@ -121,6 +121,7 @@ rules:
   - ciliumlocalredirectpolicies/status
   - ciliumlocalredirectpolicies/finalizers
   - ciliumegressnatpolicies
+  - ciliumendpointslices
   verbs:
   - '*'
 ---
@@ -193,6 +194,7 @@ rules:
   - ciliumnodes/status
   - ciliumnodes/finalizers
   - ciliumidentities
+  - ciliumendpointslices
   - ciliumidentities/status
   - ciliumidentities/finalizers
   - ciliumlocalredirectpolicies
@@ -275,19 +277,19 @@ data:
   custom-cni-conf: "false"
   debug: "false"
   disable-cnp-status-updates: "true"
+  disable-endpoint-crd: "false"
   enable-auto-protect-node-port-range: "true"
   enable-bandwidth-manager: "false"
   enable-bpf-clock-probe: "true"
-  enable-bpf-masquerade: "true"
   enable-endpoint-health-checking: "true"
   enable-health-check-nodeport: "true"
   enable-health-checking: "true"
   enable-host-reachable-services: "true"
-  enable-hubble: "true"
   enable-ipv4: "true"
   enable-ipv4-masquerade: "true"
   enable-ipv6: "false"
   enable-ipv6-masquerade: "true"
+  enable-k8s-terminating-endpoint: "true"
   enable-l2-neigh-discovery: "true"
   enable-l7-proxy: "true"
   enable-local-redirect-policy: "false"
@@ -296,12 +298,6 @@ data:
   enable-session-affinity: "true"
   enable-well-known-identities: "false"
   enable-xt-socket-fallback: "true"
-  hubble-disable-tls: "false"
-  hubble-listen-address: :4244
-  hubble-socket-path: /var/run/cilium/hubble.sock
-  hubble-tls-cert-file: /var/lib/cilium/tls/hubble/server.crt
-  hubble-tls-client-ca-files: /var/lib/cilium/tls/hubble/client-ca.crt
-  hubble-tls-key-file: /var/lib/cilium/tls/hubble/server.key
   identity-allocation-mode: crd
   install-iptables-rules: "true"
   install-no-conntrack-iptables-rules: "false"
@@ -405,7 +401,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/operator-generic:v1.10.5@sha256:2d2f730f219d489ff0702923bf24c0002cd93eb4b47ba344375566202f56d972
+        image: quay.io/cilium/operator-generic:v1.11.0@sha256:b522279577d0d5f1ad7cadaacb7321d1b172d8ae8c8bc816e503c897b420cfe3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -522,7 +518,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.10.5@sha256:0612218e28288db360c63677c09fafa2d17edda4f13867bcabf87056046b33bb
+        image: quay.io/cilium/cilium:v1.11.0@sha256:ea677508010800214b0b5497055f38ed3bff57963fa2399bcb1c69cf9476453a
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -563,10 +559,6 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         securityContext:
-          capabilities:
-            add:
-            - NET_ADMIN
-            - SYS_MODULE
           privileged: true
         startupProbe:
           failureThreshold: 105
@@ -582,6 +574,7 @@ spec:
           successThreshold: 1
         volumeMounts:
         - mountPath: /sys/fs/bpf
+          mountPropagation: Bidirectional
           name: bpf-maps
         - mountPath: /var/run/cilium
           name: cilium-run
@@ -600,22 +593,21 @@ spec:
           readOnly: true
         - mountPath: /run/xtables.lock
           name: xtables-lock
-        - mountPath: /var/lib/cilium/tls/hubble
-          name: hubble-tls
-          readOnly: true
       hostNetwork: true
       initContainers:
       - command:
         - sh
-        - -c
-        - cp /usr/bin/cilium-mount /hostbin/cilium-mount && nsenter --cgroup=/hostproc/1/ns/cgroup
-          --mount=/hostproc/1/ns/mnt "${BIN_PATH}/cilium-mount" $CGROUP_ROOT; rm /hostbin/cilium-mount
+        - -ec
+        - |
+          cp /usr/bin/cilium-mount /hostbin/cilium-mount;
+          nsenter --cgroup=/hostproc/1/ns/cgroup --mount=/hostproc/1/ns/mnt "${BIN_PATH}/cilium-mount" $CGROUP_ROOT;
+          rm /hostbin/cilium-mount
         env:
         - name: CGROUP_ROOT
           value: /run/cilium/cgroupv2
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.10.5@sha256:0612218e28288db360c63677c09fafa2d17edda4f13867bcabf87056046b33bb
+        image: quay.io/cilium/cilium:v1.11.0@sha256:ea677508010800214b0b5497055f38ed3bff57963fa2399bcb1c69cf9476453a
         imagePullPolicy: IfNotPresent
         name: mount-cgroup
         securityContext:
@@ -625,6 +617,20 @@ spec:
           name: hostproc
         - mountPath: /hostbin
           name: cni-path
+      - command:
+        - sh
+        - -c
+        - |
+          until test -f "/tmp/cilium-bootstrap-time"; do
+            echo "Waiting on node-init to run...";
+            sleep 1;
+          done
+        image: quay.io/cilium/cilium:v1.11.0@sha256:ea677508010800214b0b5497055f38ed3bff57963fa2399bcb1c69cf9476453a
+        imagePullPolicy: IfNotPresent
+        name: wait-for-node-init
+        volumeMounts:
+        - mountPath: /tmp/cilium-bootstrap-time
+          name: cilium-bootstrap-file
       - command:
         - /init-container.sh
         env:
@@ -644,7 +650,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.10.5@sha256:0612218e28288db360c63677c09fafa2d17edda4f13867bcabf87056046b33bb
+        image: quay.io/cilium/cilium:v1.11.0@sha256:ea677508010800214b0b5497055f38ed3bff57963fa2399bcb1c69cf9476453a
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
         resources:
@@ -652,9 +658,6 @@ spec:
             cpu: 100m
             memory: 100Mi
         securityContext:
-          capabilities:
-            add:
-            - NET_ADMIN
           privileged: true
         volumeMounts:
         - mountPath: /sys/fs/bpf
@@ -703,28 +706,93 @@ spec:
           path: /run/xtables.lock
           type: FileOrCreate
         name: xtables-lock
+      - hostPath:
+          path: /tmp/cilium-bootstrap-time
+          type: FileOrCreate
+        name: cilium-bootstrap-file
       - name: clustermesh-secrets
         secret:
-          defaultMode: 420
+          defaultMode: 256
           optional: true
           secretName: cilium-clustermesh
       - configMap:
           name: cilium-config
         name: cilium-config-path
-      - name: hubble-tls
-        projected:
-          sources:
-          - secret:
-              items:
-              - key: ca.crt
-                path: client-ca.crt
-              - key: tls.crt
-                path: server.crt
-              - key: tls.key
-                path: server.key
-              name: hubble-server-certs
-              optional: true
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 2
     type: RollingUpdate
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    meta.helm.sh/release-name: cilium
+    meta.helm.sh/release-namespace: kube-system
+  labels:
+    app: cilium-node-init
+    app.kubernetes.io/managed-by: Helm
+    helm.toolkit.fluxcd.io/name: cilium
+    helm.toolkit.fluxcd.io/namespace: kube-system
+  name: cilium-node-init
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: cilium-node-init
+      app.kubernetes.io/managed-by: Helm
+      helm.toolkit.fluxcd.io/name: cilium
+      helm.toolkit.fluxcd.io/namespace: kube-system
+  template:
+    metadata:
+      annotations:
+        meta.helm.sh/release-name: cilium
+        meta.helm.sh/release-namespace: kube-system
+      labels:
+        app: cilium-node-init
+        app.kubernetes.io/managed-by: Helm
+        helm.toolkit.fluxcd.io/name: cilium
+        helm.toolkit.fluxcd.io/namespace: kube-system
+    spec:
+      containers:
+      - env:
+        - name: CHECKPOINT_PATH
+          value: /tmp/node-init.cilium.io
+        - name: STARTUP_SCRIPT
+          value: |
+            #!/bin/bash
+
+            set -o errexit
+            set -o pipefail
+            set -o nounset
+
+            echo "Link information:"
+            ip link
+
+            echo "Routing table:"
+            ip route
+
+            echo "Addressing:"
+            ip -4 a
+            ip -6 a
+            date > /tmp/cilium-bootstrap-time
+            echo "Node initialization complete"
+        image: quay.io/cilium/startup-script:62bfbe88c17778aad7bef9fa57ff9e2d4a9ba0d8
+        imagePullPolicy: IfNotPresent
+        lifecycle: null
+        name: node-init
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /run/xtables.lock
+          name: xtables-lock
+      hostNetwork: true
+      hostPID: true
+      priorityClassName: system-node-critical
+      tolerations:
+      - operator: Exists
+      volumes:
+      - hostPath:
+          path: /run/xtables.lock
+          type: FileOrCreate
+        name: xtables-lock
