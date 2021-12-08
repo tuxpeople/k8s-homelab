@@ -36,6 +36,12 @@ spec:
     # Roll out cilium agent pods automatically when configmap is updated.
     rollOutCiliumPods: true
 
+    # Cilium leverages MetalLB's simplified BGP announcement system for service type: LoadBalancer
+    bgp:
+      enabled: false
+      announce:
+        loadbalancerIP: true
+
     kubeProxyReplacement: "strict"
     k8sServiceHost: 192.168.8.222
     k8sServicePort: 6443
