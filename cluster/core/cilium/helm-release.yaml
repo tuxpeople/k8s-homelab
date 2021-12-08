@@ -43,6 +43,9 @@ spec:
         loadbalancerIP: true
 
     kubeProxyReplacement: "strict"
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    localRedirectPolicy: true
+
     k8sServiceHost: 192.168.8.222
     k8sServicePort: 6443
     hostServices:
@@ -55,6 +58,9 @@ spec:
       encryption:
         enabled: true
         nodeEncryption: true
+
+    tunnel: "disabled"
+    autoDirectNodeRoutes: true
 
     containerRuntime:
       integration: "containerd"
