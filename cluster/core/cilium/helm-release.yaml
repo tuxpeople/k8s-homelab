@@ -39,7 +39,21 @@ spec:
 
     encryption:
       enabled: true
+      nodeEncryption: true
+
     hubble:
+      metrics:
+        serviceMonitor:
+          enabled: true
+        enabled:
+        - dns:query;ignoreAAAA
+        - drop
+        - tcp
+        - flow
+        - icmp
+        - http
+        - port-distribution
+
       ui:
         enabled: true
         rollOutPods: true
@@ -64,6 +78,10 @@ spec:
     operator:
       replicas: 2
       rollOutPods: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
 
     prometheus:
       enabled: true
