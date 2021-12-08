@@ -27,23 +27,22 @@ spec:
       retries: 3
     crds: CreateReplace
   values:
-    kubeProxyReplacement: "strict"
-    k8sServiceHost: 192.168.8.222
-    k8sServicePort: 6443
-    hostServices:
-      enabled: true
-    nodePort:
-      enabled: true
-    nodeinit:
-      enabled: false
     global:
       encryption:
-        enabled: true
-        nodeEncryption: true
+        enabled: false
 
-    containerRuntime:
-      integration: "containerd"
-      socketPath: "/var/run/k3s/containerd/containerd.sock"
+    kubeProxyReplacement: "strict"
+
+    rollOutCiliumPods: true
+
+    nodeinit:
+      enabled: true
+
+    hostServices:
+      enabled: true
+
+    k8sServiceHost: 192.168.8.222
+    k8sServicePort: 6443
 
     hubble:
       metrics:
@@ -57,8 +56,10 @@ spec:
         - icmp
         - http
         - port-distribution
+
       ui:
         enabled: true
+        rollOutPods: true
         replicas: 1
         ingress:
           enabled: true
@@ -71,19 +72,25 @@ spec:
           - hubble.sky.lab
       relay:
         enabled: true
+        rollOutPods: true
+
+    containerRuntime:
+      integration: containerd
+      socketPath: /var/run/k3s/containerd/containerd.sock
 
     operator:
-      replicas: 1
+      replicas: 2
+      rollOutPods: true
       prometheus:
         enabled: true
         serviceMonitor:
           enabled: true
+
+    prometheus:
+      enabled: true
 
     ipam:
       mode: "cluster-pool"
       operator:
         clusterPoolIPv4PodCIDR: "10.42.0.0/16"
         clusterPoolIPv4MaskSize: 24
-
-    prometheus:
-      enabled: true
