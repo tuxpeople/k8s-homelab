@@ -42,7 +42,7 @@ spec:
         cpu: 20m
       limits:
         memory: 3Gi
-        cpu: 1000m
+        cpu: 1500m
     # auth:
     #   basicAuth:
     #     enabled: true
