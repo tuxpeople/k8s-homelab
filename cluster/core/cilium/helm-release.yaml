@@ -44,7 +44,8 @@ spec:
         nodeEncryption: true
 
     containerRuntime:
-      integration: containerd
+      integration: "containerd"
+      socketPath: "/var/run/k3s/containerd/containerd.sock"
 
     hubble:
       metrics:
