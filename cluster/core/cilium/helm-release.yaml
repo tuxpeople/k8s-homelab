@@ -61,6 +61,7 @@ spec:
 
     tunnel: "disabled"
     autoDirectNodeRoutes: true
+    nativeRoutingCIDR: 10.42.0.0/16
 
     containerRuntime:
       integration: "containerd"
