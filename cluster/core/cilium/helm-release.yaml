@@ -38,8 +38,8 @@ spec:
       enabled: false
     global:
       encryption:
-        enabled: true
-        nodeEncryption: true
+        enabled: false
+        nodeEncryption: false
 
     containerRuntime:
       integration: "containerd"
