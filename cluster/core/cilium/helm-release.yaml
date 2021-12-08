@@ -87,7 +87,7 @@ spec:
           enabled: true
 
     prometheus:
-      enabled: true
+      enabled: false
 
     ipam:
       mode: "cluster-pool"
