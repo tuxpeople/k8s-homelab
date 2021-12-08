@@ -29,6 +29,8 @@ spec:
   values:
     kubeProxyReplacement: "strict"
 
+    rollOutCiliumPods: true
+
     nodeinit:
       enabled: true
 
@@ -37,20 +39,23 @@ spec:
 
     encryption:
       enabled: true
-    ui:
-      enabled: true
-      replicas: 1
-      ingress:
+    hubble:
+      ui:
         enabled: true
-        annotations:
-          kubernetes.io/ingress.class: traefik
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "telescope"
-        hosts:
-        - hubble.sky.lab
-    relay:
-      enabled: true
+        rollOutPods: true
+        replicas: 1
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "telescope"
+          hosts:
+          - hubble.sky.lab
+      relay:
+        enabled: true
+        rollOutPods: true
 
     containerRuntime:
       integration: containerd
@@ -58,6 +63,7 @@ spec:
 
     operator:
       replicas: 2
+      rollOutPods: true
 
     prometheus:
       enabled: true
