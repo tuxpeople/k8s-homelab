@@ -51,4 +51,3 @@ spec:
       mode: kubernetes
     kubeProxyReplacement: strict
     enableIPv4Masquerade: false
-    nativeRoutingCIDR: 10.42.0.0/16
