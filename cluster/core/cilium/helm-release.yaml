@@ -32,7 +32,7 @@ spec:
       enabled: false
 
     # masquerade enables masquerading of traffic leaving the node for destinations outside of the cluster.
-    masquerade: true
+    masquerade: false
     # Roll out cilium agent pods automatically when configmap is updated.
     rollOutCiliumPods: true
 
@@ -42,7 +42,11 @@ spec:
       announce:
         loadbalancerIP: true
 
-    kubeProxyReplacement: "strict"
+    ipam:
+      mode: kubernetes
+    kubeProxyReplacement: strict
+    enableIPv4Masquerade: false
+    nativeRoutingCIDR: 10.42.0.0/16
 
     k8sServiceHost: 192.168.8.222
     k8sServicePort: 6443
@@ -99,9 +103,6 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-
-    ipam:
-      mode: "kubernetes"
 
     prometheus:
       enabled: true
