@@ -40,6 +40,7 @@ spec:
 
     hostServices:
       enabled: true
+      hostNamespaceOnly: true
 
     k8sServiceHost: 192.168.8.222
     k8sServicePort: 6443
