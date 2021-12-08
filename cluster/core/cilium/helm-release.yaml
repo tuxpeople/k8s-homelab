@@ -39,7 +39,6 @@ spec:
 
     encryption:
       enabled: true
-      nodeEncryption: true
 
     hubble:
       metrics:
