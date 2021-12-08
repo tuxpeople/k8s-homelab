@@ -74,6 +74,7 @@ spec:
         - port-distribution
       ui:
         enabled: true
+        rollOutPods: true
         replicas: 1
         ingress:
           enabled: true
@@ -86,19 +87,18 @@ spec:
           - hubble.sky.lab
       relay:
         enabled: true
+        rollOutPods: true
 
     operator:
       replicas: 1
+      rollOutPods: true
       prometheus:
         enabled: true
         serviceMonitor:
           enabled: true
 
     ipam:
-      mode: "cluster-pool"
-      operator:
-        clusterPoolIPv4PodCIDR: "10.42.0.0/16"
-        clusterPoolIPv4MaskSize: 24
+      mode: "kubernetes"
 
     prometheus:
       enabled: true
