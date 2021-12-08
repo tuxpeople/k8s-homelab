@@ -29,6 +29,9 @@ spec:
   values:
     kubeProxyReplacement: "strict"
 
+    nodeinit:
+      enabled: true
+
     k8sServiceHost: 192.168.8.222
     k8sServicePort: 6443
 
