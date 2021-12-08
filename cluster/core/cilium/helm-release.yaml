@@ -81,3 +81,9 @@ spec:
 
     prometheus:
       enabled: true
+
+    ipam:
+      mode: "cluster-pool"
+      operator:
+        clusterPoolIPv4PodCIDR: "10.42.0.0/16"
+        clusterPoolIPv4MaskSize: 24
