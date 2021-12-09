@@ -35,6 +35,10 @@ spec:
       strategies:
         RemoveDuplicates:
           enabled: true
+          params:
+            namespaces:
+              exclude:
+                - "K10"
         RemovePodsViolatingNodeAffinity:
           enabled: true
           params:
