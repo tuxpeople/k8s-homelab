@@ -38,7 +38,7 @@ spec:
           params:
             namespaces:
               exclude:
-                - "K10"
+                - "k10"
         RemovePodsViolatingNodeAffinity:
           enabled: true
           params:
