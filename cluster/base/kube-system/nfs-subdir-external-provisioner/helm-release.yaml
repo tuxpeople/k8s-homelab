@@ -34,6 +34,11 @@ spec:
   values:
     storageClass:
       defaultClass: false
+      name: nfs-client
+      allowVolumeExpansion: true
+      reclaimPolicy: Delete
+      archiveOnDelete: true
+      pathPattern: ${.PVC.namespace}-${.PVC.name}
     nfs:
       server: 10.20.30.40
       path: /volume1/Kubernetes
