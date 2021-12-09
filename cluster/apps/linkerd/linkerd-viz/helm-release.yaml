@@ -16,6 +16,7 @@ spec:
         name: linkerd-charts
         namespace: flux-system
       interval: 10m
+  targetNamespace: linkerd
   test:
     enable: false
   install:
