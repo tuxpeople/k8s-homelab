@@ -48,6 +48,6 @@ spec:
   values:
     controlPlaneTracing: true
     installNamespace: false
-    identity:
-      issuer:
-        crtExpiry: "2022-10-20T10:29:51Z"
+    # identity:
+    #   issuer:
+    #     crtExpiry: "2022-10-20T10:29:51Z"
