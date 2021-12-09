@@ -34,18 +34,7 @@ spec:
   actions:
     - action: backup
       backupParameters:
-        filters:
-          includeResources:
-            - group: ""
-              version: ""
-              resource: ""
-              name: ""
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - speedtest-plotter
-          excludeResources: []
+        filters: {}
         profile:
           name: minio
           namespace: k10
