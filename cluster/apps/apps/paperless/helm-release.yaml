@@ -40,8 +40,11 @@ spec:
     persistence:
       consume:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
+        type: custom
+        volumeSpec:
+          nfs:
+            server: 10.20.30.40
+            path: /volume1/scanner
       data:
         enabled: true
         accessMode: ReadWriteOnce
