@@ -36,13 +36,13 @@ spec:
       company: tuxpeople-k8s-homelab
       email: ${SECRET_EMAIL}
     clusterName: k8s-homelab
-    # resources:
-    #   requests:
-    #     memory: 250Mi
-    #     cpu: 20m
-    #   limits:
-    #     memory: 3Gi
-    #     cpu: 1500m
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 20m
+      limits:
+        memory: 1Gi
+        cpu: 1000m
     # auth:
     #   basicAuth:
     #     enabled: true
