@@ -119,6 +119,9 @@ spec:
             readOnly: true
       - name: frontend
         image: vikunja/frontend:latest
+        env:
+          - name: VIKUNJA_API_URL
+            value: "https://todo.${SECRET_DOMAIN_ME}/api/v1"
     postgresql:
       postgresqlPostgresPassword: ${SECRET_VIKUNJA_POSTGRES_ADMIN_PASSWORD}
       postgresqlUsername: vikunja
