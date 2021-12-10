@@ -10,10 +10,10 @@ spec:
     minutes:
       - 0
     hours:
-      - 0
-      - 6
-      - 12
-      - 18
+      - 3
+      - 9
+      - 15
+      - 21
     weekdays:
       - 0
     days:
