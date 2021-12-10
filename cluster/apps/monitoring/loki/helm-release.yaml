@@ -36,6 +36,16 @@ spec:
     loki:
       replicas: 1
       config:
+        storage_config:
+          aws:
+            s3: s3://${SECRET_MINIO_ACCESSKEY}:${SECRET_MINIO_SECRETKEY}@us-east-1/loki
+            endpoint: http://minio.lab:9091
+            s3forcepathstyle: true
+            insecure: true
+          boltdb_shipper:
+            active_index_directory: /data/index
+            cache_location: /data/boltdb-cache
+            shared_store: s3
         limits_config:
           reject_old_samples: true
           reject_old_samples_max_age: 168h
@@ -43,9 +53,6 @@ spec:
         table_manager:
           retention_deletes_enabled: true
           retention_period: 336h
-      persistence:
-        enabled: true
-        size: 25Gi
       serviceMonitor:
         enabled: true
       ingress:
