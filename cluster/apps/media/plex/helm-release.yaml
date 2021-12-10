@@ -44,6 +44,8 @@ spec:
       TZ: Europe/Zurich
       VERSION: public
       # PLEX_CLAIM: claim-xxxxxxxxx
+    strategy:
+      type: Recreate
     service:
       main:
         primary: true

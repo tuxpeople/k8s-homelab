@@ -32,6 +32,8 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    strategy:
+      type: Recreate
     metrics:
       enabled: true
       prometheusRule:

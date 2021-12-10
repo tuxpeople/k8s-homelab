@@ -31,6 +31,8 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    strategy:
+      type: Recreate
     controller:
       strategy: RollingUpdate
     service:

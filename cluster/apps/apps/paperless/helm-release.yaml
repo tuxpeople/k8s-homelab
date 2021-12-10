@@ -37,6 +37,8 @@ spec:
       PAPERLESS_OCR_LANGUAGE: "deu"
       PAPERLESS_OCR_LANGUAGES: "deu eng"
       PAPERLESS_REDIS: redis://localhost:6379
+    strategy:
+      type: Recreate
     persistence:
       consume:
         enabled: true

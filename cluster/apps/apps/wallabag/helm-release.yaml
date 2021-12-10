@@ -48,6 +48,8 @@ spec:
       POPULATE_DATABASE: "true"
     image:
       pullPolicy: Always
+    strategy:
+      type: Recreate
     persistence:
       images:
         enabled: true

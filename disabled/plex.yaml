@@ -31,6 +31,8 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    strategy:
+      type: Recreate
     allowedNetworks:
     - 127.0.0.1/8
     - 192.168.8.0/24

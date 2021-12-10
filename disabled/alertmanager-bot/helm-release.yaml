@@ -32,6 +32,8 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    strategy:
+      type: Recreate
     env:
       TZ: "Europe/Zurich"
       TELEGRAM_ADMIN: "${SECRET_TELEGRAMUSERID}"

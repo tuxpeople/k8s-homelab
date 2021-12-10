@@ -43,6 +43,8 @@ spec:
         size: 1G
     image:
       pullPolicy: Always
+    strategy:
+      type: Recreate
     ingress:
       main:
         enabled: true

@@ -36,6 +36,8 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    strategy:
+      type: Recreate
     authHost: "auth.${SECRET_DOMAIN_ME}"
     cookie:
       domain: "sso.${SECRET_DOMAIN_ME}"

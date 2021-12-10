@@ -45,6 +45,8 @@ spec:
       UP_PROMETHEUS_DISABLE: false
       UP_PROMETHEUS_NAMESPACE: "unifipoller"
       UP_LOKI_URL: http://loki:3100
+    strategy:
+      type: Recreate
     metrics:
       enabled: true
       prometheusRule:
