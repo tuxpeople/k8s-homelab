@@ -30,7 +30,7 @@ data:
           # The name of the provider as it will appear in the frontend.
           - name: dex
             # The auth url to send users to if they want to authenticate using OpenID Connect.
-            authurl: https://sso.${SECRET_DOMAIN_ME}/auth/ldap
+            authurl: https://sso.${SECRET_DOMAIN_ME}/auth
             # The client ID used to authenticate Vikunja at the OpenID Connect provider.
             clientid: ${SECRET_OIDC_CLIENT_ID}
             # The client secret used to authenticate Vikunja at the OpenID Connect provider.
