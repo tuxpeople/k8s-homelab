@@ -59,7 +59,6 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
           hajimari.io/enable: "true"
           hajimari.io/icon: "format-list-checks"
-          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
         hosts:
           - host: "todo.${SECRET_DOMAIN_ME}"
             paths:
