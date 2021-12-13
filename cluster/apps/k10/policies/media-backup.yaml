@@ -6,31 +6,6 @@ metadata:
 spec:
   comment: ""
   frequency: "@daily"
-  subFrequency:
-    minutes:
-      - 0
-    hours:
-      - 0
-      - 6
-      - 12
-      - 18
-    weekdays:
-      - 0
-    days:
-      - 1
-    months:
-      - 1
-  retention:
-    daily: 2
-    weekly: 0
-    monthly: 0
-    yearly: 0
-  selector:
-    matchExpressions:
-      - key: k10.kasten.io/appNamespace
-        operator: In
-        values:
-          - media
   actions:
     - action: backup
       backupParameters:
@@ -47,8 +22,8 @@ spec:
                   values:
                     - podsync
         profile:
-          name: minio
           namespace: k10
+          name: minio
     - action: export
       exportParameters:
         frequency: "@daily"
@@ -57,8 +32,22 @@ spec:
           namespace: k10
         exportData:
           enabled: true
+          overrides:
+            - storageClassName: nfs-client
+              enabled: false
       retention:
         daily: 7
         weekly: 4
         monthly: 12
-        yearly: 0
+        yearly: 7
+  retention:
+    daily: 2
+    weekly: 0
+    monthly: 0
+    yearly: 0
+  selector:
+    matchExpressions:
+      - key: k10.kasten.io/appNamespace
+        operator: In
+        values:
+          - media
