@@ -33,4 +33,4 @@ spec:
     targetNamespaces: ""
     trivy:
       ignoreUnfixed: true
-    installCRDs: true
+      githubToken: ${SECRET_GITHUB_TOKEN}
