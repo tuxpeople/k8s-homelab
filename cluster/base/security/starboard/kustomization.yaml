@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: security
 resources:
   - helm-release.yaml
+  - secret.sops.yaml
