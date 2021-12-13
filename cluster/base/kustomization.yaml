@@ -6,4 +6,4 @@ resources:
   - monitoring
   - networking
   - system-upgrade
-  - security
+  # - security
