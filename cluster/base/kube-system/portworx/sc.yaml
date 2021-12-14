@@ -30,5 +30,6 @@ metadata:
   annotations:
     snapshot.storage.kubernetes.io/is-default-class: "true"
     k10.kasten.io/is-snapshot-class: "true"
+    velero.io/csi-volumesnapshot-class: "true"
 driver: pxd.portworx.com
 deletionPolicy: Delete
