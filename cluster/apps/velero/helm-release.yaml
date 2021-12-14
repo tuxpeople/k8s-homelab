@@ -48,14 +48,14 @@ spec:
         name: default
         bucket: velero
         config:
-          region: us-east-1
+          region: minio
           s3ForcePathStyle: true
           s3Url: "http://minio.lab:9091"
       volumeSnapshotLocation:
         name: default
         bucket: velero
         config:
-          region: us-east-1
+          region: minio
           s3ForcePathStyle: true
           s3Url: "http://minio.lab:9091"
       resticTimeout: 6h
