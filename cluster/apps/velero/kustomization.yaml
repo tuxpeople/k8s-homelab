@@ -6,4 +6,3 @@ resources:
   - helm-release.yaml
   - velero-schedule.yaml
   - prometheus-rule.yaml
-  - portworx-local-location.yaml

@@ -1,7 +1,0 @@
-apiVersion: velero.io/v1
-kind: VolumeSnapshotLocation
-metadata:
-  name: portworx-local
-  namespace: velero
-spec:
-  provider: portworx.io/portworx
