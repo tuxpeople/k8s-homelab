@@ -1,9 +1,9 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: starboard
+  name: starboard-operator
 spec:
-  releaseName: starboard
+  releaseName: starboard-operator
   chart:
     spec:
       # renovate: registryUrl=https://aquasecurity.github.io/helm-charts/
