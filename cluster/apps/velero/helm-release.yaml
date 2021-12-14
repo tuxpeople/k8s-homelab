@@ -54,10 +54,6 @@ spec:
       volumeSnapshotLocation:
         name: default
         bucket: velero
-        config:
-          region: us-east-1
-          s3ForcePathStyle: true
-          s3Url: "http://minio.lab:9091"
       resticTimeout: 6h
     initContainers:
       - name: velero-plugin-for-aws
