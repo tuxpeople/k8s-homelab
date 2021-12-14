@@ -4,13 +4,6 @@ metadata:
   name: portworx
 spec:
   infra:
-    credential:
-      secretType: PortworxKey
-      secret:
-        apiVersion: v1
-        kind: secret
-        name: portworxsecret
-        namespace: k10
     portworx:
       namespace: kube-system
       serviceName: portworx-service
