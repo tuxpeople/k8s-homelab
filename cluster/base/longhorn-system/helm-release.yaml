@@ -47,6 +47,6 @@ spec:
     defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
       backupTargetCredentialSecret: minio-secrets
-      defaultReplicaCount: 2
-      defaultDataLocality: disabled
+      # defaultReplicaCount: 2
+      # defaultDataLocality: disabled
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
