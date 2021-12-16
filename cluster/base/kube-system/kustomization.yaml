@@ -6,3 +6,4 @@ resources:
   - configurations
   - nfs-subdir-external-provisioner
   - kube-vip
+  - external-snapshotter
