@@ -6,6 +6,7 @@ resources:
   - helm-release.yaml
   - sc.yaml
   - namespace.yaml
+  - ingress.yaml
 secretGenerator:
   - name: minio-secrets
     literals:
