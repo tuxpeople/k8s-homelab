@@ -27,14 +27,12 @@
       run_once: true
 
     - name: Create flux-system namespace
-      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} create namespace flux-system"
-      ignore_errors: true
+      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} create namespace flux-system --dry-run=client -o yaml | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply -f - --force"
       delegate_to: localhost
       become: false
 
     - name: Deploy gpg key for SOPS
       shell: "gpg --export-secret-keys --armor {{ gpg_key }} | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} create secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin --dry-run=client -o yaml | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply -f - --force"
-      ignore_errors: true
       delegate_to: localhost
       become: false
 
@@ -45,10 +43,15 @@
       environment:
         KUBECONFIG: "{{ local_kubeconfig }}"
 
-    - name: Bootstrap Flux
-      shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=cluster/core --private-key-file=~/.ssh/id_rsa_github"
+#      shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=cluster/core --private-key-file=~/.ssh/id_rsa_github"
+
+    - name: Bootstrap Flux (Attempt 1, will fail due to race conditions with the Flux CRD)
+      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --kustomize={{ repo_abs_path.stdout }}/cluster/base/flux-system"
       delegate_to: localhost
       become: false
-      environment:
-        KUBECONFIG: "{{ local_kubeconfig }}"
-        GITHUB_TOKEN: "{{ github_token }}"
+      ignore_errors: true
+
+    - name: Bootstrap Flux (Attempt 2)
+      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --kustomize={{ repo_abs_path.stdout }}/cluster/base/flux-system"
+      delegate_to: localhost
+      become: false
