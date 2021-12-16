@@ -6,5 +6,4 @@ resources:
   - kube-prometheus-stack
   - sealed-secrets
   - traefik
-  - external-snapshotter
   - k8up
