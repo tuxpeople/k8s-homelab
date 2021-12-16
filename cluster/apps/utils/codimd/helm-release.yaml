@@ -63,7 +63,7 @@ spec:
         - ReadWriteOnce
         enabled: true
         size: 10Gi
-        storageClass: "portworx-csi-sc-replicated"
+        storageClass: "homelab-longhorn-replicated"
       connection:
         protocolUseSSL: true
       allowPDFExport: true
