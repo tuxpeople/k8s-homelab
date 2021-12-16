@@ -4,6 +4,5 @@ kind: Kustomization
 namespace: longhorn-system
 resources:
   - helm-release.yaml
-  - sc.yaml
   - namespace.yaml
   - minio-secrets.sops.yaml
