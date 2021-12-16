@@ -6,9 +6,4 @@ resources:
   - helm-release.yaml
   - sc.yaml
   - namespace.yaml
-secretGenerator:
-  - name: minio-secrets
-    literals:
-      - AWS_ACCESS_KEY_ID=${SECRET_MINIO_ACCESSKEY}
-      - AWS_SECRET_ACCESS_KEY=${SECRET_MINIO_SECRETKEY}
-      - AWS_ENDPOINTS=http://minio.lab:9091
+  - minio-secrets.sops.yaml
