@@ -63,6 +63,7 @@ spec:
         - ReadWriteOnce
         enabled: true
         size: 10Gi
+        storageClass: "portworx-csi-sc-replicated"
       connection:
         protocolUseSSL: true
       allowPDFExport: true
