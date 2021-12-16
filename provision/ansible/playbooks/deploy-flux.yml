@@ -46,12 +46,12 @@
 #      shell: "flux bootstrap github --owner={{ github_user }} --repository={{ github_repo }} --branch=master --personal=true  --private=false --path=cluster/core --private-key-file=~/.ssh/id_rsa_github"
 
     - name: Bootstrap Flux (Attempt 1, will fail due to race conditions with the Flux CRD)
-      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --kustomize={{ repo_abs_path.stdout }}/cluster/base/flux-system"
+      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --kustomize={{ repo_abs_path.stdout }}/cluster/core/flux-system"
       delegate_to: localhost
       become: false
       ignore_errors: true
 
     - name: Bootstrap Flux (Attempt 2)
-      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --kustomize={{ repo_abs_path.stdout }}/cluster/base/flux-system"
+      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --kustomize={{ repo_abs_path.stdout }}/cluster/core/flux-system"
       delegate_to: localhost
       become: false
