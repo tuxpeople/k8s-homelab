@@ -46,8 +46,8 @@ spec:
       defaultFsType: ext4
       recurringJobSelector:
         enable: true
-        jobList: '[{ "name":"snap", "isGroup":true, "task":"snapshot", "cron":"*/30 * * * *", "retain":3},
-          { "name":"backup", "isGroup":false, "task":"backup", "cron":"2 1 * * *", "retain":7 }]'
+        jobList: '[{ "name":"snap", "task":"snapshot", "cron":"*/30 * * * *", "retain":3},
+          { "name":"backup", "task":"backup", "cron":"2 1 * * *", "retain":7 }]'
     defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
       backupTargetCredentialSecret: minio-secret
