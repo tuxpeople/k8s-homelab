@@ -50,3 +50,5 @@ spec:
       defaultReplicaCount: 2
       defaultDataLocality: disabled
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
+      least-effort: best-effort
+      storageMinimalAvailablePercentage: 2
