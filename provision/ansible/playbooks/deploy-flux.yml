@@ -27,7 +27,7 @@
       run_once: true
 
     - name: Deploy gpg key for SOPS
-      shell: "gpg --export-secret-keys --armor {{ gpg_key }} | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin"
+      shell: "gpg --export-secret-keys --armor {{ gpg_key }} | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} create secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin --dry-run=client -o yaml | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply -f - --force"
       ignore_errors: true
       delegate_to: localhost
       become: false
