@@ -1,0 +1,12 @@
+apps|app.kubernetes.io/name=changedetection-io|/datastore
+apps|app.kubernetes.io/name=mealie|/app/data/
+apps|statefulset.kubernetes.io/pod-name=mealie-postgresql-0|/bitnami/postgresql/data
+apps|app.kubernetes.io/name=paperless|/usr/src/paperless/data
+apps|app.kubernetes.io/name=paperless|/usr/src/paperless/media
+development|app=dokuwiki|/config
+development|app=gollum|/wiki
+development|app.kubernetes.io/name=mariadb|/bitnami/mariadb
+development|app=semaphore|/etc/semaphore
+media|app.kubernetes.io/name=tautulli|/config
+media|app.kubernetes.io/name=gaps|/usr/data
+networking|app=speedtest-plotter|/data
