@@ -1,0 +1,2 @@
+package_debian: open-iscsi
+package_redhat: iscsi-initiator-utils

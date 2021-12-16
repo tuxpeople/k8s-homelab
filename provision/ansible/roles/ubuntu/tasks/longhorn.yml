@@ -1,0 +1,37 @@
+---
+
+- name: Install open-iscsi
+  package:
+    name: "{{ lookup('vars', 'package_' + ansible_os_family | lower )}}"
+    state: present
+
+- name: Create /var/lib/longhorn if it does not exist
+  file:
+    path: /var/lib/longhorn
+    state: directory
+    mode: '0755'
+
+- name: Create volume group
+  lvg:
+    vg: "longhorn_vg"
+    pvs: "{{ datadisk }}"
+
+- name: Create logical volumes
+  lvol:
+    vg: "longhorn_vg"
+    lv: "data_lv"
+    size: 100%PVS
+    resizefs: true
+
+- name: Create filesystems
+  filesystem:
+    fstype: ext4
+    dev: "/dev/longhorn_vg/data_lv"
+
+- name: Ensure lv mounts exists
+  mount:
+    src: "/dev/longhorn_vg/data_lv"
+    path: "/var/lib/longhorn"
+    opts: rw,nosuid
+    state: mounted
+    fstype: ext4
