@@ -11,3 +11,4 @@ github_token: !vault |
           3232653538383265393966666532363839353937346639306162
 local_kubeconfig: /Users/tdeutsch/iCloudDrive/Allgemein/kubectl/homelab.yaml
 cluster_name: k3s-prod
+gpg_key: 0DF444DA3BD391701DD9BAA6B412B80F601DFCE2

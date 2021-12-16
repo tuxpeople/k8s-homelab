@@ -26,8 +26,8 @@
       become: false
       run_once: true
 
-    - name: Deploy Sealed Secrets key
-      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply --force -f {{ sealed_secrets_key }}"
+    - name: Deploy gpg key for SOPS
+      shell: "gpg --export-secret-keys --armor {{ gpg_key }} | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin"
       ignore_errors: true
       delegate_to: localhost
       become: false
