@@ -26,6 +26,12 @@
       become: false
       run_once: true
 
+    - name: Create flux-system namespace
+      shell: "/usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} create namespace flux-system"
+      ignore_errors: true
+      delegate_to: localhost
+      become: false
+
     - name: Deploy gpg key for SOPS
       shell: "gpg --export-secret-keys --armor {{ gpg_key }} | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} create secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin --dry-run=client -o yaml | /usr/local/bin/kubectl --kubeconfig={{ local_kubeconfig }} apply -f - --force"
       ignore_errors: true
