@@ -41,12 +41,12 @@ spec:
         hajimari.io/icon: "content-save-outline"
         hajimari.io/appName: "Longhorn"
     persistence:
-      defaultClassReplicaCount: 2
+      # defaultClassReplicaCount: 2
       defaultClass: false
       defaultFsType: ext4
     defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
       backupTargetCredentialSecret: minio-secrets
-      # defaultReplicaCount: 2
-      # defaultDataLocality: disabled
+      defaultReplicaCount: 2
+      defaultDataLocality: disabled
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
