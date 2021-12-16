@@ -7,3 +7,4 @@ resources:
   - networking
   - system-upgrade
   - starboard-operator
+  - longhorn-system
