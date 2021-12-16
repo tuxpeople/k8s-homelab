@@ -63,7 +63,7 @@ spec:
         - ReadWriteOnce
         enabled: true
         size: 10Gi
-        storageClass: "homelab-longhorn-replicated"
+        storageClass: "longhorn"
       connection:
         protocolUseSSL: true
       allowPDFExport: true
