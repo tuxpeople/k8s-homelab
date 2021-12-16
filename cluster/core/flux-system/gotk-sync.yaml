@@ -11,7 +11,7 @@ spec:
     branch: master
   # secretRef:
   #   name: flux-system
-  url: ssh://git@github.com/tuxpeople/k8s-server
+  url: https://github.com/tuxpeople/k8s-homelab.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
