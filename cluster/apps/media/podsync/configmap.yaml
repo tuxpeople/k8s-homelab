@@ -65,7 +65,7 @@ data:
       clean = { keep_last = 5 }
 
       [feeds.mytowatch]
-      url = "https://www.youtube.com/playlist?list=PL7qBQ0Mi2xAp-alNW5mJ7z4X9Zko9rpWJ"
+      url = "https://youtube.com/playlist?list=PL7qBQ0Mi2xAp-alNW5mJ7z4X9Zko9rpWJ"
       page_size = 20
       update_period = "7h"
       quality = "high"
