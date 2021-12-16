@@ -7,4 +7,3 @@ resources:
   - nfs-subdir-external-provisioner
   - kube-vip
   - external-snapshotter
-  - portworx
