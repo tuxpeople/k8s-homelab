@@ -5,4 +5,4 @@ namespace: longhorn-system
 resources:
   - helm-release.yaml
   - namespace.yaml
-  - minio-secrets.sops.yaml
+  - minio-secret.sops.yaml

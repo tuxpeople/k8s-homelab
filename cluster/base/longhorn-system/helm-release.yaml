@@ -50,7 +50,7 @@ spec:
           { "name":"backup", "isGroup":false, "task":"backup", "cron":"2 1 * * *", "retain":7 }]'
     defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
-      backupTargetCredentialSecret: minio-secrets
+      backupTargetCredentialSecret: minio-secret
       defaultReplicaCount: 2
       defaultDataLocality: disabled
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
