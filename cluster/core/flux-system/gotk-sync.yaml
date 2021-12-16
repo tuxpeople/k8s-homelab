@@ -9,8 +9,8 @@ spec:
   interval: 1m0s
   ref:
     branch: master
-  secretRef:
-    name: flux-system
+  # secretRef:
+  #   name: flux-system
   url: ssh://git@github.com/tuxpeople/k8s-server
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
