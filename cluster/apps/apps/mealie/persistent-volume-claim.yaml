@@ -22,3 +22,34 @@ spec:
   resources:
     requests:
       storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-mealie-postgresql-0-pvc-restore
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: datacopy
+spec:
+  containers:
+  - name: datacopy
+    image: ubuntu
+    command:
+    - "sleep"
+    - "36000"
+    volumeMounts:
+    - mountPath: "/pv"
+      name: pvc-orig-data
+  restartPolicy: Never
+  volumes:
+  - name: pvc-orig-data
+    persistentVolumeClaim:
+      claimName: data-mealie-postgresql-0-pvc-restore
