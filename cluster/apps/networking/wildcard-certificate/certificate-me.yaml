@@ -4,12 +4,12 @@ kind: Certificate
 metadata:
   name: "${SECRET_DOMAIN_ME/./-}"
   namespace: networking
-  annotation:
+  annotations:
     kubed.appscode.com/sync: ""
 spec:
   secretName: "${SECRET_DOMAIN_ME/./-}-tls"
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt-production
     kind: ClusterIssuer
   commonName: "${SECRET_DOMAIN_ME}"
   dnsNames:
