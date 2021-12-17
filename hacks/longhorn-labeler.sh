@@ -14,5 +14,5 @@ export KUBECONFIG=~/iCloudDrive/Allgemein/kubectl/homelab.yaml
 
 step "Label the volumes"
 for i in $(kubectl get pvc -A -l recurring-job-group.longhorn.io/normal=enabled -o=custom-columns=VOLUME:.spec.volumeName | grep -v VOLUME); do
-    kubectl -n longhorn-system label volume/$i recurring-job.longhorn.io/normal=enabled
+    kubectl -n longhorn-system label volume/$i recurring-job-group.longhorn.io/normal=enabled
 done
