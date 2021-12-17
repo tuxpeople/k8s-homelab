@@ -50,7 +50,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: gaps-data-pvc
+        existingClaim: tautulli-data-pvc
     resources:
       limits:
         memory: 750Mi
