@@ -4,7 +4,7 @@ metadata:
   name: daily-backup
   namespace: longhorn-system
 spec:
-  concurrency: 6
+  concurrency: 25
   cron: 45 0 * * *
   groups:
   - normal
