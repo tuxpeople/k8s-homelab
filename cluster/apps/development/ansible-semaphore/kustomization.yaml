@@ -5,4 +5,4 @@ resources:
   - admin-secret.sops.yaml
   - mysql-helm-release.yaml
   - semaphore-deployment.yaml
-  - semaphore-persistent_volume_claim.yaml
+  - persistent-volume-claim.yaml

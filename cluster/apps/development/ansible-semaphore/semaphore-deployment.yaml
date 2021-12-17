@@ -68,7 +68,7 @@ spec:
       volumes:
       - name: semaphore-etc
         persistentVolumeClaim:
-          claimName: semaphore-data
+          claimName: semaphore-data-pvc
       - name: tmp
         emptyDir:
 ---

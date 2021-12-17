@@ -33,9 +33,14 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    nameOverride: semaphore-database
     auth:
       database: semaphore
       user: semaphore
       existingSecret: ansible-semaphore-secret
     metrics:
       enabled: true
+    primary:
+      persistence:
+        enabled: true
+        existingClaim: data-mariadb-0-pvc

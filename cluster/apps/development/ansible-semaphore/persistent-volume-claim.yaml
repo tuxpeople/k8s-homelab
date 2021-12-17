@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     app: semaphore
-  name: semaphore-data
+  name: semaphore-data-pvc
   namespace: development
 spec:
   accessModes:
