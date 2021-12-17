@@ -33,7 +33,6 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    nameOverride: semaphore-database
     auth:
       database: semaphore
       user: semaphore
