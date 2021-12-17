@@ -12,7 +12,6 @@ fi
 
 export KUBECONFIG=~/iCloudDrive/Allgemein/kubectl/homelab.yaml
 OLDIFS=$IFS
-rm -f ~/iCloudDrive/Allgemein/backup/kubernetes/*
 cd ~/git/k8s-homelab/hacks
 
 for line in $(cat backup.txt); do
@@ -22,7 +21,8 @@ POD=$(kubectl get pods -l ${strarr[1]} -n ${strarr[0]} --template '{{range .item
 NAME=$(echo ${strarr[1]}--${strarr[2]} | tr '=' '-' | tr '/' '-')
 echo ""
 echo "Namespace ${strarr[0]} / Pod $POD / Folder ${strarr[2]}"
-cat ~/iCloudDrive/Allgemein/backup/kubernetes/${NAME}.tar.gz | kubectl exec $POD -n ${strarr[0]} -- tar -xzf - -C "${strarr[2]}"
+kubectl cp -n ${strarr[0]} ~/iCloudDrive/Allgemein/backup/kubernetes/${NAME}.tar.gz $POD:/tmp/${NAME}.tar.gz
+kubectl exec $POD -n ${strarr[0]} -- tar -xvzf /tmp/${NAME}.tar.gz -C "${strarr[2]}"
 sleep 2
 kubectl delete pod $POD -n ${strarr[0]}
 #kubectl -n ${strarr[0]} cp $POD:${strarr[2]} backup/${NAME}/
