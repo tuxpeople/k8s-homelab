@@ -5,7 +5,7 @@ metadata:
   namespace: longhorn-system
 spec:
   concurrency: 2
-  cron: 5 * * * *
+  cron: 15 * * * *
   groups:
   - default
   retain: 6
