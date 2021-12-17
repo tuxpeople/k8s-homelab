@@ -37,8 +37,7 @@ spec:
     persistence:
       files:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 5G
+        existingClaim: vikunja-files-pvc
       config:
         enabled: true
         type: custom
@@ -130,3 +129,4 @@ spec:
       enabled: true
       persistence:
         enabled: true
+        existingClaim: data-vikunja-postgresql-0-pvc

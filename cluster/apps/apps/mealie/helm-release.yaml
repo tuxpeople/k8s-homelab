@@ -39,8 +39,7 @@ spec:
     persistence:
       config:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
+        existingClaim: mealie-config-pvc
     ingress:
       main:
         enabled: true
@@ -55,3 +54,8 @@ spec:
           paths:
           - path: /
             pathType: Prefix
+    postgres:
+      persistence:
+        config:
+          enabled: true
+          existingClaim: data-mealie-postgresql-0-pvc

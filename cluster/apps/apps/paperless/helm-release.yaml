@@ -49,16 +49,13 @@ spec:
             path: /volume1/scanner
       data:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
+        existingClaim: paperless-data-pvc
       export:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
+        existingClaim: paperless-export-pvc
       media:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 10G
+        existingClaim: paperless-media-pvc
     image:
       pullPolicy: Always
     ingress:

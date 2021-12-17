@@ -53,12 +53,10 @@ spec:
     persistence:
       images:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 5G
+        existingClaim: wallabag-images-pvc
       data:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 5G
+        existingClaim: wallabag-data-pvc
     ingress:
       main:
         enabled: true
@@ -86,3 +84,4 @@ spec:
         replicaCount: 0
       persistence:
         enabled: false
+        existingClaim: redis-data-wallabag-redis-master-0-pvc

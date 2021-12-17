@@ -39,8 +39,7 @@ spec:
     persistence:
       data:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 1G
+        existingClaim: changedetection-io-data-pvc
     image:
       pullPolicy: Always
     strategy:
