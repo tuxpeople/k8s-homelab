@@ -39,8 +39,7 @@ spec:
     persistence:
       config:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 5G
+        existingClaim: hasteserver-haste-server-config-pvc
     ingress:
       main:
         enabled: true

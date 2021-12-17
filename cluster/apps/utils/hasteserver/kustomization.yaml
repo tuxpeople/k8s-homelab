@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - uptimerobot-monitor.yaml
+  - persistent-volume-claim.yaml
