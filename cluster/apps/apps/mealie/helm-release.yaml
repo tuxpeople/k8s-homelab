@@ -56,6 +56,5 @@ spec:
             pathType: Prefix
     postgres:
       persistence:
-        config:
-          enabled: true
-          existingClaim: data-mealie-postgresql-0-pvc
+        enabled: true
+        existingClaim: data-mealie-postgresql-0-pvc
