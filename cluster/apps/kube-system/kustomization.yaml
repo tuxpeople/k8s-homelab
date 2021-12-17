@@ -9,3 +9,4 @@ resources:
   - kured
   - node-feature-discovery
   - kube-cleanup-operator
+  - kubed

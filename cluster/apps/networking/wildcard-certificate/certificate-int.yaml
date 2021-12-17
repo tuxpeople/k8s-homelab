@@ -4,6 +4,8 @@ kind: Certificate
 metadata:
   name: "${SECRET_DOMAIN_INTERNAL/./-}"
   namespace: networking
+  annotation:
+    kubed.appscode.com/sync: ""
 spec:
   secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
   issuerRef:
