@@ -35,7 +35,7 @@ spec:
       enabled: true
       ingressClassName: "traefik"
       tls: true
-      tlsSecret: "${SECRET_DOMAIN_ME/./-}-tls"
+      tlsSecret: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
       host: "longhorn.${SECRET_DOMAIN_INTERNAL}"
       annotations:
         hajimari.io/enable: "true"
