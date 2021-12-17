@@ -74,7 +74,7 @@ spec:
           - path: /
             pathType: Prefix
         tls:
-        - secretName: wallabag-tls
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
           - wallabag.${SECRET_DOMAIN_ME}
     redis:

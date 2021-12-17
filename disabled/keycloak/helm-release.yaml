@@ -47,7 +47,7 @@ spec:
       tls:
         - hosts:
             - sso.${SECRET_DOMAIN_ME}
-          secretName: keycloak-tls
+          secretName: "${SECRET_DOMAIN_ME/./-}-tls"
 
     args:
       - -Dkeycloak.profile.feature.docker=enabled

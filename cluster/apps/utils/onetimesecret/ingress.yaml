@@ -17,7 +17,7 @@ metadata:
     hajimari.io/icon: "safe"
 spec:
   tls:
-    - secretName: secrets-tls
+    - secretName: "${SECRET_DOMAIN_CH/./-}-tls"
       hosts:
         - secrets.${SECRET_DOMAIN_CH}
   rules:

@@ -116,4 +116,4 @@ spec:
   tls:
   - hosts:
     - semaphore.${SECRET_DOMAIN_ME}
-    secretName: semaphore-tls
+    secretName: "${SECRET_DOMAIN_ME/./-}-tls"

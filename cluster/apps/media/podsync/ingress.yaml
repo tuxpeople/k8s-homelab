@@ -30,4 +30,4 @@ spec:
   tls:
   - hosts:
     - podsync.${SECRET_DOMAIN_ME}
-    secretName: "podsync-tls"
+    secretName: "${SECRET_DOMAIN_ME/./-}-tls"

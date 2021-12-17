@@ -16,7 +16,7 @@ metadata:
     hajimari.io/icon: "semantic-web"
 spec:
   tls:
-    - secretName: static-tls
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
       hosts:
         - static.${SECRET_DOMAIN_ME}
   rules:

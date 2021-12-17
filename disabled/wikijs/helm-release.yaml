@@ -55,7 +55,7 @@ spec:
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
         tls:
-        - secretName: wikijs-tls
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
           - wikijs.${SECRET_DOMAIN_ME}
         hosts:

@@ -15,7 +15,7 @@ spec:
   tls:
     - hosts:
         - "linkerd.${SECRET_DOMAIN_ME}"
-      secretName: linkerd-viz-tls
+      ssecretName: "${SECRET_DOMAIN_ME/./-}-tls"
   rules:
     - host: "linkerd.${SECRET_DOMAIN_ME}"
       http:

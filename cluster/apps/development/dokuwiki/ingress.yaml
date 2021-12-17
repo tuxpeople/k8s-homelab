@@ -17,7 +17,7 @@ metadata:
     hajimari.io/icon: "file-document-edit"
 spec:
   tls:
-    - secretName: wiki-tls
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
       hosts:
         - wiki.${SECRET_DOMAIN_ME}
   rules:

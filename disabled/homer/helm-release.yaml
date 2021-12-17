@@ -59,6 +59,6 @@ spec:
           - path: /
             pathType: Prefix
         tls:
-        - secretName: homer-tls
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
           - homer.${SECRET_DOMAIN_ME}

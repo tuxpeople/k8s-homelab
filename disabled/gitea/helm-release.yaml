@@ -88,7 +88,7 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "git"
       tls:
-        - secretName: git-tls
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
             - git.${SECRET_DOMAIN_ME}
     cache: redis-master.redis:6379

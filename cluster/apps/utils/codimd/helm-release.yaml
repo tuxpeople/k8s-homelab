@@ -50,7 +50,7 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "language-markdown"
       tls:
-      - secretName: codimd-tls
+      - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
         hosts:
         - codimd.${SECRET_DOMAIN_ME}
       hosts:

@@ -14,7 +14,7 @@ spec:
   tls:
     - hosts:
         - "jaeger.${SECRET_DOMAIN_ME}"
-      secretName: linkerd-jaeger-tls
+      secretName: "${SECRET_DOMAIN_ME/./-}-tls"
   rules:
     - host: "jaeger.${SECRET_DOMAIN_ME}"
       http:

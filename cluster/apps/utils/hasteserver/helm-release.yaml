@@ -53,7 +53,7 @@ spec:
           hajimari.io/icon: "notebook"
           hajimari.io/appName: "hasteserver"
         tls:
-        - secretName: paste-tls
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
           - paste.${SECRET_DOMAIN_ME}
         hosts:

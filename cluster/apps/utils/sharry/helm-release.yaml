@@ -55,7 +55,7 @@ spec:
           - path: /
             pathType: Prefix
         tls:
-        - secretName: share-tls
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
           - "share.${SECRET_DOMAIN_ME}"
     config: |

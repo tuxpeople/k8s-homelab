@@ -20,7 +20,7 @@ metadata:
     hajimari.io/icon: "file-document-edit-outline"
 spec:
   tls:
-    - secretName: wiki2-tls
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
       hosts:
         - wiki2.${SECRET_DOMAIN_ME}
   rules:

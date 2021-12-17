@@ -41,7 +41,7 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         kubernetes.io/ingress.class: traefik
       tls:
-        - secretName: nextcloud-tls
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
           - cloud.${SECRET_DOMAIN_ME}
     nextcloud:

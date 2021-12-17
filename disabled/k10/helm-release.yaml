@@ -71,7 +71,7 @@ spec:
       create: true
       host: k10.${SECRET_DOMAIN_ME}
       tls:
-        secretName: k10-tls
+        secretName: "${SECRET_DOMAIN_ME/./-}-tls"
         hosts:
         - k10.${SECRET_DOMAIN_ME}
     injectKanisterSidecar:

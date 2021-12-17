@@ -15,7 +15,7 @@ metadata:
     hajimari.io/icon: "vs-code"
 spec:
   tls:
-    - secretName: code-tls
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
       hosts:
         - code.${SECRET_DOMAIN_ME}
   rules:
