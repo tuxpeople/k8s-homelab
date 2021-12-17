@@ -4,7 +4,7 @@ metadata:
   name: hourly-backup
   namespace: longhorn-system
 spec:
-  concurrency: 6
+  concurrency: 25
   cron: 15 * * * *
   groups:
   - normal
