@@ -2,14 +2,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "int-${SECRET_DOMAIN_ME/./-}"
+  name: "${SECRET_DOMAIN_INTERNAL/./-}"
   namespace: networking
 spec:
-  secretName: "int-${SECRET_DOMAIN_ME/./-}-tls"
+  secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
-  commonName: "int.${SECRET_DOMAIN_ME}"
+  commonName: "${SECRET_DOMAIN_INTERNAL}"
   dnsNames:
-    - "int.${SECRET_DOMAIN_ME}"
-    - "*.int.${SECRET_DOMAIN_ME}"
+    - "${SECRET_DOMAIN_INTERNAL}"
+    - "*.${SECRET_DOMAIN_INTERNAL}"
