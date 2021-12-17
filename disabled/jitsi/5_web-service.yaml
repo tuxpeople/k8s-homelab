@@ -21,8 +21,6 @@ kind: Ingress
 metadata:
   name: jitsi
   namespace: jitsi
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
   tls:
     - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
