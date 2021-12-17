@@ -34,6 +34,9 @@ spec:
   values:
     env:
       TZ: "Europe/Zurich"
+      DB_ENGINE: sqlite
+      DEFAULT_EMAIL: thomas@${SECRET_DOMAIN_ME}
+      BASE_URL: https://mealie.${SECRET_DOMAIN_INTERNAL}
     strategy:
       type: Recreate
     persistence:
@@ -54,8 +57,3 @@ spec:
           paths:
           - path: /
             pathType: Prefix
-    postgres:
-      persistence:
-        config:
-          enabled: true
-          existingClaim: data-mealie-postgresql-0-pvc
