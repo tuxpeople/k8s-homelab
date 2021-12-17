@@ -54,7 +54,7 @@ spec:
             mode: 0644
       - name: bastion-keys
         persistentVolumeClaim:
-          claimName: bastion-keys
+          claimName: bastion-keys-pvc
       - name: bastion-googleauth
         secret:
           secretName: bastion-googleauth

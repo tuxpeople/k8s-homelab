@@ -3,8 +3,9 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
+    recurring-job-group.longhorn.io/normal: "enabled"
     app: bastion
-  name: bastion-keys
+  name: bastion-keys-pvc
   namespace: utils
 spec:
   accessModes:
