@@ -4,10 +4,11 @@ kind: Certificate
 metadata:
   name: "${SECRET_DOMAIN_INTERNAL/./-}"
   namespace: networking
-  annotations:
-    kubed.appscode.com/sync: "true"
 spec:
   secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+  secretTemplate:
+    annotations:
+      kubed.appscode.com/sync: ""
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
