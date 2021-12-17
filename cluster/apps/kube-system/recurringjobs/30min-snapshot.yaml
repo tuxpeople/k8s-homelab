@@ -4,7 +4,7 @@ metadata:
   name: 30min-snapshot
   namespace: longhorn-system
 spec:
-  concurrency: 2
+  concurrency: 6
   cron: 0/30 * * * *
   groups:
   - normal
