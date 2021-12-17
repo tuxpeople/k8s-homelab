@@ -85,3 +85,7 @@ spec:
             username: name
             displayName: name
             email: email
+    postgresql:
+      persistence:
+        enabled: true
+        existingClaim: codimd-postgresql-data-pvc
