@@ -7,6 +7,6 @@ spec:
   concurrency: 2
   cron: 45 0 * * *
   groups:
-  - default
+  - normal
   retain: 7
   task: backup
