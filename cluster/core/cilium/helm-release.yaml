@@ -85,7 +85,7 @@ spec:
       prometheus:
         enabled: true
         serviceMonitor:
-          enabled: true
+          enabled: false
 
     prometheus:
       enabled: true
