@@ -50,5 +50,5 @@ spec:
               - deployment
               - cm
               - ingress
-    podSecurityContext:
-      fsGroup: 1000
+    persistence:
+      storageClassName: "nfs-client"
