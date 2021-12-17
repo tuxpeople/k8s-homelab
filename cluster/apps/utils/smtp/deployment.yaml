@@ -23,7 +23,7 @@ spec:
         env:
         - name: "TZ"
           value: "Europe/Zurich"
-        - name: "smtp.k8s.sky.lab"
+        - name: "smtp.int.eighty-three.me"
         - name: "SMARTHOST"
           value: "smtp.sendgrid.net::587"
         - name: "SMTP_USERNAME"
