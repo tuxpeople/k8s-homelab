@@ -45,4 +45,4 @@ spec:
       volumes:
       - name: code-server
         persistentVolumeClaim:
-          claimName: code-server-data
+          claimName: code-server-data-pvc
