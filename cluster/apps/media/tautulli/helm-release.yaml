@@ -50,8 +50,7 @@ spec:
     persistence:
       config:
         enabled: true
-        accessMode: ReadWriteOnce
-        size: 5Gi
+        existingClaim: gaps-data-pvc
     resources:
       limits:
         memory: 750Mi

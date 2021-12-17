@@ -48,4 +48,4 @@ spec:
         name: podsync-config
       - name: podsync-data
         persistentVolumeClaim:
-          claimName: podsync-data
+          claimName: podsync-data-pvc

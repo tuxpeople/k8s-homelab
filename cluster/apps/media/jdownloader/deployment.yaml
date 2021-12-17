@@ -56,4 +56,4 @@ spec:
           server: 10.20.30.40
       - name: jdownloader
         persistentVolumeClaim:
-          claimName: jdownloader
+          claimName: jdownloader-pvc

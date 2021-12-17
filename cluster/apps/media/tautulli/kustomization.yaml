@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: media
 resources:
   - helm-release.yaml
+  - persistent-volume-claim.yaml
