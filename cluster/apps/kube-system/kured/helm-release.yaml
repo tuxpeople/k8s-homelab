@@ -33,10 +33,8 @@ spec:
   values:
     updateStrategy: RollingUpdate
     configuration:
-      rebootDays:
-      - we
-      startTime: "1:00"
-      endTime: "4:00"
+      startTime: "0:00"
+      endTime: "5:00"
       timeZone: "Europe/Zurich"
     # tolerations:
     # - key: "node-role.kubernetes.io/master"
