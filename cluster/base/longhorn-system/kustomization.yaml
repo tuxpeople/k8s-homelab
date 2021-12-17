@@ -7,4 +7,3 @@ resources:
   - namespace.yaml
   - minio-secret.sops.yaml
   - snap-class.yaml
-  - recurringjobs
