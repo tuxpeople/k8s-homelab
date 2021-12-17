@@ -46,4 +46,4 @@ spec:
       volumes:
       - name: gollum-data
         persistentVolumeClaim:
-          claimName: gollum-data
+          claimName: gollum-data-pvc

@@ -7,7 +7,7 @@ metadata:
     k8up.io/backup: "true"
   labels:
     app: gollum
-  name: gollum-data
+  name: gollum-data-pvc
 spec:
   accessModes:
   - ReadWriteMany
