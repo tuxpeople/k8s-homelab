@@ -5,7 +5,7 @@ metadata:
   name: "${SECRET_DOMAIN_INTERNAL/./-}"
   namespace: networking
   annotations:
-    kubed.appscode.com/sync: ""
+    kubed.appscode.com/sync: "true"
 spec:
   secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
   issuerRef:
