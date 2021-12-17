@@ -4,9 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: development
   labels:
+    recurring-job-group.longhorn.io/normal: "enabled"
     app: code-server
-  annotations:
-    k8up.io/backup: "true"
   name: code-server-data-pvc
 spec:
   accessModes:
