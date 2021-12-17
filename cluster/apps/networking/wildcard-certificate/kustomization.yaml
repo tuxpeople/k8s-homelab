@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - certificate-ch.yaml
   - certificate-me.yaml
+  - certificate-int.yaml
