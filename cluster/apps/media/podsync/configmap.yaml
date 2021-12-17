@@ -66,11 +66,11 @@ data:
 
       [feeds.mytowatch]
       url = "https://youtube.com/playlist?list=PL7qBQ0Mi2xAp-alNW5mJ7z4X9Zko9rpWJ"
-      page_size = 20
+      page_size = 30
       update_period = "7h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 20 }
+      clean = { keep_last = 30 }
 
       [feeds.adriangoins]
       url="https://www.youtube.com/channel/UCjjwExYSPRWwjj9WwydrVmA"
