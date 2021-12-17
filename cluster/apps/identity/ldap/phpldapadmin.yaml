@@ -62,9 +62,11 @@ metadata:
   name: phpldapadmin
   annotations:
     kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   rules:
   - host: phpldapadmin.${SECRET_DOMAIN_INTERNAL}
+    secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
     http:
       paths:
       - path: /

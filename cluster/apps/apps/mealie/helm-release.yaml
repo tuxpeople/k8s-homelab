@@ -48,12 +48,12 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: "traefik"
-          external-dns/is-private: "true"
-          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_INTERNAL}"
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
           hajimari.io/enable: "true"
           hajimari.io/icon: "chef-hat"
         hosts:
         - host: "mealie.${SECRET_DOMAIN_INTERNAL}"
+          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
           paths:
           - path: /
             pathType: Prefix

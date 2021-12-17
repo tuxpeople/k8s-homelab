@@ -34,12 +34,14 @@ spec:
     ingress:
       enabled: true
       ingressClassName: "traefik"
-      tls: false
+      tls: true
+      tlsSecret: "${SECRET_DOMAIN_ME/./-}-tls"
       host: "longhorn.${SECRET_DOMAIN_INTERNAL}"
       annotations:
         hajimari.io/enable: "true"
         hajimari.io/icon: "content-save-outline"
         hajimari.io/appName: "Longhorn"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
     persistence:
       defaultClassReplicaCount: 2
       defaultClass: true

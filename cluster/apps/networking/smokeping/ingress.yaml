@@ -8,11 +8,13 @@ metadata:
   name: smokeping
   annotations:
     kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hajimari.io/enable: "true"
     hajimari.io/icon: "smoke"
 spec:
   rules:
   - host: smoke.${SECRET_DOMAIN_INTERNAL}
+    secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
     http:
       paths:
       - path: /
