@@ -82,6 +82,6 @@ spec:
       architecture: standalone
       replica:
         replicaCount: 0
-      persistence:
-        enabled: false
-        existingClaim: redis-data-wallabag-redis-master-0-pvc
+      master:
+        persistence:
+          enabled: false

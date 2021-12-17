@@ -20,14 +20,3 @@ spec:
   resources:
     requests:
       storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: redis-data-wallabag-redis-master-0-pvc
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
