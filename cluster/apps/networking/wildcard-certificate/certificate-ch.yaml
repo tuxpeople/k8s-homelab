@@ -16,4 +16,3 @@ spec:
   dnsNames:
     - "${SECRET_DOMAIN_CH}"
     - "*.${SECRET_DOMAIN_CH}"
-    - "test.${SECRET_DOMAIN_CH}"
