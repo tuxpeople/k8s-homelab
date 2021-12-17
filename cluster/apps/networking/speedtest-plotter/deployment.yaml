@@ -45,4 +45,4 @@ spec:
       volumes:
       - name: speedtest-plotter-data
         persistentVolumeClaim:
-          claimName: speedtest-plotter-data
+          claimName: speedtest-plotter-data-pvc

@@ -4,8 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: networking
   labels:
+    recurring-job-group.longhorn.io/normal: "enabled"
     app: speedtest-plotter
-  name: speedtest-plotter-data
+  name: speedtest-plotter-data-pvc
 spec:
   accessModes:
   - ReadWriteOnce
