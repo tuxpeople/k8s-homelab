@@ -36,4 +36,4 @@ spec:
       volumes:
       - name: static-data
         persistentVolumeClaim:
-          claimName: static-data
+          claimName: static-data-pvc

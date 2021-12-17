@@ -4,8 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: utils
   labels:
+    recurring-job-group.longhorn.io/normal: "enabled"
     app: static
-  name: static-data
+  name: static-data-pvc
 spec:
   accessModes:
   - ReadWriteOnce
