@@ -30,13 +30,21 @@ data:
       format = "audio"
       clean = { keep_last = 5 }
 
-      [feeds.TechWorldWithNana]
-      url = "https://www.youtube.com/playlist?list=UUdngmbVKX1Tgre699-XLlUA"
-      page_size = 10
+      [feeds.DevOpsToolkit]
+      url = "https://www.youtube.com/playlist?list=UUfz8x0lVzJpb_dgWm9kPVrw"
+      page_size = 15
       update_period = "8h"
       quality = "high"
       format = "video"
-      clean = { keep_last = 10 }
+      clean = { keep_last = 15 }
+      
+      [feeds.TechWorldWithNana]
+      url = "https://www.youtube.com/playlist?list=UUdngmbVKX1Tgre699-XLlUA"
+      page_size = 15
+      update_period = "8h"
+      quality = "high"
+      format = "video"
+      clean = { keep_last = 15 }
 
       [feeds.oralsessions]
       url = "https://www.youtube.com/playlist?list=PLquP20HDxBb0hSlkoKj6Zx6ifU5rYK_u3"
