@@ -31,7 +31,7 @@ data:
       clean = { keep_last = 5 }
 
       [feeds.DevOpsToolkit]
-      url = "https://www.youtube.com/playlist?list=UUfz8x0lVzJpb_dgWm9kPVrw"
+      url = "https://youtube.com/c/DevOpsToolkit"
       page_size = 15
       update_period = "8h"
       quality = "high"
@@ -39,7 +39,7 @@ data:
       clean = { keep_last = 15 }
       
       [feeds.TechWorldWithNana]
-      url = "https://www.youtube.com/playlist?list=UUdngmbVKX1Tgre699-XLlUA"
+      url = "https://youtube.com/c/TechWorldwithNana"
       page_size = 15
       update_period = "8h"
       quality = "high"
