@@ -8,3 +8,5 @@ resources:
   - system-upgrade
   - starboard-operator
   - longhorn-system
+  - linkerd
+  - linkerd-viz

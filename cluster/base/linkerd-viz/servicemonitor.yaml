@@ -1,0 +1,14 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+  name: linkerd-viz-metrics-api
+  namespace: linkerd-viz
+spec:
+  selector:
+    matchLabels:
+      component: metrics-api
+      linkerd.io/extension: viz
+  endpoints:
+  - targetPort: 8085

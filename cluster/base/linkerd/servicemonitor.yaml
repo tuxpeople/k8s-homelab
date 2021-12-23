@@ -1,0 +1,88 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: linkerd-web
+spec:
+  selector:
+    matchLabels:
+      linkerd.io/control-plane-component: web
+  endpoints:
+  - targetPort: 9994
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: linkerd-sp-validator
+spec:
+  selector:
+    matchLabels:
+      linkerd.io/control-plane-component: sp-validator
+  endpoints:
+  - targetPort: 9997
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: linkerd-controller-api
+spec:
+  selector:
+    matchLabels:
+      linkerd.io/control-plane-component: controller
+  endpoints:
+  - targetPort: 9995
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: linkerd-identity
+spec:
+  selector:
+    matchLabels:
+      linkerd.io/control-plane-component: identity
+  endpoints:
+  - targetPort: 9990
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: linkerd-proxy-injector
+spec:
+  selector:
+    matchLabels:
+      linkerd.io/control-plane-component: proxy-injector
+  endpoints:
+  - targetPort: 9995
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: linkerd-tap
+spec:
+  selector:
+    matchLabels:
+      linkerd.io/control-plane-component: tap
+  endpoints:
+  - targetPort: 9998
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: linkerd-dst
+spec:
+  selector:
+    matchLabels:
+      linkerd.io/control-plane-component: destination
+  endpoints:
+  - targetPort: 9996
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: linkerd-proxies
+spec:
+  selector:
+    matchLabels:
+      linkerd.io/control-plane-ns: linkerd
+  endpoints:
+  - targetPort: 4191
