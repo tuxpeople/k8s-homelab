@@ -45,3 +45,10 @@ spec:
       logLevel: warn,linkerd=info
       logFormat: json
     installNamespace: false
+    identity:
+      issuer:
+        crtExpiry: 2031-12-22T10:26:30Z
+        tls:
+          keyPEM: ${SECRET_LINKDERD_ISSUERTLSKEYPEM}
+          crtPEM: ${SECRET_LINKDERD_TLSCRTPEM}
+    identityTrustAnchorsPEM: ${SECRET_LINKDERD_IDENTITYTRUSTANCHORSPEM}
