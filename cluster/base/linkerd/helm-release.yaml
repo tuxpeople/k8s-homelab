@@ -32,6 +32,7 @@ spec:
   releaseName: linkerd
   targetNamespace: linkerd
   values:
+    cniEnabled: true
     controllerLogLevel: info
     controllerLogFormat: json
     controlPlaneTracing: false
