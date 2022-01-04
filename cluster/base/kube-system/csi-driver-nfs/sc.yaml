@@ -15,4 +15,4 @@ volumeBindingMode: Immediate
 allowVolumeExpansion: true
 mountOptions:
   - hard
-  - nfsvers=4.1
+  - nfsvers=3
