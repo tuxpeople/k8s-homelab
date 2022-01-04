@@ -32,7 +32,7 @@ spec:
           value: Europe/Zurich
         - name: XDG_DOWNLOAD_DIR
           value: /Downloads
-        image: ghcr.io/tuxpeople/jdownloader-headless:pr-31
+        image: ghcr.io/tuxpeople/jdownloader-headless:v1.4.1
         imagePullPolicy: Always
         name: jdownloader
         resources:
