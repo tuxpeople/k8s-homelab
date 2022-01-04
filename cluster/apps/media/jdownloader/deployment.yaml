@@ -47,7 +47,7 @@ spec:
         volumeMounts:
         - mountPath: /Downloads
           name: downloads
-        - mountPath: /opt/JDownloader/cfg
+        - mountPath: /opt/JDownloader/
           name: jdownloader
       volumes:
       - name: downloads
