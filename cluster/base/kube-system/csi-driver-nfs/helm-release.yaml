@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
       chart: csi-driver-nfs
-      version: 3.0.0
+      version: v3.1.0
       sourceRef:
         kind: HelmRepository
         name: csi-driver-nfs
