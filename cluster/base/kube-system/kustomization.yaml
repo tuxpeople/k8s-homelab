@@ -7,3 +7,4 @@ resources:
   - nfs-subdir-external-provisioner
   - kube-vip
   - external-snapshotter
+  - csi-driver-nfs
