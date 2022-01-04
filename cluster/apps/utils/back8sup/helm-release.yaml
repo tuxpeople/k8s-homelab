@@ -51,4 +51,4 @@ spec:
               - cm
               - ingress
     persistence:
-      storageClassName: "nfs-client"
+      storageClassName: "nfs-csi"
