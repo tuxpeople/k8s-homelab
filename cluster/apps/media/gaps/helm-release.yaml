@@ -52,5 +52,6 @@ spec:
             pathType: Prefix
     persistence:
       data:
+        enabled: true
         accessMode: ReadWriteOnce
         existingClaim: gaps-data-pvc
