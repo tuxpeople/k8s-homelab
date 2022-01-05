@@ -5,7 +5,7 @@ data:
     [server]
     port = 8080
     data_dir = "/app/data/"
-    hostname = "podsync.${SECRET_DOMAIN_ME}"
+    hostname = "https://podsync.${SECRET_DOMAIN_ME}"
 
     [database]
     badger = { truncate = true, file_io = true }
@@ -37,7 +37,7 @@ data:
       quality = "high"
       format = "video"
       clean = { keep_last = 15 }
-      
+
       [feeds.TechWorldWithNana]
       url = "https://www.youtube.com/playlist?list=UUdngmbVKX1Tgre699-XLlUA"
       page_size = 15
