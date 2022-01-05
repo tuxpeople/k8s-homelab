@@ -45,7 +45,6 @@ spec:
     persistence:
       defaultClassReplicaCount: 2
       defaultClass: true
-      defaultFsType: ext4
       recurringJobSelector:
         enable: true
         jobList: '[
