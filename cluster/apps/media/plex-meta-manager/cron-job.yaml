@@ -12,13 +12,12 @@ spec:
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
-  dnsPolicy: ClusterFirst
   jobTemplate:
     spec:
       template:
         spec:
           restartPolicy: OnFailure
-          dnsPolicy: None
+          dnsPolicy: ClusterFirst
           containers:
           - name: plex-meta-manager
             image: meisnate12/plex-meta-manager:latest
