@@ -37,8 +37,15 @@ spec:
             - name: PMM_CONFIG
               value: "/myconfig/config.yml"
             volumeMounts:
-            - mountPath: /myconfig
+            - mountPath: /config/config.yaml
               name: plex-meta-manager-config
+              subPath: config.yaml
+            - mountPath: /config/holiday.yaml
+              name: plex-meta-manager-config
+              subPath: holiday.yaml
+            - mountPath: /config/movies.yaml
+              name: plex-meta-manager-config
+              subPath: movies.yaml
             resources:
               requests:
                 memory: 500Mi
@@ -50,3 +57,13 @@ spec:
           - name: plex-meta-manager-config
             configMap:
               name: plex-meta-manager-config
+              items:
+              - key: config.yaml
+                mode: 420
+                path: config.yaml
+              - key: holiday.yaml
+                mode: 420
+                path: holiday.yaml
+              - key: movies.yaml
+                mode: 420
+                path: movies.yaml
