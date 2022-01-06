@@ -35,15 +35,8 @@ spec:
             - name: PMM_TIME
               value: "14:00,05:18"
             volumeMounts:
-            - mountPath: /config/config.yml
+            - mountPath: /config
               name: plex-meta-manager-config
-              subPath: config.yml
-            - mountPath: /config/holiday.yml
-              name: plex-meta-manager-config
-              subPath: holiday.yml
-            - mountPath: /config/movies.yml
-              name: plex-meta-manager-config
-              subPath: movies.yml
             resources:
               requests:
                 memory: 500Mi
@@ -53,15 +46,5 @@ spec:
                 cpu: 500m
           volumes:
           - name: plex-meta-manager-config
-            configMap:
-              name: plex-meta-manager-config
-              items:
-              - key: config.yml
-                mode: 420
-                path: config.yml
-              - key: holiday.yml
-                mode: 420
-                path: holiday.yml
-              - key: movies.yml
-                mode: 420
-                path: movies.yml
+            persistentVolumeClaim:
+              claimName: plex-meta-manager-config
