@@ -28,16 +28,16 @@ spec:
               value: "1000"
             - name: TZ
               value: "Europe/Zurich"
-            # - name: PMM_DEBUG
             - name: PMM_TEST
               value: "false"
             - name: PMM_RUN
               value: "true"
-            # - name: PMM_COLLECTIONS
             - name: PMM_TIME
               value: "14:00,05:18"
+            - name: PMM_CONFIG
+              value: "/myconfig/config.yml"
             volumeMounts:
-            - mountPath: /config
+            - mountPath: /myconfig
               name: plex-meta-manager-config
             resources:
               requests:
