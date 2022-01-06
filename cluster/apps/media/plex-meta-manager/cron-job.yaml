@@ -1,0 +1,53 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: plex-meta-manager
+  labels:
+    app: plex-meta-manager
+spec:
+  suspend: false
+  # Run once a day, every day, starting at 3AM
+  schedule: "0 4 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          dnsPolicy: None
+          containers:
+          - name: plex-meta-manager
+            image: meisnate12/plex-meta-manager:latest
+            imagePullPolicy: Always
+            env:
+            - name: PUID
+              value: "1000"
+            - name: GUID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Zurich"
+            # - name: PMM_DEBUG
+            - name: PMM_TEST
+              value: "false"
+            - name: PMM_RUN
+              value: "true"
+            # - name: PMM_COLLECTIONS
+            - name: PMM_TIME
+              value: "14:00,05:18"
+            volumeMounts:
+            - mountPath: /config
+              name: plex-meta-manager-config
+            resources:
+              requests:
+                memory: 500Mi
+                cpu: 100m
+              limits:
+                memory: 2000Mi
+                cpu: 500m
+          volumes:
+          - name: plex-meta-manager-config
+            configMap:
+              name: plex-meta-manager-config

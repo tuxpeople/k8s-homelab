@@ -10,3 +10,4 @@ resources:
   - tautulli
   - plex
   - plex-exporter
+  - plex-meta-manager
