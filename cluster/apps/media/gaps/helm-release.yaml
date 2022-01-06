@@ -32,6 +32,8 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    image:
+      pullPolicy: Always
     env:
       TZ: Europe/Zurich
     strategy:
