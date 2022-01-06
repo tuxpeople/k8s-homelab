@@ -9,9 +9,10 @@ spec:
   suspend: false
   # Run once a day, every day, starting at 3AM
   schedule: "0 4 * * *"
-  failedJobsHistoryLimit: 1
-  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
+  dnsPolicy: ClusterFirst
   jobTemplate:
     spec:
       template:
