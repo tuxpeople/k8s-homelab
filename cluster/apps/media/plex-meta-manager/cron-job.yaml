@@ -34,8 +34,6 @@ spec:
               value: "true"
             - name: PMM_TIME
               value: "14:00,05:18"
-            - name: PMM_CONFIG
-              value: "/myconfig/config.yml"
             volumeMounts:
             - mountPath: /config/config.yml
               name: plex-meta-manager-config
