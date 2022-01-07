@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: ombi
-      version: 11.1.0
+      version: 11.2.0
       interval: 5m
       sourceRef:
         kind: HelmRepository
