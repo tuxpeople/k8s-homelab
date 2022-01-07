@@ -5,7 +5,6 @@ metadata:
   labels:
     app: podsync
   name: podsync-data-pvc
-  namespace: media
 spec:
   accessModes:
   - ReadWriteOnce

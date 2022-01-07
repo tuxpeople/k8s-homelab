@@ -3,7 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: plex
-  namespace: media
 spec:
   chart:
     spec:
@@ -75,7 +74,6 @@ apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
   name: plex
-  namespace: media
 spec:
   friendlyName: "K8S Plex"
   url: "http://${SECRET_DOMAIN_TARGET_SKY}:32400/identity"

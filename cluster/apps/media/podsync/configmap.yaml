@@ -127,4 +127,3 @@ metadata:
   labels:
     app: podsync
   name: podsync-config
-  namespace: media

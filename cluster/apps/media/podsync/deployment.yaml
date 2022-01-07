@@ -7,7 +7,6 @@ metadata:
   labels:
     app: podsync
   name: podsync
-  namespace: media
 spec:
   replicas: 1
   selector:

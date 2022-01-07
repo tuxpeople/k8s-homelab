@@ -17,4 +17,3 @@ metadata:
   labels:
     app: plex-exporter
   name: plex-exporter-config
-  namespace: media

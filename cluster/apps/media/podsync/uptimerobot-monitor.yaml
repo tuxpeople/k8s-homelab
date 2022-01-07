@@ -3,7 +3,6 @@ apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
   name: podsync
-  namespace: media
 spec:
   alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}
   friendlyName: K8S podsync

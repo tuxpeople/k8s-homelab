@@ -7,7 +7,6 @@ metadata:
   labels:
     app: plex-exporter
   name: plex-exporter
-  namespace: media
 spec:
   replicas: 1
   selector:
