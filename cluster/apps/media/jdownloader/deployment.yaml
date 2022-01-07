@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: media
   name: jdownloader
 spec:
   selector:
@@ -47,13 +46,12 @@ spec:
         volumeMounts:
         - mountPath: /Downloads
           name: downloads
-        - mountPath: /opt/JDownloader/
-          name: jdownloader
+        - mountPath: /opt/JDownloader/cfg
+          name: jdownloader-config
       volumes:
       - name: downloads
-        nfs:
-          path: /volume1/Multimedia/input/jdownloader
-          server: 10.20.30.40
-      - name: jdownloader
         persistentVolumeClaim:
-          claimName: jdownloader-pvc
+          claimName: nfs-media-downloads
+      - name: jdownloader-config
+        persistentVolumeClaim:
+          claimName: jdownloader-config
