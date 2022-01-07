@@ -12,3 +12,4 @@ resources:
   - plex-exporter
   - plex-meta-manager
   - volumes.yaml
+  - ombi
