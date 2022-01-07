@@ -44,15 +44,16 @@ spec:
         existingClaim: "ombi-config"
 
     ingress:
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "plex"
-      enabled: true
-      hosts:
-      - host: ombi.${SECRET_DOMAIN_INTERNAL}
-        secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-        paths:
-        - path: /
-          pathType: Prefix
+      main:
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "plex"
+        enabled: true
+        hosts:
+        - host: ombi.${SECRET_DOMAIN_INTERNAL}
+          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+          paths:
+          - path: /
+            pathType: Prefix
