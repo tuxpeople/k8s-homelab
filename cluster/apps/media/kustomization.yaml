@@ -14,3 +14,4 @@ resources:
   - volumes.yaml
   - ombi
   - radarr
+  - sonarr
