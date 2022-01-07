@@ -34,20 +34,17 @@ spec:
       TZ: Europe/Zurich
       PUID: 911
       PGID: 911
-
     persistence:
       config:
         enabled: true
         emptyDir: false
         mountPath: /config
         existingClaim: "nzbget-config"
-
       downloads:
         enabled: true
         emptyDir: false
         mountPath: /downloads
         existingClaim: nfs-media-downloads
-
     ingress:
       main:
         annotations:
@@ -55,7 +52,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           hajimari.io/enable: "true"
           hajimari.io/icon: "plex"
-        enabled: true
+        enabled: false
         hosts:
         - host: nzbget.${SECRET_DOMAIN_INTERNAL}
           secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
