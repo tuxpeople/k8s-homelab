@@ -30,7 +30,7 @@ spec:
         - name: TZ
           value: Europe/Zurich
         - name: XDG_DOWNLOAD_DIR
-          value: /Downloads
+          value: /Downloads/jdownloader
         image: ghcr.io/tuxpeople/jdownloader-headless:pr-33
         imagePullPolicy: Always
         name: jdownloader
