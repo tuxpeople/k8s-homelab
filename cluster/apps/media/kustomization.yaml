@@ -11,3 +11,4 @@ resources:
   - plex
   - plex-exporter
   - plex-meta-manager
+  - volumes.yaml
