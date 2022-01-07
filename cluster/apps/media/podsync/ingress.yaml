@@ -12,7 +12,7 @@ metadata:
     hajimari.io/appName: "podsync"
   labels:
     app: podsync
-  name: podsync-ingress
+  name: podsync
 spec:
   rules:
   - host: podsync.${SECRET_DOMAIN_ME}
@@ -20,7 +20,7 @@ spec:
       paths:
       - backend:
           service:
-            name: podsync-svc
+            name: podsync
             port:
               number: 8080
         path: /
