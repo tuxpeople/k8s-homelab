@@ -34,7 +34,6 @@ spec:
   values:
     image:
       pullPolicy: Always
-      tag: alpha
     env:
       TZ: Europe/Zurich
     strategy:
