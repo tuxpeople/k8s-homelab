@@ -21,7 +21,7 @@ spec:
       containers:
         - name: sonarr
           image: "linuxserver/sonarr:preview"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: PUID
               value: "1000"
