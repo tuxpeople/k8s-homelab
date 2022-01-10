@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "plex"
+  name: nzbget
+  labels:
+    app.kubernetes.io/name: nzbget
+spec:
+  rules:
+  - host: nzbget.${SECRET_DOMAIN_INTERNAL}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sonarr
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - nzbget.${SECRET_DOMAIN_ME}
+    secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
