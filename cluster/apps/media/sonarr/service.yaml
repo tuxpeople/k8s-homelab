@@ -1,0 +1,17 @@
+---
+# Source: sonarr/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  labels:
+    app.kubernetes.io/name: sonarr
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: sonarr
