@@ -29,9 +29,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-media-tv
+  name: nfs-media
 spec:
-  storageClassName: media-tv
+  storageClassName: media
   capacity:
     storage: 1Mi
   accessModes:
@@ -39,41 +39,14 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 10.20.30.40
-    path: "/volume1/Multimedia/TV-Shows"
+    path: "/volume1/Multimedia"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-media-tv
+  name: nfs-media
 spec:
-  storageClassName: media-tv
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Mi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nfs-media-movies
-spec:
-  storageClassName: media-movies
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    server: 10.20.30.40
-    path: "/volume1/Multimedia/Movies"
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: nfs-media-movies
-spec:
-  storageClassName: media-movies
+  storageClassName: media
   accessModes:
     - ReadWriteMany
   resources:

@@ -54,8 +54,8 @@ spec:
         existingClaim: sonarr-config
       tv:
         enabled: true
-        existingClaim: nfs-media-tv
-        mountPath: /tv
+        existingClaim: nfs-media
+        mountPath: /media
       downloads:
         enabled: true
         existingClaim: nfs-media-downloads
