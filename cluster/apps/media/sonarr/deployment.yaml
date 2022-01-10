@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: sonarr
-          image: "linuxserver/sonarr:preview"
+          image: "linuxserver/sonarr:latest"
           imagePullPolicy: Always
           env:
             - name: PUID
