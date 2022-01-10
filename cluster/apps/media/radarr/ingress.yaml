@@ -19,7 +19,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: sonarr
+            name: radarr
             port:
               number: 80
   tls:
