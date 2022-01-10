@@ -54,8 +54,8 @@ spec:
               name: media
           resources:
             limits:
-              cpu: 250m
-              memory: 512Mi
+              cpu: 1000m
+              memory: 750Mi
             requests:
               cpu: 100m
               memory: 128Mi
