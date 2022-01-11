@@ -33,8 +33,6 @@ spec:
   values:
     env:
       TZ: Europe/Zurich
-      PUID: 911
-      PGID: 911
     persistence:
       config:
         enabled: true
