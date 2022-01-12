@@ -16,3 +16,4 @@ resources:
   - radarr
   - sonarr
   - nzbget
+  - prowlarr
