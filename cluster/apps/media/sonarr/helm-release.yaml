@@ -77,3 +77,7 @@ spec:
           for: 5m
           labels:
             severity: critical
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1500Mi
