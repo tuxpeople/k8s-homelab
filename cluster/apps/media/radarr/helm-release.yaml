@@ -38,7 +38,7 @@ spec:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           hajimari.io/enable: "true"
-          hajimari.io/icon: "plex"
+          hajimari.io/icon: "filmstrip"
         enabled: true
         hosts:
         - host: radarr.${SECRET_DOMAIN_INTERNAL}
