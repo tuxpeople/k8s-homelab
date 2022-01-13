@@ -7,7 +7,7 @@ metadata:
     app: backup-test
 spec:
   suspend: false
-  schedule: "15 * * * *"
+  schedule: "20 * * * *"
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
@@ -18,40 +18,40 @@ spec:
           affinity:
             podAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
-                - podAffinityTerm:
-                    labelSelector:
-                      matchExpressions:
-                        - key: app.kubernetes.io/name
-                          operator: In
-                          values:
-                            - radarr
+              - labelSelector:
+                  matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                    - radarr
+                topologyKey: "kubernetes.io/hostname"
           restartPolicy: OnFailure
           dnsPolicy: ClusterFirst
           containers:
-            - name: backup-test
-              image: alpine
-              imagePullPolicy: Always
-              volumeMounts:
-                - mountPath: /mnt/source
-                  name: source
-                - mountPath: /mnt/destination
-                  name: destination
-              resources:
-                requests:
-                  memory: 500Mi
-                  cpu: 100m
-                limits:
-                  memory: 2000Mi
-                  cpu: 500m
-              args:
-                - /bin/sh
-                - -c
-                - "cd /mnt/; tar -czvf destination/radarr-$(date +%A).tar.gz source"
+          - name: backup-test
+            image: alpine
+            imagePullPolicy: Always
+            volumeMounts:
+            - mountPath: /mnt/source
+              name: source
+            - mountPath: /mnt/destination
+              name: destination
+            resources:
+              requests:
+                memory: 500Mi
+                cpu: 100m
+              limits:
+                memory: 2000Mi
+                cpu: 500m
+            args:
+            - /bin/sh
+            - -c
+            - "cd /mnt/; tar -czvf destination/radarr-$(date +%A).tar.gz source"
           volumes:
-            - name: source
-              persistentVolumeClaim:
-                claimName: radarr-config
-            - name: destination
-              nfs:
-                server: 10.20.30.40
-                path: "/volume1/Multimedia/backup"
+          - name: source
+            persistentVolumeClaim:
+              claimName: radarr-config
+          - name: destination
+            nfs:
+              server: 10.20.30.40
+              path: "/volume1/Multimedia/backup"
