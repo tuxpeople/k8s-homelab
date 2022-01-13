@@ -22,7 +22,7 @@ data:
 
     echo "Starting backup"
     cd /mnt/
-    tar -czvf target/${PREFIX}-${SUFFIX}.tar.gz persistentvolume
+    tar -czf target/${PREFIX}-${SUFFIX}.tar.gz persistentvolume
     cd target
 
     echo "Cleanup old backups"
