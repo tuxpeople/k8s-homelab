@@ -46,9 +46,6 @@ spec:
             - name: backupscript
               mountPath: /script
             resources:
-              requests:
-                memory: 50Mi
-                cpu: 50m
               limits:
                 memory: 1000Mi
                 cpu: 1000m
@@ -113,9 +110,6 @@ spec:
             - name: backupscript
               mountPath: /script
             resources:
-              requests:
-                memory: 50Mi
-                cpu: 50m
               limits:
                 memory: 1000Mi
                 cpu: 1000m
