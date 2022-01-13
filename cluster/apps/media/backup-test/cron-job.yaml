@@ -36,13 +36,15 @@ spec:
               value: "radarr"
             - name: FILESUFFIX
               value: "$(date '+%Y%m%d%H%M%S')"
-            - name: KEEP   # Number of file to keep +1
-              value: "4"
+            - name: KEEPFILES
+              value: "3"
             volumeMounts:
             - mountPath: /mnt/persistentvolume
               name: persistentvolume
             - mountPath: /mnt/target
               name: target
+            - name: backupscript
+              mountPath: /script
             resources:
               requests:
                 memory: 50Mi
@@ -50,10 +52,8 @@ spec:
               limits:
                 memory: 1000Mi
                 cpu: 1000m
-            args:
-            - /bin/sh
-            - -c
-            - "cd /mnt/ && tar -czvf target/${FILEPREFIX}-${FILESUFFIX}.tar.gz persistentvolume && cd target && ls -t1 | tail -n +${KEEP} | xargs rm --"
+            command: ["/bin/sh"]
+            args: ["/script/backup.sh"]
           volumes:
           - name: persistentvolume
             persistentVolumeClaim:
@@ -62,3 +62,6 @@ spec:
             nfs:
               server: 10.20.30.40
               path: "/volume1/Multimedia/backup"
+          - name: backupscript
+            configMap:
+              name: script-configmap

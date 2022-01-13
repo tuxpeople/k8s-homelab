@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script-configmap
+data:
+  backup.sh: |
+    #!/bin/sh
+
+    echo "Getting vars"
+
+    PREFIX=$(printenv FILEPREFIX)
+    SUFFIX=$(printenv FILESUFFIX)
+    num=$(printenv KEEPFILES)
+    TOKEEP=$((num+1))
+
+    echo "Do some checks"
+    echo " - checking for target dir"
+    [ -d /mnt/target ] || exit 1
+    echo " - checking for source dir"
+    [ -d /mnt/persistentvolume ] || exit 1
+
+    echo "Starting backup"
+    cd /mnt/
+    tar -czvf target/${PREFIX}-${SUFFIX}.tar.gz persistentvolume
+    cd target
+
+    echo "Cleanup old backups"
+    COUNT="0"
+    COUNT=$(ls -t1 | tail -n +${KEEP} | wc -l)
+
+    if [ "${COUNT}" -lt "1" ];
+    then
+        echo "No cleanup needed"
+    else
+        echo "Cleaning up old backups, keeping last $(printenv KEEPFILES) files:"
+        ls -t1 | tail -n +${KEEP} | xargs rm -v --
+    fi
