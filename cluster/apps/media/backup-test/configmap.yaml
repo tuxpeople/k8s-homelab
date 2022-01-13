@@ -11,7 +11,7 @@ data:
 
     echo "Getting vars"
     SUFFIX=$(date '+%Y%m%d%H%M%S')
-    TOKEEP=$((BACKUPNAME+1))
+    TOKEEP=$((KEEPFILES+1))
 
     echo "Do some checks"
     echo " - checking for target dir"
@@ -19,21 +19,21 @@ data:
     echo " - checking for source dir"
     [ -d /mnt/persistentvolume ] || exit 1
 
-    echo "I will backup /mnt/persistentvolume to /mnt/target/${BACKUPNAME}-${SUFFIX}.tar.gz. I will delete all old backups except the last $(printenv KEEPFILES)"
+    echo "I will backup /mnt/persistentvolume to /mnt/target/$BACKUPNAME-$SUFFIX.tar.gz. I will delete all old backups except the last $(printenv KEEPFILES)"
 
     echo "Starting backup"
     cd /mnt/
-    tar -czf target/${BACKUPNAME}-${SUFFIX}.tar.gz persistentvolume
+    tar -czf target/$BACKUPNAME-$SUFFIX.tar.gz.tar.gz persistentvolume
     cd target
 
     echo "Cleanup old backups"
     COUNT="0"
-    COUNT=$(ls -t1 ${BACKUPNAME}-* | tail -n +${KETOKEEPEP} | wc -l)
+    COUNT=$(ls -t1 $BACKUPNAME-* | tail -n +$TOKEEP | wc -l)
 
-    if [ "${COUNT}" -lt "1" ];
+    if [ "$COUNT" -lt "1" ];
     then
         echo "No cleanup needed"
     else
-        echo "Cleaning up old backups, keeping last $(printenv KEEPFILES) files:"
-        ls -t1 ${BACKUPNAME}-* | tail -n +${TOKEEP} | xargs rm -v --
+        echo "Cleaning up old backups, keeping last $KEEPFILES files:"
+        ls -t1 $BACKUPNAME-* | tail -n +$TOKEEP | xargs rm -v --
     fi
