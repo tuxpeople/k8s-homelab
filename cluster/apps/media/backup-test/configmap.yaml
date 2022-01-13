@@ -9,10 +9,8 @@ data:
 
     echo "Getting vars"
 
-    printenv
-
-    PREFIX=$(printenv BACKUPFILEPREFIX)
-    SUFFIX=$(printenv BACKUPFILESUFFIX)
+    PREFIX=$(printenv BACKUPNAME)
+    SUFFIX="$(date '+%Y%m%d%H%M%S')"
     num=$(printenv KEEPFILES)
     TOKEEP=$((num+1))
 

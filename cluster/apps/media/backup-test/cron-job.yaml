@@ -32,10 +32,8 @@ spec:
             image: alpine
             imagePullPolicy: Always
             env:
-            - name: BACKUPFILEPREFIX
+            - name: BACKUPNAME
               value: "radarr"
-            - name: BACKUPFILESUFFIX
-              value: "$(date '+%Y%m%d%H%M%S')"
             - name: KEEPFILES
               value: "3"
             volumeMounts:
