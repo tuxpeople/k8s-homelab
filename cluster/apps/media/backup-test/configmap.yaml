@@ -7,6 +7,8 @@ data:
   backup.sh: |
     #!/bin/sh
 
+    set -xo
+
     echo "Getting vars"
     SUFFIX=$(date '+%Y%m%d%H%M%S')
     TOKEEP=$((BACKUPNAME+1))
