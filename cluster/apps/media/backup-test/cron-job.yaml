@@ -7,7 +7,7 @@ metadata:
     app: backup-test
 spec:
   suspend: false
-  schedule: "20 * * * *"
+  schedule: "*/7 * * * *"
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
@@ -46,7 +46,7 @@ spec:
             args:
             - /bin/sh
             - -c
-            - "cd /mnt/; tar -czvf destination/radarr-$(date +%A).tar.gz source"
+            - "cd /mnt/ && tar -czvf destination/radarr-$(date '+%Y%m%d%H%M%S').tar.gz source && cd destination && ls -t1 | tail -n +4 | xargs rm --"
           volumes:
           - name: source
             persistentVolumeClaim:
