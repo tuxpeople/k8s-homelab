@@ -9,8 +9,8 @@ data:
 
     echo "Getting vars"
 
-    PREFIX=$(printenv FILEPREFIX)
-    SUFFIX=$(printenv FILESUFFIX)
+    PREFIX=$(printenv BACKUPFILEPREFIX)
+    SUFFIX=$(printenv BACKUPFILESUFFIX)
     num=$(printenv KEEPFILES)
     TOKEEP=$((num+1))
 
