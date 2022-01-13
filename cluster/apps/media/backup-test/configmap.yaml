@@ -7,8 +7,6 @@ data:
   backup.sh: |
     #!/bin/sh
 
-    set -xo
-
     echo "Getting vars"
     SUFFIX=$(date '+%Y%m%d%H%M%S')
     TOKEEP=$((KEEPFILES+1))
@@ -19,14 +17,12 @@ data:
     echo " - checking for source dir"
     [ -d /mnt/persistentvolume ] || exit 1
 
-    echo "I will backup /mnt/persistentvolume to /mnt/target/$BACKUPNAME-$SUFFIX.tar.gz. I will delete all old backups except the last $(printenv KEEPFILES)"
-
-    echo "Starting backup"
+    echo "Starting backup of /mnt/persistentvolume to /mnt/target/$BACKUPNAME-$SUFFIX.tar.gz"
     cd /mnt/
     tar -czf target/$BACKUPNAME-$SUFFIX.tar.gz.tar.gz persistentvolume
     cd target
 
-    echo "Cleanup old backups"
+    echo "Cleanup old backups except the last $(printenv KEEPFILES)"
     COUNT="0"
     COUNT=$(ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | wc -l)
 
