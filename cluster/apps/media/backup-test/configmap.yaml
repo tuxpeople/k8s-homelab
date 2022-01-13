@@ -28,12 +28,12 @@ data:
 
     echo "Cleanup old backups"
     COUNT="0"
-    COUNT=$(ls -t1 $BACKUPNAME-* | tail -n +$TOKEEP | wc -l)
+    COUNT=$(ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | wc -l)
 
     if [ "$COUNT" -lt "1" ];
     then
         echo "No cleanup needed"
     else
         echo "Cleaning up old backups, keeping last $KEEPFILES files:"
-        ls -t1 $BACKUPNAME-* | tail -n +$TOKEEP | xargs rm -v --
+        ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | xargs rm -v --
     fi
