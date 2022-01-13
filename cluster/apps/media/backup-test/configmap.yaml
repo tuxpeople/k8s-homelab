@@ -17,19 +17,26 @@ data:
     echo " - checking for source dir"
     [ -d /mnt/persistentvolume ] || exit 1
 
-    echo "Starting backup of /mnt/persistentvolume to /mnt/target/$BACKUPNAME-$SUFFIX.tar.gz"
-    cd /mnt/
-    tar -czf target/$BACKUPNAME-$SUFFIX.tar.gz.tar.gz persistentvolume
-    cd target
+    cd /mnt/persistentvolume
 
-    echo "Check if cleanup is needed"
-    COUNT="0"
-    COUNT=$(ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | wc -l)
+    for i in $(ls -1); do
+      BACKUPNAME=$i
+      echo "Starting backup of /mnt/persistentvolume/$BACKUPNAME to /mnt/target/$BACKUPNAME-$SUFFIX.tar.gz"
+      tar -czf /mnt/target/$BACKUPNAME-$SUFFIX.tar.gz.tar.gz $BACKUPNAME
+      cd /mnt/target
 
-    if [ "$COUNT" -lt "1" ];
-    then
-        echo "No cleanup needed"
-    else
-        echo "Cleaning up old backups, keeping last $KEEPFILES files:"
-        ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | xargs rm -v --
-    fi
+      echo "Check if cleanup is needed"
+      COUNT="0"
+      COUNT=$(ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | wc -l)
+
+      if [ "$COUNT" -lt "1" ];
+      then
+          echo "No cleanup needed for $BACKUPNAME"
+      else
+          echo "Cleaning up old backups, keeping last $KEEPFILES files:"
+          ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | xargs rm -v --
+      fi
+      cd /mnt/persistentvolume
+    done
+
+    echo "All Backups finished"
