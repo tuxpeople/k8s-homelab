@@ -7,7 +7,7 @@ metadata:
     app: backup-test
 spec:
   suspend: false
-  schedule: "*/5 * * * *"
+  schedule: "*/10 * * * *"
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
