@@ -18,3 +18,4 @@ resources:
   - nzbget
   - prowlarr
   - readarr
+  - backup-test
