@@ -39,11 +39,11 @@ spec:
             - name: KEEP   # Number of file to keep +1
               value: "4"
             volumeMounts:
-            - mountPath: /mnt/source
-              name: source
-            - mountPath: /mnt/destination
-              name: destination
-            resources:
+            - mountPath: /mnt/persistentvolume
+              name: persistentvolume
+            - mountPath: /mnt/target
+              name: target
+            repersistentvolumes:
               requests:
                 memory: 50Mi
                 cpu: 50m
@@ -53,12 +53,12 @@ spec:
             args:
             - /bin/sh
             - -c
-            - "cd /mnt/ && tar -czvf destination/${FILEPREFIX}-${FILESUFFIX}.tar.gz source && cd destination && ls -t1 | tail -n +${KEEP} | xargs rm --"
+            - "cd /mnt/ && tar -czvf target/${FILEPREFIX}-${FILESUFFIX}.tar.gz persistentvolume && cd target && ls -t1 | tail -n +${KEEP} | xargs rm --"
           volumes:
-          - name: source
+          - name: persistentvolume
             persistentVolumeClaim:
               claimName: radarr-config
-          - name: destination
+          - name: target
             nfs:
               server: 10.20.30.40
               path: "/volume1/Multimedia/backup"
