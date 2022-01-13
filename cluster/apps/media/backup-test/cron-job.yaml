@@ -31,6 +31,13 @@ spec:
           - name: backup-test
             image: alpine
             imagePullPolicy: Always
+            env:
+            - name: FILEPREFIX
+              value: "radarr"
+            - name: FILESUFFIX
+              value: "$(date '+%Y%m%d%H%M%S')"
+            - name: KEEP   # Number of file to keep +1
+              value: "4"
             volumeMounts:
             - mountPath: /mnt/source
               name: source
@@ -46,7 +53,7 @@ spec:
             args:
             - /bin/sh
             - -c
-            - "cd /mnt/ && tar -czvf destination/radarr-$(date '+%Y%m%d%H%M%S').tar.gz source && cd destination && ls -t1 | tail -n +4 | xargs rm --"
+            - "cd /mnt/ && tar -czvf destination/${FILEPREFIX}-${FILESUFFIX}.tar.gz source && cd destination && ls -t1 | tail -n +${KEEP} | xargs rm --"
           volumes:
           - name: source
             persistentVolumeClaim:
