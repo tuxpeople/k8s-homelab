@@ -2,12 +2,12 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: sonarr-test
+  name: backup-test
   labels:
-    app: sonarr-test
+    app: backup-test
 spec:
   suspend: false
-  schedule: "*/8 * * * *"
+  schedule: "*/10 * * * *"
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
@@ -23,12 +23,12 @@ spec:
                   - key: app.kubernetes.io/name
                     operator: In
                     values:
-                    - sonarr
+                    - radarr
                 topologyKey: "kubernetes.io/hostname"
           restartPolicy: OnFailure
           dnsPolicy: ClusterFirst
           containers:
-          - name: sonarr-test
+          - name: backup-test
             image: alpine
             imagePullPolicy: Always
             env:
@@ -39,8 +39,6 @@ spec:
             volumeMounts:
             - mountPath: /mnt/persistentvolume/radarr
               name: radarr
-            - mountPath: /mnt/persistentvolume/sonarr
-              name: sonarr
             - mountPath: /mnt/target
               name: target
             - name: backupscript
@@ -52,9 +50,6 @@ spec:
             command: ["/bin/sh"]
             args: ["/script/backup.sh"]
           volumes:
-          - name: sonarr
-            persistentVolumeClaim:
-              claimName: sonarr-config
           - name: radarr
             persistentVolumeClaim:
               claimName: radarr-config
