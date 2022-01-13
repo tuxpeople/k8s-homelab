@@ -22,7 +22,7 @@ data:
     tar -czf target/$BACKUPNAME-$SUFFIX.tar.gz.tar.gz persistentvolume
     cd target
 
-    echo "Cleanup old backups except the last $(printenv KEEPFILES)"
+    echo "Check if cleanup is needed"
     COUNT="0"
     COUNT=$(ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | wc -l)
 
