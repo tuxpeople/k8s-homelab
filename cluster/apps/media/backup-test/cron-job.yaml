@@ -2,12 +2,79 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: backup-test
+  name: sonarr-test
   labels:
-    app: backup-test
+    app: sonarr-test
 spec:
   suspend: false
-  schedule: "*/10 * * * *"
+  schedule: "*/8 * * * *"
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                    - sonarr
+                topologyKey: "kubernetes.io/hostname"
+          restartPolicy: OnFailure
+          dnsPolicy: ClusterFirst
+          containers:
+          - name: sonarr-test
+            image: alpine
+            imagePullPolicy: Always
+            env:
+            - name: BACKUPNAME
+              value: "sonarr"
+            - name: KEEPFILES
+              value: "3"
+            - name: TIMESTAMP
+              value: "date '+%Y%m%d%H%M%S'"
+            volumeMounts:
+            - mountPath: /mnt/persistentvolume
+              name: persistentvolume
+            - mountPath: /mnt/target
+              name: target
+            - name: backupscript
+              mountPath: /script
+            resources:
+              requests:
+                memory: 50Mi
+                cpu: 50m
+              limits:
+                memory: 1000Mi
+                cpu: 1000m
+            command: ["/bin/sh"]
+            args: ["/script/backup.sh"]
+          volumes:
+          - name: persistentvolume
+            persistentVolumeClaim:
+              claimName: sonarr-config
+          - name: target
+            nfs:
+              server: 10.20.30.40
+              path: "/volume1/Multimedia/backup"
+          - name: backupscript
+            configMap:
+              name: script-configmap
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: radarr-test
+  labels:
+    app: radarr-test
+spec:
+  suspend: false
+  schedule: "*/9 * * * *"
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
@@ -28,7 +95,7 @@ spec:
           restartPolicy: OnFailure
           dnsPolicy: ClusterFirst
           containers:
-          - name: backup-test
+          - name: radarr-test
             image: alpine
             imagePullPolicy: Always
             env:
