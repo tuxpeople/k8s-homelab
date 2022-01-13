@@ -36,6 +36,8 @@ spec:
               value: "radarr"
             - name: KEEPFILES
               value: "3"
+            - name: TIMESTAMP
+              value: "date '+%Y%m%d%H%M%S'"
             volumeMounts:
             - mountPath: /mnt/persistentvolume
               name: persistentvolume

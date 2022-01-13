@@ -8,7 +8,7 @@ data:
     #!/bin/sh
 
     echo "Getting vars"
-    SUFFIX=$(date '+%Y%m%d%H%M%S')
+    SUFFIX=$(eval $TIMESTAMP)
     TOKEEP=$((KEEPFILES+1))
 
     echo "Do some checks"
