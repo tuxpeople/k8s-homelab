@@ -43,7 +43,7 @@ spec:
               name: persistentvolume
             - mountPath: /mnt/target
               name: target
-            ressources:
+            resources:
               requests:
                 memory: 50Mi
                 cpu: 50m
