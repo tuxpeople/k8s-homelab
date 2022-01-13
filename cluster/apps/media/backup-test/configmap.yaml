@@ -27,12 +27,12 @@ data:
 
     echo "Cleanup old backups"
     COUNT="0"
-    COUNT=$(ls -t1 | tail -n +${KEEP} | wc -l)
+    COUNT=$(ls -t1 | tail -n +${KETOKEEPEP} | wc -l)
 
     if [ "${COUNT}" -lt "1" ];
     then
         echo "No cleanup needed"
     else
         echo "Cleaning up old backups, keeping last $(printenv KEEPFILES) files:"
-        ls -t1 | tail -n +${KEEP} | xargs rm -v --
+        ls -t1 | tail -n +${TOKEEP} | xargs rm -v --
     fi
