@@ -40,6 +40,7 @@ for i in $(kubectl get nodes -o name | cut -d'/' -f2); do
 done
 
 step "Pause for 2 minutes before enabeling monitoring"
+sleep 120
 
 step "Enable monitoring"
 for i in $(echo ${MONITORS}); do
