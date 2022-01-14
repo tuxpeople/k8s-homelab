@@ -39,18 +39,14 @@ k3s_server:
     - "feature-gates=GracefulNodeShutdown=true"
     # Allow k8s services to contain TCP and UDP on the same port
     - "feature-gates=MixedProtocolLBService=true"
-    # add support for VolumeSnapshotDataSource
-    - "feature-gates=VolumeSnapshotDataSource=true"
   # Required to monitor kube-controller-manager with kube-prometheus-stack
   kube-controller-manager-arg:
-    - "address=0.0.0.0"
     - "bind-address=0.0.0.0"
   # Required to monitor kube-proxy with kube-prometheus-stack
   kube-proxy-arg:
     - "metrics-bind-address=0.0.0.0"
   # Required to monitor kube-scheduler with kube-prometheus-stack
   kube-scheduler-arg:
-    - "address=0.0.0.0"
     - "bind-address=0.0.0.0"
   # Required to monitor etcd with kube-prometheus-stack
   etcd-expose-metrics: true
