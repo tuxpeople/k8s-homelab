@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: networking
+  name: smokeping
+spec:
+  selector:
+    matchLabels:
+      app: smokeping
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: smokeping
+    spec:
+      containers:
+        - name: smokeping
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
+          image: ghcr.io/linuxserver/smokeping:version-2.7.3-r5
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 200Mi
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /config
+              name: smokeping-config
+            - mountPath: /data
+              name: smokeping-data
+      volumes:
+        - name: smokeping-config
+          persistentVolumeClaim:
+            claimName: smokeping-config-pvc
+        - name: smokeping-data
+          persistentVolumeClaim:
+            claimName: smokeping-data-pvc

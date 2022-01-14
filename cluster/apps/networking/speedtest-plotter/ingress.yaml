@@ -2,30 +2,30 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: traefik-dashboard
   namespace: networking
+  labels:
+    app: speedtest-plotter
+  name: speedtest-plotter
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     external-dns/is-public: "true"
     external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-    traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
     hajimari.io/enable: "true"
-    hajimari.io/icon: "web"
-    hajimari.io/appName: "traefik"
+    hajimari.io/icon: "speedometer"
 spec:
   tls:
-    - hosts:
-        - "traefik.${SECRET_DOMAIN_ME}"
-      secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+      hosts:
+        - speed.${SECRET_DOMAIN_ME}
   rules:
-    - host: "traefik.${SECRET_DOMAIN_ME}"
+    - host: speed.${SECRET_DOMAIN_ME}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: traefik
+                name: speedtest-plotter
                 port:
-                  number: 9000
+                  number: 8000
