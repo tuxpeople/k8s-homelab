@@ -1,0 +1,36 @@
+---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: focal
+#   namespace: system-upgrade
+# type: Opaque
+# stringData:
+#   upgrade.sh: |
+#     #!/bin/sh
+#     set -e
+#     apt-get --assume-yes update
+#     apt-get --assume-yes dist-upgrade
+# ---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: focal
+  namespace: system-upgrade
+spec:
+  concurrency: 1
+  nodeSelector:
+    matchExpressions:
+      # - {key: plan.upgrade.cattle.io/focal, operator: Exists}
+      - {key: region, operator: In, values: ["sky"]}
+  serviceAccountName: system-upgrade
+  secrets:
+    - name: focal
+      path: /host/run/system-upgrade/secrets/focal
+  drain:
+    force: true
+  version: focal
+  upgrade:
+    image: ubuntu
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/focal/upgrade.sh"]
