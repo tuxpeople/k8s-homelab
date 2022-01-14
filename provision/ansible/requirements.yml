@@ -5,4 +5,4 @@ collections:
   - name: ansible.posix
 roles:
   - src: xanmanning.k3s
-    version: 2.12.1
+    version: v2.12.1
