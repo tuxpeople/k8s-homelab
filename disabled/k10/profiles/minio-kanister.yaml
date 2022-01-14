@@ -1,0 +1,21 @@
+---
+apiVersion: config.kio.kasten.io/v1alpha1
+kind: Profile
+metadata:
+  name: kanister-profile
+spec:
+  type: Kanister
+  kanister:
+    credential:
+      secretType: AwsAccessKey
+      secret:
+        apiVersion: v1
+        kind: secret
+        name: k10-minio-secret
+        namespace: k10
+    location:
+      type: ObjectStore
+      objectStore:
+        endpoint: http://minio.lab:9091
+        name: k10
+        objectStoreType: S3

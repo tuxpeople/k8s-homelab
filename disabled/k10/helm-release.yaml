@@ -1,0 +1,80 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: k10
+spec:
+  chart:
+    spec:
+      version: 4.0.5
+      # renovate: registryUrl=https://charts.kasten.io/
+      chart: k10
+      interval: 5m
+      sourceRef:
+        kind: HelmRepository
+        name: kasten
+        namespace: flux-system
+  interval: 5m
+  releaseName: k10
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    eula:
+      accept: true
+      company: tuxpeople-k8s-homelab
+      email: ${SECRET_EMAIL}
+    clusterName: k8s-homelab
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 20m
+      limits:
+        memory: 1Gi
+        cpu: 1000m
+    # auth:
+    #   basicAuth:
+    #     enabled: true
+    auth:
+      tokenAuth:
+        enabled: true
+      # oidcAuth:
+      #   enabled: true
+      #   providerURL: https://sso.${SECRET_DOMAIN_ME}
+      #   redirectURL: https://k10.${SECRET_DOMAIN_ME}
+      #   clientID: ${SECRET_OIDC_CLIENT_ID}
+      #   clientSecret: ${SECRET_OIDC_CLIENT_SECRET}
+      #   scopes: "openid profile email"
+      #   usernameClaim: "email"
+      #   # usernamePrefix: "-"
+    ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        external-dns/is-public: "true"
+        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "file-cabinet"
+        hajimari.io/appName: "Kasten K10"
+        hajimari.io/url: "https://k10.eighty-three.me/k10/"
+      create: true
+      host: k10.${SECRET_DOMAIN_ME}
+      tls:
+        secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+        hosts:
+        - k10.${SECRET_DOMAIN_ME}
+    injectKanisterSidecar:
+      enabled: false
+      namespaceSelector:
+        matchLabels:

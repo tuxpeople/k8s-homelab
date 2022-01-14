@@ -1,0 +1,93 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+spec:
+  releaseName: nextcloud
+  chart:
+    spec:
+      # renovate: registryUrl=https://nextcloud.github.io/helm/
+      version: 2.6.4
+      chart: nextcloud
+      sourceRef:
+        kind: HelmRepository
+        name: nextcloud
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    image:
+      repository: nextcloud
+      tag: fpm-alpine
+      pullPolicy: Always
+    ingress:
+      enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        kubernetes.io/ingress.class: traefik
+      tls:
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+          hosts:
+          - cloud.${SECRET_DOMAIN_ME}
+    nextcloud:
+      host: cloud.${SECRET_DOMAIN_ME}
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-passwords
+        usernameKey: username
+        passwordKey: password
+      extraEnv:
+        - name: NEXTCLOUD_TRUSTED_DOMAINS
+          value: "cloud.${SECRET_DOMAIN_ME} localhost"
+        - name: TRUSTED_PROXIES
+          value: 10.42.0.0/15
+    nginx:
+      enabled: true
+      image:
+        repository: nginx
+        tag: alpine
+        pullPolicy: Always
+    internalDatabase:
+      enabled: false
+    mariadb:
+      enabled: true
+      db:
+        name: nextcloud
+        user: nextcloud
+      master:
+        persistence:
+          enabled: true
+          accessMode: ReadWriteOnce
+          size: 8Gi
+    redis:
+      enabled: true
+      usePassword: true
+    cronjob:
+      enabled: true
+    persistence:
+      # Nextcloud Data (/var/www/html)
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 100Gi
+    metrics:
+      enabled: true
+
+  valuesFrom:
+  - secretKeyRef:
+    kind: Secret
+    name: secretvalues

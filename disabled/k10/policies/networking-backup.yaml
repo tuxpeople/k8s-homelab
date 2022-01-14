@@ -1,0 +1,41 @@
+---
+apiVersion: config.kio.kasten.io/v1alpha1
+kind: Policy
+metadata:
+  name: networking-backup
+spec:
+  comment: ""
+  frequency: "@daily"
+  actions:
+    - action: backup
+      backupParameters:
+        profile:
+          namespace: k10
+          name: minio
+    - action: export
+      exportParameters:
+        frequency: "@daily"
+        profile:
+          name: minio
+          namespace: k10
+        exportData:
+          enabled: true
+          overrides:
+            - storageClassName: nfs-client
+              enabled: false
+      retention:
+        daily: 7
+        weekly: 4
+        monthly: 12
+        yearly: 7
+  retention:
+    daily: 2
+    weekly: 0
+    monthly: 0
+    yearly: 0
+  selector:
+    matchExpressions:
+      - key: k10.kasten.io/appNamespace
+        operator: In
+        values:
+          - networking

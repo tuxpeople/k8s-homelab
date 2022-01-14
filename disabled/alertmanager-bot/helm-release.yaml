@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: alertmanager-bot
+  namespace: monitoring
+spec:
+  releaseName: alertmanager-bot
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts
+      chart: alertmanager-bot
+      version: 6.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    strategy:
+      type: Recreate
+    env:
+      TZ: "Europe/Zurich"
+      TELEGRAM_ADMIN: "${SECRET_TELEGRAMUSERID}"
+      TELEGRAM_TOKEN: "${SECRET_TELEGRAMTOKEN}"
+      ALERTMANAGER_URL: "http://alertmanager-operated:9093"
+    service:
+      main:
+        enabled: true
+        ports:
+          http:
+            port: 8080

@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: linkerd-web-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: "identity-forward-auth@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    ingress.kubernetes.io/custom-request-headers: l5d-dst-override:web.linkerd.svc.cluster.local:8084
+    kubernetes.io/ingress.class: "traefik"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: chip
+    hajimari.io/appName: Linkerd
+spec:
+  tls:
+    - hosts:
+        - "linkerd.${SECRET_DOMAIN_ME}"
+      ssecretName: "${SECRET_DOMAIN_ME/./-}-tls"
+  rules:
+    - host: "linkerd.${SECRET_DOMAIN_ME}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 8084

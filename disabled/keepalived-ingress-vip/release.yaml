@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: keepalived-ingress-vip
+  namespace: keepalived-ingress-vip
+spec:
+  releaseName: keepalived-ingress-vip
+  chart:
+    spec:
+      chart: chart
+      sourceRef:
+        kind: GitRepository
+        name: keepalived-ingress-vip
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    pod:
+      resources:
+        limits:
+          memory: 100Mi
+    keepalived:
+      vrrpInterfaceName: eth0
+      vipInterfaceName: eth0
+      vipAddressCidr: "192.168.8.222/24"
+      checkServiceUrl: http://localhost:80/ping

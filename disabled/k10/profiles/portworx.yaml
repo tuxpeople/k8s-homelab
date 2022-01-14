@@ -1,0 +1,18 @@
+kind: Profile
+apiVersion: config.kio.kasten.io/v1alpha1
+metadata:
+  name: portworx
+spec:
+  infra:
+    credential:
+      secretType: PortworxKey
+      secret:
+        apiVersion: v1
+        kind: secret
+        name: portworxsecret
+        namespace: k10
+    portworx:
+      namespace: kube-system
+      serviceName: portworx-service
+    type: Portworx
+  type: Infra

@@ -1,0 +1,24 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+resources:
+  - secret.sops.yaml
+  - storagecluster.yaml
+  - sc.yaml
+  - ingress.yaml
+  - alertmanager-rules.yaml
+
+generatorOptions:
+  labels:
+    grafana_dashboard: "1"
+  annotations:
+    k8s-sidecar-target-directory: "/tmp/dashboards/Portworx"
+
+configMapGenerator:
+  - name: portworx-grafana-dashboards
+    files:
+      - https://docs.portworx.com/samples/k8s/pxc/portworx-cluster-dashboard.json
+      - https://docs.portworx.com/samples/k8s/pxc/portworx-node-dashboard.json
+      - https://docs.portworx.com/samples/k8s/pxc/portworx-volume-dashboard.json
+      - https://docs.portworx.com/samples/k8s/pxc/portworx-etcd-dashboard.json

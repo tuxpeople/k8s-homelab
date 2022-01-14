@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex
+spec:
+  selector:
+    matchLabels:
+      app: plex
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: plex
+    spec:
+      containers:
+      - name: plex
+        image: ghcr.io/linuxserver/plex:1.23.2.4656-85f0adf5b-ls55
+        imagePullPolicy: Always
+        env:
+        - name: "TZ"
+          value: "Europe/Zurich"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 3000m
+            memory: 1000Mi
+        ports:
+        - containerPort: 32400
+          name: web
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /dev/dri
+          name: dri
+        - mountPath: /data
+          name: nas-multimedia
+        - mountPath: /config
+          name: plex-config
+      volumes:
+      - hostPath:
+          path: /dev/dri
+          type: Directory
+        name: dri
+      - hostPath:
+          path: /mnt/multimedia
+          type: Directory
+        name: nas-multimedia
+      - name: plex-config
+        persistentVolumeClaim:
+          claimName: plex-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: plex
+  name: plex-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plex
+  labels:
+    app: plex
+spec:
+  type: NodePort
+  ports:
+    - name: web
+      nodePort: 32400
+      port: 32400
+      protocol: TCP
+      targetPort: 32400
+  selector:
+    app: plex

@@ -1,0 +1,6 @@
+brew install step
+step certificate create root.linkerd.cluster.local ca.crt ca.key --profile root-ca --no-password --insecure --not-after=87600h
+step certificate create identity.linkerd.cluster.local issuer.crt issuer.key --profile intermediate-ca --not-after 8760h --no-password --insecure --ca ca.crt --ca-key ca.key
+cat ca.crt | /usr/bin/base64 -b0
+cat issuer.crt | /usr/bin/base64 -b0
+cat issuer.key | /usr/bin/base64 -b0
