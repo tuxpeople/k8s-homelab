@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  chart:
+    spec:
+      # renovate: registryUrl=https://helm.cilium.io/
+      chart: cilium
+      version: 1.11.0
+      sourceRef:
+        kind: HelmRepository
+        name: cilium-charts
+        namespace: flux-system
+      interval: 5m
+  releaseName: cilium
+  targetNamespace: kube-system
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+    crds: Create
+  upgrade:
+    remediation:
+      retries: 3
+    crds: CreateReplace
+  values:
+    global:
+      encryption:
+        enabled: false
+    kubeProxyReplacement: "strict"
+    rollOutCiliumPods: true
+    nodeinit:
+      enabled: true
+    hostServices:
+      enabled: true
+      hostNamespaceOnly: true
+    k8sServiceHost: 192.168.8.222
+    k8sServicePort: 6443
+    hubble:
+      metrics:
+        serviceMonitor:
+          enabled: true
+        enabled:
+          - dns:query;ignoreAAAA
+          - drop
+          - tcp
+          - flow
+          - icmp
+          - http
+          - port-distribution
+      ui:
+        enabled: true
+        rollOutPods: true
+        replicas: 1
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "telescope"
+          hosts:
+            - hubble.int.eighty-three.me
+      relay:
+        enabled: true
+        rollOutPods: true
+    containerRuntime:
+      integration: containerd
+      socketPath: /var/run/k3s/containerd/containerd.sock
+    operator:
+      replicas: 2
+      rollOutPods: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: false
+    prometheus:
+      enabled: true
+    ipam:
+      mode: "cluster-pool"
+      operator:
+        clusterPoolIPv4PodCIDR: "10.42.0.0/16"
+        clusterPoolIPv4MaskSize: 24
