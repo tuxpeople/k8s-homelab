@@ -22,3 +22,6 @@
 - include: longhorn.yml
   tags:
     - longhorn
+
+- name: Reboot
+  reboot:
