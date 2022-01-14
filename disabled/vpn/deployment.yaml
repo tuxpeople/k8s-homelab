@@ -23,27 +23,27 @@ spec:
             allowPrivilegeEscalation: true
             privileged: true
           env:
-          - name: "VPN_IPSEC_PSK"
-            valueFrom:
-              secretKeyRef:
-                name: vpn-secret
-                key: VPN_IPSEC_PSK
-          - name: "VPN_USER"
-            valueFrom:
-              secretKeyRef:
-                name: vpn-secret
-                key: VPN_USER
-          - name: "VPN_PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                name: vpn-secret
-                key: VPN_PASSWORD
-          - name: "VPN_DNS_NAME"
-            value: "vpn.${SECRET_DOMAIN_ME}"
-          - name: "VPN_DNS_SRV1"
-            value: "192.168.8.1"
-          - name: "VPN_IKEV2_ONLY"
-            value: "yes"
+            - name: "VPN_IPSEC_PSK"
+              valueFrom:
+                secretKeyRef:
+                  name: vpn-secret
+                  key: VPN_IPSEC_PSK
+            - name: "VPN_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: vpn-secret
+                  key: VPN_USER
+            - name: "VPN_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: vpn-secret
+                  key: VPN_PASSWORD
+            - name: "VPN_DNS_NAME"
+              value: "vpn.${SECRET_DOMAIN_ME}"
+            - name: "VPN_DNS_SRV1"
+              value: "192.168.8.1"
+            - name: "VPN_IKEV2_ONLY"
+              value: "yes"
           ports:
             - containerPort: 500
               hostPort: 500

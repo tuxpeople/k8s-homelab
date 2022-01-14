@@ -9,10 +9,10 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - name: wireguard
-    protocol: UDP
-    port: 51820
-    targetPort: 51820
+    - name: wireguard
+      protocol: UDP
+      port: 51820
+      targetPort: 51820
   externalTrafficPolicy: Local
   loadBalancerIP: ${SVC_WIREGUARD_ADDRESS}
   selector:

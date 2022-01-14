@@ -13,14 +13,14 @@ spec:
     yearly: 1
   selector:
     matchExpressions:
-    - key: k10.kasten.io/appNamespace
-      operator: In
-      values:
-      - k10
+      - key: k10.kasten.io/appNamespace
+        operator: In
+        values:
+          - k10
   actions:
-  - action: backup
-    backupParameters:
-      filters: {}
-      profile:
-        name: minio
-        namespace: k10
+    - action: backup
+      backupParameters:
+        filters: {}
+        profile:
+          name: minio
+          namespace: k10

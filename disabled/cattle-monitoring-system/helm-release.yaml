@@ -36,14 +36,14 @@ spec:
       ingress:
         enabled: true
         hosts:
-        - grafana2.${SECRET_DOMAIN_ME}
+          - grafana2.${SECRET_DOMAIN_ME}
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
         tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-          hosts:
-          - grafana2.${SECRET_DOMAIN_ME}
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+            hosts:
+              - grafana2.${SECRET_DOMAIN_ME}
   #     plugins:
   #     - natel-discrete-panel
   #     - pr0ps-trackmap-panel

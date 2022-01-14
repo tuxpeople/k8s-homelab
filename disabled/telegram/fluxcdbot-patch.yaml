@@ -13,10 +13,10 @@ spec:
   template:
     spec:
       containers:
-      - name: fluxcdbot
-        env:
-        - name: TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: telegram-token
-              key: token
+        - name: fluxcdbot
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-token
+                  key: token

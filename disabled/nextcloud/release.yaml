@@ -43,7 +43,7 @@ spec:
       tls:
         - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
           hosts:
-          - cloud.${SECRET_DOMAIN_ME}
+            - cloud.${SECRET_DOMAIN_ME}
     nextcloud:
       host: cloud.${SECRET_DOMAIN_ME}
       existingSecret:
@@ -86,8 +86,7 @@ spec:
       size: 100Gi
     metrics:
       enabled: true
-
   valuesFrom:
-  - secretKeyRef:
-    kind: Secret
-    name: secretvalues
+    - secretKeyRef:
+      kind: Secret
+      name: secretvalues

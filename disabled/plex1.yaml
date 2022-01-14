@@ -13,42 +13,42 @@ spec:
         app: plex
     spec:
       containers:
-      - name: plex
-        image: ghcr.io/linuxserver/plex:1.23.2.4656-85f0adf5b-ls55
-        imagePullPolicy: Always
-        env:
-        - name: "TZ"
-          value: "Europe/Zurich"
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
-            cpu: 3000m
-            memory: 1000Mi
-        ports:
-        - containerPort: 32400
-          name: web
-          protocol: TCP
-        volumeMounts:
-        - mountPath: /dev/dri
-          name: dri
-        - mountPath: /data
-          name: nas-multimedia
-        - mountPath: /config
-          name: plex-config
+        - name: plex
+          image: ghcr.io/linuxserver/plex:1.23.2.4656-85f0adf5b-ls55
+          imagePullPolicy: Always
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 3000m
+              memory: 1000Mi
+          ports:
+            - containerPort: 32400
+              name: web
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /dev/dri
+              name: dri
+            - mountPath: /data
+              name: nas-multimedia
+            - mountPath: /config
+              name: plex-config
       volumes:
-      - hostPath:
-          path: /dev/dri
-          type: Directory
-        name: dri
-      - hostPath:
-          path: /mnt/multimedia
-          type: Directory
-        name: nas-multimedia
-      - name: plex-config
-        persistentVolumeClaim:
-          claimName: plex-config
+        - hostPath:
+            path: /dev/dri
+            type: Directory
+          name: dri
+        - hostPath:
+            path: /mnt/multimedia
+            type: Directory
+          name: nas-multimedia
+        - name: plex-config
+          persistentVolumeClaim:
+            claimName: plex-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -58,7 +58,7 @@ metadata:
   name: plex-config
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi

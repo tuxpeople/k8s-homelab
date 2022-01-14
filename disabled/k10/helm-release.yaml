@@ -49,15 +49,15 @@ spec:
     auth:
       tokenAuth:
         enabled: true
-      # oidcAuth:
-      #   enabled: true
-      #   providerURL: https://sso.${SECRET_DOMAIN_ME}
-      #   redirectURL: https://k10.${SECRET_DOMAIN_ME}
-      #   clientID: ${SECRET_OIDC_CLIENT_ID}
-      #   clientSecret: ${SECRET_OIDC_CLIENT_SECRET}
-      #   scopes: "openid profile email"
-      #   usernameClaim: "email"
-      #   # usernamePrefix: "-"
+        # oidcAuth:
+        #   enabled: true
+        #   providerURL: https://sso.${SECRET_DOMAIN_ME}
+        #   redirectURL: https://k10.${SECRET_DOMAIN_ME}
+        #   clientID: ${SECRET_OIDC_CLIENT_ID}
+        #   clientSecret: ${SECRET_OIDC_CLIENT_SECRET}
+        #   scopes: "openid profile email"
+        #   usernameClaim: "email"
+        #   # usernamePrefix: "-"
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
@@ -73,7 +73,7 @@ spec:
       tls:
         secretName: "${SECRET_DOMAIN_ME/./-}-tls"
         hosts:
-        - k10.${SECRET_DOMAIN_ME}
+          - k10.${SECRET_DOMAIN_ME}
     injectKanisterSidecar:
       enabled: false
       namespaceSelector:

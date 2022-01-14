@@ -36,25 +36,25 @@ spec:
     csiDriver:
       name: "org.democratic-csi.nfs-client"
     storageClasses:
-    # changed the name from nfs-client, so it runs in parallel with nfs-client-provisioner
-    - name: synology-nfs-client
-      defaultClass: true
-    # set to Retain, so PVC will be left alone on delete
-      reclaimPolicy: Retain
-      volumeBindingMode: Immediate
-      allowVolumeExpansion: false
-      parameters:
-        fsType: nfs
-    # use nfsvers=4, since my NAS support that
-      mountOptions:
-      - noatime
-      # - nfsvers=4 mine not
-      secrets:
-        provisioner-secret:
-        controller-publish-secret:
-        node-stage-secret:
-        node-publish-secret:
-        controller-expand-secret:
+      # changed the name from nfs-client, so it runs in parallel with nfs-client-provisioner
+      - name: synology-nfs-client
+        defaultClass: true
+        # set to Retain, so PVC will be left alone on delete
+        reclaimPolicy: Retain
+        volumeBindingMode: Immediate
+        allowVolumeExpansion: false
+        parameters:
+          fsType: nfs
+          # use nfsvers=4, since my NAS support that
+        mountOptions:
+          - noatime
+        # - nfsvers=4 mine not
+        secrets:
+          provisioner-secret:
+          controller-publish-secret:
+          node-stage-secret:
+          node-publish-secret:
+          controller-expand-secret:
     volumeSnapshotClasses: []
     # only needs controller, and the csi node client daemonset
     controller:
@@ -64,13 +64,13 @@ spec:
       strategy: deployment
       hostNetwork: true
       hostIPC: true
-    # for the controller, it manually mount from the remote NFS sevrer on start, so it can dynamically create PVC (the "crude" part)
+      # for the controller, it manually mount from the remote NFS sevrer on start, so it can dynamically create PVC (the "crude" part)
       driver:
         securityContext:
           allowPrivilegeEscalation: true
           capabilities:
             add:
-            - SYS_ADMIN
+              - SYS_ADMIN
           privileged: true
         lifecycle:
           postStart:
@@ -78,7 +78,7 @@ spec:
               command: ["/bin/sh", "-c", "mkdir -p /nfs-storage; mount <my NFS server>:/nfs-storage /nfs-storage"]
           preStop:
             exec:
-              command: ["/bin/sh","-c","umount /nfs-storage"]
+              command: ["/bin/sh", "-c", "umount /nfs-storage"]
     # provide the config to controller how to map and setup a PVC
     driver:
       config:
@@ -89,7 +89,7 @@ spec:
           shareHost: 10.20.30.40
           shareBasePath: "/volume1/Kubernetes"
           controllerBasePath: "/volume1/Kubernetes"
-    # allow control to PVC creation user and permission
+          # allow control to PVC creation user and permission
           dirPermissionsMode: "0700"
           dirPermissionsUser: 1000
           dirPermissionsGroup: 1000

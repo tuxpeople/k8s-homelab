@@ -53,11 +53,11 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
           traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
         hosts:
-        - host: "homer.${SECRET_DOMAIN_ME}"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "homer.${SECRET_DOMAIN_ME}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-          hosts:
-          - homer.${SECRET_DOMAIN_ME}
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+            hosts:
+              - homer.${SECRET_DOMAIN_ME}

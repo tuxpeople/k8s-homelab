@@ -25,11 +25,11 @@ spec:
           stdin: true
           tty: true
           env:
-          - name: "ALGO_ARGS"
-            valueFrom:
-              secretKeyRef:
-                name: algo-secret
-                key: ALGO_ARGS
+            - name: "ALGO_ARGS"
+              valueFrom:
+                secretKeyRef:
+                  name: algo-secret
+                  key: ALGO_ARGS
           ports:
             - name: ssh
               containerPort: 4160
