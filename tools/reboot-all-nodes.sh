@@ -13,8 +13,8 @@ cd ${_basedir} && cd $(git rev-parse --show-toplevel)
 export KUBECONFIG=~/iCloudDrive/Allgemein/kubectl/homelab.yaml
 
 step "Disable monitoring"
-MONITORS=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Cache-Control: no-cache" -d "api_key=${SECRET}&format=json&logs=1" "https://api.uptimerobot.com/v2/getMonitors" | jq '.monitors[].id')
 SECRET=$(kubectl -n flux-system get secrets cluster-secrets -o go-template='{{ .data.SECRET_UPTIMEROBOT_APIKEY | base64decode }}')
+MONITORS=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Cache-Control: no-cache" -d "api_key=${SECRET}&format=json&logs=1" "https://api.uptimerobot.com/v2/getMonitors" | jq '.monitors[].id')
 for i in $(echo ${MONITORS}); do
   sleep 10
   curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d "api_key=${SECRET}&format=json&id=${i}&status=0" "https://api.uptimerobot.com/v2/editMonitor"
@@ -26,7 +26,7 @@ for i in $(kubectl get nodes -o name | cut -d'/' -f2); do
   ssh-keygen -R ${i}; ssh-keygen -R `dig +short ${i}`; ssh-keyscan -t rsa ${i},`dig +short ${i}` >> ~/.ssh/known_hosts
 
   step "Drain ${i}"
-  kubectl drain --ignore-daemonsets --delete-emptydir-data --force ${i}
+  kubectl drain --ignore-daemonsets --delete-emptydir-data --force --grace-period=120 ${i}
 
   step "Reboot ${i}"
   ssh ${i} -l ansible "reboot"
