@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: smtp
+  name: smtp
+  namespace: utils
+spec:
+  selector:
+    matchLabels:
+      app: smtp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: smtp
+    spec:
+      containers:
+        - image: devture/exim-relay:4.94.2-r0-3
+          imagePullPolicy: Always
+          name: smtp
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
+            - name: "smtp.int.eighty-three.me"
+            - name: "SMARTHOST"
+              value: "smtp.sendgrid.net::587"
+            - name: "SMTP_USERNAME"
+              value: "apikey"
+            - name: "SMTP_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-password
+                  key: password
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+            limits:
+              cpu: 400m
+              memory: 100Mi
+          ports:
+            - containerPort: 8025
+          livenessProbe:
+            exec:
+              command:
+                - exim
+                - '-bt'
+                - 'test@tuxpeople.org'
+            initialDelaySeconds: 10
+            periodSeconds: 10

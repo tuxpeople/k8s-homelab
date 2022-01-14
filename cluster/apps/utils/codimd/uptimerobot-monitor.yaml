@@ -1,0 +1,13 @@
+---
+apiVersion: uroperator.brennerm.github.io/v1beta1
+kind: UptimeRobotMonitor
+metadata:
+  name: codimd
+  namespace: utils
+spec:
+  friendlyName: "K8S codimd"
+  url: "https://codimd.${SECRET_DOMAIN_ME}"
+  type: HTTPS
+  httpMethod: GET
+  interval: 300
+  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"

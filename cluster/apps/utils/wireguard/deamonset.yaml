@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-setup-wireguard
+  namespace: utils
+  labels:
+    app: wireguard
+  annotations:
+    command: &cmd yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm && yum install -y kmod-wireguard
+spec:
+  selector:
+    matchLabels:
+      app: wireguard
+  template:
+    metadata:
+      labels:
+        app: wireguard
+    spec:
+      initContainers:
+        - name: init-node
+          command:
+            - nsenter
+            - --mount=/proc/1/ns/mnt
+            - --
+            - sh
+            - -c
+            - *cmd
+          image: alpine:3.15
+          securityContext:
+            privileged: true
+      containers:
+        - name: wait
+          image: k8s.gcr.io/pause:3.6
+      hostPID: true
+      hostNetwork: true
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+  updateStrategy:
+    type: RollingUpdate
