@@ -17,7 +17,7 @@
       "cluster/.+\\.yaml$"
     ],
     "ignorePaths": [
-      "cluster/core/"
+      "cluster/base/"
     ],
   },
   "regexManagers": [
