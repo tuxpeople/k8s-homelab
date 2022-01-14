@@ -2,20 +2,20 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: metrics-server
+  name: node-problem-detector
   namespace: kube-system
 spec:
-  interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://kubernetes-sigs.github.io/metrics-server
-      chart: metrics-server
-      version: 3.7.0
+      # renovate: registryUrl=https://charts.deliveryhero.io/
+      chart: node-problem-detector
+      version: 2.0.9
       sourceRef:
         kind: HelmRepository
-        name: metrics-server-charts
+        name: deliveryhero
         namespace: flux-system
       interval: 5m
+  interval: 5m
   test:
     enable: false # Enable helm test
   install:
@@ -31,8 +31,21 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    args:
-      - --kubelet-insecure-tls
-      - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-      - --kubelet-use-node-status-port
-      - --metric-resolution=15s
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    settings:
+      log_monitors:
+        - /config/kernel-monitor.json
+        - /config/abrt-adaptor.json
+        - /config/systemd-monitor.json
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    resources:
+      requests:
+        cpu: 50m
+        memory: 263M
+      limits:
+        cpu: 500m
+        memory: 512M
