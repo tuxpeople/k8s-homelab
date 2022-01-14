@@ -18,9 +18,9 @@ spec:
       interval: 5m
   dependsOn:
     - name: cert-manager
-      namespace: networking
+      namespace: cert-manager
     - name: metallb
-      namespace: networking
+      namespace: metallb-system
   test:
     enable: false # Enable helm test
   install:
