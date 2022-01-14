@@ -21,4 +21,4 @@ spec:
         - name: default
           protocol: layer2
           addresses:
-            - "${METALLB_LB_RANGE}"
+            - "${SVC_LB_RANGE}"
