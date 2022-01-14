@@ -5,16 +5,31 @@ metadata:
   name: cert-manager
   namespace: cert-manager
 spec:
-  interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.jetstack.io/
+      # renovate: registryUrl=https://charts.jetstack.io
       chart: cert-manager
       version: v1.6.1
       sourceRef:
         kind: HelmRepository
         name: jetstack-charts
         namespace: flux-system
+      interval: 5m
+  interval: 5m
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
   values:
     installCRDs: false
     webhook:
@@ -28,3 +43,7 @@ spec:
       nameservers:
         - "1.1.1.1"
         - "9.9.9.9"
+    prometheus:
+      enabled: true
+      servicemonitor:
+        enabled: true
