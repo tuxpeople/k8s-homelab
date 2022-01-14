@@ -10,3 +10,4 @@ resources:
   - networking
   - starboard-operator
   - system-upgrade
+  - namespaces
