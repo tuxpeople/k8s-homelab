@@ -1,0 +1,81 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: phpldapadmin
+  name: phpldapadmin
+  namespace: identity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpldapadmin
+  template:
+    metadata:
+      labels:
+        app: phpldapadmin
+    spec:
+      containers:
+        - image: osixia/phpldapadmin@sha256:9831569a2f3d1d764aabcb5abe6e463771b9595f1565fe3007fe77c4c3979043
+          imagePullPolicy: Always
+          name: phpldapadmin
+          env:
+            - name: PHPLDAPADMIN_LDAP_HOSTS
+              value: "openldap"
+            - name: PHPLDAPADMIN_HTTPS
+              value: "false"
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: phpldapadmin
+  name: phpldapadmin-svc
+  namespace: identity
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: phpldapadmin
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: identity
+  labels:
+    app: phpldapadmin
+  name: phpldapadmin
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+    - hosts:
+        - phpldapadmin.${SECRET_DOMAIN_INTERNAL}
+      secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+  rules:
+    - host: phpldapadmin.${SECRET_DOMAIN_INTERNAL}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: phpldapadmin
+                port:
+                  number: 80

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: dokuwiki
+  labels:
+    recurring-job-group.longhorn.io/normal: "enabled"
+    app: dokuwiki
+  name: dokuwiki-data-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi

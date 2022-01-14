@@ -1,0 +1,35 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: development
+  labels:
+    app: gollum
+  name: gollum
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    ingress.kubernetes.io/auth-type: basic
+    ingress.kubernetes.io/auth-realm: traefik
+    ingress.kubernetes.io/auth-secret: gollum-basic-auth
+    external-dns/is-public: "true"
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+    traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "file-document-edit-outline"
+spec:
+  tls:
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+      hosts:
+        - wiki2.${SECRET_DOMAIN_ME}
+  rules:
+    - host: wiki2.${SECRET_DOMAIN_ME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gollum
+                port:
+                  number: 8080

@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openldap
+  namespace: identity
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    app.kubernetes.io/name: openldap
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: openldap
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: openldap
+    spec:
+      containers:
+        - name: openldap
+          image: docker.io/bitnami/openldap:2.6.0
+          imagePullPolicy: "Always"
+          env:
+            - name: LDAP_ROOT
+              valueFrom:
+                secretKeyRef:
+                  key: ldaproot
+                  name: openldap
+            - name: LDAP_ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: adminusername
+                  name: openldap
+            - name: LDAP_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: adminpassword
+                  name: openldap
+            - name: LDAP_CUSTOM_LDIF_DIR
+              value: "/ldifs"
+            - name: BITNAMI_DEBUG
+              value: "true"
+          ports:
+            - name: tcp-ldap
+              containerPort: 1389
+          volumeMounts:
+            - name: users-ldif
+              mountPath: "/ldifs"
+              readOnly: true
+      volumes:
+        - name: users-ldif
+          secret:
+            secretName: openldap
+            items:
+              - key: 01-default-users.ldif
+                path: 01-default-users.ldif
+              - key: 02-gitlab.ldif
+                path: 02-gitlab.ldif
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openldap
+  namespace: identity
+  labels:
+    app.kubernetes.io/name: openldap
+spec:
+  type: ClusterIP
+  ports:
+    - name: tcp-ldap
+      port: 1389
+      targetPort: tcp-ldap
+  selector:
+    app.kubernetes.io/name: openldap

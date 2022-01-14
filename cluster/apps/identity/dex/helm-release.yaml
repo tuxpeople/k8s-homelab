@@ -1,0 +1,146 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dex
+  namespace: identity
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.dexidp.io
+      chart: dex
+      version: 0.6.5
+      sourceRef:
+        kind: HelmRepository
+        name: dex-chart
+        namespace: flux-system
+      interval: 5m
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  # Depends on having the sealed secret dex-helm-values un-encrypted.
+  # dependsOn:
+  #   - name: sealed-secrets
+  #     namespace: kube-system
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        external-dns/is-public: "true"
+        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+      hosts:
+        - host: sso.${SECRET_DOMAIN_ME}
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - sso.${SECRET_DOMAIN_ME}
+          secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    env:
+      KUBERNETES_POD_NAMESPACE: identity
+    config:
+      issuer: https://sso.${SECRET_DOMAIN_ME}
+      storage:
+        type: kubernetes
+        config:
+          inCluster: true
+      oauth2:
+        alwaysShowLoginScreen: false
+        responseTypes: ['code', 'token', 'id_token']
+        skipApprovalScreen: true
+      web:
+        http: 0.0.0.0:5556
+      frontend:
+        theme: 'tectonic'
+        issuer: 'eighty-three'
+        issuerUrl: 'https://${SECRET_DOMAIN_ME}'
+        logoUrl: https://camo.githubusercontent.com/5b298bf6b0596795602bd771c5bddbb963e83e0f/68747470733a2f2f692e696d6775722e636f6d2f7031527a586a512e706e67
+      expiry:
+        signingKeys: '6h'
+        idTokens: '24h'
+      logger:
+        level: debug
+        format: json
+      # Disable default email auth and only use oauth2 providers configured as connectors
+      enablePasswordDB: false
+      # Remember you can have multiple connectors of the same 'type' (with different 'id's)
+      # If you need e.g. logins with groups for two different Microsoft 'tenants'
+      staticClients:
+        - id: ${SECRET_OIDC_CLIENT_ID}
+          redirectURIs:
+            - 'https://wiki2.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://code.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://prometheus.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://alertmanager.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://change.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://grafana.${SECRET_DOMAIN_ME}/login/generic_oauth'
+            - 'https://wiki.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://traefik.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://homer.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://dashy.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://hajimari.${SECRET_DOMAIN_ME}/_oauth'
+            - 'https://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback'
+            - 'http://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback'
+            - 'https://k10.eighty-three.me/k10/auth-svc/v0/oidc/redirect'
+            - 'https://todo.eighty-three.me/auth/openid/dex'
+          name: 'SKY'
+          secret: ${SECRET_OIDC_CLIENT_SECRET}
+      connectors:
+        - type: ldap
+          name: OpenLDAP
+          id: ldap
+          config:
+            # The following configurations seem to work with OpenLDAP:
+            #
+            # 1) Plain LDAP, without TLS:
+            host: openldap:1389
+            insecureNoSSL: true
+            #
+            # 2) LDAPS without certificate validation:
+            # host: localhost:636
+            # insecureNoSSL: false
+            # insecureSkipVerify: true
+            #
+            # 3) LDAPS with certificate validation:
+            # host: YOUR-HOSTNAME:636
+            # insecureNoSSL: false
+            # insecureSkipVerify: false
+            # rootCAData: 'CERT'
+            # ...where CERT="$( base64 -w 0 your-cert.crt )"
+
+            # This would normally be a read-only user.
+            bindDN: ${SECRET_LDAP_BIND_DN}
+            bindPW: ${SECRET_LDAP_BIND_PW}
+            usernamePrompt: Username
+            userSearch:
+              baseDN: ou=users,dc=sky,dc=lab
+              filter: "(objectClass=person)"
+              username: sn
+              # "DN" (case sensitive) is a special attribute name. It indicates that
+              # this value should be taken from the entity's DN not an attribute on
+              # the entity.
+              idAttr: DN
+              emailAttr: mail
+              nameAttr: cn
+            groupSearch:
+              baseDN: ou=users,dc=sky,dc=lab
+              filter: "(objectClass=groupOfNames)"
+              userAttr: DN
+              groupAttr: member
+              # The group name should be the "cn" value.
+              nameAttr: cn
