@@ -1,0 +1,63 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mealie
+  namespace: apps
+spec:
+  releaseName: mealie
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts
+      chart: mealie
+      version: 3.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    env:
+      TZ: "Europe/Zurich"
+      DB_ENGINE: sqlite
+      DEFAULT_EMAIL: thomas@${SECRET_DOMAIN_ME}
+      BASE_URL: https://mealie.${SECRET_DOMAIN_INTERNAL}
+    strategy:
+      type: Recreate
+    persistence:
+      config:
+        enabled: true
+        existingClaim: mealie-config-pvc
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "chef-hat"
+        hosts:
+          - host: "mealie.${SECRET_DOMAIN_INTERNAL}"
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix
+    postgresql:
+      persistence:
+        enabled: true
+        existingClaim: data-mealie-postgresql-0-pvc

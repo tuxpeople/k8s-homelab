@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: apps
+  name: octoprint
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+    external-dns/is-public: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "printer-3d-nozzle"
+spec:
+  tls:
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+      hosts:
+        - print.${SECRET_DOMAIN_ME}
+  rules:
+    - host: print.${SECRET_DOMAIN_ME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: octoprint
+                port:
+                  number: 80
