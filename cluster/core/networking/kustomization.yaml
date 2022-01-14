@@ -4,6 +4,4 @@ kind: Kustomization
 resources:
   - cloudflare-ddns
   - external-dns
-  - metallb
   - secret.sops.yaml
-  - cert-manager
