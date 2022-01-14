@@ -1,0 +1,20 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: media
+resources:
+  - gaps
+  - jdownloader
+  - podsync
+  - tautulli
+  - plex
+  - plex-exporter
+  - plex-meta-manager
+  - volumes.yaml
+  - ombi
+  - radarr
+  - sonarr
+  - nzbget
+  # - prowlarr
+  # - readarr
+  # - backup-test

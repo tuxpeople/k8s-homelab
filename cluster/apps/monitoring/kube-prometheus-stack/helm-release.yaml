@@ -1,0 +1,296 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  chart:
+    spec:
+      # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      version: 30.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    alertmanager:
+      enabled: true
+      config:
+        #  global:
+        #  smtp_smarthost: smtp.gmail.com:587
+        #  smtp_auth_username: you@gmail.com
+        #  smtp_auth_password: yourapppassword # https://support.google.com/mail/answer/185833?hl=en-GB
+        #  smtp_auth_identity: you@gmail.com
+        route:
+          group_by: ['job']
+          group_wait: 5m
+          group_interval: 10m
+          repeat_interval: 1h
+          receiver: discord
+          routes:
+            - match:
+                alertname: Watchdog
+              receiver: 'DeadMansSnitch'
+              repeat_interval: 30m
+            - match:
+                alertname: CPUThrottlingHigh
+              receiver: 'email'
+            - match:
+                alertname: KubeMemoryOvercommit
+              receiver: 'email'
+            - match:
+                alertname: KubeCPUOvercommit
+              receiver: 'email'
+            - match:
+                alertname: KubeletTooManyPods
+              receiver: 'email'
+              # - receiver: discord
+              #   group_wait: 10s
+              #   match_re:
+              #     issue: Portworx*
+              #   continue: true
+        receivers:
+          - name: 'null'
+          - name: email
+            email_configs:
+              - send_resolved: true
+                to: "${SECRET_EMAIL}"
+                from: "prometheus@tuxpeople.org"
+                smarthost: "smtp.utils.svc.cluster.local:25"
+                require_tls: false
+          - name: DeadMansSnitch
+            webhook_configs:
+              - url: "https://nosnch.in/c15491ac44"
+                send_resolved: false
+          - name: discord
+            webhook_configs:
+              - send_resolved: true
+                url: 'http://alertmanager-discord:9094'
+        # Inhibition rules allow to mute a set of alerts given that another alert is firing.
+        # We use this to mute any warning-level notifications if the same alert is already critical.
+        inhibit_rules:
+          - source_match:
+              severity: 'critical'
+            target_match:
+              severity: 'warning'
+            # Apply inhibition if the alertname is the same.
+            equal: ['alertname', 'namespace']
+      alertmanagerSpec:
+        replicas: 1
+        # podAntiAffinity: "soft"
+        storage:
+          volumeClaimTemplate:
+            spec:
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 1Gi
+        resources:
+          limits:
+            cpu: 500m
+            memory: 400Mi
+            #   requests:
+            #     cpu: 25m
+            #     memory: 32Mi
+            # priorityClassName: high-priority
+      alertmanagerConfigSelector:
+        matchLabels:
+          alertmanagerConfig: homelab
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
+        tls:
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+            hosts:
+              - alertmanager.${SECRET_DOMAIN_ME}
+        hosts:
+          - alertmanager.${SECRET_DOMAIN_ME}
+    nodeExporter:
+      serviceMonitor:
+        relabelings:
+          - action: replace
+            regex: (.*)
+            replacement: $1
+            sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: kubernetes_node
+    grafana:
+      enabled: false
+    # Disable etcd monitoring. See https://github.com/cablespaghetti/k3s-monitoring/issues/4
+    kubeEtcd:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    prometheus:
+      enabled: true
+      persistentVolume:
+        enabled: true
+        size: 10Gi
+      prometheusSpec:
+        replicas: 1
+        # resources:
+        #   limits:
+        #     cpu: 300m
+        #     memory: 1500Mi
+        podAntiAffinity: "hard"
+        ruleSelector: {}
+        ruleNamespaceSelector: {}
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelector: {}
+        podMonitorNamespaceSelector: {}
+        scrape_interval: 10s
+        podMonitorSelectorNilUsesHelmValues: false
+        retention: 14d
+        enableAdminAPI: true
+        walCompression: true
+        additionalScrapeConfigs:
+          - job_name: 'octoprint'
+            scrape_interval: 5s
+            metrics_path: '/plugin/prometheus_exporter/metrics'
+            params:
+              apikey: ['${SECRET_OCTOPRINTAPI}']
+            static_configs:
+              - targets: ['octopi.home:80']
+          - job_name: 'speedtest-exporter'
+            scrape_interval: 1m
+            scrape_timeout: 30s
+            static_configs:
+              - targets: ['speedtest-exporter:9798']
+          - job_name: 'mystrom-exporter'
+            scrape_interval: 1m
+            scrape_timeout: 30s
+            static_configs:
+              - targets: ['mystrom-3dprinter:9452']
+                labels:
+                  alias: "3D Drucker"
+          - job_name: 'node-exporter'
+            honor_timestamps: true
+            basic_auth:
+              username: randomuser
+              password: examplepassword
+            static_configs:
+              - targets: ['192.168.8.11:9100'] # lab1
+                labels:
+                  alias: lab1
+              - targets: ['192.168.8.12:9100'] # lab2
+                labels:
+                  alias: lab2
+              - targets: ['192.168.8.13:9100'] # lab2
+                labels:
+                  alias: lab3
+              - targets: ['192.168.8.14:9100'] # lab2
+                labels:
+                  alias: lab4
+          - job_name: 'kubernetes-service-endpoints'
+            kubernetes_sd_configs:
+              - role: endpoints
+            relabel_configs:
+              - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+                action: keep
+                regex: true
+              - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
+                action: replace
+                target_label: __scheme__
+                regex: (https?)
+              - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+                action: replace
+                target_label: __metrics_path__
+                regex: (.+)
+              - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+                action: replace
+                target_label: __address__
+                regex: ([^:]+)(?::\d+)?;(\d+)
+                replacement: $1:$2
+              - action: labelmap
+                regex: __meta_kubernetes_service_label_(.+)
+              - source_labels: [__meta_kubernetes_namespace]
+                action: replace
+                target_label: kubernetes_namespace
+              - source_labels: [__meta_kubernetes_service_name]
+                action: replace
+                target_label: kubernetes_name
+              - source_labels: [__meta_kubernetes_pod_node_name]
+                action: replace
+                target_label: kubernetes_node
+          # Kubernetes API
+          - job_name: kubernetes-apiserver
+            kubernetes_sd_configs:
+              - role: endpoints
+                namespaces:
+                  names:
+                    - default
+            scheme: https
+            tls_config:
+              ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              insecure_skip_verify: true
+            bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+            relabel_configs:
+              - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+                action: keep
+                regex: kubernetes;https
+        # Kubernetes pods
+        scrape_configs:
+          - job_name: 'kubernetes-pods'
+            kubernetes_sd_configs:
+              - role: pod
+            relabel_configs:
+              - action: labelmap
+                regex: __meta_kubernetes_pod_label_(.+)
+              - source_labels: [__meta_kubernetes_namespace]
+                action: replace
+                target_label: namespace
+              - source_labels: [__meta_kubernetes_pod_name]
+                action: replace
+                target_label: pod
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+          traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
+        tls:
+          - secretName: prometheus-tls
+            hosts:
+              - prometheus.${SECRET_DOMAIN_ME}
+        hosts:
+          - prometheus.${SECRET_DOMAIN_ME}

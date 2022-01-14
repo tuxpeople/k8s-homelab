@@ -1,0 +1,143 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+spec:
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts
+      chart: plex
+      interval: 5m
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      version: 6.0.0
+  interval: 5m
+  releaseName: plex
+  test:
+    enable: false # Enable helm test
+  install:
+    remediation: # perform remediation when helm install fails
+      retries: 5
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    image:
+      # -- image repository
+      repository: ghcr.io/linuxserver/plex
+      # -- image tag
+      tag: latest
+      # -- image pull policy
+      pullPolicy: Always
+    priorityClassName: high-priority
+    env:
+      TZ: Europe/Zurich
+      VERSION: public
+      # PLEX_CLAIM: claim-xxxxxxxxx
+    strategy:
+      type: Recreate
+    service:
+      main:
+        primary: true
+        type: LoadBalancer
+        loadBalancerIP: "${SVC_PLEX_ADDR}"
+        externalTrafficPolicy: Local
+        annotations:
+          metallb.universe.tf/allow-shared-ip: plex
+        ports:
+          http:
+            enabled: true
+            port: 32400
+            protocol: HTTP
+      gdm:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: "${SVC_PLEX_ADDR}"
+        externalTrafficPolicy: Local
+        annotations:
+          metallb.universe.tf/allow-shared-ip: plex
+        ports:
+          gdm1:
+            enabled: true
+            port: 32410
+            protocol: UDP
+            targetPort: 32410
+          gdm2:
+            enabled: true
+            port: 32412
+            protocol: UDP
+            targetPort: 32412
+          gdm3:
+            enabled: true
+            port: 32413
+            protocol: UDP
+            targetPort: 32413
+          gdm4:
+            enabled: true
+            port: 32414
+            protocol: UDP
+            targetPort: 32414
+    persistence:
+      config:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: 10.20.30.40
+            path: /volume1/Plex
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: 10.20.30.40
+            path: /volume1/Multimedia
+        mountPath: /data
+        readOnly: true
+      dri:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+        mountPath: /dev/dri
+        hostPathType: "Directory"
+        readOnly: false
+    ingress:
+      main:
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "plex"
+        enabled: true
+        hosts:
+          - host: plex.${SECRET_DOMAIN_ME}
+            paths:
+              - path: /
+                pathType: Prefix
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "plex-promtail"
+    addons:
+      promtail:
+        enabled: true
+        image:
+          repository: grafana/promtail
+        loki: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+        logs:
+          - name: promtail/plex
+            path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
+          - name: promtail/plex/plugins
+            path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
+        volumeMounts:
+          - name: config
+            mountPath: /config
+            readOnly: true
+        securityContext:
+          runAsUser: 0

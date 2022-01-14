@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script-configmap
+data:
+  backup.sh: |
+    #!/bin/sh
+
+    echo "Getting vars"
+    SUFFIX=$(eval $TIMESTAMP)
+    TOKEEP=$((KEEPFILES+1))
+
+    echo "Do some checks"
+    echo " - checking for target dir"
+    [ -d /mnt/target ] || exit 1
+    echo " - checking for source dir"
+    [ -d /mnt/persistentvolume ] || exit 1
+
+    cd /mnt/persistentvolume
+
+    for i in $(ls -1); do
+      BACKUPNAME=$i
+      echo "Starting backup of /mnt/persistentvolume/$BACKUPNAME to /mnt/target/$BACKUPNAME-$SUFFIX.tar.gz"
+      tar -czf /mnt/target/$BACKUPNAME-$SUFFIX.tar.gz.tar.gz $BACKUPNAME
+      cd /mnt/target
+
+      echo "Check if cleanup is needed"
+      COUNT="0"
+      COUNT=$(ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | wc -l)
+
+      if [ "$COUNT" -lt "1" ];
+      then
+          echo "No cleanup needed for $BACKUPNAME"
+      else
+          echo "Cleaning up old backups, keeping last $KEEPFILES files:"
+          ls -t1 | grep $BACKUPNAME | tail -n +$TOKEEP | xargs rm -v --
+      fi
+      cd /mnt/persistentvolume
+    done
+
+    echo "All Backups finished"
