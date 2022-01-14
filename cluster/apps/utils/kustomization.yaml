@@ -5,11 +5,11 @@ namespace: utils
 resources:
   - back8sup
   - bastion
-  - codimd
-  - hasteserver
+  # - codimd
+  # - hasteserver
   - namespace.yaml
-  - onetimesecret
-  - sharry
+  # - onetimesecret
+  # - sharry
   - smtp
   - static
   - wireguard
