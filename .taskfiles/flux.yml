@@ -12,5 +12,5 @@ tasks:
     cmds:
       - flux reconcile kustomization crds
       - flux reconcile kustomization flux-system
-      - flux reconcile kustomization base
+      - flux reconcile kustomization core
       - flux reconcile kustomization apps
