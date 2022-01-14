@@ -5,5 +5,4 @@ namespace: identity
 resources:
   - dex
   - ldap
-  - namespace.yaml
   - traefik-forward-auth
