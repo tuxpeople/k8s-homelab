@@ -46,11 +46,11 @@ spec:
           hajimari.io/icon: "filmstrip"
         enabled: true
         hosts:
-        - host: gaps.${SECRET_DOMAIN_INTERNAL}
-          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: gaps.${SECRET_DOMAIN_INTERNAL}
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix
     persistence:
       data:
         enabled: true

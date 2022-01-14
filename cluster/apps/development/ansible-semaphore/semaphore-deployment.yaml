@@ -20,57 +20,57 @@ spec:
       securityContext:
         fsGroup: 1000
       containers:
-      - image: ansiblesemaphore/semaphore:v2.8.23
-        imagePullPolicy: Always
-        env:
-        - name: "SEMAPHORE_DB_USER"
-          value: "root"
-        - name: "SEMAPHORE_DB_PASS"
-          valueFrom:
-            secretKeyRef:
-              name: ansible-semaphore-secret
-              key: mariadb-root-password
-        - name: "SEMAPHORE_DB_HOST"
-          value: "mariadb"
-        - name: "SEMAPHORE_DB_PORT"
-          value: "3306"
-        - name: "SEMAPHORE_DB"
-          value: "semaphore"
-        - name: "SEMAPHORE_PLAYBOOK_PATH"
-          value: "/tmp/semaphore/"
-        - name: "SEMAPHORE_ADMIN_PASSWORD"
-          valueFrom:
-            secretKeyRef:
-              name: ansible-semaphore-secret
-              key: semaphore-admin-password
-        - name: "SEMAPHORE_ADMIN_NAME"
-          value: "admin"
-        - name: "SEMAPHORE_ADMIN_EMAIL"
-          value: "${SECRET_EMAIL}"
-        - name: "SEMAPHORE_ADMIN"
-          value: "admin"
-        name: semaphore
-        ports:
-        - containerPort: 3000
-          protocol: TCP
-        volumeMounts:
-        - mountPath: /etc/semaphore
-          name: semaphore-etc
-        - mountPath: /tmp
-          name: tmp
-        resources:
-          limits:
-            cpu: 500m
-            memory: 200Mi
-          requests:
-            cpu: 100m
-            memory: 100Mi
+        - image: ansiblesemaphore/semaphore:v2.8.23
+          imagePullPolicy: Always
+          env:
+            - name: "SEMAPHORE_DB_USER"
+              value: "root"
+            - name: "SEMAPHORE_DB_PASS"
+              valueFrom:
+                secretKeyRef:
+                  name: ansible-semaphore-secret
+                  key: mariadb-root-password
+            - name: "SEMAPHORE_DB_HOST"
+              value: "mariadb"
+            - name: "SEMAPHORE_DB_PORT"
+              value: "3306"
+            - name: "SEMAPHORE_DB"
+              value: "semaphore"
+            - name: "SEMAPHORE_PLAYBOOK_PATH"
+              value: "/tmp/semaphore/"
+            - name: "SEMAPHORE_ADMIN_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: ansible-semaphore-secret
+                  key: semaphore-admin-password
+            - name: "SEMAPHORE_ADMIN_NAME"
+              value: "admin"
+            - name: "SEMAPHORE_ADMIN_EMAIL"
+              value: "${SECRET_EMAIL}"
+            - name: "SEMAPHORE_ADMIN"
+              value: "admin"
+          name: semaphore
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/semaphore
+              name: semaphore-etc
+            - mountPath: /tmp
+              name: tmp
+          resources:
+            limits:
+              cpu: 500m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
       volumes:
-      - name: semaphore-etc
-        persistentVolumeClaim:
-          claimName: semaphore-data-pvc
-      - name: tmp
-        emptyDir:
+        - name: semaphore-etc
+          persistentVolumeClaim:
+            claimName: semaphore-data-pvc
+        - name: tmp
+          emptyDir:
 ---
 apiVersion: v1
 kind: Service
@@ -81,10 +81,10 @@ metadata:
   namespace: development
 spec:
   ports:
-  - name: http
-    port: 3000
-    protocol: TCP
-    targetPort: 3000
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
   selector:
     app: semaphore
   type: ClusterIP
@@ -103,17 +103,17 @@ metadata:
   namespace: development
 spec:
   rules:
-  - host: semaphore.${SECRET_DOMAIN_ME}
-    http:
-      paths:
-      - backend:
-          service:
-            name: semaphore-svc
-            port:
-              number: 3000
-        path: /
-        pathType: Prefix
+    - host: semaphore.${SECRET_DOMAIN_ME}
+      http:
+        paths:
+          - backend:
+              service:
+                name: semaphore-svc
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-    - semaphore.${SECRET_DOMAIN_ME}
-    secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    - hosts:
+        - semaphore.${SECRET_DOMAIN_ME}
+      secretName: "${SECRET_DOMAIN_ME/./-}-tls"

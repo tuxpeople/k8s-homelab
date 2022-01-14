@@ -52,11 +52,11 @@ spec:
           hajimari.io/icon: "notebook"
           hajimari.io/appName: "hasteserver"
         tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-          hosts:
-          - paste.${SECRET_DOMAIN_ME}
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+            hosts:
+              - paste.${SECRET_DOMAIN_ME}
         hosts:
-        - host: "paste.${SECRET_DOMAIN_ME}"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "paste.${SECRET_DOMAIN_ME}"
+            paths:
+              - path: /
+                pathType: Prefix

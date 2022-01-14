@@ -9,7 +9,7 @@ metadata:
   namespace: utils
 spec:
   ports:
-  - port: 6379
+    - port: 6379
   selector:
     app: onetimesecret
     component: redis

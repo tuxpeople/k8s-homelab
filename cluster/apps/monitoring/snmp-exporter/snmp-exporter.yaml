@@ -13,8 +13,8 @@ spec:
     app.kubernetes.io/name: snmp-exporter
     app.kubernetes.io/instance: snmp-exporter
   ports:
-  - name: monitoring
-    port: 9116
+    - name: monitoring
+      port: 9116
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -31,19 +31,19 @@ spec:
       app.kubernetes.io/name: snmp-exporter
       app.kubernetes.io/instance: snmp-exporter
   endpoints:
-  - interval: 180s
-    port: monitoring
-    scrapeTimeout: 60s
-    params:
-      module:
-      - synology
-      target:
-      - 10.20.30.40
-    path: "/snmp"
-    targetPort: 9116
-    relabelings:
-    - sourceLabels: [__param_target]
-      targetLabel: instance
+    - interval: 180s
+      port: monitoring
+      scrapeTimeout: 60s
+      params:
+        module:
+          - synology
+        target:
+          - 10.20.30.40
+      path: "/snmp"
+      targetPort: 9116
+      relabelings:
+        - sourceLabels: [__param_target]
+          targetLabel: instance
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -66,24 +66,24 @@ spec:
         app.kubernetes.io/instance: snmp-exporter
     spec:
       containers:
-      - name: snmp-exporter
-        image: quay.io/prometheus/snmp-exporter:v0.20.0
-        imagePullPolicy: IfNotPresent
-        ports:
-        - name: monitoring
-          containerPort: 9116
-        volumeMounts:
-        - name: snmp-etc
-          mountPath: /etc/snmp_exporter/snmp.yaml
-          subPath: snmp.yaml
-          readOnly: true
+        - name: snmp-exporter
+          image: quay.io/prometheus/snmp-exporter:v0.20.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: monitoring
+              containerPort: 9116
+          volumeMounts:
+            - name: snmp-etc
+              mountPath: /etc/snmp_exporter/snmp.yaml
+              subPath: snmp.yaml
+              readOnly: true
       volumes:
-      - name: snmp-etc
-        projected:
-          defaultMode: 0444
-          sources:
-          - configMap:
-              name: snmp-exporter
-              items:
-              - key: snmp.yaml
-                path: snmp.yaml
+        - name: snmp-etc
+          projected:
+            defaultMode: 0444
+            sources:
+              - configMap:
+                  name: snmp-exporter
+                  items:
+                    - key: snmp.yaml
+                      path: snmp.yaml

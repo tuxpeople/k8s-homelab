@@ -49,11 +49,11 @@ spec:
           hajimari.io/icon: "cloud-search"
         enabled: true
         hosts:
-        - host: prowlarr.${SECRET_DOMAIN_INTERNAL}
-          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: prowlarr.${SECRET_DOMAIN_INTERNAL}
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix
     resources:
       requests:
         memory: 100Mi

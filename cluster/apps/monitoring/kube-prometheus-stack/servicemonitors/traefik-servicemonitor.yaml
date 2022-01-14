@@ -10,10 +10,10 @@ metadata:
   namespace: monitoring
 spec:
   endpoints:
-  - port: metrics
+    - port: metrics
   namespaceSelector:
     matchNames:
-    - kube-system
+      - kube-system
   selector:
     matchLabels:
       app: traefik

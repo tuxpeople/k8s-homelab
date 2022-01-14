@@ -118,10 +118,10 @@ spec:
           hajimari.io/icon: "plex"
         enabled: true
         hosts:
-        - host: plex.${SECRET_DOMAIN_ME}
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: plex.${SECRET_DOMAIN_ME}
+            paths:
+              - path: /
+                pathType: Prefix
     podAnnotations:
       configmap.reloader.stakater.com/reload: "plex-promtail"
     addons:
@@ -131,13 +131,13 @@ spec:
           repository: grafana/promtail
         loki: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
         logs:
-        - name: promtail/plex
-          path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
-        - name: promtail/plex/plugins
-          path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
+          - name: promtail/plex
+            path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
+          - name: promtail/plex/plugins
+            path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
         volumeMounts:
-        - name: config
-          mountPath: /config
-          readOnly: true
+          - name: config
+            mountPath: /config
+            readOnly: true
         securityContext:
           runAsUser: 0

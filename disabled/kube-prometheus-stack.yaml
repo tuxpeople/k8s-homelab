@@ -41,7 +41,6 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
-
     prometheus:
       prometheusSpec:
         storageSpec:
@@ -55,8 +54,7 @@ spec:
           - job_name: 'unifipoller'
             scrape_interval: 30s
             static_configs:
-            - targets: ['unifi-poller:9130']
-
+              - targets: ['unifi-poller:9130']
     grafana:
       adminPassword: highly-secure-production-password
       persistence:
@@ -69,13 +67,13 @@ spec:
       ingress:
         enabled: true
         hosts:
-        - grafana.${SECRET_DOMAIN_ME}
+          - grafana.${SECRET_DOMAIN_ME}
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
         tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-          hosts:
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+            hosts:
               - grafana.${SECRET_DOMAIN_ME}
       grafana.ini:
         server:
@@ -86,7 +84,7 @@ spec:
         datasources.yaml:
           apiVersion: 1
           datasources:
-          - name: Loki
-            type: loki
-            access: proxy
-            url: http://loki:3100
+            - name: Loki
+              type: loki
+              access: proxy
+              url: http://loki:3100

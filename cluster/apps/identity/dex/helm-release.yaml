@@ -126,9 +126,7 @@ spec:
             # This would normally be a read-only user.
             bindDN: ${SECRET_LDAP_BIND_DN}
             bindPW: ${SECRET_LDAP_BIND_PW}
-
             usernamePrompt: Username
-
             userSearch:
               baseDN: ou=users,dc=sky,dc=lab
               filter: "(objectClass=person)"
@@ -139,13 +137,10 @@ spec:
               idAttr: DN
               emailAttr: mail
               nameAttr: cn
-
             groupSearch:
               baseDN: ou=users,dc=sky,dc=lab
               filter: "(objectClass=groupOfNames)"
-
               userAttr: DN
               groupAttr: member
-
               # The group name should be the "cn" value.
               nameAttr: cn

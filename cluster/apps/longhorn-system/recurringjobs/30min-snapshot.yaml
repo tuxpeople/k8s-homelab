@@ -8,6 +8,6 @@ spec:
   concurrency: 2
   cron: 0/30 * * * *
   groups:
-  - normal
+    - normal
   retain: 4
   task: snapshot

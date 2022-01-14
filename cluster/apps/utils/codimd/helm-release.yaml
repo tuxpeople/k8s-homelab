@@ -49,17 +49,17 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "language-markdown"
       tls:
-      - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-        hosts:
-        - codimd.${SECRET_DOMAIN_ME}
+        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+          hosts:
+            - codimd.${SECRET_DOMAIN_ME}
       hosts:
-      - host: "codimd.${SECRET_DOMAIN_ME}"
-        paths:
-        - /
+        - host: "codimd.${SECRET_DOMAIN_ME}"
+          paths:
+            - /
     codimd:
       imageStorePersistentVolume:
         accessModes:
-        - ReadWriteOnce
+          - ReadWriteOnce
         enabled: true
         size: 10Gi
         storageClass: "longhorn"

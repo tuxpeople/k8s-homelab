@@ -15,25 +15,25 @@ spec:
         app: dokuwiki
     spec:
       containers:
-      - name: dokuwiki
-        env:
-        - name: "TZ"
-          value: "Europe/Zurich"
-        image: ghcr.io/linuxserver/dokuwiki:2020-07-29-ls83
-        imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
-            cpu: 500m
-            memory: 200Mi
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - mountPath: /config
-          name: dokuwiki-data
+        - name: dokuwiki
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
+          image: ghcr.io/linuxserver/dokuwiki:2020-07-29-ls83
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 200Mi
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /config
+              name: dokuwiki-data
       volumes:
-      - name: dokuwiki-data
-        persistentVolumeClaim:
-          claimName: dokuwiki-data-pvc
+        - name: dokuwiki-data
+          persistentVolumeClaim:
+            claimName: dokuwiki-data-pvc

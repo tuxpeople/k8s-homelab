@@ -9,7 +9,7 @@ metadata:
   namespace: utils
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 50Mi

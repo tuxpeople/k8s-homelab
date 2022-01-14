@@ -7,7 +7,6 @@ resources:
   - bastion
   # - codimd
   # - hasteserver
-  - namespace.yaml
   # - onetimesecret
   # - sharry
   - smtp

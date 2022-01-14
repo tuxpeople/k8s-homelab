@@ -7,4 +7,3 @@ resources:
   - code-server
   - dokuwiki
   - gollum
-  - namespace.yaml

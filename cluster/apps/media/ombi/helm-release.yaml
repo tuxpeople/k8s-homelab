@@ -35,14 +35,12 @@ spec:
       TZ: Europe/Zurich
       PUID: 911
       PGID: 911
-
     persistence:
       config:
         enabled: true
         emptyDir: false
         mountPath: /config
         existingClaim: "ombi-config"
-
     ingress:
       main:
         annotations:
@@ -52,8 +50,8 @@ spec:
           hajimari.io/icon: "plex"
         enabled: true
         hosts:
-        - host: ombi.${SECRET_DOMAIN_INTERNAL}
-          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: ombi.${SECRET_DOMAIN_INTERNAL}
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix

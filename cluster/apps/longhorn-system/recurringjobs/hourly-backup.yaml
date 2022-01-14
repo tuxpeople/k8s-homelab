@@ -8,6 +8,6 @@ spec:
   concurrency: 2
   cron: 15 * * * *
   groups:
-  - normal
+    - normal
   retain: 6
   task: backup

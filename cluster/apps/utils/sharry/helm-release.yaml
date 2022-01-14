@@ -49,14 +49,14 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "share-variant"
         hosts:
-        - host: "share.${SECRET_DOMAIN_ME}"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "share.${SECRET_DOMAIN_ME}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-          hosts:
-          - "share.${SECRET_DOMAIN_ME}"
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+            hosts:
+              - "share.${SECRET_DOMAIN_ME}"
     config: |
       sharry.restserver {
         # base-url = "https://share.${SECRET_DOMAIN_ME}"

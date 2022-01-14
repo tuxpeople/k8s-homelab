@@ -7,9 +7,9 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 25
-    targetPort: 8025
-    protocol: TCP
-    name: http
+    - port: 25
+      targetPort: 8025
+      protocol: TCP
+      name: http
   selector:
     app: smtp

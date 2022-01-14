@@ -14,44 +14,44 @@ spec:
         app: jdownloader
     spec:
       containers:
-      - env:
-        - name: MYJD_DEVICE_NAME
-          value: kubernetes
-        - name: MYJD_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: myjd-creds
-              key: MYJD_PASSWORD
-        - name: MYJD_USER
-          valueFrom:
-            secretKeyRef:
-              name: myjd-creds
-              key: MYJD_USER
-        - name: TZ
-          value: Europe/Zurich
-        - name: XDG_DOWNLOAD_DIR
-          value: /Downloads/jdownloader
-        image: ghcr.io/tuxpeople/jdownloader-headless:pr-33
-        imagePullPolicy: Always
-        name: jdownloader
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
-            cpu: 1000m
-            memory: 1000Mi
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - mountPath: /Downloads
-          name: downloads
-        - mountPath: /opt/JDownloader/cfg
-          name: jdownloader-config
+        - env:
+            - name: MYJD_DEVICE_NAME
+              value: kubernetes
+            - name: MYJD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myjd-creds
+                  key: MYJD_PASSWORD
+            - name: MYJD_USER
+              valueFrom:
+                secretKeyRef:
+                  name: myjd-creds
+                  key: MYJD_USER
+            - name: TZ
+              value: Europe/Zurich
+            - name: XDG_DOWNLOAD_DIR
+              value: /Downloads/jdownloader
+          image: ghcr.io/tuxpeople/jdownloader-headless:pr-33
+          imagePullPolicy: Always
+          name: jdownloader
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 1000m
+              memory: 1000Mi
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /Downloads
+              name: downloads
+            - mountPath: /opt/JDownloader/cfg
+              name: jdownloader-config
       volumes:
-      - name: downloads
-        persistentVolumeClaim:
-          claimName: nfs-media-downloads
-      - name: jdownloader-config
-        persistentVolumeClaim:
-          claimName: jdownloader-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: nfs-media-downloads
+        - name: jdownloader-config
+          persistentVolumeClaim:
+            claimName: jdownloader-config

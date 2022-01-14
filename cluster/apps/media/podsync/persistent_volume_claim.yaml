@@ -7,7 +7,7 @@ metadata:
   name: podsync-data-pvc
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 65Gi

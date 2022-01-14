@@ -18,33 +18,33 @@ spec:
           restartPolicy: OnFailure
           dnsPolicy: ClusterFirst
           containers:
-          - name: plex-meta-manager
-            image: meisnate12/plex-meta-manager:latest
-            imagePullPolicy: Always
-            env:
-            - name: PUID
-              value: "1000"
-            - name: GUID
-              value: "1000"
-            - name: TZ
-              value: "Europe/Zurich"
-            - name: PMM_TEST
-              value: "false"
-            - name: PMM_RUN
-              value: "true"
-            - name: PMM_TIME
-              value: "14:00,05:18"
-            volumeMounts:
-            - mountPath: /config
-              name: plex-meta-manager-config
-            resources:
-              requests:
-                memory: 500Mi
-                cpu: 100m
-              limits:
-                memory: 2000Mi
-                cpu: 500m
+            - name: plex-meta-manager
+              image: meisnate12/plex-meta-manager:latest
+              imagePullPolicy: Always
+              env:
+                - name: PUID
+                  value: "1000"
+                - name: GUID
+                  value: "1000"
+                - name: TZ
+                  value: "Europe/Zurich"
+                - name: PMM_TEST
+                  value: "false"
+                - name: PMM_RUN
+                  value: "true"
+                - name: PMM_TIME
+                  value: "14:00,05:18"
+              volumeMounts:
+                - mountPath: /config
+                  name: plex-meta-manager-config
+              resources:
+                requests:
+                  memory: 500Mi
+                  cpu: 100m
+                limits:
+                  memory: 2000Mi
+                  cpu: 500m
           volumes:
-          - name: plex-meta-manager-config
-            persistentVolumeClaim:
-              claimName: plex-meta-manager-config
+            - name: plex-meta-manager-config
+              persistentVolumeClaim:
+                claimName: plex-meta-manager-config

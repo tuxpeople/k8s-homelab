@@ -52,11 +52,11 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "chef-hat"
         hosts:
-        - host: "mealie.${SECRET_DOMAIN_INTERNAL}"
-          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "mealie.${SECRET_DOMAIN_INTERNAL}"
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix
     postgresql:
       persistence:
         enabled: true

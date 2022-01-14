@@ -15,17 +15,17 @@ metadata:
   name: podsync
 spec:
   rules:
-  - host: podsync.${SECRET_DOMAIN_ME}
-    http:
-      paths:
-      - backend:
-          service:
-            name: podsync
-            port:
-              number: 8080
-        path: /
-        pathType: Prefix
+    - host: podsync.${SECRET_DOMAIN_ME}
+      http:
+        paths:
+          - backend:
+              service:
+                name: podsync
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-    - podsync.${SECRET_DOMAIN_ME}
-    secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    - hosts:
+        - podsync.${SECRET_DOMAIN_ME}
+      secretName: "${SECRET_DOMAIN_ME/./-}-tls"

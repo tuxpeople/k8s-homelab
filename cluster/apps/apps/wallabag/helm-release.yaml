@@ -68,14 +68,14 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "newspaper"
         hosts:
-        - host: "wallabag.${SECRET_DOMAIN_ME}"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "wallabag.${SECRET_DOMAIN_ME}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-          hosts:
-          - wallabag.${SECRET_DOMAIN_ME}
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+            hosts:
+              - wallabag.${SECRET_DOMAIN_ME}
     redis:
       enabled: true
       architecture: standalone

@@ -18,24 +18,24 @@ spec:
         app: wireguard
     spec:
       initContainers:
-      - name: init-node
-        command:
-        - nsenter
-        - --mount=/proc/1/ns/mnt
-        - --
-        - sh
-        - -c
-        - *cmd
-        image: alpine:3.15
-        securityContext:
-          privileged: true
+        - name: init-node
+          command:
+            - nsenter
+            - --mount=/proc/1/ns/mnt
+            - --
+            - sh
+            - -c
+            - *cmd
+          image: alpine:3.15
+          securityContext:
+            privileged: true
       containers:
-      - name: wait
-        image: k8s.gcr.io/pause:3.6
+        - name: wait
+          image: k8s.gcr.io/pause:3.6
       hostPID: true
       hostNetwork: true
       tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/master
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
   updateStrategy:
     type: RollingUpdate

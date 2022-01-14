@@ -8,13 +8,11 @@ resources:
   - sc.yaml
   - ingress.yaml
   - alertmanager-rules.yaml
-
 generatorOptions:
   labels:
     grafana_dashboard: "1"
   annotations:
     k8s-sidecar-target-directory: "/tmp/dashboards/Portworx"
-
 configMapGenerator:
   - name: portworx-grafana-dashboards
     files:

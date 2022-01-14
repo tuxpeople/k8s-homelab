@@ -67,12 +67,12 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "file-document-multiple"
         hosts:
-        - host: "paperless.${SECRET_DOMAIN_INTERNAL}"
-          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "paperless.${SECRET_DOMAIN_INTERNAL}"
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix
     additionalContainers:
-    - name: broker
-      image: redis:6.2
-      imagePullPolicy: IfNotPresent
+      - name: broker
+        image: redis:6.2
+        imagePullPolicy: IfNotPresent

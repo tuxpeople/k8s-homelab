@@ -41,7 +41,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-        - prometheus.${SECRET_DOMAIN_INTERNAL}
+          - prometheus.${SECRET_DOMAIN_INTERNAL}
         annotations:
           kubernetes.io/ingress.class: traefik
       serverFiles:
@@ -50,11 +50,11 @@ spec:
             - job_name: 'unifipoller'
               scrape_interval: 30s
               static_configs:
-              - targets: ['unifi-poller:9130']
+                - targets: ['unifi-poller:9130']
             - job_name: 'uptimerobot-prometheus'
               scrape_interval: 30s
               static_configs:
-              - targets: ['uptimerobot-prometheus:9705']
+                - targets: ['uptimerobot-prometheus:9705']
             - job_name: 'kubernetes-service-endpoints'
               kubernetes_sd_configs:
                 - role: endpoints
@@ -128,13 +128,13 @@ spec:
       ingress:
         enabled: true
         hosts:
-        - grafana.${SECRET_DOMAIN_ME}
+          - grafana.${SECRET_DOMAIN_ME}
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
         tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
-          hosts:
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+            hosts:
               - grafana.${SECRET_DOMAIN_ME}
       grafana.ini:
         server:
@@ -237,6 +237,6 @@ spec:
       serviceMonitor:
         enabled: true
   valuesFrom:
-  - secretKeyRef:
-    kind: Secret
-    name: grafanavalues
+    - secretKeyRef:
+      kind: Secret
+      name: grafanavalues

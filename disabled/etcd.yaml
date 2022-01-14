@@ -31,7 +31,7 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-  #   replicaCount: 3
+    #   replicaCount: 3
     auth:
       rbac:
         enabled: false

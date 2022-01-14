@@ -9,7 +9,7 @@ metadata:
   name: code-server-data-pvc
 spec:
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
       storage: 5Gi

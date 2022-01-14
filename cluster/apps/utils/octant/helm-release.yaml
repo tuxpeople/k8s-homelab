@@ -42,7 +42,6 @@ spec:
             - path: /
               pathType: ImplementationSpecific
       tls: []
-
     clusterRole:
       additionalRules:
         - apiGroups:
@@ -52,7 +51,6 @@ spec:
             - get
             - list
             - watch
-
     plugins:
       install:
         - https://github.com/aquasecurity/starboard-octant-plugin/releases/download/v0.12.0/starboard-octant-plugin_linux_x86_64.tar.gz

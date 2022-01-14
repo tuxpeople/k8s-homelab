@@ -7,12 +7,12 @@ metadata:
   namespace: jitsi
 spec:
   ports:
-  - name: "http"
-    port: 80
-    targetPort: 80
-  - name: "https"
-    port: 443
-    targetPort: 443
+    - name: "http"
+      port: 80
+      targetPort: 80
+    - name: "https"
+      port: 443
+      targetPort: 443
   selector:
     k8s-app: jitsi
 ---
@@ -25,15 +25,15 @@ spec:
   tls:
     - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
       hosts:
-      - meet.${SECRET_DOMAIN_ME}
+        - meet.${SECRET_DOMAIN_ME}
   rules:
-  - host: meet.${SECRET_DOMAIN_ME}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: web
-            port:
-              number: 80
+    - host: meet.${SECRET_DOMAIN_ME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 80

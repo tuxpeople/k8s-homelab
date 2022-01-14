@@ -18,9 +18,9 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
-- kind: ServiceAccount
-  name: system-upgrade
-  namespace: system-upgrade
+  - kind: ServiceAccount
+    name: system-upgrade
+    namespace: system-upgrade
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -56,43 +56,43 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: "node-role.kubernetes.io/master"
-                operator: In
-                values:
-                - "true"
+              - matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values:
+                      - "true"
       serviceAccountName: system-upgrade
       tolerations:
-      - key: "CriticalAddonsOnly"
-        operator: "Exists"
-      - key: "node-role.kubernetes.io/master"
-        operator: "Exists"
-        effect: "NoSchedule"
+        - key: "CriticalAddonsOnly"
+          operator: "Exists"
+        - key: "node-role.kubernetes.io/master"
+          operator: "Exists"
+          effect: "NoSchedule"
       containers:
-      - name: system-upgrade-controller
-        image: rancher/system-upgrade-controller:v0.7.0
-        imagePullPolicy: IfNotPresent
-        envFrom:
-        - configMapRef:
-            name: default-controller-env
-        env:
-        - name: SYSTEM_UPGRADE_CONTROLLER_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels['upgrade.cattle.io/controller']
-        - name: SYSTEM_UPGRADE_CONTROLLER_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        volumeMounts:
-        - name: etc-ssl
-          mountPath: /etc/ssl
-        - name: tmp
-          mountPath: /tmp
+        - name: system-upgrade-controller
+          image: rancher/system-upgrade-controller:v0.7.0
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: default-controller-env
+          env:
+            - name: SYSTEM_UPGRADE_CONTROLLER_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['upgrade.cattle.io/controller']
+            - name: SYSTEM_UPGRADE_CONTROLLER_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          volumeMounts:
+            - name: etc-ssl
+              mountPath: /etc/ssl
+            - name: tmp
+              mountPath: /tmp
       volumes:
-      - name: etc-ssl
-        hostPath:
-          path: /etc/ssl
-          type: Directory
-      - name: tmp
-        emptyDir: {}
+        - name: etc-ssl
+          hostPath:
+            path: /etc/ssl
+            type: Directory
+        - name: tmp
+          emptyDir: {}

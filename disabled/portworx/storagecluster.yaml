@@ -14,7 +14,7 @@ spec:
     internal: true
   storage:
     devices:
-    - /dev/vdc
+      - /dev/vdc
   secretsProvider: k8s
   stork:
     enabled: true

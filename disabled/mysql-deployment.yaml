@@ -17,41 +17,41 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: mysql:5.7.33
-        imagePullPolicy: Always
-        env:
-        - name: "MYSQL_DATABASE"
-          value: "semaphore"
-        - name: "MYSQL_USER"
-          value: "semaphore"
-        - name: "MYSQL_PASSWORD"
-          valueFrom:
-            secretKeyRef:
-              name: ansible-semaphore-secret
-              key: mysql-password
-        - name: "MYSQL_ROOT_PASSWORD"
-          valueFrom:
-            secretKeyRef:
-              name: ansible-semaphore-secret
-              key: mysql-root-password
-        name: mysql
-        ports:
-        - containerPort: 3306
-          protocol: TCP
-        volumeMounts:
-        - mountPath: /var/lib/mysql
-          name: mysql-data
-        resources:
-          limits:
-            cpu: 600m
-            memory: 600Mi
-          requests:
-            cpu: 100m
-            memory: 100Mi
+        - image: mysql:5.7.33
+          imagePullPolicy: Always
+          env:
+            - name: "MYSQL_DATABASE"
+              value: "semaphore"
+            - name: "MYSQL_USER"
+              value: "semaphore"
+            - name: "MYSQL_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: ansible-semaphore-secret
+                  key: mysql-password
+            - name: "MYSQL_ROOT_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: ansible-semaphore-secret
+                  key: mysql-root-password
+          name: mysql
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-data
+          resources:
+            limits:
+              cpu: 600m
+              memory: 600Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
       volumes:
-      - name: mysql-data
-        persistentVolumeClaim:
-          claimName: mysql-data
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-data
 ---
 apiVersion: v1
 kind: Service
@@ -62,10 +62,10 @@ metadata:
   namespace: development
 spec:
   ports:
-  - name: http
-    port: 3306
-    protocol: TCP
-    targetPort: 3306
+    - name: http
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
   selector:
     app: mysql
   type: ClusterIP

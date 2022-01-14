@@ -18,30 +18,30 @@ spec:
         app: plex-exporter
     spec:
       containers:
-      - image: ghcr.io/tuxpeople/plex-exporter:nightly
-        command: ["/plex_exporter"]
-        args: ["--config", "/config.json"]
-        imagePullPolicy: Always
-        name: plex-exporter
-        ports:
-        - containerPort: 9567
-          protocol: TCP
-        resources:
-          limits:
-            cpu: 500m
-            memory: 200Mi
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        volumeMounts:
-        - mountPath: /config.json
-          name: plex-exporter-config
-          subPath: config.json
+        - image: ghcr.io/tuxpeople/plex-exporter:nightly
+          command: ["/plex_exporter"]
+          args: ["--config", "/config.json"]
+          imagePullPolicy: Always
+          name: plex-exporter
+          ports:
+            - containerPort: 9567
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+            - mountPath: /config.json
+              name: plex-exporter-config
+              subPath: config.json
       volumes:
-      - configMap:
-          items:
-          - key: config.json
-            mode: 420
-            path: config.json
+        - configMap:
+            items:
+              - key: config.json
+                mode: 420
+                path: config.json
+            name: plex-exporter-config
           name: plex-exporter-config
-        name: plex-exporter-config

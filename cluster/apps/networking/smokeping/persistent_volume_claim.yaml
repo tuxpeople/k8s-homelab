@@ -9,7 +9,7 @@ metadata:
   name: smokeping-data-pvc
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -24,7 +24,7 @@ metadata:
   name: smokeping-config-pvc
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

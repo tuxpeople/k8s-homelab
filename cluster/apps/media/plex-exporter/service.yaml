@@ -7,10 +7,10 @@ metadata:
   name: plex-exporter-svc
 spec:
   ports:
-  - name: metrics
-    port: 9567
-    protocol: TCP
-    targetPort: 9567
+    - name: metrics
+      port: 9567
+      protocol: TCP
+      targetPort: 9567
   selector:
     app: plex-exporter
   type: ClusterIP

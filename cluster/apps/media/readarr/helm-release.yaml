@@ -57,11 +57,11 @@ spec:
           hajimari.io/icon: "book-music"
         enabled: true
         hosts:
-        - host: readarr.${SECRET_DOMAIN_INTERNAL}
-          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: readarr.${SECRET_DOMAIN_INTERNAL}
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix
     resources:
       limits:
         cpu: 1000m

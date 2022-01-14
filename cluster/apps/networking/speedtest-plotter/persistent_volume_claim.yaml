@@ -9,7 +9,7 @@ metadata:
   name: speedtest-plotter-data-pvc
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 500M

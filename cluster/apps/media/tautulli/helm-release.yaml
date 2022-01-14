@@ -43,11 +43,11 @@ spec:
           hajimari.io/icon: "chart-bar"
         enabled: true
         hosts:
-        - host: tautulli.${SECRET_DOMAIN_INTERNAL}
-          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: tautulli.${SECRET_DOMAIN_INTERNAL}
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix
     persistence:
       config:
         enabled: true

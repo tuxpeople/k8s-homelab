@@ -7,9 +7,9 @@ metadata:
 spec:
   externalName: octopi.home
   ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: 80
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
   sessionAffinity: None
   type: ExternalName

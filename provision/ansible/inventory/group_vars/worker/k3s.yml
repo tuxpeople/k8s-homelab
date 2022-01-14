@@ -13,5 +13,3 @@ k3s_agent:
     - "feature-gates=GracefulNodeShutdown=true"
     # Allow k8s services to contain TCP and UDP on the same port
     - "feature-gates=MixedProtocolLBService=true"
-    # add support for VolumeSnapshotDataSource
-    - "feature-gates=VolumeSnapshotDataSource=true"

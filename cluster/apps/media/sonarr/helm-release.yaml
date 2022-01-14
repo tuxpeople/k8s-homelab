@@ -41,11 +41,11 @@ spec:
           hajimari.io/icon: "television-box"
         enabled: true
         hosts:
-        - host: sonarr.${SECRET_DOMAIN_INTERNAL}
-          secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: sonarr.${SECRET_DOMAIN_INTERNAL}
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - path: /
+                pathType: Prefix
     podSecurityContext:
       fsGroup: 65537
     persistence:
@@ -68,15 +68,15 @@ spec:
       prometheusRule:
         enabled: true
         rules:
-        - alert: SonarrDown
-          annotations:
-            description: Sonarr service is down.
-            summary: Sonarr is down.
-          expr: |
-            sonarr_system_status == 0
-          for: 5m
-          labels:
-            severity: critical
+          - alert: SonarrDown
+            annotations:
+              description: Sonarr service is down.
+              summary: Sonarr is down.
+            expr: |
+              sonarr_system_status == 0
+            for: 5m
+            labels:
+              severity: critical
     resources:
       limits:
         cpu: 1000m

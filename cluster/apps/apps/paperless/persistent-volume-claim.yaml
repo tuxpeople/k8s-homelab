@@ -7,7 +7,7 @@ metadata:
     recurring-job-group.longhorn.io/normal: "enabled"
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -18,7 +18,7 @@ metadata:
   name: paperless-export-pvc
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -31,7 +31,7 @@ metadata:
     recurring-job-group.longhorn.io/normal: "enabled"
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi

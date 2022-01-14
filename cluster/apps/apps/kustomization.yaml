@@ -5,7 +5,6 @@ namespace: apps
 resources:
   - changedetection.io
   - mealie
-  - namespace.yaml
   - octoprint
   - paperless
   # - wallabag
