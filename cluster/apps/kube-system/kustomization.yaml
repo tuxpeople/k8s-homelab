@@ -7,6 +7,6 @@ resources:
   - descheduler
   - reloader
   - kured
-  - node-feature-discovery
+  # - node-feature-discovery
   - kube-cleanup-operator
   - kubed
