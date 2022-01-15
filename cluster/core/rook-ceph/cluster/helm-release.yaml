@@ -1,0 +1,99 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+  namespace: rook-ceph
+spec:
+  install:
+    disableWait: true
+    remediation:
+      retries: 100
+  upgrade:
+    remediation:
+      retries: 100
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.rook.io/release
+      chart: rook-ceph-cluster
+      version: v1.8.2
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph-charts
+        namespace: flux-system
+  dependsOn:
+    - name: rook-ceph
+  values:
+    monitoring:
+      enabled: true
+    ingress:
+      dashboard:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "content-save-outline"
+          hajimari.io/appName: "Rook Dashboard"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        host:
+          name: "rook.${SECRET_DOMAIN_INTERNAL}"
+          path: "/"
+        tls:
+          - hosts:
+              - "rook.${SECRET_DOMAIN_INTERNAL}"
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+    cephClusterSpec:
+      dashboard:
+        enabled: true
+        urlPrefix: /
+      storage:
+        useAllNodes: false
+        useAllDevices: false
+        config:
+          osdsPerDevice: "1"
+        nodes:
+          - name: "k3s-node1"
+            devices:
+              - name: "vdc"
+          - name: "k3s-node2"
+            devices:
+              - name: "vdc"
+          - name: "k3s-node3"
+            devices:
+              - name: "vdc"
+          - name: "k3s-node-a"
+            devices:
+              - name: "vdc"
+    cephBlockPools:
+      - name: ceph-blockpool
+        spec:
+          replicated:
+            size: 2
+        storageClass:
+          enabled: true
+          name: ceph-block
+          isDefault: true
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+          parameters:
+            imageFormat: "2"
+            imageFeatures: layering
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+            csi.storage.k8s.io/fstype: ext4
+    cephFileSystems: []
+    cephObjectStores: []
+#    automate [data cleanup process](https://github.com/rook/rook/blob/master/Documentation/ceph-teardown.md#delete-the-data-on-hosts) in cluster destruction.
+#    cleanupPolicy:
+#      # Since cluster cleanup is destructive to data, confirmation is required.
+#      # To destroy all Rook data on hosts during uninstall, confirmation must be set to "yes-really-destroy-data".
+#      # This value should only be set when the cluster is about to be deleted. After the confirmation is set,
+#      # Rook will immediately stop configuring the cluster and only wait for the delete command.
+#      # If the empty string is set, Rook will not destroy any data on hosts during uninstall.
+#      confirmation: "yes-really-destroy-data"
+#      allowUninstallWithVolumes: false
