@@ -54,3 +54,7 @@ spec:
       defaultReplicaCount: 2
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       storageMinimalAvailablePercentage: 5
+      createDefaultDiskLabeledNodes: true
+      defaultDataLocality: best-effort
+      storageOverProvisioningPercentage: 150
+      taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
