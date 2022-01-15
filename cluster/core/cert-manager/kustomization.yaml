@@ -6,3 +6,6 @@ resources:
   - letsencrypt-production.yaml
   - letsencrypt-staging.yaml
   - secret.sops.yaml
+  - certificate-ch.yaml
+  - certificate-me.yaml
+  - certificate-int.yaml

@@ -5,5 +5,4 @@ resources:
   # - smokeping
   - speedtest-plotter
   - traefik
-  - wildcard-certificate
   # - kubernetes-dashboard
