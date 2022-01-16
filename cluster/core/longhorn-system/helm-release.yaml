@@ -52,13 +52,13 @@ spec:
         {
           "name":"snap",
           "task":"snapshot",
-          "cron":"30 2 */2 * *",
-          "retain":7
+          "cron":"30 */2 * * *",
+          "retain":3
         },
         {
           "name":"backup",
           "task":"backup",
-          "cron":"30 3 * * 1",
+          "cron":"30 3 * * *",
           "retain":2
         }
       ]'
