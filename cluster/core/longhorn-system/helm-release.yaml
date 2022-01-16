@@ -62,7 +62,7 @@ spec:
           "retain":2
         }
       ]'
-      defaultSettings:
+    defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
       backupTargetCredentialSecret: minio-secret
       defaultReplicaCount: 2
