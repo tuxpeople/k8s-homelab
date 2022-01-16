@@ -8,6 +8,5 @@ resources:
   - metallb-system
   - monitoring
   - networking
-  - starboard-operator
   - system-upgrade
   - namespaces
