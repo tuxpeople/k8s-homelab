@@ -23,6 +23,8 @@ k3s_server:
     - traefik
     # Disable servicelb - replaced with metallb and install with Flux
     - servicelb
+    # Disable metrics-server - installed with Flux
+    - metrics-server
     # Disable local-storage - replaced with nfs-client-provisioner and install with Flux
     - local-storage
   disable-network-policy: true
