@@ -86,7 +86,10 @@ spec:
       prometheus:
         enabled: true
     ipam:
-      mode: "kubernetes"
+      mode: "cluster-pool"
+      operator:
+        clusterPoolIPv4PodCIDR: "10.42.0.0/16"
+        clusterPoolIPv4MaskSize: 24
     k8s:
       requireIPv4PodCIDR: true
     loadBalancer:
