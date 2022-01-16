@@ -25,7 +25,7 @@ spec:
     enable: false # Enable helm test
   install:
     remediation: # perform remediation when helm install fails
-      retries: 6
+      retries: 5
   upgrade:
     remediation: # perform remediation when helm upgrade fails
       retries: 3
