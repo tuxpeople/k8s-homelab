@@ -17,8 +17,6 @@ k3s_server:
   disable:
     # Disable flannel - replaced with Calico
     - flannel
-    # Disable kube-proxy - replaced with Calico
-    - kube-proxy
     # Disable traefik - installed with Flux
     - traefik
     # Disable servicelb - replaced with metallb and install with Flux
@@ -29,7 +27,6 @@ k3s_server:
     - local-storage
   disable-network-policy: true
   disable-cloud-controller: true
-  disable-kube-proxy: true
   write-kubeconfig-mode: "644"
   # Network CIDR to use for pod IPs
   cluster-cidr: "10.42.0.0/16"
