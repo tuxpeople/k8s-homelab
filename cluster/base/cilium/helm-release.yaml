@@ -30,9 +30,9 @@ spec:
     global:
       encryption:
         enabled: false
-    rollOutCiliumPods: true
     kubeProxyReplacement: "strict"
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    rollOutCiliumPods: true
     nodeinit:
       enabled: true
     hostServices:
@@ -72,23 +72,16 @@ spec:
       integration: containerd
       socketPath: /var/run/k3s/containerd/containerd.sock
     operator:
+      replicas: 2
       rollOutPods: true
-      replicas: 1
       prometheus:
         enabled: true
         serviceMonitor:
-          enabled: true
+          enabled: false
     prometheus:
       enabled: true
-      serviceMonitor:
-        enabled: true
-    proxy:
-      prometheus:
-        enabled: true
     ipam:
       mode: "cluster-pool"
       operator:
         clusterPoolIPv4PodCIDR: "10.42.0.0/16"
         clusterPoolIPv4MaskSize: 24
-    k8s:
-      requireIPv4PodCIDR: true
