@@ -11,3 +11,25 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  storageClassName: longhorn
+  volumeName: tautulli-data-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tautulli-data-pv
+spec:
+  capacity:
+    storage: 1Gi 
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  csi:
+    driver: driver.longhorn.io 
+    fsType: ext4
+    volumeAttributes:
+      numberOfReplicas: "2"
+      staleReplicaTimeout: "30" 
+    volumeHandle: tautulli-data-pv 
+  storageClassName: longhorn
