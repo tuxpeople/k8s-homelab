@@ -1,13 +1,18 @@
----
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: tautulli-data-pvc
-  labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+  name: tautulli-data-restore
+  namespace: media
 spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+  template:
+    spec:
+      containers:
+        - name: pi
+          image: wahooli/longhorn-backup-restore:latest
+          env:
+            - name: LONGHORN_URL
+              value: http://longhorn-frontend.longhorn-system/v1 # default, can be omitted
+            - name: VOLUME_HANDLE
+              value: pvc-64fdc331-2531-4b43-bc20-707ab3287d19
+      restartPolicy: Never
+  backoffLimit: 0
