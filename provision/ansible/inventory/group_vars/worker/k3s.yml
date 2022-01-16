@@ -13,3 +13,6 @@ k3s_agent:
     - "feature-gates=GracefulNodeShutdown=true"
     # Allow k8s services to contain TCP and UDP on the same port
     - "feature-gates=MixedProtocolLBService=true"
+    # Others
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=ReadWriteOncePod=true"

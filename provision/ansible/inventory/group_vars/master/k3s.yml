@@ -29,6 +29,7 @@ k3s_server:
     - local-storage
   disable-network-policy: true
   disable-cloud-controller: true
+  disable-kube-proxy: true
   write-kubeconfig-mode: "644"
   # Network CIDR to use for pod IPs
   cluster-cidr: "10.42.0.0/16"
@@ -39,17 +40,37 @@ k3s_server:
     - "feature-gates=GracefulNodeShutdown=true"
     # Allow k8s services to contain TCP and UDP on the same port
     - "feature-gates=MixedProtocolLBService=true"
-  # Required to monitor kube-controller-manager with kube-prometheus-stack
+    # Others
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=ReadWriteOncePod=true"
   kube-controller-manager-arg:
+    # Various
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=ReadWriteOncePod=true"
+    - "allocate-node-cidrs"
+    # Required to monitor component with kube-prometheus-stack
     - "bind-address=0.0.0.0"
-  # Required to monitor kube-proxy with kube-prometheus-stack
   kube-proxy-arg:
+    # Various
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=ReadWriteOncePod=true"
+    # Required to monitor component with kube-prometheus-stack
     - "metrics-bind-address=0.0.0.0"
-  # Required to monitor kube-scheduler with kube-prometheus-stack
   kube-scheduler-arg:
+    # Various
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=ReadWriteOncePod=true"
+    # Required to monitor component with kube-prometheus-stack
     - "bind-address=0.0.0.0"
-  # Required to monitor etcd with kube-prometheus-stack
   etcd-expose-metrics: true
-  # Required for HAProxy health-checks
+  # Required to monitor etcd with kube-prometheus-stack
   kube-apiserver-arg:
+    # Required for HAProxy health-checks
     - "anonymous-auth=true"
+    # Others
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=ReadWriteOncePod=true"
