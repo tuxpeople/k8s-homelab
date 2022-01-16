@@ -10,7 +10,7 @@ tasks:
   reconcile:
     desc: Reconcile main kustomizations
     cmds:
-      - flux reconcile kustomization crds
       - flux reconcile kustomization flux-system
+      - flux reconcile kustomization crds
       - flux reconcile kustomization core
       - flux reconcile kustomization apps
