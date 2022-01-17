@@ -1,0 +1,41 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pv-backup
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      ttlSecondsAfterFinished: 300
+      template:
+        spec:
+          serviceAccountName: sa-pv-backup
+          automountServiceAccountToken: true
+          restartPolicy: OnFailure
+          containers:
+            - name: pv-backup
+              image: ghcr.io/k8s-at-home/kubectl:v1.23.1
+              command:
+                - "/bin/sh"
+              args:
+                - "-c"
+                - "sleep 9999"
+              env:
+                - name: DESTINATION_NAMESPACE
+                  value: utils
+                - name: DESTINATION_PVC_NAME
+                  value: nfs-kubernetes
+              volumeMounts:
+                - mountPath: /scripts/pv-backup.sh
+                  name: pv-backup
+                  subPath: pv-backup.sh
+          volumes:
+            - name: pv-backup
+              configMap:
+                defaultMode: 0777
+                name: pv-backup

@@ -11,3 +11,4 @@
         seconds: 5
   roles:
     - ubuntu
+    - frzk.chrony

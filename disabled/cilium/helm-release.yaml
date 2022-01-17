@@ -31,6 +31,7 @@ spec:
       encryption:
         enabled: false
     kubeProxyReplacement: "strict"
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     rollOutCiliumPods: true
     nodeinit:
       enabled: true

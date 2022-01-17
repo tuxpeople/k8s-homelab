@@ -5,7 +5,7 @@
 #
 
 # (string) Use a specific version of k3s
-k3s_release_version: "v1.22"
+k3s_release_version: "v1.23"
 
 # (bool) Install using hard links rather than symbolic links.
 k3s_install_hard_links: true
@@ -27,13 +27,38 @@ k3s_registration_address: "{{ kubevip_address }}"
 
 # (list) A list of URLs to deploy on the primary control plane. Read notes below.
 k3s_server_manifests_urls:
-#   - url: https://docs.projectcalico.org/archive/v3.21/manifests/tigera-operator.yaml
-#     filename: tigera-operator.yaml
+  - url: https://docs.projectcalico.org/archive/v3.21/manifests/tigera-operator.yaml
+    filename: tigera-operator.yaml
   - url: https://kube-vip.io/manifests/rbac.yaml
     filename: kube-vip-rbac.yaml
 
 # (list) A flat list of templates to deploy on the primary control plane
 # /var/lib/rancher/k3s/server/manifests
 k3s_server_manifests_templates:
-  - "cilium-installation.yaml.j2"
+  # - "cilium-installation.yaml.j2"
   - "kube-vip-daemonset.yaml.j2"
+  - "calico-installation.yaml.j2"
+
+# -- /etc/rancher/k3s/registries.yaml
+k3s_registries:
+  mirrors:
+    docker.io:
+      endpoint:
+        - "https://registry-1.docker.io"
+  configs:
+    registry-1.docker.io:
+      auth:
+        username: "{{ DOCKER_USERNAME }}"
+        password: "{{ DOCKER_PASSWORD }}"
+#   mirrors:
+#     "docker.io":
+#       endpoint:
+#         - "https://mirror.{{ SECRET_PRIVATE_DOMAIN }}"
+#     "*":
+#       endpoint:
+#         - "https://mirror.{{ SECRET_PRIVATE_DOMAIN }}"
+#   config:
+#     "https://registry.{{ SECRET_PRIVATE_DOMAIN }}":
+#       auth:
+#         username: "{{ SECRET_NEXUS_USERNAME }}"
+#         password: "{{ SECRET_NEXUS_PASSWORD }}"

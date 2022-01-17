@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-pv-backup
+  namespace: backup
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pv-backup
+rules:
+  - apiGroups: [""]
+    resources: ["serviceaccounts", "clusterrole", "clusterrolebinding"]
+    verbs: ["watch", "list", "create", "update", "delete", "patch", "get"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["list", "create", "delete", "get", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["namespaces", "persistentvolumeclaims", "serviceaccounts", "pods/log"]
+    verbs: ["watch", "list", "get"]
+  - apiGroups: [""]
+    resources: ["pods", "jobs"]
+    verbs: ["watch", "list", "create", "update", "delete", "patch", "get"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["watch", "list", "create", "update", "delete", "patch", "get"]
+  - apiGroups: ["", "apps"]
+    resources: ["deployments"]
+    verbs: ["list", "watch", "get"]
+  - apiGroups: ["", "apps"]
+    resources: ["deployments/scale"]
+    verbs: ["list", "watch", "get", "update", "patch", "create", "delete"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["watch", "list", "get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pv-backup
+roleRef:
+  kind: ClusterRole
+  name: pv-backup
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: sa-pv-backup
+    namespace: backup

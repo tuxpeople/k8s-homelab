@@ -48,27 +48,32 @@ spec:
       reclaimPolicy: Delete
       recurringJobs:
         enable: true
-        jobList: '[
-        {
-          "name":"snap",
-          "task":"snapshot",
-          "cron":"30 2 */2 * *",
-          "retain":7
-        },
-        {
-          "name":"backup",
-          "task":"backup",
-          "cron":"30 3 * * 1",
-          "retain":2
-        }
-      ]'
-      defaultSettings:
+        jobList: '[ { "name":"snap", "task":"snapshot", "cron":"30 */2 * * *", "retain":3 }, { "name":"backup", "task":"backup", "cron":"30 3 * * *", "retain":2 } ]'
+    defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
       backupTargetCredentialSecret: minio-secret
       defaultReplicaCount: 2
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       storageMinimalAvailablePercentage: 5
-      createDefaultDiskLabeledNodes: true
+      defaultDataPath: /var/lib/longhorn
       defaultDataLocality: best-effort
       storageOverProvisioningPercentage: 150
       taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
+    longhornManager:
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+    longhornDriver:
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+    longhornUI:
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
