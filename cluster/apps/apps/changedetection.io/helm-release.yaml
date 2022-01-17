@@ -65,7 +65,7 @@ spec:
               - "change.${SECRET_DOMAIN_ME}"
             secretName: "${SECRET_DOMAIN_ME/./-}-tls"
     resources:
-      limit:
+      limits:
         cpu: 200m
         memory: 500M
     additionalContainers:
