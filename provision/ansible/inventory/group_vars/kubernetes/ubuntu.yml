@@ -1,6 +1,7 @@
 ---
-# (string) Timezone for the servers
-timezone: "Europe/Zurich"
+chrony_timezone: Europe/Zurich
+chrony_ntp_pools:
+  - ntp.metas.ch iburst maxpoll 10
 
 # (list) Additional ssh public keys to add to the nodes
 ssh_authorized_keys:
