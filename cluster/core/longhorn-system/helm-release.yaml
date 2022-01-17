@@ -54,7 +54,7 @@ spec:
       backupTargetCredentialSecret: minio-secret
       defaultReplicaCount: 2
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
-      storageMinimalAvailablePercentage: 10
+      storageMinimalAvailablePercentage: 5
       defaultDataPath: /var/lib/longhorn
       defaultDataLocality: best-effort
       storageOverProvisioningPercentage: 150
