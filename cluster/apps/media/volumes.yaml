@@ -4,7 +4,7 @@ kind: PersistentVolume
 metadata:
   name: nfs-media-downloads
 spec:
-  storageClassName: media-downloads
+  storageClassName: nfs-media-downloads
   capacity:
     storage: 1Mi
   accessModes:
@@ -19,7 +19,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: nfs-media-downloads
 spec:
-  storageClassName: media-downloads
+  storageClassName: nfs-media-downloads
   accessModes:
     - ReadWriteMany
   resources:
@@ -31,7 +31,7 @@ kind: PersistentVolume
 metadata:
   name: nfs-media
 spec:
-  storageClassName: media
+  storageClassName: nfs-media
   capacity:
     storage: 1Mi
   accessModes:
@@ -46,7 +46,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: nfs-media
 spec:
-  storageClassName: media
+  storageClassName: nfs-media
   accessModes:
     - ReadWriteMany
   resources:
