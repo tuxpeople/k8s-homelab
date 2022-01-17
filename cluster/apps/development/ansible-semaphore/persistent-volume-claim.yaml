@@ -13,6 +13,28 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  storageClassName: longhorn
+  volumeName: sepahore-data-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sepahore-data-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  csi:
+    driver: driver.longhorn.io
+    fsType: ext4
+    volumeAttributes:
+      numberOfReplicas: "2"
+      staleReplicaTimeout: "30"
+    volumeHandle: sepahore-data-pv
+  storageClassName: longhorn
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -28,3 +50,25 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  storageClassName: longhorn
+  volumeName: sepahore-mariadb0-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sepahore-mariadb0-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  csi:
+    driver: driver.longhorn.io
+    fsType: ext4
+    volumeAttributes:
+      numberOfReplicas: "2"
+      staleReplicaTimeout: "30"
+    volumeHandle: sepahore-mariadb0-pv
+  storageClassName: longhorn
