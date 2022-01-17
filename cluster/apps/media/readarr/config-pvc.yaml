@@ -9,7 +9,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: longhorn
+  storageClassName: longhorn-manual
   volumeName: readarr-config-pv
 ---
 apiVersion: v1
@@ -30,4 +30,4 @@ spec:
       numberOfReplicas: "2"
       staleReplicaTimeout: "30"
     volumeHandle: readarr-config-pv
-  storageClassName: longhorn
+  storageClassName: longhorn-manual

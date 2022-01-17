@@ -11,7 +11,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: longhorn
+  storageClassName: longhorn-manual
   volumeName: plex-meta-manager-config-pv
 ---
 apiVersion: v1
@@ -32,4 +32,4 @@ spec:
       numberOfReplicas: "2"
       staleReplicaTimeout: "30"
     volumeHandle: plex-meta-manager-config-pv
-  storageClassName: longhorn
+  storageClassName: longhorn-manual

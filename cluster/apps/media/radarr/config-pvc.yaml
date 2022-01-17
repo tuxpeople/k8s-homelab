@@ -9,7 +9,7 @@ spec:
   resources:
     requests:
       storage: 3Gi
-  storageClassName: longhorn
+  storageClassName: longhorn-manual
   volumeName: radarr-config-pv
 ---
 apiVersion: v1
@@ -30,4 +30,4 @@ spec:
       numberOfReplicas: "2"
       staleReplicaTimeout: "30"
     volumeHandle: radarr-config-pv
-  storageClassName: longhorn
+  storageClassName: longhorn-manual
