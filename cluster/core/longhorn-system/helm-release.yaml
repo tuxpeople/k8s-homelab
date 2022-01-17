@@ -54,8 +54,27 @@ spec:
       backupTargetCredentialSecret: minio-secret
       defaultReplicaCount: 2
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
-      storageMinimalAvailablePercentage: 5
+      storageMinimalAvailablePercentage: 10
       createDefaultDiskLabeledNodes: true
+      defaultDataPath: /var/lib/longhorn
       defaultDataLocality: best-effort
       storageOverProvisioningPercentage: 150
       taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
+    longhornManager:
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+    longhornDriver:
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+    longhornUI:
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
