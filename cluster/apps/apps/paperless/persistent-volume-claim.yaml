@@ -11,28 +11,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: longhorn
-  volumeName: peperless-data-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: peperless-data-pv
-spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  csi:
-    driver: driver.longhorn.io
-    fsType: ext4
-    volumeAttributes:
-      numberOfReplicas: "2"
-      staleReplicaTimeout: "30"
-    volumeHandle: peperless-data-pv
-  storageClassName: longhorn
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -44,28 +22,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: longhorn
-  volumeName: peperless-export-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: peperless-export-pv
-spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  csi:
-    driver: driver.longhorn.io
-    fsType: ext4
-    volumeAttributes:
-      numberOfReplicas: "2"
-      staleReplicaTimeout: "30"
-    volumeHandle: peperless-export-pv
-  storageClassName: longhorn
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -79,25 +35,3 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: longhorn
-  volumeName: changedetection-io-data-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: changedetection-io-data-pv
-spec:
-  capacity:
-    storage: 5Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  csi:
-    driver: driver.longhorn.io
-    fsType: ext4
-    volumeAttributes:
-      numberOfReplicas: "2"
-      staleReplicaTimeout: "30"
-    volumeHandle: changedetection-io-data-pv
-  storageClassName: longhorn

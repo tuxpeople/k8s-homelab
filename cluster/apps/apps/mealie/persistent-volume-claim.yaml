@@ -11,28 +11,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: longhorn
-  volumeName: mealie-config-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mealie-config-pv
-spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  csi:
-    driver: driver.longhorn.io
-    fsType: ext4
-    volumeAttributes:
-      numberOfReplicas: "2"
-      staleReplicaTimeout: "30"
-    volumeHandle: mealie-config-pv
-  storageClassName: longhorn
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -44,25 +22,3 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: longhorn
-  volumeName: mealie-postgresql-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mealie-postgresql-pv
-spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  csi:
-    driver: driver.longhorn.io
-    fsType: ext4
-    volumeAttributes:
-      numberOfReplicas: "2"
-      staleReplicaTimeout: "30"
-    volumeHandle: mealie-postgresql-pv
-  storageClassName: longhorn
