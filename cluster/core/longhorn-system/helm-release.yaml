@@ -57,6 +57,7 @@ spec:
       storageMinimalAvailablePercentage: 10
       createDefaultDiskLabeledNodes: true
       defaultDataPath: /var/lib/longhorn
+      defaultDataLocality: best-effort
       storageOverProvisioningPercentage: 150
       taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
     longhornManager:
