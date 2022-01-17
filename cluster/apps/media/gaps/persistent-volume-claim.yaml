@@ -18,16 +18,16 @@ metadata:
   name: gaps-data-pv
 spec:
   capacity:
-    storage: 1Gi 
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   csi:
-    driver: driver.longhorn.io 
+    driver: driver.longhorn.io
     fsType: ext4
     volumeAttributes:
       numberOfReplicas: "2"
-      staleReplicaTimeout: "30" 
-    volumeHandle: gaps-data-pv 
+      staleReplicaTimeout: "30"
+    volumeHandle: gaps-data-pv
   storageClassName: longhorn

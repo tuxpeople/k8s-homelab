@@ -20,16 +20,16 @@ metadata:
   name: plex-meta-manager-config-pv
 spec:
   capacity:
-    storage: 1Gi 
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   csi:
-    driver: driver.longhorn.io 
+    driver: driver.longhorn.io
     fsType: ext4
     volumeAttributes:
       numberOfReplicas: "2"
-      staleReplicaTimeout: "30" 
-    volumeHandle: plex-meta-manager-config-pv 
+      staleReplicaTimeout: "30"
+    volumeHandle: plex-meta-manager-config-pv
   storageClassName: longhorn

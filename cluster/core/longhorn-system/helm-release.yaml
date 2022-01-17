@@ -48,20 +48,7 @@ spec:
       reclaimPolicy: Delete
       recurringJobs:
         enable: true
-        jobList: '[
-        {
-          "name":"snap",
-          "task":"snapshot",
-          "cron":"30 */2 * * *",
-          "retain":3
-        },
-        {
-          "name":"backup",
-          "task":"backup",
-          "cron":"30 3 * * *",
-          "retain":2
-        }
-      ]'
+        jobList: '[ { "name":"snap", "task":"snapshot", "cron":"30 */2 * * *", "retain":3 }, { "name":"backup", "task":"backup", "cron":"30 3 * * *", "retain":2 } ]'
     defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
       backupTargetCredentialSecret: minio-secret

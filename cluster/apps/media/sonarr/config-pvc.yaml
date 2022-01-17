@@ -18,17 +18,16 @@ metadata:
   name: sonarr-config-pv
 spec:
   capacity:
-    storage: 3Gi 
+    storage: 3Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   csi:
-    driver: driver.longhorn.io 
+    driver: driver.longhorn.io
     fsType: ext4
     volumeAttributes:
       numberOfReplicas: "2"
-      staleReplicaTimeout: "30" 
-    volumeHandle: sonarr-config-pv 
+      staleReplicaTimeout: "30"
+    volumeHandle: sonarr-config-pv
   storageClassName: longhorn
-  
