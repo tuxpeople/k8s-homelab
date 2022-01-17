@@ -23,6 +23,9 @@ spec:
           command:
             - redis-server
           resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
             limits:
               cpu: 500m
               memory: 200Mi

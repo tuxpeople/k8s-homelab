@@ -65,9 +65,9 @@ spec:
               - "change.${SECRET_DOMAIN_ME}"
             secretName: "${SECRET_DOMAIN_ME/./-}-tls"
     resources:
-      limits:
-        cpu: 200m
-        memory: 500M
+      requests:
+        cpu: 100m
+        memory: 128M
     additionalContainers:
       - name: webdriver
         image: selenium/standalone-chrome:96.0

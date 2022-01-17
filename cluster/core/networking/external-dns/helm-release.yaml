@@ -52,5 +52,8 @@ spec:
       kind: DNSEndpoint
     annotationFilter: "external-dns/is-public in (true)"
     resources:
+      requests:
+        memory: 100Mi
+        cpu: 25m
       limits:
         memory: 250Mi

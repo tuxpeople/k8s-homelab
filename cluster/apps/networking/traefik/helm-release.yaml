@@ -96,12 +96,11 @@ spec:
       plugins:
         enabled: false
     resources:
+      requests:
+        memory: 100Mi
+        cpu: 500m
       limits:
         memory: 500Mi
-        cpu: 500m
-      requests:
-        memory: 200Mi
-        cpu: 50m
     # TODO ist this still neded:
     # priorityClassName: "system-cluster-critical"
     # tolerations:

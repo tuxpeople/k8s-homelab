@@ -55,6 +55,9 @@ spec:
               - path: /
                 pathType: Prefix
     resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
       limits:
         memory: 500Mi
         cpu: 500m
