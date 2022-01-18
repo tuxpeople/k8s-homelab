@@ -12,4 +12,3 @@ generatorOptions:
 resources:
   - rbac.yaml
   - pv-backup-cron.yaml
-  - volumes.yaml
