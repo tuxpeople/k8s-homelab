@@ -6,7 +6,7 @@ resources:
   - cert-manager.yaml
   - development.yaml
   - identity.yaml
-  - longhorn-system.yaml
+  - rook-ceph.yaml
   - media.yaml
   - metallb-system.yaml
   - monitoring.yaml
