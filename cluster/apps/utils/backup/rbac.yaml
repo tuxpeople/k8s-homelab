@@ -14,7 +14,7 @@ rules:
     resources: ["serviceaccounts", "clusterrole", "clusterrolebinding"]
     verbs: ["watch", "list", "create", "update", "delete", "patch", "get"]
   - apiGroups: [""]
-    resources: ["secrets"]
+    resources: ["secrets", "pods/exec"]
     verbs: ["list", "create", "delete", "get", "patch", "update"]
   - apiGroups: [""]
     resources: ["namespaces", "persistentvolumeclaims", "serviceaccounts", "pods/log"]
