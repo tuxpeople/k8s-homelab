@@ -4,7 +4,7 @@ kind: CronJob
 metadata:
   name: pv-backup
 spec:
-  schedule: "30 2 * * *"
+  schedule: "35 2 * * *"
   concurrencyPolicy: "Forbid"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -21,10 +21,10 @@ spec:
             - name: pv-backup
               image: ghcr.io/k8s-at-home/kubectl:v1.23.1
               command:
-                - "/bin/sh"
+                - "/usr/bin/bash"
               args:
                 - "-c"
-                - "sleep 9999"
+                - "/scripts/pv-backup.sh"
               volumeMounts:
                 - mountPath: /scripts/pv-backup.sh
                   name: pv-backup
