@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: codimd-postgresql-data-pvc
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce

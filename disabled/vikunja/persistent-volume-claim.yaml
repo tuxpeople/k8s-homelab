@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: vikunja-files-pvc
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: data-vikunja-postgresql-0-pvc
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce

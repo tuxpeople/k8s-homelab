@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: utils
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
     app: static
   name: static-data-pvc
 spec:

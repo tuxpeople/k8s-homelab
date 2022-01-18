@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
     app: semaphore
   name: semaphore-data-pvc
   namespace: development
@@ -18,7 +18,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
     app: semaphore
   name: data-mariadb-0-pvc
   namespace: development

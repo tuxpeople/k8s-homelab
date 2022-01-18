@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: networking
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
     app: speedtest-plotter
   name: speedtest-plotter-data-pvc
 spec:

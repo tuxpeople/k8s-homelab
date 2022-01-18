@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: networking
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
     app: smokeping
   name: smokeping-data-pvc
 spec:
@@ -19,7 +19,7 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: networking
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
     app: smokeping
   name: smokeping-config-pvc
 spec:

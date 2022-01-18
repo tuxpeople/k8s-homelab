@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: wallabag-images-pvc
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: wallabag-data-pvc
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
