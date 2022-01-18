@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: gaps-data-pvc
   labels:
-    pv-backup/enabled: true
+    pv-backup/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
