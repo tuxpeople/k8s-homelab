@@ -10,6 +10,8 @@ _basedir="${_pwd}/$(dirname $(which ${0}))"
 
 cd ${_basedir} && cd $(git rev-parse --show-toplevel)
 
+. ./provision/infrastructure/settings.env
+
 step "Recreate k3s-node1"
 ssh lab1 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node1"
 kubectl delete nodes k3s-node1
@@ -20,9 +22,11 @@ ssh-keygen -R k3s-node1; ssh-keygen -R `dig +short k3s-node1`; ssh-keyscan -t rs
 ssh lab1 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node1"
 step "Run the playbooks"
 rm -rf .cache/facts/k3s-node1
-ansible-playbook -i inventories/hosts.yml plays/init.yaml
-ansible-playbook -i inventories/hosts.yml plays/base.yaml
-ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
+ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node1 provision/ansible/playbooks/ubuntu-prepare.yml
+ansible-playbook -i provision/ansible/inventory/hosts.yml provision/ansible/playbooks/k3s-install.yml
+
+step "Sleep 120s"
+sleep 120
 
 step "Recreate k3s-node2"
 ssh lab2 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node2"
@@ -34,38 +38,39 @@ ssh-keygen -R k3s-node2; ssh-keygen -R `dig +short k3s-node2`; ssh-keyscan -t rs
 ssh lab2 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node2"
 step "Run the playbooks"
 rm -rf .cache/facts/k3s-node2
-ansible-playbook -i inventories/hosts.yml plays/init.yaml
-ansible-playbook -i inventories/hosts.yml plays/base.yaml
-ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
+ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node2 provision/ansible/playbooks/ubuntu-prepare.yml
+ansible-playbook -i provision/ansible/inventory/hosts.yml provision/ansible/playbooks/k3s-install.yml
+
+step "Sleep 120s"
+sleep 120
 
 step "Recreate k3s-node3"
 ssh lab3 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node3"
 kubectl delete nodes k3s-node3
 step "Sleep 30s and allow VM to boot"
 sleep 30
-ssh-keygen -R k3s-node2; ssh-keygen -R `dig +short k3s-node2`; ssh-keyscan -t rsa k3s-node2,`dig +short k3s-node2` >> ~/.ssh/known_hosts
-#ssh k3s-node2 -l ansible "sudo yum -y install python38"
+ssh-keygen -R k3s-node3; ssh-keygen -R `dig +short k3s-node3`; ssh-keyscan -t rsa k3s-node3,`dig +short k3s-node3` >> ~/.ssh/known_hosts
+#ssh k3s-node3 -l ansible "sudo yum -y install python38"
 ssh lab3 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node3"
 step "Run the playbooks"
 rm -rf .cache/facts/k3s-node3
-ansible-playbook -i inventories/hosts.yml plays/init.yaml
-ansible-playbook -i inventories/hosts.yml plays/base.yaml
-ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
-ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
+ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node3 provision/ansible/playbooks/ubuntu-prepare.yml
+ansible-playbook -i provision/ansible/inventory/hosts.yml provision/ansible/playbooks/k3s-install.yml
+
+step "Sleep 120s"
+sleep 120
 
 step "Recreate k3s-node-a"
 ssh lab4 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node-a"
 kubectl delete nodes k3s-node-a
 step "Sleep 30s and allow VM to boot"
 sleep 30
-ssh-keygen -R k3s-node2; ssh-keygen -R `dig +short k3s-node2`; ssh-keyscan -t rsa k3s-node2,`dig +short k3s-node2` >> ~/.ssh/known_hosts
-#ssh k3s-node2 -l ansible "sudo yum -y install python38"
+ssh-keygen -R k3s-node-a; ssh-keygen -R `dig +short k3s-node-a`; ssh-keyscan -t rsa k3s-node-a,`dig +short k3s-node-a` >> ~/.ssh/known_hosts
+#ssh k3s-node-a -l ansible "sudo yum -y install python38"
 ssh lab4 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node-a"
 step "Run the playbooks"
 rm -rf .cache/facts/k3s-node-a
-ansible-playbook -i inventories/hosts.yml plays/init.yaml
-ansible-playbook -i inventories/hosts.yml plays/base.yaml
-ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
-ansible-playbook -i inventories/hosts.yml plays/k3s_cluster.yaml
+ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node-a provision/ansible/playbooks/ubuntu-prepare.yml
+ansible-playbook -i provision/ansible/inventory/hosts.yml provision/ansible/playbooks/k3s-install.yml
 
 cd ${_pwd}
