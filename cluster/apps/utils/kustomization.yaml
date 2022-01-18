@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: utils
 resources:
   - back8sup
-  # - backup
+  - backup
   - bastion
   # - codimd
   - hasteserver
