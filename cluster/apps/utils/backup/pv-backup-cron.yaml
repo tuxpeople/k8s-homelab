@@ -4,7 +4,7 @@ kind: CronJob
 metadata:
   name: pv-backup
 spec:
-  schedule: "55 * * * *"
+  schedule: "5 * * * *"
   concurrencyPolicy: "Forbid"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
