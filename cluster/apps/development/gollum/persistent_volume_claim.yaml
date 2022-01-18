@@ -9,7 +9,7 @@ metadata:
   name: gollum-data-pvc
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi
