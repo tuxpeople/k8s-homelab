@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# disable monitoring
+_step_counter=0
+step() {
+        _step_counter=$(( _step_counter + 1 ))
+        printf '\n\033[1;36m%d) %s\033[0m\n' $_step_counter "$@" >&2  # bold cyan
+}
+
+step "Disable monitoring"
 SECRET=$(kubectl -n flux-system get secrets cluster-secrets -o go-template='{{ .data.SECRET_UPTIMEROBOT_APIKEY | base64decode }}')
 MONITORS=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Cache-Control: no-cache" -d "api_key=${SECRET}&format=json&logs=1" "https://api.uptimerobot.com/v2/getMonitors" | jq '.monitors[].id')
 for i in $(echo ${MONITORS}); do
@@ -10,7 +16,7 @@ for i in $(echo ${MONITORS}); do
   echo
 done
 
-# get all pvcs that match the label pv-backup/enabled=true
+step "Get all pvcs that match the label pv-backup/enabled=true"
 source_ns_pvcs=$(kubectl get pvc --all-namespaces -l pv-backup/enabled=true -o=json | jq -c '.items[] | {name: .metadata.name, namespace: .metadata.namespace}')
 
 for ns_pvc in $source_ns_pvcs; do
@@ -23,6 +29,7 @@ for ns_pvc in $source_ns_pvcs; do
   deploy_name=$(jq -r '.name'<<<"$deploy_details")
   deploy_ns=$(jq -r '.namespace'<<<"$deploy_details")
 
+  step "Scale down the deployent $deploy_name down, backup pvc $source_pvc_name and scale the deployment up."
   # scale down the deployment so we can mount the PVC later
   kubectl scale -n "$deploy_ns" deploy "$deploy_name" --replicas=0
 
@@ -41,7 +48,7 @@ done
 
 sleep 30
 
-# Enable monitoring
+step "Enable monitoring"
 for i in $(echo ${MONITORS}); do
   curl -s  
   -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d "api_key=${SECRET}&format=json&id=${i}&status=1" "https://api.uptimerobot.com/v2/editMonitor"
