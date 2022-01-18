@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - cert-manager
   - kube-system
+  - rook-ceph
   - metallb-system
   - monitoring
   - networking

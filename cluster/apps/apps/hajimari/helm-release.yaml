@@ -42,7 +42,7 @@ spec:
           - kube-node-lease
           - kube-public
           - kube-system
-          - longhorn-system
+          - rook-ceph
           - media
           - monitoring
           - networking
