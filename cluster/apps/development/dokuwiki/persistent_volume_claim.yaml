@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: dokuwiki
   labels:
-    recurring-job-group.longhorn.io/normal: "enabled"
+    pv-backup/enabled: "true"
     app: dokuwiki
   name: dokuwiki-data-pvc
 spec:
