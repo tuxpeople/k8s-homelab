@@ -10,10 +10,14 @@ spec:
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
+      labels:
+        app.kubernetes.io/instance: back8sup
       backoffLimit: 2
       ttlSecondsAfterFinished: 600
       template:
         spec:
+          labels:
+            app.kubernetes.io/instance: back8sup
           serviceAccountName: sa-pv-backup
           automountServiceAccountToken: true
           restartPolicy: OnFailure
