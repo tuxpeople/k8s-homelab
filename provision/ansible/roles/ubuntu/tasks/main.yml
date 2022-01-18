@@ -19,9 +19,9 @@
   tags:
     - user
 
-- include: longhorn.yml
-  tags:
-    - longhorn
+# - include: longhorn.yml
+#   tags:
+#     - longhorn
 
 - name: Reboot
   reboot:
