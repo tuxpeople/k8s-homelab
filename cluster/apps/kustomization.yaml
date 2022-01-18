@@ -6,7 +6,6 @@ resources:
   - development
   - identity
   - kube-system
-  - longhorn-system
   - media
   - monitoring
   - networking

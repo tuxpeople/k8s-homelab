@@ -7,7 +7,7 @@ resources:
   - backup
   - bastion
   # - codimd
-  # - hasteserver
+  - hasteserver
   # - onetimesecret
   # - sharry
   - smtp
