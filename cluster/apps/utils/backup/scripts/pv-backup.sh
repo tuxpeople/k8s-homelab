@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# disable monitoring
+SECRET=$(kubectl -n flux-system get secrets cluster-secrets -o go-template='{{ .data.SECRET_UPTIMEROBOT_APIKEY | base64decode }}')
+MONITORS=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Cache-Control: no-cache" -d "api_key=${SECRET}&format=json&logs=1" "https://api.uptimerobot.com/v2/getMonitors" | jq '.monitors[].id')
+for i in $(echo ${MONITORS}); do
+  sleep 10
+  curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d "api_key=${SECRET}&format=json&id=${i}&status=0" "https://api.uptimerobot.com/v2/editMonitor"
+  echo
+done
+
 # get all pvcs that match the label pv-backup/enabled=true
 source_ns_pvcs=$(kubectl get pvc --all-namespaces -l pv-backup/enabled=true -o=json | jq -c '.items[] | {name: .metadata.name, namespace: .metadata.namespace}')
 
@@ -28,4 +37,13 @@ for ns_pvc in $source_ns_pvcs; do
   # scale deployment back up; blindly do not wait so we can move on to the next backup
   # TODO: maybe wait in background?
   kubectl scale -n "$deploy_ns" deploy "$deploy_name" --replicas=1
+done
+
+sleep 30
+
+# Enable monitoring
+for i in $(echo ${MONITORS}); do
+  curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d "api_key=${SECRET}&format=json&id=${i}&status=1" "https://api.uptimerobot.com/v2/editMonitor"
+  echo
+  sleep 10
 done
