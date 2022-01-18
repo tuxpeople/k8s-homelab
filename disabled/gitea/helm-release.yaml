@@ -75,7 +75,7 @@ spec:
       enabled: true
       size: 50Gi
       accessModes:
-        - ReadWriteMany
+        - ReadWriteOnce
     ingress:
       enabled: true
       hosts:
