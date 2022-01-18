@@ -50,6 +50,6 @@ fi
 
 # ceph osd pool ls
 rbd map -p ceph-blockpool "${rbd}" | xargs -I{} mount {} "${RBD_MOUNTPATH}"
-tar czvf "${NFS_MOUNTPATH}/Backups/${pvc}-${CURRENT_DATE}.tar.gz" -C "${RBD_MOUNTPATH}/" .
+tar czf "${NFS_MOUNTPATH}/Backups/${pvc}-${CURRENT_DATE}.tar.gz" -C "${RBD_MOUNTPATH}/" .
 umount "${RBD_MOUNTPATH}"
 rbd unmap -p ceph-blockpool "${rbd}"
