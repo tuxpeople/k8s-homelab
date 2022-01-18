@@ -44,6 +44,15 @@ spec:
               - "rook.${SECRET_DOMAIN_INTERNAL}"
             secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
     cephClusterSpec:
+      placement:
+        all:
+          tolerations:
+            - effect: NoSchedule
+              operator: Exists
+            - effect: NoExecute
+              operator: Exists
+      crashCollector:
+        disable: false
       dashboard:
         enabled: true
         urlPrefix: /
@@ -73,7 +82,7 @@ spec:
         storageClass:
           enabled: true
           name: ceph-block
-          isDefault: true
+          isDefault: false
           reclaimPolicy: Delete
           allowVolumeExpansion: true
           parameters:

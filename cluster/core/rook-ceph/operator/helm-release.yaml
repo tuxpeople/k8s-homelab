@@ -10,9 +10,11 @@ spec:
     disableWait: true
     remediation:
       retries: 100
+    crds: CreateReplace
   upgrade:
     remediation:
       retries: 100
+    crds: CreateReplace
   chart:
     spec:
       # renovate: registryUrl=https://charts.rook.io/release
@@ -24,7 +26,12 @@ spec:
         namespace: flux-system
   values:
     crds:
-      enabled: false
+      enabled: true
+    csi:
+      enableCephfsDriver: false
+      enableCephfsSnapshotter: false
+    monitoring:
+      enabled: true
     resources:
       requests:
         cpu: 100m
