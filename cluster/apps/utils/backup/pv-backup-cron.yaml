@@ -4,7 +4,7 @@ kind: CronJob
 metadata:
   name: pv-backup
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "30 2 * * *"
   concurrencyPolicy: "Forbid"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -25,11 +25,6 @@ spec:
               args:
                 - "-c"
                 - "sleep 9999"
-              env:
-                - name: DESTINATION_NAMESPACE
-                  value: utils
-                - name: DESTINATION_PVC_NAME
-                  value: nfs-kubernetes
               volumeMounts:
                 - mountPath: /scripts/pv-backup.sh
                   name: pv-backup

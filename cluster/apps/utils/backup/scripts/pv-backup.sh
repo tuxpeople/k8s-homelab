@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION=(curl --silent https://api.github.com/repos/utkuozdemir/pv-migrate/tags | jq -r '.[0].name' | sed -e 's/^v//')
-curl -LO "https://github.com/utkuozdemir/pv-migrate/releases/download/v${VERSION}/pv-migrate_v${VERSION}_linux_x86_64.tar.gz"
-tar xvf pv-migrate*
-mv pv-migrate /usr/local/bin/
-
-dest_ns="${DESTINATION_NAMESPACE}"
-dest_pvc_name="${DESTINATION_PVC_NAME}"
-
 # get all pvcs that match the label pv-backup/enabled=true
 source_ns_pvcs=$(kubectl get pvc --all-namespaces -l pv-backup/enabled=true -o=json | jq -c '.items[] | {name: .metadata.name, namespace: .metadata.namespace}')
 
@@ -32,8 +24,7 @@ for ns_pvc in $source_ns_pvcs; do
   done
 
   # copy from source pvc to dest pvc
-  pv-migrate migrate --source-namespace "$source_pvc_ns" --dest-namespace "$dest_ns" --dest-path /"$deploy_name" "$source_pvc_name" "$dest_pvc_name"
-
+  kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l "app=rook-direct-mount" -o jsonpath='{.items[0].metadata.name}') -- /scripts/backup.sh --rbd $(kubectl get pv/$(kubectl get pv | grep "$source_pvc_name" | awk -F' ' '{print $1}') -n "${deploy_ns}" -o json | jq -rj '.spec.csi.volumeAttributes.imageName') --pvc "$source_pvc_name"
   # scale deployment back up; blindly do not wait so we can move on to the next backup
   # TODO: maybe wait in background?
   kubectl scale -n "$deploy_ns" deploy "$deploy_name" --replicas=1
