@@ -28,8 +28,8 @@ spec:
     crds:
       enabled: true
     csi:
-      enableCephfsDriver: false
-      enableCephfsSnapshotter: false
+      enableCephfsDriver: true
+      enableCephfsSnapshotter: true
     monitoring:
       enabled: true
     resources:
