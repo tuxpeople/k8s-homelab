@@ -55,10 +55,15 @@ for ns_pvc in $source_ns_pvcs; do
     sleep 1
   done
 
+  sleep 5
+
   # copy from source pvc to dest pvc
   kubectl -n rook-ceph exec $(kubectl -n rook-ceph get pod -l "app=rook-direct-mount" -o jsonpath='{.items[0].metadata.name}') -- /scripts/backup.sh --rbd $(kubectl get pv/$(kubectl get pv | grep "$source_pvc_name" | awk -F' ' '{print $1}') -n "${deploy_ns}" -o json | jq -rj '.spec.csi.volumeAttributes.imageName') --pvc "$source_pvc_name"
   # scale deployment back up; blindly do not wait so we can move on to the next backup
   # TODO: maybe wait in background?
+
+  sleep 5
+
   kubectl scale -n "$deploy_ns" deploy "$deploy_name" --replicas=1
 done
 
