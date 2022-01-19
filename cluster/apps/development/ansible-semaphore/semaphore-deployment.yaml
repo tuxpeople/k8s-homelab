@@ -20,7 +20,7 @@ spec:
       securityContext:
         fsGroup: 1000
       containers:
-        - image: ansiblesemaphore/semaphore:v2.8.24
+        - image: ansiblesemaphore/semaphore:v2.8.25
           imagePullPolicy: Always
           env:
             - name: "SEMAPHORE_DB_USER"
