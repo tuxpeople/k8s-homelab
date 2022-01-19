@@ -3,18 +3,34 @@ set -euo pipefail
 
 _step_counter=0
 step() {
-        _step_counter=$(( _step_counter + 1 ))
-        printf '\n\033[1;36m%d) %s\033[0m\n' $_step_counter "$@" >&2  # bold cyan
+  _step_counter=$(( _step_counter + 1 ))
+  printf '\n\033[1;36m%d) %s\033[0m\n' $_step_counter "$@" >&2  # bold cyan
 }
 
-step "Disable monitoring"
-SECRET=$(kubectl -n flux-system get secrets cluster-secrets -o go-template='{{ .data.SECRET_UPTIMEROBOT_APIKEY | base64decode }}')
-MONITORS=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Cache-Control: no-cache" -d "api_key=${SECRET}&format=json&logs=1" "https://api.uptimerobot.com/v2/getMonitors" | jq '.monitors[].id')
-for i in $(echo ${MONITORS}); do
-  sleep 10
-  curl -s -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d "api_key=${SECRET}&format=json&id=${i}&status=0" "https://api.uptimerobot.com/v2/editMonitor"
-  echo
-done
+disable_monitoring() {
+  step "Disable monitoring"
+  SECRET=$(kubectl -n flux-system get secrets cluster-secrets -o go-template='{{ .data.SECRET_UPTIMEROBOT_APIKEY | base64decode }}')
+  MONITORS=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Cache-Control: no-cache" -d "api_key=${SECRET}&format=json&logs=1" "https://api.uptimerobot.com/v2/getMonitors" | jq '.monitors[].id')
+  for i in $(echo ${MONITORS}); do
+    sleep 10
+    curl -s -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d "api_key=${SECRET}&format=json&id=${i}&status=0" "https://api.uptimerobot.com/v2/editMonitor"
+    echo
+  done
+}
+
+enable_monitoring() {
+  step "Enable monitoring"
+  sleep 30
+  SECRET=$(kubectl -n flux-system get secrets cluster-secrets -o go-template='{{ .data.SECRET_UPTIMEROBOT_APIKEY | base64decode }}')
+  MONITORS=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Cache-Control: no-cache" -d "api_key=${SECRET}&format=json&logs=1" "https://api.uptimerobot.com/v2/getMonitors" | jq '.monitors[].id')
+  for i in $(echo ${MONITORS}); do
+    sleep 10
+    curl -s -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d "api_key=${SECRET}&format=json&id=${i}&status=1" "https://api.uptimerobot.com/v2/editMonitor"
+    echo
+  done
+}
+
+disable_monitoring
 
 step "Get all pvcs that match the label pv-backup/enabled=true"
 source_ns_pvcs=$(kubectl get pvc --all-namespaces -l pv-backup/enabled=true -o=json | jq -c '.items[] | {name: .metadata.name, namespace: .metadata.namespace}')
@@ -46,12 +62,4 @@ for ns_pvc in $source_ns_pvcs; do
   kubectl scale -n "$deploy_ns" deploy "$deploy_name" --replicas=1
 done
 
-sleep 30
-
-step "Enable monitoring"
-for i in $(echo ${MONITORS}); do
-  curl -s  
-  -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d "api_key=${SECRET}&format=json&id=${i}&status=1" "https://api.uptimerobot.com/v2/editMonitor"
-  echo
-  sleep 10
-done
+trap enable_monitoring EXIT
