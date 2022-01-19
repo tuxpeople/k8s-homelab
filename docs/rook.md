@@ -12,6 +12,9 @@ See https://hub.syn.tools/rook-ceph/runbooks/CephClusterWarningState.html
 kubectl -n rook-ceph exec -it deploy/rook-direct-mount -- ceph status
 ```
 
+# ceph status: "x daemons have recently crashed"
+See https://it-ops.dev/ceph-daemons-have-recently-crashed
+
 ## Failed Mount rdb image XY is still being used
 
 Scale down the deployment.
