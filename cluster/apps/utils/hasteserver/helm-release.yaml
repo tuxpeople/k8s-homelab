@@ -36,10 +36,6 @@ spec:
       TZ: "Europe/Zurich"
     strategy:
       type: Recreate
-    persistence:
-      config:
-        enabled: true
-        existingClaim: hasteserver-haste-server-config-pvc
     ingress:
       main:
         enabled: true
