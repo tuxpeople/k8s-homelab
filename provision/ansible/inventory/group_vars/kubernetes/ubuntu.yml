@@ -1,10 +1,9 @@
 ---
 chrony_timezone: Europe/Zurich
-chrony_ntp_pools:
-  - ntp11.metas.ch iburst maxpoll 10
-  - ntp12.metas.ch iburst maxpoll 10
-  - ntp13.metas.ch iburst maxpoll 10
-  - ntp.metas.ch iburst maxpoll 10
+chrony_ntp_peers:
+  - ntp11.metas.ch
+  - ntp12.metas.ch
+  - ntp13.metas.ch
 
 # (list) Additional ssh public keys to add to the nodes
 ssh_authorized_keys:
