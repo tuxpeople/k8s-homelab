@@ -31,6 +31,7 @@ enable_monitoring() {
 }
 
 wait_for_helmreleases() {
+  echo "$(date +%X) - Check for helmreleases"
   while kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep -v STATUS | grep -v succeeded > /dev/null; do
     echo "$(date +%X) - Wait until all helmreleases are ready"
     echo "$(date +%X) - Trying to speed that up..."
