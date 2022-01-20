@@ -25,3 +25,4 @@
 
 - name: Reboot
   reboot:
+  throttle: 1
