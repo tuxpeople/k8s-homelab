@@ -36,7 +36,7 @@ wait_for_helmreleases() {
     echo "$(date +%X) - Trying to speed that up..."
     while kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep "failed\|exhausted" | grep -v STATUS; do
       kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep "failed\|exhausted" | grep -v STATUS | awk '{ print $1 " " $2 }' | xargs -L1 kubectl delete helmreleases.helm.toolkit.fluxcd.io -n
-      sleep 30
+      sleep 60
     done
     sleep 60
   done
