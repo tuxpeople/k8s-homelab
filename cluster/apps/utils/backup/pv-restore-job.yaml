@@ -1,0 +1,35 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: development
+  name: pv-restore-job
+  labels:
+    app: pv-restore-job
+spec:
+  template:
+    metadata:
+      labels:
+        app: pv-restore-job
+    spec:
+      serviceAccountName: sa-pv-backup
+      automountServiceAccountToken: true
+      restartPolicy: OnFailure
+      containers:
+        - name: pv-backup
+          image: ghcr.io/k8s-at-home/kubectl:v1.23.2
+          command:
+            - "/usr/bin/bash"
+          args:
+            - "-c"
+            - "/scripts/pv-backup.sh"
+          volumeMounts:
+            - mountPath: /scripts/pv-backup.sh
+              name: pv-backup
+              subPath: pv-backup.sh
+      volumes:
+        - name: pv-backup
+          configMap:
+            defaultMode: 0777
+            name: pv-backup
+  backoffLimit: 4

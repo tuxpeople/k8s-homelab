@@ -30,6 +30,15 @@ enable_monitoring() {
   done
 }
 
+wait_for_helmreleases() {
+  while kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep -v STATUS | grep -V succeeded > /dev/null; do
+    echo "Wait until all helmreleases are ready"
+    sleep 10
+  done
+}
+
+wait_for_helmreleases
+
 disable_monitoring
 
 step "Get all pvcs that match the label pv-backup/enabled=true"
