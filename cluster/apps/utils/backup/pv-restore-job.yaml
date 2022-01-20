@@ -24,12 +24,13 @@ spec:
             - "-c"
             - "/scripts/pv-restore.sh"
           volumeMounts:
-            - mountPath: /scripts/pv-restore.sh
-              name: pv-backup
-              subPath: pv-restore.sh
+            - name: pv-backup
+              mountPath: /scripts
       volumes:
         - name: pv-backup
-          configMap:
-            defaultMode: 0777
-            name: pv-backup
+          projected:
+            defaultMode: 0775
+            sources:
+              - configMap:
+                  name: pv-backup
   backoffLimit: 4
