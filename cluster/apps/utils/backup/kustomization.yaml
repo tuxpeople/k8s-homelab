@@ -5,6 +5,7 @@ configMapGenerator:
   - name: pv-backup
     files:
       - scripts/pv-backup.sh
+      - scripts/pv-restore.sh
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
