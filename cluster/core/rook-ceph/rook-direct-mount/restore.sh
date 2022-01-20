@@ -42,7 +42,7 @@ fi
 LATEST_BACKUP=$(ls -1t ${NFS_MOUNTPATH}/Backups/ | grep ${pvc} | head -1)
 
 if [[ ! -f "${NFS_MOUNTPATH}/Backups/${LATEST_BACKUP}" ]]; then
-    echo "No Backup for ${NFS_MOUNTPATH}/Backups/${LATEST_BACKUP}"
+    echo "No Backup for ${pvc} in ${NFS_MOUNTPATH}/Backups/${LATEST_BACKUP}"
     exit 0
 fi
 
