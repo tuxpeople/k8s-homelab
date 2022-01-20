@@ -44,6 +44,16 @@ wait_for_helmreleases() {
 
 wait_for_helmreleases
 
+sleep 120
+
+wait_for_helmreleases
+
+sleep 120
+
+wait_for_helmreleases
+
+sleep 120
+
 disable_monitoring
 
 step "Get all pvcs that match the label pv-backup/enabled=true"
