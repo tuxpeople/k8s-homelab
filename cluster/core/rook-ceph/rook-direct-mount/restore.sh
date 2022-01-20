@@ -37,6 +37,11 @@ fi
 
 LATEST_BACKUP=$(ls -1t ${NFS_MOUNTPATH}/Backups/ | grep ${pvc} | head -1)
 
+if [[ ! -f "${LATEST_BACKUP}" ]]; then
+    echo "No Backup for ${LATEST_BACKUP}"
+    exit 0
+fi
+
 # ceph osd pool ls
 rbd map -p ceph-blockpool "${rbd}" | xargs -I{} mount {} "${RBD_MOUNTPATH}"
 rm -rf ${RBD_MOUNTPATH}/*
