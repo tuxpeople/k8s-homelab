@@ -34,8 +34,11 @@ wait_for_helmreleases() {
   while kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep -v STATUS | grep -v succeeded > /dev/null; do
     echo "Wait until all helmreleases are ready"
     echo "Trying to speed that up..."
-    kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep "failed\|exhausted" | grep -v STATUS | awk '{ print $1 " " $2 }' | xargs -L1 kubectl delete helmreleases.helm.toolkit.fluxcd.io -n
-    sleep 30
+    while kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep "failed\|exhausted" | grep -v STATUS; do
+      kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep "failed\|exhausted" | grep -v STATUS | awk '{ print $1 " " $2 }' | xargs -L1 kubectl delete helmreleases.helm.toolkit.fluxcd.io -n
+      sleep 30
+    done
+    sleep 10
   done
 }
 
