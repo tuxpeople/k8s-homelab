@@ -31,37 +31,32 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    fullnameOverride: prometheus
     alertmanager:
       enabled: true
       config:
-        #  global:
+        global:
+          slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}"
+          resolve_timeout: 5m
         #  smtp_smarthost: smtp.gmail.com:587
         #  smtp_auth_username: you@gmail.com
         #  smtp_auth_password: yourapppassword # https://support.google.com/mail/answer/185833?hl=en-GB
         #  smtp_auth_identity: you@gmail.com
         route:
-          group_by: ['job']
+          group_by: ["alertname", "job"]
           group_wait: 5m
           group_interval: 10m
           repeat_interval: 1h
-          receiver: discord
+          receiver: mail
           routes:
             - match:
                 alertname: Watchdog
               receiver: 'DeadMansSnitch'
               repeat_interval: 30m
-            - match:
-                alertname: CPUThrottlingHigh
-              receiver: 'email'
-            - match:
-                alertname: KubeMemoryOvercommit
-              receiver: 'email'
-            - match:
-                alertname: KubeCPUOvercommit
-              receiver: 'email'
-            - match:
-                alertname: KubeletTooManyPods
-              receiver: 'email'
+            - receiver: "discord"
+              match_re:
+                severity: critical
+              continue: true
               # - receiver: discord
               #   group_wait: 10s
               #   match_re:
@@ -81,9 +76,25 @@ spec:
               - url: "https://nosnch.in/c15491ac44"
                 send_resolved: false
           - name: discord
-            webhook_configs:
-              - send_resolved: true
-                url: 'http://alertmanager-discord:9094'
+            slack_configs:
+              - channel: "#prometheus"
+                icon_url: https://avatars3.githubusercontent.com/u/3380462
+                username: "Prometheus"
+                send_resolved: true
+                title: |-
+                  [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}
+                text: >-
+                  {{ range .Alerts -}}
+                    **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+                  **Description:** {{ if ne .Annotations.description ""}}{{ .Annotations.description }}{{else}}N/A{{ end }}
+                  **Details:**
+                    {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                    {{ end }}
+                  {{ end }}
+          # - name: discord
+          #   webhook_configs:
+          #     - send_resolved: true
+          #       url: 'http://alertmanager-discord:9094'
         # Inhibition rules allow to mute a set of alerts given that another alert is firing.
         # We use this to mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
@@ -131,26 +142,51 @@ spec:
               - alertmanager.${SECRET_DOMAIN_ME}
         hosts:
           - alertmanager.${SECRET_DOMAIN_ME}
-    nodeExporter:
-      serviceMonitor:
-        relabelings:
-          - action: replace
-            regex: (.*)
-            replacement: $1
-            sourceLabels:
-              - __meta_kubernetes_pod_node_name
-            targetLabel: kubernetes_node
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
     grafana:
       enabled: false
-    # Disable etcd monitoring. See https://github.com/cablespaghetti/k3s-monitoring/issues/4
-    kubeEtcd:
-      enabled: false
+    # Maybe disable etcd monitoring. See https://github.com/cablespaghetti/k3s-monitoring/issues/4
     kubeControllerManager:
-      enabled: false
+      enabled: true
+      service:
+        enabled: true
+        port: 10257
+        targetPort: 10257
+      serviceMonitor:
+        enabled: true
+        https: true
+        insecureSkipVerify: true
     kubeScheduler:
-      enabled: false
+      enabled: true
+      service:
+        enabled: true
+        port: 10259
+        targetPort: 10259
+      serviceMonitor:
+        enabled: true
+        https: true
+        insecureSkipVerify: true
     kubeProxy:
-      enabled: false
+      enabled: true
+    kubeEtcd:
+      enabled: true
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
     kubelet:
       enabled: true
       serviceMonitor:
@@ -159,6 +195,14 @@ spec:
             sourceLabels:
               - node
             targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    prometheusOperator:
+      prometheusConfigReloader:
+        resources:
+          limits:
+            cpu: 300m
+            memory: 200Mi
     prometheus:
       enabled: true
       persistentVolume:
@@ -170,20 +214,18 @@ spec:
         #   limits:
         #     cpu: 300m
         #     memory: 1500Mi
-        podAntiAffinity: "hard"
-        ruleSelector: {}
-        ruleNamespaceSelector: {}
+        replicaExternalLabelName: "replica"
         ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelector: {}
-        serviceMonitorNamespaceSelector: {}
         serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelector: {}
-        podMonitorNamespaceSelector: {}
-        scrape_interval: 30s
         podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
         retention: 14d
         enableAdminAPI: true
         walCompression: true
+        thanos:
+          objectStorageConfig:
+            name: thanos-objstore
+            key: objstore.yml
         additionalScrapeConfigs:
           - job_name: 'octoprint'
             scrape_interval: 1m
