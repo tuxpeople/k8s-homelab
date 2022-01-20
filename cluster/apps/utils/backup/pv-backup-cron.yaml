@@ -26,11 +26,12 @@ spec:
                 - "-c"
                 - "/scripts/pv-backup.sh"
               volumeMounts:
-                - mountPath: /scripts/pv-backup.sh
-                  name: pv-backup
-                  subPath: pv-backup.sh
+                - name: pv-backup
+                  mountPath: /scripts
           volumes:
             - name: pv-backup
-              configMap:
-                defaultMode: 0777
-                name: pv-backup
+              projected:
+                defaultMode: 0775
+                sources:
+                  - configMap:
+                      name: pv-backup
