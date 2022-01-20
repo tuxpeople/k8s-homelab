@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - wireguard-config-secret.sops.yaml
-  # - deamonset.yaml
+  - deamonset.yaml

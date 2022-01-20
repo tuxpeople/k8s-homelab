@@ -7,7 +7,7 @@ metadata:
   labels:
     app: wireguard
   annotations:
-    command: &cmd yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm && yum install -y kmod-wireguard
+    command: &cmd apt install -y wireguard-linux-compat wireguard-dkms
 spec:
   selector:
     matchLabels:
