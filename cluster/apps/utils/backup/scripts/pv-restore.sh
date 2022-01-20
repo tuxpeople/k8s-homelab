@@ -33,7 +33,9 @@ enable_monitoring() {
 wait_for_helmreleases() {
   while kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep -v STATUS | grep -v succeeded > /dev/null; do
     echo "Wait until all helmreleases are ready"
-    sleep 10
+    echo "Trying to speed that up..."
+    kubectl get helmreleases.helm.toolkit.fluxcd.io -A | grep "failed\|exhausted" | grep -v STATUS | awk '{ print $1 " " $2 }' | xargs -L1 kubectl delete helmreleases.helm.toolkit.fluxcd.io -n
+    sleep 30
   done
 }
 
