@@ -35,6 +35,10 @@ if ! mountpoint -q ${NFS_MOUNTPATH}; then
     exit 1
 fi
 
+if [[ ! -d "${RBD_MOUNTPATH}" ]]; then
+    mkdir -p "${RBD_MOUNTPATH}"
+fi
+
 LATEST_BACKUP=$(ls -1t ${NFS_MOUNTPATH}/Backups/ | grep ${pvc} | head -1)
 
 if [[ ! -f "${NFS_MOUNTPATH}/Backups/${LATEST_BACKUP}" ]]; then
