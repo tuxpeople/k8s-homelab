@@ -15,4 +15,4 @@ spec:
       - "media"
   endpoints:
     - port: metrics
-      interval: 15s
+      interval: 30s
