@@ -3,6 +3,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ombi-config
+  labels:
+    pv-backup/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce

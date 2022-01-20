@@ -3,6 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
+    pv-backup/enabled: "true"
     app: jdownloader
   name: jdownloader-config
 spec:
