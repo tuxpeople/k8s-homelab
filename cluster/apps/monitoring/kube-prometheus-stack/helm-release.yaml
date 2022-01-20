@@ -222,10 +222,10 @@ spec:
         retention: 14d
         enableAdminAPI: true
         walCompression: true
-        thanos:
-          objectStorageConfig:
-            name: thanos-objstore
-            key: objstore.yml
+        # thanos:
+        #   objectStorageConfig:
+        #     name: thanos-objstore
+        #     key: objstore.yml
         additionalScrapeConfigs:
           - job_name: 'octoprint'
             scrape_interval: 1m
