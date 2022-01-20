@@ -11,5 +11,3 @@ collections:
 roles:
   - src: xanmanning.k3s
     version: v3.0.1
-  - src: frzk.chrony
-    version: v2.0.0
