@@ -21,7 +21,7 @@ rules:
     verbs: ["watch", "list", "get"]
   - apiGroups: ["helm.toolkit.fluxcd.io"]
     resources: ["helmreleases"]
-    verbs: ["watch", "list", "get"]
+    verbs: ["watch", "list", "get", "delete"]
   - apiGroups: [""]
     resources: ["pods", "jobs"]
     verbs: ["watch", "list", "create", "update", "delete", "patch", "get"]
