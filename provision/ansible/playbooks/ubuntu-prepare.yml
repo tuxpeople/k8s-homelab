@@ -11,4 +11,5 @@
         seconds: 5
   roles:
     - ubuntu
-    - frzk.chrony
+    - robertdebock.roles.cron
+    - robertdebock.roles.ntp
