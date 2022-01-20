@@ -22,11 +22,11 @@ spec:
             - "/usr/bin/bash"
           args:
             - "-c"
-            - "/scripts/pv-backup.sh"
+            - "/scripts/pv-restore.sh"
           volumeMounts:
-            - mountPath: /scripts/pv-backup.sh
+            - mountPath: /scripts/pv-restore.sh
               name: pv-backup
-              subPath: pv-backup.sh
+              subPath: pv-restore.sh
       volumes:
         - name: pv-backup
           configMap:
