@@ -179,14 +179,14 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelector: {}
         podMonitorNamespaceSelector: {}
-        scrape_interval: 10s
+        scrape_interval: 30s
         podMonitorSelectorNilUsesHelmValues: false
         retention: 14d
         enableAdminAPI: true
         walCompression: true
         additionalScrapeConfigs:
           - job_name: 'octoprint'
-            scrape_interval: 5s
+            scrape_interval: 1m
             metrics_path: '/plugin/prometheus_exporter/metrics'
             params:
               apikey: ['${SECRET_OCTOPRINTAPI}']
