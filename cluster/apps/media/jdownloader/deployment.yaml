@@ -35,6 +35,9 @@ spec:
           imagePullPolicy: Always
           name: jdownloader
           resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
             limits:
               cpu: 1000m
               memory: 1000Mi

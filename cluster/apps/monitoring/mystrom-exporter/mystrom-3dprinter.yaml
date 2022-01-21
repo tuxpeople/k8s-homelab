@@ -24,6 +24,9 @@ spec:
           imagePullPolicy: Always
           name: mystrom-3dprinter
           resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
             limits:
               cpu: 500m
               memory: 100Mi

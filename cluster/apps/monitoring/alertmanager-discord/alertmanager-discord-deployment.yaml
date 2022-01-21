@@ -21,6 +21,9 @@ spec:
             - containerPort: 9094
               name: http
           resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
             limits:
               cpu: 20m
               memory: 40Mi

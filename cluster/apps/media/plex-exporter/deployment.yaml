@@ -27,6 +27,9 @@ spec:
             - containerPort: 9567
               protocol: TCP
           resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
             limits:
               cpu: 500m
               memory: 200Mi

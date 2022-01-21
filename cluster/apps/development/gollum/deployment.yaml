@@ -19,6 +19,9 @@ spec:
           image: tdeutsch/gollum-small:20211004141924
           imagePullPolicy: Always
           resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
             limits:
               cpu: 1000m
               memory: 200Mi
