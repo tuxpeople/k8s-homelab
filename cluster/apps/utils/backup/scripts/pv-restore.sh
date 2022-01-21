@@ -43,6 +43,8 @@ wait_for_helmreleases() {
   done
 }
 
+sleep 1800
+
 wait_for_helmreleases
 
 sleep 300
