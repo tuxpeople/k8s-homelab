@@ -55,7 +55,7 @@ spec:
               repeat_interval: 30m
             - receiver: "discord"
               match_re:
-                severity: critical
+                severity: warning
               continue: true
               # - receiver: discord
               #   group_wait: 10s
