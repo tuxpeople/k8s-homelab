@@ -8,6 +8,7 @@ configMapGenerator:
     files:
       - backup.sh
       - restore.sh
+      - fsck.sh
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
