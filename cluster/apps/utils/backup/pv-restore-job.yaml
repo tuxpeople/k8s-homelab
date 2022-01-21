@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  namespace: development
+  namespace: utils
   name: pv-restore-job
   labels:
     app: pv-restore-job
@@ -33,4 +33,4 @@ spec:
             sources:
               - configMap:
                   name: pv-backup
-  backoffLimit: 4
+  backoffLimit: 0
