@@ -45,15 +45,15 @@ wait_for_helmreleases() {
 
 wait_for_helmreleases
 
-sleep 120
+sleep 300
 
 wait_for_helmreleases
 
-sleep 120
+sleep 300
 
 wait_for_helmreleases
 
-sleep 120
+sleep 300
 
 disable_monitoring
 
