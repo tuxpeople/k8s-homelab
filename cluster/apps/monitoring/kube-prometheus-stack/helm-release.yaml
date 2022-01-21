@@ -47,7 +47,7 @@ spec:
           group_wait: 5m
           group_interval: 10m
           repeat_interval: 1h
-          receiver: mail
+          receiver: email
           routes:
             - match:
                 alertname: Watchdog
