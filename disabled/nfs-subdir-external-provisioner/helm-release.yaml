@@ -34,7 +34,7 @@ spec:
   values:
     storageClass:
       defaultClass: false
-      name: nfs-client
+      name: nfs-csi
       allowVolumeExpansion: true
       reclaimPolicy: Delete
       archiveOnDelete: true

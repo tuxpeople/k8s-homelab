@@ -33,7 +33,7 @@ spec:
         exportData:
           enabled: true
           overrides:
-            - storageClassName: nfs-client
+            - storageClassName: nfs-csi
               enabled: false
       retention:
         daily: 7
