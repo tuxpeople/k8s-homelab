@@ -29,6 +29,7 @@ data:
       quality = "high"
       format = "audio"
       clean = { keep_last = 5 }
+      cover_art = "https://yt3.ggpht.com/WewMhq9m4SgHYZeA7-SO4Ke-nVkjI7iryN3KoVaKwr9ecMDHDBiyB0zj4zD49GEi-hSwChFR=s88-c-k-c0x00ffffff-no-rj"
 
       [feeds.spotfight_2minuten]
       url = "https://www.youtube.com/playlist?list=PLoAxl58aGuGojeNhwzFBperSX1AnekP4P"
@@ -37,6 +38,7 @@ data:
       quality = "high"
       format = "audio"
       clean = { keep_last = 5 }
+      cover_art = "https://yt3.ggpht.com/HSjCAWdtnoC_zdNxFokohG0I9jm2fjflVaB1FY0wZvS2EZP55UsearOiga6LHYir0JW0ck1D9nY=s88-c-k-c0x00ffffff-no-rj"
 
       [feeds.spotfight_kurzausgaben]
       url = "https://www.youtube.com/playlist?list=PLoAxl58aGuGp-PtV-GobUj32WIagoyOwp"
@@ -45,6 +47,7 @@ data:
       quality = "high"
       format = "audio"
       clean = { keep_last = 5 }
+      cover_art = "https://yt3.ggpht.com/HSjCAWdtnoC_zdNxFokohG0I9jm2fjflVaB1FY0wZvS2EZP55UsearOiga6LHYir0JW0ck1D9nY=s88-c-k-c0x00ffffff-no-rj"
 
       [feeds.DevOpsToolkit]
       url = "https://www.youtube.com/playlist?list=UUfz8x0lVzJpb_dgWm9kPVrw"
