@@ -30,6 +30,22 @@ data:
       format = "audio"
       clean = { keep_last = 5 }
 
+      [feeds.spotfight_2minuten]
+      url = "https://www.youtube.com/playlist?list=PLoAxl58aGuGojeNhwzFBperSX1AnekP4P"
+      page_size = 5
+      update_period = "1h"
+      quality = "high"
+      format = "audio"
+      clean = { keep_last = 5 }
+
+      [feeds.spotfight_kurzausgaben]
+      url = "https://www.youtube.com/playlist?list=PLoAxl58aGuGp-PtV-GobUj32WIagoyOwp"
+      page_size = 5
+      update_period = "1h"
+      quality = "high"
+      format = "audio"
+      clean = { keep_last = 5 }
+
       [feeds.DevOpsToolkit]
       url = "https://www.youtube.com/playlist?list=UUfz8x0lVzJpb_dgWm9kPVrw"
       page_size = 15
