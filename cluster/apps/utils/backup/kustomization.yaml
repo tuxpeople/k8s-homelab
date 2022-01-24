@@ -13,4 +13,3 @@ generatorOptions:
 resources:
   - rbac.yaml
   - pv-backup-cron.yaml
-  - pv-restore-job.yaml
