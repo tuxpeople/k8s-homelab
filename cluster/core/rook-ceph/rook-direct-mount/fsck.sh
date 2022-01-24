@@ -2,8 +2,7 @@
 
 # PVC=sonarr-config-v1 \
 # NS=media \
-# kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l "app=rook-direct-mount" -o jsonpath='{.items[0].metadata.name}') -- /scripts/fsck.sh --rbd $(kubectl get pv/$(kubectl get pv | grep "$PVC" | awk -F' ' '{print $1}') -n "${NS}" -o json | jq -rj '.spec.csi.volumeAttributes.imageName')
-
+# l
 # Set defaults
 rbd=""
 
