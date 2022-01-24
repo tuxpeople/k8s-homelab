@@ -11,7 +11,7 @@ resources:
   - plex-exporter
   - plex-meta-manager
   - volumes.yaml
-  - ombi
+  - overseerr
   - radarr
   - sonarr
   - nzbget
