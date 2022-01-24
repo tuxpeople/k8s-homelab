@@ -38,8 +38,6 @@ spec:
     persistence:
       config:
         enabled: true
-        emptyDir: false
-        mountPath: /config
         existingClaim: "overseerr-config"
     ingress:
       main:
