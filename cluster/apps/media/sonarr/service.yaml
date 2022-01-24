@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: sonarr
 spec:
-  externalName: nuc0.home
+  externalName: sonarr.home
   ports:
     - name: http
       port: 8989

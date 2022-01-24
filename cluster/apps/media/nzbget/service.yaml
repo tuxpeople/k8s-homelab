@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: nzbget
 spec:
-  externalName: nuc0.home
+  externalName: nzbget.home
   ports:
     - name: http
       port: 6789
