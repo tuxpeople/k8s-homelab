@@ -76,11 +76,9 @@ spec:
               - url: "https://nosnch.in/c15491ac44"
                 send_resolved: false
           - name: discord
-            slack_configs:
-              - channel: "#prometheus"
-                icon_url: https://avatars3.githubusercontent.com/u/3380462
-                username: "Prometheus"
-                send_resolved: true
+            webhook_configs:
+              - send_resolved: true
+                url: 'http://alertmanager-discord:9094'
                 title: |-
                   [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}
                 text: >-
