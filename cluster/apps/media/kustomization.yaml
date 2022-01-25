@@ -9,7 +9,7 @@ resources:
   - tautulli
   - plex
   - plex-exporter
-  - plex-meta-manager
+  # - plex-meta-manager
   - volumes.yaml
   - overseerr
   - radarr
