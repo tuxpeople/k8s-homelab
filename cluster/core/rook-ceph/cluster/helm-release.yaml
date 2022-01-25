@@ -72,9 +72,6 @@ spec:
           - name: "k3s-node3"
             devices:
               - name: "vdc"
-          - name: "k3s-node-a"
-            devices:
-              - name: "vdc"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
