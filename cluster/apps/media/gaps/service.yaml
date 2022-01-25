@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gaps
+spec:
+  externalName: gaps.home
+  ports:
+    - name: http
+      port: 8484
+      protocol: TCP
+      targetPort: 8484
+  sessionAffinity: None
+  type: ExternalName
