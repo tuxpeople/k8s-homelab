@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: overseerr
+  name: nzbhydra2
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
@@ -12,15 +12,15 @@ spec:
   tls:
     - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
       hosts:
-        - overseerr.${SECRET_DOMAIN_INTERNAL}
+        - nzbhydra2.${SECRET_DOMAIN_INTERNAL}
   rules:
-    - host: overseerr.${SECRET_DOMAIN_INTERNAL}
+    - host: nzbhydra2.${SECRET_DOMAIN_INTERNAL}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: overseerr
+                name: nzbhydra2
                 port:
-                  number: 5055
+                  number: 5076
