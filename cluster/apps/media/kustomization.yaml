@@ -16,6 +16,7 @@ resources:
   - radarr
   - sonarr
   - nzbget
+  - notifiarr
   # - prowlarr
   # - readarr
   # - backup-test
