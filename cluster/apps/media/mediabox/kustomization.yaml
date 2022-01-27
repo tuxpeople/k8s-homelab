@@ -2,5 +2,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ingress.yaml
+  - bazarr-ingress.yaml
+  - gaps-ingress.yaml
+  - nzbget-ingress.yaml
+  - nzbhydra2-ingress.yaml
+  - overseerr-ingress.yaml
+  - radarr-ingress.yaml
   - service.yaml
+  - sonar-ingress.yaml
+  - stats-ingress.yaml
+  - tautulli-ingress.yaml
