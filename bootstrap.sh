@@ -30,6 +30,6 @@ done
 task flux:reconcile
 done
 
-kubectl logs -n utils -l app=pv-restore-job -f
+# kubectl logs -n utils -l app=pv-restore-job -f
 
 cd ${_pwd}
