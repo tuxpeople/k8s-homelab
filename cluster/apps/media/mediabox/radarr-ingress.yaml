@@ -21,6 +21,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: radarr
+                name: mediabox
                 port:
-                  number: 7878
+                  name: radarr

@@ -21,6 +21,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: tautulli
+                name: mediabox
                 port:
-                  number: 8181
+                  name: tautulli

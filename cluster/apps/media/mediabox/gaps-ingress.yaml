@@ -2,25 +2,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nzbhydra2
+  name: gaps
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hajimari.io/enable: "true"
-    hajimari.io/icon: "plex"
+    hajimari.io/icon: "filmstrip"
 spec:
   tls:
     - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
       hosts:
-        - nzbhydra2.${SECRET_DOMAIN_INTERNAL}
+        - gaps.${SECRET_DOMAIN_INTERNAL}
   rules:
-    - host: nzbhydra2.${SECRET_DOMAIN_INTERNAL}
+    - host: gaps.${SECRET_DOMAIN_INTERNAL}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: nzbhydra2
+                name: mediabox
                 port:
-                  number: 5076
+                  name: gaps
