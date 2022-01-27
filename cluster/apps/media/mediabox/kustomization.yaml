@@ -12,3 +12,4 @@ resources:
   - sonar-ingress.yaml
   - stats-ingress.yaml
   - tautulli-ingress.yaml
+  - dozzle-ingress.yaml
