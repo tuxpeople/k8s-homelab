@@ -38,5 +38,9 @@ spec:
       port: 6767
       protocol: TCP
       targetPort: 6767
+    - name: stats
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
   sessionAffinity: None
   type: ExternalName
