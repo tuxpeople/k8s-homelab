@@ -10,3 +10,4 @@ resources:
   # - node-feature-discovery
   - kube-cleanup-operator
   - kubed
+  - reflector
