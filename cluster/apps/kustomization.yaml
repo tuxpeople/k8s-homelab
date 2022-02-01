@@ -12,3 +12,4 @@ resources:
   - system-upgrade
   - utils
   - starboard-operator
+  - reflector
