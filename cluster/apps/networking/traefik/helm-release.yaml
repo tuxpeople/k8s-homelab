@@ -102,7 +102,7 @@ spec:
       requests:
         memory: 200Mi
         cpu: 50m
-    # TODO ist this still neded:
+    # TODO is this still neded:
     # priorityClassName: "system-cluster-critical"
     # tolerations:
     #   - key: "CriticalAddonsOnly"
