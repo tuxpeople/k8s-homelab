@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 10.20.30.40
-    path: "/volume1/Multimedia/input"
+    path: "/volume2/Multimedia/input"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -39,7 +39,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 10.20.30.40
-    path: "/volume1/Multimedia"
+    path: "/volume2/Multimedia"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

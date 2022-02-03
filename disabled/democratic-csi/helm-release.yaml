@@ -87,8 +87,8 @@ spec:
         instance_id: fdf93387-dc47-4668-8b8d-69a46aa0513e
         nfs:
           shareHost: 10.20.30.40
-          shareBasePath: "/volume1/Kubernetes"
-          controllerBasePath: "/volume1/Kubernetes"
+          shareBasePath: "/volume2/Kubernetes"
+          controllerBasePath: "/volume2/Kubernetes"
           # allow control to PVC creation user and permission
           dirPermissionsMode: "0700"
           dirPermissionsUser: 1000

@@ -40,4 +40,4 @@ spec:
       archiveOnDelete: true
     nfs:
       server: 10.20.30.40
-      path: /volume1/Kubernetes
+      path: /volume2/Kubernetes
