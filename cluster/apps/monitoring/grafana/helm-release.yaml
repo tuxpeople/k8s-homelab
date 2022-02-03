@@ -180,10 +180,10 @@ spec:
           gnetId: 11462
           datasource: prometheus
           revision: 1
-        # Ref: https://grafana.com/grafana/dashboards/13665/revisions
+        # Ref: https://grafana.com/grafana/dashboards/14336/revisions
         speedtest:
-          gnetId: 13665
-          revision: 1
+          gnetId: 14336
+          revision: 2
           datasource: prometheus
         # Ref: https://grafana.com/grafana/dashboards/9955/revisions
         uptimerobot:
