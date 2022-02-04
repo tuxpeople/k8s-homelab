@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: mediabox
 spec:
-  externalName: media.home
+  externalName: thiazi.home
   ports:
     - name: tautulli
       port: 8181
