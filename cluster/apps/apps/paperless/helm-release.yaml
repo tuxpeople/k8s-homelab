@@ -46,7 +46,7 @@ spec:
         volumeSpec:
           nfs:
             server: 10.20.30.40
-            path: /volume2/Kubernetes/scanner
+            path: /volume2/data/scanner
       data:
         enabled: true
         existingClaim: paperless-data-pvc
