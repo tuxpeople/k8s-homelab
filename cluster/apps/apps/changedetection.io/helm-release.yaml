@@ -70,5 +70,5 @@ spec:
         memory: 500M
     additionalContainers:
       - name: webdriver
-        image: selenium/standalone-chrome:97.0
+        image: selenium/standalone-chrome:98.0
         imagePullPolicy: Always
