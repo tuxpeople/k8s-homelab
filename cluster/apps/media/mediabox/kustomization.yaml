@@ -6,7 +6,6 @@ resources:
   - gaps-ingress.yaml
   - nzbget-ingress.yaml
   - nzbhydra2-ingress.yaml
-  - overseerr-ingress.yaml
   - radarr-ingress.yaml
   - service.yaml
   - sonar-ingress.yaml
