@@ -18,10 +18,6 @@ spec:
       port: 7878
       protocol: TCP
       targetPort: 7878
-    - name: overseerr
-      port: 5055
-      protocol: TCP
-      targetPort: 5055
     - name: nzbhydra2
       port: 5076
       protocol: TCP

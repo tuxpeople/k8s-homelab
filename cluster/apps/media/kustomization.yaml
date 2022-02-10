@@ -8,6 +8,7 @@ resources:
   - plex-exporter
   - mediabox
   - volumes.yaml
+  - overseer
   # - prowlarr
   # - readarr
   # - backup-test
