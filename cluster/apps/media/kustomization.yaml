@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: media
 resources:
   - jdownloader
-  - podsync
+  # - podsync
   - plex-exporter
   - mediabox
   - volumes.yaml
