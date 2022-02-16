@@ -15,7 +15,7 @@ metadata:
   name: podsync
 spec:
   rules:
-    - host: podsync.${SECRET_DOMAIN_ME}
+    - host: podsync-old.${SECRET_DOMAIN_ME}
       http:
         paths:
           - backend:
@@ -27,5 +27,5 @@ spec:
             pathType: Prefix
   tls:
     - hosts:
-        - podsync.${SECRET_DOMAIN_ME}
+        - podsync-old.${SECRET_DOMAIN_ME}
       secretName: "${SECRET_DOMAIN_ME/./-}-tls"
