@@ -21,13 +21,12 @@ spec:
   test:
     enable: false # Enable helm test
   install:
-    remediation: # perform remediation when helm install fails
-      retries: 5
-  upgrade:
-    remediation: # perform remediation when helm upgrade fails
+    createNamespace: true
+    remediation:
       retries: 3
-      remediateLastFailure: true # remediate the last failure, when no retries remain
-    cleanupOnFail: true
+  upgrade:
+    remediation:
+      retries: 3
   rollback:
     timeout: 10m
     cleanupOnFail: true
