@@ -39,11 +39,11 @@ spec:
     #   create: true
     # psp:
     #   create: true
-    prometheus:
-      podMonitor:
-        enabled: true
-      prometheusRule:
-        enabled: true
+    # prometheus:         # .Values.prometheus.serviceAccount must be defined when .Values.prometheus.podMonitor.enabled == true
+    #   podMonitor:
+    #     enabled: true
+    #   prometheusRule:
+    #     enabled: true
     # controller:
     #   logLevel: debug
     # speaker:
