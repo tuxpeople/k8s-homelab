@@ -23,6 +23,6 @@
 #   tags:
 #     - longhorn
 
-- name: Reboot
-  reboot:
-  throttle: 1
+# - name: Reboot
+#   reboot:
+#   throttle: 1
