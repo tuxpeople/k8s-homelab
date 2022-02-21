@@ -39,6 +39,8 @@ spec:
       strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"
+    podSecurityContext:
+      fsGroup: 0
     service:
       main:
         enabled: true
