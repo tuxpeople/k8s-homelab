@@ -30,10 +30,15 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    env:
+      # -- Set the container timezone
+      TZ: Europe/Zurich
     strategy:
       type: Recreate
     controller:
       strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
     service:
       main:
         enabled: true
