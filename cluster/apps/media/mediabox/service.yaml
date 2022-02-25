@@ -18,14 +18,14 @@ spec:
       port: 7878
       protocol: TCP
       targetPort: 7878
-    - name: nzbhydra2
-      port: 5076
+    - name: prowlarr
+      port: 9696
       protocol: TCP
-      targetPort: 5076
-    - name: nzbget
-      port: 6789
+      targetPort: 9696
+    - name: sabnzbd
+      port: 8080
       protocol: TCP
-      targetPort: 6789
+      targetPort: 8080
     - name: gaps
       port: 8484
       protocol: TCP
@@ -38,9 +38,9 @@ spec:
       port: 8080
       protocol: TCP
       targetPort: 8080
-    - name: dozzle
-      port: 9999
+    - name: notifiarr
+      port: 5454
       protocol: TCP
-      targetPort: 9999
+      targetPort: 5454
   sessionAffinity: None
   type: ExternalName

@@ -2,19 +2,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nzbget
+  name: notifiarr
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hajimari.io/enable: "true"
-    hajimari.io/icon: "cloud-download"
+    hajimari.io/icon: "filmstrip"
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
       hosts:
-        - nzbget.${SECRET_DOMAIN_INTERNAL}
+        - notifiarr.${SECRET_DOMAIN_ME}
   rules:
-    - host: nzbget.${SECRET_DOMAIN_INTERNAL}
+    - host: notifiarr.${SECRET_DOMAIN_ME}
       http:
         paths:
           - path: /
@@ -23,4 +23,4 @@ spec:
               service:
                 name: mediabox
                 port:
-                  name: nzbget
+                  name: notifiarr

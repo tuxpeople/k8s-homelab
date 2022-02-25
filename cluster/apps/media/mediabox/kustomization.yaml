@@ -4,11 +4,11 @@ kind: Kustomization
 resources:
   - bazarr-ingress.yaml
   - gaps-ingress.yaml
-  - nzbget-ingress.yaml
-  - nzbhydra2-ingress.yaml
+  - sabnzbd-ingress.yaml
+  - prowlarr-ingress.yaml
   - radarr-ingress.yaml
   - service.yaml
   - sonar-ingress.yaml
   - stats-ingress.yaml
   - tautulli-ingress.yaml
-  - dozzle-ingress.yaml
+  - notifiarr-ingress.yaml
