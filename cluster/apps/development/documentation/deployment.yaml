@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: documentation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: documentation
+  template:
+    metadata:
+      labels:
+        app: documentation
+    spec:
+      securityContext:
+        fsGroup: 34222
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: git-secret
+          secret:
+            defaultMode: 256
+            secretName: git-secret
+      containers:
+        - name: git-sync
+          image: k8s.gcr.io/git-sync:v4.0.0
+          volumeMounts:
+            - name: data
+              mountPath: /git
+            - name: git-secret
+              mountPath: /etc/git-secret
+          args:
+            - "--ssh"
+            - "--repo=git@github.com:tuxpeople/documentation-private.git"
+            - --depth=1
+            - --period=60
+            - --link=current
+            - --root=/git
+          securityContext:
+            runAsUser: 34222
+        - name: documentation
+          image: registry.eighty-three.me/tuxpeople/mkdocs
+          args:
+            - "build"
+            - "--config-file"
+            - "/git/current/mkdocs.yml"
+          volumeMounts:
+            - name: data
+              mountPath: /git

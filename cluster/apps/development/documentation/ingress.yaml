@@ -1,0 +1,31 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: documentation
+  name: documentation
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns/is-public: "true"
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+    traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "file-document-edit"
+spec:
+  tls:
+    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+      hosts:
+        - doku.${SECRET_DOMAIN_ME}
+  rules:
+    - host: doku.${SECRET_DOMAIN_ME}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: documentation
+                port:
+                  number: 8000
