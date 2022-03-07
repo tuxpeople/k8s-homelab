@@ -34,7 +34,7 @@ spec:
             - "--repo=git@github.com:tuxpeople/documentation-private.git"
             - --depth=1
             - --wait=60
-            - --link=current
+            - --dest=current
             - --root=/git
           securityContext:
             runAsUser: 34222
