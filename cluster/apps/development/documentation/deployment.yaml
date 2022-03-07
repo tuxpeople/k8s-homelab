@@ -23,7 +23,7 @@ spec:
             secretName: git-secret
       containers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync/git-sync:v4.0.0
+          image: k8s.gcr.io/git-sync:v3.1.3
           volumeMounts:
             - name: data
               mountPath: /git
