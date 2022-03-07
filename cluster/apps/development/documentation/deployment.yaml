@@ -12,12 +12,14 @@ spec:
       labels:
         app: documentation
     spec:
+      securityContext:
+        fsGroup: 65533
       volumes:
         - name: data
           emptyDir: {}
         - name: git-secret
           secret:
-            defaultMode: 256
+            defaultMode: 0400
             secretName: git-secret
       containers:
         - name: git-sync
@@ -34,6 +36,8 @@ spec:
             - --wait=60
             - --dest=current
             - --root=/git
+          securityContext:
+            runAsUser: 65533
         - name: documentation
           image: registry.eighty-three.me/tuxpeople/mkdocs
           args:
