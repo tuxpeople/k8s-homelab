@@ -33,7 +33,7 @@ spec:
             - "--ssh"
             - "--repo=git@github.com:tuxpeople/documentation-private.git"
             - --depth=1
-            - --period=60
+            - --wait=60
             - --link=current
             - --root=/git
           securityContext:
