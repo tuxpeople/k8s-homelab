@@ -12,8 +12,6 @@ spec:
       labels:
         app: documentation
     spec:
-      securityContext:
-        fsGroup: 34222
       volumes:
         - name: data
           emptyDir: {}
@@ -36,8 +34,6 @@ spec:
             - --wait=60
             - --dest=current
             - --root=/git
-          securityContext:
-            runAsUser: 34222
         - name: documentation
           image: registry.eighty-three.me/tuxpeople/mkdocs
           args:
