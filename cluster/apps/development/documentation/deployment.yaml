@@ -59,11 +59,15 @@ spec:
           env:
             - name: "TZ"
               value: "Europe/Zurich"
-          image: tdeutsch/minilighttpd@sha256:d2485ff17085c94d4c4d4b8c947fdb4d857644d74d7348ea177428d36b4d3387
-          imagePullPolicy: Always
+          image: busybox:1.35.0
+          command: ["httpd"]
+          args:
+            - "-f"
+            - "-p 80"
+            - "-h /docs/"
           volumeMounts:
             - name: docs
-              mountPath: /data
+              mountPath: /docs
           ports:
             - containerPort: 80
           livenessProbe:
