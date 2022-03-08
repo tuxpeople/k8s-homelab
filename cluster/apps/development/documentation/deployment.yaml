@@ -39,12 +39,12 @@ spec:
             - "-branch=master"
           securityContext:
             runAsUser: 65533
-        - name: documentation
-          image: registry.eighty-three.me/tuxpeople/mkdocs
-          args:
-            - "build"
-            - "--config-file"
-            - "/git/current/mkdocs.yml"
-          volumeMounts:
-            - name: data
-              mountPath: /git
+        # - name: documentation
+        #   image: registry.eighty-three.me/tuxpeople/mkdocs
+        #   args:
+        #     - "build"
+        #     - "--config-file"
+        #     - "/git/current/mkdocs.yml"
+        #   volumeMounts:
+        #     - name: data
+        #       mountPath: /git
