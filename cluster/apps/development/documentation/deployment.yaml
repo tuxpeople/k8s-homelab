@@ -63,7 +63,7 @@ spec:
               value: "Europe/Zurich"
           image: busybox:1.35.0
           command: ["/bin/sh"]
-          args: ["-c", "httpd -f -p 80 -h /var/www/"]
+          args: ["-c", "httpd -f -p 8000 -h /docs/"]
           # command: ["httpd"]
           # args:
           #   - "-f"
@@ -71,9 +71,9 @@ spec:
           #   - "-h /var/www/"
           volumeMounts:
             - name: docs
-              mountPath: /var/www
+              mountPath: /docs
           ports:
-            - containerPort: 80
+            - containerPort: 8000
           livenessProbe:
             httpGet:
               path: /
