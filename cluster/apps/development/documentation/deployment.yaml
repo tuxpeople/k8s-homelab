@@ -37,7 +37,7 @@ spec:
             - "-ssh"
             - "-repo=git@github.com:tuxpeople/documentation-private.git"
             - "-depth=1"
-            - "-wait=3600"
+            - "-wait=180"
             - "-dest=current"
             - "-root=/git"
             - "-branch=master"
