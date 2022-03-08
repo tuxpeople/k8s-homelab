@@ -97,6 +97,7 @@ spec:
             - 'http://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback'
             - 'https://k10.eighty-three.me/k10/auth-svc/v0/oidc/redirect'
             - 'https://todo.eighty-three.me/auth/openid/dex'
+            - 'https://doku.eighty-three.me/_oauth'
           name: 'SKY'
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
