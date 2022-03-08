@@ -44,7 +44,7 @@ spec:
           securityContext:
             runAsUser: 65533
         - name: documentation
-          image: registry.eighty-three.me/tuxpeople/mkdocs
+          image: registry.eighty-three.me/tuxpeople/mkdocs:v0.0.1
           command: ["/scripts/watch.sh"]
           volumeMounts:
             - name: data
