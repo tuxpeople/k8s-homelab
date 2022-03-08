@@ -32,6 +32,9 @@ spec:
       containers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.2.0
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
           volumeMounts:
             - name: data
               mountPath: /git
@@ -49,6 +52,9 @@ spec:
             runAsUser: 65533
         - name: mkdocs
           image: registry.eighty-three.me/tuxpeople/mkdocs:v0.1.0
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
           command: ["/scripts/watch.sh"]
           volumeMounts:
             - name: data
