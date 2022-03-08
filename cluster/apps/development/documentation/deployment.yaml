@@ -23,7 +23,7 @@ spec:
             secretName: git-secret
       containers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync:v3.1.6
+          image: k8s.gcr.io/git-sync/git-sync:v3.2.0
           volumeMounts:
             - name: data
               mountPath: /git
@@ -32,10 +32,11 @@ spec:
           args:
             - "--ssh"
             - "--repo=git@github.com:tuxpeople/documentation-private.git"
-            - --depth=1
-            - --wait=60
-            - --dest=current
-            - --root=/git
+            - "--depth=1"
+            - "--wait=60"
+            - "--dest=current"
+            - "--root=/git"
+            - "--branch=master"
           securityContext:
             runAsUser: 65533
         - name: documentation
