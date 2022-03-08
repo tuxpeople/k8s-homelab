@@ -82,10 +82,3 @@ spec:
             periodSeconds: 3
           securityContext:
             runAsUser: 65533
-      # initContainers:
-      #   - name: init-folder
-      #     image: busybox:1.35.0
-      #     command: ['sh', '-c', 'echo "Hello" > /docs/index.htm']
-      #     volumeMounts:
-      #       - name: docs
-      #         mountPath: /docs
