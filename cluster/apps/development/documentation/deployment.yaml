@@ -57,27 +57,29 @@ spec:
               mountPath: "/scripts"
           securityContext:
             runAsUser: 65533
-        # - name: webserver
-        #   env:
-        #     - name: "TZ"
-        #       value: "Europe/Zurich"
-        #   image: busybox:1.35.0
-        #   command: ["httpd"]
-        #   args:
-        #     - "-f"
-        #     - "-p 80"
-        #     - "-h /docs/"
-        #   volumeMounts:
-        #     - name: docs
-        #       mountPath: /docs
-        #   ports:
-        #     - containerPort: 80
-        #   livenessProbe:
-        #     httpGet:
-        #       path: /
-        #       port: 80
-        #     initialDelaySeconds: 3
-        #     periodSeconds: 3
+        - name: webserver
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
+          image: busybox:1.35.0
+          command: ["httpd"]
+          args:
+            - "-f"
+            - "-p 80"
+            - "-h /docs/"
+          volumeMounts:
+            - name: docs
+              mountPath: /docs
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          securityContext:
+            runAsUser: 65533
       # initContainers:
       #   - name: init-folder
       #     image: busybox:1.35.0
