@@ -6,8 +6,11 @@ data:
   watch.sh: |-
     #!/bin/sh
     sleep 30
-    mkdocs build --config-file /git/current/mkdocs.yml
+    mkdir /docs
+    cp -rH /git/current/* /docs/
+    mkdocs build --config-file /docs/mkdocs.yml
     inotifywait -q -r -m -e modify,move,create,delete /git/current/ |
     while read _; do
-      mkdocs serve --config-file /git/current/mkdocs.yml
+      cp -rH /git/current/* /docs/
+      mkdocs serve --config-file /docs/mkdocs.yml
     done
