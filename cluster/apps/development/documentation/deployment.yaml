@@ -30,13 +30,13 @@ spec:
             - name: git-secret
               mountPath: /etc/git-secret
           args:
-            - "--ssh"
-            - "--repo=git@github.com:tuxpeople/documentation-private.git"
-            - "--depth=1"
-            - "--wait=60"
-            - "--dest=current"
-            - "--root=/git"
-            - "--branch=master"
+            - "-ssh"
+            - "-repo=git@github.com:tuxpeople/documentation-private.git"
+            - "-depth=1"
+            - "-wait=3600"
+            - "-dest=current"
+            - "-root=/git"
+            - "-branch=master"
           securityContext:
             runAsUser: 65533
         # - name: documentation
