@@ -9,4 +9,4 @@ data:
     do
       sleep 2
     done
-    mkdocs serve --config-file /git/current/mkdocs.yml
+    mkdocs serve --config-file /git/current/mkdocs.yml -a 0.0.0.0:8000
