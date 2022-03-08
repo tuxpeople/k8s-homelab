@@ -62,11 +62,13 @@ spec:
             - name: "TZ"
               value: "Europe/Zurich"
           image: busybox:1.35.0
-          command: ["httpd"]
-          args:
-            - "-f"
-            - "-p 80"
-            - "-h /var/www/"
+          command: ["/bin/sh"]
+          args: ["-c", "sleep", "3000"]
+          # command: ["httpd"]
+          # args:
+          #   - "-f"
+          #   - "-p 80"
+          #   - "-h /var/www/"
           volumeMounts:
             - name: docs
               mountPath: /var/www
