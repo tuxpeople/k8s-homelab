@@ -63,7 +63,7 @@ spec:
               value: "Europe/Zurich"
           image: busybox:1.35.0
           command: ["/bin/sh"]
-          args: ["-c", "sleep 3000"]
+          args: ["-c", "httpd -f -p 80 -h /var/www/"]
           # command: ["httpd"]
           # args:
           #   - "-f"
