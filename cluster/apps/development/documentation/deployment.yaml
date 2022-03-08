@@ -66,10 +66,10 @@ spec:
           args:
             - "-f"
             - "-p 80"
-            - "-h /docs/"
+            - "-h /var/www/"
           volumeMounts:
             - name: docs
-              mountPath: /docs
+              mountPath: /var/www
           ports:
             - containerPort: 80
           livenessProbe:
