@@ -55,6 +55,8 @@ spec:
               mountPath: /docs
             - name: scripts
               mountPath: "/scripts"
+          securityContext:
+            runAsUser: 65533
         # - name: webserver
         #   env:
         #     - name: "TZ"
