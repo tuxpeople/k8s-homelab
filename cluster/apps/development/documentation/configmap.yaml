@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: docs-watch-script
+data:
+  watch.sh: |-
+    #!/bin/bash
+    sleep 30
+    mkdocs build --config-file /git/current/mkdocs.yml
+    # watch...
+    inotifywait -q -r -m -e modify,move,create,delete /git/current/ |
+    while read _; do
+      mkdocs build --config-file /git/current/mkdocs.yml
+    done

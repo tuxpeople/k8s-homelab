@@ -21,6 +21,10 @@ spec:
           secret:
             defaultMode: 288
             secretName: git-secret
+        - name: scripts
+          configMap:
+            name: docs-watch-script
+            defaultMode: 0755
       containers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.2.0
@@ -41,13 +45,12 @@ spec:
             runAsUser: 65533
         - name: documentation
           image: registry.eighty-three.me/tuxpeople/mkdocs
-          args:
-            - "build"
-            - "--config-file"
-            - "/git/current/mkdocs.yml"
+          command: ["/scripts/watch.sh"]
           volumeMounts:
             - name: data
               mountPath: /git
+            - name: scripts
+              mountPath: "/scripts"
           ports:
             - containerPort: 8000
           livenessProbe:
