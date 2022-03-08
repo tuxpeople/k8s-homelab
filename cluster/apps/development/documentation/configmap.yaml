@@ -4,7 +4,7 @@ metadata:
   name: docs-watch-script
 data:
   watch.sh: |-
-    #!/bin/bash
+    #!/bin/sh
     sleep 30
     mkdocs build --config-file /git/current/mkdocs.yml
     # watch...
