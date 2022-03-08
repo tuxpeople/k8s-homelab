@@ -19,7 +19,7 @@ spec:
           emptyDir: {}
         - name: git-secret
           secret:
-            defaultMode: 0400
+            defaultMode: 288
             secretName: git-secret
       containers:
         - name: git-sync
