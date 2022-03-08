@@ -5,8 +5,14 @@ metadata:
 data:
   watch.sh: |-
     #!/bin/sh
+    mkdir /docs
     while [ ! -f /git/current/mkdocs.yml ]
     do
       sleep 2
     done
-    mkdocs serve --config-file /git/current/mkdocs.yml -a 0.0.0.0:8000
+    mkdocs build --config-file /git/current/mkdocs.yml --site-dir /docs
+    inotifywait -q -r -m -e modify,move,create,delete /git/current/ |
+    while read _; do
+      cp -rH /git/current/* /docs/
+      mkdocs build --config-file /git/current/mkdocs.yml --site-dir /docs
+    done
