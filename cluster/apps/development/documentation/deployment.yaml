@@ -77,7 +77,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: 80
+              port: 8000
             initialDelaySeconds: 3
             periodSeconds: 3
           securityContext:
