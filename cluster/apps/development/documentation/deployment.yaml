@@ -72,11 +72,6 @@ spec:
           image: busybox:1.35.0
           command: ["/bin/sh"]
           args: ["-c", "httpd -f -p 8000 -h /docs/"]
-          # command: ["httpd"]
-          # args:
-          #   - "-f"
-          #   - "-p 80"
-          #   - "-h /var/www/"
           volumeMounts:
             - name: docs
               mountPath: /docs
