@@ -76,3 +76,10 @@ spec:
               port: 80
             initialDelaySeconds: 3
             periodSeconds: 3
+      initContainers:
+        - name: init-folder
+          image: busybox:1.35.0
+          command: ['sh', '-c', 'echo "Hello" > /docs/index.htm']
+          volumeMounts:
+            - name: docs
+              mountPath: /docs
