@@ -55,7 +55,7 @@ spec:
             - containerPort: 8000
           livenessProbe:
             httpGet:
-              path: /index.html
+              path: /
               port: 8000
             initialDelaySeconds: 3
             periodSeconds: 3
