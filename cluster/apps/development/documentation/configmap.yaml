@@ -9,9 +9,7 @@ data:
     do
       sleep 2
     done
-    mkdocs build --config-file /git/current/mkdocs.yml --site-dir /docs
-    inotifywait -m -q -r -e create,delete,modify,move  --format '%w%f' --exclude '.*\.git/.*' /git/current/ |
-    while read _; do
-      cp -rH /git/current/* /docs/
+    while true; do
       mkdocs build --config-file /git/current/mkdocs.yml --site-dir /docs
+      inotifywait -q -r -e create,delete,modify,move --exclude '.*\.git/.*' /git/current/
     done
