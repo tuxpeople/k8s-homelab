@@ -71,7 +71,7 @@ spec:
               value: "Europe/Zurich"
           image: busybox:1.35.0
           command: ["/bin/sh"]
-          args: ["-c", "httpd -f -p 8000 -h /docs/"]
+          args: ["-c", "httpd -f -v -p 8000 -h /docs/"]
           # command: ["httpd"]
           # args:
           #   - "-f"
