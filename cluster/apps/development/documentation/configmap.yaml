@@ -11,5 +11,6 @@ data:
     done
     while true; do
       mkdocs build --config-file /git/current/mkdocs.yml --site-dir /docs
+      # inotify blocks the loop until file changes
       inotifywait -q -r -e create,delete,modify,move --exclude '.*\.git/.*' /git/current/
     done
