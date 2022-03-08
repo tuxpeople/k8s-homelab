@@ -5,10 +5,7 @@ metadata:
 data:
   watch.sh: |-
     #!/bin/sh
-    sleep 30
-    mkdocs build --config-file /git/current/mkdocs.yml
-    # watch...
     inotifywait -q -r -m -e modify,move,create,delete /git/current/ |
     while read _; do
-      mkdocs build --config-file /git/current/mkdocs.yml
+      mkdocs serve --config-file /git/current/mkdocs.yml
     done
