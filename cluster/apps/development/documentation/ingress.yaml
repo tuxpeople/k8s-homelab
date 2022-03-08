@@ -28,4 +28,4 @@ spec:
               service:
                 name: documentation
                 port:
-                  number: 8000
+                  number: 80

@@ -5,7 +5,6 @@ metadata:
 data:
   watch.sh: |-
     #!/bin/sh
-    mkdir /docs
     while [ ! -f /git/current/mkdocs.yml ]
     do
       sleep 2

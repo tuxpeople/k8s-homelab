@@ -17,6 +17,8 @@ spec:
       volumes:
         - name: data
           emptyDir: {}
+        - name: docs
+          emptyDir: {}
         - name: git-secret
           secret:
             defaultMode: 288
@@ -43,19 +45,30 @@ spec:
             - "-branch=master"
           securityContext:
             runAsUser: 65533
-        - name: documentation
+        - name: mkdocs
           image: registry.eighty-three.me/tuxpeople/mkdocs:v0.1.0
           command: ["/scripts/watch.sh"]
           volumeMounts:
             - name: data
               mountPath: /git
+            - name: docs
+              mountPath: /docs
             - name: scripts
               mountPath: "/scripts"
+        - name: webserver
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
+          image: tdeutsch/minilighttpd@sha256:d2485ff17085c94d4c4d4b8c947fdb4d857644d74d7348ea177428d36b4d3387
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: docs
+              mountPath: /data
           ports:
-            - containerPort: 8000
+            - containerPort: 80
           livenessProbe:
             httpGet:
               path: /
-              port: 8000
+              port: 80
             initialDelaySeconds: 3
             periodSeconds: 3
