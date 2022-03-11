@@ -31,7 +31,7 @@ spec:
             defaultMode: 0755
       containers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync/git-sync:v3.4.0
+          image: k8s.gcr.io/git-sync/git-sync:v3.5.0
           env:
             - name: "TZ"
               value: "Europe/Zurich"
