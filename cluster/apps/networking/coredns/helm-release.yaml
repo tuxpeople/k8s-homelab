@@ -32,59 +32,71 @@ spec:
   values:
     nameOverride: coredns
     fullnameOverride: coredns
+    serviceType: LoadBalancer
+    prometheus:
+      service:
+        enabled: true
+      monitor:
+        enabled: true
+    service:
+      externalTrafficPolicy: Local
+      loadBalancerIP: ${SVC_COREDNS_ADDRESS}
     rbac:
       create: true
-    isClusterService: true
-    serviceType: LoadBalancer
-    service:
-      externalIPs:
-        - "${SVC_COREDNS_ADDRESS}"
-      externalTrafficPolicy: Local
+    isClusterService: false
     servers:
       - zones:
-          - zone: ${SECRET_DOMAIN_INTERNAL}
+          - zone: ${SECRET_DOMAIN_INTERNAL}.
             scheme: dns://
-            port: 53
-            plugins:
-              # Enables console logging
-              - name: log
-              - name: errors
-              # Serves a /health endpoint on :8080, required for livenessProbe
-              - name: health
-                configBlock: |-
-                  lameduck 5s
-              # Serves a /ready endpoint on :8181, required for readinessProbe
-              - name: ready
-              # Allow automatic reloading of Corefile
-              - name: reload
-              # Detect forwarding loops
-              - name: loop
-              # Set up local resolution
-              - name: etcd
-                configBlock: |-
-                  stubzones
-                  path /skydns
-                  endpoint http://etcd:2379
-              # tls /etc/coredns/coredns-etcd/cert.pem /etc/coredns/coredns-etcd/key.pem /etc/coredns/coredns-etcd/ca.crt
-              # Set up cache
-              - name: cache
-                parameters: 30
-    # extraSecrets:
-    # - name: coredns-etcd
-    #   mountPath: /etc/coredns/coredns-etcd
+            use_tcp: false
+          # - zone: ${SECRET_DOMAIN_ME}.
+          #   scheme: dns://
+          #   use_tcp: false
+        port: 53
+        plugins:
+          - name: errors
+          - name: health
+            configBlock: |-
+              lameduck 5s
+          - name: ready
+          # - name: kubernetes
+          #   parameters: cluster.local in-addr.arpa ip6.arpa
+          #   configBlock: |-
+          #     pods insecure
+          #     fallthrough in-addr.arpa ip6.arpa
+          #     ttl 30
+          - name: prometheus
+            parameters: 0.0.0.0:9153
+          - name: forward
+            parameters: . /etc/resolv.conf
+          - name: cache
+            parameters: 30
+          - name: loop
+          - name: reload
+          - name: loadbalance
+          - name: file
+            parameters: /etc/coredns/${SECRET_DOMAIN}
     affinity:
-      podAntiAffinity:
+      nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-            matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: In
-                values:
-                  - coredns
-            topologyKey: "kubernetes.io/hostname"
-    resources:
-      requests:
-        memory: 200Mi
-        cpu: 50m
-      limits:
-        memory: 500Mi
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/master
+                  operator: Exists
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - coredns
+              topologyKey: kubernetes.io/hostname
+    # zoneFiles:
+    #   - filename: ${SECRET_DOMAIN}
+    #     domain: ${SECRET_DOMAIN}
+    #     contents: |
+    #       ${SECRET_DOMAIN}.   IN SOA etta.ns.cloudflare.com. dns.cloudflare.com. 2020100600 10000 2400 604800 3600
+    #       *.${SECRET_DOMAIN}. IN A ${METALLB_TRAEFIK_ADDR}
