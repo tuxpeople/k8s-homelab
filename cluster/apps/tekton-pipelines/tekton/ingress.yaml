@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: tekton
+    component: tekton-dashboard
+  name: tekton
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+    - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+      hosts:
+        - tekton.${SECRET_DOMAIN_INTERNAL}
+  rules:
+    - host: tekton.${SECRET_DOMAIN_INTERNAL}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tekton-dashboard
+                port:
+                  number: 9097
