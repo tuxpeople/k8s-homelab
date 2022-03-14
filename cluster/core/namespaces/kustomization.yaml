@@ -12,3 +12,4 @@ resources:
   - networking.yaml
   - starboard-operator.yaml
   - utils.yaml
+  - tekton-pipelines.yaml
