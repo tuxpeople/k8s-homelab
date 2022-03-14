@@ -6,6 +6,4 @@ resources:
   # - smokeping
   - speedtest-plotter
   - traefik
-  - etcd-for-coredns
-  - coredns
   # - kubernetes-dashboard
