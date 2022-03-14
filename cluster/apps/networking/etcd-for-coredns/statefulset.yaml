@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: etcd
+  labels:
+    app.kubernetes.io/name: etcd
+spec:
+  serviceName: etcd
+  replicas: 1
+  updateStrategy:
+    type: OnDelete
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: etcd
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: etcd
+    spec:
+      containers:
+        - name: etcd
+          image: gcr.io/etcd-development/etcd:v3.5.2
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/etcd
+          env:
+            - name: ETCD_NAME
+              value: node1
+            - name: ETCD_DATA_DIR
+              value: /etcd-data
+            - name: ETCD_LISTEN_PEER_URLS
+              value: http://0.0.0.0:2380
+            - name: ETCD_LISTEN_CLIENT_URLS
+              value: http://0.0.0.0:2379
+            - name: ETCD_INITIAL_ADVERTISE_PEER_URLS
+              value: http://0.0.0.0:2380
+            - name: ETCD_ADVERTISE_CLIENT_URLS
+              value: http://0.0.0.0:2379
+            - name: ETCD_INITIAL_CLUSTER
+              value: "node1=http://0.0.0.0:2380"
+          volumeMounts:
+            - name: data
+              mountPath: /etcd-data
+          ports:
+            - containerPort: 2379
+              name: client
+            - containerPort: 2380
+              name: peer
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
