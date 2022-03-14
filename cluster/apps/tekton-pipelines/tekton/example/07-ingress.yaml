@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: tekton
+    component: el-github-pr
+  name: tekton
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns/is-public: "true"
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "safe"
+spec:
+  tls:
+    - secretName: "${SECRET_DOMAIN_CH/./-}-tls"
+      hosts:
+        - hook.${SECRET_DOMAIN_CH}
+  rules:
+    - host: hook.${SECRET_DOMAIN_CH}
+      http:
+        paths:
+          - path: /hooks
+            pathType: Exact
+            backend:
+              service:
+                name: el-github-pr
+                port:
+                  number: 8080

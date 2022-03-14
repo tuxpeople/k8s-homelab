@@ -1,0 +1,12 @@
+---
+# See https://github.com/arthurk/tekton-triggers-example
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - 01-rbac.yaml
+  - 02-pipeline.yaml
+  - 03-eventlistener.yaml
+  - 04-secret.sops.yaml
+  - 05-triggerbinding.yaml
+  - 06-triggertemplate.yaml
+  - 07-ingress.yaml
