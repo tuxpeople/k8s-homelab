@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - cloudflare-ddns
   - external-dns
+  - internal-dns
   - etcd-for-coredns
   - coredns
   - secret.sops.yaml
