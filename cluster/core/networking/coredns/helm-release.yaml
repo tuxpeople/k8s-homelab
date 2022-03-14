@@ -65,6 +65,12 @@ spec:
           #     pods insecure
           #     fallthrough in-addr.arpa ip6.arpa
           #     ttl 30
+          - name: etcd
+            configBlock: |-
+              stubzones
+              path /skydns
+              endpoint http://etcd:2379
+            parameters: "${SECRET_DOMAIN_INTERNAL}"
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: forward
