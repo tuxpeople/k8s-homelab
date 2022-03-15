@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.rancher.io
       chart: rancher-monitoring-crd
-      version: 14.5.100
+      version: 100.1.0+up19.0.3
       sourceRef:
         kind: HelmRepository
         name: rancher-charts
