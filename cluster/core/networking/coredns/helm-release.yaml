@@ -46,9 +46,9 @@ spec:
     isClusterService: false
     servers:
       - zones:
-          - zone: ${SECRET_DOMAIN_INTERNAL}.
-            scheme: dns://
-            use_tcp: false
+          # - zone: ${SECRET_DOMAIN_INTERNAL}.
+          #   scheme: dns://
+          #   use_tcp: false
           # - zone: ${SECRET_DOMAIN_ME}.
           #   scheme: dns://
           #   use_tcp: false
