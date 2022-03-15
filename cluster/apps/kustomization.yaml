@@ -12,4 +12,4 @@ resources:
   - system-upgrade
   - utils
   - starboard-operator
-  - tekton-pipelines
+  # - tekton-pipelines
