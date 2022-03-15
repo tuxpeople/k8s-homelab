@@ -13,4 +13,3 @@ resources:
   - utils
   - starboard-operator
   # - tekton-pipelines
-  - cattle-monitoring-system

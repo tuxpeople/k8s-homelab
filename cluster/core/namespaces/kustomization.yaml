@@ -13,4 +13,3 @@ resources:
   - starboard-operator.yaml
   - utils.yaml
   - tekton-pipelines.yaml
-  - cattle-monitoring-system.yaml
