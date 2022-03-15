@@ -3,7 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: rancher-monitoring
-  namespace: cattle-monitoring-system
 spec:
   releaseName: rancher-monitoring
   chart:
@@ -30,7 +29,13 @@ spec:
     timeout: 10m
     cleanupOnFail: true
     recreate: true
+  dependsOn:
+    - name: rancher-monitoring-crd
+      namespace: cattle-monitoring-system
   values:
+    prometheus:
+      persistent:
+        useReleaseName: true
     # grafana:
     #   ingress:
     #     enabled: true
