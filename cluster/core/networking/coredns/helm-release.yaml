@@ -80,8 +80,8 @@ spec:
           - name: loop
           - name: reload
           - name: loadbalance
-          - name: file
-            parameters: /etc/coredns/${SECRET_DOMAIN}
+          # - name: file
+          #   parameters: /etc/coredns/${SECRET_DOMAIN}
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
