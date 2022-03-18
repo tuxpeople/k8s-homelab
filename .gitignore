@@ -15,3 +15,7 @@ frzk.chrony*
 .terraform
 .terraform.tfstate*
 terraform.tfstate*
+
+# others
+git-secret
+git-secret.pub
