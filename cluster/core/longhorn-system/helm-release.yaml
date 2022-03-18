@@ -38,7 +38,7 @@ spec:
       host: "longhorn.${SECRET_DOMAIN_INTERNAL}"
       annotations:
         hajimari.io/enable: "true"
-        hajimari.io/icon: "content-save-outline"
+        hajimari.io/icon: harddisk
         hajimari.io/appName: "Longhorn"
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
     persistence:
@@ -47,7 +47,7 @@ spec:
       reclaimPolicy: Delete
       recurringJobs:
         enable: true
-        jobList: '[ { "name":"snap", "task":"snapshot", "cron":"30 */2 * * *", "retain":3 }, { "name":"backup", "task":"backup", "cron":"30 3 * * *", "retain":2 } ]'
+        jobList: '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":3,"labels": {"interval":"daily"}}]'
     defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
       backupTargetCredentialSecret: minio-secret
@@ -57,7 +57,8 @@ spec:
       defaultDataPath: /var/lib/longhorn
       defaultDataLocality: best-effort
       storageOverProvisioningPercentage: 150
-      taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
+      # taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
+      upgradeChecker: true
     longhornManager:
       tolerations:
         - key: "node-role.kubernetes.io/master"
