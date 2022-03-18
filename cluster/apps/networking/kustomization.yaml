@@ -7,3 +7,4 @@ resources:
   - speedtest-plotter
   - traefik
   # - kubernetes-dashboard
+  - error-pages
