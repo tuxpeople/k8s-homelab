@@ -13,3 +13,4 @@ resources:
   - starboard-operator.yaml
   - utils.yaml
   - tekton-pipelines.yaml
+  - longhorn-system.yaml
