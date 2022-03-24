@@ -50,7 +50,7 @@ jobs:
           echo "::set-output name=cilium_version::$VERSION"
 
       - name: Create pull request for Cilium base-install upgrade
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: "cilium/upgrade-${{ steps.upgrade.outputs.cilium_version }}"
