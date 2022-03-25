@@ -7,7 +7,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      # renovate: registryUrl=https://hajimari.io
       chart: joplin-server
       version: 4.5.0
       sourceRef:
