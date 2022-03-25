@@ -29,6 +29,10 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    image:
+      repository: joplin/server
+      tag: 2.7.4-beta
+      pullPolicy: Always
     env:
       TZ: "Europe/Zurich"
       APP_BASE_URL: https://joplin.${SECRET_DOMAIN_ME}
