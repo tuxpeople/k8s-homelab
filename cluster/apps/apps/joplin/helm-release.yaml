@@ -12,7 +12,7 @@ spec:
       version: 4.5.0
       sourceRef:
         kind: HelmRepository
-        name: hajimari-charts
+        name: k8s-at-home
         namespace: flux-system
       interval: 5m
   test:
