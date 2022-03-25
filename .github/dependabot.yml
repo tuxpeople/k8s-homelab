@@ -2,19 +2,45 @@ version: 2
 updates:
 
 # Maintain dependencies for Docker
-- package-ecosystem: docker
+- package-ecosystem: "docker"
   directory: "/"
   schedule:
-    interval: daily
-  open-pull-requests-limit: 10
+    interval: "daily"
+  commit-message:
+    prefix: "feat(deps): "
+  labels:
+  - dependencies
+  - docker
   assignees:
     - "tuxpeople"
+  target-branch: "develop"
 
 # Maintain dependencies for GitHub Actions
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:
     interval: "daily"
+  commit-message:
+    prefix: "chore(ci): "
+  labels:
+  - dependencies
+  - github-actions
   open-pull-requests-limit: 10
   assignees:
     - "tuxpeople"
+  target-branch: "develop"
+
+# Maintain dependencies for Python
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: "daily"
+  commit-message:
+    prefix: "feat(deps): "
+  labels:
+  - dependencies
+  - python
+  open-pull-requests-limit: 10
+  assignees:
+    - "tuxpeople"
+  target-branch: "develop"
