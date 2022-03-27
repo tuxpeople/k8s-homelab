@@ -207,10 +207,10 @@ spec:
       persistentVolume:
         enabled: true
         size: 10Gi
-      thanosService:
-        enabled: true
-      thanosServiceMonitor:
-        enabled: true
+      # thanosService:
+      #   enabled: true
+      # thanosServiceMonitor:
+      #   enabled: true
       prometheusSpec:
         replicas: 1
         replicaExternalLabelName: "replica"
@@ -218,15 +218,15 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
-        retention: 6h
+        retention: 7d
         enableAdminAPI: true
         walCompression: true
-        thanos:
-          image: quay.io/thanos/thanos:v0.25.2
-          version: v0.22.0
-          objectStorageConfig:
-            name: thanos-objstore
-            key: objstore.yml
+        # thanos:
+        #   image: quay.io/thanos/thanos:v0.25.2
+        #   version: v0.22.0
+        #   objectStorageConfig:
+        #     name: thanos-objstore
+        #     key: objstore.yml
         additionalScrapeConfigs:
           # - job_name: minio
           #   honor_timestamps: true
