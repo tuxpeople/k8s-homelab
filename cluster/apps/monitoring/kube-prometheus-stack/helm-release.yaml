@@ -158,27 +158,27 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        - 192.168.8.11
-        - 192.168.8.12
-        - 192.168.8.13
+        - 192.168.8.101
+        - 192.168.8.102
+        - 192.168.8.103
     kubeScheduler:
       enabled: true
       endpoints:
-        - 192.168.8.11
-        - 192.168.8.12
-        - 192.168.8.13
+        - 192.168.8.101
+        - 192.168.8.102
+        - 192.168.8.103
     kubeProxy:
       enabled: true
       endpoints:
-        - 192.168.8.11
-        - 192.168.8.12
-        - 192.168.8.13
+        - 192.168.8.101
+        - 192.168.8.102
+        - 192.168.8.103
     kubeEtcd:
       enabled: true
       endpoints:
-        - 192.168.8.11
-        - 192.168.8.12
-        - 192.168.8.13
+        - 192.168.8.101
+        - 192.168.8.102
+        - 192.168.8.103
       service:
         enabled: true
         port: 2381
@@ -250,16 +250,16 @@ spec:
               username: randomuser
               password: examplepassword
             static_configs:
-              - targets: ['192.168.8.11:9100'] # lab1
+              - targets: ['192.168.8.101:9100'] # lab1
                 labels:
                   alias: lab1
-              - targets: ['192.168.8.12:9100'] # lab2
+              - targets: ['192.168.8.102:9100'] # lab2
                 labels:
                   alias: lab2
-              - targets: ['192.168.8.13:9100'] # lab2
+              - targets: ['192.168.8.103:9100'] # lab2
                 labels:
                   alias: lab3
-              - targets: ['192.168.8.14:9100'] # lab2
+              - targets: ['192.168.8.104:9100'] # lab2
                 labels:
                   alias: lab4
           - job_name: 'kubernetes-service-endpoints'
