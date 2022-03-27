@@ -35,9 +35,9 @@ spec:
     serviceType: LoadBalancer
     prometheus:
       service:
-        enabled: true
+        enabled: false
       monitor:
-        enabled: true
+        enabled: false
     service:
       externalTrafficPolicy: Local
       loadBalancerIP: ${SVC_COREDNS_ADDRESS}
