@@ -155,31 +155,30 @@ spec:
               targetLabel: kubernetes_node
     grafana:
       enabled: false
-    # Maybe disable etcd monitoring. See https://github.com/cablespaghetti/k3s-monitoring/issues/4
     kubeControllerManager:
       enabled: true
-      service:
-        enabled: true
-        port: 10257
-        targetPort: 10257
-      serviceMonitor:
-        enabled: true
-        https: true
-        insecureSkipVerify: true
+      endpoints:
+        - 192.168.8.11
+        - 192.168.8.12
+        - 192.168.8.13
     kubeScheduler:
       enabled: true
-      service:
-        enabled: true
-        port: 10259
-        targetPort: 10259
-      serviceMonitor:
-        enabled: true
-        https: true
-        insecureSkipVerify: true
+      endpoints:
+        - 192.168.8.11
+        - 192.168.8.12
+        - 192.168.8.13
     kubeProxy:
       enabled: true
+      endpoints:
+        - 192.168.8.11
+        - 192.168.8.12
+        - 192.168.8.13
     kubeEtcd:
       enabled: true
+      endpoints:
+        - 192.168.8.11
+        - 192.168.8.12
+        - 192.168.8.13
       service:
         enabled: true
         port: 2381
