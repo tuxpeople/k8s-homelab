@@ -1,7 +1,15 @@
 ---
-timezone: Europe/Zurich
-chrony_ntp_pools:
-  - ntp.metas.ch iburst
+systemd_timesyncd_purge_legacy_packages: yes
+ntp_servers:
+  - ntp11.metas.ch
+  - ntp12.metas.ch
+  - ntp13.metas.ch
+ntp_fallback_servers:
+  - 0.europe.pool.ntp.org
+  - 1.europe.pool.ntp.org
+  - 2.europe.pool.ntp.org
+  - 3.europe.pool.ntp.org
+system_timezone: "Europe/Zurich"
 
 # (list) Additional ssh public keys to add to the nodes
 ssh_authorized_keys:

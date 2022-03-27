@@ -12,4 +12,4 @@
   roles:
     - ubuntu
     - robertdebock.roles.cron
-    - frzk.chrony
+    - idiv-biodiversity.systemd_timesyncd
