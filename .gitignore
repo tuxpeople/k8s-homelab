@@ -11,6 +11,7 @@ kubeconfig
 # Ansible
 xanmanning.k3s*
 frzk.chrony*
+idiv-biodiversity*
 # Terraform
 .terraform
 .terraform.tfstate*
