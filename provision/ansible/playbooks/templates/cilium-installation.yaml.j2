@@ -66,18 +66,14 @@ rules:
 - apiGroups:
   - ""
   resources:
-  - pods
   - pods/finalizers
   verbs:
-  - get
-  - list
-  - watch
   - update
-  - delete
 - apiGroups:
   - ""
   resources:
   - nodes
+  - pods
   verbs:
   - get
   - list
@@ -401,7 +397,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/operator-generic:v1.11.2@sha256:4c8bea6818ee3e4932f99e9c1d7efa88b8c0f3cd516160caec878406531e45e7
+        image: quay.io/cilium/operator-generic:v1.11.3@sha256:5b81db7a32cb7e2d00bb3cf332277ec2b3be239d9e94a8d979915f4e6648c787
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -518,7 +514,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.11.2@sha256:4332428fbb528bda32fffe124454458c9b716c86211266d1a03c4ddf695d7f60
+        image: quay.io/cilium/cilium:v1.11.3@sha256:cb6aac121e348abd61a692c435a90a6e2ad3f25baa9915346be7b333de8a767f
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -607,7 +603,7 @@ spec:
           value: /run/cilium/cgroupv2
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.11.2@sha256:4332428fbb528bda32fffe124454458c9b716c86211266d1a03c4ddf695d7f60
+        image: quay.io/cilium/cilium:v1.11.3@sha256:cb6aac121e348abd61a692c435a90a6e2ad3f25baa9915346be7b333de8a767f
         imagePullPolicy: IfNotPresent
         name: mount-cgroup
         securityContext:
@@ -621,11 +617,11 @@ spec:
         - sh
         - -c
         - |
-          until test -f "/tmp/cilium-bootstrap-time"; do
+          until test -s "/tmp/cilium-bootstrap-time"; do
             echo "Waiting on node-init to run...";
             sleep 1;
           done
-        image: quay.io/cilium/cilium:v1.11.2@sha256:4332428fbb528bda32fffe124454458c9b716c86211266d1a03c4ddf695d7f60
+        image: quay.io/cilium/cilium:v1.11.3@sha256:cb6aac121e348abd61a692c435a90a6e2ad3f25baa9915346be7b333de8a767f
         imagePullPolicy: IfNotPresent
         name: wait-for-node-init
         volumeMounts:
@@ -650,7 +646,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.11.2@sha256:4332428fbb528bda32fffe124454458c9b716c86211266d1a03c4ddf695d7f60
+        image: quay.io/cilium/cilium:v1.11.3@sha256:cb6aac121e348abd61a692c435a90a6e2ad3f25baa9915346be7b333de8a767f
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
         resources:
