@@ -48,6 +48,7 @@ k3s_server:
   #   - "allocate-node-cidrs"
     # Required to monitor component with kube-prometheus-stack
   kube-controller-manager-arg:
+    - "address=0.0.0.0"
     - "bind-address=0.0.0.0"
   kube-proxy-arg:
     # # Various
@@ -63,6 +64,7 @@ k3s_server:
     # - "feature-gates=MixedProtocolLBService=true"
     # - "feature-gates=ReadWriteOncePod=true"
     # Required to monitor component with kube-prometheus-stack
+    - "address=0.0.0.0"
     - "bind-address=0.0.0.0"
   # Required to monitor etcd with kube-prometheus-stack
   etcd-expose-metrics: true
