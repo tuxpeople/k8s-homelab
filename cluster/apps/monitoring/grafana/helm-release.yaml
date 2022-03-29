@@ -174,11 +174,11 @@ spec:
           datasource: prometheus
           revision: 3
       networking:
-        # Ref: https://grafana.com/grafana/dashboards/11462/revisions
+        # Ref: https://grafana.com/grafana/dashboards/4475/revisions
         traefik:
-          gnetId: 11462
+          gnetId: 4475
           datasource: prometheus
-          revision: 1
+          revision: 5
         # Ref: https://grafana.com/grafana/dashboards/14336/revisions
         speedtest:
           gnetId: 14336
