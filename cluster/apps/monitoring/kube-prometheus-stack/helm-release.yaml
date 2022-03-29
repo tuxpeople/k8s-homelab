@@ -267,12 +267,12 @@ spec:
               - targets: ['192.168.8.202:9100'] # lab2
                 labels:
                   alias: lab2
-              - targets: ['192.168.8.203:9100'] # lab2
+              - targets: ['192.168.8.203:9100'] # lab3
                 labels:
                   alias: lab3
-              - targets: ['192.168.8.204:9100'] # lab2
-                labels:
-                  alias: lab4
+              # - targets: ['192.168.8.204:9100'] # lab4
+              #   labels:
+              #     alias: lab4
       ingress:
         enabled: true
         annotations:
