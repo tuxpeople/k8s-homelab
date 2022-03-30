@@ -8,7 +8,7 @@ resources:
   - loki
   - mystrom-exporter
   - prometheus-uptimerobot-exporter
-  - snmp-exporter
+  # - snmp-exporter
   - speedtest-exporter
   - unifi-poller
   - alertmanager-discord
