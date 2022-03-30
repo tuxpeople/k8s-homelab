@@ -73,9 +73,9 @@ spec:
             - name: PORT
               value: "9707"
             - name: URL
-              value: "$SECRET_SONARR_URL"
+              value: "${SECRET_SONARR_URL}"
             - name: APIKEY
-              value: "$SECRET_SONARR_API_KEY"
+              value: "${SECRET_SONARR_API_KEY}"
             - name: ENABLE_EPISODE_QUALITY_METRICS
               value: "true"
           ports:
