@@ -20,9 +20,11 @@ spec:
     enable: false # Enable helm test
   install:
     createNamespace: true
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
     remediation:
       retries: 3
   rollback:
