@@ -13,3 +13,4 @@ resources:
   - utils
   - starboard-operator
   # - tekton-pipelines
+  - k10
