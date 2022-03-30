@@ -12,3 +12,5 @@ resources:
   - stats-ingress.yaml
   - tautulli-ingress.yaml
   - notifiarr-ingress.yaml
+  - radarr-exporter.yaml
+  - sonarr-exporter.yaml
