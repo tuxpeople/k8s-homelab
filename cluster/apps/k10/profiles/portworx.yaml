@@ -10,7 +10,7 @@ spec:
         apiVersion: v1
         kind: secret
         name: portworxsecret
-        namespace: k10
+        namespace: kasten-io
     portworx:
       namespace: kube-system
       serviceName: portworx-service

@@ -23,4 +23,4 @@ spec:
         filters: {}
         profile:
           name: minio
-          namespace: k10
+          namespace: kasten-io

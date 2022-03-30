@@ -18,5 +18,5 @@ spec:
         apiVersion: v1
         kind: secret
         name: k10-minio-secret
-        namespace: k10
+        namespace: kasten-io
   type: Location

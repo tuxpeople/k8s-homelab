@@ -30,4 +30,4 @@ spec:
                     - podsync
         profile:
           name: minio
-          namespace: k10
+          namespace: kasten-io
