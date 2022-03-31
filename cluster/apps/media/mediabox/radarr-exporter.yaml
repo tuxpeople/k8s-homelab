@@ -117,31 +117,21 @@ data:
             "hide": true,
             "iconColor": "rgba(0, 211, 255, 1)",
             "name": "Annotations & Alerts",
-            "target": {
-              "limit": 100,
-              "matchAny": false,
-              "tags": [],
-              "type": "dashboard"
-            },
             "type": "dashboard"
           }
         ]
       },
       "editable": true,
-      "fiscalYearStartMonth": 0,
+      "gnetId": null,
       "graphTooltip": 0,
-      "id": 22,
+      "id": 272,
+      "iteration": 1617623062689,
       "links": [],
-      "liveNow": false,
       "panels": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CDEAF5ACF3"
-          },
+          "datasource": "prometheus",
           "fieldConfig": {
             "defaults": {
-              "displayName": "status",
               "mappings": [
                 {
                   "from": "",
@@ -184,7 +174,7 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 5,
+            "h": 4,
             "w": 7,
             "x": 0,
             "y": 0
@@ -192,43 +182,41 @@ data:
           "id": 2,
           "options": {
             "colorMode": "value",
-            "graphMode": "area",
+            "graphMode": "none",
             "justifyMode": "center",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": [
-                "last"
-              ],
+              "calcs": ["last"],
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_system_status",
+              "expr": "radarr_system_status{job=\"$instance\"}",
               "format": "time_series",
               "instant": true,
+              "interval": "",
               "legendFormat": "",
               "refId": "A"
             }
           ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "status",
           "type": "stat"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
+          "datasource": "prometheus",
           "fieldConfig": {
             "defaults": {
-              "displayName": "in queue",
               "mappings": [
                 {
                   "from": "",
                   "id": 1,
-                  "operator": "",
                   "text": "0",
                   "to": "",
                   "type": 1,
@@ -249,64 +237,9 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 5,
-            "w": 4,
+            "h": 4,
+            "w": 7,
             "x": 7,
-            "y": 0
-          },
-          "id": 4,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "8.4.2",
-          "targets": [
-            {
-              "expr": "sum(radarr_queue_total)",
-              "format": "table",
-              "instant": true,
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "displayName": "missing",
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "rgb(255, 194, 48)",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "locale"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 4,
-            "x": 11,
             "y": 0
           },
           "id": 5,
@@ -316,34 +249,556 @@ data:
             "justifyMode": "center",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
+              "calcs": ["lastNotNull"],
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "8.4.2",
+          "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_movie_missing_total",
-              "format": "table",
+              "expr": "radarr_movie_missing_total{job=\"$instance\"}",
+              "format": "time_series",
               "instant": true,
+              "interval": "",
+              "intervalFactor": 1,
               "legendFormat": "",
               "refId": "A"
             }
           ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "missing",
           "type": "stat"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
+          "datasource": "prometheus",
           "fieldConfig": {
             "defaults": {
-              "displayName": "wanted",
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "0",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgb(255, 194, 48)",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "locale"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 4,
+            "x": 14,
+            "y": 0
+          },
+          "id": 16,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.2",
+          "targets": [
+            {
+              "expr": "radarr_queue_total{job=\"$instance\"}",
+              "format": "time_series",
+              "hide": false,
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "in queue",
+          "type": "stat"
+        },
+        {
+          "datasource": "prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "0",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgb(255, 194, 48)",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "locale"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 12,
+            "w": 4,
+            "x": 18,
+            "y": 0
+          },
+          "id": 4,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.2",
+          "targets": [
+            {
+              "expr": "radarr_system_health_issues{job=\"$instance\"}",
+              "format": "time_series",
+              "hide": false,
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "health issues",
+          "type": "stat"
+        },
+        {
+          "datasource": "prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "0",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgb(255, 194, 48)",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "locale"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 7,
+            "x": 0,
+            "y": 4
+          },
+          "id": 6,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.2",
+          "targets": [
+            {
+              "expr": "radarr_movie_total{job=\"$instance\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "intervalFactor": 1,
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "movies",
+          "type": "stat"
+        },
+        {
+          "datasource": "prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "text": "0",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgb(255, 194, 48)",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "locale"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 7,
+            "x": 7,
+            "y": 4
+          },
+          "id": 3,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": ["last"],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.2",
+          "targets": [
+            {
+              "expr": "radarr_movie_wanted_total{job=\"$instance\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "wanted",
+          "type": "stat"
+        },
+        {
+          "datasource": "prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "decimals": 0,
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "0",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgb(255, 194, 48)",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "locale"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 4,
+            "x": 14,
+            "y": 4
+          },
+          "id": 8,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": ["last"],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.2",
+          "targets": [
+            {
+              "expr": "sum(increase(radarr_movie_downloaded_total{job=\"$instance\"}[30d]))",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "d/l past month",
+          "type": "stat"
+        },
+        {
+          "datasource": "prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "0",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgb(255, 194, 48)",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "locale"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 7,
+            "x": 0,
+            "y": 8
+          },
+          "id": 17,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.2",
+          "targets": [
+            {
+              "expr": "radarr_movie_monitored_total{job=\"$instance\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "intervalFactor": 1,
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "monitored",
+          "type": "stat"
+        },
+        {
+          "datasource": "prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "0",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgb(255, 194, 48)",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 7,
+            "x": 7,
+            "y": 8
+          },
+          "id": 10,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.2",
+          "targets": [
+            {
+              "expr": "radarr_movie_filesize_total{job=\"$instance\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "intervalFactor": 1,
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "size",
+          "type": "stat"
+        },
+        {
+          "datasource": "prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "decimals": 0,
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "0",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgb(255, 194, 48)",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "locale"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 4,
+            "x": 14,
+            "y": 8
+          },
+          "id": 7,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": ["last"],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.2",
+          "targets": [
+            {
+              "expr": "sum(increase(radarr_movie_downloaded_total{job=\"$instance\"}[7d]))",
+              "format": "table",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "d/ past week",
+          "type": "stat"
+        },
+        {
+          "datasource": "prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "links": [],
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -353,418 +808,62 @@ data:
                     "value": null
                   }
                 ]
-              },
-              "unit": "locale"
+              }
             },
             "overrides": []
           },
           "gridPos": {
-            "h": 5,
-            "w": 4,
-            "x": 15,
-            "y": 0
-          },
-          "id": 3,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "last"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "8.4.2",
-          "targets": [
-            {
-              "expr": "radarr_movie_wanted_total",
-              "format": "table",
-              "instant": true,
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "displayName": "movies",
-              "mappings": [
-                {
-                  "from": "",
-                  "id": 1,
-                  "operator": "",
-                  "text": "0",
-                  "to": "",
-                  "type": 1,
-                  "value": "null"
-                }
-              ],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "rgb(255, 194, 48)",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "locale"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 7,
+            "h": 11,
+            "w": 22,
             "x": 0,
-            "y": 5
+            "y": 12
           },
-          "id": 6,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "8.4.2",
-          "targets": [
-            {
-              "expr": "radarr_movie_total",
-              "format": "table",
-              "instant": true,
-              "intervalFactor": 1,
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "displayName": "monitored",
-              "mappings": [
-                {
-                  "from": "",
-                  "id": 1,
-                  "operator": "",
-                  "text": "0",
-                  "to": "",
-                  "type": 1,
-                  "value": "null"
-                }
-              ],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "rgb(255, 194, 48)",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "locale"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 4,
-            "x": 7,
-            "y": 5
-          },
-          "id": 10,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "8.4.2",
-          "targets": [
-            {
-              "expr": "radarr_movie_monitored_total",
-              "format": "table",
-              "instant": true,
-              "intervalFactor": 1,
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "displayName": "d/l past month",
-              "mappings": [
-                {
-                  "from": "",
-                  "id": 1,
-                  "operator": "",
-                  "text": "0",
-                  "to": "",
-                  "type": 1,
-                  "value": "null"
-                }
-              ],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "rgb(255, 194, 48)",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "locale"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 4,
-            "x": 11,
-            "y": 5
-          },
-          "id": 8,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "last"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "8.4.2",
-          "targets": [
-            {
-              "expr": "sum(increase(radarr_movie_download_total[30d]))",
-              "format": "table",
-              "instant": true,
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "displayName": "d/l past week",
-              "mappings": [
-                {
-                  "from": "",
-                  "id": 1,
-                  "operator": "",
-                  "text": "0",
-                  "to": "",
-                  "type": 1,
-                  "value": "null"
-                }
-              ],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "rgb(255, 194, 48)",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "locale"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 4,
-            "x": 15,
-            "y": 5
-          },
-          "id": 7,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "last"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "8.4.2",
-          "targets": [
-            {
-              "expr": "sum(increase(radarr_movie_download_total[7d]))",
-              "format": "table",
-              "instant": true,
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "type": "stat"
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 10,
-            "w": 19,
-            "x": 0,
-            "y": 10
-          },
-          "hiddenSeries": false,
           "id": 13,
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": true,
-            "values": true
-          },
-          "lines": false,
-          "linewidth": 1,
-          "nullPointMode": "null",
           "options": {
-            "alertThreshold": true
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "text": {
+              "titleSize": 10,
+              "valueSize": 10
+            }
           },
-          "percentage": false,
-          "pluginVersion": "8.4.2",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
+          "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "sort_desc(sum(radarr_movie_quality_total) by (quality))",
+              "expr": "sort_desc(sum(radarr_movie_quality_total{job=\"$instance\"}) by (quality))",
               "format": "time_series",
               "instant": true,
+              "interval": "",
               "legendFormat": "{{quality}}",
               "refId": "A"
             }
           ],
-          "thresholds": [],
-          "timeRegions": [],
-          "tooltip": {
-            "shared": false,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "series",
-            "show": true,
-            "values": [
-              "total"
-            ]
-          },
-          "yaxes": [
-            {
-              "format": "locale",
-              "label": "movies by quality",
-              "logBase": 1,
-              "show": true
-            },
-            {
-              "format": "short",
-              "logBase": 1,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": 3
-          }
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "qualities",
+          "type": "bargauge"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CddD0C75ACF3"
+          "datasource": "Loki",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
           },
           "gridPos": {
             "h": 11,
-            "w": 19,
+            "w": 22,
             "x": 0,
-            "y": 20
+            "y": 23
           },
           "id": 15,
           "options": {
             "dedupStrategy": "none",
-            "enableLogDetails": true,
-            "prettifyLogMessage": false,
-            "showCommonLabels": false,
             "showLabels": false,
             "showTime": false,
             "sortOrder": "Descending",
@@ -772,19 +871,60 @@ data:
           },
           "targets": [
             {
-              "expr": "{app_kubernetes_io_name=\"radarr\"}",
+              "expr": "{app_kubernetes_io_name=\"radarr\"} !~ \"Sending HTTP request to http://localhost:7878\"",
               "refId": "A"
             }
           ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "log",
           "type": "logs"
         }
       ],
       "refresh": "1m",
-      "schemaVersion": 35,
+      "schemaVersion": 27,
       "style": "dark",
       "tags": [],
       "templating": {
-        "list": []
+        "list": [
+          {
+            "allValue": null,
+            "current": {
+              "selected": false,
+              "text": "media/radarr",
+              "value": "media/radarr"
+            },
+            "datasource": null,
+            "definition": "label_values(radarr_system_status, job)",
+            "description": null,
+            "error": null,
+            "hide": 0,
+            "includeAll": false,
+            "label": "Instance",
+            "multi": false,
+            "name": "instance",
+            "options": [
+              {
+                "selected": true,
+                "text": "media/radarr",
+                "value": "media/radarr"
+              }
+            ],
+            "query": {
+              "query": "label_values(radarr_system_status, job)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 0,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          }
+        ]
       },
       "time": {
         "from": "now-2d",
@@ -794,6 +934,5 @@ data:
       "timezone": "",
       "title": "Radarr",
       "uid": "A8iPssjZk",
-      "version": 1,
-      "weekStart": ""
+      "version": 18
     }
