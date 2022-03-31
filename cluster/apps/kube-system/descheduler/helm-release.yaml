@@ -43,8 +43,14 @@ spec:
           params:
             nodeAffinityType:
               - requiredDuringSchedulingIgnoredDuringExecution
+        RemovePodsViolatingTopologySpreadConstraint:
+          enabled: true
+          params:
+            includeSoftConstraints: true
         RemovePodsViolatingInterPodAntiAffinity:
           enabled: true
+          params:
+            nodeFit: true
         RemoveFailedPods:
           enabled: true
           params:
