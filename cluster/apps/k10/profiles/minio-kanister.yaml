@@ -12,7 +12,7 @@ spec:
         apiVersion: v1
         kind: secret
         name: k10-minio-secret
-        namespace: kasten-io
+        namespace: k10
     location:
       type: ObjectStore
       objectStore:

@@ -22,14 +22,14 @@ spec:
                   values:
                     - podsync
         profile:
-          namespace: kasten-io
+          namespace: k10
           name: minio
     - action: export
       exportParameters:
         frequency: "@daily"
         profile:
           name: minio
-          namespace: kasten-io
+          namespace: k10
         exportData:
           enabled: true
           overrides:
