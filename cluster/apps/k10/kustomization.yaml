@@ -5,7 +5,7 @@ namespace: k10
 resources:
   - helm-release.yaml
   - kustomization.yaml
-  - monitoring
+#  - monitoring
   - namespace.yaml
-  - policies
-  - profiles
+#  - policies
+#  - profiles
