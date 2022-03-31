@@ -155,9 +155,6 @@ spec:
         octoprint:
           url: https://raw.githubusercontent.com/tg44/OctoPrint-prometheus-Exporter/master/extras/octoprint-grafana.json
           datasource: prometheus
-        exportarr:
-          url: https://raw.githubusercontent.com/onedr0p/exportarr/master/examples/grafana/dashboard.json
-          datasource: prometheus
       gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
