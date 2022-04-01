@@ -10,7 +10,7 @@ spec:
     annotations:
       kubed.appscode.com/sync: ""
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt-production
     kind: ClusterIssuer
   commonName: "${SECRET_DOMAIN_ME}"
   dnsNames:
