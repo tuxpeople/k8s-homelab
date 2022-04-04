@@ -69,9 +69,9 @@ spec:
             - name: PORT
               value: "9708"
             - name: URL
-              value: "${SECRET_radarr_URL}"
+              value: "${SECRET_RADARR_URL}"
             - name: APIKEY
-              value: "${SECRET_radarr_API_KEY}"
+              value: "${SECRET_RADARR_API_KEY}"
             - name: ADDITIONALMETRICS
               value: "true"
             - name: UNKNOWNQUEUEITEMS
