@@ -33,10 +33,10 @@ spec:
   values:
     storageClass:
       defaultClass: true
-      name: nfs-csi
+      name: nfs-subdir-external-provisioner
       allowVolumeExpansion: true
       reclaimPolicy: Delete
       archiveOnDelete: true
     nfs:
       server: 10.20.30.40
-      path: /volume2/Kubernetes
+      path: /volume2/Kubernetes/nfs-subdir-external-provisioner
