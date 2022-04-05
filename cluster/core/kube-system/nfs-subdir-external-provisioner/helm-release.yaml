@@ -32,7 +32,7 @@ spec:
     recreate: true
   values:
     storageClass:
-      defaultClass: false
+      defaultClass: true
       name: nfs-csi
       allowVolumeExpansion: true
       reclaimPolicy: Delete
