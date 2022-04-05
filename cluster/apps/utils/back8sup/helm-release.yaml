@@ -50,4 +50,4 @@ spec:
               - cm
               - ingress
     persistence:
-      storageClassName: "nfs-csi"
+      storageClassName: "nfs-subdir-external-provisioner"

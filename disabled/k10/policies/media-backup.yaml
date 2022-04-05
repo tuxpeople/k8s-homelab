@@ -33,7 +33,7 @@ spec:
         exportData:
           enabled: true
           overrides:
-            - storageClassName: nfs-csi
+            - storageClassName: nfs-subdir-external-provisioner
               enabled: false
       retention:
         daily: 7
