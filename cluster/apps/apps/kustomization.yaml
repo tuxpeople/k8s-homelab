@@ -9,5 +9,5 @@ resources:
   - paperless
   # - wallabag
   - hajimari
-  - longhorn-system
+  #- longhorn-system
   - joplin
