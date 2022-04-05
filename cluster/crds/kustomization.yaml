@@ -6,4 +6,3 @@ resources:
   - kube-prometheus-stack
   - traefik
   - k8up
-  - external-snapshotter
