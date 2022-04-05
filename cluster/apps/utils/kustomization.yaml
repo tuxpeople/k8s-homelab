@@ -13,3 +13,4 @@ resources:
   - static
   - wireguard
   - octant
+  - k8up
