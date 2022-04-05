@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: k10
 resources:
   - helm-release.yaml
-  - kustomization.yaml
 #  - monitoring
   - namespace.yaml
 #  - policies
