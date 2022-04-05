@@ -10,3 +10,4 @@ resources:
   - system-upgrade
   - namespaces
   - longhorn-system
+  - synology-csi
