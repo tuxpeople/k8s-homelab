@@ -70,7 +70,7 @@ spec:
     persistence:
       data:
         enabled: true
-        accessMode: ReadWriteOnce
+        accessMode: ReadWriteMany
         size: 2Gi
     resources:
       requests:
@@ -83,7 +83,7 @@ spec:
       postgresqlDatabase: joplin
       persistence:
         enabled: true
-        accessMode: ReadWriteOnce
+        accessMode: ReadWriteMany
         size: 10Gi
       volumePermissions:
         enabled: true
