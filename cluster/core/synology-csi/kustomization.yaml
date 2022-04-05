@@ -8,7 +8,6 @@ resources:
   - snapshotter/volume-snapshot-class.yml
   - csi-driver.yml
   - node.yml
-  - kustomization.yaml
-  - namespace.yml
   - storage-class.yml
   - controller.yml
+  - namespace.yml
