@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - configurations
   - nfs-subdir-external-provisioner
+  - external-snapshotter
   - kube-vip
