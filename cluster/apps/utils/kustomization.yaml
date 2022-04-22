@@ -11,6 +11,6 @@ resources:
   # - sharry
   - smtp
   - static
-  - wireguard
+  # - wireguard
   - octant
   - k8up
