@@ -119,6 +119,7 @@ spec:
             type: loki
             access: proxy
             url: http://loki:3100
+            isDefault: false
     dashboards:
       unifi:
         # Ref: https://grafana.com/grafana/dashboards/11315/revisions
