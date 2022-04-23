@@ -67,6 +67,11 @@ spec:
           - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
             hosts:
               - joplin.${SECRET_DOMAIN_ME}
+    service:
+      main:
+        annotations:
+          prometheus.io/probe: "true"
+          prometheus.io/protocol: tcp
     persistence:
       data:
         enabled: true
