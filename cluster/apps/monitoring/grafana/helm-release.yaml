@@ -148,11 +148,6 @@ spec:
           #   gnetId: 11310
           #   datasource: prometheus
           #   revision: 4
-        # https://grafana.com/grafana/dashboards/13942/revisions
-        wireguard:
-          gnetId: 13942
-          datasource: prometheus
-          revision: 1
       apps:
         octoprint:
           url: https://raw.githubusercontent.com/tg44/OctoPrint-prometheus-Exporter/master/extras/octoprint-grafana.json
@@ -211,6 +206,11 @@ spec:
           gnetId: 14501
           revision: 1
           datasource: prometheus
+        # https://grafana.com/grafana/dashboards/13942/revisions
+        wireguard:
+          gnetId: 13942
+          datasource: prometheus
+          revision: 1
     sidecar:
       dashboards:
         enabled: true
