@@ -34,6 +34,7 @@ spec:
       enabled: false
     loki:
       replicas: 1
+      isDefault: false
       config:
         storage_config:
           aws:
