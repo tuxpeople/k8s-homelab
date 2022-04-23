@@ -157,6 +157,11 @@ spec:
               targetLabel: kubernetes_node
     grafana:
       enabled: false
+      sidecar:
+        dashboards:
+          multicluster:
+            etcd:
+              enabled: true
     kubelet:
       enabled: true
       serviceMonitor:
