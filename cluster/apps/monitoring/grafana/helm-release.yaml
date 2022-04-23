@@ -216,6 +216,8 @@ spec:
         enabled: true
         searchNamespace: ALL
         label: grafana_dashboard
+        provider:
+          foldersFromFilesStructure: true
       datasources:
         enabled: true
         searchNamespace: ALL
