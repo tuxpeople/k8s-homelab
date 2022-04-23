@@ -90,5 +90,3 @@ spec:
         enabled: true
         accessMode: ReadWriteOnce
         size: 10Gi
-      volumePermissions:
-        enabled: true
