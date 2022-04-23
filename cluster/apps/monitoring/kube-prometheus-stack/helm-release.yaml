@@ -160,6 +160,8 @@ spec:
       forceDeployDashboards: true
       sidecar:
         dashboards:
+          annotations:
+            k8s-sidecar-target-directory: "/tmp/dashboards/Kubi-Test"
           multicluster:
             etcd:
               enabled: true
