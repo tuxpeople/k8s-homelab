@@ -277,6 +277,12 @@ spec:
               - targets: ['mystrom-3dprinter:9452']
                 labels:
                   alias: "3D Drucker"
+          - job_name: 'wireguard-exporter'
+            scrape_interval: 1m
+            scrape_timeout: 30s
+            metrics_path: '/metrics'
+            static_configs:
+              - targets: ['10.20.30.1:9586']
           - job_name: 'node-exporter'
             scrape_interval: 1m
             scrape_timeout: 30s
