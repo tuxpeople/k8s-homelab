@@ -1,0 +1,17 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: wireguard-exporter
+  name: wireguard-exporter.yaml
+  namespace: monitoring
+spec:
+  endpoints:
+    - interval: 60m
+      path: "/metrics"
+      port: metrics
+      scrapeTimeout: 1m
+  selector:
+    matchLabels:
+      app: wireguard-exporter
