@@ -37,6 +37,6 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: loki
+    k8s-sidecar-target-directory: "/tmp/dashboards/loki"
   labels:
     grafana_dashboard: "true"
