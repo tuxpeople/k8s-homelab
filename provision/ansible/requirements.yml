@@ -10,7 +10,7 @@ collections:
     version: 1.9.4
 roles:
   - src: xanmanning.k3s
-    version: v3.1.1
+    version: v3.1.2
   # - src: frzk.chrony
   #   version: 2.0.0
   - src: idiv-biodiversity.systemd_timesyncd
