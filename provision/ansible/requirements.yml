@@ -1,7 +1,7 @@
 ---
 collections:
   - name: community.general
-    version: 4.7.0
+    version: 4.8.0
   - name: community.sops
     version: 1.2.1
   - name: ansible.posix
@@ -10,7 +10,7 @@ collections:
     version: 1.9.4
 roles:
   - src: xanmanning.k3s
-    version: v3.1.1
+    version: v3.1.2
   # - src: frzk.chrony
   #   version: 2.0.0
   - src: idiv-biodiversity.systemd_timesyncd
