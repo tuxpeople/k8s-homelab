@@ -1,4 +1,6 @@
 ---
+# ansible_ssh_private_key_file: /Users/tdeutsch/.ssh/id_rsa
+# ansible_ssh_extra_args: "-o IdentitiesOnly=yes"
 systemd_timesyncd_purge_legacy_packages: yes
 ntp_servers:
   - ntp11.metas.ch
