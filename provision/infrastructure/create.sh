@@ -12,13 +12,13 @@ ssh root@192.168.8.12 "qm stop 702; qm destroy 702"
 ssh root@192.168.8.13 "qm stop 703; qm destroy 703"
 
 step "Create VMs"
-# ssh lab1 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible -M "12:E5:DB:22:E2:BB" k3s-node1"
-# ssh lab2 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible -M "12:7B:49:C3:1C:A9" k3s-node2"
-# ssh lab2 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible -M "12:CA:08:F4:41:F3" k3s-node3"
+# ssh lab1 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible -M "12:E5:DB:22:E2:BB" k3s-node1.lab"
+# ssh lab2 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible -M "12:7B:49:C3:1C:A9" k3s-node2.lab"
+# ssh lab2 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible -M "12:CA:08:F4:41:F3" k3s-node3.lab"
 
-ssh root@192.168.8.11 "qm clone 9000 701 --full --name k3s-node1; qm set 701 --memory ${MASTER_MEM} --sockets 2 --cores 2; qm set 701 -net0 virtio=12:E5:DB:22:E2:BB,bridge=vmbr0; qm resize 701 scsi0 ${OS_DISK}G; qm set 701 --onboot=1; qm start 701"
-ssh root@192.168.8.11 "qm clone 9000 702 --full --name k3s-node2; qm set 702 --memory ${MASTER_MEM} --sockets 2 --cores 2; qm set 702 -net0 virtio=12:7B:49:C3:1C:A9,bridge=vmbr0; qm migrate 702 pve2"
-ssh root@192.168.8.11 "qm clone 9000 703 --full --name k3s-node3; qm set 703 --memory ${MASTER_MEM} --sockets 2 --cores 2; qm set 703 -net0 virtio=12:CA:08:F4:41:F3,bridge=vmbr0; qm migrate 703 pve3"
+ssh root@192.168.8.11 "qm clone 9000 701 --full --name k3s-node1.lab; qm set 701 --memory ${MASTER_MEM} --sockets 2 --cores 2; qm set 701 --ipconfig0 ip=192.168.8.101/24,gw=192.168.8.1; qm resize 701 scsi0 ${OS_DISK}G; qm set 701 --onboot=1; qm start 701"
+ssh root@192.168.8.11 "qm clone 9000 702 --full --name k3s-node2.lab; qm set 702 --memory ${MASTER_MEM} --sockets 2 --cores 2; qm set 702 --ipconfig0 ip=192.168.8.102/24,gw=192.168.8.1; qm migrate 702 pve2"
+ssh root@192.168.8.11 "qm clone 9000 703 --full --name k3s-node3.lab; qm set 703 --memory ${MASTER_MEM} --sockets 2 --cores 2; qm set 703 --ipconfig0 ip=192.168.8.103/24,gw=192.168.8.1; qm migrate 703 pve3"
 
 ssh root@192.168.8.12 "qm resize 702 scsi0 ${OS_DISK}G; qm set 702 --onboot=1; qm start 702"
 ssh root@192.168.8.13 "qm resize 703 scsi0 ${OS_DISK}G; qm set 703 --onboot=1; qm start 703"
@@ -26,20 +26,11 @@ ssh root@192.168.8.13 "qm resize 703 scsi0 ${OS_DISK}G; qm set 703 --onboot=1; q
 step "Sleep 60s and allow VMs to boot and do cloud-init"
 sleep 60
 
-step "Reboot VMs in 10s intervalls"
-for i in 192.168.8.20{1..3}; do
-  ssh ansible@${i} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "sudo reboot"
-  sleep 10
-done
-
-step "Sleep 60s and allow VMs to boot"
-sleep 60
-
-# ssh lab1 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node1"
-# ssh lab2 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node2"
-# ssh lab2 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node3"
+# ssh lab1 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node1.lab"
+# ssh lab2 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node2.lab"
+# ssh lab2 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node3.lab"
 
 step "Update SSH Host-Keys"
-for i in k3s-node1 k3s-node2 k3s-node3; do
+for i in k3s-node1.lab k3s-node2.lab k3s-node3.lab; do
   ssh-keygen -R $i; ssh-keygen -R `dig +short $i`; ssh-keyscan -t rsa $i,`dig +short $i` >> ~/.ssh/known_hosts
 done
