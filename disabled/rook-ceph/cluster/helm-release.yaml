@@ -63,13 +63,13 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "k3s-node1"
+          - name: "k3s-node1.lab"
             devices:
               - name: "vdc"
-          - name: "k3s-node2"
+          - name: "k3s-node2.lab"
             devices:
               - name: "vdc"
-          - name: "k3s-node3"
+          - name: "k3s-node3.lab"
             devices:
               - name: "vdc"
     cephBlockPools:
