@@ -175,9 +175,9 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        - 192.168.8.201
-        - 192.168.8.202
-        - 192.168.8.203
+        - 192.168.8.101
+        - 192.168.8.102
+        - 192.168.8.103
       service:
         enabled: true
         port: 10259
@@ -189,9 +189,9 @@ spec:
     kubeScheduler:
       enabled: true
       endpoints:
-        - 192.168.8.201
-        - 192.168.8.202
-        - 192.168.8.203
+        - 192.168.8.101
+        - 192.168.8.102
+        - 192.168.8.103
       service:
         enabled: true
         port: 10257
@@ -203,15 +203,15 @@ spec:
     kubeProxy:
       enabled: true
       endpoints:
-        - 192.168.8.201
-        - 192.168.8.202
-        - 192.168.8.203
+        - 192.168.8.101
+        - 192.168.8.102
+        - 192.168.8.103
     kubeEtcd:
       enabled: true
       endpoints:
-        - 192.168.8.201
-        - 192.168.8.202
-        - 192.168.8.203
+        - 192.168.8.101
+        - 192.168.8.102
+        - 192.168.8.103
       service:
         enabled: true
         port: 2381
@@ -290,16 +290,16 @@ spec:
               username: randomuser
               password: examplepassword
             static_configs:
-              - targets: ['192.168.8.201:9100'] # lab1
+              - targets: ['192.168.8.101:9100'] # lab1
                 labels:
                   alias: lab1
-              - targets: ['192.168.8.202:9100'] # lab2
+              - targets: ['192.168.8.102:9100'] # lab2
                 labels:
                   alias: lab2
-              - targets: ['192.168.8.203:9100'] # lab3
+              - targets: ['192.168.8.103:9100'] # lab3
                 labels:
                   alias: lab3
-              # - targets: ['192.168.8.204:9100'] # lab4
+              # - targets: ['192.168.8.104:9100'] # lab4
               #   labels:
               #     alias: lab4
       ingress:
