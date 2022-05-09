@@ -17,6 +17,6 @@ spec:
       protocol: UDP
       name: isakmp
   externalTrafficPolicy: Local
-  loadBalancerIP: ${SVC_VPN_ADDRESS}
+  loadBalancerIP: ${METALLB_VPN_ADDR}
   selector:
     app.kubernetes.io/name: vpn

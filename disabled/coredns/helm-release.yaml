@@ -40,7 +40,7 @@ spec:
         enabled: false
     service:
       externalTrafficPolicy: Local
-      loadBalancerIP: ${SVC_COREDNS_ADDRESS}
+      loadBalancerIP: ${METALLB_COREDNS_ADDR}
     rbac:
       create: true
     isClusterService: false
