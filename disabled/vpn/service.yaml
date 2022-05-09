@@ -17,6 +17,6 @@ spec:
       port: 4500
       targetPort: 4500
   externalTrafficPolicy: Local
-  loadBalancerIP: ${SVC_VPN_ADDRESS}
+  loadBalancerIP: ${METALLB_VPN_ADDR}
   selector:
     app.kubernetes.io/name: vpn

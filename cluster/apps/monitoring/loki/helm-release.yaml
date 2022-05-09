@@ -89,4 +89,4 @@ spec:
         enabled: true
         type: LoadBalancer
         port: 1514
-        loadBalancerIP: ${SVC_SYSLOG_ADDRESS}
+        loadBalancerIP: ${METALLB_SYSLOG_ADDR}

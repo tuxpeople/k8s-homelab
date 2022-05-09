@@ -7,3 +7,4 @@ resources:
   - traefik
   - k8up
   - external-snapshotter
+  - system-upgrade-controller

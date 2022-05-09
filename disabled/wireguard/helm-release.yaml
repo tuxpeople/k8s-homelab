@@ -43,7 +43,7 @@ spec:
       main:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${SVC_WIREGUARD_ADDRESS}
+        loadBalancerIP: ${METALLB_WIREGUARD_ADDR}
         externalTrafficPolicy: Local
     persistence:
       config:
