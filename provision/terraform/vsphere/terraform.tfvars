@@ -8,7 +8,7 @@ vms = {
     hostname = "k3s-node1"
     network  = "VM Network"
 
-    datastore  = "datastore11"
+    datastore  = "NFS"
     datacenter = "SKY"
     template   = "ubuntu-focal-20.04-cloudimg"
     cluster    = "Homelab"
@@ -27,7 +27,7 @@ vms = {
     hostname = "k3s-node2"
     network  = "VM Network"
 
-    datastore  = "datastore11"
+    datastore  = "NFS"
     datacenter = "SKY"
     template   = "ubuntu-focal-20.04-cloudimg"
     cluster    = "Homelab"
@@ -46,7 +46,7 @@ vms = {
     hostname = "k3s-node3"
     network  = "VM Network"
 
-    datastore  = "datastore12"
+    datastore  = "NFS"
     datacenter = "SKY"
     template   = "ubuntu-focal-20.04-cloudimg"
     cluster    = "Homelab"
