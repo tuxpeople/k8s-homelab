@@ -1,0 +1,20 @@
+#cloud-config
+
+hostname: ${hostname}
+instance-id: ${instance_id}
+
+users:
+  - name: ansible
+    ssh_import_id:
+      - gh:tuxpeople
+    lock_passwd: true
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: [adm]
+
+packages:
+  - open-vm-tools
+
+power_state:
+    delay: 30
+    mode: reboot
+    message: Rebooting machine
