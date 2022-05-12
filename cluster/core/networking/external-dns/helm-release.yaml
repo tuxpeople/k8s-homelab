@@ -39,7 +39,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: cloudflare-api-token
-            key: api-key
+            key: cloudflare_api_token
     extraArgs:
       - --cloudflare-proxied
       - --annotation-filter=external-dns/is-public in (true)
