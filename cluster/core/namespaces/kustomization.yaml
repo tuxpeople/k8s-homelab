@@ -14,4 +14,3 @@ resources:
   - utils.yaml
   - tekton-pipelines.yaml
   - longhorn-system.yaml
-  - system-upgrade.yaml
