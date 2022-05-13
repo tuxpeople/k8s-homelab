@@ -12,7 +12,7 @@ spec:
       version: 1.1.7
       sourceRef:
         kind: HelmRepository
-        name: k8s-gateway
+        name: k8s-gateway-charts
         namespace: flux-system
       interval: 5m
   test:
