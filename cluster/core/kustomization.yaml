@@ -6,6 +6,5 @@ resources:
   - kube-system
   - metallb-system
   - monitoring
-  - system-upgrade
   - namespaces
   - synology-csi
