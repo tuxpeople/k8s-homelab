@@ -7,7 +7,8 @@ git pull
 
 task terraform:init
 task terraform:forceapply
-task pre-commit:init
+task precommit:init
+task precommit:update
 task ansible:deps
 task ansible:clean-cache
 task ansible:prepare
