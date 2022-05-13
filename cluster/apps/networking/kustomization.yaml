@@ -3,11 +3,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: networking
 resources:
+  - cloudflare-ddns
+  - error-pages
+  - external-dns
+  - k8s-gateway
+  # - kubernetes-dashboard
+  - secret.sops.yaml
   # - smokeping
   - speedtest-plotter
   - traefik
-  # - kubernetes-dashboard
-  - error-pages
-  - external-dns
-  - cloudflare-ddns
-  - secret.sops.yaml
