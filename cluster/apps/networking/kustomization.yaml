@@ -8,3 +8,6 @@ resources:
   - traefik
   # - kubernetes-dashboard
   - error-pages
+  - external-dns
+  - cloudflare-ddns
+  - secret.sops.yaml
