@@ -18,7 +18,7 @@ tasks:
       - terraform plan {{.CLI_ARGS}}
 
   apply:
-    desc: Apply the changes to vsphere
+    desc: Apply the changes to Cloudflare
     dir: provision/terraform/vsphere
     cmds:
       - terraform apply {{.CLI_ARGS}}

@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - cert-manager
   - kube-prometheus-stack
-  - traefik
   - k8up
   - external-snapshotter
   - system-upgrade-controller
+  - traefik
