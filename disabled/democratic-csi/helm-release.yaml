@@ -9,7 +9,6 @@ spec:
   releaseName: democratic-csi
   chart:
     spec:
-      # renovate: registryUrl=https://democratic-csi.github.io/charts
       chart: democratic-csi
       version: 0.8.3
       sourceRef:

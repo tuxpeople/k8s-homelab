@@ -7,7 +7,6 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://coredns.github.io/helm
       chart: coredns
       version: 1.19.0
       sourceRef:

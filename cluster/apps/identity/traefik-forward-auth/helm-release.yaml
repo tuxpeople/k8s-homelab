@@ -7,7 +7,6 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
       chart: traefik-forward-auth
       version: 2.1.2
       sourceRef:

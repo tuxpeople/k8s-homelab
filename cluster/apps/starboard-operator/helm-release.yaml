@@ -7,7 +7,6 @@ spec:
   releaseName: starboard-operator
   chart:
     spec:
-      # renovate: registryUrl=https://aquasecurity.github.io/helm-charts/
       chart: starboard-operator
       version: 0.10.4
       sourceRef:

@@ -8,7 +8,6 @@ spec:
   releaseName: wallabag
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts
       chart: wallabag
       version: 6.2.2
       sourceRef:

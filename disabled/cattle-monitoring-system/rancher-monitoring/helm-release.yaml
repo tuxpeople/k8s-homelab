@@ -7,7 +7,6 @@ spec:
   releaseName: rancher-monitoring
   chart:
     spec:
-      # renovate: registryUrl=https://charts.rancher.io
       chart: rancher-monitoring
       version: 100.1.0+up19.0.3
       sourceRef:

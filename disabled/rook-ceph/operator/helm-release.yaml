@@ -17,7 +17,6 @@ spec:
     crds: CreateReplace
   chart:
     spec:
-      # renovate: registryUrl=https://charts.rook.io/release
       chart: rook-ceph
       version: v1.8.3
       sourceRef:

@@ -8,7 +8,6 @@ spec:
   chart:
     spec:
       version: 0.4.4
-      # renovate: registryUrl=https://charts.adfinis.com
       chart: back8sup
       interval: 5m
       sourceRef:

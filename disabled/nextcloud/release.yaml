@@ -7,7 +7,6 @@ spec:
   releaseName: nextcloud
   chart:
     spec:
-      # renovate: registryUrl=https://nextcloud.github.io/helm/
       version: 2.6.4
       chart: nextcloud
       sourceRef:
