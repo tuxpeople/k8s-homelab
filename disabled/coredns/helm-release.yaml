@@ -81,7 +81,7 @@ spec:
           - name: reload
           - name: loadbalance
           # - name: file
-          #   parameters: /etc/coredns/${SECRET_DOMAIN}
+          #   parameters: /etc/coredns/${SECRET_DOMAIN_ME}
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -101,8 +101,8 @@ spec:
                       - coredns
               topologyKey: kubernetes.io/hostname
     # zoneFiles:
-    #   - filename: ${SECRET_DOMAIN}
-    #     domain: ${SECRET_DOMAIN}
+    #   - filename: ${SECRET_DOMAIN_ME}
+    #     domain: ${SECRET_DOMAIN_ME}
     #     contents: |
-    #       ${SECRET_DOMAIN}.   IN SOA etta.ns.cloudflare.com. dns.cloudflare.com. 2020100600 10000 2400 604800 3600
-    #       *.${SECRET_DOMAIN}. IN A ${METALLB_TRAEFIK_ADDR}
+    #       ${SECRET_DOMAIN_ME}.   IN SOA etta.ns.cloudflare.com. dns.cloudflare.com. 2020100600 10000 2400 604800 3600
+    #       *.${SECRET_DOMAIN_ME}. IN A ${METALLB_TRAEFIK_ADDR}

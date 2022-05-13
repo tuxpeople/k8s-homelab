@@ -30,7 +30,7 @@ spec:
     recreate: true
   values:
     fullnameOverride: k8s-gateway
-    domain: ${SECRET_DOMAIN}
+    domain: ${SECRET_DOMAIN_ME}
     ttl: 1
     service:
       type: LoadBalancer
