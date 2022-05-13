@@ -128,7 +128,7 @@ spec:
             bindPW: ${SECRET_LDAP_BIND_PW}
             usernamePrompt: Username
             userSearch:
-              baseDN: ou=users,dc=sky,dc=lab
+              baseDN: ou=People,dc=sky,dc=lab
               filter: "(objectClass=person)"
               username: sn
               # "DN" (case sensitive) is a special attribute name. It indicates that
@@ -138,7 +138,7 @@ spec:
               emailAttr: mail
               nameAttr: cn
             groupSearch:
-              baseDN: ou=users,dc=sky,dc=lab
+              baseDN: ou=Groups,dc=sky,dc=lab
               filter: "(objectClass=groupOfNames)"
               userAttr: DN
               groupAttr: member
