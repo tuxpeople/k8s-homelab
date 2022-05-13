@@ -9,6 +9,7 @@ data:
   METALLB_VPN_ADDR: 192.168.8.82
   METALLB_WIREGUARD_ADDR: 192.168.8.83
   METALLB_SYSLOG_ADDR: 192.168.8.84
+  METALLB_K8S_GATEWAY_ADDR: 192.168.8.85
 kind: ConfigMap
 metadata:
   name: cluster-settings
