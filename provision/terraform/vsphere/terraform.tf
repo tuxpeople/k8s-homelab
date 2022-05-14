@@ -31,6 +31,7 @@ resource "vsphere_virtual_machine" "allvms" {
 
   resource_pool_id = data.vsphere_compute_cluster.this[each.key].resource_pool_id
   datastore_id     = data.vsphere_datastore.this[each.key].id
+  folder           = each.value.folder
 
   name     = each.value.vmname
   num_cpus = each.value.vCPU

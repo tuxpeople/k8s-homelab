@@ -6,6 +6,7 @@ vms = {
 
     vmname   = "k3s-node1"
     hostname = "k3s-node1"
+    folder   = "Kubernetes/Prod"
     network  = "VM Network"
 
     datastore  = "NFS"
@@ -25,6 +26,7 @@ vms = {
 
     vmname   = "k3s-node2"
     hostname = "k3s-node2"
+    folder   = "Kubernetes/Prod"
     network  = "VM Network"
 
     datastore  = "NFS"
@@ -44,6 +46,7 @@ vms = {
 
     vmname   = "k3s-node3"
     hostname = "k3s-node3"
+    folder   = "Kubernetes/Prod"
     network  = "VM Network"
 
     datastore  = "NFS"

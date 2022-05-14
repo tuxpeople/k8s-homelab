@@ -20,6 +20,7 @@ variable "vms" {
     disksize         = number
     thin_provisioned = string
     eagerly_scrub    = string
+    folder           = string
     vmname           = string
     datastore        = string
     network          = string
