@@ -34,7 +34,7 @@ spec:
         - name: BACKUP_GLOBALSECRETACCESSKEY
           value: ${SECRET_MINIO_SECRETKEY}
         - name: BACKUP_GLOBALS3ENDPOINT
-          value: http://minio.lab:9091
+          value: http://minio.lab.tdeutsch.ch:9091
     metrics:
       prometheusRule:
         enabled: true

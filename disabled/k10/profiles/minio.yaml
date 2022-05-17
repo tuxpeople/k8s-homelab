@@ -7,7 +7,7 @@ spec:
   locationSpec:
     type: ObjectStore
     objectStore:
-      endpoint: http://minio.lab:9091
+      endpoint: http://minio.lab.tdeutsch.ch:9091
       name: k10
       objectStoreType: S3
       path: k10/6ac7658b-355c-41b9-a834-98dadf4d0777/migration

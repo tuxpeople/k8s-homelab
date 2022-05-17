@@ -16,6 +16,6 @@ spec:
     location:
       type: ObjectStore
       objectStore:
-        endpoint: http://minio.lab:9091
+        endpoint: http://minio.lab.tdeutsch.ch:9091
         name: k10
         objectStoreType: S3

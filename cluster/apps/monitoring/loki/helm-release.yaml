@@ -38,7 +38,7 @@ spec:
         storage_config:
           aws:
             s3: s3://${SECRET_MINIO_ACCESSKEY}:${SECRET_MINIO_SECRETKEY}@us-east-1/loki
-            endpoint: http://minio.lab:9091
+            endpoint: http://minio.lab.tdeutsch.ch:9091
             s3forcepathstyle: true
             insecure: true
           boltdb_shipper:
