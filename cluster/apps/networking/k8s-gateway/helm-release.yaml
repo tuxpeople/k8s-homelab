@@ -31,6 +31,8 @@ spec:
   values:
     fullnameOverride: k8s-gateway
     domain: ${SECRET_DOMAIN_ME}
+    fallthrough:
+      enabled: true
     ttl: 1
     service:
       type: LoadBalancer
