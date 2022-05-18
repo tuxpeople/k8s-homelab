@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-custom
+  namespace: kube-system
+data:
+  example.server: |
+    ${SECRET_DOMAIN_ME} {
+      log
+      whoami
+    }
