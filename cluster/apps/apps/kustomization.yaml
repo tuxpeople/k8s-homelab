@@ -7,7 +7,7 @@ resources:
   - mealie
   - octoprint
   - paperless
-  # - wallabag
+  - wallabag
   - hajimari
   #- longhorn-system
   #- joplin
