@@ -12,4 +12,3 @@ resources:
   - kubed
   - reflector
   - home-dns
-  - coredns-custom.yaml
