@@ -57,32 +57,16 @@ rules:
   resources:
   - namespaces
   - services
-  - nodes
-  - endpoints
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - pods/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - ""
-  resources:
-  - nodes
   - pods
+  - endpoints
+  - nodes
   verbs:
   - get
   - list
   - watch
-  - update
 - apiGroups:
   - ""
   resources:
-  - nodes
   - nodes/status
   verbs:
   - patch
@@ -101,21 +85,15 @@ rules:
   resources:
   - ciliumnetworkpolicies
   - ciliumnetworkpolicies/status
-  - ciliumnetworkpolicies/finalizers
   - ciliumclusterwidenetworkpolicies
   - ciliumclusterwidenetworkpolicies/status
-  - ciliumclusterwidenetworkpolicies/finalizers
   - ciliumendpoints
   - ciliumendpoints/status
-  - ciliumendpoints/finalizers
   - ciliumnodes
   - ciliumnodes/status
-  - ciliumnodes/finalizers
   - ciliumidentities
-  - ciliumidentities/finalizers
   - ciliumlocalredirectpolicies
   - ciliumlocalredirectpolicies/status
-  - ciliumlocalredirectpolicies/finalizers
   - ciliumegressnatpolicies
   - ciliumendpointslices
   verbs:
@@ -142,6 +120,20 @@ rules:
   - list
   - watch
   - delete
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  - nodes/status
+  verbs:
+  - patch
 - apiGroups:
   - discovery.k8s.io
   resources:
@@ -259,6 +251,7 @@ subjects:
 ---
 apiVersion: v1
 data:
+  annotate-k8s-node: "true"
   arping-refresh-period: 30s
   auto-direct-node-routes: "false"
   bpf-lb-external-clusterip: "false"
@@ -305,10 +298,14 @@ data:
   monitor-aggregation-flags: all
   monitor-aggregation-interval: 5s
   node-port-bind-protection: "true"
+  nodes-gc-interval: 5m0s
   operator-api-serve-addr: 127.0.0.1:9234
   preallocate-bpf-maps: "false"
+  remove-cilium-node-taints: "true"
+  set-cilium-is-up-condition: "true"
   sidecar-istio-proxy-image: cilium/istio_proxy
   tunnel: vxlan
+  unmanaged-pod-watcher-interval: "15"
 kind: ConfigMap
 metadata:
   annotations:
