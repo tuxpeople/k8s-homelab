@@ -262,7 +262,7 @@ spec:
             params:
               apikey: ['${SECRET_OCTOPRINTAPI}']
             static_configs:
-              - targets: ['octopi.home.tdeutsch.ch:80']
+              - targets: ['octopi.home:80']
           - job_name: 'speedtest-exporter'
             scrape_interval: 1m
             scrape_timeout: 30s

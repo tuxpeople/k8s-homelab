@@ -7,7 +7,7 @@ data:
         "port": 9567
       },
       "server": {
-        "address": "plex.home.tdeutsch.ch",
+        "address": "plex.home",
         "port": 32400,
         "token": "${SECRET_PLEXTOKEN}"
       }
