@@ -5,7 +5,7 @@ metadata:
   name: octoprint
   namespace: apps
 spec:
-  externalName: octopi.home
+  externalName: octopi.home.tdeutsch.ch
   ports:
     - name: http
       port: 80
