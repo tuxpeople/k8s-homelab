@@ -19,7 +19,7 @@ spec:
           env:
             - name: "TZ"
               value: "Europe/Zurich"
-          image: tdeutsch/minilighttpd@sha256:d2485ff17085c94d4c4d4b8c947fdb4d857644d74d7348ea177428d36b4d3387
+          image: tdeutsch/minilighttpd@sha256:b41cbb5dafeb8beac0848624c2bb26febfcbf2e077004840a391d9a7842789a7
           imagePullPolicy: Always
           resources:
             requests:
