@@ -57,32 +57,16 @@ rules:
   resources:
   - namespaces
   - services
-  - nodes
-  - endpoints
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - pods/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - ""
-  resources:
-  - nodes
   - pods
+  - endpoints
+  - nodes
   verbs:
   - get
   - list
   - watch
-  - update
 - apiGroups:
   - ""
   resources:
-  - nodes
   - nodes/status
   verbs:
   - patch
@@ -101,21 +85,15 @@ rules:
   resources:
   - ciliumnetworkpolicies
   - ciliumnetworkpolicies/status
-  - ciliumnetworkpolicies/finalizers
   - ciliumclusterwidenetworkpolicies
   - ciliumclusterwidenetworkpolicies/status
-  - ciliumclusterwidenetworkpolicies/finalizers
   - ciliumendpoints
   - ciliumendpoints/status
-  - ciliumendpoints/finalizers
   - ciliumnodes
   - ciliumnodes/status
-  - ciliumnodes/finalizers
   - ciliumidentities
-  - ciliumidentities/finalizers
   - ciliumlocalredirectpolicies
   - ciliumlocalredirectpolicies/status
-  - ciliumlocalredirectpolicies/finalizers
   - ciliumegressnatpolicies
   - ciliumendpointslices
   verbs:
@@ -142,6 +120,20 @@ rules:
   - list
   - watch
   - delete
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  - nodes/status
+  verbs:
+  - patch
 - apiGroups:
   - discovery.k8s.io
   resources:
@@ -259,6 +251,7 @@ subjects:
 ---
 apiVersion: v1
 data:
+  annotate-k8s-node: "true"
   arping-refresh-period: 30s
   auto-direct-node-routes: "false"
   bpf-lb-external-clusterip: "false"
@@ -305,10 +298,14 @@ data:
   monitor-aggregation-flags: all
   monitor-aggregation-interval: 5s
   node-port-bind-protection: "true"
+  nodes-gc-interval: 5m0s
   operator-api-serve-addr: 127.0.0.1:9234
   preallocate-bpf-maps: "false"
+  remove-cilium-node-taints: "true"
+  set-cilium-is-up-condition: "true"
   sidecar-istio-proxy-image: cilium/istio_proxy
   tunnel: vxlan
+  unmanaged-pod-watcher-interval: "15"
 kind: ConfigMap
 metadata:
   annotations:
@@ -398,7 +395,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/operator-generic:v1.11.4@sha256:bf75ad0dc47691a3a519b8ab148ed3a792ffa2f1e309e6efa955f30a40e95adc
+        image: quay.io/cilium/operator-generic:v1.11.5@sha256:8ace281328b27d4216218c604d720b9a63a8aec2bd1996057c79ab0168f9d6d8
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -515,7 +512,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.11.4@sha256:d9d4c7759175db31aa32eaa68274bb9355d468fbc87e23123c80052e3ed63116
+        image: quay.io/cilium/cilium:v1.11.5@sha256:79e66c3c2677e9ecc3fd5b2ed8e4ea7e49cf99ed6ee181f2ef43400c4db5eef0
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -604,7 +601,7 @@ spec:
           value: /run/cilium/cgroupv2
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.11.4@sha256:d9d4c7759175db31aa32eaa68274bb9355d468fbc87e23123c80052e3ed63116
+        image: quay.io/cilium/cilium:v1.11.5@sha256:79e66c3c2677e9ecc3fd5b2ed8e4ea7e49cf99ed6ee181f2ef43400c4db5eef0
         imagePullPolicy: IfNotPresent
         name: mount-cgroup
         securityContext:
@@ -622,7 +619,7 @@ spec:
             echo "Waiting on node-init to run...";
             sleep 1;
           done
-        image: quay.io/cilium/cilium:v1.11.4@sha256:d9d4c7759175db31aa32eaa68274bb9355d468fbc87e23123c80052e3ed63116
+        image: quay.io/cilium/cilium:v1.11.5@sha256:79e66c3c2677e9ecc3fd5b2ed8e4ea7e49cf99ed6ee181f2ef43400c4db5eef0
         imagePullPolicy: IfNotPresent
         name: wait-for-node-init
         volumeMounts:
@@ -647,7 +644,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.11.4@sha256:d9d4c7759175db31aa32eaa68274bb9355d468fbc87e23123c80052e3ed63116
+        image: quay.io/cilium/cilium:v1.11.5@sha256:79e66c3c2677e9ecc3fd5b2ed8e4ea7e49cf99ed6ee181f2ef43400c4db5eef0
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
         resources:
