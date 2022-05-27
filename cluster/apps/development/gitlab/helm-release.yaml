@@ -58,15 +58,13 @@ spec:
       gravatar:
         plainUrl: "https://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon"
         sslUrl: "https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon"
-      certificates:
-        customCAs:
-          - secret: custom-ca
       edition: ce
       hosts:
         domain: ${MY_DOMAIN}
       ingress:
         configureCertmanager: false
-        enabled: false
+        tls:
+          secretName: eighty-three-me-tls
       initialRootPassword:
         secret: gitlab-initial-root-password
     minio:
