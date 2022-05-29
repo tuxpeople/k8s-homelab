@@ -43,7 +43,7 @@ spec:
         enabled: true
         secret: authelia-tls
       traefikCRD:
-        enabled: true
+        enabled: false
 
     persistence:
       enabled: true
