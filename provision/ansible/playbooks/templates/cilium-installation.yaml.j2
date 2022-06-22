@@ -251,6 +251,7 @@ subjects:
 ---
 apiVersion: v1
 data:
+  agent-not-ready-taint-key: node.cilium.io/agent-not-ready
   annotate-k8s-node: "true"
   arping-refresh-period: 30s
   auto-direct-node-routes: "false"
@@ -448,7 +449,6 @@ spec:
       annotations:
         meta.helm.sh/release-name: cilium
         meta.helm.sh/release-namespace: kube-system
-        scheduler.alpha.kubernetes.io/critical-pod: ""
       labels:
         app.kubernetes.io/managed-by: Helm
         helm.toolkit.fluxcd.io/name: cilium
@@ -533,7 +533,7 @@ spec:
             - name: brief
               value: "true"
             path: /healthz
-            port: 9876
+            port: 9879
             scheme: HTTP
           periodSeconds: 30
           successThreshold: 1
@@ -547,7 +547,7 @@ spec:
             - name: brief
               value: "true"
             path: /healthz
-            port: 9876
+            port: 9879
             scheme: HTTP
           periodSeconds: 30
           successThreshold: 1
@@ -562,7 +562,7 @@ spec:
             - name: brief
               value: "true"
             path: /healthz
-            port: 9876
+            port: 9879
             scheme: HTTP
           periodSeconds: 2
           successThreshold: 1
