@@ -52,7 +52,7 @@ spec:
           securityContext:
             runAsUser: 65533
         - name: mkdocs
-          image: registry.eighty-three.me/tuxpeople/mkdocs:v0.1.0
+          image: registry.eighty-three.me/tuxpeople/mkdocs:v0.2.0
           env:
             - name: "TZ"
               value: "Europe/Zurich"
