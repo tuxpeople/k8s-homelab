@@ -13,3 +13,21 @@ spec:
       name: http
   selector:
     app: smtp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smtp-ext
+  namespace: utils
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: "${METALLB_SMTP_ADDR}"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 25
+      targetPort: 8025
+      protocol: TCP
+      name: http
+  selector:
+    app: smtp
+  externalTrafficPolicy: Local
