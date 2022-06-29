@@ -13,7 +13,13 @@ users:
 
 packages:
   - open-vm-tools
+  - sudo
+  - python3
 
-power_state:
-  mode: reboot
-  message: Rebooting machine
+runcmd:
+  - command -v dhclient >/dev/null 2>&1 && { echo renew; dhclient -r; dhclient; }
+  - command -v dhcpcd >/dev/null 2>&1 && { echo renew; dhcpcd -k; dhcpcd -n; }
+
+# power_state:
+#   mode: reboot
+#   message: Rebooting machine

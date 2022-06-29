@@ -9,6 +9,10 @@
     - name: Pausing for 5 seconds...
       pause:
         seconds: 5
+    - name: Wait 600 seconds for target connection to become reachable/usable
+    - name: fix ssh keys
+      local_action: ansible.builtin.command ~/iCloudDrive/Allgemein/bin/fix-ssh-key {{ inventory_hostname }}
+
   roles:
     - ubuntu
     - robertdebock.roles.cron
