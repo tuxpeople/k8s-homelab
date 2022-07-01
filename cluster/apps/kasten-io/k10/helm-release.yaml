@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      version: 5.0.1
+      version: 5.0.2
       chart: k10
       interval: 5m
       sourceRef:
