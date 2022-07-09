@@ -72,7 +72,7 @@ spec:
               value: "Europe/Zurich"
           image: busybox:1.35.0
           command: ["/bin/sh"]
-          args: ["-c", "httpd -f -p 8000 -h /docs/"]
+          args: ["-c", "httpd -f -p 8000 -h /docs"]
           volumeMounts:
             - name: docs
               mountPath: /docs
