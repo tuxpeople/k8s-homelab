@@ -65,39 +65,70 @@ rules:
   - list
   - watch
 - apiGroups:
-  - ""
-  resources:
-  - nodes/status
-  verbs:
-  - patch
-- apiGroups:
   - apiextensions.k8s.io
   resources:
   - customresourcedefinitions
   verbs:
-  - create
   - list
   - watch
-  - update
   - get
 - apiGroups:
   - cilium.io
   resources:
-  - ciliumnetworkpolicies
-  - ciliumnetworkpolicies/status
+  - ciliumbgploadbalancerippools
+  - ciliumbgppeeringpolicies
+  - ciliumclusterwideenvoyconfigs
   - ciliumclusterwidenetworkpolicies
-  - ciliumclusterwidenetworkpolicies/status
+  - ciliumegressgatewaypolicies
+  - ciliumegressnatpolicies
   - ciliumendpoints
-  - ciliumendpoints/status
-  - ciliumnodes
-  - ciliumnodes/status
+  - ciliumendpointslices
+  - ciliumenvoyconfigs
   - ciliumidentities
   - ciliumlocalredirectpolicies
-  - ciliumlocalredirectpolicies/status
-  - ciliumegressnatpolicies
-  - ciliumendpointslices
+  - ciliumnetworkpolicies
+  - ciliumnodes
   verbs:
-  - '*'
+  - list
+  - watch
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumidentities
+  - ciliumendpoints
+  - ciliumnodes
+  verbs:
+  - create
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumidentities
+  verbs:
+  - update
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumendpoints
+  verbs:
+  - delete
+  - get
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumnodes
+  - ciliumnodes/status
+  verbs:
+  - get
+  - update
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumnetworkpolicies/status
+  - ciliumclusterwidenetworkpolicies/status
+  - ciliumendpoints/status
+  - ciliumendpoints
+  verbs:
+  - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -145,7 +176,13 @@ rules:
 - apiGroups:
   - ""
   resources:
-  - services
+  - services/status
+  verbs:
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
   verbs:
   - get
   - list
@@ -153,15 +190,8 @@ rules:
 - apiGroups:
   - ""
   resources:
-  - services/status
-  verbs:
-  - update
-- apiGroups:
-  - ""
-  resources:
   - services
   - endpoints
-  - namespaces
   verbs:
   - get
   - list
@@ -170,26 +200,67 @@ rules:
   - cilium.io
   resources:
   - ciliumnetworkpolicies
-  - ciliumnetworkpolicies/status
-  - ciliumnetworkpolicies/finalizers
   - ciliumclusterwidenetworkpolicies
-  - ciliumclusterwidenetworkpolicies/status
-  - ciliumclusterwidenetworkpolicies/finalizers
-  - ciliumendpoints
-  - ciliumendpoints/status
-  - ciliumendpoints/finalizers
-  - ciliumnodes
-  - ciliumnodes/status
-  - ciliumnodes/finalizers
-  - ciliumidentities
-  - ciliumendpointslices
-  - ciliumidentities/status
-  - ciliumidentities/finalizers
-  - ciliumlocalredirectpolicies
-  - ciliumlocalredirectpolicies/status
-  - ciliumlocalredirectpolicies/finalizers
   verbs:
-  - '*'
+  - create
+  - update
+  - deletecollection
+  - patch
+  - get
+  - list
+  - watch
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumnetworkpolicies/status
+  - ciliumclusterwidenetworkpolicies/status
+  verbs:
+  - patch
+  - update
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumendpoints
+  - ciliumidentities
+  verbs:
+  - delete
+  - list
+  - watch
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumidentities
+  verbs:
+  - update
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumnodes
+  verbs:
+  - create
+  - update
+  - get
+  - list
+  - watch
+  - delete
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumnodes/status
+  verbs:
+  - update
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumendpointslices
+  - ciliumenvoyconfigs
+  verbs:
+  - create
+  - update
+  - get
+  - list
+  - watch
+  - delete
 - apiGroups:
   - apiextensions.k8s.io
   resources:
@@ -198,8 +269,28 @@ rules:
   - create
   - get
   - list
-  - update
   - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ciliumbgploadbalancerippools.cilium.io
+  - ciliumbgppeeringpolicies.cilium.io
+  - ciliumclusterwideenvoyconfigs.cilium.io
+  - ciliumclusterwidenetworkpolicies.cilium.io
+  - ciliumegressgatewaypolicies.cilium.io
+  - ciliumegressnatpolicies.cilium.io
+  - ciliumendpoints.cilium.io
+  - ciliumendpointslices.cilium.io
+  - ciliumenvoyconfigs.cilium.io
+  - ciliumexternalworkloads.cilium.io
+  - ciliumidentities.cilium.io
+  - ciliumlocalredirectpolicies.cilium.io
+  - ciliumnetworkpolicies.cilium.io
+  - ciliumnodes.cilium.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - update
 - apiGroups:
   - coordination.k8s.io
   resources:
@@ -252,16 +343,17 @@ subjects:
 apiVersion: v1
 data:
   agent-not-ready-taint-key: node.cilium.io/agent-not-ready
-  annotate-k8s-node: "true"
   arping-refresh-period: 30s
   auto-direct-node-routes: "false"
   bpf-lb-external-clusterip: "false"
   bpf-lb-map-max: "65536"
+  bpf-lb-sock: "false"
   bpf-map-dynamic-size-ratio: "0.0025"
   bpf-policy-map-max: "16384"
+  bpf-root: /sys/fs/bpf
   cgroup-root: /run/cilium/cgroupv2
   cilium-endpoint-gc-interval: 5m0s
-  cluster-id: ""
+  cluster-id: "0"
   cluster-name: default
   cluster-pool-ipv4-cidr: 10.42.0.0/16
   cluster-pool-ipv4-mask-size: "24"
@@ -270,12 +362,11 @@ data:
   disable-cnp-status-updates: "true"
   disable-endpoint-crd: "false"
   enable-auto-protect-node-port-range: "true"
-  enable-bandwidth-manager: "false"
+  enable-bgp-control-plane: "false"
   enable-bpf-clock-probe: "true"
   enable-endpoint-health-checking: "true"
   enable-health-check-nodeport: "true"
   enable-health-checking: "true"
-  enable-host-reachable-services: "true"
   enable-ipv4: "true"
   enable-ipv4-masquerade: "true"
   enable-ipv6: "false"
@@ -286,9 +377,11 @@ data:
   enable-local-redirect-policy: "false"
   enable-policy: default
   enable-remote-node-identity: "true"
-  enable-session-affinity: "true"
+  enable-svc-source-range-check: "true"
+  enable-vtep: "false"
   enable-well-known-identities: "false"
   enable-xt-socket-fallback: "true"
+  host-reachable-services-protos: null
   identity-allocation-mode: crd
   install-iptables-rules: "true"
   install-no-conntrack-iptables-rules: "false"
@@ -302,11 +395,24 @@ data:
   nodes-gc-interval: 5m0s
   operator-api-serve-addr: 127.0.0.1:9234
   preallocate-bpf-maps: "false"
+  procfs: /host/proc
   remove-cilium-node-taints: "true"
   set-cilium-is-up-condition: "true"
   sidecar-istio-proxy-image: cilium/istio_proxy
+  synchronize-k8s-nodes: "true"
+  tofqdns-dns-reject-response-code: refused
+  tofqdns-enable-dns-compression: "true"
+  tofqdns-endpoint-max-ip-per-hostname: "50"
+  tofqdns-idle-connection-grace-period: 0s
+  tofqdns-max-deferred-connection-deletes: "10000"
+  tofqdns-min-ttl: "3600"
+  tofqdns-proxy-response-max-delay: 100ms
   tunnel: vxlan
   unmanaged-pod-watcher-interval: "15"
+  vtep-cidr: ""
+  vtep-endpoint: ""
+  vtep-mac: ""
+  vtep-mask: ""
 kind: ConfigMap
 metadata:
   annotations:
@@ -363,11 +469,11 @@ spec:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
-              matchExpressions:
-              - key: io.cilium/app
-                operator: In
-                values:
-                - operator
+              matchLabels:
+                app.kubernetes.io/managed-by: Helm
+                helm.toolkit.fluxcd.io/name: cilium
+                helm.toolkit.fluxcd.io/namespace: kube-system
+                io.cilium/app: operator
             topologyKey: kubernetes.io/hostname
       containers:
       - args:
@@ -396,7 +502,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/operator-generic:v1.11.6@sha256:9f6063c7bcaede801a39315ec7c166309f6a6783e98665f6693939cf1701bc17
+        image: quay.io/cilium/operator-generic:v1.12.0@sha256:bb2a42eda766e5d4a87ee8a5433f089db81b72dd04acf6b59fcbb445a95f9410
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -413,6 +519,8 @@ spec:
           name: cilium-config-path
           readOnly: true
       hostNetwork: true
+      nodeSelector:
+        kubernetes.io/os: linux
       priorityClassName: system-cluster-critical
       restartPolicy: Always
       serviceAccount: cilium-operator
@@ -447,6 +555,10 @@ spec:
   template:
     metadata:
       annotations:
+        container.apparmor.security.beta.kubernetes.io/apply-sysctl-overwrites: unconfined
+        container.apparmor.security.beta.kubernetes.io/cilium-agent: unconfined
+        container.apparmor.security.beta.kubernetes.io/clean-cilium-state: unconfined
+        container.apparmor.security.beta.kubernetes.io/mount-cgroup: unconfined
         meta.helm.sh/release-name: cilium
         meta.helm.sh/release-namespace: kube-system
       labels:
@@ -456,27 +568,11 @@ spec:
         k8s-app: cilium
     spec:
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                - linux
-            - matchExpressions:
-              - key: beta.kubernetes.io/os
-                operator: In
-                values:
-                - linux
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
-              matchExpressions:
-              - key: k8s-app
-                operator: In
-                values:
-                - cilium
+              matchLabels:
+                k8s-app: cilium
             topologyKey: kubernetes.io/hostname
       containers:
       - args:
@@ -512,7 +608,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.11.6@sha256:f7f93c26739b6641a3fa3d76b1e1605b15989f25d06625260099e01c8243f54c
+        image: quay.io/cilium/cilium:v1.12.0@sha256:079baa4fa1b9fe638f96084f4e0297c84dd4fb215d29d2321dcbe54273f63ade
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -521,6 +617,7 @@ spec:
               - /cni-install.sh
               - --enable-debug=false
               - --cni-exclusive=true
+              - --log-file=/var/run/cilium/cilium-cni.log
           preStop:
             exec:
               command:
@@ -553,7 +650,25 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         securityContext:
-          privileged: true
+          capabilities:
+            add:
+            - CHOWN
+            - KILL
+            - NET_ADMIN
+            - NET_RAW
+            - IPC_LOCK
+            - SYS_MODULE
+            - SYS_ADMIN
+            - SYS_RESOURCE
+            - DAC_OVERRIDE
+            - FOWNER
+            - SETGID
+            - SETUID
+            drop:
+            - ALL
+          seLinuxOptions:
+            level: s0
+            type: spc_t
         startupProbe:
           failureThreshold: 105
           httpGet:
@@ -567,8 +682,12 @@ spec:
           periodSeconds: 2
           successThreshold: 1
         volumeMounts:
+        - mountPath: /host/proc/sys/net
+          name: host-proc-sys-net
+        - mountPath: /host/proc/sys/kernel
+          name: host-proc-sys-kernel
         - mountPath: /sys/fs/bpf
-          mountPropagation: Bidirectional
+          mountPropagation: HostToContainer
           name: bpf-maps
         - mountPath: /var/run/cilium
           name: cilium-run
@@ -601,16 +720,69 @@ spec:
           value: /run/cilium/cgroupv2
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.11.6@sha256:f7f93c26739b6641a3fa3d76b1e1605b15989f25d06625260099e01c8243f54c
+        image: quay.io/cilium/cilium:v1.12.0@sha256:079baa4fa1b9fe638f96084f4e0297c84dd4fb215d29d2321dcbe54273f63ade
         imagePullPolicy: IfNotPresent
         name: mount-cgroup
         securityContext:
-          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - SYS_CHROOT
+            - SYS_PTRACE
+            drop:
+            - ALL
+          seLinuxOptions:
+            level: s0
+            type: spc_t
         volumeMounts:
         - mountPath: /hostproc
           name: hostproc
         - mountPath: /hostbin
           name: cni-path
+      - command:
+        - sh
+        - -ec
+        - |
+          cp /usr/bin/cilium-sysctlfix /hostbin/cilium-sysctlfix;
+          nsenter --mount=/hostproc/1/ns/mnt "${BIN_PATH}/cilium-sysctlfix";
+          rm /hostbin/cilium-sysctlfix
+        env:
+        - name: BIN_PATH
+          value: /opt/cni/bin
+        image: quay.io/cilium/cilium:v1.12.0@sha256:079baa4fa1b9fe638f96084f4e0297c84dd4fb215d29d2321dcbe54273f63ade
+        imagePullPolicy: IfNotPresent
+        name: apply-sysctl-overwrites
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - SYS_CHROOT
+            - SYS_PTRACE
+            drop:
+            - ALL
+          seLinuxOptions:
+            level: s0
+            type: spc_t
+        volumeMounts:
+        - mountPath: /hostproc
+          name: hostproc
+        - mountPath: /hostbin
+          name: cni-path
+      - args:
+        - mount | grep "/sys/fs/bpf type bpf" || mount -t bpf bpf /sys/fs/bpf
+        command:
+        - /bin/bash
+        - -c
+        - --
+        image: quay.io/cilium/cilium:v1.12.0@sha256:079baa4fa1b9fe638f96084f4e0297c84dd4fb215d29d2321dcbe54273f63ade
+        imagePullPolicy: IfNotPresent
+        name: mount-bpf-fs
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /sys/fs/bpf
+          mountPropagation: Bidirectional
+          name: bpf-maps
       - command:
         - sh
         - -c
@@ -619,7 +791,7 @@ spec:
             echo "Waiting on node-init to run...";
             sleep 1;
           done
-        image: quay.io/cilium/cilium:v1.11.6@sha256:f7f93c26739b6641a3fa3d76b1e1605b15989f25d06625260099e01c8243f54c
+        image: quay.io/cilium/cilium:v1.12.0@sha256:079baa4fa1b9fe638f96084f4e0297c84dd4fb215d29d2321dcbe54273f63ade
         imagePullPolicy: IfNotPresent
         name: wait-for-node-init
         volumeMounts:
@@ -644,7 +816,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.11.6@sha256:f7f93c26739b6641a3fa3d76b1e1605b15989f25d06625260099e01c8243f54c
+        image: quay.io/cilium/cilium:v1.12.0@sha256:079baa4fa1b9fe638f96084f4e0297c84dd4fb215d29d2321dcbe54273f63ade
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
         resources:
@@ -652,7 +824,17 @@ spec:
             cpu: 100m
             memory: 100Mi
         securityContext:
-          privileged: true
+          capabilities:
+            add:
+            - NET_ADMIN
+            - SYS_MODULE
+            - SYS_ADMIN
+            - SYS_RESOURCE
+            drop:
+            - ALL
+          seLinuxOptions:
+            level: s0
+            type: spc_t
         volumeMounts:
         - mountPath: /sys/fs/bpf
           name: bpf-maps
@@ -661,6 +843,8 @@ spec:
           name: cilium-cgroup
         - mountPath: /var/run/cilium
           name: cilium-run
+      nodeSelector:
+        kubernetes.io/os: linux
       priorityClassName: system-node-critical
       restartPolicy: Always
       serviceAccount: cilium
@@ -712,6 +896,14 @@ spec:
       - configMap:
           name: cilium-config
         name: cilium-config-path
+      - hostPath:
+          path: /proc/sys/net
+          type: Directory
+        name: host-proc-sys-net
+      - hostPath:
+          path: /proc/sys/kernel
+          type: Directory
+        name: host-proc-sys-kernel
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 2
@@ -740,6 +932,7 @@ spec:
   template:
     metadata:
       annotations:
+        container.apparmor.security.beta.kubernetes.io/node-init: unconfined
         meta.helm.sh/release-name: cilium
         meta.helm.sh/release-namespace: kube-system
       labels:
@@ -770,17 +963,33 @@ spec:
             mkdir -p "/tmp/cilium-bootstrap.d"
             date > "/tmp/cilium-bootstrap.d/cilium-bootstrap-time"
             echo "Node initialization complete"
-        image: quay.io/cilium/startup-script:62bfbe88c17778aad7bef9fa57ff9e2d4a9ba0d8
+        image: quay.io/cilium/startup-script:d69851597ea019af980891a4628fb36b7880ec26
         imagePullPolicy: IfNotPresent
         lifecycle: null
         name: node-init
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
         securityContext:
-          privileged: true
+          capabilities:
+            add:
+            - SYS_MODULE
+            - NET_ADMIN
+            - SYS_ADMIN
+            - SYS_CHROOT
+            - SYS_PTRACE
+          privileged: false
+          seLinuxOptions:
+            level: s0
+            type: spc_t
         volumeMounts:
         - mountPath: /run/xtables.lock
           name: xtables-lock
       hostNetwork: true
       hostPID: true
+      nodeSelector:
+        kubernetes.io/os: linux
       priorityClassName: system-node-critical
       tolerations:
       - operator: Exists
@@ -789,3 +998,5 @@ spec:
           path: /run/xtables.lock
           type: FileOrCreate
         name: xtables-lock
+  updateStrategy:
+    type: RollingUpdate
