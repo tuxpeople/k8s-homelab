@@ -7,7 +7,7 @@ metadata:
 spec:
   chart:
     spec:
-      version: 0.4.5
+      version: 0.4.7
       chart: back8sup
       interval: 5m
       sourceRef:
