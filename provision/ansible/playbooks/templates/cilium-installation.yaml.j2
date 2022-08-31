@@ -983,9 +983,6 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
-        volumeMounts:
-        - mountPath: /run/xtables.lock
-          name: xtables-lock
       hostNetwork: true
       hostPID: true
       nodeSelector:
@@ -993,10 +990,5 @@ spec:
       priorityClassName: system-node-critical
       tolerations:
       - operator: Exists
-      volumes:
-      - hostPath:
-          path: /run/xtables.lock
-          type: FileOrCreate
-        name: xtables-lock
   updateStrategy:
     type: RollingUpdate
