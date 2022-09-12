@@ -28,10 +28,3 @@ spec:
     timeout: 10m
     cleanupOnFail: true
     recreate: true
-  values:
-    configInline:
-      address-pools:
-        - name: default
-          protocol: layer2
-          addresses:
-            - "${METALLB_LB_RANGE}"
