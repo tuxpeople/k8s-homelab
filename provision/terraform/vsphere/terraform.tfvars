@@ -11,7 +11,7 @@ vms = {
 
     datastore  = "datastore11_ssd"
     datacenter = "SKY"
-    template   = "ubuntu-focal-20.04-cloudimg"
+    template   = "focal-server-cloudimg-amd64"
     cluster    = "Homelab"
 
     guest_id         = "ubuntu64Guest"
@@ -29,9 +29,9 @@ vms = {
     folder   = "Kubernetes/Prod"
     network  = "Lab (308)"
 
-    datastore  = "datastore11_ssd"
+    datastore  = "datastore13_m2"
     datacenter = "SKY"
-    template   = "ubuntu-focal-20.04-cloudimg"
+    template   = "focal-server-cloudimg-amd64"
     cluster    = "Homelab"
 
     guest_id         = "ubuntu64Guest"
@@ -49,9 +49,9 @@ vms = {
     folder   = "Kubernetes/Prod"
     network  = "Lab (308)"
 
-    datastore  = "datastore11_ssd"
+    datastore  = "datastore15_ssd"
     datacenter = "SKY"
-    template   = "ubuntu-focal-20.04-cloudimg"
+    template   = "focal-server-cloudimg-amd64"
     cluster    = "Homelab"
 
     guest_id         = "ubuntu64Guest"
