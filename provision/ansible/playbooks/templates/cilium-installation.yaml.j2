@@ -502,7 +502,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/operator-generic:v1.12.1@sha256:93d5aaeda37d59e6c4325ff05030d7b48fabde6576478e3fdbfb9bb4a68ec4a1
+        image: quay.io/cilium/operator-generic:v1.12.2@sha256:00508f78dae5412161fa40ee30069c2802aef20f7bdd20e91423103ba8c0df6e
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -514,6 +514,7 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 3
         name: cilium-operator
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /tmp/cilium/config-map
           name: cilium-config-path
@@ -608,7 +609,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.12.1@sha256:ea2db1ee21b88127b5c18a96ad155c25485d0815a667ef77c2b7c7f31cab601b
+        image: quay.io/cilium/cilium:v1.12.2@sha256:986f8b04cfdb35cf714701e58e35da0ee63da2b8a048ab596ccb49de58d5ba36
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -681,6 +682,7 @@ spec:
             scheme: HTTP
           periodSeconds: 2
           successThreshold: 1
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /host/proc/sys/net
           name: host-proc-sys-net
@@ -720,7 +722,7 @@ spec:
           value: /run/cilium/cgroupv2
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.12.1@sha256:ea2db1ee21b88127b5c18a96ad155c25485d0815a667ef77c2b7c7f31cab601b
+        image: quay.io/cilium/cilium:v1.12.2@sha256:986f8b04cfdb35cf714701e58e35da0ee63da2b8a048ab596ccb49de58d5ba36
         imagePullPolicy: IfNotPresent
         name: mount-cgroup
         securityContext:
@@ -734,6 +736,7 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /hostproc
           name: hostproc
@@ -749,7 +752,7 @@ spec:
         env:
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.12.1@sha256:ea2db1ee21b88127b5c18a96ad155c25485d0815a667ef77c2b7c7f31cab601b
+        image: quay.io/cilium/cilium:v1.12.2@sha256:986f8b04cfdb35cf714701e58e35da0ee63da2b8a048ab596ccb49de58d5ba36
         imagePullPolicy: IfNotPresent
         name: apply-sysctl-overwrites
         securityContext:
@@ -763,6 +766,7 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /hostproc
           name: hostproc
@@ -774,11 +778,12 @@ spec:
         - /bin/bash
         - -c
         - --
-        image: quay.io/cilium/cilium:v1.12.1@sha256:ea2db1ee21b88127b5c18a96ad155c25485d0815a667ef77c2b7c7f31cab601b
+        image: quay.io/cilium/cilium:v1.12.2@sha256:986f8b04cfdb35cf714701e58e35da0ee63da2b8a048ab596ccb49de58d5ba36
         imagePullPolicy: IfNotPresent
         name: mount-bpf-fs
         securityContext:
           privileged: true
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /sys/fs/bpf
           mountPropagation: Bidirectional
@@ -791,9 +796,10 @@ spec:
             echo "Waiting on node-init to run...";
             sleep 1;
           done
-        image: quay.io/cilium/cilium:v1.12.1@sha256:ea2db1ee21b88127b5c18a96ad155c25485d0815a667ef77c2b7c7f31cab601b
+        image: quay.io/cilium/cilium:v1.12.2@sha256:986f8b04cfdb35cf714701e58e35da0ee63da2b8a048ab596ccb49de58d5ba36
         imagePullPolicy: IfNotPresent
         name: wait-for-node-init
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /tmp/cilium-bootstrap.d
           name: cilium-bootstrap-file-dir
@@ -816,7 +822,7 @@ spec:
           value: 192.168.8.222
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.12.1@sha256:ea2db1ee21b88127b5c18a96ad155c25485d0815a667ef77c2b7c7f31cab601b
+        image: quay.io/cilium/cilium:v1.12.2@sha256:986f8b04cfdb35cf714701e58e35da0ee63da2b8a048ab596ccb49de58d5ba36
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
         resources:
@@ -835,6 +841,7 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /sys/fs/bpf
           name: bpf-maps
@@ -983,6 +990,7 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
+        terminationMessagePolicy: FallbackToLogsOnError
       hostNetwork: true
       hostPID: true
       nodeSelector:
