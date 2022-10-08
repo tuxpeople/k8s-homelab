@@ -514,6 +514,7 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 3
         name: cilium-operator
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /tmp/cilium/config-map
           name: cilium-config-path
@@ -681,6 +682,7 @@ spec:
             scheme: HTTP
           periodSeconds: 2
           successThreshold: 1
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /host/proc/sys/net
           name: host-proc-sys-net
@@ -734,6 +736,7 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /hostproc
           name: hostproc
@@ -763,6 +766,7 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /hostproc
           name: hostproc
@@ -779,6 +783,7 @@ spec:
         name: mount-bpf-fs
         securityContext:
           privileged: true
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /sys/fs/bpf
           mountPropagation: Bidirectional
@@ -794,6 +799,7 @@ spec:
         image: quay.io/cilium/cilium:v1.12.2@sha256:986f8b04cfdb35cf714701e58e35da0ee63da2b8a048ab596ccb49de58d5ba36
         imagePullPolicy: IfNotPresent
         name: wait-for-node-init
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /tmp/cilium-bootstrap.d
           name: cilium-bootstrap-file-dir
@@ -835,6 +841,7 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /sys/fs/bpf
           name: bpf-maps
@@ -983,6 +990,7 @@ spec:
           seLinuxOptions:
             level: s0
             type: spc_t
+        terminationMessagePolicy: FallbackToLogsOnError
       hostNetwork: true
       hostPID: true
       nodeSelector:
