@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 1
 
       - name: Setup Kubernetes Tools
-        uses: yokawasa/action-setup-kube-tools@v0.8.2
+        uses: yokawasa/action-setup-kube-tools@v0.9.0
         with:
           setup-tools: |
             helmv3
