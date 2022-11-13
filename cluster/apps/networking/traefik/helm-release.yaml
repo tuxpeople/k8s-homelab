@@ -34,8 +34,6 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    image:
-      name: ghcr.io/k8s-at-home/traefik
     deployment:
       kind: Deployment
       replicas: 1
@@ -99,3 +97,4 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
+        cpu: 500m
