@@ -21,12 +21,14 @@ tasks:
     desc: Apply the changes to Cloudflare
     dir: provision/terraform/vsphere
     cmds:
+      - terraform apply -refresh-only {{.CLI_ARGS}}
       - terraform apply {{.CLI_ARGS}}
 
   forceapply:
     desc: Apply the changes to vsphere
     dir: provision/terraform/vsphere
     cmds:
+      - terraform apply -refresh-only -auto-approve {{.CLI_ARGS}}
       - terraform apply -auto-approve {{.CLI_ARGS}}
 
   destroy:

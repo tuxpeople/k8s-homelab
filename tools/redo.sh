@@ -12,49 +12,49 @@ cd ${_basedir} && cd $(git rev-parse --show-toplevel)
 
 . ./provision/infrastructure/settings.env
 
-step "Recreate k3s-node1.lab"
-ssh lab1 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node1.lab"
-kubectl delete nodes k3s-node1.lab
+step "Recreate k3s-node01.lab"
+ssh lab1 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node01.lab"
+kubectl delete nodes k3s-node01.lab
 step "Sleep 30s and allow VM to boot"
 sleep 30
-ssh-keygen -R k3s-node1.lab; ssh-keygen -R `dig +short k3s-node1.lab`; ssh-keyscan -t rsa k3s-node1.lab,`dig +short k3s-node1.lab` >> ~/.ssh/known_hosts
-#ssh k3s-node1.lab -l ansible "sudo yum -y install python38"
-ssh lab1 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node1.lab"
+ssh-keygen -R k3s-node01.lab; ssh-keygen -R `dig +short k3s-node01.lab`; ssh-keyscan -t rsa k3s-node01.lab,`dig +short k3s-node01.lab` >> ~/.ssh/known_hosts
+#ssh k3s-node01.lab -l ansible "sudo yum -y install python38"
+ssh lab1 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node01.lab"
 step "Run the playbooks"
-rm -rf .cache/facts/k3s-node1.lab
-ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node1.lab provision/ansible/playbooks/ubuntu-prepare.yml
+rm -rf .cache/facts/k3s-node01.lab
+ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node01.lab provision/ansible/playbooks/ubuntu-prepare.yml
 ansible-playbook -i provision/ansible/inventory/hosts.yml provision/ansible/playbooks/k3s-install.yml
 
 step "Sleep 120s"
 sleep 120
 
-step "Recreate k3s-node2.lab"
-ssh lab2 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node2.lab"
-kubectl delete nodes k3s-node2.lab
+step "Recreate k3s-node02.lab"
+ssh lab2 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node02.lab"
+kubectl delete nodes k3s-node02.lab
 step "Sleep 30s and allow VM to boot"
 sleep 30
-ssh-keygen -R k3s-node2.lab; ssh-keygen -R `dig +short k3s-node2.lab`; ssh-keyscan -t rsa k3s-node2.lab,`dig +short k3s-node2.lab` >> ~/.ssh/known_hosts
-#ssh k3s-node2.lab -l ansible "sudo yum -y install python38"
-ssh lab2 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node2.lab"
+ssh-keygen -R k3s-node02.lab; ssh-keygen -R `dig +short k3s-node02.lab`; ssh-keyscan -t rsa k3s-node02.lab,`dig +short k3s-node02.lab` >> ~/.ssh/known_hosts
+#ssh k3s-node02.lab -l ansible "sudo yum -y install python38"
+ssh lab2 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node02.lab"
 step "Run the playbooks"
-rm -rf .cache/facts/k3s-node2.lab
-ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node2.lab provision/ansible/playbooks/ubuntu-prepare.yml
+rm -rf .cache/facts/k3s-node02.lab
+ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node02.lab provision/ansible/playbooks/ubuntu-prepare.yml
 ansible-playbook -i provision/ansible/inventory/hosts.yml provision/ansible/playbooks/k3s-install.yml
 
 step "Sleep 120s"
 sleep 120
 
-step "Recreate k3s-node3.lab"
-ssh lab3 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node3.lab"
-kubectl delete nodes k3s-node3.lab
+step "Recreate k3s-node03.lab"
+ssh lab3 -l root "kvm-install-vm create -t ${NODE_OS} -a -c ${MASTER_CPU} -m ${MASTER_MEM} -d ${OS_DISK} -y -u ansible k3s-node03.lab"
+kubectl delete nodes k3s-node03.lab
 step "Sleep 30s and allow VM to boot"
 sleep 30
-ssh-keygen -R k3s-node3.lab; ssh-keygen -R `dig +short k3s-node3.lab`; ssh-keyscan -t rsa k3s-node3.lab,`dig +short k3s-node3.lab` >> ~/.ssh/known_hosts
-#ssh k3s-node3.lab -l ansible "sudo yum -y install python38"
-ssh lab3 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node3.lab"
+ssh-keygen -R k3s-node03.lab; ssh-keygen -R `dig +short k3s-node03.lab`; ssh-keyscan -t rsa k3s-node03.lab,`dig +short k3s-node03.lab` >> ~/.ssh/known_hosts
+#ssh k3s-node03.lab -l ansible "sudo yum -y install python38"
+ssh lab3 -l root "kvm-install-vm attach-disk -d ${DATA_DISK} -t ${DATA_DRIVE} k3s-node03.lab"
 step "Run the playbooks"
-rm -rf .cache/facts/k3s-node3.lab
-ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node3.lab provision/ansible/playbooks/ubuntu-prepare.yml
+rm -rf .cache/facts/k3s-node03.lab
+ansible-playbook -i provision/ansible/inventory/hosts.yml -l k3s-node03.lab provision/ansible/playbooks/ubuntu-prepare.yml
 ansible-playbook -i provision/ansible/inventory/hosts.yml provision/ansible/playbooks/k3s-install.yml
 
 cd ${_pwd}
