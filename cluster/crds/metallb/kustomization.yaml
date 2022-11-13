@@ -1,0 +1,7 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - crds.yaml
+
+# curl -L https://raw.githubusercontent.com/metallb/metallb/main/charts/metallb/charts/crds/templates/crds.yaml | sed 's/{{ .Release.Namespace }}/metallb-system/g' > crds.yaml
