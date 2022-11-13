@@ -9,10 +9,10 @@ spec:
   chart:
     spec:
       chart: kured
-      version: 3.0.1
+      version: 4.1.0
       sourceRef:
         kind: HelmRepository
-        name: weaveworks-kured-charts
+        name: kubereboot
         namespace: flux-system
       interval: 5m
   test:
@@ -34,6 +34,7 @@ spec:
       startTime: "0:00"
       endTime: "5:00"
       timeZone: "Europe/Zurich"
+      logFormat: "json"
     # tolerations:
     # - key: "node-role.kubernetes.io/master"
     #   operator: "Exists"
