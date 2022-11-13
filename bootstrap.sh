@@ -9,7 +9,7 @@ git pull
 # task terraform:forceapply
 # task precommit:init
 # task precommit:update
-task ansible:deps
+# task ansible:deps
 task ansible:clean-cache
 task ansible:prepare
 task ansible:install || task ansible:install
