@@ -58,13 +58,21 @@ resource "vsphere_virtual_machine" "allvms" {
     template_uuid = data.vsphere_virtual_machine.template[each.key].id
   }
 
-  extra_config = {
+  vapp {
+    properties = {
+      user-data   = each.value.user_data != "" ? base64encode(file("${path.module}/${each.value.user_data}")) : base64encode(file("${path.module}/cloud-init.yaml"))
+      hostname    = "${each.value.hostname}"
+      instance-id = "${each.value.vmname}"
+    }
+  }
+
+  /* extra_config = {
     "guestinfo.userdata" = base64encode(templatefile("cloud-init.tftpl", {
       hostname    = "${each.value.hostname}",
       instance_id = "${each.value.vmname}"
     }))
     "guestinfo.userdata.encoding" = "base64"
-  }
+  } */
 
   provisioner "local-exec" {
     command = "sleep 120; fix-ssh-key ${each.value.hostname}"

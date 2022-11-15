@@ -28,5 +28,6 @@ variable "vms" {
     cluster          = string
     datacenter       = string
     hostname         = string
+    user_data        = string
   }))
 }

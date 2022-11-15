@@ -17,6 +17,8 @@ vms = {
     guest_id         = "ubuntu64Guest"
     thin_provisioned = "true"
     eagerly_scrub    = "false"
+
+    user_data = ""
   }
 
   k3s-node2 = {
@@ -37,6 +39,8 @@ vms = {
     guest_id         = "ubuntu64Guest"
     thin_provisioned = "true"
     eagerly_scrub    = "false"
+
+    user_data = ""
   }
 
   k3s-node3 = {
@@ -57,5 +61,7 @@ vms = {
     guest_id         = "ubuntu64Guest"
     thin_provisioned = "true"
     eagerly_scrub    = "false"
+
+    user_data = ""
   }
 }
