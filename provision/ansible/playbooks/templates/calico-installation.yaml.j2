@@ -5,6 +5,9 @@ metadata:
   name: default
 spec:
   calicoNetwork:
+    # https://projectcalico.docs.tigera.io/networking/ip-autodetection
+    nodeAddressAutodetectionV4:
+      kubernetes: NodeInternalIP
     # Note: The ipPools section cannot be modified post-install.
     ipPools:
       - blockSize: 26

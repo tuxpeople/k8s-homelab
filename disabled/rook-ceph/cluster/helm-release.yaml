@@ -16,7 +16,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.10.4
+      version: v1.10.5
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
@@ -62,13 +62,13 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "k3s-node1.lab"
+          - name: "k3s-node01.lab"
             devices:
               - name: "vdc"
-          - name: "k3s-node2.lab"
+          - name: "k3s-node02.lab"
             devices:
               - name: "vdc"
-          - name: "k3s-node3.lab"
+          - name: "k3s-node03.lab"
             devices:
               - name: "vdc"
     cephBlockPools:
