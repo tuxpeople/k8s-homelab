@@ -6,3 +6,4 @@ resources:
   - external-snapshotter.yaml
   - kube-prometheus-stack.yaml
   - kyverno.yaml
+  - metallb.yaml
