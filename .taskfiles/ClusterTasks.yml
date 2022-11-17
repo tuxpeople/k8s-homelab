@@ -22,9 +22,15 @@ tasks:
     desc: Force update Flux to pull in changes from your Git repository
     cmds:
       - flux reconcile source git flux-system {{.CLI_ARGS | default "-n flux-system"}}
-      - flux reconcile kustomization flux-system
-      - flux reconcile kustomization crds
-      - flux reconcile kustomization core
+      - flux reconcile kustomization flux-installation
+      - flux reconcile kustomization flux-cluster
+      - flux reconcile kustomization crds-metallb
+      - flux reconcile kustomization external-secrets-crds
+      - flux reconcile kustomization external-snapshotter-crds
+      - flux reconcile kustomization kube-prometheus-stack-crds
+      - flux reconcile kustomization kyverno-crds
+      - flux reconcile kustomization traefik-crds
+      - flux reconcile kustomization base
       - flux reconcile kustomization apps
 
   nodes:
