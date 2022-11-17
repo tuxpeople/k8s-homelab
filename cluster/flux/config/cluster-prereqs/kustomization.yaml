@@ -8,3 +8,4 @@ resources:
   - kyverno.yaml
   - metallb.yaml
   - traefik.yaml
+  - cert-manager.yaml
