@@ -63,15 +63,14 @@ spec:
         enabled: true
         hosts:
           - host: code.${SECRET_DOMAIN_ME}
-            http:
-              paths:
-                - path: /
-                  pathType: Prefix
-                  backend:
-                    service:
-                      name: code-server
-                      port:
-                        number: 8443
+            paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: code-server
+                    port:
+                      number: 8443
 
     persistence:
       config:
