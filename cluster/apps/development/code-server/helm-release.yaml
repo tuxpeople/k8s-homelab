@@ -66,11 +66,8 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-                backend:
-                  service:
-                    name: code-server
-                    port:
-                      number: 8443
+                service:
+                  port: http
 
     persistence:
       config:
