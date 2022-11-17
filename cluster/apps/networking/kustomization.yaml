@@ -7,5 +7,4 @@ resources:
   - external-dns
   - secret.sops.yaml
   - traefik
-  - kube-vip
   - metallb-system
