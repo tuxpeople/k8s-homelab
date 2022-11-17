@@ -67,7 +67,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  port: 8443
+                  port: http
 
     persistence:
       config:
