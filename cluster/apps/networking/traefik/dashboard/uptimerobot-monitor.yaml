@@ -3,7 +3,6 @@ apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
   name: traefik
-  namespace: networking
 spec:
   friendlyName: "K8S Traefik Dashboard"
   url: "https://traefik.${SECRET_DOMAIN_ME}"
