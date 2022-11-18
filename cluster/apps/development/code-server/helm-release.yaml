@@ -32,7 +32,7 @@ spec:
       repository: ghcr.io/linuxserver/code-server
       pullPolicy: Always
       # renovate: datasource=docker depName=ghcr.io/linuxserver/code-server
-      tag: sha256:fcaeb09731a3faa77856f9a2a2a2c9189893df90faba3406426e8fd496e85e5e
+      tag: 4.8.3
 
     strategy:
       type: Recreate
