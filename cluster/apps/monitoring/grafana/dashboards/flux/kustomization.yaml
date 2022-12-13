@@ -6,4 +6,4 @@ commonLabels:
 commonAnnotations:
   k8s-sidecar-target-directory: "/tmp/dashboards/gitops"
 resources:
-  - https://github.com/fluxcd/flux2/blob/main/manifests/monitoring/monitoring-config
+  - https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/
