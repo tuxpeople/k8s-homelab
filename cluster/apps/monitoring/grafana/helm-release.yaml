@@ -185,10 +185,10 @@ spec:
           datasource: Prometheus
       gitops:
         flux-cluster:
-          url: https://github.com/fluxcd/flux2/raw/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
           datasource: Prometheus
         flux-control-plane:
-          url: https://github.com/fluxcd/flux2/raw/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
           datasource: Prometheus
         logs:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
