@@ -41,6 +41,8 @@ spec:
     grafana.ini:
       server:
         root_url: https://grafana.${SECRET_DOMAIN_ME}
+      security:
+        cookie_secure: true
       log.console:
         level: debug
       auth:
