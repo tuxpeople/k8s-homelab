@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
         with:
           fetch-depth: 0
       - name: Lint
-        uses: github/super-linter/slim@v4
+        uses: github/super-linter/slim@bb2d833b08b6c288608686672b93a8a4589cdc49 # v4
         env:
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'workflow_dispatch' }}
           DEFAULT_BRANCH: "${{ env.DEFAULT_BRANCH }}"
