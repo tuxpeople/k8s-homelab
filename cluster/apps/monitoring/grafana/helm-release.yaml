@@ -181,16 +181,6 @@ spec:
           gnetId: 13502
           revision: 10
           datasource: Prometheus
-      gitops:
-        flux-cluster:
-          url: https://github.com/fluxcd/flux2/raw/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
-          datasource: Prometheus
-        flux-control-plane:
-          url: https://github.com/fluxcd/flux2/raw/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
-          datasource: Prometheus
-        logs:
-          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
-          datasource: Loki
       systems:
         # Ref: https://grafana.com/grafana/dashboards/1860/revisions
         node-exporter-full:
