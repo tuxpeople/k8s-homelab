@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 41.7.4
+      version: 42.3.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -55,8 +55,8 @@ spec:
               match:
                 alertname: Watchdog
             - receiver: "discord"
-              match_re:
-                severity: critical
+              matchers:
+                - severity = "critical"
               continue: true
               # - receiver: discord
               #   group_wait: 10s
@@ -97,14 +97,14 @@ spec:
         # Inhibition rules allow to mute a set of alerts given that another alert is firing.
         # We use this to mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
-          - source_match:
-              severity: "critical"
-            target_match:
-              severity: "warning"
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
             equal: ["alertname", "namespace"]
       alertmanagerSpec:
-        replicas: 1
-        # podAntiAffinity: "soft"
+        replicas: 2
+        podAntiAffinity: hard
         storage:
           volumeClaimTemplate:
             spec:
@@ -132,8 +132,8 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
           traefik.ingress.kubernetes.io/router.middlewares: identity-forward-auth@kubernetescrd
           hajimari.io/enable: "true"
-          hajimari.io/icon: "alarm-light"
-          hajimari.io/appName: "Alertmanager"
+          hajimari.io/appName: "Alert Manager"
+          hajimari.io/icon: "mdi:alert-decagram-outline"
         tls:
           - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
             hosts:
@@ -141,7 +141,18 @@ spec:
         hosts:
           - alertmanager.${SECRET_DOMAIN_ME}
     kube-state-metrics:
-      fullnameOverride: kube-state-metrics
+      metricLabelsAllowlist:
+        - "persistentvolumeclaims=[*]"
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
@@ -156,6 +167,7 @@ spec:
               targetLabel: kubernetes_node
     grafana:
       enabled: false
+      forceDeployDashboards: true
       sidecar:
         dashboards:
           multicluster:
@@ -177,28 +189,12 @@ spec:
         - 192.168.8.101
         - 192.168.8.102
         - 192.168.8.103
-      service:
-        enabled: true
-        port: 10259
-        targetPort: 10259
-      serviceMonitor:
-        enabled: true
-        https: true
-        insecureSkipVerify: true
     kubeScheduler:
       enabled: true
       endpoints:
         - 192.168.8.101
         - 192.168.8.102
         - 192.168.8.103
-      service:
-        enabled: true
-        port: 10257
-        targetPort: 10257
-      serviceMonitor:
-        enabled: true
-        https: true
-        insecureSkipVerify: true
     kubeProxy:
       enabled: true
       endpoints:
@@ -229,26 +225,45 @@ spec:
       persistentVolume:
         enabled: true
         size: 10Gi
-      # thanosService:
-      #   enabled: true
-      # thanosServiceMonitor:
-      #   enabled: true
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
+      thanosIngress:
+        enabled: true
+        annotations:
+          hajimari.io/enable: "false"
       prometheusSpec:
-        replicas: 1
-        replicaExternalLabelName: "replica"
+        replicas: 2
+        replicaExternalLabelName: __replica__
+        externalLabels:
+          cluster: homelab
+        thanos:
+          image: quay.io/thanos/thanos:v0.29.0
+          # renovate: datasource=docker depName=quay.io/thanos/thanos
+          version: "v0.29.0"
+        podAntiAffinity: hard
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
-        retention: 7d
+        retention: 14d
+        retentionSize: 45GB
         enableAdminAPI: true
         walCompression: true
-        # thanos:
-        #   image: quay.io/thanos/thanos:v0.25.2
-        #   version: v0.22.0
-        #   objectStorageConfig:
-        #     name: thanos-objstore
-        #     key: objstore.yml
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              resources:
+                requests:
+                  storage: 50Gi
+        resources:
+          requests:
+            cpu: 10m
+            memory: 2000Mi
+          limits:
+            memory: 8000Mi
+
         additionalScrapeConfigs:
           # - job_name: minio
           #   honor_timestamps: true
@@ -304,6 +319,9 @@ spec:
       ingress:
         enabled: true
         annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/appName: "Prometheus"
+          hajimari.io/icon: "mdi:fire"
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           external-dns/is-public: "true"

@@ -1,0 +1,187 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: monitoring
+spec:
+  chart:
+    spec:
+      chart: loki-stack
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  test:
+    enable: false # Enable helm test
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    grafana:
+      enabled: false
+    loki:
+      replicas: 1
+      isDefault: false
+      structuredConfig:
+        auth_enabled: false
+        server:
+          log_level: info
+          http_listen_port: 3100
+          grpc_listen_port: 9095
+        memberlist:
+          join_members: ["loki-memberlist"]
+        limits_config:
+          retention_period: 14d
+          enforce_metric_name: false
+          reject_old_samples: true
+          reject_old_samples_max_age: 168h
+          max_cache_freshness_per_query: 10m
+          split_queries_by_interval: 15m
+          ingestion_rate_mb: 8
+          ingestion_burst_size_mb: 16
+          shard_streams:
+            enabled: true
+        schema_config:
+          configs:
+            - from: "2021-08-01"
+              store: boltdb-shipper
+              object_store: s3
+              schema: v11
+              index:
+                prefix: loki_index_
+                period: 24h
+        common:
+          path_prefix: /var/loki
+          replication_factor: 3
+          storage:
+            s3:
+              s3: s3://${SECRET_MINIO_ACCESSKEY}:${SECRET_MINIO_SECRETKEY}@us-east-1/loki
+              endpoint: http://minio.lab.tdeutsch.ch:9091
+              s3forcepathstyle: true
+              insecure: true
+            boltdb_shipper:
+              active_index_directory: /data/index
+              cache_location: /data/boltdb-cache
+              shared_store: s3
+
+          ring:
+            kvstore:
+              store: memberlist
+        ruler:
+          enable_api: true
+          enable_alertmanager_v2: true
+          alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+          storage:
+            type: local
+            local:
+              directory: /rules
+          rule_path: /tmp/scratch
+          ring:
+            kvstore:
+              store: memberlist
+        distributor:
+          ring:
+            kvstore:
+              store: memberlist
+        compactor:
+          working_directory: /var/loki/boltdb-shipper-compactor
+          shared_store: s3
+          compaction_interval: 10m
+          retention_enabled: true
+          retention_delete_delay: 2h
+          retention_delete_worker_count: 150
+        ingester:
+          max_chunk_age: 1h
+          lifecycler:
+            ring:
+              kvstore:
+                store: memberlist
+        analytics:
+          reporting_enabled: false
+    gateway:
+      enabled: true
+      replicas: 2
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - host: loki.${SECRET_DOMAIN_INTERNAL}
+            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            paths:
+              - "/"
+
+    write:
+      replicas: 3
+      persistence:
+        size: 10Gi
+    read:
+      replicas: 3
+      extraVolumeMounts:
+        - name: loki-rules
+          mountPath: /rules/fake
+        - name: loki-rules-tmp
+          mountPath: /tmp/scratch
+        - name: loki-tmp
+          mountPath: /tmp/loki-tmp
+      extraVolumes:
+        - name: loki-rules
+          configMap:
+            name: loki-alerting-rules
+        - name: loki-rules-tmp
+          emptyDir: {}
+        - name: loki-tmp
+          emptyDir: {}
+      persistence:
+        size: 10Gi
+    monitoring:
+      serviceMonitor:
+        enabled: false
+        metricsInstance:
+          enabled: false
+      selfMonitoring:
+        enabled: false
+        grafanaAgent:
+          installOperator: false
+        lokiCanary:
+          enabled: false
+    test:
+      enabled: false
+    promtail:
+      serviceMonitor:
+        enabled: true
+      extraScrapeConfigs:
+        - job_name: syslog
+          syslog:
+            listen_address: 0.0.0.0:1514
+            idle_timeout: 60s
+            label_structured_data: true
+            labels:
+              job: "syslog"
+          relabel_configs:
+            - source_labels: ['__syslog_connection_ip_address']
+              target_label: 'ip_address'
+            - source_labels: ['__syslog_message_severity']
+              target_label: 'severity'
+            - source_labels: ['__syslog_message_facility']
+              target_label: 'facility'
+            - source_labels: ['__syslog_message_hostname']
+              target_label: 'host'
+      syslogService:
+        enabled: true
+        type: LoadBalancer
+        port: 1514
+        loadBalancerIP: ${METALLB_SYSLOG_ADDR}
