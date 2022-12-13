@@ -42,30 +42,12 @@
     // regexManager to read and process cert-manager CRD's
     {
       "fileMatch": [
-        "cluster/crds/cert-manager/.+\\.ya?ml$"
+        "cluster/flux/config/cluster-prereqs/.+\\.ya?ml$"
       ],
       "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    // regexManager to read and process Traefik CRD's
-    {
-      "fileMatch": [
-        "cluster/crds/traefik/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    // regexManager to read and process k8up CRD's
-    {
-      "fileMatch": [
-          "cluster/crds\\/k8up\\/kustomization\\.ya?ml$"
-      ],
-      "matchStrings": [
-          "datasource=(?<datasource>.*) depName=(?<depName>.*)\\s.*\\/(?<currentValue>.*?)\\/"
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/",
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n",
+        "datasource=(?<datasource>.*) depName=(?<depName>.*)\\s.*\\/(?<currentValue>.*?)\\/"
       ]
     },
     // Generic Flux Regex Manager
