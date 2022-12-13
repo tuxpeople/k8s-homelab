@@ -1,6 +1,9 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+commonLabels:
+  grafana_dashboard: "1"
+commonAnnotations:
+  k8s-sidecar-target-directory: "/tmp/dashboards/Kubernetes"
 resources:
-  - flux
-  - kubernetes
+  - https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/grafana-dashboardDefinitions.yaml
