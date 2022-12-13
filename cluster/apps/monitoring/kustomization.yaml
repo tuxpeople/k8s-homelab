@@ -5,3 +5,4 @@ namespace: storage
 resources:
   - kube-prometheus-stack
   - grafana
+  - loki
