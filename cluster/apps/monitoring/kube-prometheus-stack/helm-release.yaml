@@ -331,5 +331,8 @@ spec:
           - secretName: prometheus-tls
             hosts:
               - prometheus.${SECRET_DOMAIN_ME}
+            paths:
+              - path: /
+                pathType: Prefix
         hosts:
           - prometheus.${SECRET_DOMAIN_ME}
