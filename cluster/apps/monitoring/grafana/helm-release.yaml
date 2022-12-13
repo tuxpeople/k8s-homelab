@@ -29,7 +29,7 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    replicas: 2
+    replicas: 1
     rbac:
       pspEnabled: false
     testFramework:
