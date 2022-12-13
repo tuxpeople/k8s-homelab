@@ -1,17 +1,32 @@
+
 {
-  "enabled": true,
+  extends: [
+    ":enableRenovate",
+    "config:base",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":enablePreCommit",
+    ":automergeDigest",
+    ":automergeBranch",
+    ":separatePatchReleases",
+    "docker:enableMajor",
+    "github>tuxpeople/k8s-homelab//.github/renovate/autoMerge.json5",
+    "github>tuxpeople/k8s-homelab//.github/renovate/labels.json5",
+    "github>tuxpeople/k8s-homelab//.github/renovate/disabledDatasources.json5",
+    "github>tuxpeople/k8s-homelab//.github/renovate/commitMessage.json5",
+    "github>tuxpeople/k8s-homelab//.github/renovate/groups.json5",
+    "github>tuxpeople/k8s-homelab//.github/renovate/semanticCommits.json5",
+    "helpers:pinGitHubActionDigests"
+  ],
   "timezone": "Europe/Zurich",
-  "semanticCommits": "enabled",
-  "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "commitBody": "Signed-off-by: Thomas Deutsch <tuxpeople@users.noreply.github.com>",
   "assignees": ["@tuxpeople"],
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "schedule": ["every weekend"],
-  "pre-commit": {
-    "enabled": true
-  },
+
   "flux": {
     "fileMatch": ["cluster/.+\\.ya?ml$"]
   },
@@ -25,7 +40,6 @@
     ]
   },
   "regexManagers": [
-    // Read and process GitHub Releases
     {
       "fileMatch": [
         "cluster/.+\\.ya?ml$",
@@ -34,33 +48,16 @@
       "matchStrings": [
         "datasource=(?<datasource>.*?)( versioning=(?<versioning>.*?))?\n *url: https:\/\/github\\.com\/(?<depName>.*?)\\.git\n *ref:\n *tag: (?<currentValue>.*)\n",
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?_version: \"(?<currentValue>.*)\"\n",
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?_VERSION=\"(?<currentValue>.*)\"\n"
-      ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    },
-    // regexManager to read and process cert-manager CRD's
-    {
-      "fileMatch": [
-        "cluster/flux/config/cluster-prereqs/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?_VERSION=\"(?<currentValue>.*)\"\n",
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n",
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/",
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n",
         "datasource=(?<datasource>.*) depName=(?<depName>.*)\\s.*\\/(?<currentValue>.*?)\\/",
-        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n"
-      ]
-    },
-    // Generic Flux Regex Manager
-    {
-      "fileMatch": [
-        "clusters/.+\\.ya?ml$"
+        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n",
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( registryUrl=(?<registryUrl>.*?))?( versioning=(?<versioning>.*=?))?\n *tag: (?<currentValue>.*=?)"
       ],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( registryUrl=(?<registryUrl>.*?))?( versioning=(?<versioning>.*=?))?\n *tag: (?<currentValue>.*=?)"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
-      "registryUrlTemplate": "{{#if registryUrl}}{{{registryUrl}}}{{else}}{{/if}}"
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ],
   "packageRules": [
@@ -85,46 +82,6 @@
       "matchUpdateTypes": ["major", "minor", "patch"]
     },
     // add labels according to package and update types
-    {
-      "matchUpdateTypes": ["major"],
-      "labels": ["type/major"]
-    },
-    {
-      "matchUpdateTypes": ["minor"],
-      "labels": ["type/minor"]
-    },
-    {
-      "matchUpdateTypes": ["patch"],
-      "labels": ["type/patch"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "addLabels": ["component/container"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "addLabels": ["component/helm"]
-    },
-    {
-      "matchDatasources": ["galaxy", "galaxy-collection"],
-      "addLabels": ["component/ansible"]
-    },
-    {
-      "matchDatasources": ["terraform-provider"],
-      "addLabels": ["component/terraform"]
-    },
-    {
-      "matchDatasources": ["github-releases", "github-tags"],
-      "addLabels": ["component/github-release"]
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "addLabels": ["component/github-action"]
-    },
-    {
-      "matchDatasources": ["pypi"],
-      "addLabels": ["component/pip"]
-    },
     {
       "matchDatasources": ["github-releases", "docker"],
       "matchPackagePatterns": [
