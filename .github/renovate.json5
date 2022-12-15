@@ -76,6 +76,17 @@
       ],
       "datasourceTemplate": "helm"
     },
+    // regexManager to read and process more crds
+    {
+      "fileMatch": [
+        "cluster/.+\\.ya?ml$",
+        "provision/ansible/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: (?[a-zA-Z-]+<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
     // regexManager to read and process Traefik CRD's
     {
       "fileMatch": [
