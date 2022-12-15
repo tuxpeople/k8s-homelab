@@ -112,7 +112,7 @@ spec:
           reporting_enabled: false
     gateway:
       enabled: true
-      replicas: 2
+      replicas: 1
       ingress:
         enabled: true
         annotations:
@@ -123,7 +123,6 @@ spec:
             secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
             paths:
               - "/"
-
     write:
       replicas: 3
       persistence:
