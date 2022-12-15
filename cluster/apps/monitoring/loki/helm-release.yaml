@@ -121,11 +121,11 @@ spec:
             hosts:
               - loki.${SECRET_DOMAIN_INTERNAL}
     write:
-      replicas: 3
+      replicas: 1
       persistence:
         size: 10Gi
     read:
-      replicas: 3
+      replicas: 1
       extraVolumeMounts:
         - name: loki-rules
           mountPath: /rules/fake
