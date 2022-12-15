@@ -235,6 +235,12 @@ spec:
         pathType: Prefix
         annotations:
           hajimari.io/enable: "false"
+        hosts:
+          - "thanos-sidecar.${SECRET_DOMAIN_INTERNAL}"
+        tls:
+          - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            hosts:
+              - loki.${SECRET_DOMAIN_INTERNAL}
       prometheusSpec:
         replicas: 2
         replicaExternalLabelName: __replica__
