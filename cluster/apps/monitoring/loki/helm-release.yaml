@@ -111,6 +111,7 @@ spec:
       enabled: true
       replicas: 1
       ingress:
+        pathType: Prefix
         enabled: true
         annotations:
           kubernetes.io/ingress.class: traefik
