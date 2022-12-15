@@ -125,6 +125,7 @@ spec:
           alertmanagerConfig: homelab
       ingress:
         enabled: true
+        pathType: Prefix
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
@@ -231,6 +232,7 @@ spec:
         enabled: true
       thanosIngress:
         enabled: true
+        pathType: Prefix
         annotations:
           hajimari.io/enable: "false"
       prometheusSpec:
@@ -318,6 +320,7 @@ spec:
               #     alias: lab4
       ingress:
         enabled: true
+        pathType: Prefix
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/appName: "Prometheus"
