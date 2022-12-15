@@ -111,7 +111,6 @@ spec:
       enabled: true
       replicas: 1
       ingress:
-        pathType: Prefix
         enabled: true
         annotations:
           kubernetes.io/ingress.class: traefik
@@ -120,6 +119,7 @@ spec:
           - host: loki.${SECRET_DOMAIN_INTERNAL}
             paths:
               - path: /
+                pathType: Prefix
         tls:
           - secretName: ${SECRET_DOMAIN_INTERNAL/./-}-tls
             hosts:
