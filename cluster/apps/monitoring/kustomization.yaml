@@ -6,3 +6,8 @@ resources:
   - kube-prometheus-stack
   - grafana
   - loki
+  - alertmanager-discord
+  - mystrom-exporter
+  - prometheus-uptimerobot-exporter
+  - speedtest-exporter
+  - unifi-poller
