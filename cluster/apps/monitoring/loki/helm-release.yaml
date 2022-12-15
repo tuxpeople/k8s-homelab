@@ -69,10 +69,6 @@ spec:
               endpoint: http://minio.lab.tdeutsch.ch:9091
               s3forcepathstyle: true
               insecure: true
-            boltdb_shipper:
-              active_index_directory: /data/index
-              cache_location: /data/boltdb-cache
-              shared_store: s3
           ring:
             kvstore:
               store: memberlist
