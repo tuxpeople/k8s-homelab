@@ -9,6 +9,5 @@ resources:
   - alertmanager-discord
   - mystrom-exporter
   - prometheus-uptimerobot-exporter
-  - promtail
   - speedtest-exporter
   - unifi-poller
