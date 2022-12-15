@@ -291,13 +291,20 @@ spec:
             scrape_timeout: 30s
             static_configs:
               - targets: ['speedtest-exporter:9798']
-          - job_name: 'mystrom-exporter'
-            scrape_interval: 1m
-            scrape_timeout: 30s
+          - job_name: mystrom-exporter
+            scrape_interval: 30s
+            metrics_path: /device
+            honor_labels: true
             static_configs:
-              - targets: ['mystrom-3dprinter:9452']
-                labels:
-                  alias: "3D Drucker"
+              - targets:
+                  - '10.20.30.33'
+            labels:
+              alias: "3D Drucker"
+            relabel_configs:
+              - source_labels: [__address__]
+                target_label: __param_target
+              - target_label: __address__
+                replacement: mystrom-3dprinter:9452
           - job_name: 'wireguard-exporter'
             scrape_interval: 1m
             scrape_timeout: 30s
