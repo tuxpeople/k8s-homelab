@@ -105,7 +105,7 @@ spec:
           reporting_enabled: false
     gateway:
       enabled: true
-      replicas: 1
+      replicas: 2
       ingress:
         enabled: true
         annotations:
@@ -121,11 +121,11 @@ spec:
             hosts:
               - loki.${SECRET_DOMAIN_INTERNAL}
     write:
-      replicas: 1
+      replicas: 2
       persistence:
         size: 10Gi
     read:
-      replicas: 1
+      replicas: 2
       extraVolumeMounts:
         - name: loki-rules
           mountPath: /rules/fake
