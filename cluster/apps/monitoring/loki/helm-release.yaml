@@ -29,8 +29,6 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    grafana:
-      enabled: false
     loki:
       replicas: 1
       isDefault: false
@@ -75,7 +73,6 @@ spec:
               active_index_directory: /data/index
               cache_location: /data/boltdb-cache
               shared_store: s3
-
           ring:
             kvstore:
               store: memberlist
@@ -120,9 +117,12 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
         hosts:
           - host: loki.${SECRET_DOMAIN_INTERNAL}
-            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
             paths:
-              - "/"
+              - path: /
+        tls:
+          - secretName: ${SECRET_DOMAIN_INTERNAL/./-}-tls
+            hosts:
+              - loki.${SECRET_DOMAIN_INTERNAL}
     write:
       replicas: 3
       persistence:
