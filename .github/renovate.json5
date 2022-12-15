@@ -41,62 +41,21 @@
     ]
   },
   "regexManagers": [
+    // Read and process GitHub Releases
     {
-      "description": "Process various dependencies",
       "fileMatch": [
         "cluster/.+\\.ya?ml$",
-        "hack/.+\\.sh$"
+        "provision/ansible/.+\\.ya?ml$"
       ],
       "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
-      ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    },
-    // regexManager to read and process Traefik CRD's
-    {
-      "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
-      "fileMatch": [
-        "cluster/crds/traefik/.+\\.yaml$"
-      ],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
+        // helm releases
+        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n",
+        // kube-prometheus-stack crd
+        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n",
+        // cert-manager crd
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
       ],
       "datasourceTemplate": "helm"
-    },
-    {
-      "description": "Process CRD dependencies",
-      "fileMatch": [
-        "cluster/crds/cert-manager/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        // GitRepository and Flux Kustomization where 'Git tag' matches 'Helm' version
-        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
-        // Kustomization where 'GitHub release artifact' matches 'Docker image' version
-        "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
-      ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
-    },
-    {
-      "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
-      "fileMatch": [
-        "cluster/crds/external-snapshotter/.+\\.ya?ml$",
-        "cluster/crds/kube-prometheus-stack/.+\\.ya?ml$",
-        "cluster/crds/kyverno/.+\\.ya?ml$",
-        "cluster/crds/rook-ceph/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "description": "Process Kustomization CRD dependencies - Image and Github Release are the same version",
-      "fileMatch": ["cluster/crds/.+\\.ya?ml$"],
-      "matchStrings": [
-        "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
-      ],
-      "datasourceTemplate": "docker"
     }
   ],
   "packageRules": [
