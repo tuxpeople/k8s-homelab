@@ -65,6 +65,17 @@
       ],
       "datasourceTemplate": "helm"
     },
+    // regexManager to read and process kube-prometheus-stack
+    {
+      "fileMatch": [
+        "cluster/.+\\.ya?ml$",
+        "provision/ansible/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: kube-prometheus-stack-(?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
     // regexManager to read and process Traefik CRD's
     {
       "fileMatch": [
