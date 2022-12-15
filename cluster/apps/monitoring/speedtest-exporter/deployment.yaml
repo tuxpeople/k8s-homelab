@@ -14,7 +14,7 @@ spec:
         app: speedtest-exporter
     spec:
       containers:
-        - image: ghcr.io/danopstech/speedtest_exporter:latest
+        - image: ghcr.io/danopstech/speedtest_exporter:latest@sha256:99efbe55412b0a328d5827fab8dbcc2286093d4ad0d369e4e9b7e3c4153793be
           imagePullPolicy: Always
           name: main
           ports:

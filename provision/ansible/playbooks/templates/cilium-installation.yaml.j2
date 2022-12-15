@@ -970,7 +970,7 @@ spec:
             mkdir -p "/tmp/cilium-bootstrap.d"
             date > "/tmp/cilium-bootstrap.d/cilium-bootstrap-time"
             echo "Node initialization complete"
-        image: quay.io/cilium/startup-script:d69851597ea019af980891a4628fb36b7880ec26
+        image: quay.io/cilium/startup-script:d69851597ea019af980891a4628fb36b7880ec26@sha256:0862c6a2f7bcb1718381af37474a7e7ca4c878360107bdf60305a48e25befc5b
         imagePullPolicy: IfNotPresent
         lifecycle: null
         name: node-init

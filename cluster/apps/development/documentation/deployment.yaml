@@ -32,7 +32,7 @@ spec:
             defaultMode: 0755
       containers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync/git-sync:v3.6.2
+          image: k8s.gcr.io/git-sync/git-sync:v3.6.2@sha256:ea3c17fe8ca52bbb479cb2dbb816dd95c3200569ad458ccaa2d0ad375a18349f
           env:
             - name: "TZ"
               value: "Europe/Zurich"
@@ -52,7 +52,7 @@ spec:
           securityContext:
             runAsUser: 65533
         - name: mkdocs
-          image: registry.eighty-three.me/tuxpeople/mkdocs:v0.2.0
+          image: registry.eighty-three.me/tuxpeople/mkdocs:v0.2.0@sha256:cfb756a12352287c03bfb292b19c2f54ae8bcd70c542029e5163e424d32502b1
           env:
             - name: "TZ"
               value: "Europe/Zurich"
@@ -70,7 +70,7 @@ spec:
           env:
             - name: "TZ"
               value: "Europe/Zurich"
-          image: busybox:1.35.0
+          image: busybox:1.35.0@sha256:224c1fd5e9242c2d7708ba787ba2316738620cbe57963f923791356fff75439c
           command: ["/bin/sh"]
           args: ["-c", "httpd -f -p 8000 -h /docs/"]
           volumeMounts:

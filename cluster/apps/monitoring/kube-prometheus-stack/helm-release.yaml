@@ -247,7 +247,7 @@ spec:
         externalLabels:
           cluster: homelab
         thanos:
-          image: quay.io/thanos/thanos:v0.29.0
+          image: quay.io/thanos/thanos:v0.29.0@sha256:4766a6caef0d834280fed2d8d059e922bc8781e054ca11f62de058222669d9dd
           # renovate: datasource=docker depName=quay.io/thanos/thanos
           version: "v0.29.0"
         podAntiAffinity: hard

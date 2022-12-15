@@ -14,7 +14,7 @@ spec:
         app: alertmanager-discord
     spec:
       containers:
-        - image: benjojo/alertmanager-discord
+        - image: benjojo/alertmanager-discord@sha256:7d27cd8494b269fe592cf6a9d7f6bdf14ac628bba34c381dc43cf533eaa95158
           imagePullPolicy: Always
           name: main
           ports:
