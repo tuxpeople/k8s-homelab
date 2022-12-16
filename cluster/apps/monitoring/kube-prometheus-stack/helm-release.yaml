@@ -346,7 +346,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
           traefik.ingress.kubernetes.io/router.middlewares: forwardauth-authelia@kubernetescrd
         tls:
-          - secretName: prometheus-tls
+          - secretName: ${SECRET_DOMAIN_ME/./-}-tls
             hosts:
               - prometheus.${SECRET_DOMAIN_ME}
         hosts:
