@@ -67,7 +67,7 @@ spec:
   tls:
     - hosts:
         - phpldapadmin.${SECRET_DOMAIN_INTERNAL}
-      secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+      secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
   rules:
     - host: phpldapadmin.${SECRET_DOMAIN_INTERNAL}
       http:

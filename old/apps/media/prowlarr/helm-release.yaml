@@ -48,7 +48,7 @@ spec:
         enabled: true
         hosts:
           - host: prowlarr.${SECRET_DOMAIN_INTERNAL}
-            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
             paths:
               - path: /
                 pathType: Prefix

@@ -10,7 +10,7 @@ metadata:
     hajimari.io/icon: "chart-bar"
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
       hosts:
         - tautulli.${SECRET_DOMAIN_INTERNAL}
   rules:

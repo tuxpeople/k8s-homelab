@@ -11,7 +11,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
       hosts:
         - tekton.${SECRET_DOMAIN_INTERNAL}
   rules:

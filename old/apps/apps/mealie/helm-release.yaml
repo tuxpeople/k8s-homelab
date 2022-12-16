@@ -51,7 +51,7 @@ spec:
           hajimari.io/icon: "chef-hat"
         hosts:
           - host: "mealie.${SECRET_DOMAIN_INTERNAL}"
-            secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+            secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
             paths:
               - path: /
                 pathType: Prefix

@@ -238,7 +238,7 @@ spec:
         hosts:
           - "thanos-sidecar.${SECRET_DOMAIN_INTERNAL}"
         tls:
-          - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+          - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
             hosts:
               - loki.${SECRET_DOMAIN_INTERNAL}
       prometheusSpec:

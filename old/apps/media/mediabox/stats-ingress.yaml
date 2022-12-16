@@ -10,7 +10,7 @@ metadata:
     hajimari.io/icon: "plex"
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
       hosts:
         - stats.${SECRET_DOMAIN_INTERNAL}
   rules:

@@ -15,7 +15,7 @@ spec:
   tls:
     - hosts:
         - smoke.${SECRET_DOMAIN_INTERNAL}
-      secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+      secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
   rules:
     - host: smoke.${SECRET_DOMAIN_INTERNAL}
       http:

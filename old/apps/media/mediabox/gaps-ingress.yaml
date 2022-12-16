@@ -10,7 +10,7 @@ metadata:
     hajimari.io/icon: "filmstrip"
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
       hosts:
         - gaps.${SECRET_DOMAIN_INTERNAL}
   rules:

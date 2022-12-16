@@ -2,9 +2,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN_INTERNAL/./-}"
+  name: "${SECRET_DOMAIN_INTERNAL//./-}"
 spec:
-  secretName: "${SECRET_DOMAIN_INTERNAL/./-}-tls"
+  secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
   secretTemplate:
     annotations:
       kubed.appscode.com/sync: ""
