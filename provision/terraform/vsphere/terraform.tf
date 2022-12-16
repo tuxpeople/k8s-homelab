@@ -38,4 +38,5 @@ module "k3s-node" {
   datastore       = "datastore11_ssd"
   #template        = "jammy-server-cloudimg-amd64"
   ssh_private_keyfile = ""
+  mac_address = ["00:50:56:8d:c8:e2", "00:50:56:8d:cb:63", "00:50:56:8d:e7:1e"]
 }

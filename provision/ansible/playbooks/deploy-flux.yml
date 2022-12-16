@@ -49,3 +49,17 @@
       shell: "kubectl --kubeconfig={{ local_kubeconfig }} apply --kustomize={{ repo_abs_path.stdout }}/cluster/bootstrap"
       delegate_to: localhost
       become: false
+
+    - name: Check for Flux
+      shell: "kubectl --kubeconfig={{ local_kubeconfig }} get crd kustomizations.kustomize.toolkit.fluxcd.io"
+      delegate_to: localhost
+      become: false
+      retries: 6
+      delay: 10
+      register: result
+      until: result.rc == 0
+
+    - name: Bootstrap cluster
+      shell: "kubectl --kubeconfig={{ local_kubeconfig }} apply --kustomize={{ repo_abs_path.stdout }}/cluster/flux/config"
+      delegate_to: localhost
+      become: false
