@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - cloudflare-only.yaml
   - internal-only.yaml
+  - authelia.yaml
