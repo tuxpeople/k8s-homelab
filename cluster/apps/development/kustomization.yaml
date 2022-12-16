@@ -5,3 +5,4 @@ namespace: development
 resources:
   - code-server
   - documentation
+  - debugcontainer

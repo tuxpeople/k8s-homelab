@@ -59,7 +59,7 @@ spec:
       main:
         enabled: true
         hosts:
-          - host: code.${SECRET_DOMAIN_ME}
+          - host: code.${SECRET_DOMAIN_INTERNAL}
             paths:
               - path: /
                 pathType: Prefix
@@ -73,3 +73,5 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /config
+
+# docker run --entrypoint /bin/sleep docker.io/fluxcd/flux-cli:v0.37.0 inf

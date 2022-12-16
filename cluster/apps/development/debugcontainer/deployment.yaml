@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  name: debugcontainer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: debugcontainer
+  template:
+    metadata:
+      labels:
+        app: debugcontainer
+    spec:
+      securityContext:
+        fsGroup: 65533
+      volumes:
+        - name: git-secret
+          secret:
+            defaultMode: 288
+            secretName: git-secret
+      containers:
+        - name: debugcontainer
+          image: ghcr.io/tuxpeople/debugcontainer:devel
+          env:
+            - name: "TZ"
+              value: "Europe/Zurich"
+          volumeMounts:
+            - name: git-secret
+              mountPath: /etc/git-secret
+          securityContext:
+            runAsUser: 65533

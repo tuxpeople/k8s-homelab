@@ -15,11 +15,11 @@ metadata:
     hajimari.io/icon: "file-document-edit"
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
       hosts:
-        - doku.${SECRET_DOMAIN_ME}
+        - doku.${SECRET_DOMAIN_INTERNAL}
   rules:
-    - host: doku.${SECRET_DOMAIN_ME}
+    - host: doku.${SECRET_DOMAIN_INTERNAL}
       http:
         paths:
           - path: /
