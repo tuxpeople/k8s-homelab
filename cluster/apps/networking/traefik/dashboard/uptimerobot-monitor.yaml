@@ -5,7 +5,7 @@ metadata:
   name: traefik
 spec:
   friendlyName: "K8S Traefik Dashboard"
-  url: "https://traefik.${SECRET_DOMAIN_ME}"
+  url: "https://traefik.${SECRET_DOMAIN_INTERNAL}"
   type: HTTPS
   httpMethod: GET
   interval: 300

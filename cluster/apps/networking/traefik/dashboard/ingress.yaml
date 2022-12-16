@@ -15,10 +15,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "traefik.${SECRET_DOMAIN_ME}"
-      secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+        - "traefik.${SECRET_DOMAIN_INTERNAL}"
+      secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
   rules:
-    - host: "traefik.${SECRET_DOMAIN_ME}"
+    - host: "traefik.${SECRET_DOMAIN_INTERNAL}"
       http:
         paths:
           - path: /
