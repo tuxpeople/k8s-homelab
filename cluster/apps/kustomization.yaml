@@ -6,3 +6,4 @@ resources:
   - storage
   - development
   - monitoring
+  - kube-system
