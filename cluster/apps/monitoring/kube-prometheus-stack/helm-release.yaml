@@ -137,11 +137,11 @@ spec:
           hajimari.io/appName: "Alert Manager"
           hajimari.io/icon: "mdi:alert-decagram-outline"
         tls:
-          - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
             hosts:
-              - alertmanager.${SECRET_DOMAIN_INTERNAL}
+              - alertmanager.${SECRET_DOMAIN_ME}
         hosts:
-          - alertmanager.${SECRET_DOMAIN_INTERNAL}
+          - alertmanager.${SECRET_DOMAIN_ME}
     kube-state-metrics:
       metricLabelsAllowlist:
         - "persistentvolumeclaims=[*]"
@@ -346,8 +346,8 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
         tls:
-          - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
+          - secretName: ${SECRET_DOMAIN_ME/./-}-tls
             hosts:
-              - prometheus.${SECRET_DOMAIN_INTERNAL}
+              - prometheus.${SECRET_DOMAIN_ME}
         hosts:
-          - prometheus.${SECRET_DOMAIN_INTERNAL}
+          - prometheus.${SECRET_DOMAIN_ME}
