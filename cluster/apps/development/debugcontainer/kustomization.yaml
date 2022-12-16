@@ -4,6 +4,3 @@ kind: Kustomization
 resources:
   - git-secret.sops.yaml
   - deployment.yaml
-  - ingress.yaml
-  - service.yaml
-  - configmap.yaml
