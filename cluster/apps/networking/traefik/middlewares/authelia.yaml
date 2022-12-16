@@ -5,7 +5,7 @@ metadata:
   name: forwardauth-authelia
 spec:
   forwardAuth:
-    address: https://auth.${SECRET_DOMAIN_ME}
+    address: https://auth.${SECRET_DOMAIN_ME}/api/verify?rd=https%3A%2F%2Fauth.${SECRET_DOMAIN_ME}%2F
     trustForwardHeader: true
     authResponseHeaders:
       - Remote-User
