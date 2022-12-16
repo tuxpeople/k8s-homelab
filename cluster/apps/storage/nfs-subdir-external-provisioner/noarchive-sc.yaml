@@ -1,0 +1,10 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-subdir-external-provisioner-noarchive
+parameters:
+  archiveOnDelete: "false"
+provisioner: cluster.local/nfs-subdir-external-provisioner
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
