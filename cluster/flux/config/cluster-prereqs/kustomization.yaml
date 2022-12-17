@@ -10,4 +10,4 @@ resources:
   - kyverno.yaml
   - metallb.yaml
   - traefik.yaml
-  - system-upgrade-controller.yaml
+  - system-upgrade-controller
