@@ -26,3 +26,10 @@ metadata:
   name: development
   labels:
     kustomize.toolkit.fluxcd.io/prune: disabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system-upgrade
+  labels:
+    kustomize.toolkit.fluxcd.io/prune: disabled
