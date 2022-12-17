@@ -103,8 +103,6 @@ spec:
                 store: memberlist
         analytics:
           reporting_enabled: false
-    canary:
-      enabled: false
     gateway:
       enabled: true
       replicas: 2
@@ -153,8 +151,8 @@ spec:
         enabled: false
         grafanaAgent:
           installOperator: false
-        lokiCanary:
-          enabled: false
+      lokiCanary:
+        enabled: false
     test:
       enabled: false
     promtail:
