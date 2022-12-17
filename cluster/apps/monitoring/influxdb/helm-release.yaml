@@ -1,0 +1,42 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: influxdb
+spec:
+  chart:
+    spec:
+      chart: influxdb2
+      version: 2.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: influxdata-charts
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  test:
+    enable: false # Enable helm test
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    persistence:
+      enabled: true
+      useExisting: true
+      name: influx-config-v1
+    adminUser:
+      organization: "tuxpeople"
+      bucket: "home"
+      user: "influx"
+      retention_policy: "0s"
+      ## Leave empty to generate a random password and token.
+      ## Or fill any of these values to use fixed values.
+      password: "${SECRET_INFLUX_PASSWORD}"

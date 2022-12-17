@@ -11,3 +11,4 @@ resources:
   - prometheus-uptimerobot-exporter
   - speedtest-exporter
   - unifi-poller
+  - influxdb
