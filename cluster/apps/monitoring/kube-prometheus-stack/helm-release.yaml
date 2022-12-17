@@ -241,7 +241,7 @@ spec:
         tls:
           - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
             hosts:
-              - loki.${SECRET_DOMAIN_INTERNAL}
+              - thanos-sidecar.${SECRET_DOMAIN_INTERNAL}
       prometheusSpec:
         replicas: 2
         replicaExternalLabelName: __replica__
