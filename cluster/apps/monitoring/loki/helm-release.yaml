@@ -103,6 +103,8 @@ spec:
                 store: memberlist
         analytics:
           reporting_enabled: false
+    canary:
+      enabled: false
     gateway:
       enabled: true
       replicas: 2
