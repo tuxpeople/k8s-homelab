@@ -6,3 +6,4 @@ resources:
   - kube-vip
   - kubed
   - metrics-server
+  - descheduler

@@ -204,11 +204,6 @@ spec:
           gnetId: 13516
           datasource: Prometheus
           revision: 3
-        # Ref: https://grafana.com/grafana/dashboards/17514-ssh-logs/?tab=revisions
-        linux-ssh-logs:
-          gnetId: 17514
-          datasource: Loki
-          revision: 1
       networking:
         # Ref: https://grafana.com/grafana/dashboards/4475/revisions
         traefik:
