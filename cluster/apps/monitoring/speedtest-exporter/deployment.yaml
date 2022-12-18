@@ -25,8 +25,8 @@ spec:
               cpu: 10m
               memory: 10Mi
             limits:
-              cpu: 20m
-              memory: 40Mi
+              cpu: 100m
+              memory: 400Mi
           env:
             - name: DISCORD_WEBHOOK
               valueFrom:
