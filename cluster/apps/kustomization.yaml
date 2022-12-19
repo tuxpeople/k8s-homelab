@@ -8,3 +8,4 @@ resources:
   - monitoring
   - kube-system
   - system-upgrade-controller
+  - flux-system
