@@ -7,4 +7,4 @@ resources:
   - development
   - monitoring
   - kube-system
-  - system-upgrade
+  - system-upgrade-controller
