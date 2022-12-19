@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-system-upgrade-controller-crd-app
+  name: cluster-apps-system-upgrade-controller-crds-app
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./cluster/apps/system-upgrade-controller-crd/app
+  path: ./cluster/apps/system-upgrade-controller-crds/app
   prune: true
   sourceRef:
     kind: GitRepository
