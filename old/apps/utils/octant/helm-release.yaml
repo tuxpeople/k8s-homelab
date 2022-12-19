@@ -13,9 +13,9 @@ spec:
         kind: HelmRepository
         name: octant-dashboard
         namespace: flux-system
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -35,7 +35,7 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
       hosts:
         - host: octant.${SECRET_DOMAIN_INTERNAL}
-          secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+          secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
           paths:
             - path: /
               pathType: ImplementationSpecific
@@ -43,8 +43,8 @@ spec:
     clusterRole:
       additionalRules:
         - apiGroups:
-            - "*"
-          resources: ["*"]
+            - '*'
+          resources: ['*']
           verbs:
             - get
             - list

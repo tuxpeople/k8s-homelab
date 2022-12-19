@@ -14,9 +14,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -37,7 +37,7 @@ spec:
       config:
         enabled: true
         mountPath: /config
-        existingClaim: "readarr-config"
+        existingClaim: readarr-config
       media:
         enabled: true
         existingClaim: nfs-media
@@ -51,12 +51,12 @@ spec:
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "book-music"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: book-music
         enabled: true
         hosts:
           - host: readarr.${SECRET_DOMAIN_INTERNAL}
-            secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+            secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
             paths:
               - path: /
                 pathType: Prefix

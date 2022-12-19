@@ -15,9 +15,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,7 +31,7 @@ spec:
     recreate: true
   values:
     env:
-      TZ: "Europe/Zurich"
+      TZ: Europe/Zurich
     strategy:
       type: Recreate
     ingress:
@@ -40,17 +40,17 @@ spec:
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "notebook"
-          hajimari.io/appName: "hasteserver"
+          external-dns/is-public: 'true'
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_TARGET_SKY}
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: notebook
+          hajimari.io/appName: hasteserver
         tls:
-          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+          - secretName: ${SECRET_DOMAIN_ME/./-}-tls
             hosts:
               - paste.${SECRET_DOMAIN_ME}
         hosts:
-          - host: "paste.${SECRET_DOMAIN_ME}"
+          - host: paste.${SECRET_DOMAIN_ME}
             paths:
               - path: /
                 pathType: Prefix

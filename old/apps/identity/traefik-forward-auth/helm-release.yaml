@@ -19,9 +19,9 @@ spec:
       namespace: identity
     - name: traefik
       namespace: networking
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -36,11 +36,11 @@ spec:
   values:
     env:
       DEFAULT_PROVIDER: oidc
-      PROVIDERS_OIDC_ISSUER_URL: "https://sso.${SECRET_DOMAIN_ME}"
-      PROVIDERS_OIDC_CLIENT_ID: "${SECRET_OIDC_CLIENT_ID}"
+      PROVIDERS_OIDC_ISSUER_URL: https://sso.${SECRET_DOMAIN_ME}
+      PROVIDERS_OIDC_CLIENT_ID: ${SECRET_OIDC_CLIENT_ID}
       LOG_LEVEL: debug
       TZ: Europe/Zurich
-      AUTH_HOST: "auth.${SECRET_DOMAIN_ME}"
+      AUTH_HOST: auth.${SECRET_DOMAIN_ME}
       COOKIE_DOMAIN: sso.${SECRET_DOMAIN_ME}
     middleware:
       enabled: true
@@ -51,13 +51,13 @@ spec:
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+          external-dns/is-public: 'true'
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_TARGET_SKY}
         hosts:
           - host: auth.${SECRET_DOMAIN_ME}
             paths:
               - /
         tls:
-          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+          - secretName: ${SECRET_DOMAIN_ME/./-}-tls
             hosts:
-              - "auth.${SECRET_DOMAIN_ME}"
+              - auth.${SECRET_DOMAIN_ME}

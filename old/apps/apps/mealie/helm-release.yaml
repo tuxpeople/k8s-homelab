@@ -15,9 +15,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,7 +31,7 @@ spec:
     recreate: true
   values:
     env:
-      TZ: "Europe/Zurich"
+      TZ: Europe/Zurich
       DB_ENGINE: sqlite
       DEFAULT_EMAIL: thomas@${SECRET_DOMAIN_ME}
       BASE_URL: https://mealie.${SECRET_DOMAIN_INTERNAL}
@@ -45,13 +45,13 @@ spec:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: "traefik"
+          kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "chef-hat"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: chef-hat
         hosts:
-          - host: "mealie.${SECRET_DOMAIN_INTERNAL}"
-            secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+          - host: mealie.${SECRET_DOMAIN_INTERNAL}
+            secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
             paths:
               - path: /
                 pathType: Prefix

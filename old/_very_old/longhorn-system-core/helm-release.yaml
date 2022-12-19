@@ -5,7 +5,7 @@ metadata:
   name: longhorn
   namespace: longhorn-system
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: longhorn
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 10m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,14 +31,14 @@ spec:
   values:
     ingress:
       enabled: true
-      ingressClassName: "traefik"
+      ingressClassName: traefik
       tls: true
-      tlsSecret: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
-      host: "longhorn.${SECRET_DOMAIN_INTERNAL}"
+      tlsSecret: ${SECRET_DOMAIN_INTERNAL//./-}-tls
+      host: longhorn.${SECRET_DOMAIN_INTERNAL}
       annotations:
-        hajimari.io/enable: "true"
+        hajimari.io/enable: 'true'
         hajimari.io/icon: harddisk
-        hajimari.io/appName: "Longhorn"
+        hajimari.io/appName: Longhorn
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
     persistence:
       defaultClassReplicaCount: 2
@@ -46,7 +46,8 @@ spec:
       reclaimPolicy: Delete
       recurringJobs:
         enable: true
-        jobList: '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":3,"labels": {"interval":"daily"}}]'
+        jobList: '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":3,"labels":
+          {"interval":"daily"}}]'
     defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
       backupTargetCredentialSecret: minio-secret
@@ -60,19 +61,19 @@ spec:
       upgradeChecker: true
     longhornManager:
       tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
+        - key: node-role.kubernetes.io/master
+          operator: Equal
+          value: 'true'
+          effect: NoSchedule
     longhornDriver:
       tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
+        - key: node-role.kubernetes.io/master
+          operator: Equal
+          value: 'true'
+          effect: NoSchedule
     longhornUI:
       tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
+        - key: node-role.kubernetes.io/master
+          operator: Equal
+          value: 'true'
+          effect: NoSchedule

@@ -5,7 +5,7 @@ metadata:
   name: linkerd-viz
   namespace: linkerd
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: linkerd-viz
@@ -33,13 +33,13 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
-    prometheusUrl: "http://prometheus-operated.monitoring.svc.cluster.local:9090"
-    grafanaUrl: "grafana.monitoring.svc.cluster.local:80"
-    jaegerUrl: "jaeger.linkerd.svc.cluster.local:16686"
+    prometheusUrl: http://prometheus-operated.monitoring.svc.cluster.local:9090
+    grafanaUrl: grafana.monitoring.svc.cluster.local:80
+    jaegerUrl: jaeger.linkerd.svc.cluster.local:16686
     grafana:
       enabled: false
     prometheus:
       enabled: false
     dashboard:
-      enforcedHostRegexp: "^(localhost|linkerd.+|web.+)$"
+      enforcedHostRegexp: ^(localhost|linkerd.+|web.+)$
     installNamespace: false

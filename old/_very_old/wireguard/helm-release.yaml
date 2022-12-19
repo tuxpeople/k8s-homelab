@@ -14,9 +14,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -37,7 +37,7 @@ spec:
     controller:
       strategy: RollingUpdate
       annotations:
-        reloader.stakater.com/auto: "true"
+        reloader.stakater.com/auto: 'true'
     service:
       main:
         enabled: true

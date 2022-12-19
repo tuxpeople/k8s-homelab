@@ -5,7 +5,7 @@ metadata:
   name: authelia
   namespace: identity
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: authelia
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -36,8 +36,8 @@ spec:
       className: traefik
       annotations:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        external-dns/is-public: "true"
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_ME_TARGET_SKY}"
+        external-dns/is-public: 'true'
+        external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_ME_TARGET_SKY}
       subdomain: login
       tls:
         enabled: true
@@ -56,8 +56,8 @@ spec:
 
     configMap:
       # theme: dark
-      default_redirection_url: "https://hajimari.${SECRET_DOMAIN_ME}"
-      default_2fa_method: "totp"
+      default_redirection_url: https://hajimari.${SECRET_DOMAIN_ME}
+      default_2fa_method: totp
 
       # authentication methods
       authentication_backend:
@@ -93,11 +93,11 @@ spec:
 
         rules:
           - domain:
-              - "sonarr.${SECRET_DOMAIN_ME}"
-              - "radarr.${SECRET_DOMAIN_ME}"
+              - sonarr.${SECRET_DOMAIN_ME}
+              - radarr.${SECRET_DOMAIN_ME}
             policy: bypass
             resources:
-              - '^/feed/.*ics\?apikey=.*$'
+              - ^/feed/.*ics\?apikey=.*$
 
           # - domain:
           #     # iot
@@ -139,7 +139,7 @@ spec:
               - static.eighty-three.me
             policy: one_factor
             subject:
-              - "group:admins"
+              - group:admins
             networks:
               - home
 
@@ -176,4 +176,4 @@ spec:
               - static.eighty-three.me
             policy: two_factor
             subject:
-              - "group:admins"
+              - group:admins

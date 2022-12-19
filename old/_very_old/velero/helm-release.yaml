@@ -16,9 +16,9 @@ spec:
       interval: 5m
   releaseName: velero
   targetNamespace: velero
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -39,7 +39,7 @@ spec:
           aws_secret_access_key = ${SECRET_MINIO_SECRETKEY}
     configuration:
       extraEnvVars:
-        TZ: "Europe/Zurich"
+        TZ: Europe/Zurich
       features: EnableCSI
       provider: aws
       backupStorageLocation:
@@ -48,7 +48,7 @@ spec:
         config:
           region: us-east-1
           s3ForcePathStyle: true
-          s3Url: "http://minio.lab.tdeutsch.ch:9091"
+          s3Url: http://minio.lab.tdeutsch.ch:9091
       volumeSnapshotLocation:
         name: default
         bucket: velero
@@ -95,10 +95,10 @@ spec:
       podVolumePath: /var/lib/kubelet/pods
       privileged: false
       tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Exists"
-        - key: "node-role.kubernetes.io/control-plane"
-          operator: "Exists"
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
       resources:
         requests:
           memory: 200Mi

@@ -15,9 +15,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,9 +31,9 @@ spec:
     recreate: true
   values:
     env:
-      PAPERLESS_TIME_ZONE: "Europe/Zurich"
-      PAPERLESS_OCR_LANGUAGE: "deu"
-      PAPERLESS_OCR_LANGUAGES: "deu eng"
+      PAPERLESS_TIME_ZONE: Europe/Zurich
+      PAPERLESS_OCR_LANGUAGE: deu
+      PAPERLESS_OCR_LANGUAGES: deu eng
       PAPERLESS_REDIS: redis://localhost:6379
     strategy:
       type: Recreate
@@ -60,13 +60,13 @@ spec:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: "traefik"
+          kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "file-document-multiple"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: file-document-multiple
         hosts:
-          - host: "paperless.${SECRET_DOMAIN_INTERNAL}"
-            secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+          - host: paperless.${SECRET_DOMAIN_INTERNAL}
+            secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
             paths:
               - path: /
                 pathType: Prefix

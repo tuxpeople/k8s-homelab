@@ -5,7 +5,7 @@ metadata:
   name: error-pages
   namespace: networking
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: error-pages
@@ -19,7 +19,7 @@ spec:
     - name: traefik
       namespace: networking
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -34,4 +34,4 @@ spec:
   values:
     env:
       TEMPLATE_NAME: l7-dark
-      SHOW_DETAILS: "false"
+      SHOW_DETAILS: 'false'

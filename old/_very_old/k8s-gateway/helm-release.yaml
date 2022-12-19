@@ -5,7 +5,7 @@ metadata:
   name: k8s-gateway
   namespace: networking
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: k8s-gateway
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -30,7 +30,7 @@ spec:
     recreate: true
   values:
     nameOverride: k8s-gateway
-    domain: "sky.lab"
+    domain: sky.lab
     ttl: 1
     service:
       type: NodePort

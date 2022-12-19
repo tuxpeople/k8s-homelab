@@ -14,9 +14,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -36,18 +36,18 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: "overseerr-config"
+        existingClaim: overseerr-config
     ingress:
       main:
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "plex"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: plex
         enabled: true
         hosts:
           - host: overseerr.${SECRET_DOMAIN_INTERNAL}
-            secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+            secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
             paths:
               - path: /
                 pathType: Prefix

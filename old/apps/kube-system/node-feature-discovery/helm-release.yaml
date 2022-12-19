@@ -5,7 +5,7 @@ metadata:
   name: node-feature-discovery
   namespace: kube-system
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: node-feature-discovery
@@ -15,7 +15,7 @@ spec:
         name: node-feature-discovery-charts
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -30,19 +30,19 @@ spec:
   values:
     master:
       tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Equal"
-          value: ""
-          effect: "NoSchedule"
+        - key: node-role.kubernetes.io/master
+          operator: Equal
+          value: ''
+          effect: NoSchedule
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 1
               preference:
                 matchExpressions:
-                  - key: "node-role.kubernetes.io/master"
+                  - key: node-role.kubernetes.io/master
                     operator: In
-                    values: [""]
+                    values: ['']
     worker:
       config: |-
         core:
@@ -92,9 +92,9 @@ spec:
                 vendor: ["1a86"]
                 device: ["7523"]
       annotations:
-        configmap.reloader.stakater.com/reload: "nfd-worker-conf"
+        configmap.reloader.stakater.com/reload: nfd-worker-conf
       tolerations:
-        - effect: "NoExecute"
-          operator: "Exists"
-        - effect: "NoSchedule"
-          operator: "Exists"
+        - effect: NoExecute
+          operator: Exists
+        - effect: NoSchedule
+          operator: Exists

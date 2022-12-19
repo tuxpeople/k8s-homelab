@@ -15,9 +15,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -33,10 +33,10 @@ spec:
     strategy:
       type: Recreate
     env:
-      TZ: "Europe/Zurich"
-      TELEGRAM_ADMIN: "${SECRET_TELEGRAMUSERID}"
-      TELEGRAM_TOKEN: "${SECRET_TELEGRAMTOKEN}"
-      ALERTMANAGER_URL: "http://alertmanager-operated:9093"
+      TZ: Europe/Zurich
+      TELEGRAM_ADMIN: ${SECRET_TELEGRAMUSERID}
+      TELEGRAM_TOKEN: ${SECRET_TELEGRAMTOKEN}
+      ALERTMANAGER_URL: http://alertmanager-operated:9093
     service:
       main:
         enabled: true

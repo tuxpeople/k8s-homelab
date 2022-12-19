@@ -5,7 +5,7 @@ metadata:
   name: gitlab
   namespace: development
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: gitlab
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -44,20 +44,20 @@ spec:
       appConfig:
         cron_jobs:
           ci_archive_traces_cron_worker:
-            cron: "17 * * * *"
+            cron: 17 * * * *
           expire_build_artifacts_worker:
-            cron: "50 * * * *"
+            cron: 50 * * * *
           pipeline_schedule_worker:
-            cron: "19 * * * *"
+            cron: 19 * * * *
           repository_archive_cache_worker:
-            cron: "0 * * * *"
+            cron: 0 * * * *
           repository_check_worker:
-            cron: "20 * * * *"
+            cron: 20 * * * *
           stuck_ci_jobs_worker:
-            cron: "0 * * * *"
+            cron: 0 * * * *
       gravatar:
-        plainUrl: "https://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon"
-        sslUrl: "https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon"
+        plainUrl: https://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon
+        sslUrl: https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon
       edition: ce
       hosts:
         domain: ${MY_DOMAIN}

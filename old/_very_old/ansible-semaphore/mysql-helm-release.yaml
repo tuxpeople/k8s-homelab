@@ -16,7 +16,7 @@ spec:
       interval: 5m
   releaseName: mariadb
   targetNamespace: development
-  interval: 5m
+  interval: 15m
   test:
     enable: false # Enable helm test
   install:

@@ -15,9 +15,9 @@ spec:
         name: codimd
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,10 +31,10 @@ spec:
     recreate: true
   values:
     env:
-      TZ: "Europe/Zurich"
+      TZ: Europe/Zurich
     image:
-      registry: "docker.io"
-      repository: "hackmdio/hackmd"
+      registry: docker.io
+      repository: hackmdio/hackmd
     service:
       type: ClusterIP
     ingress:
@@ -42,16 +42,16 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        external-dns/is-public: "true"
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "language-markdown"
+        external-dns/is-public: 'true'
+        external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_TARGET_SKY}
+        hajimari.io/enable: 'true'
+        hajimari.io/icon: language-markdown
       tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+        - secretName: ${SECRET_DOMAIN_ME/./-}-tls
           hosts:
             - codimd.${SECRET_DOMAIN_ME}
       hosts:
-        - host: "codimd.${SECRET_DOMAIN_ME}"
+        - host: codimd.${SECRET_DOMAIN_ME}
           paths:
             - /
     codimd:
@@ -60,7 +60,7 @@ spec:
           - ReadWriteOnce
         enabled: true
         size: 10Gi
-        storageClass: "longhorn"
+        storageClass: longhorn
       connection:
         protocolUseSSL: true
       allowPDFExport: true
@@ -77,7 +77,7 @@ spec:
           authorizationUrl: https://sso.${SECRET_DOMAIN_ME}/auth
           tokenUrl: https://sso.${SECRET_DOMAIN_ME}/token
           userProfileUrl: https://sso.${SECRET_DOMAIN_ME}/userinfo
-          scope: "openid profile email groups"
+          scope: openid profile email groups
           attributes:
             username: name
             displayName: name

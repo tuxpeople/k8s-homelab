@@ -15,9 +15,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,9 +31,9 @@ spec:
     recreate: true
   values:
     env:
-      TZ: "Europe/Zurich"
-      BASE_URL: "https://change.${SECRET_DOMAIN_ME}"
-      WEBDRIVER_URL: "http://127.0.0.1:4444/wd/hub"
+      TZ: Europe/Zurich
+      BASE_URL: https://change.${SECRET_DOMAIN_ME}
+      WEBDRIVER_URL: http://127.0.0.1:4444/wd/hub
     persistence:
       data:
         enabled: true
@@ -48,20 +48,20 @@ spec:
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "magnify-scan"
+          external-dns/is-public: 'true'
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_TARGET_SKY}
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: magnify-scan
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
         hosts:
-          - host: "change.${SECRET_DOMAIN_ME}"
+          - host: change.${SECRET_DOMAIN_ME}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "change.${SECRET_DOMAIN_ME}"
-            secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+              - change.${SECRET_DOMAIN_ME}
+            secretName: ${SECRET_DOMAIN_ME/./-}-tls
     resources:
       limits:
         cpu: 200m

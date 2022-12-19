@@ -16,7 +16,7 @@ spec:
       interval: 5m
   releaseName: sealed-secrets
   targetNamespace: kube-system
-  interval: 5m
+  interval: 15m
   install:
     remediation:
       retries: 3

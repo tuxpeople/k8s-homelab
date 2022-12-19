@@ -14,9 +14,9 @@ spec:
         name: aquasecurity
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -29,7 +29,7 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
-    targetNamespaces: ""
+    targetNamespaces: ''
     trivy:
       ignoreUnfixed: true
       githubToken: ${SECRET_GITHUB_TOKEN}

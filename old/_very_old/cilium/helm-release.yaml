@@ -16,7 +16,7 @@ spec:
       interval: 5m
   releaseName: cilium
   targetNamespace: kube-system
-  interval: 5m
+  interval: 15m
   install:
     remediation:
       retries: 3
@@ -29,7 +29,7 @@ spec:
     global:
       encryption:
         enabled: false
-    kubeProxyReplacement: "strict"
+    kubeProxyReplacement: strict
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     rollOutCiliumPods: true
     nodeinit:
@@ -60,8 +60,8 @@ spec:
           annotations:
             kubernetes.io/ingress.class: traefik
             traefik.ingress.kubernetes.io/router.entrypoints: websecure
-            hajimari.io/enable: "true"
-            hajimari.io/icon: "telescope"
+            hajimari.io/enable: 'true'
+            hajimari.io/icon: telescope
           hosts:
             - hubble.int.eighty-three.me
       relay:
@@ -80,7 +80,7 @@ spec:
     prometheus:
       enabled: true
     ipam:
-      mode: "cluster-pool"
+      mode: cluster-pool
       operator:
-        clusterPoolIPv4PodCIDR: "10.42.0.0/16"
+        clusterPoolIPv4PodCIDR: 10.42.0.0/16
         clusterPoolIPv4MaskSize: 24

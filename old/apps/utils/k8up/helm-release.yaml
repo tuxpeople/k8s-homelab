@@ -14,7 +14,7 @@ spec:
         name: appuio
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   install:
     crds: Skip
     remediation:

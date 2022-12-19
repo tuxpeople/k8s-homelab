@@ -1,4 +1,3 @@
-# https://gist.github.com/admun/4372899f20421a947b7544e5fc9f9117
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -16,9 +15,9 @@ spec:
         name: democratic-csi
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -32,7 +31,7 @@ spec:
     recreate: true
   values:
     csiDriver:
-      name: "org.democratic-csi.nfs-client"
+      name: org.democratic-csi.nfs-client
     storageClasses:
       # changed the name from nfs-client, so it runs in parallel with nfs-client-provisioner
       - name: synology-nfs-client
@@ -73,10 +72,11 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "mkdir -p /nfs-storage; mount <my NFS server>:/nfs-storage /nfs-storage"]
+              command: [/bin/sh, -c, mkdir -p /nfs-storage; mount <my NFS server>:/nfs-storage
+                    /nfs-storage]
           preStop:
             exec:
-              command: ["/bin/sh", "-c", "umount /nfs-storage"]
+              command: [/bin/sh, -c, umount /nfs-storage]
     # provide the config to controller how to map and setup a PVC
     driver:
       config:
@@ -85,9 +85,9 @@ spec:
         instance_id: fdf93387-dc47-4668-8b8d-69a46aa0513e
         nfs:
           shareHost: 10.20.30.40
-          shareBasePath: "/volume2/Kubernetes"
-          controllerBasePath: "/volume2/Kubernetes"
+          shareBasePath: /volume2/Kubernetes
+          controllerBasePath: /volume2/Kubernetes
           # allow control to PVC creation user and permission
-          dirPermissionsMode: "0700"
+          dirPermissionsMode: '0700'
           dirPermissionsUser: 1000
           dirPermissionsGroup: 1000

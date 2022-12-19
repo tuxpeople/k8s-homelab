@@ -12,7 +12,7 @@ spec:
   upgrade:
     remediation:
       retries: 100
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: rook-ceph-cluster
@@ -29,19 +29,19 @@ spec:
     ingress:
       dashboard:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: traefik
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "content-save-outline"
-          hajimari.io/appName: "Rook Dashboard"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: content-save-outline
+          hajimari.io/appName: Rook Dashboard
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
         host:
-          name: "rook.${SECRET_DOMAIN_INTERNAL}"
-          path: "/"
+          name: rook.${SECRET_DOMAIN_INTERNAL}
+          path: /
         tls:
           - hosts:
-              - "rook.${SECRET_DOMAIN_INTERNAL}"
-            secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+              - rook.${SECRET_DOMAIN_INTERNAL}
+            secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
     cephClusterSpec:
       placement:
         all:
@@ -60,17 +60,17 @@ spec:
         useAllNodes: false
         useAllDevices: false
         config:
-          osdsPerDevice: "1"
+          osdsPerDevice: '1'
         nodes:
-          - name: "k3s-node01.lab"
+          - name: k3s-node01.lab
             devices:
-              - name: "vdc"
-          - name: "k3s-node02.lab"
+              - name: vdc
+          - name: k3s-node02.lab
             devices:
-              - name: "vdc"
-          - name: "k3s-node03.lab"
+              - name: vdc
+          - name: k3s-node03.lab
             devices:
-              - name: "vdc"
+              - name: vdc
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -83,7 +83,7 @@ spec:
           reclaimPolicy: Delete
           allowVolumeExpansion: true
           parameters:
-            imageFormat: "2"
+            imageFormat: '2'
             imageFeatures: layering
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph

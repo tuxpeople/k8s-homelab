@@ -15,9 +15,9 @@ spec:
         name: gitea
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -34,11 +34,11 @@ spec:
       admin:
         existingSecret: gitea-admin-secret
       config:
-        APP_NAME: "Tuxpeople's GIT"
+        APP_NAME: Tuxpeople's GIT
         repository:
-          ROOT: "~/gitea-repositories"
+          ROOT: ~/gitea-repositories
         repository.pull-request:
-          WORK_IN_PROGRESS_PREFIXES: "WIP:,[WIP]:"
+          WORK_IN_PROGRESS_PREFIXES: 'WIP:,[WIP]:'
         cache:
           builtIn:
             enabled: true
@@ -48,20 +48,20 @@ spec:
           ROOT_URL: https://git.${SECRET_DOMAIN_ME}
           DISABLE_SSH: true
         cron.sync_external_users:
-          ENABLED: "true"
-          RUN_AT_START: "true"
-          SCHEDULE: "@every 10m"
-          UPDATE_EXISTING: "true"
-          NO_SUCCESS_NOTICE: "true"
+          ENABLED: 'true'
+          RUN_AT_START: 'true'
+          SCHEDULE: '@every 10m'
+          UPDATE_EXISTING: 'true'
+          NO_SUCCESS_NOTICE: 'true'
       ldap:
         enabled: true
-        name: 'k8s-ldap'
+        name: k8s-ldap
         securityProtocol: unencrypted
-        host: "openldap.identity.svc.cluster.local"
-        port: "1389"
-        userSearchBase: "ou=users,dc=sky,dc=lab"
-        userFilter: "(sn=%s)"
-        adminFilter: "(&(objectClass=groupOfNames)(cn=admins)))"
+        host: openldap.identity.svc.cluster.local
+        port: '1389'
+        userSearchBase: ou=users,dc=sky,dc=lab
+        userFilter: (sn=%s)
+        adminFilter: (&(objectClass=groupOfNames)(cn=admins)))
         emailAttribute: mail
         bindDn: ${SECRET_LDAP_BIND_DN}
         bindPassword: ${SECRET_LDAP_BIND_PW}
@@ -69,7 +69,7 @@ spec:
         # sshPublicKeyAttribute: sshPublicKey
     persistence:
       annotations:
-        k8up.io/backup: yes
+        k8up.io/backup: true
       enabled: true
       size: 50Gi
       accessModes:
@@ -81,12 +81,12 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        external-dns/is-public: "true"
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "git"
+        external-dns/is-public: 'true'
+        external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_TARGET_SKY}
+        hajimari.io/enable: 'true'
+        hajimari.io/icon: git
       tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+        - secretName: ${SECRET_DOMAIN_ME/./-}-tls
           hosts:
             - git.${SECRET_DOMAIN_ME}
     cache: redis-master.redis:6379
@@ -100,7 +100,7 @@ spec:
     postgresql:
       # persistence:
       #   annotations:
-      #     k8up.io/backup: yes
+      #     k8up.io/backup: true
       primary:
 
 # annotations:

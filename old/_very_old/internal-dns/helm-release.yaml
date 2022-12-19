@@ -14,9 +14,9 @@ spec:
         name: bitnami
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -36,10 +36,10 @@ spec:
       apiversion: externaldns.k8s.io/v1alpha1
       kind: DNSEndpoint
     coredns:
-      etcdEndpoints: "http://etcd:2379"
+      etcdEndpoints: http://etcd:2379
     domainFilters:
-      - "${SECRET_DOMAIN_INTERNAL}"
-    annotationFilter: "external-dns/is-internal in (true)"
+      - ${SECRET_DOMAIN_INTERNAL}
+    annotationFilter: external-dns/is-internal in (true)
     interval: 1m
     metrics:
       enabled: true
@@ -50,4 +50,4 @@ spec:
     provider: coredns
     sources:
       - ingress
-    txtPrefix: "k8s."
+    txtPrefix: k8s.

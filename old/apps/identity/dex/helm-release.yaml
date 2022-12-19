@@ -5,7 +5,7 @@ metadata:
   name: dex
   namespace: identity
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: dex
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -38,8 +38,8 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        external-dns/is-public: "true"
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+        external-dns/is-public: 'true'
+        external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_TARGET_SKY}
       hosts:
         - host: sso.${SECRET_DOMAIN_ME}
           paths:
@@ -48,7 +48,7 @@ spec:
       tls:
         - hosts:
             - sso.${SECRET_DOMAIN_ME}
-          secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+          secretName: ${SECRET_DOMAIN_ME/./-}-tls
     env:
       KUBERNETES_POD_NAMESPACE: identity
     config:
@@ -59,18 +59,18 @@ spec:
           inCluster: true
       oauth2:
         alwaysShowLoginScreen: false
-        responseTypes: ['code', 'token', 'id_token']
+        responseTypes: [code, token, id_token]
         skipApprovalScreen: true
       web:
         http: 0.0.0.0:5556
       frontend:
-        theme: 'tectonic'
-        issuer: 'eighty-three'
-        issuerUrl: 'https://${SECRET_DOMAIN_ME}'
+        theme: tectonic
+        issuer: eighty-three
+        issuerUrl: https://${SECRET_DOMAIN_ME}
         logoUrl: https://camo.githubusercontent.com/5b298bf6b0596795602bd771c5bddbb963e83e0f/68747470733a2f2f692e696d6775722e636f6d2f7031527a586a512e706e67
       expiry:
-        signingKeys: '6h'
-        idTokens: '24h'
+        signingKeys: 6h
+        idTokens: 24h
       logger:
         level: debug
         format: json
@@ -81,23 +81,23 @@ spec:
       staticClients:
         - id: ${SECRET_OIDC_CLIENT_ID}
           redirectURIs:
-            - 'https://wiki2.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://code.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://prometheus.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://alertmanager.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://change.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://grafana.${SECRET_DOMAIN_ME}/login/generic_oauth'
-            - 'https://wiki.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://traefik.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://homer.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://dashy.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://hajimari.${SECRET_DOMAIN_ME}/_oauth'
-            - 'https://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback'
-            - 'http://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback'
-            - 'https://k10.eighty-three.me/k10/auth-svc/v0/oidc/redirect'
-            - 'https://todo.eighty-three.me/auth/openid/dex'
-            - 'https://doku.eighty-three.me/_oauth'
-          name: 'SKY'
+            - https://wiki2.${SECRET_DOMAIN_ME}/_oauth
+            - https://code.${SECRET_DOMAIN_ME}/_oauth
+            - https://prometheus.${SECRET_DOMAIN_ME}/_oauth
+            - https://alertmanager.${SECRET_DOMAIN_ME}/_oauth
+            - https://change.${SECRET_DOMAIN_ME}/_oauth
+            - https://grafana.${SECRET_DOMAIN_ME}/login/generic_oauth
+            - https://wiki.${SECRET_DOMAIN_ME}/_oauth
+            - https://traefik.${SECRET_DOMAIN_ME}/_oauth
+            - https://homer.${SECRET_DOMAIN_ME}/_oauth
+            - https://dashy.${SECRET_DOMAIN_ME}/_oauth
+            - https://hajimari.${SECRET_DOMAIN_ME}/_oauth
+            - https://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback
+            - http://codimd.${SECRET_DOMAIN_ME}/auth/oauth2/callback
+            - https://k10.eighty-three.me/k10/auth-svc/v0/oidc/redirect
+            - https://todo.eighty-three.me/auth/openid/dex
+            - https://doku.eighty-three.me/_oauth
+          name: SKY
           secret: ${SECRET_OIDC_CLIENT_SECRET}
       connectors:
         - type: ldap
@@ -128,7 +128,7 @@ spec:
             usernamePrompt: Username
             userSearch:
               baseDN: ou=People,dc=sky,dc=lab
-              filter: "(objectClass=person)"
+              filter: (objectClass=person)
               username: sn
               # "DN" (case sensitive) is a special attribute name. It indicates that
               # this value should be taken from the entity's DN not an attribute on
@@ -138,7 +138,7 @@ spec:
               nameAttr: cn
             groupSearch:
               baseDN: ou=Groups,dc=sky,dc=lab
-              filter: "(objectClass=groupOfNames)"
+              filter: (objectClass=groupOfNames)
               userAttr: DN
               groupAttr: member
               # The group name should be the "cn" value.

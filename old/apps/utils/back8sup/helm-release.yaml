@@ -14,9 +14,9 @@ spec:
         kind: HelmRepository
         name: adfinis
         namespace: flux-system
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -30,14 +30,14 @@ spec:
     recreate: true
   values:
     cronjob:
-      schedule: "15 * * * *"
+      schedule: 15 * * * *
       environment:
         - name: GENERATIONS
-          value: "12"
+          value: '12'
         - name: TOKEN_FILE
-          value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+          value: /var/run/secrets/kubernetes.io/serviceaccount/token
         - name: API_ENDPOINT
-          value: "https://kubernetes.default.svc.cluster.local:443"
+          value: https://kubernetes.default.svc.cluster.local:443
     configMaps:
       config.yaml: |
         global:
@@ -49,4 +49,4 @@ spec:
               - cm
               - ingress
     persistence:
-      storageClassName: "nfs-subdir-external-provisioner"
+      storageClassName: nfs-subdir-external-provisioner

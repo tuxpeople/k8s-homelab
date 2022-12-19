@@ -15,9 +15,9 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-  interval: 5m
+  interval: 15m
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,19 +31,19 @@ spec:
     recreate: true
   values:
     env:
-      TZ: "Europe/Zurich"
+      TZ: Europe/Zurich
       SYMFONY__ENV__DOMAIN_NAME: https://wallabag.${SECRET_DOMAIN_ME}
       SYMFONY__ENV__DATABASE_DRIVER: pdo_sqlite
       SYMFONY__ENV__DATABASE_HOST: 127.0.0.1
-      SYMFONY__ENV__DATABASE_PORT: null
+      SYMFONY__ENV__DATABASE_PORT:
       SYMFONY__ENV__DATABASE_NAME: symfony
       SYMFONY__ENV__DATABASE_USER: root
-      SYMFONY__ENV__DATABASE_PASSWORD: null
+      SYMFONY__ENV__DATABASE_PASSWORD:
       SYMFONY__ENV__REDIS_HOST: wallabag-redis-master
       SYMFONY__ENV__SERVER_NAME: Wallabag
-      SYMFONY__ENV__FOSUSER_REGISTRATION: "false"
-      SYMFONY__ENV__FOSUSER_CONFIRMATION: "false"
-      POPULATE_DATABASE: "true"
+      SYMFONY__ENV__FOSUSER_REGISTRATION: 'false'
+      SYMFONY__ENV__FOSUSER_CONFIRMATION: 'false'
+      POPULATE_DATABASE: 'true'
     image:
       pullPolicy: Always
     strategy:
@@ -59,19 +59,19 @@ spec:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: "traefik"
+          kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "newspaper"
+          external-dns/is-public: 'true'
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_TARGET_SKY}
+          hajimari.io/enable: 'true'
+          hajimari.io/icon: newspaper
         hosts:
-          - host: "wallabag.${SECRET_DOMAIN_ME}"
+          - host: wallabag.${SECRET_DOMAIN_ME}
             paths:
               - path: /
                 pathType: Prefix
         tls:
-          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+          - secretName: ${SECRET_DOMAIN_ME/./-}-tls
             hosts:
               - wallabag.${SECRET_DOMAIN_ME}
     redis:
