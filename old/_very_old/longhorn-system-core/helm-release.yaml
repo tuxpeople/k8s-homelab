@@ -39,7 +39,7 @@ spec:
         hajimari.io/enable: 'true'
         hajimari.io/icon: harddisk
         hajimari.io/appName: Longhorn
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
     persistence:
       defaultClassReplicaCount: 2
       defaultClass: true

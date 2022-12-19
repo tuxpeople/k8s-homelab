@@ -8,7 +8,7 @@ metadata:
   name: smokeping
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
     hajimari.io/enable: "true"
     hajimari.io/icon: "smoke"
 spec:

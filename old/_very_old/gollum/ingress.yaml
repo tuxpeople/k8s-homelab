@@ -8,7 +8,7 @@ metadata:
   name: gollum
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
     ingress.kubernetes.io/auth-type: basic
     ingress.kubernetes.io/auth-realm: traefik
     ingress.kubernetes.io/auth-secret: gollum-basic-auth
