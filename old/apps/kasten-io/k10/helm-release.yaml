@@ -4,16 +4,16 @@ kind: HelmRelease
 metadata:
   name: k10
 spec:
+  interval: 15m
+  timeout: 10m
   chart:
     spec:
       version: 5.5.0
       chart: k10
-      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: kasten
         namespace: flux-system
-  interval: 15m
   releaseName: k10
   test:
     enable: false  # Enable helm test

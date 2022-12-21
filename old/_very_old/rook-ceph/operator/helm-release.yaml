@@ -5,7 +5,6 @@ metadata:
   name: rook-ceph
   namespace: rook-ceph
 spec:
-  interval: 15m
   install:
     disableWait: true
     remediation:

@@ -5,6 +5,8 @@ metadata:
   name: 1password-connect
   namespace: kube-system
 spec:
+  interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: connect
@@ -13,10 +15,8 @@ spec:
         kind: HelmRepository
         name: 1password
         namespace: flux-system
-      interval: 5m
   releaseName: 1password-connect
   targetNamespace: kube-system
-  interval: 15m
   test:
     enable: false  # Enable helm test
   install:

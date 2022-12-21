@@ -5,6 +5,8 @@ metadata:
   name: kubernetes-dashboard
   namespace: networking
 spec:
+  interval: 15m
+  timeout: 10m
   releaseName: kubernetes-dashboard
   chart:
     spec:
@@ -14,8 +16,6 @@ spec:
         kind: HelmRepository
         name: kubernetes-dashboard
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   test:
     enable: false  # Enable helm test
   install:

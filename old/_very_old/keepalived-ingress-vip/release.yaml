@@ -5,6 +5,8 @@ metadata:
   name: keepalived-ingress-vip
   namespace: keepalived-ingress-vip
 spec:
+  interval: 15m
+  timeout: 10m
   releaseName: keepalived-ingress-vip
   chart:
     spec:
@@ -13,8 +15,6 @@ spec:
         kind: GitRepository
         name: keepalived-ingress-vip
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   install:
     remediation:
       retries: 3

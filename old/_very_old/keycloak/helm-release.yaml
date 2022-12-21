@@ -5,6 +5,8 @@ metadata:
   name: keycloak
   namespace: identity
 spec:
+  interval: 15m
+  timeout: 10m
   releaseName: keycloak
   chart:
     spec:
@@ -14,8 +16,6 @@ spec:
         kind: HelmRepository
         name: codecentric
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   test:
     enable: false # Enable helm test
   install:

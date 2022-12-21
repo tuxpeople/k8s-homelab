@@ -5,6 +5,7 @@ metadata:
   name: joplin
 spec:
   interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: joplin-server
@@ -13,7 +14,6 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
   test:
     enable: false  # Enable helm test
   install:

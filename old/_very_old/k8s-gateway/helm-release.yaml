@@ -6,6 +6,7 @@ metadata:
   namespace: networking
 spec:
   interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: k8s-gateway
@@ -14,7 +15,6 @@ spec:
         kind: HelmRepository
         name: k8s-gateway-charts
         namespace: flux-system
-      interval: 5m
   test:
     enable: false  # Enable helm test
   install:

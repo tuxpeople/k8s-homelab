@@ -5,6 +5,8 @@ metadata:
   name: k8up
   namespace: k8up
 spec:
+  interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: k8up
@@ -13,8 +15,6 @@ spec:
         kind: HelmRepository
         name: appuio
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   install:
     crds: Skip
     remediation:

@@ -6,6 +6,7 @@ metadata:
   namespace: monitoring
 spec:
   interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: prometheus-blackbox-exporter
@@ -14,7 +15,6 @@ spec:
         kind: HelmRepository
         name: prometheus-community-charts
         namespace: flux-system
-      interval: 5m
   test:
     enable: false  # Enable helm test
   install:

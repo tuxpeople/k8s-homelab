@@ -5,6 +5,8 @@ metadata:
   name: traefik-forward-auth
   namespace: identity
 spec:
+  interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: traefik-forward-auth
@@ -13,13 +15,11 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
   dependsOn:
     - name: dex
       namespace: identity
     - name: traefik
       namespace: networking
-  interval: 15m
   test:
     enable: false  # Enable helm test
   install:

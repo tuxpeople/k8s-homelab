@@ -5,6 +5,8 @@ metadata:
   name: node-problem-detector
   namespace: kube-system
 spec:
+  interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: node-problem-detector
@@ -13,8 +15,6 @@ spec:
         kind: HelmRepository
         name: deliveryhero
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   test:
     enable: false  # Enable helm test
   install:

@@ -4,6 +4,8 @@ kind: HelmRelease
 metadata:
   name: rancher-monitoring-crd
 spec:
+  interval: 15m
+  timeout: 10m
   releaseName: rancher-monitoring-crd
   chart:
     spec:
@@ -13,8 +15,6 @@ spec:
         kind: HelmRepository
         name: rancher-charts
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   install:
     remediation:
       retries: 3

@@ -6,6 +6,7 @@ metadata:
   namespace: networking
 spec:
   interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: error-pages
@@ -14,7 +15,6 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-      interval: 5m
   dependsOn:
     - name: traefik
       namespace: networking

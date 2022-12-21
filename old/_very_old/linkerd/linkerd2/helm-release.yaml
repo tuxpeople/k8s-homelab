@@ -6,6 +6,7 @@ metadata:
   namespace: linkerd
 spec:
   interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: linkerd2
@@ -14,7 +15,6 @@ spec:
         kind: HelmRepository
         name: linkerd-charts
         namespace: flux-system
-      interval: 10m
   test:
     enable: false
   install:
@@ -30,7 +30,6 @@ spec:
     timeout: 10m
     recreate: true
     cleanupOnFail: true
-  timeout: 20m
   valuesFrom:
     - kind: Secret
       name: linkerd-certs

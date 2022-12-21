@@ -5,6 +5,8 @@ metadata:
   name: codimd
   namespace: utils
 spec:
+  interval: 15m
+  timeout: 10m
   releaseName: codimd
   chart:
     spec:
@@ -14,8 +16,6 @@ spec:
         kind: HelmRepository
         name: codimd
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   test:
     enable: false  # Enable helm test
   install:

@@ -5,6 +5,8 @@ metadata:
   name: velero
   namespace: velero
 spec:
+  interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: velero
@@ -13,10 +15,8 @@ spec:
         kind: HelmRepository
         name: vmware-tanzu
         namespace: flux-system
-      interval: 5m
   releaseName: velero
   targetNamespace: velero
-  interval: 15m
   test:
     enable: false  # Enable helm test
   install:

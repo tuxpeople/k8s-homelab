@@ -5,16 +5,16 @@ metadata:
   name: back8sup
   namespace: utils
 spec:
+  interval: 15m
+  timeout: 10m
   chart:
     spec:
       version: 0.4.8
       chart: back8sup
-      interval: 5m
       sourceRef:
         kind: HelmRepository
         name: adfinis
         namespace: flux-system
-  interval: 15m
   test:
     enable: false  # Enable helm test
   install:

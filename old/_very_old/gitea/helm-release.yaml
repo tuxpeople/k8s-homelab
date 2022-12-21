@@ -5,6 +5,8 @@ metadata:
   name: gitea
   namespace: development
 spec:
+  interval: 15m
+  timeout: 10m
   releaseName: gitea
   chart:
     spec:
@@ -14,8 +16,6 @@ spec:
         kind: HelmRepository
         name: gitea
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   test:
     enable: false  # Enable helm test
   install:

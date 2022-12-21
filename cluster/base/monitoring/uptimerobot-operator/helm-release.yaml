@@ -4,6 +4,8 @@ kind: HelmRelease
 metadata:
   name: uptimerobot-operator
 spec:
+  interval: 15m
+  timeout: 10m
   releaseName: uptimerobot-operator
   chart:
     spec:
@@ -13,8 +15,6 @@ spec:
         kind: HelmRepository
         name: uptimerobot-operator-charts
         namespace: flux-system
-      interval: 5m
-  interval: 15m
   test:
     enable: false # Enable helm test
   install:

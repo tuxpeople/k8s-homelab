@@ -5,6 +5,7 @@ metadata:
   name: snapscheduler
 spec:
   interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: snapscheduler

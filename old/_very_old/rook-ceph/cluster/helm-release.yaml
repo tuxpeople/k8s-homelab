@@ -13,6 +13,7 @@ spec:
     remediation:
       retries: 100
   interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: rook-ceph-cluster

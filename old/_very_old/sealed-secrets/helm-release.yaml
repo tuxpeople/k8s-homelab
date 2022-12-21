@@ -5,6 +5,8 @@ metadata:
   name: sealed-secrets
   namespace: kube-system
 spec:
+  interval: 15m
+  timeout: 10m
   chart:
     spec:
       chart: sealed-secrets
@@ -13,10 +15,8 @@ spec:
         kind: HelmRepository
         name: sealed-secrets
         namespace: flux-system
-      interval: 5m
   releaseName: sealed-secrets
   targetNamespace: kube-system
-  interval: 15m
   install:
     remediation:
       retries: 3
