@@ -54,7 +54,7 @@ spec:
           hosts:
             - gitops.${SECRET_DOMAIN_INTERNAL}
     networkPolicy:
-      create: false
+      create: true
     metrics:
       enabled: true
     rbac:
