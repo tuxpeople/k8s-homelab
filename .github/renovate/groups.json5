@@ -21,6 +21,16 @@
       "separateMinorPatch": true
     },
     {
+      "description": "Cilium",
+      "groupName": "Cilium",
+      "matchPackagePatterns": ["cilium"],
+      "matchDatasources": ["docker", "helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
       "description": "External Snapshotter kustomization (for CRDs) and chart",
       "groupName": "External Snapshotter",
       "matchPackagePatterns": ["external-snapshotter", "snapshot-controller"],
