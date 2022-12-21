@@ -60,7 +60,7 @@
         "cluster/.+\\.ya?ml$",
         "provision/ansible/.+\\.ya?ml$"
       ],
-      "matchStrings": [
+/*       "matchStrings": [
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/",
         //"registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*tag: (?[a-zA-Z-]?<depName>[a-zA-Z-]?)-(?<currentValue>.*)\n",
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*tag: (.*?<depName>.*?<currentValue>.*)\n",
@@ -74,7 +74,7 @@
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/",
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
         //"registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n"
-      ],
+      ], */
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
