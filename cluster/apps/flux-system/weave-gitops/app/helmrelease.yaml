@@ -43,13 +43,14 @@ spec:
       annotations:
         hajimari.io/icon: "sawtooth-wave"
       hosts:
-        - host: &host "gitops.${SECRET_DOMAIN_INTERNAL}"
+        - host: gitops.${SECRET_DOMAIN_INTERNAL}
           paths:
             - path: /
               pathType: Prefix
       tls:
-        - hosts:
-            - *host
+        - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+          hosts:
+            - gitops.${SECRET_DOMAIN_INTERNAL}
     networkPolicy:
       create: false
     metrics:
