@@ -49,14 +49,12 @@ spec:
           split_queries_by_interval: 15m
           ingestion_rate_mb: 8
           ingestion_burst_size_mb: 16
-          shard_streams:
-            enabled: true
         schema_config:
           configs:
             - from: "2021-08-01"
               store: boltdb-shipper
-              object_store: s3
-              schema: v11
+              object_store: aws
+              schema: v12
               index:
                 prefix: loki_index_
                 period: 24h
@@ -64,7 +62,7 @@ spec:
           path_prefix: /var/loki
           replication_factor: 3
           storage:
-            s3:
+            aws:
               s3: s3://${SECRET_MINIO_ACCESSKEY}:${SECRET_MINIO_SECRETKEY}@us-east-1/loki
               endpoint: http://minio.lab.tdeutsch.ch:9091
               s3forcepathstyle: true
@@ -135,6 +133,8 @@ spec:
         - name: loki-tmp
           mountPath: /tmp/loki-tmp
       extraVolumes:
+        - name: loki-rules
+          emptyDir: {}
         - name: loki-rules-tmp
           emptyDir: {}
         - name: loki-tmp
@@ -143,12 +143,14 @@ spec:
         storageClass: nfs-subdir-external-provisioner-noarchive
         size: 10Gi
     monitoring:
+      dashboards:
+        enabled: true
+        labels:
+          grafana_dashboard: "1"
       serviceMonitor:
-        enabled: false
-        metricsInstance:
-          enabled: false
+        enabled: true
       selfMonitoring:
-        enabled: false
+        enabled: true
         grafanaAgent:
           installOperator: false
       lokiCanary:
