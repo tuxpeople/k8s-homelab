@@ -22,6 +22,18 @@ spec:
   interval: 30m
   retryInterval: 2m
   timeout: 1m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-settings
+        optional: false
+      - kind: Secret
+        name: cluster-secrets
+        optional: false
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -42,3 +54,15 @@ spec:
   interval: 30m
   retryInterval: 2m
   timeout: 1m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-settings
+        optional: false
+      - kind: Secret
+        name: cluster-secrets
+        optional: false
