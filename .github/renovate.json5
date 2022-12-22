@@ -39,7 +39,7 @@
       "provision/ansible/.+\\.ya?ml.j2$"
     ]
   },
-  /* "regexManagers": [
+  "regexManagers": [
     // Read and process GitHub Releases
     {
       "fileMatch": [
@@ -54,7 +54,7 @@
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     },
-    // regexManager to read and process cert-manager CRD's
+   /*   // regexManager to read and process cert-manager CRD's
     {
       "fileMatch": [
         "cluster/.+\\.ya?ml$",
@@ -77,8 +77,8 @@
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    }
-  ], */
+    } */
+  ],
   "packageRules": [
     {
       "description": "Disable kubernetes-api",
