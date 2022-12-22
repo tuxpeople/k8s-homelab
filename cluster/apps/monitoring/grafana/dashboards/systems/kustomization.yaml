@@ -3,13 +3,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 configMapGenerator:
-  - name: loki-dashboard-ssh-logs
+  - name: loki-dashboard-ssh-logs1
     files:
       - ssh-logs.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
+    # kustomize.toolkit.fluxcd.io/substitute: disabled
     k8s-sidecar-target-directory: "/tmp/dashboards/Systems"
   labels:
     grafana_dashboard: "true"
