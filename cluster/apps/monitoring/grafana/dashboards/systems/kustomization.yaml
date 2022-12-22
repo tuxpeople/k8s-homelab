@@ -9,7 +9,7 @@ configMapGenerator:
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
-    # kustomize.toolkit.fluxcd.io/substitute: disabled
+    kustomize.toolkit.fluxcd.io/substitute: disabled
     grafana_folder: Systems
   labels:
     grafana_dashboard: "true"
