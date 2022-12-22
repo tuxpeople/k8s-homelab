@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mqtt2prometheus
+  name: mqtt2prometheus
+spec:
+  ports:
+    - name: metrics
+      port: 9090
+      targetPort: metrics
+  selector:
+    app: mqtt2prometheus

@@ -1,14 +1,14 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: monitoring
 resources:
-  - kube-prometheus-stack
-  - grafana
-  - loki
-  - alertmanager-discord
-  - mystrom-exporter
-  - prometheus-uptimerobot-exporter
-  - speedtest-exporter
-  - unifi-poller
-  - influxdb
+  - ./alertmanager-discord
+  - ./speedtest-exporter
+  - ./loki
+  - ./kube-prometheus-stack
+  - ./mystrom-exporter
+  - ./prometheus-uptimerobot-exporter
+  - ./grafana
+  - ./influxdb
+  - ./mqtt2prometheus
+  - ./unifi-poller
