@@ -38,4 +38,3 @@ spec:
           items:
             - key: config.yaml
               path: config.yaml
-              mode: 0644
