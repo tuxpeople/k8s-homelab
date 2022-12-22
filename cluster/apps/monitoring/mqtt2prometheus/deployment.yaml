@@ -5,21 +5,25 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
   name: mqtt2prometheus
+  labels:
+    app.kubernetes.io/name: mqtt2prometheus
+    app.kubernetes.io/instance: mqtt2prometheus
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: mqtt2prometheus
+      app.kubernetes.io/name: mqtt2prometheus
+      app.kubernetes.io/instance: mqtt2prometheus
   template:
     metadata:
       labels:
-        app: mqtt2prometheus
+        app.kubernetes.io/name: mqtt2prometheus
+        app.kubernetes.io/instance: mqtt2prometheus
     spec:
       containers:
         - image: ghcr.io/hikhvar/mqtt2prometheus:v0.1.6
           imagePullPolicy: Always
           name: mqtt2prometheus
-          command: ["/mqtt2prometheus"]
-          args: ["-config", "/data/config.yaml"]
           ports:
             - containerPort: 9641
               name: metrics
@@ -31,13 +35,10 @@ spec:
               cpu: 100m
               memory: 400Mi
           volumeMounts:
-            - mountPath: /data/config.yaml
-              name: config-file
-              subPath: config.yaml
+            - name: config-file
+              mountPath: /config.yaml
+              subPath: config-yaml
+              readOnly: true
       volumes:
         - configMap:
           name: config-file
-          items:
-            - key: config.yaml
-              path: config.yaml
-          defaultMode: 292
