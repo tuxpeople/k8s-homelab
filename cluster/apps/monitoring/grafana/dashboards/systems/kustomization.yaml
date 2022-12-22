@@ -10,6 +10,6 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     # kustomize.toolkit.fluxcd.io/substitute: disabled
-    k8s-sidecar-target-directory: "/tmp/dashboards/Systems"
+    k8s-sidecar-target-directory: "/tmp/dashboards/Systems00"
   labels:
     grafana_dashboard: "true"
