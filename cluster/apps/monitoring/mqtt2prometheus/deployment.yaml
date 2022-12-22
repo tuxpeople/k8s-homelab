@@ -18,6 +18,7 @@ spec:
         - image: ghcr.io/hikhvar/mqtt2prometheus:v0.1.6
           imagePullPolicy: Always
           name: mqtt2prometheus
+          command: ["/mqtt2prometheus"]
           args: ["-config", "/data/config.yaml"]
           ports:
             - containerPort: 9641
