@@ -11,12 +11,12 @@ spec:
       path: "/metrics"
       port: metrics
       scrapeTimeout: 1m
-      relabelings:
-        - source_labels: ["topic"]
-          target_label: location
-          regex: '/devices/(.*)/.*'
-          action: replace
-          replacement: "$1"
+      # relabelings:
+      #   - source_labels: ["topic"]
+      #     target_label: location
+      #     regex: '/devices/(.*)/.*'
+      #     action: replace
+      #     replacement: "$1"
   selector:
     matchLabels:
       app: mqtt2prometheus
