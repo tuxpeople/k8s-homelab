@@ -1,0 +1,45 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: neuvector
+spec:
+  interval: 15m
+  timeout: 10m
+  chart:
+    spec:
+      chart: core
+      version: 2.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: neuvector
+        namespace: flux-system
+  test:
+    enable: false # Enable helm test
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    controller:
+      replicas: 2
+    manager:
+      svc:
+        type: ClusterIP
+      ingress:
+        enabled: true
+        host: neuvector.${SECRET_DOMAIN_INTERNAL}
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.tls: "true"
+        tls: true
+        secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
+    k3s:
+      enabled: false

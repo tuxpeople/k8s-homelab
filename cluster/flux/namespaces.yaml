@@ -33,3 +33,11 @@ metadata:
   name: system-upgrade
   labels:
     kustomize.toolkit.fluxcd.io/prune: disabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: neuvector
+  labels:
+    kustomize.toolkit.fluxcd.io/prune: disabled
+    pod-security.kubernetes.io/enforce: privileged
