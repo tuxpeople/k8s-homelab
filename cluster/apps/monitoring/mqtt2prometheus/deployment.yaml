@@ -18,6 +18,7 @@ spec:
         - image: ghcr.io/hikhvar/mqtt2prometheus:v0.1.6
           imagePullPolicy: Always
           name: mqtt2prometheus
+          args: ["-config", "/data/config.yaml"]
           ports:
             - containerPort: 9641
               name: metrics
@@ -29,12 +30,8 @@ spec:
               cpu: 100m
               memory: 400Mi
           volumeMounts:
-            - mountPath: /config.yaml
+            - mountPath: /data
               name: config-file
-              subPath: config.yaml
       volumes:
         - configMap:
           name: config-file
-          items:
-            - key: config.yaml
-              path: config.yaml
