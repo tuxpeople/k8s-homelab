@@ -11,7 +11,7 @@ spec:
       path: "/metrics"
       port: metrics
       scrapeTimeout: 1m
-      metricRelabelings:
+      relabelings:
         - source_labels: ["topic"]
           target_label: location
           regex: '/devices/(.*)/.*'
