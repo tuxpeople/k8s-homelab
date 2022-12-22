@@ -9,6 +9,6 @@ resources:
   - ./mystrom-exporter
   - ./prometheus-uptimerobot-exporter
   - ./grafana
-  - ./influxdb
+  # - ./influxdb
   - ./mqtt2prometheus
   - ./unifi-poller
