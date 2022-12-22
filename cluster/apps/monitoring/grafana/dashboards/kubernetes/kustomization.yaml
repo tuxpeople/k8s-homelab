@@ -4,6 +4,6 @@ kind: Kustomization
 commonLabels:
   grafana_dashboard: "1"
 commonAnnotations:
-  k8s-sidecar-target-directory: "/tmp/dashboards/Kubernetes00"
+  grafana_folder: Kubernetes
 resources:
   - https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/grafana-dashboardDefinitions.yaml
