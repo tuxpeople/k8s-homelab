@@ -18,8 +18,6 @@ spec:
         - image: ghcr.io/peschmae/exporter-go-mystrom:2.0.1
           imagePullPolicy: Always
           name: mystrom-3dprinter
-          command: ["/app/mystrom-exporter"]
-          args: ["-web.listen-address", "0.0.0.0:9452"]
           resources:
             requests:
               cpu: 10m
