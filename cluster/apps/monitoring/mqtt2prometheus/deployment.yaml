@@ -31,8 +31,12 @@ spec:
               cpu: 100m
               memory: 400Mi
           volumeMounts:
-            - mountPath: /data/
+            - mountPath: /data/config.yaml
               name: config-file
+              subPath: config.yaml
       volumes:
         - configMap:
           name: config-file
+          items:
+            - key: config.yaml
+              path: config.yaml
