@@ -66,6 +66,7 @@ spec:
           storage:
             s3:
               bucketnames: loki
+              region: us-east-1
               access_key_id: ${SECRET_MINIO_ACCESSKEY}
               secret_access_key: ${SECRET_MINIO_SECRETKEY}
               endpoint: http://minio.lab.tdeutsch.ch:9091
