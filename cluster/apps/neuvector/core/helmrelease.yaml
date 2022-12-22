@@ -42,4 +42,4 @@ spec:
         tls: true
         secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
     k3s:
-      enabled: false
+      enabled: true
