@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: config-file
 data:
-  config-file: |
+  config.yaml: |
     mqtt:
       # The MQTT broker to connect to
       server: tcp://raspberrypi:1883

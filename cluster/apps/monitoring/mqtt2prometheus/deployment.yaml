@@ -43,5 +43,5 @@ spec:
         - configMap:
           name: config-file
           items:
-            - key: config-file
+            - key: config.yaml
               path: "config.yaml"
