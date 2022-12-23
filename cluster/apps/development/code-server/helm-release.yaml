@@ -74,4 +74,10 @@ spec:
         size: 5Gi
         mountPath: /config
 
+      extensions:
+        enabled: true
+        type: configMap
+        mountPath: /etc/cont-init.d/44-install-extension.sh
+        subPath: 44-install-extension.sh
+        name: install-extension
 # docker run --entrypoint /bin/sleep docker.io/fluxcd/flux-cli:v0.37.0 inf
