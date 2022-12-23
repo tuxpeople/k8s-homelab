@@ -36,7 +36,7 @@ spec:
               memory: 400Mi
           volumeMounts:
             - name: config-file
-              mountPath: /config.yaml
+              mountPath: /
               subPath: config.yaml
               readOnly: true
       volumes:
