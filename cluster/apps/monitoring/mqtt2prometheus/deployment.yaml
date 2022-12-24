@@ -40,9 +40,8 @@ spec:
               subPath: config.yaml
               readOnly: true
       volumes:
-        - name: config-file
-          configMap:
-            name: config-file
-            items:
-              - key: config.yaml
-                path: "config.yaml"
+        - configMap:
+          name: config-file
+          items:
+            - key: config.yaml
+              path: "config.yaml"
