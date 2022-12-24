@@ -35,14 +35,13 @@ spec:
               cpu: 100m
               memory: 400Mi
           volumeMounts:
-            - name: config-volume
+            - name: config-file
               mountPath: /config.yaml
               subPath: config.yaml
               readOnly: true
       volumes:
-        - name: config-volume
-          configMap:
-            name: sconfig-file
-            items:
-              - key: config.yaml
-                path: config.yaml
+        - configMap:
+          name: config-file
+          items:
+            - key: config.yaml
+              path: "config.yaml"
