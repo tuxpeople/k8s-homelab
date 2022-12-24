@@ -35,7 +35,7 @@ data:
       # Separator. Used to split path to elements when accessing json fields.
       # You can access json fields with dots in it. F.E. {"key.name": {"nested": "value"}}
       # Just set separator to -> and use key.name->nested as mqtt_name
-      separator: ,
+      separator: .
     # This is a list of valid metrics. Only metrics listed here will be exported
     metrics:
         # The name of the metric in prometheus
