@@ -7,3 +7,4 @@ resources:
   - kubed
   - metrics-server
   - descheduler
+  - reloader
