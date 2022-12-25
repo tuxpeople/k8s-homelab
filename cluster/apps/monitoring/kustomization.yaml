@@ -12,3 +12,4 @@ resources:
   # - ./influxdb
   - ./mqtt2prometheus
   - ./unifi-poller
+  - ./prometheus-pushgateway
