@@ -26,7 +26,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 15853,
   "graphTooltip": 0,
-  "id": 73,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -44,7 +43,7 @@
       },
       "id": 5,
       "panels": [],
-      "repeat": "Raum",
+      "repeat": "$Raum",
       "repeatDirection": "h",
       "targets": [
         {
@@ -866,6 +865,6 @@
   "timezone": "",
   "title": "Xiaomi Mijia Temperature, and Humidity Dashboard",
   "uid": "vUNydvHddsdww",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }
