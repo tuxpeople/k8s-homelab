@@ -6,6 +6,7 @@ configMapGenerator:
   - name: xiaomi-climate
     files:
       - xiaomi-climate.json
+      - home-dashboard.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
