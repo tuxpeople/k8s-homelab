@@ -43,7 +43,7 @@
       },
       "id": 5,
       "panels": [],
-      "repeat": "$Raum",
+      "repeat": "Raum",
       "repeatDirection": "h",
       "targets": [
         {
