@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: phpipam
-          image: pierrecdn/phpipam:1.5.0
+          image: pierrecdn/phpipam:1.16.003
           imagePullPolicy: Always
           ports:
             - containerPort: 80
