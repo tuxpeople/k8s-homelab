@@ -161,7 +161,7 @@
             "uid": "grafanacloud-prom"
           },
           "editorMode": "builder",
-          "expr": "xiaomi_temperature{room=\"$Raum\"}",
+          "expr": "quantile_over_time(.7, xiaomi_temperature{room=\"$Raum\"}[3h])",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -258,7 +258,7 @@
             "uid": "grafanacloud-prom"
           },
           "editorMode": "builder",
-          "expr": "xiaomi_humidity{room=\"$Raum\"}",
+          "expr": "quantile_over_time(.7, xiaomi_humidity{room=\"$Raum\"}[3h])",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -553,7 +553,7 @@
             "uid": "grafanacloud-prom"
           },
           "editorMode": "builder",
-          "expr": "xiaomi_dew_point{room=\"$Raum\"}",
+          "expr": "quantile_over_time(.7, xiaomi_dew_point{room=\"$Raum\"}[3h])",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -650,7 +650,7 @@
             "uid": "grafanacloud-prom"
           },
           "editorMode": "builder",
-          "expr": "xiaomi_battery{room=\"$Raum\"}",
+          "expr": "quantile_over_time(.7, xiaomi_battery{room=\"$Raum\"}[3h])",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
