@@ -842,7 +842,7 @@
         "hide": 2,
         "includeAll": true,
         "label": "",
-        "multi": false,
+        "multi": true,
         "name": "Raum",
         "options": [],
         "query": {
@@ -863,8 +863,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Xiaomi Mijia Temperature, and Humidity Dashboard",
-  "uid": "vUNydvHddsdww",
+  "title": "11Xiaomi Mijia Temperature, and Humidity Dashboard",
+  "uid": "11vUNydvHddsdww",
   "version": 1,
   "weekStart": ""
 }
