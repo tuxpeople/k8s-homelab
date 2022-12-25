@@ -10,3 +10,4 @@ resources:
   - ./storage
   - ./kube-system
   - ./monitoring
+  - ./octoprint
