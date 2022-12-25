@@ -10,6 +10,5 @@ resources:
   - ./prometheus-uptimerobot-exporter
   - ./grafana
   # - ./influxdb
-  - ./mqtt2prometheus
   - ./unifi-poller
   - ./prometheus-pushgateway
