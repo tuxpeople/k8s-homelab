@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: phpipam-mysql
+  labels:
+    app: phpipam-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpipam-mysql
+  serviceName: phpipam-mysql
+  template:
+    metadata:
+      labels:
+        app: phpipam-mysql
+    spec:
+      containers:
+        - name: phpipam-mysql
+          image: mysql:5.6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: mysql_root_password
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: phpipam-mysql-volume
+          volumes:
+            - name: phpipam-mysql-volume
+              persistentVolumeClaim:
+                claimName: phpipam-data-pvc

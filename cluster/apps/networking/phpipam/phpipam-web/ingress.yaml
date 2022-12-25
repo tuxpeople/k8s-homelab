@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: phpipam
+  name: phpipam
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
+    hajimari.io/enable: "true"
+spec:
+  tls:
+    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+      hosts:
+        - phpipam.${SECRET_DOMAIN_INTERNAL}
+  rules:
+    - host: phpipam.${SECRET_DOMAIN_INTERNAL}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: phpipam
+                port:
+                  number: 80

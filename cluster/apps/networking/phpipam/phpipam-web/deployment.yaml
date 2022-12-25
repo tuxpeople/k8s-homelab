@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpipam
+  labels:
+    app: phpipam
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpipam
+  template:
+    metadata:
+      labels:
+        app: phpipam
+    spec:
+      containers:
+        - name: phpipam
+          image: pierrecdn/phpipam:1.5.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+            - name: MYSQL_ENV_MYSQL_USER
+              value: "root"
+            - name: MYSQL_ENV_MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: mysql_root_password
+            - name: MYSQL_ENV_MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: phpipam-configmap
+                  key: database_url
