@@ -829,10 +829,15 @@
   "templating": {
     "list": [
       {
+        "allValue": "",
         "current": {
-          "selected": true,
-          "text": "Schlafzimmer",
-          "value": "Schlafzimmer"
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "prometheus",
@@ -842,7 +847,7 @@
         "hide": 2,
         "includeAll": true,
         "label": "",
-        "multi": false,
+        "multi": true,
         "name": "Raum",
         "options": [],
         "query": {
