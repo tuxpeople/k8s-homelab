@@ -307,6 +307,12 @@ spec:
                 target_label: __param_target
               - target_label: __address__
                 replacement: mystrom-3dprinter:9452
+          - job_name: 'prometheus-pushgateway'
+            scrape_interval: 1m
+            scrape_timeout: 30s
+            honor_labels: true
+            static_configs:
+              - targets: ['prometheus-pushgateway:9091']
           - job_name: 'wireguard-exporter'
             scrape_interval: 1m
             scrape_timeout: 30s
