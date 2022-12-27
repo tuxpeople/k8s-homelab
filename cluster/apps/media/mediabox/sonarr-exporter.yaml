@@ -114,7 +114,7 @@ metadata:
     app: plex-exporter
     namespace: media
   annotations:
-    k8s-sidecar-target-directory: "/tmp/dashboards/apps"
+    grafana_folder: Apps
 data:
   sonarr-exporter-dashboard.json: |-
     {

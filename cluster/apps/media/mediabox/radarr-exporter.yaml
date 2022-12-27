@@ -108,7 +108,7 @@ metadata:
     app: radarr-exporter
   namespace: media
   annotations:
-    k8s-sidecar-target-directory: "/tmp/dashboards/apps"
+    grafana_folder: Apps
 data:
   radarr-exporter-dashboard.json: |-
     {

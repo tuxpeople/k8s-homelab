@@ -3,13 +3,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 configMapGenerator:
-  - name: loki-dashboard-ssh-logs1
+  - name: xiaomi-climate
     files:
-      - ssh-logs.json
+      - octoprint.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: Systems
+    grafana_folder: Apps
   labels:
     grafana_dashboard: "1"
