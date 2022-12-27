@@ -169,8 +169,7 @@ spec:
               targetLabel: kubernetes_node
     grafana:
       enabled: false
-      forceDeployDashboards: false
-      defaultDashboardsEnabled: false
+      forceDeployDashboards: true
       sidecar:
         dashboards:
           multicluster:
