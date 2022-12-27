@@ -277,7 +277,7 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "mdi:chart-arc"
       tls:
-        - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+        - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
           hosts:
             - grafana.${SECRET_DOMAIN_ME}
     enabled: true

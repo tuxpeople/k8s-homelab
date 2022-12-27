@@ -15,7 +15,7 @@ metadata:
     hajimari.io/icon: "speedometer"
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
       hosts:
         - speed.${SECRET_DOMAIN_ME}
   rules:

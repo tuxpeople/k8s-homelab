@@ -23,7 +23,7 @@ metadata:
   namespace: jitsi
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
       hosts:
         - meet.${SECRET_DOMAIN_ME}
   rules:

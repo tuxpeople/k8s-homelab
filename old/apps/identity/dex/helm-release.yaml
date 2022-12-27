@@ -48,7 +48,7 @@ spec:
       tls:
         - hosts:
             - sso.${SECRET_DOMAIN_ME}
-          secretName: ${SECRET_DOMAIN_ME/./-}-tls
+          secretName: ${SECRET_DOMAIN_ME//./-}-tls
     env:
       KUBERNETES_POD_NAMESPACE: identity
     config:

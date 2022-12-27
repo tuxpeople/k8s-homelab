@@ -58,6 +58,6 @@ spec:
             paths:
               - /
         tls:
-          - secretName: ${SECRET_DOMAIN_ME/./-}-tls
+          - secretName: ${SECRET_DOMAIN_ME//./-}-tls
             hosts:
               - auth.${SECRET_DOMAIN_ME}

@@ -63,7 +63,7 @@ spec:
               - path: /
                 pathType: Prefix
         tls:
-          - secretName: ${SECRET_DOMAIN_ME/./-}-tls
+          - secretName: ${SECRET_DOMAIN_ME//./-}-tls
             hosts:
               - joplin.${SECRET_DOMAIN_ME}
     service:

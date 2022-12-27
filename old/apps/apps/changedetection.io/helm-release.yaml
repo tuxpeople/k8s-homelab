@@ -61,7 +61,7 @@ spec:
         tls:
           - hosts:
               - change.${SECRET_DOMAIN_ME}
-            secretName: ${SECRET_DOMAIN_ME/./-}-tls
+            secretName: ${SECRET_DOMAIN_ME//./-}-tls
     resources:
       limits:
         cpu: 200m

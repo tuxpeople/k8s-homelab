@@ -64,7 +64,7 @@ spec:
         tls:
           - hosts:
               - todo.${SECRET_DOMAIN_ME}
-            secretName: ${SECRET_DOMAIN_ME/./-}-tls
+            secretName: ${SECRET_DOMAIN_ME//./-}-tls
     resources:
       requests:
         cpu: 100m

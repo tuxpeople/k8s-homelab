@@ -13,7 +13,7 @@ metadata:
     hajimari.io/icon: "printer-3d-nozzle"
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
       hosts:
         - print.${SECRET_DOMAIN_ME}
   rules:

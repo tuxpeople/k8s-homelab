@@ -12,7 +12,7 @@ metadata:
     hajimari.io/icon: "filmstrip"
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+    - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
       hosts:
         - notifiarr.${SECRET_DOMAIN_ME}
   rules:

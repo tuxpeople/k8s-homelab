@@ -137,7 +137,7 @@ spec:
           hajimari.io/appName: "Alert Manager"
           hajimari.io/icon: "mdi:alert-decagram-outline"
         tls:
-          - secretName: "${SECRET_DOMAIN_ME/./-}-tls"
+          - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
             hosts:
               - alertmanager.${SECRET_DOMAIN_ME}
         hosts:
@@ -352,7 +352,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
         tls:
-          - secretName: ${SECRET_DOMAIN_ME/./-}-tls
+          - secretName: ${SECRET_DOMAIN_ME//./-}-tls
             hosts:
               - prometheus.${SECRET_DOMAIN_ME}
         hosts:
