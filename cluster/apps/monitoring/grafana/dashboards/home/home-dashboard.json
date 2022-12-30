@@ -125,7 +125,7 @@
               "uid": "PBFA97CFB590B2093"
             },
             "editorMode": "builder",
-            "expr": "quantile_over_time(.7, xiaomi_temperature[3h])",
+            "expr": "xiaomi_temperature < 50",
             "legendFormat": "{{room}}",
             "range": true,
             "refId": "A"
@@ -218,7 +218,7 @@
               "uid": "PBFA97CFB590B2093"
             },
             "editorMode": "builder",
-            "expr": "quantile_over_time(0.7, xiaomi_humidity[3h])",
+            "expr": "xiaomi_humidity[3h])",
             "legendFormat": "{{room}}",
             "range": true,
             "refId": "A"
