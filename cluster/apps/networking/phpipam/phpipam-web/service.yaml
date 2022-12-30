@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: phpipam
+    component: www
   type: LoadBalancer
   ports:
     - protocol: TCP
