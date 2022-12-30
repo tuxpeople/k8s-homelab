@@ -4,32 +4,75 @@ metadata:
   name: phpipam
   labels:
     app: phpipam
+    component: www
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: phpipam
+      component: www
   template:
     metadata:
       labels:
         app: phpipam
+        component: www
     spec:
       containers:
-        - name: phpipam
-          image: pierrecdn/phpipam:1.16.003
+        - name: phpipam-www
+          image: phpipam/phpipam-www:1.5x
           imagePullPolicy: Always
           ports:
             - containerPort: 80
               protocol: TCP
           env:
-            - name: MYSQL_ENV_MYSQL_USER
-              value: "root"
-            - name: MYSQL_ENV_MYSQL_ROOT_PASSWORD
+            - name: SCAN_INTERVAL
+              value: "5m"
+            - name: IPAM_DATABASE_WEBHOST
+              value: "%"
+            - name: IPAM_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: phpipam-secret
                   key: mysql_root_password
-            - name: MYSQL_ENV_MYSQL_HOST
+            - name: IPAM_DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: phpipam-configmap
+                  key: database_url
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpipam
+  labels:
+    app: phpipam
+    component: cron
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpipam
+      component: cron
+  template:
+    metadata:
+      labels:
+        app: phpipam
+        component: cron
+    spec:
+      containers:
+        - name: phpipam-cron
+          image: phpipam/phpipam-cron:1.5x
+          env:
+            - name: SCAN_INTERVAL
+              value: "5m"
+            - name: IPAM_DATABASE_WEBHOST
+              value: "%"
+            - name: IPAM_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: mysql_root_password
+            - name: IPAM_DATABASE_HOST
               valueFrom:
                 configMapKeyRef:
                   name: phpipam-configmap

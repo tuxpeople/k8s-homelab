@@ -3,17 +3,20 @@ kind: StatefulSet
 metadata:
   name: phpipam-mysql
   labels:
-    app: phpipam-mysql
+    app: phpipam
+    component: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: phpipam-mysql
+      app: phpipam
+      component: mysql
   serviceName: phpipam-mysql
   template:
     metadata:
       labels:
-        app: phpipam-mysql
+        app: phpipam
+        component: mysql
     spec:
       containers:
         - name: phpipam-mysql
