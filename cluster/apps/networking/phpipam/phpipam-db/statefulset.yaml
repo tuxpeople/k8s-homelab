@@ -33,8 +33,8 @@ spec:
                   key: mysql_root_password
           volumeMounts:
             - mountPath: /var/lib/mysql
-              name: phpipam-mysql-volume
+              name: phpipam-data-pvc
           volumes:
-            - name: phpipam-mysql-volume
+            - name: phpipam-data-pvc
               persistentVolumeClaim:
                 claimName: phpipam-data-pvc
