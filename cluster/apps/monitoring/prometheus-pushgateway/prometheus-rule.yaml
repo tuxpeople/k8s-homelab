@@ -1,0 +1,20 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: k8s
+    role: alert-rules
+  name: pushgateway-rules
+  namespace: monitoring
+spec:
+  groups:
+    - name: pushgateway.rules
+      rules:
+        - alert: PushesDelayed
+          expr: time() - push_time_seconds{job="indoorclimate"} > 1800
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Pushgateway pushers are delayed
