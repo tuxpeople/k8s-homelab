@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phpipam
+  name: phpipam-www
   labels:
     app: phpipam
     component: www
@@ -43,7 +43,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phpipam
+  name: phpipam-cron
   labels:
     app: phpipam
     component: cron
