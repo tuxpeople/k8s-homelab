@@ -70,7 +70,7 @@ spec:
           env:
             - name: "TZ"
               value: "Europe/Zurich"
-          image: busybox:1.35.0
+          image: busybox:1.36.0
           command: ["/bin/sh"]
           args: ["-c", "httpd -f -p 8000 -h /docs/"]
           volumeMounts:
