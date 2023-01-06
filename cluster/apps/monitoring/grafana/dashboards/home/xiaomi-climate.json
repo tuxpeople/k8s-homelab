@@ -26,9 +26,107 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 15853,
   "graphTooltip": 0,
+  "id": 44,
   "links": [],
   "liveNow": false,
   "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 67,
+      "panels": [],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-blue",
+                "value": null
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 16
+              },
+              {
+                "color": "dark-green",
+                "value": 18
+              },
+              {
+                "color": "dark-orange",
+                "value": 22
+              },
+              {
+                "color": "dark-red",
+                "value": 26
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "id": 69,
+      "interval": "5m",
+      "maxPerRow": 8,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "9.3.1",
+      "repeat": "Raum",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-prom"
+          },
+          "editorMode": "builder",
+          "expr": "xiaomi_temperature{room=\"$Raum\"}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "$Raum",
+      "type": "stat"
+    },
     {
       "collapsed": false,
       "datasource": {
@@ -39,7 +137,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 5
       },
       "id": 5,
       "panels": [],
@@ -136,7 +234,7 @@
         "h": 7,
         "w": 9,
         "x": 0,
-        "y": 1
+        "y": 6
       },
       "id": 2,
       "interval": "5m",
@@ -233,7 +331,7 @@
         "h": 7,
         "w": 9,
         "x": 9,
-        "y": 1
+        "y": 6
       },
       "id": 3,
       "interval": "5m",
@@ -312,7 +410,7 @@
         "h": 7,
         "w": 3,
         "x": 18,
-        "y": 1
+        "y": 6
       },
       "id": 15,
       "interval": "5m",
@@ -430,7 +528,7 @@
         "h": 7,
         "w": 3,
         "x": 21,
-        "y": 1
+        "y": 6
       },
       "id": 16,
       "interval": "5m",
@@ -528,7 +626,7 @@
         "h": 7,
         "w": 9,
         "x": 0,
-        "y": 8
+        "y": 13
       },
       "id": 19,
       "interval": "5m",
@@ -625,7 +723,7 @@
         "h": 7,
         "w": 9,
         "x": 9,
-        "y": 8
+        "y": 13
       },
       "id": 17,
       "interval": "5m",
@@ -688,7 +786,7 @@
         "h": 7,
         "w": 3,
         "x": 18,
-        "y": 8
+        "y": 13
       },
       "id": 20,
       "interval": "5m",
@@ -785,7 +883,7 @@
         "h": 7,
         "w": 3,
         "x": 21,
-        "y": 8
+        "y": 13
       },
       "id": 18,
       "interval": "5m",
