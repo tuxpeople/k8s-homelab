@@ -650,7 +650,7 @@
             "uid": "grafanacloud-prom"
           },
           "editorMode": "builder",
-          "expr": "xiaomi_battery{room=\"$Raum\"} < 50",
+          "expr": "xiaomi_battery{room=\"$Raum\"} < 101",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
