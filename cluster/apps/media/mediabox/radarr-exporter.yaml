@@ -133,7 +133,7 @@ data:
       "links": [],
       "panels": [
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "mappings": [
@@ -214,7 +214,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "mappings": [
@@ -278,7 +278,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "mappings": [
@@ -343,7 +343,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "mappings": [
@@ -408,7 +408,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "mappings": [
@@ -473,7 +473,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "mappings": [
@@ -536,7 +536,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -601,7 +601,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "mappings": [
@@ -666,7 +666,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "mappings": [
@@ -731,7 +731,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -796,7 +796,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "prometheus",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "color": {
