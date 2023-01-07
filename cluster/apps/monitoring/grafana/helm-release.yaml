@@ -263,7 +263,7 @@ spec:
       - vonage-status-panel
       - grafana-worldmap-panel
       - grafana-clock-panel
-      - singlestat
+      - grafana-singlestat-panel
     serviceMonitor:
       enabled: true
     ingress:
