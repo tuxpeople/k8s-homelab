@@ -327,18 +327,9 @@ spec:
               username: randomuser
               password: examplepassword
             static_configs:
-              - targets: ['192.168.8.101:9100'] # lab1
-                labels:
-                  alias: lab1
-              - targets: ['192.168.8.102:9100'] # lab2
-                labels:
-                  alias: lab2
-              - targets: ['192.168.8.103:9100'] # lab3
-                labels:
-                  alias: lab3
-              # - targets: ['192.168.8.104:9100'] # lab4
-              #   labels:
-              #     alias: lab4
+              - targets: ['192.168.8.101:9100'] # k3s-node01
+              - targets: ['192.168.8.102:9100'] # k3s-node02
+              - targets: ['192.168.8.103:9100'] # k3s-node03
       ingress:
         enabled: true
         pathType: Prefix
