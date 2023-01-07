@@ -294,7 +294,7 @@ spec:
             static_configs:
               - targets: ['speedtest-exporter:9090']
           - job_name: minio-job
-            bearer_token: ${SECRET_MINIO_BEARERTOKEN }
+            bearer_token: ${SECRET_MINIO_BEARERTOKEN}
             metrics_path: /minio/v2/metrics/cluster
             scheme: http
             static_configs:
