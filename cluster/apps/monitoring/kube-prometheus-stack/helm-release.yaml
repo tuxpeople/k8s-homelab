@@ -293,6 +293,12 @@ spec:
             scrape_timeout: 30s
             static_configs:
               - targets: ['speedtest-exporter:9090']
+          - job_name: minio-job
+            bearer_token: ${SECRET_MINIO_BEARERTOKEN }
+            metrics_path: /minio/v2/metrics/cluster
+            scheme: http
+            static_configs:
+              - targets: ['minio.lab.tdeutsch.ch:9091']
           - job_name: mystrom-exporter
             scrape_interval: 30s
             metrics_path: /device
