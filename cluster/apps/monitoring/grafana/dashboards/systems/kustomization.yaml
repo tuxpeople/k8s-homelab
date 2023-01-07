@@ -5,7 +5,7 @@ namespace: monitoring
 configMapGenerator:
   - name: loki-dashboard-ssh-logs1
     files:
-      - ssh-logs.json
+      - ssh-logs-1.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
