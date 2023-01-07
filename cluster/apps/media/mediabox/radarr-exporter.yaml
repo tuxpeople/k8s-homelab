@@ -200,7 +200,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_system_status{job=\"$job\"}",
+              "expr": "radarr_system_status{job=\"$instance\"}",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -263,7 +263,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_movie_missing_total{job=\"$job\"}",
+              "expr": "radarr_movie_missing_total{job=\"$instance\"}",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -328,7 +328,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_queue_total{job=\"$job\"}",
+              "expr": "radarr_queue_total{job=\"$instance\"}",
               "format": "time_series",
               "hide": false,
               "instant": true,
@@ -393,7 +393,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_system_health_issues{job=\"$job\"}",
+              "expr": "radarr_system_health_issues{job=\"$instance\"}",
               "format": "time_series",
               "hide": false,
               "instant": true,
@@ -458,7 +458,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_movie_total{job=\"$job\"}",
+              "expr": "radarr_movie_total{job=\"$instance\"}",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -522,7 +522,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_movie_wanted_total{job=\"$job\"}",
+              "expr": "radarr_movie_wanted_total{job=\"$instance\"}",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -587,7 +587,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "sum(increase(radarr_movie_downloaded_total{job=\"$job\"}[30d]))",
+              "expr": "sum(increase(radarr_movie_downloaded_total{job=\"$instance\"}[30d]))",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -651,7 +651,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_movie_monitored_total{job=\"$job\"}",
+              "expr": "radarr_movie_monitored_total{job=\"$instance\"}",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -716,7 +716,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "radarr_movie_filesize_total{job=\"$job\"}",
+              "expr": "radarr_movie_filesize_total{job=\"$instance\"}",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -782,7 +782,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "sum(increase(radarr_movie_downloaded_total{job=\"$job\"}[7d]))",
+              "expr": "sum(increase(radarr_movie_downloaded_total{job=\"$instance\"}[7d]))",
               "format": "table",
               "instant": true,
               "interval": "",
@@ -840,7 +840,7 @@ data:
           "pluginVersion": "7.5.2",
           "targets": [
             {
-              "expr": "sort_desc(sum(radarr_movie_quality_total{job=\"$job\"}) by (quality))",
+              "expr": "sort_desc(sum(radarr_movie_quality_total{job=\"$instance\"}) by (quality))",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -904,9 +904,9 @@ data:
             "error": null,
             "hide": 0,
             "includeAll": false,
-            "label": "Job",
+            "label": "Instance",
             "multi": false,
-            "name": "job",
+            "name": "instance",
             "options": [
               {
                 "selected": true,
