@@ -369,6 +369,40 @@ spec:
               - action: replace
                 source_labels: [__meta_kubernetes_service_name]
                 target_label: kubernetes_name
+          - job_name: "kubernetes-pods"
+
+            kubernetes_sd_configs:
+              - role: pod
+
+            relabel_configs:
+              # Example relabel to scrape only pods that have
+              # "example.io/should_be_scraped = true" annotation.
+              #  - source_labels: [__meta_kubernetes_pod_annotation_example_io_should_be_scraped]
+              #    action: keep
+              #    regex: true
+              #
+              # Example relabel to customize metric path based on pod
+              # "example.io/metric_path = <metric path>" annotation.
+              #  - source_labels: [__meta_kubernetes_pod_annotation_example_io_metric_path]
+              #    action: replace
+              #    target_label: __metrics_path__
+              #    regex: (.+)
+              #
+              # Example relabel to scrape only single, desired port for the pod
+              # based on pod "example.io/scrape_port = <port>" annotation.
+              #  - source_labels: [__address__, __meta_kubernetes_pod_annotation_example_io_scrape_port]
+              #    action: replace
+              #    regex: ([^:]+)(?::\d+)?;(\d+)
+              #    replacement: $1:$2
+              #    target_label: __address__
+              - action: labelmap
+                regex: __meta_kubernetes_pod_label_(.+)
+              - source_labels: [__meta_kubernetes_namespace]
+                action: replace
+                target_label: namespace
+              - source_labels: [__meta_kubernetes_pod_name]
+                action: replace
+                target_label: pod
       ingress:
         enabled: true
         pathType: Prefix
