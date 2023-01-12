@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: vmware-exporter
-          image: "pryorda/vmware_exporter:latest"
+          image: "pryorda/vmware_exporter:v0.18.4"
           imagePullPolicy: Always
           ports:
             - containerPort: 9272

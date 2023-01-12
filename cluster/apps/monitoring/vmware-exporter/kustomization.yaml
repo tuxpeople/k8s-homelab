@@ -6,5 +6,5 @@ resources:
   - configmap.yaml
   - deployment.yaml
   - secrets.sops.yaml
-  - service-monitor.yaml
-  - service.yaml
+  # - service-monitor.yaml
+  # - service.yaml
