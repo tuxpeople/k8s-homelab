@@ -12,3 +12,4 @@ resources:
   # - ./influxdb
   - ./unifi-poller
   - ./prometheus-pushgateway
+  - vmware-exporter
