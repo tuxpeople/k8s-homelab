@@ -13,3 +13,4 @@ resources:
   - ./unifi-poller
   - ./prometheus-pushgateway
   - vmware-exporter
+  - blackbox-exporter
