@@ -123,7 +123,7 @@ spec:
             severity: critical
           annotations:
             description: |-
-              The SSL certificate for {{"{{ $labels.target }}"}} will expire in less than 3 days
+              The SSL certificate for {{"{{ $labels.instance }}"}} will expire in less than 3 days
         - alert: BlackboxSslCertificateExpired
           expr: probe_ssl_earliest_cert_expiry - time() <= 0
           for: 10m
@@ -131,7 +131,7 @@ spec:
             severity: critical
           annotations:
             description: |-
-              The SSL certificate for {{"{{ $labels.target }}"}} has expired
+              The SSL certificate for {{"{{ $labels.instance }}"}} has expired
         - alert: BlackboxProbeFailed
           expr: probe_success == 0
           for: 10m
@@ -139,10 +139,10 @@ spec:
             severity: critical
           annotations:
             description: |-
-              The host {{"{{ $labels.target }}"}} is currently unreachable
+              The host {{"{{ $labels.instance }}"}} is currently unreachable
         - alert: SlowResponseTime
           annotations:
-            message: The response time for {{"{{ $labels.target }}"}} has been greater than 30 seconds for 5 minutes.
+            message: The response time for {{"{{ $labels.instance }}"}} has been greater than 30 seconds for 5 minutes.
           expr: probe_duration_seconds > 30
           for: 15m
           labels:
@@ -153,4 +153,4 @@ spec:
           labels:
             severity: error
           annotations:
-            message: The HTTP response for {{"{{ $labels.target }}"}} was not a HTTP status code is not 200-399
+            message: The HTTP response for {{"{{ $labels.instance }}"}} was not a HTTP status code is not 200-399
