@@ -336,6 +336,39 @@ spec:
               - targets: ['192.168.8.101:9100'] # k3s-node01
               - targets: ['192.168.8.102:9100'] # k3s-node02
               - targets: ['192.168.8.103:9100'] # k3s-node03
+          - job_name: kubernetes-service-endpoints
+            kubernetes_sd_configs:
+              - {role: service}
+            relabel_configs:
+              - action: keep
+                regex: true
+                source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+              - action: drop
+                regex: (kube-system|prom)
+                source_labels: [__meta_kubernetes_namespace]
+              - action: keep
+                regex: .*metrics
+                source_labels: [__meta_kubernetes_service_port_name]
+              - action: replace
+                regex: (https?)
+                source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
+                target_label: __scheme__
+              - action: replace
+                regex: (.+)
+                source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+                target_label: __metrics_path__
+              - action: replace
+                regex: ([^:]+)(?::\d+)?;(\d+)
+                replacement: $1:$2
+                source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+                target_label: __address__
+              - {action: labelmap, regex: __meta_kubernetes_service_label_(.+)}
+              - action: replace
+                source_labels: [__meta_kubernetes_namespace]
+                target_label: kubernetes_namespace
+              - action: replace
+                source_labels: [__meta_kubernetes_service_name]
+                target_label: kubernetes_name
       ingress:
         enabled: true
         pathType: Prefix
