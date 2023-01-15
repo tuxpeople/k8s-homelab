@@ -34,7 +34,7 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: phpipam-data-pvc
-          volumes:
-            - name: phpipam-data-pvc
-              persistentVolumeClaim:
-                claimName: phpipam-data-pvc
+      volumes:
+        - name: phpipam-data-pvc
+          persistentVolumeClaim:
+            claimName: phpipam-data-pvc
