@@ -27,7 +27,7 @@ spec:
               protocol: TCP
           env:
             - name: MYSQL_ROOT_HOST
-              value: "10.42.*.*"
+              value: "%"
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
