@@ -25,6 +25,8 @@ spec:
             - containerPort: 80
               protocol: TCP
           env:
+            - name: TZ
+              value: ${LOCAL_TIMEZONE}
             - name: IPAM_DATABASE_NAME
               valueFrom:
                 secretKeyRef:
@@ -69,6 +71,8 @@ spec:
         - name: phpipam-cron
           image: phpipam/phpipam-cron:1.5x
           env:
+            - name: TZ
+              value: ${LOCAL_TIMEZONE}
             - name: SCAN_INTERVAL
               value: "1h"
             - name: IPAM_DATABASE_NAME

@@ -38,7 +38,7 @@ spec:
       type: Recreate
 
     env:
-      TZ: "Europe/Zurich"
+      TZ: "${LOCAL_TIMEZONE}"
       DOCKER_MODS: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:universal-git"
 
     service:

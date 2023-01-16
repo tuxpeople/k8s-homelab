@@ -11,6 +11,7 @@ data:
   METALLB_SYSLOG_ADDR: 192.168.8.84
   METALLB_K8S_GATEWAY_ADDR: 192.168.8.85
   METALLB_SMTP_ADDR: 192.168.8.86
+  LOCAL_TIMEZONE: Europe/Zurich
 kind: ConfigMap
 metadata:
   name: cluster-settings
