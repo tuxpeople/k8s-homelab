@@ -11,7 +11,8 @@ spec:
     matchLabels:
       app: phpipam
       component: mysql
-  serviceName: phpipam-mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -20,14 +21,12 @@ spec:
     spec:
       containers:
         - name: phpipam-mysql
-          image: mysql:8.0
+          image: mariadb:10.9.4
           imagePullPolicy: Always
           ports:
             - containerPort: 3306
-              protocol: TCP
+              name: mysql
           env:
-            - name: MYSQL_ROOT_HOST
-              value: "%"
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
