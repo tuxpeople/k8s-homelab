@@ -34,8 +34,9 @@ spec:
     image:
       repository: transloadit/companion
       tag: 4.1.1
-    strategy:
-      type: Recreate
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
     service:
       main:
         ports:
