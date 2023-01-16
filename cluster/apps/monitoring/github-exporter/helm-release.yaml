@@ -26,7 +26,7 @@ spec:
       nameOverride: *app
     image:
       repository: promhippie/github-exporter
-      tag: 1.0.0
+      tag: 1.2.0
     strategy:
       type: Recreate
     service:
