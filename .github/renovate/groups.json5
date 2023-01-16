@@ -13,7 +13,7 @@
     {
       "description": "K3S",
       "groupName": "k3s",
-      "matchPackagePatterns": ["k3s"],
+      "matchPackagePatterns": ["k3s-io/k3s"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       }
