@@ -52,3 +52,16 @@ spec:
     serviceMonitor:
       main:
         enabled: true
+    probes:
+      liveness:
+        enabled: true
+        type: httpGet
+        spec:
+          path: /healthz
+          port: http
+      readiness:
+        enabled: true
+        type: httpGet
+        spec:
+          path: /healthz
+          port: http
