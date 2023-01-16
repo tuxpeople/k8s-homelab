@@ -40,7 +40,7 @@ spec:
     persistence:
       healthcheck:
         enabled: true
-        type: emptydir
+        type: uppy-data
         mountPath: /mnt/companion-data
     resources:
       requests:
