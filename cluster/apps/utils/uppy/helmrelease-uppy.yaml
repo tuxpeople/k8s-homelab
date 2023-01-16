@@ -51,7 +51,7 @@ spec:
         type: pvc
         accessMode: ReadWriteOnce
         size: 5Gi
-        mountPath: /mnt/companion-data
+        mountPath: /data
     resources:
       requests:
         cpu: 34m
