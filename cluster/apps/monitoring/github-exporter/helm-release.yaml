@@ -38,10 +38,6 @@ spec:
         ports:
           metrics:
             port: 9504
-    persistence:
-      healthcheck:
-        enabled: true
-        type: emptydir
     resources:
       requests:
         cpu: 34m

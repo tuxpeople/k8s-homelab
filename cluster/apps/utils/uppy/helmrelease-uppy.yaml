@@ -42,9 +42,11 @@ spec:
           http:
             port: 3020
     persistence:
-      healthcheck:
+      uppy-data:
         enabled: true
-        type: uppy-data
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
         mountPath: /mnt/companion-data
     resources:
       requests:
