@@ -14,3 +14,4 @@ resources:
   - ./prometheus-pushgateway
   - vmware-exporter
   - blackbox-exporter
+  - github-exporter
