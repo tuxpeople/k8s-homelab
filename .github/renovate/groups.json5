@@ -11,6 +11,14 @@
       "separateMinorPatch": true
     },
     {
+      "description": "K3S",
+      "groupName": "k3s",
+      "matchPackagePatterns": ["k3s"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
+    },
+    {
       "description": "Cert-Manager image (for CRDs) and chart",
       "groupName": "Cert-Manager",
       "matchPackagePatterns": ["cert-manager"],
