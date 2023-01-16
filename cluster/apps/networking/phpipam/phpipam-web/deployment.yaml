@@ -27,6 +27,8 @@ spec:
           env:
             - name: TZ
               value: ${LOCAL_TIMEZONE}
+            - name: IPAM_DATABASE_WEBHOST
+              value: "%"
             - name: IPAM_DATABASE_NAME
               valueFrom:
                 secretKeyRef:
