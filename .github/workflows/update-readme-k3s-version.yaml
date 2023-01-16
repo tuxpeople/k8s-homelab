@@ -28,8 +28,7 @@ jobs:
       - name: Get used k3s version
         if: steps.changed-plan.outputs.any_changed == 'true'
         run:
-          VERSION=$(grep "version:" ${{ env.PLAN_FILE }} | cut -d'"' -f2 | cut -d'+' -f1)
-          echo "k3sversion=${VERSION}" >> $GITHUB_ENV
+          echo "k3sversion=$(grep "version:" ${{ env.PLAN_FILE }} | cut -d'"' -f2 | cut -d'+' -f1)" >> $GITHUB_ENV
       - name: Readme Download Button Action
         if: steps.changed-plan.outputs.any_changed == 'true'
         env:
