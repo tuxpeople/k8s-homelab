@@ -44,7 +44,7 @@ spec:
             port: 3020
     envFrom:
       - secretRef:
-        name: companion-env
+          name: companion-env
     persistence:
       uppy-data:
         enabled: true
