@@ -1,0 +1,94 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app redis
+spec:
+  interval: 15m
+  timeout: 10m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  test:
+    enable: false # Enable helm test
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    global:
+      nameOverride: *app
+    image:
+      repository: redis
+      tag: 7.0.7-alpine
+    controller:
+      type: statefulset
+    service:
+      main:
+        ports:
+          http:
+            port: 6379
+    command:
+      - sh
+    args:
+      - -c
+      - >-
+        redis-server
+    persistence:
+      healthcheck:
+        enabled: true
+        type: custom
+        mountPath: /health
+        volumeSpec:
+          configMap:
+            name: redis-healthcheck
+            defaultMode: 0755
+    probes:
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+              - sh
+              - -c
+              - /health/ping_liveness.sh 5
+          initialDelaySeconds: 5
+          timeoutSeconds: 6
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+      readiness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+              - sh
+              - -c
+              - /health/ping_readiness.sh 1
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+    resources:
+      requests:
+        cpu: 34m
+        memory: 204Mi
+      limits:
+        memory: 241Mi
+    env:
+      REDIS_PORT: "6379"
