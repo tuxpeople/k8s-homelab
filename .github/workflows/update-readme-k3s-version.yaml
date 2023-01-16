@@ -42,8 +42,8 @@ jobs:
           BEGIN_TAG: "<!-- BEGIN K3S BADGE -->"
           END_TAG: "<!-- END K3S BADGE -->"
         run: |
-          UPDATE=$(cat README.md | perl -0777 -pe 's#(${{ env.BEGIN_TAG }})(?:.|\n)*?(${{ env.END_TAG }})#${1}[![k3s](${{ env.BASE_URL }}-${{ env.VERSION }}-${{ env.COLOR }}?style=${{ env.SYTLE }}&logo=${{ env.LOGO }}&logoColor=${{ env.LOGO_COLOR }})](https://k3s.io/)${2}#g')
-          echo "${UPDATE}" > README.md
+          UPDATE=$(cat readme.md | perl -0777 -pe 's#(${{ env.BEGIN_TAG }})(?:.|\n)*?(${{ env.END_TAG }})#${1}[![k3s](${{ env.BASE_URL }}-${{ env.VERSION }}-${{ env.COLOR }}?style=${{ env.SYTLE }}&logo=${{ env.LOGO }}&logoColor=${{ env.LOGO_COLOR }})](https://k3s.io/)${2}#g')
+          echo "${UPDATE}" > readme.md
       - uses: EndBug/add-and-commit@v9
         if: steps.changed-plan.outputs.any_changed == 'true'
         with:
