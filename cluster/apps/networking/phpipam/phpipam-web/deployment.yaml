@@ -25,19 +25,25 @@ spec:
             - containerPort: 80
               protocol: TCP
           env:
-            - name: SCAN_INTERVAL
-              value: "5m"
-            - name: IPAM_DATABASE_WEBHOST
-              value: "%"
-            - name: IPAM_DATABASE_PASSWORD
+            - name: IPAM_DATABASE_NAME
               valueFrom:
                 secretKeyRef:
                   name: phpipam-secret
-                  key: mysql_root_password
+                  key: dbname
+            - name: IPAM_DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: dbuser
+            - name: IPAM_DATABASE_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: dbpassword
             - name: IPAM_DATABASE_HOST
               valueFrom:
-                configMapKeyRef:
-                  name: phpipam-configmap
+                secretKeyRef:
+                  name: phpipam-secret
                   key: database_url
 ---
 apiVersion: apps/v1
@@ -64,16 +70,24 @@ spec:
           image: phpipam/phpipam-cron:1.5x
           env:
             - name: SCAN_INTERVAL
-              value: "5m"
-            - name: IPAM_DATABASE_WEBHOST
-              value: "%"
-            - name: IPAM_DATABASE_PASSWORD
+              value: "1h"
+            - name: IPAM_DATABASE_NAME
               valueFrom:
                 secretKeyRef:
                   name: phpipam-secret
-                  key: mysql_root_password
+                  key: dbname
+            - name: IPAM_DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: dbuser
+            - name: IPAM_DATABASE_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: dbpassword
             - name: IPAM_DATABASE_HOST
               valueFrom:
-                configMapKeyRef:
-                  name: phpipam-configmap
+                secretKeyRef:
+                  name: phpipam-secret
                   key: database_url

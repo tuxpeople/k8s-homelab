@@ -27,11 +27,28 @@ spec:
             - containerPort: 3306
               name: mysql
           env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: dbname
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: dbuser
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: phpipam-secret
+                  key: dbpassword
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: phpipam-secret
-                  key: mysql_root_password
+                  key: dbrootpassword
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
+              value: 'yes'
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: phpipam-data-pvc
