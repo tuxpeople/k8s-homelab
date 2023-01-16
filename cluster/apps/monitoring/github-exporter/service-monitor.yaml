@@ -1,0 +1,16 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: github-exporter
+  name: github-exporter
+spec:
+  endpoints:
+    - interval: 5m
+      path: "/metrics"
+      port: 9504
+      scrapeTimeout: 1m
+  selector:
+    matchLabels:
+      app: github-exporter
