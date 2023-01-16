@@ -49,3 +49,6 @@ spec:
       GITHUB_EXPORTER_LOG_PRETTY: true
       GITHUB_EXPORTER_ORG: tuxpeople
       GITHUB_EXPORTER_REPO: tuxpeople/k8s-homelab
+    serviceMonitor:
+      main:
+        enabled: true
