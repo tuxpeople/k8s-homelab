@@ -36,7 +36,7 @@ spec:
     service:
       main:
         ports:
-          metrics:
+          http:
             port: 9504
     resources:
       requests:
