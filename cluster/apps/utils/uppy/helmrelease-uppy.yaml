@@ -41,6 +41,7 @@ spec:
       healthcheck:
         enabled: true
         type: emptydir
+        mountPath: /mnt/companion-data
     resources:
       requests:
         cpu: 34m
