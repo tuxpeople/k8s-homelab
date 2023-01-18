@@ -183,6 +183,14 @@ spec:
           gnetId: 13502
           revision: 10
           datasource: Prometheus
+        sonarrv3:
+          gnetId: 12530
+          revision: 2
+          datasource: Prometheus
+        radarrv3:
+          gnetId: 12896
+          revision: 1
+          datasource: Prometheus
       gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
