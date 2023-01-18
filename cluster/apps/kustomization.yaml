@@ -12,4 +12,3 @@ resources:
   - ./octoprint
   - ./media
   - ./kyverno
-  - ./utils
