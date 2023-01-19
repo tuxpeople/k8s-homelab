@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: phpipam-mysql
-          image: mysql:8.0.31
+          image: mysql:8.0.32
           imagePullPolicy: Always
           ports:
             - containerPort: 3306
