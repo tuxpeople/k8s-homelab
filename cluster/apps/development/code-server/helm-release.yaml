@@ -40,7 +40,10 @@ spec:
     env:
       TZ: "${LOCAL_TIMEZONE}"
       PASSWORD: "${CODESERVER_PASSWORD}"
-      DOCKER_MODS: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:universal-git"
+      DOCKER_MODS: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:code-server-terraform|linuxserver/mods:universal-git|linuxserver/mods:tshoot|linuxserver/mods:universal-package-install"
+      # INSTALL_PACKAGES: "rsync|git|nginx"
+      # INSTALL_PIP_PACKAGES: "apprise"
+
 
     service:
       main:
