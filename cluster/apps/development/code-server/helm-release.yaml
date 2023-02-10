@@ -83,7 +83,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: pvc
+        type: emptyDir
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /config
