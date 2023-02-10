@@ -29,9 +29,9 @@ spec:
     recreate: true
   values:
     image:
-      repository: ghcr.io/coder/code-server
+      repository: ghcr.io/linuxserver/code-server
       pullPolicy: Always
-      # renovate: datasource=docker depName=ghcr.io/coder/code-server
+      # renovate: datasource=docker depName=ghcr.io/linuxserver/code-server
       tag: 4.9.1
 
     strategy:
