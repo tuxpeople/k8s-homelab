@@ -32,7 +32,7 @@ spec:
             defaultMode: 0755
       containers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync/git-sync:v3.6.3
+          image: k8s.gcr.io/git-sync/git-sync:v3.6.4
           env:
             - name: "TZ"
               value: "${LOCAL_TIMEZONE}"
