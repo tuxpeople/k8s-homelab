@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ env.BRANCH_NAME }}
-      - uses: tj-actions/changed-files@db3ea27a0cf07135175be5efe7aaf84df6e0e6f0 # v35
+      - uses: tj-actions/changed-files@7f2aa19bdcf4a00195671e368091a1e32a694ac5 # v35
         id: changed-plan
         with:
           files: ${{ env.PLAN_FILE }}
