@@ -108,7 +108,7 @@ jobs:
         echo "::set-output name=message::$(echo "$message" | jq --raw-input --slurp)"
 
     - name: Create comment
-      uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808 # v2
+      uses: peter-evans/create-or-update-comment@67dcc547d311b736a8e6c5c236542148a47adc3d # v2
       with:
         issue-number: ${{ github.event.pull_request.number }}
         body: "${{ fromJSON(steps.diff.outputs.message) }}"
