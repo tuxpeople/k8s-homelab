@@ -14,7 +14,7 @@ ansible-galaxy install -r requirements.yaml --ignore-errors
 
 step "Prepare/Update KUBE-VIP"
 curl -sL https://kube-vip.io/manifests/rbac.yaml > files/rbac.yaml
-export VIP=192.168.8.222
+export VIP=192.168.8.100
 export INTERFACE=ens192
 curl -sL kube-vip.io/k3s | vipAddress=$VIP vipInterface=$INTERFACE sh > files/vip.yaml
 git add files/vip.yaml files/rbac.yaml

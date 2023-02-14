@@ -35,5 +35,5 @@ spec:
     keepalived:
       vrrpInterfaceName: ens192
       vipInterfaceName: ens192
-      vipAddressCidr: 192.168.8.222/24
+      vipAddressCidr: 192.168.8.100/24
       checkServiceUrl: http://localhost:80/ping
