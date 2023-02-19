@@ -25,6 +25,29 @@ metadata:
   namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    meta.helm.sh/release-name: cilium
+    meta.helm.sh/release-namespace: kube-system
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: cilium
+    helm.toolkit.fluxcd.io/name: cilium
+    helm.toolkit.fluxcd.io/namespace: kube-system
+  name: cilium-config-agent
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   annotations:
@@ -32,6 +55,7 @@ metadata:
     meta.helm.sh/release-namespace: kube-system
   labels:
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: cilium
     helm.toolkit.fluxcd.io/name: cilium
     helm.toolkit.fluxcd.io/namespace: kube-system
   name: cilium
@@ -75,12 +99,11 @@ rules:
 - apiGroups:
   - cilium.io
   resources:
-  - ciliumbgploadbalancerippools
+  - ciliumloadbalancerippools
   - ciliumbgppeeringpolicies
   - ciliumclusterwideenvoyconfigs
   - ciliumclusterwidenetworkpolicies
   - ciliumegressgatewaypolicies
-  - ciliumegressnatpolicies
   - ciliumendpoints
   - ciliumendpointslices
   - ciliumenvoyconfigs
@@ -88,6 +111,7 @@ rules:
   - ciliumlocalredirectpolicies
   - ciliumnetworkpolicies
   - ciliumnodes
+  - ciliumnodeconfigs
   verbs:
   - list
   - watch
@@ -138,6 +162,7 @@ metadata:
     meta.helm.sh/release-namespace: kube-system
   labels:
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: cilium
     helm.toolkit.fluxcd.io/name: cilium
     helm.toolkit.fluxcd.io/namespace: kube-system
   name: cilium-operator
@@ -179,6 +204,7 @@ rules:
   - services/status
   verbs:
   - update
+  - patch
 - apiGroups:
   - ""
   resources:
@@ -261,6 +287,7 @@ rules:
   - list
   - watch
   - delete
+  - patch
 - apiGroups:
   - apiextensions.k8s.io
   resources:
@@ -273,12 +300,11 @@ rules:
 - apiGroups:
   - apiextensions.k8s.io
   resourceNames:
-  - ciliumbgploadbalancerippools.cilium.io
+  - ciliumloadbalancerippools.cilium.io
   - ciliumbgppeeringpolicies.cilium.io
   - ciliumclusterwideenvoyconfigs.cilium.io
   - ciliumclusterwidenetworkpolicies.cilium.io
   - ciliumegressgatewaypolicies.cilium.io
-  - ciliumegressnatpolicies.cilium.io
   - ciliumendpoints.cilium.io
   - ciliumendpointslices.cilium.io
   - ciliumenvoyconfigs.cilium.io
@@ -287,10 +313,25 @@ rules:
   - ciliumlocalredirectpolicies.cilium.io
   - ciliumnetworkpolicies.cilium.io
   - ciliumnodes.cilium.io
+  - ciliumnodeconfigs.cilium.io
   resources:
   - customresourcedefinitions
   verbs:
   - update
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumloadbalancerippools
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumloadbalancerippools/status
+  verbs:
+  - patch
 - apiGroups:
   - coordination.k8s.io
   resources:
@@ -301,6 +342,28 @@ rules:
   - update
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    meta.helm.sh/release-name: cilium
+    meta.helm.sh/release-namespace: kube-system
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: cilium
+    helm.toolkit.fluxcd.io/name: cilium
+    helm.toolkit.fluxcd.io/namespace: kube-system
+  name: cilium-config-agent
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cilium-config-agent
+subjects:
+- kind: ServiceAccount
+  name: cilium
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   annotations:
@@ -308,6 +371,7 @@ metadata:
     meta.helm.sh/release-namespace: kube-system
   labels:
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: cilium
     helm.toolkit.fluxcd.io/name: cilium
     helm.toolkit.fluxcd.io/namespace: kube-system
   name: cilium
@@ -328,6 +392,7 @@ metadata:
     meta.helm.sh/release-namespace: kube-system
   labels:
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: cilium
     helm.toolkit.fluxcd.io/name: cilium
     helm.toolkit.fluxcd.io/namespace: kube-system
   name: cilium-operator
@@ -359,6 +424,7 @@ data:
   cluster-pool-ipv4-mask-size: "24"
   custom-cni-conf: "false"
   debug: "false"
+  debug-verbose: ""
   disable-cnp-status-updates: "true"
   disable-endpoint-crd: "false"
   enable-auto-protect-node-port-range: "true"
@@ -370,6 +436,7 @@ data:
   enable-ipv4: "true"
   enable-ipv4-masquerade: "true"
   enable-ipv6: "false"
+  enable-ipv6-big-tcp: "false"
   enable-ipv6-masquerade: "true"
   enable-k8s-terminating-endpoint: "true"
   enable-l2-neigh-discovery: "true"
@@ -377,12 +444,14 @@ data:
   enable-local-redirect-policy: "false"
   enable-policy: default
   enable-remote-node-identity: "true"
+  enable-sctp: "false"
   enable-svc-source-range-check: "true"
   enable-vtep: "false"
   enable-well-known-identities: "false"
   enable-xt-socket-fallback: "true"
-  host-reachable-services-protos: null
   identity-allocation-mode: crd
+  identity-gc-interval: 15m0s
+  identity-heartbeat-timeout: 30m0s
   install-iptables-rules: "true"
   install-no-conntrack-iptables-rules: "false"
   ipam: cluster-pool
@@ -434,6 +503,8 @@ metadata:
     meta.helm.sh/release-namespace: kube-system
   labels:
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: cilium-operator
+    app.kubernetes.io/part-of: cilium
     helm.toolkit.fluxcd.io/name: cilium
     helm.toolkit.fluxcd.io/namespace: kube-system
     io.cilium/app: operator
@@ -461,6 +532,8 @@ spec:
         meta.helm.sh/release-namespace: kube-system
       labels:
         app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: cilium-operator
+        app.kubernetes.io/part-of: cilium
         helm.toolkit.fluxcd.io/name: cilium
         helm.toolkit.fluxcd.io/namespace: kube-system
         io.cilium/app: operator
@@ -503,7 +576,7 @@ spec:
           value: 192.168.8.100
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/operator-generic:v1.12.6@sha256:eec4430d222cb2967d42d3b404d2606e66468de47ae85e0a3ca3f58f00a5e017
+        image: quay.io/cilium/operator-generic:v1.13.0@sha256:4b58d5b33e53378355f6e8ceb525ccf938b7b6f5384b35373f1f46787467ebf5
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -542,6 +615,8 @@ metadata:
     meta.helm.sh/release-namespace: kube-system
   labels:
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: cilium-agent
+    app.kubernetes.io/part-of: cilium
     helm.toolkit.fluxcd.io/name: cilium
     helm.toolkit.fluxcd.io/namespace: kube-system
     k8s-app: cilium
@@ -565,6 +640,8 @@ spec:
         meta.helm.sh/release-namespace: kube-system
       labels:
         app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: cilium-agent
+        app.kubernetes.io/part-of: cilium
         helm.toolkit.fluxcd.io/name: cilium
         helm.toolkit.fluxcd.io/namespace: kube-system
         k8s-app: cilium
@@ -610,7 +687,7 @@ spec:
           value: 192.168.8.100
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.12.6@sha256:454134506b0448c756398d3e8df68d474acde2a622ab58d0c7e8b272b5867d0d
+        image: quay.io/cilium/cilium:v1.13.0@sha256:6544a3441b086a2e09005d3e21d1a4afb216fae19c5a60b35793c8a9438f8f68
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -701,16 +778,40 @@ spec:
         - mountPath: /var/lib/cilium/clustermesh
           name: clustermesh-secrets
           readOnly: true
-        - mountPath: /tmp/cilium/config-map
-          name: cilium-config-path
-          readOnly: true
         - mountPath: /lib/modules
           name: lib-modules
           readOnly: true
         - mountPath: /run/xtables.lock
           name: xtables-lock
+        - mountPath: /tmp
+          name: tmp
       hostNetwork: true
       initContainers:
+      - command:
+        - cilium
+        - build-config
+        env:
+        - name: K8S_NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: CILIUM_K8S_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.8.100
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
+        image: quay.io/cilium/cilium:v1.13.0@sha256:6544a3441b086a2e09005d3e21d1a4afb216fae19c5a60b35793c8a9438f8f68
+        imagePullPolicy: IfNotPresent
+        name: config
+        terminationMessagePolicy: FallbackToLogsOnError
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
       - command:
         - sh
         - -ec
@@ -723,7 +824,7 @@ spec:
           value: /run/cilium/cgroupv2
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.12.6@sha256:454134506b0448c756398d3e8df68d474acde2a622ab58d0c7e8b272b5867d0d
+        image: quay.io/cilium/cilium:v1.13.0@sha256:6544a3441b086a2e09005d3e21d1a4afb216fae19c5a60b35793c8a9438f8f68
         imagePullPolicy: IfNotPresent
         name: mount-cgroup
         securityContext:
@@ -753,7 +854,7 @@ spec:
         env:
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.12.6@sha256:454134506b0448c756398d3e8df68d474acde2a622ab58d0c7e8b272b5867d0d
+        image: quay.io/cilium/cilium:v1.13.0@sha256:6544a3441b086a2e09005d3e21d1a4afb216fae19c5a60b35793c8a9438f8f68
         imagePullPolicy: IfNotPresent
         name: apply-sysctl-overwrites
         securityContext:
@@ -779,7 +880,7 @@ spec:
         - /bin/bash
         - -c
         - --
-        image: quay.io/cilium/cilium:v1.12.6@sha256:454134506b0448c756398d3e8df68d474acde2a622ab58d0c7e8b272b5867d0d
+        image: quay.io/cilium/cilium:v1.13.0@sha256:6544a3441b086a2e09005d3e21d1a4afb216fae19c5a60b35793c8a9438f8f68
         imagePullPolicy: IfNotPresent
         name: mount-bpf-fs
         securityContext:
@@ -797,7 +898,7 @@ spec:
             echo "Waiting on node-init to run...";
             sleep 1;
           done
-        image: quay.io/cilium/cilium:v1.12.6@sha256:454134506b0448c756398d3e8df68d474acde2a622ab58d0c7e8b272b5867d0d
+        image: quay.io/cilium/cilium:v1.13.0@sha256:6544a3441b086a2e09005d3e21d1a4afb216fae19c5a60b35793c8a9438f8f68
         imagePullPolicy: IfNotPresent
         name: wait-for-node-init
         terminationMessagePolicy: FallbackToLogsOnError
@@ -823,7 +924,7 @@ spec:
           value: 192.168.8.100
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
-        image: quay.io/cilium/cilium:v1.12.6@sha256:454134506b0448c756398d3e8df68d474acde2a622ab58d0c7e8b272b5867d0d
+        image: quay.io/cilium/cilium:v1.13.0@sha256:6544a3441b086a2e09005d3e21d1a4afb216fae19c5a60b35793c8a9438f8f68
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
         resources:
@@ -861,6 +962,8 @@ spec:
       tolerations:
       - operator: Exists
       volumes:
+      - emptyDir: {}
+        name: tmp
       - hostPath:
           path: /var/run/cilium
           type: DirectoryOrCreate
@@ -901,9 +1004,6 @@ spec:
           defaultMode: 256
           optional: true
           secretName: cilium-clustermesh
-      - configMap:
-          name: cilium-config
-        name: cilium-config-path
       - hostPath:
           path: /proc/sys/net
           type: Directory
@@ -926,6 +1026,8 @@ metadata:
   labels:
     app: cilium-node-init
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: cilium-node-init
+    app.kubernetes.io/part-of: cilium
     helm.toolkit.fluxcd.io/name: cilium
     helm.toolkit.fluxcd.io/namespace: kube-system
   name: cilium-node-init
@@ -946,6 +1048,8 @@ spec:
       labels:
         app: cilium-node-init
         app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: cilium-node-init
+        app.kubernetes.io/part-of: cilium
         helm.toolkit.fluxcd.io/name: cilium
         helm.toolkit.fluxcd.io/namespace: kube-system
     spec:
