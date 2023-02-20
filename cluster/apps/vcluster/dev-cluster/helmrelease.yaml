@@ -37,8 +37,6 @@ spec:
       nodes:
         enabled: true
         syncAllNodes: true
-      ingresses:
-        enabled: true
 
     # Enable HA mode
     enableHA: true
@@ -46,7 +44,7 @@ spec:
     syncer:
       replicas: 3
       extraArgs:
-        - --tls-san=staging-vcluster.${SECRET_DOMAIN_ME}
+        - --tls-san=dev-cluster.${SECRET_DOMAIN_ME}
       securityContext:
         allowPrivilegeEscalation: false
         capabilities:
@@ -107,7 +105,7 @@ spec:
 
     # Scale up DNS server
     coredns:
-      replicas: 1
+      replicas: 3
       securityContext:
         allowPrivilegeEscalation: false
         capabilities:
@@ -131,15 +129,15 @@ spec:
           requests.cpu: 10
           requests.memory: 20Gi
           requests.storage: "100Gi"
-          requests.ephemeral-storage: "200Gi"
+          requests.ephemeral-storage: 60Gi
           limits.cpu: 20
           limits.memory: 40Gi
-          limits.ephemeral-storage: "200Gi"
+          limits.ephemeral-storage: 160Gi
           services.nodeports: 20
-          services.loadbalancers: 2
+          services.loadbalancers: 20
           count/endpoints: 40
-          count/pods: 30
-          count/services: 40
+          count/pods: 20
+          count/services: 20
           count/secrets: 100
           count/configmaps: 100
           count/persistentvolumeclaims: 20
@@ -150,11 +148,11 @@ spec:
       limitRange:
         enabled: true
         default:
-          ephemeral-storage: 2Gi
+          ephemeral-storage: 8Gi
           memory: 512Mi
-          cpu: "300m"
+          cpu: "1"
         defaultRequest:
-          ephemeral-storage: 1Gi
+          ephemeral-storage: 3Gi
           memory: 128Mi
           cpu: 100m
 
@@ -170,11 +168,15 @@ spec:
               - 172.16.0.0/12
               - 192.168.0.0/16
 
-    # service:
-    #   type: LoadBalancer
-    #   loadBalancerIP: ${LB_VCLUSTER_IP}
     ingress:
-      enabled: false
+      enabled: true
+      host: dev-cluster.${SECRET_DOMAIN_ME}
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        external-dns/is-public: "true"
+        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+        hajimari.io/enable: "true"
 
     # securityContext:
     #   runAsUser: 12345
