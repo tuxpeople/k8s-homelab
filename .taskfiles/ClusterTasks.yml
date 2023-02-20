@@ -28,7 +28,6 @@ tasks:
       - flux reconcile kustomization external-secrets-crds
       - flux reconcile kustomization external-snapshotter-crds
       - flux reconcile kustomization kube-prometheus-stack-crds
-      - flux reconcile kustomization kyverno-crds
       - flux reconcile kustomization traefik-crds
       - flux reconcile kustomization base
       - flux reconcile kustomization apps
