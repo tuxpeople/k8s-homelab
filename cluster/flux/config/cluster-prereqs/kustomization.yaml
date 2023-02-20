@@ -7,6 +7,5 @@ resources:
   - external-secrets.yaml
   - external-snapshotter.yaml
   - kube-prometheus-stack.yaml
-  - kyverno.yaml
   - metallb.yaml
   - traefik.yaml
