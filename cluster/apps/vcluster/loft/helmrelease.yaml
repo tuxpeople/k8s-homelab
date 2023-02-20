@@ -37,19 +37,17 @@ spec:
 
     ingress:
       enabled: true
-      hosts:
-        - loft.${SECRET_DOMAIN_ME}
+      host: loft.${SECRET_DOMAIN_ME}
+      ingressClass: traefik
       annotations:
-        kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.tls: "true"
         external-dns/is-public: "true"
         external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
         hajimari.io/enable: "true"
         hajimari.io/icon: "mdi:chart-arc"
       tls:
-        - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
-          hosts:
-            - loft.${SECRET_DOMAIN_ME}
+        enabled: true
+        secret: "${SECRET_DOMAIN_ME//./-}-tls"
 
         # audit
     audit:
