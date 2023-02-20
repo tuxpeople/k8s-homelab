@@ -55,5 +55,5 @@ spec:
 
     config:
       audit:
-        level: '1'
+        enabled: true
       loftHost: "https://loft.${SECRET_DOMAIN_ME}"
