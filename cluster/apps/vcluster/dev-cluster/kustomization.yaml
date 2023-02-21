@@ -10,6 +10,7 @@ patchesJSON6902:
       version: v1
       kind: Service
       name: dev-cluster
+      namespace: vcluster
     patch: |-
       - op: add
         path: /metadata/annotations/external-dns~1is-public
