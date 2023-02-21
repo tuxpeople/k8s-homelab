@@ -50,6 +50,7 @@ spec:
     domainFilters:
       - "${SECRET_DOMAIN_ME}"
       - "${SECRET_DOMAIN_CH}"
+      - "${SECRET_DOMAIN_K8S}"
     resources:
       requests:
         memory: 100Mi
