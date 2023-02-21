@@ -12,9 +12,9 @@ patchesJSON6902:
       name: dev-cluster
       namespace: vcluster
     patch: |-
+      - op: replace
+        path: /metadata/annotations/external-dns.alpha.kubernetes.io~1target
+        value: ${SECRET_DOMAIN_TARGET_SKY}
       - op: add
         path: /metadata/annotations/external-dns~1is-public
         value: "true"
-      - op: add
-        path: /metadata/annotations/external-dns.alpha.kubernetes.io~1target
-        value: "${SECRET_DOMAIN_TARGET_SKY}"
