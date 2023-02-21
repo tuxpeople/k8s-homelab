@@ -37,7 +37,7 @@ spec:
 
     ingress:
       enabled: true
-      host: loft.${SECRET_DOMAIN_ME}
+      host: loft.${SECRET_DOMAIN_K8S}
       ingressClass: traefik
       annotations:
         traefik.ingress.kubernetes.io/router.tls: "true"
@@ -47,7 +47,7 @@ spec:
         hajimari.io/icon: "mdi:chart-arc"
       tls:
         enabled: true
-        secret: "${SECRET_DOMAIN_ME//./-}-tls"
+        secret: "${SECRET_DOMAIN_K8S//./-}-tls"
 
         # audit
     audit:
@@ -56,4 +56,4 @@ spec:
     config:
       audit:
         enabled: true
-      loftHost: "https://loft.${SECRET_DOMAIN_ME}"
+      loftHost: "https://loft.${SECRET_DOMAIN_K8S}"
