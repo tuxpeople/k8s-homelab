@@ -7,7 +7,6 @@ resources:
 
 patchesJSON6902:
   - target:
-      group: core
       version: v1
       kind: Service
       name: dev-cluster
