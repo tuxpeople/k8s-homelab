@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: dev-cluster-ingressroute
+  namespace: vcluster
+
+spec:
+  routes:
+    - match: "HostSNI(`dev-cluster.${SECRET_DOMAIN_K8S}`)"
+      services:
+        - name: vcluster
+          port: 443
+          weight: 10
+  tls:
+    passthrough: true
