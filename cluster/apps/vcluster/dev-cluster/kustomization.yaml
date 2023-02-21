@@ -3,3 +3,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./helmrelease.yaml
+  - ./ingress.yaml
+
+patchesJSON6902:
+  - target:
+      group: core
+      version: v1
+      kind: Service
+      name: dev-cluster
+    patch: |-
+      - op: add
+        path: /metadata/annotations/external-dns~1is-public
+        value: "true"
+      - op: add
+        path: /metadata/annotations/external-dns.alpha.kubernetes.io~1target
+        value: "${SECRET_DOMAIN_TARGET_SKY}"
