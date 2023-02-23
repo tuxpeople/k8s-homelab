@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-cluster-lb
+  annotations:
+    external-dns/is-public: "true"
+    external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+    external-dns.alpha.kubernetes.io/hostname: "dev-cluster.${SECRET_DOMAIN_K8S}"
+spec:
+  selector:
+    app: vcluster
+    release: dev-cluster
+  type: LoadBalancer
+  loadBalancerIP: ${METALLBDEV_VCLUSTER_ADDR}
+  ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
