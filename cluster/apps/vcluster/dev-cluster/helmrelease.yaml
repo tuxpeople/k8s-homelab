@@ -34,24 +34,24 @@ spec:
       enabled: true
       # podSecurityStandard: baseline
 
-      # resourceQuota:
-      #   enabled: true
-      #   quota:
-      #     requests.cpu: 10
-      #     requests.memory: 20Gi
-      #     requests.storage: "100Gi"
-      #     requests.ephemeral-storage: 60Gi
-      #     limits.cpu: 20
-      #     limits.memory: 40Gi
-      #     limits.ephemeral-storage: 160Gi
-      #     services.nodeports: 20
-      #     services.loadbalancers: 20
-      #     count/endpoints: 40
-      #     count/pods: 20
-      #     count/services: 20
-      #     count/secrets: 100
-      #     count/configmaps: 100
-      #     count/persistentvolumeclaims: 20
+      resourceQuota:
+        enabled: false
+        # quota:
+        #   requests.cpu: 10
+        #   requests.memory: 20Gi
+        #   requests.storage: "100Gi"
+        #   requests.ephemeral-storage: 60Gi
+        #   limits.cpu: 20
+        #   limits.memory: 40Gi
+        #   limits.ephemeral-storage: 160Gi
+        #   services.nodeports: 20
+        #   services.loadbalancers: 20
+        #   count/endpoints: 40
+        #   count/pods: 20
+        #   count/services: 20
+        #   count/secrets: 100
+        #   count/configmaps: 100
+        #   count/persistentvolumeclaims: 20
       #   scopeSelector:
       #     matchExpressions:
       #   scopes:
