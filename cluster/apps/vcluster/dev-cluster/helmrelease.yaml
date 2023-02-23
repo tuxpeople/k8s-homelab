@@ -32,7 +32,9 @@ spec:
   values:
     isolation:
       enabled: true
-
+    service:
+      type: LoadBalancer
+      loadBalancerIP: ${DEV_VCLUSTER_ADDR}
       # podSecurityStandard: baseline
 
       # resourceQuota:
