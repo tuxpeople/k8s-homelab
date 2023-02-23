@@ -6,7 +6,7 @@ metadata:
 
 spec:
   routes:
-    - match: "HostSNI(`dev-cluster.${SECRET_DOMAIN_K8S}`)"
+    - match: "HostSNI(`dev-cluster.vcluster.${SECRET_DOMAIN_K8S}`)"
       services:
         - name: dev-cluster
           port: 443
