@@ -30,6 +30,10 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    syncer:
+      extraArgs:
+        - --tls-san=dev-cluster.vcluster.${SECRET_DOMAIN_K8S}
+        - --out-kube-config-server=https://dev-cluster.vcluster.${SECRET_DOMAIN_K8S}
     isolation:
       enabled: true
       # podSecurityStandard: baseline
