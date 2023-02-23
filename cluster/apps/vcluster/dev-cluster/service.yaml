@@ -12,6 +12,7 @@ spec:
     release: dev-cluster
   type: LoadBalancer
   loadBalancerIP: ${METALLBDEV_VCLUSTER_ADDR}
+  externalTrafficPolicy: Local
   ports:
     - name: https
       port: 443
