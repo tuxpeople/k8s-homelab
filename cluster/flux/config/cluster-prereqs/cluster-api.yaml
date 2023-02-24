@@ -9,7 +9,7 @@ spec:
   url: https://github.com/kubernetes-sigs/cluster-api.git
   ref:
     # renovate: datasource=github-releases depName=kubernetes-sigs/cluster-api
-    tag: v1.3.2
+    tag: v1.3.3
   ignore: |
     # exclude all
     /*
