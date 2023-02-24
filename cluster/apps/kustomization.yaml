@@ -11,5 +11,5 @@ resources:
   - ./monitoring
   - ./octoprint
   - ./media
-  - ./kyverno
+  # - ./kyverno
   - ./vcluster
