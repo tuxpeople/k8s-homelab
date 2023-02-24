@@ -1,75 +1,51 @@
-
 {
-  extends: [
-    ":enableRenovate",
+  "extends": [
     "config:base",
+    "docker:enableMajor",
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
     ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranch",
-    ":separatePatchReleases",
-    "docker:enableMajor",
-    "github>tuxpeople/k8s-homelab//.github/renovate/autoMerge.json5",
-    "github>tuxpeople/k8s-homelab//.github/renovate/labels.json5",
-    "github>tuxpeople/k8s-homelab//.github/renovate/disabledDatasources.json5",
-    "github>tuxpeople/k8s-homelab//.github/renovate/commitMessage.json5",
-    "github>tuxpeople/k8s-homelab//.github/renovate/groups.json5",
-    "github>tuxpeople/k8s-homelab//.github/renovate/semanticCommits.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/autoMerge.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/commitMessage.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/labels.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/semanticCommits.json5",
     "helpers:pinGitHubActionDigests"
   ],
-  "timezone": "Europe/Zurich",
+  "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
-  "commitBody": "Signed-off-by: Thomas Deutsch <tuxpeople@users.noreply.github.com>",
-  "assignees": ["@tuxpeople"],
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
-  "schedule": ["every weekend"],
-
+  "schedule": ["every saturday"],
+  "pre-commit": {
+    "enabled": true
+  },
   "flux": {
-    "fileMatch": ["cluster/.+\\.ya?ml$"]
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "helm-values": {
-    "fileMatch": ["cluster/.+\\.ya?ml$"]
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "kubernetes": {
     "fileMatch": [
-      "cluster/.+\\.ya?ml$",
-      "provision/ansible/.+\\.ya?ml.j2$"
+      "ansible/.+\\.ya?ml.j2$",
+      "kubernetes/.+\\.ya?ml$"
     ]
   },
-  "packageRules": [
+  "regexManagers": [
     {
-      "description": "Disable kubernetes-api",
-      "matchManagers": ["kubernetes"],
-      "matchDatasources": ["kubernetes-api"],
-      "enabled": false
-    },
-    // setup datasources
-    {
-      "matchDatasources": ["helm"],
-      "separateMinorPatch": true,
-      "ignoreDeprecated": true
-    },
-    // global docker datasource settings
-    {
-      "matchDatasources": ["docker"],
-      "enabled": true,
-      "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "matchUpdateTypes": ["major", "minor", "patch"]
-    },
-    // add labels according to package and update types
-    {
-      "matchDatasources": ["github-releases", "docker"],
-      "matchPackagePatterns": [
-        "external-snapshotter",
-        "snapshot-controller"
+      "description": "Process various other dependencies",
+      "fileMatch": [
+        "ansible/.+\\.ya?ml$",
+        "kubernetes/.+\\.ya?ml$"
       ],
-      "groupName": "external-snapshotter-suite",
-      "additionalBranchPrefix": "",
-      "separateMinorPatch": true
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ]
 }

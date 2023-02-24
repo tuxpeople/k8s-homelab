@@ -6,29 +6,9 @@ repos:
     hooks:
       - args:
           - --config-file
-          - .github/linters/.yamllint.yaml
+          - .yamllint.yaml
         id: yamllint
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.18
     hooks:
-      - id: trailing-whitespace
-        args: [--markdown-linebreak-ext=md]
-      - id: end-of-file-fixer
-      - id: mixed-line-ending
-  - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.4.2
-    hooks:
-      - id: remove-crlf
-      - id: remove-tabs
-  - repo: https://github.com/sirosen/texthooks
-    rev: 0.5.0
-    hooks:
-      - id: fix-smartquotes
-  - repo: https://github.com/k8s-at-home/sops-pre-commit
-    rev: v2.1.1
-    hooks:
-      - id: forbid-secrets
-  - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.15.3
-    hooks:
-      - id: gitleaks
+      - id: terraform-fmt

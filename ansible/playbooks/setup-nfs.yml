@@ -1,0 +1,53 @@
+---
+- name: Create nfs disk
+  hosts: nfs-server
+  become: true
+  tasks:
+    - name: create partition
+      community.general.parted:
+        device: /dev/sda
+        number: 1
+        flags: [ lvm ]
+        state: present
+        part_end: "100%"
+
+    # - name: Install lvm2 dependency
+    #   package:
+    #     name: lvm2
+    #     state: present
+
+    - name: task for creating volume group
+      community.general.lvg:
+          vg: vg_data
+          pvs: /dev/sda1
+          pvresize: true
+          pesize: 16
+
+    - name: task for creating logical volume
+      community.general.lvol:
+          vg: vg_data
+          lv:  lv_nfs
+          size: 100%VG
+          force: yes
+
+    - name: Create directory nfs if does not exist
+      ansible.builtin.file:
+        path: /nfs
+        state: directory
+        mode: '0755'
+
+    - name: format the ext4 filesystem
+      community.general.filesystem:
+        fstype: ext4
+        dev: /dev/vg_data/lv_nfs
+
+    - name: mount the lv on /nfs
+      ansible.posix.mount:
+        path: /nfs
+        src: /dev/vg_data/lv_nfs
+        fstype: ext4
+        state: mounted
+
+    - name: mount the lv on /nfs
+      ansible.builtin.include_role:
+        name: robertdebock.roles.nfsserver

@@ -18,7 +18,7 @@ _... managed by Flux and serviced with RenovateBot_ :robot:
 
 ## :book:&nbsp; Overview
 
-This repository _is_ my home Kubernetes cluster in a declarative state. [Flux](https://github.com/fluxcd/flux2) watches my [cluster](./cluster/) folder and makes the changes to my cluster based on the YAML manifests.
+This repository _is_ my home Kubernetes cluster in a declarative state. [Flux](https://github.com/fluxcd/flux2) watches my [cluster](./kubernetes/) folder and makes the changes to my cluster based on the YAML manifests.
 
 Feel free to open a [Github issue](https://github.com/tuxpeople/k8s-homelab/issues/new/choose) if you have any questions.
 

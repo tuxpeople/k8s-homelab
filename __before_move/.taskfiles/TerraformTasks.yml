@@ -1,0 +1,38 @@
+---
+version: "3"
+
+tasks:
+
+  init:
+    desc: Initialize terraform dependencies
+    dir: provision/terraform/vsphere
+    cmds:
+      - tfenv install 1.1.9
+      - tfenv use 1.1.9
+      - terraform init -backend-config="path=${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Dateien/Allgemein/tfstate/k8s-homelab.tfstate" {{.CLI_ARGS}}
+
+  plan:
+    desc: Show the changes terraform will make
+    dir: provision/terraform/vsphere
+    cmds:
+      - terraform plan {{.CLI_ARGS}}
+
+  apply:
+    desc: Apply the changes to Cloudflare
+    dir: provision/terraform/vsphere
+    cmds:
+      - terraform apply -refresh-only {{.CLI_ARGS}}
+      - terraform apply {{.CLI_ARGS}}
+
+  forceapply:
+    desc: Apply the changes to vsphere
+    dir: provision/terraform/vsphere
+    cmds:
+      - terraform apply -refresh-only -auto-approve {{.CLI_ARGS}}
+      - terraform apply -auto-approve {{.CLI_ARGS}}
+
+  destroy:
+    desc: Apply the changes to vsphere
+    dir: provision/terraform/vsphere
+    cmds:
+      - terraform destroy {{.CLI_ARGS}}
