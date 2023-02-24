@@ -30,12 +30,27 @@ spec:
     cleanupOnFail: true
     recreate: true
   values:
+    storage:
+      persistence: true
+      className: nfs-subdir-external-provisioner-noarchive
     syncer:
       extraArgs:
         - --tls-san=dev-cluster.vcluster.${SECRET_DOMAIN_K8S}
         - --out-kube-config-server=https://dev-cluster.vcluster.${SECRET_DOMAIN_K8S}
+        - --fake-persistent-volumes=false
     isolation:
       enabled: true
+    sync:
+      nodes:
+        enabled: false
+      persistentvolumes:
+        enabled: true
+      # If you want to create custom storage classes
+      # inside the vcluster.
+      storageclasses:
+        enabled: false
+      ingresses:
+        enabled: true
       # podSecurityStandard: baseline
 
       # resourceQuota:
