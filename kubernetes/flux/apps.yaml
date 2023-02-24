@@ -10,7 +10,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: k8s-turingpi
+    name: k8s-homelab
   decryption:
     provider: sops
     secretRef:

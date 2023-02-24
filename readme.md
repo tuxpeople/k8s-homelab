@@ -24,4 +24,4 @@ Feel free to open a [Github issue](https://github.com/tuxpeople/k8s-homelab/issu
 
 This repository ispired by many other here on Github. Most of them are based on the [k8s-at-home/template-cluster-k3s](https://github.com/k8s-at-home/template-cluster-k3s) repository.
 
-To see more like this repo, take a look at their [curated list](https://github.com/k8s-at-home/awesome-home-kubernetes).
+To see more like this repo, take a look at their [curated list](https://github.com/k8s-at-home/awesome-k8s-homelab).

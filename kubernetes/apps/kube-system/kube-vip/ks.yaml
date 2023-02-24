@@ -9,7 +9,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: k8s-turingpi
+    name: k8s-homelab
   healthChecks:
     - apiVersion: apps/v1
       kind: DaemonSet
