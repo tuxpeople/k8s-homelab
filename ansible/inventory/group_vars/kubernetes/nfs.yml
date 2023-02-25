@@ -1,8 +1,0 @@
-nfsserver_exports:
-  - share: /nfs
-    hosts:
-      - name: "192.168.8.0/24"
-        options:
-          - rw
-          - sync
-          - no_subtree_check
