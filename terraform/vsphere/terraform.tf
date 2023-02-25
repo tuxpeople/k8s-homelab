@@ -9,8 +9,6 @@ terraform {
       version = "0.7.2"
     }
   }
-  backend "local" {
-  }
 }
 
 data "sops_file" "cloudflare_secrets" {

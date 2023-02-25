@@ -5,18 +5,21 @@ tasks:
 
   init:
     desc: Initialize terraform dependencies
-    dir: "{{.TERRAFORM_DIR}}/cloudflare"
+    dir: "{{.TERRAFORM_DIR}}"
     cmds:
-      - terraform init {{.CLI_ARGS}}
+      - TFENV_ARCH=amd64 tfenv install 1.1.9
+      - tfenv use 1.1.9
+      - terraform init -backend-config="path=${HOME}/Library/Mobile Documents/com~apple~CloudDocs/Dateien/Allgemein/tfstate/k8s-homelab.tfstate" {{.CLI_ARGS}}
 
   plan:
     desc: Show the changes terraform will make
-    dir: "{{.TERRAFORM_DIR}}/cloudflare"
+    dir: "{{.TERRAFORM_DIR}}"
     cmds:
       - terraform plan {{.CLI_ARGS}}
 
   apply:
     desc: Apply the changes to Cloudflare
-    dir: "{{.TERRAFORM_DIR}}/cloudflare"
+    dir: "{{.TERRAFORM_DIR}}"
     cmds:
+      - terraform apply -refresh-only {{.CLI_ARGS}}
       - terraform apply {{.CLI_ARGS}}
