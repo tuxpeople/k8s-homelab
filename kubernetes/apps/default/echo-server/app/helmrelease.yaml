@@ -56,10 +56,10 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ipv4-homelab.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "ipv4-homelab.${SECRET_DOMAIN_ME}"
           hajimari.io/icon: video-input-antenna
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_ME}"
             paths:
               - path: /
                 pathType: Prefix

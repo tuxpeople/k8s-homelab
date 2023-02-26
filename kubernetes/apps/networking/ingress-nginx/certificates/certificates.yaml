@@ -2,29 +2,29 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN/./-}-production"
+  name: "${SECRET_DOMAIN_ME/./-}-production"
   namespace: networking
 spec:
-  secretName: "${SECRET_DOMAIN/./-}-production-tls"
+  secretName: "${SECRET_DOMAIN_ME/./-}-production-tls"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN}"
+  commonName: "${SECRET_DOMAIN_ME}"
   dnsNames:
-    - "${SECRET_DOMAIN}"
-    - "*.${SECRET_DOMAIN}"
+    - "${SECRET_DOMAIN_ME}"
+    - "*.${SECRET_DOMAIN_ME}"
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN/./-}-staging"
+  name: "${SECRET_DOMAIN_ME/./-}-staging"
   namespace: networking
 spec:
-  secretName: "${SECRET_DOMAIN/./-}-staging-tls"
+  secretName: "${SECRET_DOMAIN_ME/./-}-staging-tls"
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN}"
+  commonName: "${SECRET_DOMAIN_ME}"
   dnsNames:
-    - "${SECRET_DOMAIN}"
-    - "*.${SECRET_DOMAIN}"
+    - "${SECRET_DOMAIN_ME}"
+    - "*.${SECRET_DOMAIN_ME}"

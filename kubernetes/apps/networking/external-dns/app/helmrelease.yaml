@@ -47,7 +47,7 @@ spec:
     sources: ["ingress"]
     txtPrefix: k8s.
     txtOwnerId: default
-    domainFilters: ["${SECRET_DOMAIN}"]
+    domainFilters: ["${SECRET_DOMAIN_ME}"]
     serviceMonitor:
       enabled: true
     podAnnotations:
