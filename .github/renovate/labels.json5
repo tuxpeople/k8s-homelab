@@ -14,31 +14,27 @@
     },
     {
       "matchDatasources": ["docker"],
-      "addLabels": ["component/container"]
+      "addLabels": ["renovate/container"]
     },
     {
       "matchDatasources": ["helm"],
-      "addLabels": ["component/helm"]
+      "addLabels": ["renovate/helm"]
     },
     {
       "matchDatasources": ["galaxy", "galaxy-collection"],
-      "addLabels": ["component/ansible"]
+      "addLabels": ["renovate/ansible"]
     },
     {
       "matchDatasources": ["terraform-provider"],
-      "addLabels": ["component/terraform"]
+      "addLabels": ["renovate/terraform"]
     },
     {
       "matchDatasources": ["github-releases", "github-tags"],
-      "addLabels": ["component/github-release"]
+      "addLabels": ["renovate/github-release"]
     },
     {
       "matchManagers": ["github-actions"],
-      "addLabels": ["component/github-action"]
-    },
-    {
-      "matchDatasources": ["pypi"],
-      "addLabels": ["component/pip"]
+      "addLabels": ["renovate/github-action"]
     }
   ]
 }

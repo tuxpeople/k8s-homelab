@@ -1,0 +1,22 @@
+# Editors
+#.vscode/
+# Trash
+.DS_Store
+Thumbs.db
+# k8s
+kubeconfig
+# vscode-sops
+.decrypted~*.yaml
+.config.env
+# Ansible
+xanmanning.k3s*
+frzk.chrony*
+idiv-biodiversity*
+# Terraform
+.terraform
+.terraform.tfstate*
+terraform.tfstate*
+
+# others
+git-secret
+git-secret.pub
