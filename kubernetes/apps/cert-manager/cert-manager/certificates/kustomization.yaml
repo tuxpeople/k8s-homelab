@@ -5,3 +5,4 @@ resources:
   - certificate-ch.yaml
   - certificate-me.yaml
   - certificate-int.yaml
+  - certificate-k8s.yaml
