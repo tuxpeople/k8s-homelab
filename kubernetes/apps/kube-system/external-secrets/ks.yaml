@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-external-secrets-operator
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/cert-manager/cert-manager/app
+  path: ./kubernetes/apps/kube-system/external-secrets/operator
   prune: true
   sourceRef:
     kind: GitRepository
