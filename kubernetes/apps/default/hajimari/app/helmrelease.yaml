@@ -40,6 +40,8 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - flux-system
+          - monitoring
     ingress:
       main:
         enabled: true
