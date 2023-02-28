@@ -16,3 +16,4 @@ resources:
   - ./weave-gitops.yaml
   - ./csi-driver-nfs.yaml
   - ./appscode.yaml
+  - ./external-secrets.yaml
