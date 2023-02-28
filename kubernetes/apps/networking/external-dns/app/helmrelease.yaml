@@ -35,7 +35,7 @@ spec:
           secretKeyRef:
             name: external-dns-secret
             key: email
-      - name: CF_API_KEY
+      - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
             name: external-dns-secret
