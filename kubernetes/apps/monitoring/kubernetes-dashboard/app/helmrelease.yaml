@@ -44,7 +44,7 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: kubernetes-dashboard-tls
+          secretName: ${SECRET_DOMAIN_ME//./-}-tls
     metricsScraper:
       enabled: true
     serviceMonitor:

@@ -63,7 +63,7 @@ spec:
       metrics:
         enabled: false
       extraArgs:
-        default-ssl-certificate: "networking/${SECRET_DOMAIN_ME/./-}-production-tls"
+        default-ssl-certificate: "${SECRET_DOMAIN_ME//./-}-tls"
       podAnnotations:
         configmap.reloader.stakater.com/reload: cloudflare-networks
       resources:
