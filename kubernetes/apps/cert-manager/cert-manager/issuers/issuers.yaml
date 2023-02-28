@@ -12,13 +12,15 @@ spec:
       - dns01:
           cloudflare:
             email: "${SECRET_CLOUDFLARE_EMAIL}"
-            apiKeySecretRef:
+            apiTokenSecretRef:
               name: cert-manager-secret
               key: api-key
         selector:
           dnsZones:
             - ${SECRET_DOMAIN_ME}
             - ${SECRET_DOMAIN_CH}
+            - ${SECRET_DOMAIN_INTERNAL}
+            - ${SECRET_DOMAIN_K8S}
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -34,10 +36,12 @@ spec:
       - dns01:
           cloudflare:
             email: "${SECRET_CLOUDFLARE_EMAIL}"
-            apiKeySecretRef:
+            apiTokenSecretRef:
               name: cert-manager-secret
               key: api-key
         selector:
           dnsZones:
             - ${SECRET_DOMAIN_ME}
             - ${SECRET_DOMAIN_CH}
+            - ${SECRET_DOMAIN_INTERNAL}
+            - ${SECRET_DOMAIN_K8S}
