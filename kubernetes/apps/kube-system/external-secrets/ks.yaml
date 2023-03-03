@@ -34,9 +34,8 @@ spec:
     - name: cluster-apps-external-secrets-operator
   healthChecks:
     - apiVersion: external-secrets.io/v1beta1
-      kind: SecretStore
+      kind: ClusterSecretStore
       name: 1password
-      namespace: kube-system
   interval: 30m
   retryInterval: 1m
   timeout: 3m
