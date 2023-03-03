@@ -2,20 +2,18 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-external-secrets-operator
+  name: cluster-apps-onepassword-connect
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/kube-system/external-secrets/operator
+  path: ./kubernetes/apps/kube-system/onepassword-connect/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  dependsOn:
-    - name: cluster-apps-onepassword-connect
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: external-secrets
+      name: connect
       namespace: kube-system
   interval: 30m
   retryInterval: 1m

@@ -9,3 +9,5 @@ resources:
   - ./reloader/ks.yaml
   - ./kubed/ks.yaml
   - ./external-secrets/ks.yaml
+  - ./external-secrets/ks.yaml
+  - ./onepassword-connect/ks.yaml
