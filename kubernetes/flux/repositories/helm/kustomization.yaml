@@ -17,4 +17,3 @@ resources:
   - ./csi-driver-nfs.yaml
   - ./appscode.yaml
   - ./external-secrets.yaml
-  - ./1password.yaml
