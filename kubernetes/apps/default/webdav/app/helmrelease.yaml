@@ -27,8 +27,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: bytemark/webdav
-      tag: "2.4"
+      repository: dgraziotin/nginx-webdav-nononsense
+      tag: "1.23.3"
     service:
       main:
         ports:
@@ -66,6 +66,8 @@ spec:
         storageClass: nfs-csi
     env:
       TZ: "${TIMEZONE}"
-      AUTH_TYPE: "Basic"
-      USERNAME: "${SECRET_WEBSERVICES_USERNAME}"
-      PASSWORD: "${SECRET_WEBSERVICES_PASSWORD}"
+      CLIENT_MAX_BODY_SIZE: "120M"
+      TIMEOUTS_S: "1200"
+      SERVER_NAMES: *host
+      WEBDAV_USERNAME: "${SECRET_WEBSERVICES_USERNAME}"
+      WEBDAV_PASSWORD: "${SECRET_WEBSERVICES_PASSWORD}"
