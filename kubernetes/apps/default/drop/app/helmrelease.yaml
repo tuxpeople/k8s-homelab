@@ -62,7 +62,7 @@ spec:
         type: pvc
         accessMode: ReadWriteOnce
         size: 5Gi
-        mountPath: /config
+        mountPath: /config1
         storageClass: nfs-csi
     env:
       TZ: "${TIMEZONE}"
