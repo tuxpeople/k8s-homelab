@@ -63,6 +63,7 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /var/lib/dav
+        storageClass: nfs-csi
     env:
       TZ: "${TIMEZONE}"
       AUTH_TYPE: "Basic"
