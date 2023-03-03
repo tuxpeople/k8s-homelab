@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app webdav
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: bytemark/webdav
+      tag: "2.4"
+    service:
+      main:
+        ports:
+          http:
+            port: &port 80
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN_K8S}"
+          hajimari.io/icon: video-input-antenna
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_ME}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: ${SECRET_DOMAIN_ME//./-}-tls
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+      limits:
+        memory: 50Mi
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /var/lib/dav
+    env:
+      TZ: "${TIMEZONE}"
+      AUTH_TYPE: "Basic"
+      USERNAME: "${SECRET_WEBSERVICES_USERNAME}"
+      PASSWORD: "${SECRET_WEBSERVICES_PASSWORD}"
