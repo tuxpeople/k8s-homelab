@@ -20,3 +20,25 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-external-secrets-secretstore
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/kube-system/external-secrets/secretstore
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  dependsOn:
+    - name: cluster-apps-external-secrets-operator
+  healthChecks:
+    - apiVersion: external-secrets.io/v1beta1
+      kind: SecretStore
+      name: 1password
+      namespace: kube-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
