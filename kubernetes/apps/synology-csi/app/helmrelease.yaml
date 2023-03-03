@@ -25,3 +25,4 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    clientInfoSecretName: client-info-secret
