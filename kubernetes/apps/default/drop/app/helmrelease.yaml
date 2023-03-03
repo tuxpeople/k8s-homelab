@@ -62,7 +62,7 @@ spec:
         type: pvc
         accessMode: ReadWriteOnce
         size: 5Gi
-        mountPath: /config1
-        storageClass: nfs-csi
+        mountPath: /config
+        storageClass: synology-csi-delete
     env:
       TZ: "${TIMEZONE}"
