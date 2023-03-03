@@ -4,5 +4,4 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - ./helmrelease.yaml
-  - ./OnePasswordItem.yaml
   - ./secret.sops.yaml
