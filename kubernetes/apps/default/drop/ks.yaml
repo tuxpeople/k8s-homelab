@@ -8,7 +8,7 @@ spec:
   path: ./kubernetes/apps/default/drop/app
   prune: true
   dependsOn:
-    - name: cluster-apps-synology-csi-chart
+    - name: cluster-apps-synology-csi
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
