@@ -26,6 +26,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+    - name: cluster-apps-external-secrets-secretstores
     - name: cluster-apps-cert-manager
   path: ./kubernetes/apps/cert-manager/cert-manager/issuers
   prune: true
