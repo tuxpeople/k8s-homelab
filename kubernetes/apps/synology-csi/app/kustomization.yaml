@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: synology-csi
 resources:
   - ./helmrelease.yaml
-  - ./secret.sops.yaml
+  - ./external-secret.yaml
