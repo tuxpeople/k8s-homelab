@@ -28,5 +28,4 @@ spec:
   values:
     serviceMonitor:
       enabled: true
-    namespace: monitoring
     configSecretName: "ingressmonitorcontroller-config"
