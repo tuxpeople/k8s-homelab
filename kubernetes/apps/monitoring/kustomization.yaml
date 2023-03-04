@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./kubernetes-dashboard/ks.yaml
-  - ./uptimerobot-operator/ks.yaml
+  - ./ingressmonitorcontroller/ks.yaml
