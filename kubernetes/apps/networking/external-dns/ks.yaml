@@ -10,6 +10,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
+  dependsOn:
+    - name: cluster-apps-external-secrets-secretstores
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
