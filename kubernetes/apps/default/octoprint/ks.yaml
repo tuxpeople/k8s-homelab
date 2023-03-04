@@ -1,0 +1,21 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-octoprint
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/default/octoprint/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  dependsOn:
+    - name: cluster-apps-ingressmonitorcontroller
+  healthChecks:
+    - apiVersion: v1
+      kind: Service
+      name: octoprint
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

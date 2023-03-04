@@ -1,0 +1,8 @@
+---
+apiVersion: endpointmonitor.stakater.com/v1alpha1
+kind: EndpointMonitor
+metadata:
+  name: octoprint
+spec:
+  forceHttps: true
+  url: https://print.${SECRET_DOMAIN_ME}
