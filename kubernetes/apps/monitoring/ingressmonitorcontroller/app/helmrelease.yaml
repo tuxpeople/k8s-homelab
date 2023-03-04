@@ -30,7 +30,3 @@ spec:
       enabled: true
     namespace: monitoring
     configSecretName: "ingressmonitorcontroller-config"
-    kube-rbac-proxy:
-      image:
-        repository: gcr.io/kubebuilder/kube-rbac-proxy
-        tag: v0.13.1
