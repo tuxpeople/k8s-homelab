@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./kubernetes-dashboard/ks.yaml
-# - ./prometheus/ks.yaml
+  - ./prometheus/ks.yaml

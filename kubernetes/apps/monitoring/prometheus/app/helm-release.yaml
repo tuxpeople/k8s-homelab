@@ -13,7 +13,7 @@ spec:
       version: 45.3.0
       sourceRef:
         kind: HelmRepository
-        name: prometheus-community-charts
+        name: prometheus-community
         namespace: flux-system
   test:
     enable: false # Enable helm test
@@ -50,7 +50,7 @@ spec:
             - receiver: "null"
               match:
                 alertname: InfoInhibitor
-            - receiver: 'DeadMansSnitch'
+            - receiver: "DeadMansSnitch"
               repeat_interval: 30m
               match:
                 alertname: Watchdog
@@ -64,7 +64,7 @@ spec:
               #     issue: Portworx*
               #   continue: true
         receivers:
-          - name: 'null'
+          - name: "null"
           - name: email
             email_configs:
               - send_resolved: true
@@ -79,7 +79,7 @@ spec:
           - name: discord
             webhook_configs:
               - send_resolved: true
-                url: 'http://alertmanager-discord:9094'
+                url: "http://alertmanager-discord:9094"
                 # title: |-
                 #   [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}
                 # text: >-
@@ -281,31 +281,31 @@ spec:
           #   static_configs:
           #     - targets:
           #         - "minio.domain.com:9000"
-          - job_name: 'octoprint'
+          - job_name: "octoprint"
             scrape_interval: 1m
-            metrics_path: '/plugin/prometheus_exporter/metrics'
+            metrics_path: "/plugin/prometheus_exporter/metrics"
             params:
-              apikey: ['${SECRET_OCTOPRINTAPI}']
+              apikey: ["${SECRET_OCTOPRINTAPI}"]
             static_configs:
-              - targets: ['octopi.home:80']
-          - job_name: 'speedtest-exporter'
+              - targets: ["octopi.home:80"]
+          - job_name: "speedtest-exporter"
             scrape_interval: 1m
             scrape_timeout: 30s
             static_configs:
-              - targets: ['speedtest-exporter:9090']
+              - targets: ["speedtest-exporter:9090"]
           - job_name: minio-job
             bearer_token: ${SECRET_MINIO_BEARERTOKEN}
             metrics_path: /minio/v2/metrics/cluster
             scheme: http
             static_configs:
-              - targets: ['minio.lab.tdeutsch.ch:9091']
+              - targets: ["minio.lab.tdeutsch.ch:9091"]
           - job_name: mystrom-exporter
             scrape_interval: 30s
             metrics_path: /device
             honor_labels: true
             static_configs:
               - targets:
-                  - '10.20.30.33'
+                  - "10.20.30.33"
                 labels:
                   alias: "3D Drucker"
             relabel_configs:
@@ -313,19 +313,19 @@ spec:
                 target_label: __param_target
               - target_label: __address__
                 replacement: mystrom-3dprinter:9452
-          - job_name: 'prometheus-pushgateway'
+          - job_name: "prometheus-pushgateway"
             scrape_interval: 1m
             scrape_timeout: 30s
             honor_labels: true
             static_configs:
-              - targets: ['prometheus-pushgateway:9091']
-          - job_name: 'wireguard-exporter'
+              - targets: ["prometheus-pushgateway:9091"]
+          - job_name: "wireguard-exporter"
             scrape_interval: 1m
             scrape_timeout: 30s
-            metrics_path: '/metrics'
+            metrics_path: "/metrics"
             static_configs:
-              - targets: ['10.20.30.1:9586']
-          - job_name: 'node-exporter'
+              - targets: ["10.20.30.1:9586"]
+          - job_name: "node-exporter"
             scrape_interval: 1m
             scrape_timeout: 30s
             honor_timestamps: true
@@ -333,9 +333,9 @@ spec:
               username: randomuser
               password: examplepassword
             static_configs:
-              - targets: ['192.168.8.101:9100'] # k3s-node01
-              - targets: ['192.168.8.102:9100'] # k3s-node02
-              - targets: ['192.168.8.103:9100'] # k3s-node03
+              - targets: ["192.168.8.101:9100"] # k3s-node01
+              - targets: ["192.168.8.102:9100"] # k3s-node02
+              - targets: ["192.168.8.103:9100"] # k3s-node03
       ingress:
         enabled: true
         pathType: Prefix
