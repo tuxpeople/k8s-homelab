@@ -4,8 +4,5 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - helm-release.yaml
-  - prometheusrules
-  - servicemonitors
-  - podmonitors
 # patchesStrategicMerge:
 #   - dashboard-patch.yaml
