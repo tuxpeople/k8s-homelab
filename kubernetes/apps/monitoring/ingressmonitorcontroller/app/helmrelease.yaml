@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: stakater
         namespace: flux-system
-      TargetNamespace: monitoring
+  targetNamespace: monitoring
   maxHistory: 3
   install:
     createNamespace: true
