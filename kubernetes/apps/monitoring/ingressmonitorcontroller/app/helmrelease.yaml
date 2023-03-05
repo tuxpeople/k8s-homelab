@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,6 +13,7 @@ spec:
         kind: HelmRepository
         name: stakater
         namespace: flux-system
+  TargetNamespace: monitoring
   maxHistory: 3
   install:
     createNamespace: true
@@ -28,5 +28,4 @@ spec:
   values:
     serviceMonitor:
       enabled: true
-    namespace: monitoring
     configSecretName: "ingressmonitorcontroller-config"
