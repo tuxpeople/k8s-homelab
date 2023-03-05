@@ -1,7 +1,7 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: stakater-ingress-monitor-controller
+namespace: monitoring
 resources:
   - ./helmrelease.yaml
   - ./external-secret.yaml

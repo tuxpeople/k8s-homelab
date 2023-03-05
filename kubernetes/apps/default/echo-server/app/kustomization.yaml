@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
-  - ./endpointmonitor.yaml
+  - ./uptimerobot-monitor.yaml

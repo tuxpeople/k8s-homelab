@@ -5,4 +5,4 @@ namespace: default
 resources:
   - ingress.yaml
   - service.yaml
-  - endpointmonitor.yaml
+  - uptimerobot-monitor.yaml
