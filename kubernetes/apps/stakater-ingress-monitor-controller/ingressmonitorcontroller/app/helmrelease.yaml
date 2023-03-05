@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: ingressmonitorcontroller
-  namespace: monitoring
+  namespace: stakater-ingress-monitor-controller
 spec:
   interval: 15m
   chart:
