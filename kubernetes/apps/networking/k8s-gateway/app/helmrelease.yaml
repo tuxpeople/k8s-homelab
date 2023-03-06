@@ -28,6 +28,7 @@ spec:
   values:
     fullnameOverride: k8s-gateway
     domain: ${SECRET_DOMAIN_ME}
+    replicaCount: 2
     fallthrough:
       enabled: true
     ttl: 1
