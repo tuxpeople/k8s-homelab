@@ -27,16 +27,16 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: k8s-gateway
-    domain: "${SECRET_DOMAIN_ME}"
+    domain: ${SECRET_DOMAIN_ME}
     extraZonePlugins:
       - name: forward
-        parameters: ". 1.1.1.1:53 8.8.8.8:53"
-    ttl: 1
-    falltrough:
+        parameters: . 1.1.1.1 1.0.0.1
+    fallthrough:
       enabled: true
+    ttl: 1
     service:
       type: LoadBalancer
       port: 53
       annotations:
-        metallb.universe.tf/loadBalancerIPs: "${METALLB_K8S_GATEWAY_ADDR}"
+        metallb.universe.tf/loadBalancerIPs: ${METALLB_K8S_GATEWAY_ADDR}
       externalTrafficPolicy: Local
