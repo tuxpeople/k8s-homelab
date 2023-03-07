@@ -5,7 +5,6 @@ metadata:
   name: linkerd-web-ingress
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: "networking-forwardauth-authelia@kubernetescrd"
-    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     ingress.kubernetes.io/custom-request-headers: l5d-dst-override:web.linkerd.svc.cluster.local:8084
     kubernetes.io/ingress.class: "traefik"
     hajimari.io/enable: "true"

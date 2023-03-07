@@ -4,9 +4,8 @@ kind: Ingress
 metadata:
   name: linkerd-jaeger-ingress
   annotations:
-    kubernetes.io/ingress.class: traefik
+    kubernetes.io/ingress.class: nginx
     traefik.ingress.kubernetes.io/router.middlewares: "networking-forwardauth-authelia@kubernetescrd"
-    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hajimari.io/enable: "true"
     hajimari.io/icon: chip
     hajimari.io/appName: Jaeger

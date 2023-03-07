@@ -49,10 +49,10 @@ spec:
                 requests:
                   storage: 10Gi
         additionalScrapeConfigs:
-          - job_name: 'unifipoller'
+          - job_name: "unifipoller"
             scrape_interval: 30s
             static_configs:
-              - targets: ['unifi-poller:9130']
+              - targets: ["unifi-poller:9130"]
     grafana:
       adminPassword: highly-secure-production-password
       persistence:
@@ -67,7 +67,7 @@ spec:
         hosts:
           - grafana.${SECRET_DOMAIN_ME}
         annotations:
-          kubernetes.io/ingress.class: traefik
+          kubernetes.io/ingress.class: nginx
           traefik.ingress.kubernetes.io/router.tls: "true"
         tls:
           - secretName: "${SECRET_DOMAIN_ME//./-}-tls"

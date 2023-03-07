@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: tautulli
   annotations:
-    kubernetes.io/ingress.class: traefik
+    kubernetes.io/ingress.class: nginx
     traefik.ingress.kubernetes.io/router.tls: "true"
     hajimari.io/enable: "true"
     hajimari.io/icon: "chart-bar"

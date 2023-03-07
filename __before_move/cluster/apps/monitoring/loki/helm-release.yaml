@@ -112,7 +112,7 @@ spec:
       ingress:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: traefik
+          kubernetes.io/ingress.class: nginx
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
           - host: loki.${SECRET_DOMAIN_INTERNAL}
@@ -176,14 +176,14 @@ spec:
             labels:
               job: "syslog"
           relabel_configs:
-            - source_labels: ['__syslog_connection_ip_address']
-              target_label: 'ip_address'
-            - source_labels: ['__syslog_message_severity']
-              target_label: 'severity'
-            - source_labels: ['__syslog_message_facility']
-              target_label: 'facility'
-            - source_labels: ['__syslog_message_hostname']
-              target_label: 'host'
+            - source_labels: ["__syslog_connection_ip_address"]
+              target_label: "ip_address"
+            - source_labels: ["__syslog_message_severity"]
+              target_label: "severity"
+            - source_labels: ["__syslog_message_facility"]
+              target_label: "facility"
+            - source_labels: ["__syslog_message_hostname"]
+              target_label: "host"
       extraPorts:
         syslog:
           name: tcp-syslog

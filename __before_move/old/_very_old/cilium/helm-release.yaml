@@ -58,9 +58,9 @@ spec:
         ingress:
           enabled: true
           annotations:
-            kubernetes.io/ingress.class: traefik
+            kubernetes.io/ingress.class: nginx
             traefik.ingress.kubernetes.io/router.tls: "true"
-            hajimari.io/enable: 'true'
+            hajimari.io/enable: "true"
             hajimari.io/icon: telescope
           hosts:
             - hubble.int.eighty-three.me

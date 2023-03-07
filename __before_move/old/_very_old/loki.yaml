@@ -41,34 +41,41 @@ spec:
         hosts:
           - prometheus.${SECRET_DOMAIN_INTERNAL}
         annotations:
-          kubernetes.io/ingress.class: traefik
+          kubernetes.io/ingress.class: nginx
       serverFiles:
         prometheus.yaml:
           scrape_configs:
-            - job_name: 'unifipoller'
+            - job_name: "unifipoller"
               scrape_interval: 30s
               static_configs:
-                - targets: ['unifi-poller:9130']
-            - job_name: 'uptimerobot-prometheus'
+                - targets: ["unifi-poller:9130"]
+            - job_name: "uptimerobot-prometheus"
               scrape_interval: 30s
               static_configs:
-                - targets: ['uptimerobot-prometheus:9705']
-            - job_name: 'kubernetes-service-endpoints'
+                - targets: ["uptimerobot-prometheus:9705"]
+            - job_name: "kubernetes-service-endpoints"
               kubernetes_sd_configs:
                 - role: endpoints
               relabel_configs:
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+                - source_labels:
+                    [__meta_kubernetes_service_annotation_prometheus_io_scrape]
                   action: keep
                   regex: true
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
+                - source_labels:
+                    [__meta_kubernetes_service_annotation_prometheus_io_scheme]
                   action: replace
                   target_label: __scheme__
                   regex: (https?)
-                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+                - source_labels:
+                    [__meta_kubernetes_service_annotation_prometheus_io_path]
                   action: replace
                   target_label: __metrics_path__
                   regex: (.+)
-                - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+                - source_labels:
+                    [
+                      __address__,
+                      __meta_kubernetes_service_annotation_prometheus_io_port,
+                    ]
                   action: replace
                   target_label: __address__
                   regex: ([^:]+)(?::\d+)?;(\d+)
@@ -84,22 +91,29 @@ spec:
                 - source_labels: [__meta_kubernetes_pod_node_name]
                   action: replace
                   target_label: kubernetes_node
-            - job_name: 'kubernetes-pods'
+            - job_name: "kubernetes-pods"
               kubernetes_sd_configs:
                 - role: pod
               relabel_configs:
-                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+                - source_labels:
+                    [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
                   action: keep
                   regex: true
-                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
+                - source_labels:
+                    [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
                   action: replace
                   regex: (https?)
                   target_label: __scheme__
-                - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+                - source_labels:
+                    [__meta_kubernetes_pod_annotation_prometheus_io_path]
                   action: replace
                   target_label: __metrics_path__
                   regex: (.+)
-                - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+                - source_labels:
+                    [
+                      __address__,
+                      __meta_kubernetes_pod_annotation_prometheus_io_port,
+                    ]
                   action: replace
                   regex: ([^:]+)(?::\d+)?;(\d+)
                   replacement: $1:$2
@@ -128,7 +142,7 @@ spec:
         hosts:
           - grafana.${SECRET_DOMAIN_ME}
         annotations:
-          kubernetes.io/ingress.class: traefik
+          kubernetes.io/ingress.class: nginx
           traefik.ingress.kubernetes.io/router.tls: "true"
         tls:
           - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
@@ -145,7 +159,7 @@ spec:
           providers:
             - name: unifi-poller
               orgId: 1
-              folder: 'unifi-poller'
+              folder: "unifi-poller"
               type: file
               disableDeletion: false
               editable: true
@@ -153,7 +167,7 @@ spec:
                 path: /var/lib/grafana/dashboards/unifi-poller
             - name: kubernetes
               orgId: 1
-              folder: 'kubernetes'
+              folder: "kubernetes"
               type: file
               disableDeletion: false
               editable: true
@@ -161,7 +175,7 @@ spec:
                 path: /var/lib/grafana/dashboards/kubernetes
             - name: various
               orgId: 1
-              folder: 'various'
+              folder: "various"
               type: file
               disableDeletion: false
               editable: true
@@ -216,7 +230,7 @@ spec:
         provider:
           name: sidecarProvider
           orgid: 1
-          folder: 'kubernetes'
+          folder: "kubernetes"
           type: file
           disableDelete: false
           allowUiUpdates: true

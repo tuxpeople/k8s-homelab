@@ -37,7 +37,7 @@ spec:
         enabled: true
         host: neuvector.${SECRET_DOMAIN_INTERNAL}
         annotations:
-          kubernetes.io/ingress.class: traefik
+          kubernetes.io/ingress.class: nginx
           traefik.ingress.kubernetes.io/router.tls: "true"
         tls: true
         secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls

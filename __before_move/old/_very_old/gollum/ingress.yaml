@@ -7,7 +7,7 @@ metadata:
     app: gollum
   name: gollum
   annotations:
-    kubernetes.io/ingress.class: traefik
+    kubernetes.io/ingress.class: nginx
     traefik.ingress.kubernetes.io/router.tls: "true"
     ingress.kubernetes.io/auth-type: basic
     ingress.kubernetes.io/auth-realm: traefik

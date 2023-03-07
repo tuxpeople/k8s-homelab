@@ -15,7 +15,7 @@ spec:
         name: octant-dashboard
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,7 +31,7 @@ spec:
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: traefik
+        kubernetes.io/ingress.class: nginx
         traefik.ingress.kubernetes.io/router.tls: "true"
       hosts:
         - host: octant.${SECRET_DOMAIN_INTERNAL}
@@ -43,8 +43,8 @@ spec:
     clusterRole:
       additionalRules:
         - apiGroups:
-            - '*'
-          resources: ['*']
+            - "*"
+          resources: ["*"]
           verbs:
             - get
             - list
