@@ -19,7 +19,7 @@ def insertDocumentStart(path):
 
     return contents
 
-for subdir, dirs, filenames in os.walk("./cluster"):
+for subdir, dirs, filenames in os.walk("./kubernetes"):
     for filename in filenames:
         path = subdir + os.sep + filename
 
