@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+FOLDERS="kubernetes/flux/repositories/oci kubernetes/flux/repositories/helm kubernetes/flux/repositories/git kubernetes/flux/vars kubernetes/flux/config"
+
+_pwd="$(pwd)"
+_basedir="${_pwd}/$(dirname $(which ${0}))"
+
+cd ${_basedir} && cd $(git rev-parse --show-toplevel)
+
+_gitdir="$(git rev-parse --show-toplevel)"
+
+for i in ${FOLDERS}; do
+  cd ${i}
+  rm -f kustomization.yaml
+  kustomize create --autodetect
+  yamlfix kustomization.yaml
+  cd ${_gitdir}
+done
