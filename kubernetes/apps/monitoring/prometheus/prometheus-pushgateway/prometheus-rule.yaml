@@ -1,4 +1,3 @@
-# See: https://github.com/pubcont/ansible-role-prometheus/blob/master/files/pushgateway.yml
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -27,9 +26,11 @@ spec:
           annotations:
             summary: Pushgateway pushers are delayed
         - alert: InconsistentMetrics
-          expr: rate(pushgateway_http_requests_total{code="400",handler="push",job="pushgateway"}[2m]) > 0
+          expr: rate(pushgateway_http_requests_total{code="400",handler="push",job="pushgateway"}[2m])
+            > 0
           for: 5m
           labels:
             severity: critical
           annotations:
-            summary: Someone is continuously trying to push inconsistent metrics to the Pushgateway
+            summary: Someone is continuously trying to push inconsistent metrics to
+              the Pushgateway

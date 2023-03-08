@@ -1,4 +1,3 @@
-# https://github.com/cablespaghetti/k3s-monitoring
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor

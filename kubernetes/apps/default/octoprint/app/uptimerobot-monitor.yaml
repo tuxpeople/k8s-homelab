@@ -5,9 +5,9 @@ metadata:
   name: echo-server
   namespace: monitoring
 spec:
-  friendlyName: "K8S echo-server"
-  url: "https://echo-server.${SECRET_DOMAIN_ME}"
+  friendlyName: K8S echo-server
+  url: https://echo-server.${SECRET_DOMAIN_ME}
   type: HTTPS
   httpMethod: GET
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}

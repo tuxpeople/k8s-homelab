@@ -17,7 +17,7 @@ spec:
         name: external-secrets
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:

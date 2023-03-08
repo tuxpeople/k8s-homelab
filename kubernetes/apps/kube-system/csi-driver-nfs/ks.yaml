@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-csi-driver-nfs
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/disabled: "true"
+    substitution.flux.home.arpa/disabled: 'true'
 spec:
   path: ./kubernetes/apps/kube-system/csi-driver-nfs/app
   prune: true
@@ -27,7 +27,7 @@ metadata:
   name: cluster-apps-csi-driver-nfs-sc
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/disabled: "true"
+    substitution.flux.home.arpa/disabled: 'true'
 spec:
   path: ./kubernetes/apps/kube-system/csi-driver-nfs/sc
   prune: true

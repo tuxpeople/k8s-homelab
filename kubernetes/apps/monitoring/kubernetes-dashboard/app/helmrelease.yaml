@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     env:
-      TZ: "${TIMEZONE}"
+      TZ: ${TIMEZONE}
     extraArgs:
       - --enable-skip-login
       - --disable-settings-authorizer
@@ -40,7 +40,7 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-staging
         hajimari.io/icon: mdi:kubernetes
       hosts:
-        - &host "kubernetes.${SECRET_DOMAIN_INTERNAL}"
+        - &host kubernetes.${SECRET_DOMAIN_INTERNAL}
       tls:
         - hosts:
             - *host

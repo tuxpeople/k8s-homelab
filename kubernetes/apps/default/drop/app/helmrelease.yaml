@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: lscr.io/linuxserver/pwndrop
-      tag: "1.0.1-ls61"
+      tag: 1.0.1-ls61
     service:
       main:
         ports:
@@ -39,10 +39,10 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN_K8S}"
+          external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
           hajimari.io/icon: video-input-antenna
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_ME}"
+          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN_ME}'
             paths:
               - path: /
                 pathType: Prefix
@@ -65,4 +65,4 @@ spec:
         mountPath: /config
         storageClass: synology-csi-delete
     env:
-      TZ: "${TIMEZONE}"
+      TZ: ${TIMEZONE}

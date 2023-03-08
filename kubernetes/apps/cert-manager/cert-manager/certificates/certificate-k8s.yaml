@@ -2,16 +2,16 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN_K8S/./-}"
+  name: ${SECRET_DOMAIN_K8S/./-}
 spec:
-  secretName: "${SECRET_DOMAIN_K8S//./-}-tls"
+  secretName: ${SECRET_DOMAIN_K8S//./-}-tls
   secretTemplate:
     annotations:
-      kubed.appscode.com/sync: ""
+      kubed.appscode.com/sync: ''
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN_K8S}"
+  commonName: ${SECRET_DOMAIN_K8S}
   dnsNames:
-    - "${SECRET_DOMAIN_K8S}"
-    - "*.${SECRET_DOMAIN_K8S}"
+    - ${SECRET_DOMAIN_K8S}
+    - '*.${SECRET_DOMAIN_K8S}'

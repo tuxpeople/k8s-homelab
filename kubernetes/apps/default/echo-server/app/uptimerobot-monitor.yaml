@@ -5,9 +5,9 @@ metadata:
   name: print
   namespace: monitoring
 spec:
-  friendlyName: "K8S print"
-  url: "https://print.${SECRET_DOMAIN_ME}"
+  friendlyName: K8S print
+  url: https://print.${SECRET_DOMAIN_ME}
   type: HTTPS
   httpMethod: GET
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}

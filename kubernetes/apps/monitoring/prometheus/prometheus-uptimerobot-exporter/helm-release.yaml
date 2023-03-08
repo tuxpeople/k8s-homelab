@@ -17,7 +17,7 @@ spec:
         name: k8s-assistant
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -39,7 +39,8 @@ spec:
         rules:
           - alert: UptimeRobotExporterAbsent
             annotations:
-              description: Uptime Robot Exporter has disappeared from Prometheus service discovery.
+              description: Uptime Robot Exporter has disappeared from Prometheus service
+                discovery.
               summary: Uptime Robot Exporter is down.
             expr: |
               absent(up{job=~".*uptimerobot.*"} == 1)
