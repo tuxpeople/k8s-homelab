@@ -134,7 +134,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
           hajimari.io/enable: "true"
-          hajimari.io/appName: Alert Manager
+          hajimari.io/appName: Alertmanager
           hajimari.io/icon: mdi:alert-decagram-outline
         tls:
           - secretName: ${SECRET_DOMAIN_ME//./-}-tls
