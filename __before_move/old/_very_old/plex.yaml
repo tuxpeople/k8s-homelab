@@ -74,7 +74,7 @@ metadata:
   name: plex
 spec:
   friendlyName: "K8S Plex"
-  url: "http://${SECRET_DOMAIN_TARGET_SKY}:32400/identity"
+  url: "http://ipv4.${SECRET_DOMAIN_K8S}:32400/identity"
   type: HTTP
   httpMethod: GET
   interval: 300

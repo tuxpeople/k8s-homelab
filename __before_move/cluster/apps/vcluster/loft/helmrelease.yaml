@@ -31,7 +31,7 @@ spec:
     recreate: true
   values:
     admin:
-      create: 'true'
+      create: "true"
       username: admin
       password: ${CODESERVER_PASSWORD}
 
@@ -42,7 +42,7 @@ spec:
       annotations:
         traefik.ingress.kubernetes.io/router.tls: "true"
         external-dns/is-public: "true"
-        external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN_TARGET_SKY}"
+        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN_K8S}"
         hajimari.io/enable: "true"
         hajimari.io/icon: "mdi:chart-arc"
       tls:
@@ -51,7 +51,7 @@ spec:
 
         # audit
     audit:
-      enableSideCar: 'true'
+      enableSideCar: "true"
 
     config:
       audit:
