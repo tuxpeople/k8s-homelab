@@ -108,7 +108,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: nfs-subdir-external-provisioner-noarchive
+              storageClassName: nfs-csi
               accessModes: [ReadWriteOnce]
               resources:
                 requests:
@@ -263,7 +263,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: nfs-subdir-external-provisioner-noarchive
+              storageClassName: nfs-csi
               resources:
                 requests:
                   storage: 50Gi

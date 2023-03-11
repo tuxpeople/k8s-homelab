@@ -32,7 +32,7 @@ spec:
   values:
     storage:
       persistence: true
-      className: nfs-subdir-external-provisioner-noarchive
+      className: nfs-csi
     syncer:
       extraArgs:
         - --tls-san=dev-cluster.vcluster.${SECRET_DOMAIN_K8S}
