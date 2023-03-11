@@ -11,4 +11,4 @@ spec:
   resources:
     requests:
       storage: 65Gi
-  storageClassName: "nfs-subdir-external-provisioner"
+  storageClassName: "nfs-csi"

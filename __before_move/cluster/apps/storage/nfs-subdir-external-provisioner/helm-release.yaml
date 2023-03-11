@@ -2,18 +2,18 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: nfs-subdir-external-provisioner
+  name: nfs-csi
 spec:
   interval: 15m
   timeout: 10m
-  releaseName: nfs-subdir-external-provisioner
+  releaseName: nfs-csi
   chart:
     spec:
-      chart: nfs-subdir-external-provisioner
+      chart: nfs-csi
       version: 4.0.17
       sourceRef:
         kind: HelmRepository
-        name: nfs-subdir-external-provisioner
+        name: nfs-csi
         namespace: flux-system
   test:
     enable: false # Enable helm test
@@ -31,10 +31,10 @@ spec:
   values:
     storageClass:
       defaultClass: true
-      name: nfs-subdir-external-provisioner
+      name: nfs-csi
       allowVolumeExpansion: true
       reclaimPolicy: Delete
       archiveOnDelete: true
     nfs:
       server: 10.20.30.40
-      path: /volume2/kubernetes/nfs-subdir-external-provisioner
+      path: /volume2/kubernetes/nfs-csi

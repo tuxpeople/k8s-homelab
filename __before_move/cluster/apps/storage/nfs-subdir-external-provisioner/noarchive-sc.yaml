@@ -5,6 +5,6 @@ metadata:
   name: synology-csi-delete
 parameters:
   archiveOnDelete: "false"
-provisioner: cluster.local/nfs-subdir-external-provisioner
+provisioner: cluster.local/nfs-csi
 reclaimPolicy: Delete
 volumeBindingMode: Immediate

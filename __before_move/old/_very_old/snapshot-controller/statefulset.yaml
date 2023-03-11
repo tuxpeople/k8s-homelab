@@ -3,7 +3,7 @@ kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: snapshot-controller
-  namespace: nfs-subdir-external-provisioner
+  namespace: nfs-csi
 spec:
   serviceName: "snapshot-controller"
   replicas: 1

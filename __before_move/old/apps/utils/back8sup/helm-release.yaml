@@ -16,7 +16,7 @@ spec:
         name: adfinis
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -33,7 +33,7 @@ spec:
       schedule: 15 * * * *
       environment:
         - name: GENERATIONS
-          value: '12'
+          value: "12"
         - name: TOKEN_FILE
           value: /var/run/secrets/kubernetes.io/serviceaccount/token
         - name: API_ENDPOINT
@@ -49,4 +49,4 @@ spec:
               - cm
               - ingress
     persistence:
-      storageClassName: nfs-subdir-external-provisioner
+      storageClassName: nfs-csi

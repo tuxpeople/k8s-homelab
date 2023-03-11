@@ -3,6 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - configurations
-  - nfs-subdir-external-provisioner
+  - nfs-csi
   - external-snapshotter
   - kube-vip
