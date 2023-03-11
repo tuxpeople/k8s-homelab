@@ -2,11 +2,10 @@
 apiVersion: uroperator.brennerm.github.io/v1beta1
 kind: UptimeRobotMonitor
 metadata:
-  name: echo-server
-  namespace: monitoring
+  name: print
 spec:
-  friendlyName: K8S echo-server
-  url: https://echo-server.${SECRET_DOMAIN_ME}
+  friendlyName: K8S print
+  url: https://print.${SECRET_DOMAIN_ME}
   type: HTTPS
   httpMethod: GET
   interval: 300
