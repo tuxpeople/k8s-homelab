@@ -37,6 +37,7 @@ spec:
     - apiVersion: apps/v1
       kind: Deployment
       name: alertmanager-discord
+      namespace: monitoring
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -58,6 +59,7 @@ spec:
     - apiVersion: monitoring.coreos.com/v1
       kind: PodMonitor
       name: flux-system
+      namespace: monitoring
   interval: 30m
   retryInterval: 1m
   timeout: 3m

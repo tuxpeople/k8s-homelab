@@ -16,6 +16,7 @@ spec:
     - apiVersion: v1
       kind: Service
       name: octoprint
+      namespace: default
   interval: 30m
   retryInterval: 1m
   timeout: 3m
