@@ -11,4 +11,4 @@ spec:
   resources:
     requests:
       storage: 25Gi
-  storageClassName: nfs-csi
+  storageClassName: nfs-subdir-external-provisioner-noarchive

@@ -2,7 +2,7 @@ allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nfs-csi
+  name: nfs-subdir-external-provisioner-noarchive
 parameters:
   archiveOnDelete: "false"
 provisioner: cluster.local/nfs-subdir-external-provisioner
