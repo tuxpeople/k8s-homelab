@@ -103,7 +103,7 @@ spec:
               - severity = "warning"
             equal: [alertname, namespace]
       alertmanagerSpec:
-        replicas: 2
+        replicas: 1
         podAntiAffinity: hard
         storage:
           volumeClaimTemplate:
@@ -243,7 +243,7 @@ spec:
             hosts:
               - thanos-sidecar.${SECRET_DOMAIN_INTERNAL}
       prometheusSpec:
-        replicas: 2
+        replicas: 1
         replicaExternalLabelName: __replica__
         externalLabels:
           cluster: homelab
