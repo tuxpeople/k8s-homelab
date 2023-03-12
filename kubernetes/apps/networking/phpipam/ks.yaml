@@ -1,0 +1,45 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-phpipam-db
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/networking/phpipam/phpipam-db
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  dependsOn:
+    - name: cluster-apps-external-secrets-secretstores
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: phpipam-mysql
+      namespace: networking
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-phpipam-web
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-phpipam-db
+  path: ./kubernetes/apps/networking/phpipam/phpipam-web
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: phpipam-www
+      namespace: networking
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
