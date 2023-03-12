@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
   labels:
     app: podsync
   name: podsync

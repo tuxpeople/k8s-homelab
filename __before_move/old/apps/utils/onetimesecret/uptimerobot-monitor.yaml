@@ -5,9 +5,9 @@ metadata:
   name: onetimesecret
   namespace: utils
 spec:
-  friendlyName: "K8S onetimesecret"
-  url: "https://secrets.${SECRET_DOMAIN_CH}"
+  friendlyName: K8S onetimesecret
+  url: https://secrets.${SECRET_DOMAIN_CH}
   type: HTTPS
   httpMethod: GET
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}

@@ -4,8 +4,8 @@ kind: Policy
 metadata:
   name: utils-backup
 spec:
-  comment: ""
-  frequency: "@daily"
+  comment: ''
+  frequency: '@daily'
   actions:
     - action: backup
       backupParameters:
@@ -14,7 +14,7 @@ spec:
           name: minio
     - action: export
       exportParameters:
-        frequency: "@daily"
+        frequency: '@daily'
         profile:
           name: minio
           namespace: k10

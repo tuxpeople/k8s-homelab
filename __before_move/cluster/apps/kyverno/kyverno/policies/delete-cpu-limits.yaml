@@ -17,7 +17,8 @@ spec:
       match:
         any:
           - resources:
-              kinds: ["Pod"]
+              kinds:
+                - Pod
       exclude:
         any:
           - resources:
@@ -25,28 +26,30 @@ spec:
                 - calico-system
                 - tigera-operator
           - resources:
-              kinds: ["Pod"]
+              kinds:
+                - Pod
               selector:
                 matchLabels:
-                  job-name: "*"
+                  job-name: '*'
           - resources:
-              kinds: ["Pod"]
+              kinds:
+                - Pod
               selector:
                 matchLabels:
-                  statefulset.kubernetes.io/pod-name: "*"
+                  statefulset.kubernetes.io/pod-name: '*'
           - resources:
               annotations:
-                kyverno.io/ignore: "true"
+                kyverno.io/ignore: 'true'
       mutate:
         patchStrategicMerge:
           spec:
             initContainers:
-              - (name): "*"
+              - (name): '*'
                 resources:
                   limits:
-                    cpu: null
+                    cpu:
             containers:
-              - (name): "*"
+              - (name): '*'
                 resources:
                   limits:
-                    cpu: null
+                    cpu:

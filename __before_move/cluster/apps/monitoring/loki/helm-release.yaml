@@ -16,7 +16,7 @@ spec:
         name: grafana-charts
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     crds: CreateReplace
     createNamespace: true
@@ -41,7 +41,8 @@ spec:
           http_listen_port: 3100
           grpc_listen_port: 9095
         memberlist:
-          join_members: ["loki-memberlist"]
+          join_members:
+            - loki-memberlist
         limits_config:
           retention_period: 14d
           enforce_metric_name: false
@@ -53,7 +54,7 @@ spec:
           ingestion_burst_size_mb: 16
         schema_config:
           configs:
-            - from: "2021-08-01"
+            - from: '2021-08-01'
               store: boltdb-shipper
               object_store: aws
               schema: v12
@@ -113,7 +114,7 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: nginx
-          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.tls: 'true'
         hosts:
           - host: loki.${SECRET_DOMAIN_INTERNAL}
             paths:
@@ -151,7 +152,7 @@ spec:
       dashboards:
         enabled: true
         labels:
-          grafana_dashboard: "1"
+          grafana_dashboard: '1'
       annotations:
         grafana_folder: Loki
       serviceMonitor:
@@ -174,16 +175,20 @@ spec:
             idle_timeout: 60s
             label_structured_data: true
             labels:
-              job: "syslog"
+              job: syslog
           relabel_configs:
-            - source_labels: ["__syslog_connection_ip_address"]
-              target_label: "ip_address"
-            - source_labels: ["__syslog_message_severity"]
-              target_label: "severity"
-            - source_labels: ["__syslog_message_facility"]
-              target_label: "facility"
-            - source_labels: ["__syslog_message_hostname"]
-              target_label: "host"
+            - source_labels:
+                - __syslog_connection_ip_address
+              target_label: ip_address
+            - source_labels:
+                - __syslog_message_severity
+              target_label: severity
+            - source_labels:
+                - __syslog_message_facility
+              target_label: facility
+            - source_labels:
+                - __syslog_message_hostname
+              target_label: host
       extraPorts:
         syslog:
           name: tcp-syslog

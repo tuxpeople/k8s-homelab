@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,7 +29,7 @@ spec:
             - name: TZ
               value: ${TIMEZONE}
             - name: IPAM_DATABASE_WEBHOST
-              value: "%"
+              value: '%'
             - name: IPAM_DATABASE_NAME
               value: phpipamdb
             - name: IPAM_DATABASE_USER
@@ -67,7 +68,7 @@ spec:
             - name: TZ
               value: ${TIMEZONE}
             - name: SCAN_INTERVAL
-              value: "1h"
+              value: 1h
             - name: IPAM_DATABASE_NAME
               value: phpipamdb
             - name: IPAM_DATABASE_USER

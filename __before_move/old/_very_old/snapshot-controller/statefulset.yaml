@@ -5,7 +5,7 @@ metadata:
   name: snapshot-controller
   namespace: nfs-csi
 spec:
-  serviceName: "snapshot-controller"
+  serviceName: snapshot-controller
   replicas: 1
   selector:
     matchLabels:
@@ -20,6 +20,6 @@ spec:
         - name: snapshot-controller
           image: k8s.gcr.io/sig-storage/snapshot-controller:v4.1.1
           args:
-            - "--v=5"
-            - "--leader-election=false"
+            - --v=5
+            - --leader-election=false
           imagePullPolicy: IfNotPresent

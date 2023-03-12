@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mealie-config-pvc
   labels:
-    pv-backup/enabled: "true"
+    pv-backup/enabled: 'true'
 spec:
   accessModes:
     - ReadWriteOnce

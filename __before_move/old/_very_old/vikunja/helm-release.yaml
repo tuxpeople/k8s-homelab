@@ -17,7 +17,7 @@ spec:
         name: k8s-at-home
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -40,7 +40,7 @@ spec:
         enabled: true
         type: custom
         readOnly: true
-        mountPath: "-"
+        mountPath: '-'
         volumeSpec:
           configMap:
             name: vikunja-config-yml
@@ -51,10 +51,10 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: nginx
-          traefik.ingress.kubernetes.io/router.tls: "true"
-          external-dns/is-public: "true"
+          traefik.ingress.kubernetes.io/router.tls: 'true'
+          external-dns/is-public: 'true'
           external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
-          hajimari.io/enable: "true"
+          hajimari.io/enable: 'true'
           hajimari.io/icon: format-list-checks
         hosts:
           - host: todo.${SECRET_DOMAIN_ME}
@@ -77,7 +77,7 @@ spec:
         port:
           port: 8080
         annotations:
-          prometheus.io/probe: "true"
+          prometheus.io/probe: 'true'
           prometheus.io/protocol: http
     caddy:
       notls: true
@@ -102,11 +102,11 @@ spec:
           - name: VIKUNJA_MAILER_FROMEMAIL
             value: todo@${SECRET_DOMAIN_ME}
           - name: VIKUNJA_MAILER_ENABLED
-            value: "true"
+            value: 'true'
           - name: VIKUNJA_MAILER_HOST
             value: smtp.utils.svc.cluster.local
           - name: VIKUNJA_MAILER_PORT
-            value: "25"
+            value: '25'
           - name: VIKUNJA_API_URL
             value: https://todo.${SECRET_DOMAIN_ME}/api/v1
         volumeMounts:

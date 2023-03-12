@@ -7,12 +7,12 @@ metadata:
   name: phpipam
   annotations:
     kubernetes.io/ingress.class: nginx
-    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls: 'true'
     traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
-    hajimari.io/enable: "true"
+    hajimari.io/enable: 'true'
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+    - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
       hosts:
         - phpipam.${SECRET_DOMAIN_INTERNAL}
   rules:

@@ -4,8 +4,8 @@ kind: CronJob
 metadata:
   name: cloudflare-ddns
 spec:
-  schedule: "0 * * * *"
-  concurrencyPolicy: "Forbid"
+  schedule: 0 * * * *
+  concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 5
   jobTemplate:
@@ -22,8 +22,8 @@ spec:
                 - secretRef:
                     name: cloudflare-ddns
               command:
-                - "/bin/bash"
-                - "/app/cloudflare-ddns.sh"
+                - /bin/bash
+                - /app/cloudflare-ddns.sh
               volumeMounts:
                 - name: cloudflare-ddns
                   mountPath: /app/cloudflare-ddns.sh

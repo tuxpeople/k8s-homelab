@@ -5,12 +5,12 @@ metadata:
   name: gaps
   annotations:
     kubernetes.io/ingress.class: nginx
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: "filmstrip"
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    hajimari.io/enable: 'true'
+    hajimari.io/icon: filmstrip
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+    - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
       hosts:
         - gaps.${SECRET_DOMAIN_INTERNAL}
   rules:

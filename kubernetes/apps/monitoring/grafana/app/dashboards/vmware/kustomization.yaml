@@ -15,4 +15,4 @@ generatorOptions:
     kustomize.toolkit.fluxcd.io/substitute: disabled
     grafana_folder: VMware
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: '1'

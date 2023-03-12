@@ -28,13 +28,14 @@ spec:
         - name: datacopy-automated
           image: ubuntu
           command:
-            - '/bin/bash'
-            - '-c'
-            - 'cd /source; tar -czf /destination/gollum-data-$(date +"%Y-%m-%d_%H-%M-%S").tar.gz .'
+            - /bin/bash
+            - -c
+            - cd /source; tar -czf /destination/gollum-data-$(date +"%Y-%m-%d_%H-%M-%S").tar.gz
+              .
           volumeMounts:
-            - mountPath: "/destination"
+            - mountPath: /destination
               name: backup
-            - mountPath: "/source"
+            - mountPath: /source
               name: pv
       restartPolicy: Never
       volumes:

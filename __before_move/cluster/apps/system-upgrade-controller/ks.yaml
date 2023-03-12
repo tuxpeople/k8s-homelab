@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-system-upgrade-controller-app
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/enabled: "true"
+    substitution.flux.home.arpa/enabled: 'true'
 spec:
   dependsOn:
     - name: cluster-apps-system-upgrade-controller-crds
@@ -41,7 +41,7 @@ metadata:
   name: cluster-apps-system-upgrade-controller-crds
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/enabled: "true"
+    substitution.flux.home.arpa/enabled: 'true'
 spec:
   path: ./kubernetes/apps/system-upgrade-controller/crds
   prune: true

@@ -1,6 +1,6 @@
 ---
 - name: Set timezone
   community.general.timezone:
-    name: "{{ timezone }}"
+    name: '{{ timezone }}'
   when:
     - timezone is defined

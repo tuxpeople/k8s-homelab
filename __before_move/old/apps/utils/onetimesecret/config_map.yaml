@@ -8,7 +8,7 @@ metadata:
   name: onetimesecret-config
   namespace: utils
 data:
-  config: |
+  config: |-
     :site:
       :host: secrets.${SECRET_DOMAIN_CH}
       :domain: secrets.${SECRET_DOMAIN_CH}

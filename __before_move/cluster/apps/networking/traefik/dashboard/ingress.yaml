@@ -5,20 +5,20 @@ metadata:
   name: traefik-dashboard
   annotations:
     kubernetes.io/ingress.class: nginx
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    external-dns/is-public: "true"
-    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN_K8S}"
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    external-dns/is-public: 'true'
+    external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
     traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
-    hajimari.io/enable: "true"
-    hajimari.io/icon: "web"
-    hajimari.io/appName: "traefik"
+    hajimari.io/enable: 'true'
+    hajimari.io/icon: web
+    hajimari.io/appName: traefik
 spec:
   tls:
     - hosts:
-        - "traefik.${SECRET_DOMAIN_ME}"
-      secretName: "${SECRET_DOMAIN_ME//./-}-tls"
+        - traefik.${SECRET_DOMAIN_ME}
+      secretName: ${SECRET_DOMAIN_ME//./-}-tls
   rules:
-    - host: "traefik.${SECRET_DOMAIN_ME}"
+    - host: traefik.${SECRET_DOMAIN_ME}
       http:
         paths:
           - path: /

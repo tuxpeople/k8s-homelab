@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: paperless-data-pvc
   labels:
-    pv-backup/enabled: "true"
+    pv-backup/enabled: 'true'
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: paperless-export-pvc
   labels:
-    pv-backup/enabled: "true"
+    pv-backup/enabled: 'true'
 spec:
   accessModes:
     - ReadWriteOnce
@@ -30,7 +30,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: paperless-media-pvc
   labels:
-    pv-backup/enabled: "true"
+    pv-backup/enabled: 'true'
 spec:
   accessModes:
     - ReadWriteOnce

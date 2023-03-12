@@ -10,33 +10,108 @@ kind: ClusterRole
 metadata:
   name: pv-backup
 rules:
-  - apiGroups: [""]
-    resources: ["serviceaccounts", "clusterrole", "clusterrolebinding"]
-    verbs: ["watch", "list", "create", "update", "delete", "patch", "get"]
-  - apiGroups: [""]
-    resources: ["secrets", "pods/exec"]
-    verbs: ["list", "create", "delete", "get", "patch", "update"]
-  - apiGroups: [""]
-    resources: ["namespaces", "persistentvolumeclaims", "serviceaccounts", "pods/log", "persistentvolumes"]
-    verbs: ["watch", "list", "get"]
-  - apiGroups: ["helm.toolkit.fluxcd.io"]
-    resources: ["helmreleases"]
-    verbs: ["watch", "list", "get", "delete"]
-  - apiGroups: [""]
-    resources: ["pods", "jobs"]
-    verbs: ["watch", "list", "create", "update", "delete", "patch", "get"]
-  - apiGroups: ["batch"]
-    resources: ["jobs"]
-    verbs: ["watch", "list", "create", "update", "delete", "patch", "get"]
-  - apiGroups: ["", "apps"]
-    resources: ["deployments"]
-    verbs: ["list", "watch", "get"]
-  - apiGroups: ["", "apps"]
-    resources: ["deployments/scale"]
-    verbs: ["list", "watch", "get", "update", "patch", "create", "delete"]
-  - apiGroups: ["apiextensions.k8s.io"]
-    resources: ["customresourcedefinitions"]
-    verbs: ["watch", "list", "get"]
+  - apiGroups:
+      - ''
+    resources:
+      - serviceaccounts
+      - clusterrole
+      - clusterrolebinding
+    verbs:
+      - watch
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - get
+  - apiGroups:
+      - ''
+    resources:
+      - secrets
+      - pods/exec
+    verbs:
+      - list
+      - create
+      - delete
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - ''
+    resources:
+      - namespaces
+      - persistentvolumeclaims
+      - serviceaccounts
+      - pods/log
+      - persistentvolumes
+    verbs:
+      - watch
+      - list
+      - get
+  - apiGroups:
+      - helm.toolkit.fluxcd.io
+    resources:
+      - helmreleases
+    verbs:
+      - watch
+      - list
+      - get
+      - delete
+  - apiGroups:
+      - ''
+    resources:
+      - pods
+      - jobs
+    verbs:
+      - watch
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - get
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - watch
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - get
+  - apiGroups:
+      - ''
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - list
+      - watch
+      - get
+  - apiGroups:
+      - ''
+      - apps
+    resources:
+      - deployments/scale
+    verbs:
+      - list
+      - watch
+      - get
+      - update
+      - patch
+      - create
+      - delete
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - watch
+      - list
+      - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

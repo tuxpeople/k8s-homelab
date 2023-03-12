@@ -1,3 +1,4 @@
+---
 # yamllint disable
 apiVersion: v1
 kind: Secret
@@ -14,13 +15,12 @@ sops:
   azure_kv: []
   hc_vault: []
   age: []
-  lastmodified: "2021-12-09T12:09:11Z"
+  lastmodified: '2021-12-09T12:09:11Z'
   mac: ENC[AES256_GCM,data:CF5TITuPzXR/AXffpvaRrbL7CZhBlANkvbf4/jjCCEed1mczP13k8bjwI/2MYtsKaedZUKurSRWdZpxNmoexbHJNeTXjpATgjXadXJC4ExV42rtZcv0TV8fx2w/VfJYPWEg5ldDyDYRjuKphYj0i/d1Kfs31wvKm6jNZRuG68xY=,iv:jzqaaiHFSN2Xt9owGTv4KQBwVXn/cfTxncK2W2on+YY=,tag:D5uT81zfS9eljQtZbL2WAQ==,type:str]
   pgp:
-    - created_at: "2021-12-09T12:09:05Z"
+    - created_at: '2021-12-09T12:09:05Z'
       enc: |
         -----BEGIN PGP MESSAGE-----
-
         hQIMA0q2LaeHLnEpAQ//edFrNk9k7mszh9ZEyHSYOX3I54WJ/Okw6yoMR+0RUIjF
         egJuajozHsYn2wrMX8677+joVdBIuuqs+fF4UYWQPmtc0+4dOfC8+7QFXoNWt0gW
         J03MWXy7KIHI0r+COL18Ds98XLG544JrlsjUzKHsJJUoiUL8TbITYm1IzeujlsqB
@@ -37,10 +37,9 @@ sops:
         =wu68
         -----END PGP MESSAGE-----
       fp: 0DF444DA3BD391701DD9BAA6B412B80F601DFCE2
-    - created_at: "2021-12-09T12:09:05Z"
+    - created_at: '2021-12-09T12:09:05Z'
       enc: |-
         -----BEGIN PGP MESSAGE-----
-
         wcFMA6ZIymqDCtVZARAAYd/2DWsRirRBepVRiJa6xzykvvs7Ou83zKSJNRS17hnA
         I4Fp7e3aMdyQnlMFr+RIvOpVu/Jpm3w9ii6vqAt+Ftvtid5ycm/QAoa/uifwpUgK
         Q+d3u3N4VNwH4CUQSessDEbLpgJW2osQUTK0PNr34HqkjNs8ad5wO1PInFkFLcEA

@@ -89,7 +89,7 @@ spec:
             - name: TZ
               value: Europe/Zurich
             - name: JVB_TCP_HARVESTER_DISABLED
-              value: "true"
+              value: 'true'
         - name: web
           image: jitsi/web
           imagePullPolicy: Always
@@ -111,7 +111,7 @@ spec:
             - name: TZ
               value: Europe/Zurich
             - name: JVB_TCP_HARVESTER_DISABLED
-              value: "true"
+              value: 'true'
         - name: jvb
           image: jitsi/jvb
           imagePullPolicy: Always
@@ -131,11 +131,11 @@ spec:
             - name: JICOFO_AUTH_USER
               value: focus
             - name: JVB_TCP_HARVESTER_DISABLED
-              value: "true"
+              value: 'true'
             - name: JVB_AUTH_USER
               value: jvb
             - name: JVB_PORT
-              value: "30300"
+              value: '30300'
             - name: JVB_AUTH_PASSWORD
               valueFrom:
                 secretKeyRef:

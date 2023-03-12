@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: plex-exporter-dashboard
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: '1'
     app: plex-exporter
     namespace: media
   annotations:

@@ -19,10 +19,10 @@ spec:
         - name: pv-backup
           image: ghcr.io/k8s-at-home/kubectl:v1.2
           command:
-            - "/usr/bin/bash"
+            - /usr/bin/bash
           args:
-            - "-c"
-            - "/scripts/pv-restore.sh"
+            - -c
+            - /scripts/pv-restore.sh
           volumeMounts:
             - name: pv-backup
               mountPath: /scripts

@@ -8,14 +8,14 @@ metadata:
   name: smokeping
   annotations:
     kubernetes.io/ingress.class: nginx
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: "smoke"
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    hajimari.io/enable: 'true'
+    hajimari.io/icon: smoke
 spec:
   tls:
     - hosts:
         - smoke.${SECRET_DOMAIN_INTERNAL}
-      secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+      secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
   rules:
     - host: smoke.${SECRET_DOMAIN_INTERNAL}
       http:

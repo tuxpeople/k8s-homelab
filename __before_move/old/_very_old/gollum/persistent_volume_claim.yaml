@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: development
   labels:
-    pv-backup/enabled: "true"
+    pv-backup/enabled: 'true'
     app: gollum
   name: gollum-data-pvc
 spec:

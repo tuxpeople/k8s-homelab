@@ -44,8 +44,8 @@ metadata:
     app.kubernetes.io/name: tautulli-exporter
     app.kubernetes.io/instance: tautulli-exporter
   annotations:
-    fluxcd.io/ignore: "false"
-    fluxcd.io/automated: "true"
+    fluxcd.io/ignore: 'false'
+    fluxcd.io/automated: 'true'
 spec:
   replicas: 1
   revisionHistoryLimit: 3
@@ -59,8 +59,8 @@ spec:
         app.kubernetes.io/name: tautulli-exporter
         app.kubernetes.io/instance: tautulli-exporter
       annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "monitoring"
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: monitoring
     spec:
       containers:
         - name: tautulli-exporter
@@ -68,11 +68,11 @@ spec:
           imagePullPolicy: Always
           env:
             - name: SERVE_PORT
-              value: "9487"
+              value: '9487'
             - name: TAUTULLI_URI
-              value: "${SECRET_TAUTULLI_URL}"
+              value: ${SECRET_TAUTULLI_URL}
             - name: TAUTULLI_API_KEY
-              value: "${SECRET_TAUTULLI_API_KEY}"
+              value: ${SECRET_TAUTULLI_API_KEY}
           ports:
             - name: monitoring
               containerPort: 9487

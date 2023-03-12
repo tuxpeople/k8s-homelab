@@ -2,23 +2,18 @@
 - include: locale.yml
   tags:
     - locale
-
 - include: packages.yml
   tags:
     - packages
-
 - import_tasks: kernel.yml
   tags:
     - kernel
-
 - include: network.yml
   tags:
     - network
-
 - include: filesystem.yml
   tags:
     - filesystem
-
 - include: user.yml
   tags:
     - user

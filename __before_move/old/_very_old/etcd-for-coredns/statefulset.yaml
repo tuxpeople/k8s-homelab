@@ -38,7 +38,7 @@ spec:
             - name: ETCD_ADVERTISE_CLIENT_URLS
               value: http://0.0.0.0:2379
             - name: ETCD_INITIAL_CLUSTER
-              value: "node1=http://0.0.0.0:2380"
+              value: node1=http://0.0.0.0:2380
           volumeMounts:
             - name: data
               mountPath: /etcd-data

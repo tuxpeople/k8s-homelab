@@ -4,19 +4,19 @@ kind: Ingress
 metadata:
   name: linkerd-web-ingress
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-forwardauth-authelia@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
     ingress.kubernetes.io/custom-request-headers: l5d-dst-override:web.linkerd.svc.cluster.local:8084
-    kubernetes.io/ingress.class: "traefik"
-    hajimari.io/enable: "true"
+    kubernetes.io/ingress.class: traefik
+    hajimari.io/enable: 'true'
     hajimari.io/icon: chip
     hajimari.io/appName: Linkerd
 spec:
   tls:
     - hosts:
-        - "linkerd.${SECRET_DOMAIN_ME}"
-      ssecretName: "${SECRET_DOMAIN_ME//./-}-tls"
+        - linkerd.${SECRET_DOMAIN_ME}
+      ssecretName: ${SECRET_DOMAIN_ME//./-}-tls
   rules:
-    - host: "linkerd.${SECRET_DOMAIN_ME}"
+    - host: linkerd.${SECRET_DOMAIN_ME}
       http:
         paths:
           - path: /

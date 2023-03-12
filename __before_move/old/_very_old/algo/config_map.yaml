@@ -7,7 +7,7 @@ metadata:
   name: vpn-config
   namespace: utils
 data:
-  config.cfg: |
+  config.cfg: |-
     ---
 
     # This is the list of users to generate.
@@ -85,7 +85,7 @@ data:
       enabled: true
       time: 06:00
 
-    ### Advanced users only below this line ###
+    ### Advanced users only below this line  ###
 
     # DNS servers which will be used if 'dns_encryption' is 'true'. Multiple
     # providers may be specified, but avoid mixing providers that filter results
@@ -143,7 +143,6 @@ data:
 
     # Hide sensitive data
     no_log: true
-
     congrats:
       common: |
         "#                          Congratulations!                            #"
@@ -158,13 +157,11 @@ data:
         "#        The CA key password is {{ CA_password|default(omit) }}       #"
       ssh_access: |
         "#      Shell access: ssh -F configs/{{ ansible_ssh_host|default(omit) }}/ssh_config {{ algo_server_name }}        #"
-
     SSH_keys:
       comment: algo@ssh
       private: configs/algo.pem
       private_tmp: /tmp/algo-ssh.pem
       public: configs/algo.pem.pub
-
     cloud_providers:
       azure:
         size: Standard_B1S
@@ -218,12 +215,10 @@ data:
         type: g6-nanode-1
         image: linode/ubuntu20.04
       local:
-
     fail_hint:
       - Sorry, but something went wrong!
       - Please check the troubleshooting guide.
       - https://trailofbits.github.io/algo/troubleshooting.html
-
     booleans_map:
       Y: true
       y: true

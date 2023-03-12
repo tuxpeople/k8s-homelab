@@ -20,7 +20,7 @@ metadata:
   name: smtp-ext
   namespace: utils
   annotations:
-    metallb.universe.tf/loadBalancerIPs: "${METALLB_SMTP_ADDR}"
+    metallb.universe.tf/loadBalancerIPs: ${METALLB_SMTP_ADDR}
 spec:
   type: LoadBalancer
   ports:

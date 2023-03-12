@@ -39,10 +39,11 @@ spec:
           - synology
         target:
           - 10.20.30.40
-      path: "/snmp"
+      path: /snmp
       targetPort: 9116
       relabelings:
-        - sourceLabels: [__param_target]
+        - sourceLabels:
+            - __param_target
           targetLabel: instance
 ---
 kind: Deployment

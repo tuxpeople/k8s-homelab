@@ -20,16 +20,16 @@ spec:
         - image: mysql:5.7.33
           imagePullPolicy: Always
           env:
-            - name: "MYSQL_DATABASE"
-              value: "semaphore"
-            - name: "MYSQL_USER"
-              value: "semaphore"
-            - name: "MYSQL_PASSWORD"
+            - name: MYSQL_DATABASE
+              value: semaphore
+            - name: MYSQL_USER
+              value: semaphore
+            - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: ansible-semaphore-secret
                   key: mysql-password
-            - name: "MYSQL_ROOT_PASSWORD"
+            - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: ansible-semaphore-secret

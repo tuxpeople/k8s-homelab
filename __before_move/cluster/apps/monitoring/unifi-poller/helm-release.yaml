@@ -17,7 +17,7 @@ spec:
         name: k8s-at-home
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,21 +31,21 @@ spec:
     recreate: true
   values:
     env:
-      TZ: "${TIMEZONE}"
-      UP_UNIFI_DEFAULT_ROLE: "sky"
-      UP_UNIFI_DEFAULT_URL: "https://10.20.30.1"
+      TZ: ${TIMEZONE}
+      UP_UNIFI_DEFAULT_ROLE: sky
+      UP_UNIFI_DEFAULT_URL: https://10.20.30.1
       UP_UNIFI_DEFAULT_VERIFY_SSL: false
-      UP_UNIFI_DEFAULT_USER: "unifipoller"
-      UP_UNIFI_DEFAULT_PASS: "Unifi4Poller"
+      UP_UNIFI_DEFAULT_USER: unifipoller
+      UP_UNIFI_DEFAULT_PASS: Unifi4Poller
       UP_UNIFI_DEFAULT_SAVE_SITES: true
-      UP_UNIFI_DEFAULT_SAVE_ALARMS: "true"
-      UP_UNIFI_DEFAULT_SAVE_ANOMALIES: "true"
-      UP_UNIFI_DEFAULT_SAVE_DPI: "false"
-      UP_UNIFI_DEFAULT_SAVE_EVENTS: "true"
-      UP_UNIFI_DEFAULT_SAVE_IDS: "true"
+      UP_UNIFI_DEFAULT_SAVE_ALARMS: 'true'
+      UP_UNIFI_DEFAULT_SAVE_ANOMALIES: 'true'
+      UP_UNIFI_DEFAULT_SAVE_DPI: 'false'
+      UP_UNIFI_DEFAULT_SAVE_EVENTS: 'true'
+      UP_UNIFI_DEFAULT_SAVE_IDS: 'true'
       UP_INFLUXDB_DISABLE: true
       UP_PROMETHEUS_DISABLE: false
-      UP_PROMETHEUS_NAMESPACE: "unifipoller"
+      UP_PROMETHEUS_NAMESPACE: unifipoller
       UP_LOKI_URL: http://loki:3100
     strategy:
       type: Recreate

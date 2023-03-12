@@ -5,4 +5,4 @@ metadata:
   name: default
 spec:
   defaultCertificate:
-    secretName: "${SECRET_DOMAIN_ME//./-}-tls"
+    secretName: ${SECRET_DOMAIN_ME//./-}-tls

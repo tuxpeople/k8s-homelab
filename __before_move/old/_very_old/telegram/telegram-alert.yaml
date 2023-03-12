@@ -10,11 +10,11 @@ spec:
   eventSeverity: error
   eventSources:
     - kind: GitRepository
-      name: "*"
+      name: '*'
     - kind: Kustomization
-      name: "*"
+      name: '*'
     - kind: HelmRepository
-      name: "*"
+      name: '*'
     - kind: HelmRelease
-      name: "*"
+      name: '*'
   suspend: false

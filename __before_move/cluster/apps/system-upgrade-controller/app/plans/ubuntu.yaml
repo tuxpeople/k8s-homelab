@@ -22,7 +22,7 @@ spec:
   nodeSelector:
     matchExpressions:
       # - {key: plan.upgrade.cattle.io/jammy, operator: Exists}
-      - {key: region, operator: In, values: ["sky"]}
+      - {key: region, operator: In, values: [sky]}
   serviceAccountName: system-upgrade
   secrets:
     - name: jammy
@@ -32,5 +32,9 @@ spec:
   version: jammy
   upgrade:
     image: ubuntu
-    command: ["chroot", "/host"]
-    args: ["sh", "/run/system-upgrade/secrets/jammy/upgrade.sh"]
+    command:
+      - chroot
+      - /host
+    args:
+      - sh
+      - /run/system-upgrade/secrets/jammy/upgrade.sh

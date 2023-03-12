@@ -16,7 +16,7 @@ spec:
         name: kubernetes-sigs-descheduler-charts
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -36,7 +36,7 @@ spec:
           params:
             namespaces:
               exclude:
-                - "k10"
+                - k10
         RemovePodsViolatingNodeAffinity:
           enabled: true
           params:
@@ -55,10 +55,10 @@ spec:
           params:
             failedPods:
               reasons:
-                - "NodeAffinity"
+                - NodeAffinity
               includingInitContainers: true
               excludeOwnerKinds:
-                - "Job"
+                - Job
               minPodLifeTimeSeconds: 3600
         LowNodeUtilization:
           enabled: true

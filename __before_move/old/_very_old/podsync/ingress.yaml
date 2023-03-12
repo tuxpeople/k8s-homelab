@@ -4,11 +4,11 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN_K8S}"
-    external-dns/is-public: "true"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: "podcast"
-    hajimari.io/appName: "podsync"
+    external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
+    external-dns/is-public: 'true'
+    hajimari.io/enable: 'true'
+    hajimari.io/icon: podcast
+    hajimari.io/appName: podsync
   labels:
     app: podsync
   name: podsync
@@ -27,4 +27,4 @@ spec:
   tls:
     - hosts:
         - podsync-old.${SECRET_DOMAIN_ME}
-      secretName: "${SECRET_DOMAIN_ME//./-}-tls"
+      secretName: ${SECRET_DOMAIN_ME//./-}-tls

@@ -16,7 +16,7 @@ spec:
         name: bitnami
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -30,20 +30,20 @@ spec:
     recreate: true
   values:
     nameOverride: internal-dns
-    interval: "5m"
+    interval: 5m
     # logLevel: debug
     sources:
       - ingress
     provider: coredns
     coredns:
-      etcdEndpoints: "http://etcd:2379"
+      etcdEndpoints: http://etcd:2379
     policy: sync
-    txtPrefix: "k8s."
+    txtPrefix: k8s.
     domainFilters:
-      - "${SECRET_DOMAIN_INTERNAL}"
+      - ${SECRET_DOMAIN_INTERNAL}
     crd:
       create: false
-    annotationFilter: "external-dns/is-private in (true)"
+    annotationFilter: external-dns/is-private in (true)
     resources:
       requests:
         memory: 100Mi

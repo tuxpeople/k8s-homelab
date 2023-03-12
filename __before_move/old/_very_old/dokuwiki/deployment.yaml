@@ -17,8 +17,8 @@ spec:
       containers:
         - name: dokuwiki
           env:
-            - name: "TZ"
-              value: "Europe/Zurich"
+            - name: TZ
+              value: Europe/Zurich
           image: ghcr.io/linuxserver/dokuwiki:2020-07-29-ls83
           imagePullPolicy: Always
           resources:

@@ -8,7 +8,8 @@ metadata:
     alertmanagerConfig: discord
 spec:
   route:
-    groupBy: [alertname]
+    groupBy:
+      - alertname
     groupInterval: 10s
     groupWait: 1s
     repeatInterval: 30s

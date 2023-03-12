@@ -4,26 +4,47 @@ kind: ServiceAccount
 metadata:
   name: csi-snapshotter-sa
   namespace: synology-csi
-
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: synology-csi-snapshotter-role
 rules:
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["list", "watch", "create", "update", "patch"]
-  - apiGroups: ["snapshot.storage.k8s.io"]
-    resources: ["volumesnapshotclasses"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["snapshot.storage.k8s.io"]
-    resources: ["volumesnapshotcontents"]
-    verbs: ["create", "get", "list", "watch", "update", "delete"]
-  - apiGroups: ["snapshot.storage.k8s.io"]
-    resources: ["volumesnapshotcontents/status"]
-    verbs: ["update"]
-
+  - apiGroups:
+      - ''
+    resources:
+      - events
+    verbs:
+      - list
+      - watch
+      - create
+      - update
+      - patch
+  - apiGroups:
+      - snapshot.storage.k8s.io
+    resources:
+      - volumesnapshotclasses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - snapshot.storage.k8s.io
+    resources:
+      - volumesnapshotcontents
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+      - delete
+  - apiGroups:
+      - snapshot.storage.k8s.io
+    resources:
+      - volumesnapshotcontents/status
+    verbs:
+      - update
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -38,7 +59,6 @@ roleRef:
   kind: ClusterRole
   name: synology-csi-snapshotter-role
   apiGroup: rbac.authorization.k8s.io
-
 ---
 kind: StatefulSet
 apiVersion: apps/v1
@@ -46,7 +66,7 @@ metadata:
   name: synology-csi-snapshotter
   namespace: synology-csi
 spec:
-  serviceName: "synology-csi-snapshotter"
+  serviceName: synology-csi-snapshotter
   replicas: 1
   selector:
     matchLabels:
@@ -63,7 +83,8 @@ spec:
           securityContext:
             privileged: true
             capabilities:
-              add: ["SYS_ADMIN"]
+              add:
+                - SYS_ADMIN
             allowPrivilegeEscalation: true
           image: k8s.gcr.io/sig-storage/csi-snapshotter:v6.1.0
           args:
@@ -80,7 +101,8 @@ spec:
           securityContext:
             privileged: true
             capabilities:
-              add: ["SYS_ADMIN"]
+              add:
+                - SYS_ADMIN
             allowPrivilegeEscalation: true
           image: synology/synology-csi:v1.1.1
           args:

@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -16,7 +17,7 @@ spec:
         name: nextcloud
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -36,10 +37,10 @@ spec:
     ingress:
       enabled: true
       annotations:
-        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.tls: 'true'
         kubernetes.io/ingress.class: nginx
       tls:
-        - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
+        - secretName: ${SECRET_DOMAIN_ME//./-}-tls
           hosts:
             - cloud.${SECRET_DOMAIN_ME}
     nextcloud:
@@ -51,7 +52,7 @@ spec:
         passwordKey: password
       extraEnv:
         - name: NEXTCLOUD_TRUSTED_DOMAINS
-          value: "cloud.${SECRET_DOMAIN_ME} localhost"
+          value: cloud.${SECRET_DOMAIN_ME} localhost
         - name: TRUSTED_PROXIES
           value: 10.42.0.0/15
     nginx:

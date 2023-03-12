@@ -5,12 +5,12 @@ metadata:
   name: stats
   annotations:
     kubernetes.io/ingress.class: nginx
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: "plex"
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+    hajimari.io/enable: 'true'
+    hajimari.io/icon: plex
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+    - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
       hosts:
         - stats.${SECRET_DOMAIN_INTERNAL}
   rules:

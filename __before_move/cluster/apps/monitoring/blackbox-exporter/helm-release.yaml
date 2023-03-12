@@ -39,42 +39,53 @@ spec:
           prober: http
           timeout: 5s
           http:
-            valid_http_versions: ['HTTP/1.1', 'HTTP/2.0']
+            valid_http_versions:
+              - HTTP/1.1
+              - HTTP/2.0
             follow_redirects: true
-            preferred_ip_protocol: 'ip4'
+            preferred_ip_protocol: ip4
             method: GET
         http_403:
           prober: http
           timeout: 5s
           http:
-            valid_http_versions: ['HTTP/1.1', 'HTTP/2.0']
+            valid_http_versions:
+              - HTTP/1.1
+              - HTTP/2.0
             follow_redirects: true
-            preferred_ip_protocol: 'ip4'
-            valid_status_codes: [403]
+            preferred_ip_protocol: ip4
+            valid_status_codes:
+              - 403
             method: GET
         http_401:
           prober: http
           timeout: 5s
           http:
-            valid_http_versions: ['HTTP/1.1', 'HTTP/2.0']
+            valid_http_versions:
+              - HTTP/1.1
+              - HTTP/2.0
             follow_redirects: true
-            preferred_ip_protocol: 'ip4'
-            valid_status_codes: [401]
+            preferred_ip_protocol: ip4
+            valid_status_codes:
+              - 401
             method: GET
         http_400:
           prober: http
           timeout: 5s
           http:
-            valid_http_versions: ['HTTP/1.1', 'HTTP/2.0']
+            valid_http_versions:
+              - HTTP/1.1
+              - HTTP/2.0
             follow_redirects: true
-            preferred_ip_protocol: 'ip4'
-            valid_status_codes: [400]
+            preferred_ip_protocol: ip4
+            valid_status_codes:
+              - 400
             method: GET
         icmp:
           prober: icmp
           timeout: 30s
           icmp:
-            preferred_ip_protocol: 'ip4'
+            preferred_ip_protocol: ip4
     serviceMonitor:
       enabled: true
       defaults:
@@ -146,7 +157,8 @@ spec:
               The host {{"{{ $labels.instance }}"}} is currently unreachable
         - alert: SlowResponseTime
           annotations:
-            message: The response time for {{"{{ $labels.instance }}"}} has been greater than 30 seconds for 5 minutes.
+            message: The response time for {{"{{ $labels.instance }}"}} has been greater
+              than 30 seconds for 5 minutes.
           expr: probe_duration_seconds > 30
           for: 15m
           labels:
@@ -157,4 +169,5 @@ spec:
           labels:
             severity: error
           annotations:
-            message: The HTTP response for {{"{{ $labels.instance }}"}} was not a HTTP status code is not 200-399
+            message: The HTTP response for {{"{{ $labels.instance }}"}} was not a
+              HTTP status code is not 200-399

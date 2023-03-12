@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: networking
   labels:
-    pv-backup/enabled: "true"
+    pv-backup/enabled: 'true'
     app: speedtest-plotter
   name: speedtest-plotter-data-pvc
 spec:

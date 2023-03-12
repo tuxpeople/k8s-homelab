@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,8 +18,8 @@ spec:
           image: ghcr.io/linuxserver/plex:1.23.2.4656-85f0adf5b-ls55
           imagePullPolicy: Always
           env:
-            - name: "TZ"
-              value: "Europe/Zurich"
+            - name: TZ
+              value: Europe/Zurich
           resources:
             requests:
               cpu: 100m

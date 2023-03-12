@@ -15,7 +15,7 @@ spec:
         name: k8s-at-home
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -36,7 +36,7 @@ spec:
       - 10.20.30.0/24
       - 10.42.0.0/16
       - 10.43.0.0/16
-    timezone: "Europe/Zurich"
+    timezone: Europe/Zurich
     service:
       main:
         primary: true
@@ -58,14 +58,14 @@ spec:
         type: hostPath
         hostPath: /mnt/multimedia
         mountPath: /data
-        hostPathType: "Directory"
+        hostPathType: Directory
         readOnly: true
       dri:
         enabled: true
         type: hostPath
         hostPath: /dev/dri
         mountPath: /dev/dri
-        hostPathType: "Directory"
+        hostPathType: Directory
         readOnly: false
 ---
 apiVersion: uroperator.brennerm.github.io/v1beta1
@@ -73,9 +73,9 @@ kind: UptimeRobotMonitor
 metadata:
   name: plex
 spec:
-  friendlyName: "K8S Plex"
-  url: "http://ipv4.${SECRET_DOMAIN_K8S}:32400/identity"
+  friendlyName: K8S Plex
+  url: http://ipv4.${SECRET_DOMAIN_K8S}:32400/identity
   type: HTTP
   httpMethod: GET
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}

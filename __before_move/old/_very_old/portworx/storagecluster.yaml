@@ -5,8 +5,8 @@ metadata:
   name: k8s-homelab-6cbf32f7-5c98-44d5-b3b0-90b7e7ed0674
   namespace: kube-system
   annotations:
-    portworx.io/install-source: "https://install.portworx.com/?operator=true&mc=false&kbver=&oem=esse&user=${SECRET_PORTWORX_USER}&b=true&s=%2Fdev%2Fvdc&c=${SECRET_PORTWORX_CLUSTER}&stork=true&csi=true&lh=true&tel=true&st=k8s"
-    portworx.io/misc-args: "--oem esse"
+    portworx.io/install-source: https://install.portworx.com/?operator=true&mc=false&kbver=&oem=esse&user=${SECRET_PORTWORX_USER}&b=true&s=%2Fdev%2Fvdc&c=${SECRET_PORTWORX_CLUSTER}&stork=true&csi=true&lh=true&tel=true&st=k8s
+    portworx.io/misc-args: --oem esse
 spec:
   image: portworx/oci-monitor:2.9.0
   imagePullPolicy: Always
@@ -19,7 +19,7 @@ spec:
   stork:
     enabled: true
     args:
-      webhook-controller: "false"
+      webhook-controller: 'false'
   userInterface:
     enabled: true
   autopilot:
@@ -30,4 +30,4 @@ spec:
     telemetry:
       enabled: true
   featureGates:
-    CSI: "true"
+    CSI: 'true'

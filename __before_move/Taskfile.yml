@@ -1,16 +1,13 @@
 ---
-version: "3"
-
+version: '3'
 vars:
   PROJECT_DIR:
-    sh: "git rev-parse --show-toplevel"
-  CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
-  ANSIBLE_DIR: "{{.PROJECT_DIR}}/provision/ansible"
-  TERRAFORM_DIR: "{{.PROJECT_DIR}}/provision/terraform"
-
+    sh: git rev-parse --show-toplevel
+  CLUSTER_DIR: '{{.PROJECT_DIR}}/cluster'
+  ANSIBLE_DIR: '{{.PROJECT_DIR}}/provision/ansible'
+  TERRAFORM_DIR: '{{.PROJECT_DIR}}/provision/terraform'
 env:
-  KUBECONFIG: "~/iCloudDrive/Allgemein/kubectl/homelab.yaml"
-
+  KUBECONFIG: ~/iCloudDrive/Allgemein/kubectl/homelab.yaml
 includes:
   ansible: .taskfiles/AnsibleTasks.yml
   cluster: .taskfiles/ClusterTasks.yml
@@ -18,9 +15,7 @@ includes:
   terraform: .taskfiles/TerraformTasks.yml
   format: .taskfiles/format.yml
   lint: .taskfiles/lint.yml
-
 tasks:
-
   init:
     desc: Initialize workstation dependencies with Brew
     cmds:

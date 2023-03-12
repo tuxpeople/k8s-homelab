@@ -2,16 +2,16 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN_INTERNAL//./-}"
+  name: ${SECRET_DOMAIN_INTERNAL//./-}
 spec:
-  secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+  secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
   secretTemplate:
     annotations:
-      kubed.appscode.com/sync: ""
+      kubed.appscode.com/sync: ''
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN_INTERNAL}"
+  commonName: ${SECRET_DOMAIN_INTERNAL}
   dnsNames:
-    - "${SECRET_DOMAIN_INTERNAL}"
-    - "*.${SECRET_DOMAIN_INTERNAL}"
+    - ${SECRET_DOMAIN_INTERNAL}
+    - '*.${SECRET_DOMAIN_INTERNAL}'

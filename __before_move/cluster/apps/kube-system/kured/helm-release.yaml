@@ -16,7 +16,7 @@ spec:
         name: kubereboot
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -31,10 +31,10 @@ spec:
   values:
     updateStrategy: RollingUpdate
     configuration:
-      startTime: "0:00"
-      endTime: "5:00"
-      timeZone: "${TIMEZONE}"
-      logFormat: "json"
+      startTime: 0:00
+      endTime: 5:00
+      timeZone: ${TIMEZONE}
+      logFormat: json
     # tolerations:
     # - key: "node-role.kubernetes.io/master"
     #   operator: "Exists"

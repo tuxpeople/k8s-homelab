@@ -17,8 +17,8 @@ spec:
       containers:
         - name: static
           env:
-            - name: "TZ"
-              value: "Europe/Zurich"
+            - name: TZ
+              value: Europe/Zurich
           image: tdeutsch/minilighttpd@sha256:9a7a432c83bd0a56f1fe8aaafba134311166390aa3ba342887e6b759f47d4ac5
           imagePullPolicy: Always
           resources:

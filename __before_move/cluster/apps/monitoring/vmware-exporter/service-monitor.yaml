@@ -8,7 +8,7 @@ metadata:
 spec:
   endpoints:
     - interval: 5m
-      path: "/metrics"
+      path: /metrics
       port: metrics
       scrapeTimeout: 1m
   selector:

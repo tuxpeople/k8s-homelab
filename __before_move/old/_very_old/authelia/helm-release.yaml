@@ -30,12 +30,11 @@ spec:
     recreate: true
   values:
     domain: ${SECRET_DOMAIN_ME}
-
     ingress:
       enabled: true
       className: traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.tls: 'true'
         external-dns/is-public: 'true'
         external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN_ME_TARGET_SKY}
       subdomain: login
@@ -44,16 +43,13 @@ spec:
         secret: authelia-tls
       traefikCRD:
         enabled: false
-
     persistence:
       enabled: true
       existingClaim: authelia-config-pvc
-
     pod:
       env:
         - name: TZ
           value: Europe/Zurich
-
     configMap:
       # theme: dark
       default_redirection_url: https://hajimari.${SECRET_DOMAIN_ME}
@@ -83,14 +79,12 @@ spec:
       # The Rules!!!
       access_control:
         default_policy: deny
-
         networks:
           - name: home
             networks:
               - 10.0.0.0/8
               - 172.16.0.0/12
               - 192.168.0.0/16
-
         rules:
           - domain:
               - sonarr.${SECRET_DOMAIN_ME}
@@ -100,7 +94,7 @@ spec:
               - ^/feed/.*ics\?apikey=.*$
 
           # - domain:
-          #     # iot
+          #  # iot
           #     - "home-assistant.${SECRET_DOMAIN_ME}"
           #   policy: bypass
           #   networks:

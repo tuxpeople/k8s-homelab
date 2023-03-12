@@ -12,9 +12,9 @@
     - name: Wait 600 seconds for target connection to become reachable/usable
       ansible.builtin.wait_for_connection:
     - name: fix ssh keys
-      local_action: ansible.builtin.command ~/iCloudDrive/Allgemein/bin/fix-ssh-key {{ inventory_hostname }}
+      local_action: ansible.builtin.command ~/iCloudDrive/Allgemein/bin/fix-ssh-key
+        {{ inventory_hostname }}
       become: false
-
   roles:
     - ubuntu
     - robertdebock.roles.cron

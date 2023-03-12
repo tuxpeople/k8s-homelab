@@ -12,7 +12,7 @@ spec:
       - {key: app, operator: In, values: [plex-exporter]}
   namespaceSelector:
     matchNames:
-      - "media"
+      - media
   endpoints:
     - port: metrics
       interval: 30s

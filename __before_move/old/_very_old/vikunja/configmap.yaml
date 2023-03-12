@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: vikunja-config-yml
 data:
-  config.yml: |
+  config.yml: |-
     auth:
       # Local authentication will let users log in and register (if enabled) through the db.
       # This is the default auth mechanism and does not require any additional configuration.

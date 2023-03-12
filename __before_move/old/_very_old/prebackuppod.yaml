@@ -1,3 +1,4 @@
+---
 apiVersion: k8up.io/v1
 kind: PreBackupPod
 metadata:

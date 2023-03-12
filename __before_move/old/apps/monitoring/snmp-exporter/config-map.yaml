@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: snmp-exporter
     app.kubernetes.io/instance: snmp-exporter
 data:
-  snmp.yaml: |
+  snmp.yaml: |-
     synology:
       walk:
       - 1.3.6.1.2.1.2

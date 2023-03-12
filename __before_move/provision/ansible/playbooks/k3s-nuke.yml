@@ -23,10 +23,10 @@
     - name: Gather list of CNI files to delete
       ansible.builtin.find:
         paths: /etc/cni/net.d
-        patterns: "*"
+        patterns: '*'
       register: files_to_delete
     - name: Delete CNI files
       ansible.builtin.file:
-        path: "{{ item.path }}"
+        path: '{{ item.path }}'
         state: absent
-      loop: "{{ files_to_delete.files }}"
+      loop: '{{ files_to_delete.files }}'

@@ -5,7 +5,7 @@ metadata:
   name: openldap
   namespace: identity
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
   labels:
     app.kubernetes.io/name: openldap
 spec:
@@ -21,7 +21,7 @@ spec:
       containers:
         - name: openldap
           image: docker.io/bitnami/openldap:2.6.3
-          imagePullPolicy: "Always"
+          imagePullPolicy: Always
           env:
             - name: LDAP_ROOT
               valueFrom:
@@ -39,15 +39,15 @@ spec:
                   key: adminpassword
                   name: openldap
             - name: LDAP_CUSTOM_LDIF_DIR
-              value: "/ldifs"
+              value: /ldifs
             - name: BITNAMI_DEBUG
-              value: "true"
+              value: 'true'
           ports:
             - name: tcp-ldap
               containerPort: 1389
           volumeMounts:
             - name: users-ldif
-              mountPath: "/ldifs"
+              mountPath: /ldifs
               readOnly: true
       volumes:
         - name: users-ldif

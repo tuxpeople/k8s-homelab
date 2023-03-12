@@ -72,11 +72,16 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: [/bin/sh, -c, mkdir -p /nfs-storage; mount <my NFS server>:/nfs-storage
-                    /nfs-storage]
+              command:
+                - /bin/sh
+                - -c
+                - mkdir -p /nfs-storage; mount <my NFS server>:/nfs-storage /nfs-storage
           preStop:
             exec:
-              command: [/bin/sh, -c, umount /nfs-storage]
+              command:
+                - /bin/sh
+                - -c
+                - umount /nfs-storage
     # provide the config to controller how to map and setup a PVC
     driver:
       config:

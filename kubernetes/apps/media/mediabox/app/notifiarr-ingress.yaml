@@ -5,13 +5,13 @@ metadata:
   name: notifiarr
   annotations:
     kubernetes.io/ingress.class: nginx
-    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN_K8S}"
-    external-dns/is-public: "true"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: "filmstrip"
+    external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
+    external-dns/is-public: 'true'
+    hajimari.io/enable: 'true'
+    hajimari.io/icon: filmstrip
 spec:
   tls:
-    - secretName: "${SECRET_DOMAIN_ME//./-}-tls"
+    - secretName: ${SECRET_DOMAIN_ME//./-}-tls
       hosts:
         - notifiarr.${SECRET_DOMAIN_ME}
   rules:

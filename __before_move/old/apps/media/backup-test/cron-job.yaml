@@ -7,7 +7,7 @@ metadata:
     app: backup-test
 spec:
   suspend: false
-  schedule: "*/10 * * * *"
+  schedule: '*/10 * * * *'
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
@@ -24,7 +24,7 @@ spec:
                         operator: In
                         values:
                           - radarr
-                  topologyKey: "kubernetes.io/hostname"
+                  topologyKey: kubernetes.io/hostname
           restartPolicy: OnFailure
           dnsPolicy: ClusterFirst
           containers:
@@ -33,9 +33,9 @@ spec:
               imagePullPolicy: Always
               env:
                 - name: KEEPFILES
-                  value: "3"
+                  value: '3'
                 - name: TIMESTAMP
-                  value: "date '+%Y%m%d%H%M%S'"
+                  value: date '+%Y%m%d%H%M%S'
               volumeMounts:
                 - mountPath: /mnt/persistentvolume/radarr
                   name: radarr
@@ -47,8 +47,10 @@ spec:
                 limits:
                   memory: 1000Mi
                   cpu: 1000m
-              command: ["/bin/sh"]
-              args: ["/script/backup.sh"]
+              command:
+                - /bin/sh
+              args:
+                - /script/backup.sh
           volumes:
             - name: radarr
               persistentVolumeClaim:
@@ -56,7 +58,7 @@ spec:
             - name: target
               nfs:
                 server: 10.20.30.40
-                path: "/volume2/Multimedia/backup"
+                path: /volume2/Multimedia/backup
             - name: backupscript
               configMap:
                 name: script-configmap

@@ -18,7 +18,7 @@ spec:
   releaseName: mariadb
   targetNamespace: development
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:

@@ -4,18 +4,18 @@ kind: Policy
 metadata:
   name: media-backup
 spec:
-  comment: ""
-  frequency: "@daily"
+  comment: ''
+  frequency: '@daily'
   actions:
     - action: backup
       backupParameters:
         filters:
           includeResources: []
           excludeResources:
-            - group: ""
-              version: ""
-              resource: ""
-              name: ""
+            - group: ''
+              version: ''
+              resource: ''
+              name: ''
               matchExpressions:
                 - key: app
                   operator: In
@@ -26,7 +26,7 @@ spec:
           name: minio
     - action: export
       exportParameters:
-        frequency: "@daily"
+        frequency: '@daily'
         profile:
           name: minio
           namespace: k10

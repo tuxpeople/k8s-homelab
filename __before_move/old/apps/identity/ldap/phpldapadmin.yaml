@@ -22,9 +22,9 @@ spec:
           name: phpldapadmin
           env:
             - name: PHPLDAPADMIN_LDAP_HOSTS
-              value: "openldap"
+              value: openldap
             - name: PHPLDAPADMIN_HTTPS
-              value: "false"
+              value: 'false'
           ports:
             - containerPort: 80
               protocol: TCP
@@ -62,12 +62,12 @@ metadata:
   name: phpldapadmin
   annotations:
     kubernetes.io/ingress.class: nginx
-    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls: 'true'
 spec:
   tls:
     - hosts:
         - phpldapadmin.${SECRET_DOMAIN_INTERNAL}
-      secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+      secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
   rules:
     - host: phpldapadmin.${SECRET_DOMAIN_INTERNAL}
       http:

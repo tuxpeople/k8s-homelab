@@ -5,4 +5,4 @@ metadata:
   name: high-priority
 value: 1000000
 globalDefault: false
-description: "This priority class should be used for high-priority pods only."
+description: This priority class should be used for high-priority pods only.

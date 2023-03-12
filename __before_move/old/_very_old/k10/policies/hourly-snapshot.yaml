@@ -1,10 +1,11 @@
+---
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
   name: hourly-snapshot
 spec:
-  comment: ""
-  frequency: "@hourly"
+  comment: ''
+  frequency: '@hourly'
   retention:
     hourly: 3
   selector:
@@ -19,10 +20,10 @@ spec:
         filters:
           includeResources: []
           excludeResources:
-            - group: ""
-              version: ""
-              resource: ""
-              name: ""
+            - group: ''
+              version: ''
+              resource: ''
+              name: ''
               matchExpressions:
                 - key: app
                   operator: In

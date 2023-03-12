@@ -1,7 +1,3 @@
-# Very good idea from here: https://github.com/onedr0p/home-ops/tree/main/kubernetes/apps/kube-system/home-dns
-#
-# TOKEN=$(kubectl get secrets -n kube-system $(kubectl get serviceaccounts/home-dns -n kube-system -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' | base64 --decode)
-# And replace TOKEN in /mnt/data/on_boot.d/11-create-local-dns-conf.sh on UniFi Dream Machine
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -15,7 +11,7 @@ metadata:
   name: home-dns
 rules:
   - apiGroups:
-      - ""
+      - ''
     resources:
       - services
       - namespaces

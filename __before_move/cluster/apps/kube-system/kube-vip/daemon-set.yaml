@@ -25,21 +25,21 @@ spec:
             - manager
           env:
             - name: vip_arp
-              value: "true"
+              value: 'true'
             - name: vip_interface
-              value: "ens192"
+              value: ens192
             - name: port
-              value: "6443"
+              value: '6443'
             - name: vip_cidr
-              value: "32"
+              value: '32'
             - name: cp_enable
-              value: "true"
+              value: 'true'
             - name: cp_namespace
               value: kube-system
             - name: svc_enable
-              value: "false"
+              value: 'false'
             - name: address
-              value: "192.168.8.100"
+              value: 192.168.8.100
           securityContext:
             capabilities:
               add:

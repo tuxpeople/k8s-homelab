@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
   labels:
     app: plex-exporter
   name: plex-exporter
@@ -19,8 +19,11 @@ spec:
     spec:
       containers:
         - image: ghcr.io/tuxpeople/plex-exporter:nightly
-          command: ["/plex_exporter"]
-          args: ["--config", "/config.json"]
+          command:
+            - /plex_exporter
+          args:
+            - --config
+            - /config.json
           imagePullPolicy: Always
           name: plex-exporter
           ports:

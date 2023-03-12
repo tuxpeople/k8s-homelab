@@ -6,7 +6,6 @@
     cache_valid_time: 3600
     autoclean: true
     autoremove: true
-
 - name: Install common packages
   ansible.builtin.apt:
     name:
@@ -38,7 +37,6 @@
     cache_valid_time: 3600
     autoclean: true
     autoremove: true
-
 - name: Install raspberry specific packages
   ansible.builtin.apt:
     name:
@@ -49,7 +47,6 @@
     autoclean: true
     autoremove: true
   when: "'raspi' in ansible_kernel"
-
 - name: Copy 20auto-upgrades unattended-upgrades config
   ansible.builtin.blockinfile:
     path: /etc/apt/apt.conf.d/20auto-upgrades
@@ -60,7 +57,6 @@
       APT::Periodic::Download-Upgradeable-Packages "1";
       APT::Periodic::AutocleanInterval "7";
       APT::Periodic::Unattended-Upgrade "1";
-
 - name: Copy 50unattended-upgrades unattended-upgrades config
   ansible.builtin.blockinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
@@ -74,13 +70,11 @@
           "${distro_id} ${distro_codename}-security";
           "${distro_id} ${distro_codename}-updates";
       };
-
 - name: Start unattended-upgrades service
   ansible.builtin.systemd:
     name: unattended-upgrades
     enabled: true
     state: started
-
 - name: Restart unattended-upgrades service
   ansible.builtin.service:
     name: unattended-upgrades.service

@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: vikunja-files-pvc
   labels:
-    pv-backup/enabled: "true"
+    pv-backup/enabled: 'true'
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: data-vikunja-postgresql-0-pvc
   labels:
-    pv-backup/enabled: "true"
+    pv-backup/enabled: 'true'
 spec:
   accessModes:
     - ReadWriteOnce

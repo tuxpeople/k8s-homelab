@@ -35,7 +35,7 @@ spec:
           hajimari.io/enable: 'true'
           hajimari.io/icon: content-save-outline
           hajimari.io/appName: Rook Dashboard
-          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.tls: 'true'
         host:
           name: rook.${SECRET_DOMAIN_INTERNAL}
           path: /

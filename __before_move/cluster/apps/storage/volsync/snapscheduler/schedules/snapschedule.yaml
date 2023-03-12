@@ -8,9 +8,9 @@ spec:
   disabled: false
   claimSelector:
     matchLabels:
-      snapshot.home.arpa/enabled: "true"
+      snapshot.home.arpa/enabled: 'true'
   retention:
     expires: 6h
-  schedule: "0 * * * *"
+  schedule: 0 * * * *
   snapshotTemplate:
     snapshotClassName: sky-snapshot

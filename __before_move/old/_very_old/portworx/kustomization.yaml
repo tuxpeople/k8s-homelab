@@ -10,7 +10,7 @@ resources:
   - alertmanager-rules.yaml
 generatorOptions:
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: '1'
   annotations:
     grafana_folder: Portworx
 configMapGenerator:

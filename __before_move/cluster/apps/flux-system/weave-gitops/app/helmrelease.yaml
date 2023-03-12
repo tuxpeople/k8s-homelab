@@ -16,7 +16,7 @@ spec:
         name: weave-gitops
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     crds: CreateReplace
     createNamespace: true
@@ -43,14 +43,14 @@ spec:
     ingress:
       enabled: true
       annotations:
-        hajimari.io/icon: "sawtooth-wave"
+        hajimari.io/icon: sawtooth-wave
       hosts:
         - host: gitops.${SECRET_DOMAIN_INTERNAL}
           paths:
             - path: /
               pathType: Prefix
       tls:
-        - secretName: "${SECRET_DOMAIN_INTERNAL//./-}-tls"
+        - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
           hosts:
             - gitops.${SECRET_DOMAIN_INTERNAL}
     networkPolicy:
@@ -59,11 +59,17 @@ spec:
       enabled: true
     rbac:
       create: true
-      impersonationResourceNames: ["admin"]
+      impersonationResourceNames:
+        - admin
       additionalRules:
-        - apiGroups: ["infra.contrib.fluxcd.io"]
-          resources: ["terraforms"]
-          verbs: ["get", "list", "patch"]
+        - apiGroups:
+            - infra.contrib.fluxcd.io
+          resources:
+            - terraforms
+          verbs:
+            - get
+            - list
+            - patch
     podAnnotations:
       secret.reloader.stakater.com/reload: weave-gitops-secret
   valuesFrom:

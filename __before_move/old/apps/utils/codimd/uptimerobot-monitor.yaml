@@ -5,9 +5,9 @@ metadata:
   name: codimd
   namespace: utils
 spec:
-  friendlyName: "K8S codimd"
-  url: "https://codimd.${SECRET_DOMAIN_ME}"
+  friendlyName: K8S codimd
+  url: https://codimd.${SECRET_DOMAIN_ME}
   type: HTTPS
   httpMethod: GET
   interval: 300
-  alertContacts: "${SECRET_UPTIMEROBOTCONTACTS}"
+  alertContacts: ${SECRET_UPTIMEROBOTCONTACTS}

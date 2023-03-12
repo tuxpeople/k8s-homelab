@@ -15,7 +15,7 @@ spec:
         name: jetstack-charts
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -35,11 +35,11 @@ spec:
       - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
       - --dns01-recursive-nameservers-only
     replicaCount: 1
-    podDnsPolicy: "None"
+    podDnsPolicy: None
     podDnsConfig:
       nameservers:
-        - "1.1.1.1"
-        - "9.9.9.9"
+        - 1.1.1.1
+        - 9.9.9.9
     prometheus:
       enabled: true
       servicemonitor:
