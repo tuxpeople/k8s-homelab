@@ -1,0 +1,64 @@
+# https://raw.githubusercontent.com/yoyostile/gitops/main/cluster/apps/default/mariadb/cronjob.yaml
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mariadb-backup
+  namespace: networking
+spec:
+  suspend: true
+  schedule: "@daily"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: alpine
+              image: alpine
+              env:
+                - name: DATABASES
+                  value: ""
+                - name: MARIADB_HOST
+                  value: mariadb
+                - name: MARIADB_USER
+                  value: root
+                - name: MYSQL_PWD
+                  valueFrom:
+                    secretKeyRef:
+                      name: phpipam-secret
+                      key: mariadb-root-password
+                - name: BACKBLAZE_B2_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: cluster-secrets
+                      key: BACKBLAZE_B2_KEY_ID
+                - name: BACKBLAZE_B2_APPLICATION_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: cluster-secrets
+                      key: BACKBLAZE_B2_APPLICATION_KEY
+              command: ["/bin/sh"]
+              args:
+                - -c
+                - |
+                  set -xe
+
+                  DATE=$(date +%Y-%m-%d)
+
+                  apk update
+                  apk add mysql-client py-pip
+                  pip install --upgrade b2
+                  b2 authorize-account $BACKBLAZE_B2_KEY_ID $BACKBLAZE_B2_APPLICATION_KEY
+
+                  mkdir -p backups/$DATE
+                  cd backups
+
+                  for DATABASE in $${DATABASES}; do
+                    mysqldump -h $MARIADB_HOST -u $MARIADB_USER $DATABASE | gzip > $DATE/$DATABASE.sql.gz
+                  done
+
+                  b2 sync . b2://k3s-lan-${SECRET_LAB_DOMAIN/./-}/backups/mariadb
+          restartPolicy: OnFailure
