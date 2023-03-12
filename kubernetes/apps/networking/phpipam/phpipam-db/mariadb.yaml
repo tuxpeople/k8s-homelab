@@ -23,7 +23,7 @@ spec:
   volumeClaimTemplate:
     resources:
       requests:
-        storage: 1G
+        storage: 500Mi
     storageClassName: nfs-csi
     accessModes:
       - ReadWriteOnce
