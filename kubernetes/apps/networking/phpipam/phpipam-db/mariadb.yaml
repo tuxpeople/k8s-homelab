@@ -15,7 +15,7 @@ spec:
 
   image:
     repository: mariadb
-    tag: "8.0.32"
+    tag: "10.7.4"
     pullPolicy: IfNotPresent
 
   port: 3306
