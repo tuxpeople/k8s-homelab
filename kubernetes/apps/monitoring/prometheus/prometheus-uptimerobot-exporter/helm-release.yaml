@@ -2,94 +2,51 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app drop
-  namespace: default
+  name: uptimerobot-prometheus
+  namespace: monitoring
 spec:
   interval: 15m
+  timeout: 10m
+  releaseName: uptimerobot-prometheus
   chart:
     spec:
-      chart: app-template
-      version: 1.3.2
+      chart: uptimerobot-prometheus
+      version: 6.4.2
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: k8s-assistant
         namespace: flux-system
-  maxHistory: 3
+  test:
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
       retries: 3
   upgrade:
-    cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
   values:
-    #
-    # IMPORTANT NOTE
-    #
-    # This chart inherits from our common library chart. You can check the default values/options here:
-    # https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
-    #
-
-    image:
-      # -- image repository
-      repository: billimek/prometheus-uptimerobot-exporter
-      # -- image tag
-      tag: 0.0.1
-      # -- image pull policy
-      pullPolicy: IfNotPresent
-
-    # -- environment variables. See [application docs](https://github.com/lekpamartin/uptimerobot_exporter/blob/master/docker-compose.yml) for more details.
-    # @default -- See below
-    env:
-      # -- Set the container timezone
-      TZ: UTC
-      # -- Set the uptimerobot API key
-      UPTIMEROBOT_API_KEY: ""
-
-    # -- Configures service settings for the chart.
-    # @default -- See values.yaml
-    service:
-      main:
-        ports:
-          http:
-            enabled: false
-          metrics:
-            enabled: true
-            protocol: TCP
-            port: 9705
-
-    ingress:
-      # -- Enable and configure ingress settings for the chart under this key.
-      # @default -- See values.yaml
-      main:
-        enabled: false
-
+    strategy:
+      type: Recreate
     metrics:
-      # -- Enable and configure a Prometheus serviceMonitor for the chart under this key.
-      # @default -- See values.yaml
-      enabled: false
-      serviceMonitor:
-        interval: 1m
-        scrapeTimeout: 30s
-        labels: {}
-      # -- Enable and configure Prometheus Rules for the chart under this key.
-      # @default -- See values.yaml
+      enabled: true
       prometheusRule:
-        enabled: false
-        labels: {}
-        # -- Configure additionial rules for the chart under this key.
-        # @default -- See prometheusrules.yaml
+        enabled: true
         rules:
-          []
-          # - alert: UptimeRobotExporterAbsent
-          #   annotations:
-          #     description: Uptime Robot Exporter has disappeared from Prometheus service discovery.
-          #     summary: Uptime Robot Exporter is down.
-          #   expr: |
-          #     absent(up{job=~".*uptimerobot.*"} == 1)
-          #   for: 5m
-          #   labels:
-          #     severity: critical
+          - alert: UptimeRobotExporterAbsent
+            annotations:
+              description: Uptime Robot Exporter has disappeared from Prometheus service
+                discovery.
+              summary: Uptime Robot Exporter is down.
+            expr: |
+              absent(up{job=~".*uptimerobot.*"} == 1)
+            for: 5m
+            labels:
+              severity: critical
+    env:
+      TZ: ${TIMEZONE}
+      UPTIMEROBOT_API_KEY: ${SECRET_UPTIMEROBOT_APIKEY}
