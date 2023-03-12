@@ -24,7 +24,7 @@ spec:
     resources:
       requests:
         storage: 1G
-    storageClassName: synology-csi-delete
+    storageClassName: nfs-csi
     accessModes:
       - ReadWriteOnce
 
@@ -39,3 +39,9 @@ spec:
   env:
     - name: TZ
       value: ${TIMEZONE}
+
+  podSecurityContext:
+    runAsUser: 0
+
+  securityContext:
+    allowPrivilegeEscalation: false
