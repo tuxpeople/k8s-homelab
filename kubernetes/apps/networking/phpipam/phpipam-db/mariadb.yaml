@@ -23,8 +23,8 @@ spec:
   volumeClaimTemplate:
     resources:
       requests:
-        storage: 500Mi
-    storageClassName: nfs-csi
+        storage: 1G
+    storageClassName: synology-csi-delete
     accessModes:
       - ReadWriteOnce
 
