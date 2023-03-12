@@ -14,7 +14,7 @@ spec:
     - apiVersion: apps/v1
       kind: Deployment
       name: plex-exporter
-      namespace: monitoring
+      namespace: media
   interval: 30m
   retryInterval: 1m
   timeout: 3m
