@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     auth:
-      existingSecret: mariadb-defaults
+      existingSecret: phpipam-secret
     primary:
       extraEnvVars:
         - name: TZ
