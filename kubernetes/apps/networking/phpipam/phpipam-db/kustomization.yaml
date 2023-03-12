@@ -4,3 +4,4 @@ namespace: networking
 resources:
   - helmrelease.yaml
   - external-secret.yaml
+  - cronjob.yaml
