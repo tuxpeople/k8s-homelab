@@ -14,9 +14,9 @@ spec:
     - name: cluster-apps-external-secrets-secretstores
     - name: cluster-apps-mariadb-operator
   healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: phpipam-mysql
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: phpipam-db
       namespace: networking
   interval: 30m
   retryInterval: 1m

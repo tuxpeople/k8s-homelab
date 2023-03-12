@@ -37,7 +37,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: phpipam-secret
-                  key: dbpassword
+                  key: mariadb-password
             - name: IPAM_DATABASE_HOST
               value: mariadb
 ---
