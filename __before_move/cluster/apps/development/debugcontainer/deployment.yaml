@@ -27,7 +27,7 @@ spec:
           image: ghcr.io/tuxpeople/debugcontainer:devel
           env:
             - name: "TZ"
-              value: "${LOCAL_TIMEZONE}"
+              value: "${TIMEZONE}"
           volumeMounts:
             - name: git-secret
               mountPath: /etc/git-secret

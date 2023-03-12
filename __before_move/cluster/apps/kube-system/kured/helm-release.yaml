@@ -33,7 +33,7 @@ spec:
     configuration:
       startTime: "0:00"
       endTime: "5:00"
-      timeZone: "${LOCAL_TIMEZONE}"
+      timeZone: "${TIMEZONE}"
       logFormat: "json"
     # tolerations:
     # - key: "node-role.kubernetes.io/master"

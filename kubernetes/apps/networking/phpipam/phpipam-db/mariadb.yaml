@@ -45,4 +45,4 @@ spec:
 
   env:
     - name: TZ
-      value: ${LOCAL_TIMEZONE}
+      value: ${TIMEZONE}

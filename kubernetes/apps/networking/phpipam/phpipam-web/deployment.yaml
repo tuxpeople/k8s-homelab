@@ -26,7 +26,7 @@ spec:
               protocol: TCP
           env:
             - name: TZ
-              value: ${LOCAL_TIMEZONE}
+              value: ${TIMEZONE}
             - name: IPAM_DATABASE_WEBHOST
               value: "%"
             - name: IPAM_DATABASE_NAME
@@ -65,7 +65,7 @@ spec:
           image: phpipam/phpipam-cron:1.5x
           env:
             - name: TZ
-              value: ${LOCAL_TIMEZONE}
+              value: ${TIMEZONE}
             - name: SCAN_INTERVAL
               value: "1h"
             - name: IPAM_DATABASE_NAME

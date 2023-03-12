@@ -38,7 +38,7 @@ spec:
       type: Recreate
 
     env:
-      TZ: "${LOCAL_TIMEZONE}"
+      TZ: "${TIMEZONE}"
       PUID: 911
       PGID: 911
       PROXY_DOMAIN: "code.${SECRET_DOMAIN_ME}"
