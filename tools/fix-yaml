@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+_pwd="$(pwd)"
+_basedir="${_pwd}/$(dirname $(which ${0}))"
+
+cd ${_basedir} && cd $(git rev-parse --show-toplevel)
+
+# https://github.com/lyz-code/yamlfix/blob/main/docs/index.md#configure-environment-prefix
+export YAMLFIX_SEQUENCE_STYLE="block_style"
+yamlfix .
