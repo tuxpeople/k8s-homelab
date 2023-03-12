@@ -100,8 +100,8 @@ spec:
   dependsOn:
     - name: cluster-apps-prometheus-app
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
+    - apiVersion: apps/v1
+      kind: Deployment
       name: uptimerobot-prometheus
       namespace: monitoring
   interval: 30m
