@@ -6,3 +6,4 @@ resources:
   - ./kubernetes-dashboard/ks.yaml
   - ./prometheus/ks.yaml
   - ./uptimerobot-operator/ks.yaml
+  - ./grafana/ks.yaml

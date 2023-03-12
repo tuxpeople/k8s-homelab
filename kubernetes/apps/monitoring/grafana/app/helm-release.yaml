@@ -191,6 +191,14 @@ spec:
           gnetId: 12896
           revision: 1
           datasource: Prometheus
+        mysql-overview:
+          gnetId: 7362
+          revision: 5
+          datasource: Prometheus
+        mysql-quickstart:
+          gnetId: 14057
+          revision: 1
+          datasource: Prometheus
       gitops:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
