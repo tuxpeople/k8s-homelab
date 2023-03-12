@@ -21,7 +21,7 @@ spec:
                 - name: DATABASES
                   value: ""
                 - name: MARIADB_HOST
-                  value: mariadb
+                  value: phpipam-db-mariadb
                 - name: MARIADB_USER
                   value: root
                 - name: MYSQL_PWD
