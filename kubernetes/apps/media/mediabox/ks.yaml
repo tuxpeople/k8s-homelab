@@ -26,23 +26,3 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: cluster-apps-plex-exporter
-  namespace: flux-system
-spec:
-  path: ./kubernetes/apps/media/mediabox/plex-exporter
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: k8s-homelab
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: plex-exporter
-      namespace: monitoring
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
