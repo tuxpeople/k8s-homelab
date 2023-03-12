@@ -93,8 +93,7 @@ spec:
       rules:
         - alert: UptimeRobotExporterAbsent
           annotations:
-            description:
-              Uptime Robot Exporter has disappeared from Prometheus service
+            description: Uptime Robot Exporter has disappeared from Prometheus service
               discovery.
             summary: Uptime Robot Exporter is down.
           expr: |
@@ -104,8 +103,7 @@ spec:
             severity: critical
         - alert: UptimeRobotExporterAbsent
           annotations:
-            description:
-              Uptime Robot Exporter has disappeared from Prometheus service
+            description: Uptime Robot Exporter has disappeared from Prometheus service
               discovery.
             summary: Uptime Robot Exporter is down.
           expr: |
