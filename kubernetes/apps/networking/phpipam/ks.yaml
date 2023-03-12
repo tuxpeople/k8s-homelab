@@ -12,6 +12,7 @@ spec:
     name: k8s-homelab
   dependsOn:
     - name: cluster-apps-external-secrets-secretstores
+    - name: cluster-apps-mariadb-operator
   healthChecks:
     - apiVersion: apps/v1
       kind: Deployment

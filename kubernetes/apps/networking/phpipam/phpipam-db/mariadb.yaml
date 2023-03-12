@@ -1,0 +1,48 @@
+apiVersion: mariadb.mmontes.io/v1alpha1
+kind: MariaDB
+metadata:
+  name: mariadb
+spec:
+  rootPasswordSecretKeyRef:
+    name: phpipam-secret
+    key: dbrootpassword
+
+  database: phpipamdb
+  username: phpipam
+  passwordSecretKeyRef:
+    name: phpipam-secret
+    key: dbpassword
+
+  image:
+    repository: mariadb
+    tag: "8.0.32"
+    pullPolicy: IfNotPresent
+
+  port: 3306
+
+  volumeClaimTemplate:
+    resources:
+      requests:
+        storage: 500Mi
+    storageClassName: nfs-csi
+    accessModes:
+      - ReadWriteOnce
+
+  myCnf: |
+    [mysqld]
+    bind-address=0.0.0.0
+    default_storage_engine=InnoDB
+    binlog_format=row
+    innodb_autoinc_lock_mode=2
+    max_allowed_packet=256M
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
+
+  env:
+    - name: TZ
+      value: ${LOCAL_TIMEZONE}

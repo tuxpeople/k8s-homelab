@@ -30,25 +30,16 @@ spec:
             - name: IPAM_DATABASE_WEBHOST
               value: "%"
             - name: IPAM_DATABASE_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: phpipam-secret
-                  key: dbname
+              value: phpipamdb
             - name: IPAM_DATABASE_USER
-              valueFrom:
-                secretKeyRef:
-                  name: phpipam-secret
-                  key: dbuser
+              value: phpipam
             - name: IPAM_DATABASE_PASS
               valueFrom:
                 secretKeyRef:
                   name: phpipam-secret
                   key: dbpassword
             - name: IPAM_DATABASE_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: phpipam-secret
-                  key: database_url
+              value: mariadb
 ---
 apiVersion: apps/v1
 kind: Deployment
