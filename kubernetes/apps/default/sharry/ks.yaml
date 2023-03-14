@@ -7,8 +7,6 @@ metadata:
 spec:
   path: ./kubernetes/apps/default/sharry/app
   prune: true
-  dependsOn:
-    - name: cluster-apps-synology-csi
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
