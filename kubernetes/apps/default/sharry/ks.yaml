@@ -1,0 +1,22 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-sharry
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/default/sharry/app
+  prune: true
+  dependsOn:
+    - name: cluster-apps-synology-csi
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: sharry
+      namespace: default
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
