@@ -64,14 +64,14 @@ spec:
                       {
                         enabled = true
                         id = "internal"
-                        name = "Internal"
+                        name = "Homelab Account"
                         icon = "fas fa-address-book"
-                        authorize-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/auth"
-                        token-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/token"
-                        user-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/userinfo"
+                        authorize-url = "https://auth.example.com/api/oidc/authorization"
+                        token-url = "https://auth.example.com/api/oidc/token"
+                        user-url = "https://auth.example.com/api/oidc/userinfo"
                         user-id-key = "login"
-                        client-id = "${SECRET_OIDC_CLIENT_ID}"
-                        client-secret = "${SECRET_OIDC_CLIENT_SECRET}"
+                        client-id = "${SHARRY_CLIENT_ID}"
+                        client-secret = "${SHARRY_CLIENT_SECRET}"
                       }
                   ]
                 }
