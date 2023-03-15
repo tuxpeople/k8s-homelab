@@ -80,6 +80,7 @@ spec:
           }
     persistence:
       data:
+        name: config
         enabled: true
         type: configMap
         mountPath: /opt/sharry.conf
