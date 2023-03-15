@@ -70,7 +70,7 @@ spec:
                         token-url = "https://auth.${SECRET_DOMAIN_ME}/api/oidc/token"
                         user-url = "https://auth.${SECRET_DOMAIN_ME}/api/oidc/userinfo"
                         user-id-key = "login"
-                        client-id = "${SHARRY_CLIENT_ID}"
+                        client-id = "sharry"
                         client-secret = "${SHARRY_CLIENT_SECRET}"
                       }
                   ]
