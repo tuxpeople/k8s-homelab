@@ -41,46 +41,52 @@ spec:
     configMaps:
       config:
         enabled: true
-        data: |
-          sharry.restserver {
-            # base-url = "https://share.${SECRET_DOMAIN_ME}"
-            bind {
-              address = "0.0.0.0"
-              port = {{ .Values.service.main.ports.http.port }}
-            }
-            backend {
-              signup {
-                mode = "closed"
+        data:
+          sharry.conf: |
+            sharry.restserver {
+              # base-url = "https://share.${SECRET_DOMAIN_ME}"
+              bind {
+                address = "0.0.0.0"
+                port = {{ .Values.service.main.ports.http.port }}
               }
-              auth {
-                fixed {
-                  enabled = false  # set to true to enable this auth provider
-                  user = "admin"
-                  password = "admin"
-                  order = 10
+              backend {
+                signup {
+                  mode = "closed"
                 }
-                oauth = [
-                    {
-                      enabled = true
-                      id = "internal"
-                      name = "Internal"
-                      icon = "fas fa-address-book"
-                      authorize-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/auth"
-                      token-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/token"
-                      user-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/userinfo"
-                      user-id-key = "login"
-                      client-id = "${SECRET_OIDC_CLIENT_ID}"
-                      client-secret = "${SECRET_OIDC_CLIENT_SECRET}"
-                    }
-                ]
+                auth {
+                  fixed {
+                    enabled = false  # set to true to enable this auth provider
+                    user = "admin"
+                    password = "admin"
+                    order = 10
+                  }
+                  oauth = [
+                      {
+                        enabled = true
+                        id = "internal"
+                        name = "Internal"
+                        icon = "fas fa-address-book"
+                        authorize-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/auth"
+                        token-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/token"
+                        user-url = "https://sso.${SECRET_DOMAIN_ME}/auth/ldap/protocol/openid-connect/userinfo"
+                        user-id-key = "login"
+                        client-id = "${SECRET_OIDC_CLIENT_ID}"
+                        client-secret = "${SECRET_OIDC_CLIENT_SECRET}"
+                      }
+                  ]
+                }
               }
             }
-          }
-    # persistence:
-    #   data:
-    #     name: config
-    #     enabled: true
-    #     type: configMap
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        subPath: sharry.conf
+        name: sharry-config
+        items:
+          - key: sharry.conf
+            path: sharry.conf
+        mountPath: /opt/sharry.conf
     ingress:
       main:
         enabled: true
