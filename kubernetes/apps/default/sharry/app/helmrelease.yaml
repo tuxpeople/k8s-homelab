@@ -105,7 +105,7 @@ spec:
             secretName: ${SECRET_DOMAIN_ME//./-}-tls
     resources:
       requests:
-        cpu: 5m
+        cpu: 6m
         memory: 10Mi
       limits:
         memory: 400Mi
