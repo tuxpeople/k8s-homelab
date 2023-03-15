@@ -41,8 +41,6 @@ spec:
     configMaps:
       config:
         enabled: true
-        labels: {}
-        annotations: {}
         data: |
           sharry.restserver {
             # base-url = "https://share.${SECRET_DOMAIN_ME}"
