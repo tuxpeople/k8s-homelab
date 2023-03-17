@@ -237,7 +237,7 @@ spec:
       thanosServiceMonitor:
         enabled: true
       thanosIngress:
-        enabled: true
+        enabled: false
         pathType: Prefix
         annotations:
           hajimari.io/enable: "false"
