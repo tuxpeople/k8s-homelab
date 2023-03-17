@@ -7,3 +7,4 @@ resources:
   - ./prometheus/ks.yaml
   - ./uptimerobot-operator/ks.yaml
   - ./grafana/ks.yaml
+  - ./thanos/ks.yaml
