@@ -249,7 +249,6 @@ spec:
               - thanos-sidecar.${SECRET_DOMAIN_INTERNAL}
       prometheusSpec:
         replicas: 1
-        replicaExternalLabelName: __replica__
         externalLabels:
           cluster: homelab
         thanos:
@@ -260,6 +259,8 @@ spec:
         retention: 2d
         retentionSize: 15GB
         podAntiAffinity: hard
+        replicaExternalLabelName: __replica__
+        scrapeInterval: 1m
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
