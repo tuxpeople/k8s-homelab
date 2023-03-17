@@ -44,6 +44,7 @@ spec:
         data:
           sharry.conf: |
             sharry.restserver {
+              routes.LoginRoutes = "Trace"
               # base-url = "https://share.${SECRET_DOMAIN_ME}"
               bind {
                 address = "0.0.0.0"
@@ -72,6 +73,7 @@ spec:
                         user-id-key = "login"
                         client-id = "sharry"
                         client-secret = "${SHARRY_CLIENT_SECRET}"
+                        CodeFlow = "Trace"
                       }
                   ]
                 }
