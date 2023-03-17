@@ -7,7 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-external-secrets-stores
+    - name: cluster-apps-external-secrets-secretstores
   path: ./kubernetes/apps/monitoring/thanos/app
   prune: true
   sourceRef:
