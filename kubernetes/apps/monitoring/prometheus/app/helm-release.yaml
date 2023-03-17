@@ -254,15 +254,16 @@ spec:
           cluster: homelab
         thanos:
           image: quay.io/thanos/thanos:v0.30.2
-          # renovate: datasource=docker depName=quay.io/thanos/thanos
-          version: v0.30.2
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: thanos.yml
+        retention: 2d
+        retentionSize: 15GB
         podAntiAffinity: hard
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
-        retention: 14d
-        retentionSize: 45GB
         enableAdminAPI: true
         walCompression: true
         storageSpec:
