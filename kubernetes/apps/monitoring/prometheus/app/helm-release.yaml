@@ -236,17 +236,6 @@ spec:
         enabled: true
       thanosServiceMonitor:
         enabled: true
-      thanosIngress:
-        enabled: false
-        pathType: Prefix
-        annotations:
-          hajimari.io/enable: "false"
-        hosts:
-          - thanos-sidecar.${SECRET_DOMAIN_INTERNAL}
-        tls:
-          - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
-            hosts:
-              - thanos-sidecar.${SECRET_DOMAIN_INTERNAL}
       prometheusSpec:
         replicas: 1
         externalLabels:
