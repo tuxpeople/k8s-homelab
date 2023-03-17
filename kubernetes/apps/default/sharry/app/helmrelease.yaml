@@ -76,6 +76,22 @@ spec:
                   ]
                 }
               }
+              # Configures logging
+              logging {
+                # The format for the log messages. Can be one of:
+                # Json, Logfmt, Fancy or Plain
+                format = "Fancy"
+
+                # The minimum level to log. From lowest to highest:
+                # Trace, Debug, Info, Warn, Error
+                minimum-level = "Warn"
+
+                # Override the log level of specific loggers
+                levels = {
+                  "sharry.restserver.oauth.CodeFlow" = "Trace"
+                  "sharry.restserver.routes.LoginRoutes" = "Trace"
+                }
+              }
             }
     persistence:
       config:
