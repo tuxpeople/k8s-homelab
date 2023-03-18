@@ -50,7 +50,7 @@ spec:
         oauth_auto_login: false
       auth.generic_oauth:
         enabled: true
-        name: Authelia
+        name: "Homelab Account"
         icon: signin
         client_id: grafana
         client_secret: ${SECRET_OIDC_CLIENT_SECRET_GRAFANA}
