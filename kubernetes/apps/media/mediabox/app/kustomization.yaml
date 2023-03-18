@@ -16,3 +16,4 @@ resources:
   - radarr-exporter.yaml
   - sonarr-exporter.yaml
   - tautulli-exporter.yaml
+  - prowlarr-exporter.yaml
