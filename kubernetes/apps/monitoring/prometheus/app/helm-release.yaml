@@ -243,8 +243,8 @@ spec:
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
-        retention: 1d
-        retentionSize: 10GB
+        retention: 2d
+        retentionSize: 15GB
         podAntiAffinity: hard
         replicaExternalLabelName: __replica__
         scrapeInterval: 1m
