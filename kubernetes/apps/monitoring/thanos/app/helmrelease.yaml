@@ -47,7 +47,7 @@ spec:
         tls: true
         extraTls:
           - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
-          - hosts:
+            hosts:
               - *host
     query:
       enabled: true
