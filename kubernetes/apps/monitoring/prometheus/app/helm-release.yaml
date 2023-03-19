@@ -254,6 +254,7 @@ spec:
         probeSelectorNilUsesHelmValues: false
         enableAdminAPI: true
         walCompression: true
+        disableCompaction: true
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -274,14 +275,6 @@ spec:
           #   static_configs:
           #     - targets:
           #         - "minio.domain.com:9000"
-          - job_name: "prometheus"
-            scrape_interval: 15s
-            static_configs:
-              - targets: ["localhost:9090"]
-            metric_relabel_configs:
-              - action: labeldrop
-                regex: "__name__"
-                # regex: "^(os|browser|engine|device)$"
           - job_name: octoprint
             scrape_interval: 1m
             metrics_path: /plugin/prometheus_exporter/metrics
