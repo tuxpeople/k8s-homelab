@@ -9,3 +9,4 @@ resources:
   - ./reloader/ks.yaml
   - ./kubed/ks.yaml
   - ./external-secrets/ks.yaml
+  - ./local-path-provisioner/ks.yaml
