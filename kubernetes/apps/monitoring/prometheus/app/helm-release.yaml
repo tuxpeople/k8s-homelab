@@ -228,6 +228,7 @@ spec:
     prometheus:
       enabled: true
       persistentVolume:
+        storageClassName: local-path
         enabled: true
         size: 10Gi
       thanosService:
