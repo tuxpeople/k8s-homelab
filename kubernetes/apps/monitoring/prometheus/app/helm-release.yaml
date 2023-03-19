@@ -112,7 +112,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: nfs-csi
+              storageClassName: local-path
               accessModes:
                 - ReadWriteOnce
               resources:
@@ -258,10 +258,10 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: nfs-csi
+              storageClassName: local-path
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 10Gi
         resources:
           requests:
             cpu: 10m
