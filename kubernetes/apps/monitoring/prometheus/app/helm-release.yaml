@@ -280,7 +280,7 @@ spec:
               - targets: ["localhost:9090"]
             metric_relabel_configs:
               - action: labeldrop
-                regex: "^__name__$"
+                regex: "__name__"
                 # regex: "^(os|browser|engine|device)$"
           - job_name: octoprint
             scrape_interval: 1m
