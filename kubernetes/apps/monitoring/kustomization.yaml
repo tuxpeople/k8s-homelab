@@ -8,3 +8,4 @@ resources:
   - ./uptimerobot-operator/ks.yaml
   - ./grafana/ks.yaml
   - ./thanos/ks.yaml
+  - ./mystrom-exporter/ks.yaml
