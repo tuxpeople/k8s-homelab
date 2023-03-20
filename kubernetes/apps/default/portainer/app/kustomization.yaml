@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
+  - ./portainer-agent-k8s-lb.yaml
