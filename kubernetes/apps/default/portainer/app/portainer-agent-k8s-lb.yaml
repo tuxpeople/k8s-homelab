@@ -21,7 +21,7 @@ subjects:
 apiVersion: v1
 kind: Service
 metadata:
-  name: portainer-agent1
+  name: portainer-agent
   namespace: default
   annotations:
     metallb.universe.tf/loadBalancerIPs: ${METALLB_K8S_PORTAINER}
