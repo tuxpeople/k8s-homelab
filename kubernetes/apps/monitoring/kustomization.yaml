@@ -11,3 +11,4 @@ resources:
   - ./mystrom-exporter/ks.yaml
   - ./github-exporter/ks.yaml
   - ./speedtest-exporter/ks.yaml
+  - ./unifi-poller/ks.yaml
