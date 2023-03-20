@@ -1,0 +1,50 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mystrom-3dprinter
+spec:
+  interval: 15m
+  timeout: 10m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  test:
+    enable: false # Enable helm test
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  rollback:
+    timeout: 10m
+    cleanupOnFail: true
+    recreate: true
+  values:
+    image:
+      repository: ghcr.io/peschmae/exporter-go-mystrom
+      tag: 2.0.1
+    strategy:
+      type: Recreate
+    service:
+      main:
+        ports:
+          http:
+            port: 9452
+    resources:
+      requests:
+        cpu: 10m
+        memory: 50Mi
+      limits:
+        cpu: 500m
+        memory: 100Mi
+    serviceMonitor:
+      main:
+        enabled: true
