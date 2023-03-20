@@ -12,3 +12,4 @@ resources:
   - ./github-exporter/ks.yaml
   - ./speedtest-exporter/ks.yaml
   - ./unifi-poller/ks.yaml
+  - ./vmware-exporter/ks.yaml

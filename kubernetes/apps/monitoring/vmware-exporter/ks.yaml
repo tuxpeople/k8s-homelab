@@ -1,0 +1,22 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-vmware-exporter
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/monitoring/vmware-exporter/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  dependsOn:
+    - name: cluster-apps-prometheus-app
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: vmware-exporter
+      namespace: monitoring
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
