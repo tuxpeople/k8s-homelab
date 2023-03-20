@@ -61,7 +61,7 @@ spec:
       create: true
       clientID: gitops
       issuerURL: https://auth.${SECRET_DOMAIN_ME}
-      redirectURL: https://gitops.gitops.${SECRET_DOMAIN_INTERNAL}/oauth2/callback
+      redirectURL: https://gitops.${SECRET_DOMAIN_INTERNAL}/oauth2/callback
   valuesFrom:
     - kind: Secret
       name: weave-gitops-secret
