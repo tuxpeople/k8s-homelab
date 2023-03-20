@@ -276,7 +276,7 @@ spec:
           #     - targets:
           #         - "minio.domain.com:9000"
           - job_name: octoprint
-            scrape_interval: 30s
+            scrape_interval: 1m
             metrics_path: /plugin/prometheus_exporter/metrics
             params:
               apikey:
@@ -285,7 +285,7 @@ spec:
               - targets:
                   - octopi.home:80
           - job_name: speedtest-exporter
-            scrape_interval: 30s
+            scrape_interval: 1m
             scrape_timeout: 30s
             static_configs:
               - targets:
@@ -298,7 +298,7 @@ spec:
               - targets:
                   - minio.lab.tdeutsch.ch:9091
           - job_name: mystrom-exporter
-            scrape_interval: 30s
+            scrape_interval: 1m
             metrics_path: /device
             honor_labels: true
             static_configs:
@@ -313,21 +313,21 @@ spec:
               - target_label: __address__
                 replacement: mystrom-3dprinter:9452
           - job_name: prometheus-pushgateway
-            scrape_interval: 30s
+            scrape_interval: 1m
             scrape_timeout: 30s
             honor_labels: true
             static_configs:
               - targets:
                   - prometheus-pushgateway:9091
           - job_name: wireguard-exporter
-            scrape_interval: 30s
+            scrape_interval: 1m
             scrape_timeout: 30s
             metrics_path: /metrics
             static_configs:
               - targets:
                   - 10.20.30.1:9586
           - job_name: node-exporter
-            scrape_interval: 30s
+            scrape_interval: 1m
             scrape_timeout: 30s
             honor_timestamps: true
             basic_auth:
