@@ -13,3 +13,4 @@ resources:
   - ./speedtest-exporter/ks.yaml
   - ./unifi-poller/ks.yaml
   - ./vmware-exporter/ks.yaml
+  - ./loki/ks.yaml
