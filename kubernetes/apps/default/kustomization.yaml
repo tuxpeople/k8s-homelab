@@ -8,4 +8,3 @@ resources:
   - ./drop/ks.yaml
   - ./sharry/ks.yaml
   - ./octoprint/ks.yaml
-  - ./portainer/ks.yaml
