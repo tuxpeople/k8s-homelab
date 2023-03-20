@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mystrom-3dprinter
+  namespace: monitoring
+spec:
+  endpoints:
+    - interval: 1m
+      path: /device
+      port: http
+      scheme: http
+      scrapeTimeout: 10s
+      static_configs:
+        - targets:
+            - 10.20.30.33
+          labels:
+            alias: 3D Drucker
+      relabel_configs:
+        - source_labels:
+            - __address__
+          target_label: __param_target
+        - target_label: __address__
+          replacement: mystrom-3dprinter:9452
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: mystrom-3dprinter
+      app.kubernetes.io/name: mystrom-3dprinter
+      app.kubernetes.io/service: mystrom-3dprinter
