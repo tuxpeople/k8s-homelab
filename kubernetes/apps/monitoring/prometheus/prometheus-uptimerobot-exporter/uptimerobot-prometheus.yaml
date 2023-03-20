@@ -93,7 +93,8 @@ spec:
       rules:
         - alert: UptimeRobotExporterAbsent
           annotations:
-            description: Uptime Robot Exporter has disappeared from Prometheus service
+            description:
+              Uptime Robot Exporter has disappeared from Prometheus service
               discovery.
             summary: Uptime Robot Exporter is down.
           expr: |
@@ -103,7 +104,8 @@ spec:
             severity: critical
         - alert: UptimeRobotExporterAbsent
           annotations:
-            description: Uptime Robot Exporter has disappeared from Prometheus service
+            description:
+              Uptime Robot Exporter has disappeared from Prometheus service
               discovery.
             summary: Uptime Robot Exporter is down.
           expr: |
@@ -124,7 +126,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: uptimerobot-prometheus
-      app.kubernetes.io/instance: uptimerobot-prometheus
+      app.kubernetes.io/version: 0.0.1
   endpoints:
     - port: metrics
       interval: 1m
