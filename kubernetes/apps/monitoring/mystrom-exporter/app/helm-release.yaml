@@ -48,20 +48,3 @@ spec:
     serviceMonitor:
       main:
         enabled: true
-        endpoints:
-          - port: http
-            scheme: http
-            path: /device
-            interval: 1m
-            scrapeTimeout: 10s
-            static_configs:
-              - targets:
-                  - 10.20.30.33
-                labels:
-                  alias: 3D Drucker
-            relabel_configs:
-              - source_labels:
-                  - __address__
-                target_label: __param_target
-              - target_label: __address__
-                replacement: mystrom-3dprinter:9452
