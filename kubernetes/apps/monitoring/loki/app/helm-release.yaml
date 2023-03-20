@@ -16,7 +16,7 @@ spec:
         name: grafana-charts
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     crds: CreateReplace
     createNamespace: true
@@ -54,7 +54,7 @@ spec:
           ingestion_burst_size_mb: 16
         schema_config:
           configs:
-            - from: '2021-08-01'
+            - from: "2021-08-01"
               store: boltdb-shipper
               object_store: aws
               schema: v12
@@ -114,7 +114,7 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: nginx
-          traefik.ingress.kubernetes.io/router.tls: 'true'
+          traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
           - host: loki.${SECRET_DOMAIN_INTERNAL}
             paths:
@@ -127,7 +127,7 @@ spec:
     write:
       replicas: 2
       persistence:
-        storageClass: synology-csi-delete
+        storageClass: nfs-csi
         size: 10Gi
     read:
       replicas: 2
@@ -146,13 +146,13 @@ spec:
         - name: loki-tmp
           emptyDir: {}
       persistence:
-        storageClass: synology-csi-delete
+        storageClass: nfs-csi
         size: 10Gi
     monitoring:
       dashboards:
         enabled: true
         labels:
-          grafana_dashboard: '1'
+          grafana_dashboard: "1"
       annotations:
         grafana_folder: Loki
       serviceMonitor:
