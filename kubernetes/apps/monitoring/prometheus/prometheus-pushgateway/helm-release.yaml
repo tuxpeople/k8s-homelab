@@ -16,7 +16,7 @@ spec:
         name: prometheus-community
         namespace: flux-system
   test:
-    enable: false # Enable helm test
+    enable: false  # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -33,7 +33,7 @@ spec:
     ingress:
       enabled: true
       annotations:
-        hajimari.io/enable: "true"
+        hajimari.io/enable: 'true'
         hajimari.io/appName: Prometheus Pushgateway
         hajimari.io/icon: mdi:fire
         kubernetes.io/ingress.class: nginx

@@ -44,8 +44,8 @@ metadata:
     app.kubernetes.io/name: prowlarr-exporter
     app.kubernetes.io/instance: prowlarr-exporter
   annotations:
-    fluxcd.io/ignore: "false"
-    fluxcd.io/automated: "true"
+    fluxcd.io/ignore: 'false'
+    fluxcd.io/automated: 'true'
 spec:
   replicas: 1
   revisionHistoryLimit: 3
@@ -59,7 +59,7 @@ spec:
         app.kubernetes.io/name: prowlarr-exporter
         app.kubernetes.io/instance: prowlarr-exporter
       annotations:
-        prometheus.io/scrape: "true"
+        prometheus.io/scrape: 'true'
         prometheus.io/port: monitoring
     spec:
       containers:
@@ -70,17 +70,17 @@ spec:
             - prowlarr
           env:
             - name: PORT
-              value: "9707"
+              value: '9707'
             - name: URL
               value: ${SECRET_PROWLARR_URL}
             - name: APIKEY
               value: ${SECRET_PROWLARR_API_KEY}
             - name: ENABLE_EPISODE_QUALITY_METRICS
-              value: "true"
+              value: 'true'
             - name: ADDITIONALMETRICS
-              value: "true"
+              value: 'true'
             - name: UNKNOWNQUEUEITEMS
-              value: "true"
+              value: 'true'
           ports:
             - name: monitoring
               containerPort: 9707
@@ -109,7 +109,7 @@ kind: ConfigMap
 metadata:
   name: prowlarr-exporter-dashboard
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: '1'
     app: plex-exporter
     namespace: media
   annotations:

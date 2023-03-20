@@ -7,7 +7,7 @@ metadata:
   name: phpipam
   annotations:
     kubernetes.io/ingress.class: nginx
-    hajimari.io/enable: "true"
+    hajimari.io/enable: 'true'
 spec:
   tls:
     - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
