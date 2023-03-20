@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    reloader.stakater.com/auto: 'true'
+    reloader.stakater.com/auto: "true"
   labels:
     app: plex-exporter
   name: plex-exporter
@@ -35,7 +35,7 @@ spec:
               memory: 50Mi
             limits:
               cpu: 500m
-              memory: 200Mi
+              memory: 300Mi
           volumeMounts:
             - mountPath: /config.json
               name: plex-exporter-config
