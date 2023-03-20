@@ -33,11 +33,12 @@ spec:
         external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
         hajimari.io/icon: file-arrow-up-down-outline
       hosts:
-        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_INTERNAL}"
-          paths:
-            - path: /
-              pathType: Prefix
-      tls:
-        - hosts:
-            - *host
-          secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
+        hosts:
+          - host: &host portainer.${SECRET_DOMAIN_INTERNAL}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
