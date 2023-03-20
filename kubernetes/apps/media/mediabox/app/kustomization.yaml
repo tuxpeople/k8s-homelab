@@ -10,7 +10,6 @@ resources:
   - radarr-ingress.yaml
   - service.yaml
   - sonar-ingress.yaml
-  - stats-ingress.yaml
   - tautulli-ingress.yaml
   - notifiarr-ingress.yaml
   - radarr-exporter.yaml
