@@ -14,3 +14,4 @@ resources:
   - ./unifi-poller/ks.yaml
   - ./vmware-exporter/ks.yaml
   - ./loki/ks.yaml
+  - ./blackbox-exporter/ks.yaml
