@@ -9,3 +9,4 @@ resources:
   - ./grafana/ks.yaml
   - ./thanos/ks.yaml
   - ./mystrom-exporter/ks.yaml
+  - ./github-exporter/ks.yaml
