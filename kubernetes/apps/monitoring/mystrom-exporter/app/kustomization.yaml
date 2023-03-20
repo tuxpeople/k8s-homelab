@@ -5,4 +5,3 @@ namespace: monitoring
 resources:
   - helm-release.yaml
   - grafana-dashboard.yaml
-  - servicemonitor.yaml
