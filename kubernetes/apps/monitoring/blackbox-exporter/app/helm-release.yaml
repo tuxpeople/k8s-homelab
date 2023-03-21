@@ -45,6 +45,10 @@ spec:
             follow_redirects: true
             preferred_ip_protocol: ip4
             method: GET
+            fail_if_ssl: false
+            fail_if_not_ssl: false
+            tls_config:
+              insecure_skip_verify: true
         http_403:
           prober: http
           timeout: 5s
