@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: uptimerobot-prometheus
+  labels:
+    app.kubernetes.io/name: uptimerobot-prometheus
+    app.kubernetes.io/version: 0.0.1
+spec:
+  groups:
+    - name: uptimerobot-prometheus
+      rules:
+        - alert: UptimeRobotExporterAbsent
+          annotations:
+            description:
+              Uptime Robot Exporter has disappeared from Prometheus service
+              discovery.
+            summary: Uptime Robot Exporter is down.
+          expr: |
+            absent(up{job=~".*uptimerobot-prometheus.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
+        - alert: UptimeRobotExporterAbsent
+          annotations:
+            description:
+              Uptime Robot Exporter has disappeared from Prometheus service
+              discovery.
+            summary: Uptime Robot Exporter is down.
+          expr: |
+            absent(up{job=~".*uptimerobot.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
