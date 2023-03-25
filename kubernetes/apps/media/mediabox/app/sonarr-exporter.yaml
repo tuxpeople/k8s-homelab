@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
         - name: sonarr-exporter
-          image: ghcr.io/onedr0p/exportarr:v1.2.3
+          image: ghcr.io/onedr0p/exportarr:v1.2.4
           imagePullPolicy: Always
           args:
             - sonarr
