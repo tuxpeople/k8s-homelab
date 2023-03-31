@@ -330,9 +330,9 @@ spec:
             scrape_interval: 1m
             scrape_timeout: 30s
             honor_timestamps: true
-            basic_auth:
-              username: randomuser
-              password: examplepassword
+            # basic_auth:
+            #   username: randomuser
+            #   password: examplepassword
             static_configs:
               - targets: # k3s-node01
                   - 192.168.8.101:9100
