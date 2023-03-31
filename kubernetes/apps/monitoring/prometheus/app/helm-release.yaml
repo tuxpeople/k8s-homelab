@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 45.7.1
+      version: 45.8.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -239,7 +239,7 @@ spec:
         externalLabels:
           cluster: homelab
         thanos:
-          image: quay.io/thanos/thanos:v0.30.2
+          image: quay.io/thanos/thanos:v0.31.0
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
