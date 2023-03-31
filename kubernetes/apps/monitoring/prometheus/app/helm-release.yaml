@@ -340,6 +340,8 @@ spec:
                   - 192.168.8.102:9100
               - targets: # k3s-node03
                   - 192.168.8.103:9100
+              - targets: # NAS
+                  - 10.20.30.40:9100
       ingress:
         enabled: true
         pathType: Prefix
