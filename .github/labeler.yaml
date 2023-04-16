@@ -1,11 +1,11 @@
 ---
 area/ansible:
-  - ansible/**/*
+  - "ansible/**/*"
 area/github:
-  - .github/**/*
+  - ".github/**/*"
 area/kubernetes:
-  - kubernetes/**/*
+  - "kubernetes/**/*"
 area/terraform:
-  - terraform/**/*
+  - "terraform/**/*"
 area/templates:
-  - tmpl/**/*
+  - "tmpl/**/*"

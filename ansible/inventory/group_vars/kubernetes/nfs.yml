@@ -1,0 +1,12 @@
+nfsserver_exports:
+  - share: /nfs
+    hosts:
+      - name: "*"
+        options:
+          - rw
+          - async
+          - no_wdelay
+          - crossmnt
+          - insecure
+          - no_root_squash
+          - insecure_locks

@@ -11,6 +11,8 @@ kubeconfig
 *.key
 # Ansible
 xanmanning.k3s*
+idiv-biodiversity.systemd_timesyncd*
+.cache
 # Terraform
 .terraform
 .terraform.tfstate*

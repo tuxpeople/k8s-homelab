@@ -8,18 +8,17 @@
     ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranch",
-    "github>tuxpeople/k8s-homelab//.github/renovate/autoMerge.json5",
-    "github>tuxpeople/k8s-homelab//.github/renovate/commitMessage.json5",
-    "github>tuxpeople/k8s-homelab//.github/renovate/labels.json5",
-    "github>tuxpeople/k8s-homelab//.github/renovate/semanticCommits.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/autoMerge.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/commitMessage.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/labels.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/semanticCommits.json5",
     "helpers:pinGitHubActionDigests"
   ],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "suppressNotifications": ["prIgnoreNotification"],
-  "assignees": ["@tuxpeople"],
   "rebaseWhen": "conflicted",
-  "schedule": ["every weekend"],
+  "schedule": ["every saturday"],
   "pre-commit": {
     "enabled": true
   },

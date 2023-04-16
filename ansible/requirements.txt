@@ -1,2 +1,2 @@
 openshift==0.13.1
-yamlfix>=1.9.0
+netaddr
