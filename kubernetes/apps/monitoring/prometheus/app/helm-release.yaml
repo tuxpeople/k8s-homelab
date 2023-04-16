@@ -191,27 +191,27 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        - 192.168.8.101
-        - 192.168.8.102
-        - 192.168.8.103
+        - 192.168.8.111
+        - 192.168.8.112
+        - 192.168.8.113
     kubeScheduler:
       enabled: true
       endpoints:
-        - 192.168.8.101
-        - 192.168.8.102
-        - 192.168.8.103
+        - 192.168.8.111
+        - 192.168.8.112
+        - 192.168.8.113
     kubeProxy:
       enabled: true
       endpoints:
-        - 192.168.8.101
-        - 192.168.8.102
-        - 192.168.8.103
+        - 192.168.8.111
+        - 192.168.8.112
+        - 192.168.8.113
     kubeEtcd:
       enabled: true
       endpoints:
-        - 192.168.8.101
-        - 192.168.8.102
-        - 192.168.8.103
+        - 192.168.8.111
+        - 192.168.8.112
+        - 192.168.8.113
       service:
         enabled: true
         port: 2381
@@ -335,11 +335,11 @@ spec:
             #   password: examplepassword
             static_configs:
               - targets: # k3s-node01
-                  - 192.168.8.101:9100
+                  - 192.168.8.111:9100
               - targets: # k3s-node02
-                  - 192.168.8.102:9100
+                  - 192.168.8.112:9100
               - targets: # k3s-node03
-                  - 192.168.8.103:9100
+                  - 192.168.8.113:9100
               - targets: # NAS
                   - 10.20.30.40:9100
       ingress:

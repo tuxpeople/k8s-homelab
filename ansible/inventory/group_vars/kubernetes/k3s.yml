@@ -1,5 +1,5 @@
 ---
-kubeconfig_target: "/Users/tdeutsch/iCloudDrive/Allgemein/kubectl/turingpi.yaml"
+kubeconfig_target: "/Users/tdeutsch/iCloudDrive/Allgemein/kubectl/homelab.yaml"
 
 #
 # Below vars are for the xanmanning.k3s role

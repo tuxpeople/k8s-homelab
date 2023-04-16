@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-synology-csi
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/synology-csi//app
+  path: ./kubernetes/apps/synology-csi/app
   prune: true
   sourceRef:
     kind: GitRepository

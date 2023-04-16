@@ -17,7 +17,7 @@ task ansible:playbook:flux
 
 sleep 800
 
-export KUBECONFIG=~/iCloudDrive/Allgemein/kubectl/turingpi.yaml
+export KUBECONFIG=~/iCloudDrive/Allgemein/kubectl/homelab.yaml
 
 task cluster:reconcile
 
