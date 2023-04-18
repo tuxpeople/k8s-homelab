@@ -31,3 +31,6 @@ spec:
       limits:
         memory: 250Mi
     uptimeRobotApiKey: ${SECRET_UPTIMEROBOT_APIKEY}
+    image:
+      repository: ghcr.io/tuxpeople/uptimerobot-operator
+      tag: master
