@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: eikek0/sharry
-      tag: v1.12.0
+      tag: v1.12.1
     service:
       main:
         ports:
