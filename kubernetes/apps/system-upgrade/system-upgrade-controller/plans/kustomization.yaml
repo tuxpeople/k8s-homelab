@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./server.yaml
   - ./agent.yaml
+  - ./ubuntu.yaml

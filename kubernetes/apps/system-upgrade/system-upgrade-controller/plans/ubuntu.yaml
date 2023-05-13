@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ubuntu
+  namespace: system-upgrade
+type: Opaque
+stringData:
+  upgrade.sh: |
+    #!/bin/sh
+    set -e
+    apt-get --assume-yes update
+    apt-get --assume-yes upgrade
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: ubuntu
+  namespace: system-upgrade
+spec:
+  concurrency: 1
+  # nodeSelector:
+  #   matchExpressions:
+  #     - {key: plan.upgrade.cattle.io/ubuntu, operator: Exists}
+  serviceAccountName: system-upgrade
+  secrets:
+    - name: ubuntu
+      path: /host/run/system-upgrade/secrets/ubuntu
+  drain:
+    force: true
+  version: ubuntu
+  upgrade:
+    image: ubuntu
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/ubuntu/upgrade.sh"]
