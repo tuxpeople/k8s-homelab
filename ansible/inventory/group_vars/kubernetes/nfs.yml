@@ -4,9 +4,7 @@ nfsserver_exports:
       - name: "*"
         options:
           - rw
-          - async
-          - no_wdelay
-          - crossmnt
-          - insecure
+          - sync
+          - no_subtree_check
           - no_root_squash
-          - insecure_locks
+          - insecure
