@@ -13,7 +13,7 @@ task ansible:deps
 task ansible:clean-cache
 task ansible:prepare
 task ansible:install || task ansible:install
-task ansible:playbook:flux
+task cluster:install
 
 sleep 800
 
