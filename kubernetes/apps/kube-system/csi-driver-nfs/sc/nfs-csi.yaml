@@ -9,11 +9,11 @@ provisioner: nfs.csi.k8s.io
 parameters:
   server: 10.20.30.40
   share: /volume2/kubernetes
-  mountPermissions: "0775"
+  # mountPermissions: "0775"
   # csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
   # csi.storage.k8s.io/provisioner-secret-name: "mount-options"
   # csi.storage.k8s.io/provisioner-secret-namespace: "default"
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 # Note: The first two options are strictly for NFSv4.2
-mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
+# mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
