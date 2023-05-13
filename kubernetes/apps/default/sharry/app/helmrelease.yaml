@@ -63,7 +63,7 @@ spec:
                   oauth = [
                       {
                         enabled = true
-                        id = "internal"
+                        id = "authelia"
                         name = "Homelab Account"
                         icon = "fas fa-address-book"
                         scope = "profile openid email",
