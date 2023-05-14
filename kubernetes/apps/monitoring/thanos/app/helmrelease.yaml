@@ -42,7 +42,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/enable: 'false'
+          hajimari.io/enable: "false"
         hostname: &host thanos-query-frontend.${SECRET_DOMAIN_INTERNAL}
         tls: true
         extraTls:
@@ -82,7 +82,10 @@ spec:
       enabled: true
       replicaCount: 1
       replicaLabel: __replica__
-      alertmanagers: [http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093]
+      alertmanagers:
+        [
+          http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093,
+        ]
       extraFlags: [--web.prefix-header=X-Forwarded-Prefix]
       config: |-
         groups:
@@ -103,6 +106,8 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+    volumePermissions:
+      enabled: true
   valuesFrom:
     - targetPath: objstoreConfig.config.bucket
       kind: Secret
