@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    reloader.stakater.com/auto: 'true'
+    reloader.stakater.com/auto: "true"
   name: vmware-exporter
 spec:
   selector:
@@ -15,12 +15,12 @@ spec:
         app: vmware-exporter
       annotations:
         prometheus.io/path: /metrics
-        prometheus.io/port: '9272'
-        prometheus.io/scrape: 'true'
+        prometheus.io/port: "9272"
+        prometheus.io/scrape: "true"
     spec:
       containers:
         - name: vmware-exporter
-          image: pryorda/vmware_exporter:v0.18.4
+          image: ghcr.io/tuxpeople/vmware_exporter:0.18.4
           imagePullPolicy: Always
           ports:
             - containerPort: 9272
