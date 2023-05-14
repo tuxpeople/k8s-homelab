@@ -15,6 +15,7 @@ resources:
   - k8s-assistant.yaml
   - k8s-at-home.yaml
   - k8s-gateway.yaml
+  - kubereboot.yaml
   - kubernetes-dashboard.yaml
   - metallb.yaml
   - metrics-server.yaml
