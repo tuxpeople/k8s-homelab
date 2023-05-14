@@ -6,6 +6,7 @@ resources:
   - bitnami.yaml
   - bjw-s.yaml
   - csi-driver-nfs.yaml
+  - deliveryheroio.yaml
   - external-dns.yaml
   - external-secrets.yaml
   - grafana.yaml

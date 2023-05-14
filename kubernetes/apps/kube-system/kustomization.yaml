@@ -8,6 +8,7 @@ resources:
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
   - ./kured/ks.yaml
+  - ./node-problem-detector/ks.yaml
   - ./kubed/ks.yaml
   - ./external-secrets/ks.yaml
   - ./local-path-provisioner/ks.yaml
