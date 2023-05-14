@@ -4,9 +4,9 @@ kind: Kustomization
 metadata:
   name: cluster-apps-neuvector-core
   namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: 'true'
 spec:
+  dependsOn:
+    - name: cluster-apps-system-upgrade-controller
   path: ./kubernetes/apps/neuvector/core
   prune: true
   sourceRef:
@@ -17,18 +17,7 @@ spec:
       kind: HelmRelease
       name: neuvector-core
       namespace: neuvector
+  wait: true
   interval: 30m
-  retryInterval: 2m
-  timeout: 1m
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-gpg
-  postBuild:
-    substituteFrom:
-      - kind: ConfigMap
-        name: cluster-settings
-        optional: false
-      - kind: Secret
-        name: cluster-secrets
-        optional: false
+  retryInterval: 1m
+  timeout: 5m
