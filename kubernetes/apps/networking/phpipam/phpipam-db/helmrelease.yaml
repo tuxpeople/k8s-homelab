@@ -33,8 +33,6 @@ spec:
         - name: TZ
           value: ${TIMEZONE}
     volumePermissions:
-      securityContext:
-        runAsUser: 1000
-        fsGroup: 0
+      enabled: true
     global:
       storageClass: nfs-csi
