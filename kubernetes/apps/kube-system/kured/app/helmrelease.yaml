@@ -2,17 +2,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: reloader
+  name: kured
   namespace: &namespace kube-system
 spec:
   interval: 15m
   chart:
     spec:
-      chart: reloader
-      version: v1.0.24
+      chart: kured
+      version: 4.5.0
       sourceRef:
         kind: HelmRepository
-        name: stakater
+        name: kubereboot
         namespace: flux-system
   maxHistory: 3
   install:
@@ -26,9 +26,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    fullnameOverride: reloader
-    reloader:
-      reloadStrategy: annotations
-      podMonitor:
-        enabled: true
-        namespace: *namespace
+    updateStrategy: RollingUpdate
+    configuration:
+      timeZone: ${TIMEZONE}
+      notifyUrl: ${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}
+      messageTemplateDrain: Draining node %s
+      messageTemplateReboot: Rebooted node %s
+    tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+    metrics:
+      create: true

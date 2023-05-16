@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 45.9.1
+      version: 45.27.2
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -112,7 +112,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: nfs-csi
               accessModes:
                 - ReadWriteOnce
               resources:
@@ -258,7 +258,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: nfs-csi
               resources:
                 requests:
                   storage: 10Gi

@@ -1,11 +1,11 @@
 ---
 collections:
   - name: community.general
-    version: 6.5.0
+    version: 7.0.0
   - name: community.sops
     version: 1.6.1
   - name: ansible.posix
-    version: 1.5.1
+    version: 1.5.2
   - name: robertdebock.roles
     version: 1.10.6
 roles:

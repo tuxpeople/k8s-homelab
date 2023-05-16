@@ -14,7 +14,7 @@ spec:
         app: alertmanager-discord
     spec:
       containers:
-        - image: benjojo/alertmanager-discord
+        - image: ghcr.io/tuxpeople/alertmanager-discord:null
           imagePullPolicy: Always
           name: main
           ports:

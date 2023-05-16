@@ -10,10 +10,10 @@ spec:
   chart:
     spec:
       chart: loki
-      version: 5.0.0
+      version: 5.5.1
       sourceRef:
         kind: HelmRepository
-        name: grafana-charts
+        name: grafana
         namespace: flux-system
   test:
     enable: false # Enable helm test
@@ -129,6 +129,39 @@ spec:
       persistence:
         storageClass: nfs-csi
         size: 10Gi
+      extraVolumeMounts:
+        - name: loki-rules
+          mountPath: /rules/fake
+        - name: loki-rules-tmp
+          mountPath: /tmp/scratch
+        - name: loki-tmp
+          mountPath: /tmp/loki-tmp
+      extraVolumes:
+        - name: loki-rules
+          emptyDir: {}
+        - name: loki-rules-tmp
+          emptyDir: {}
+        - name: loki-tmp
+          emptyDir: {}
+    backend:
+      replicas: 2
+      persistence:
+        storageClass: nfs-csi
+        size: 10Gi
+      extraVolumeMounts:
+        - name: loki-rules
+          mountPath: /rules/fake
+        - name: loki-rules-tmp
+          mountPath: /tmp/scratch
+        - name: loki-tmp
+          mountPath: /tmp/loki-tmp
+      extraVolumes:
+        - name: loki-rules
+          emptyDir: {}
+        - name: loki-rules-tmp
+          emptyDir: {}
+        - name: loki-tmp
+          emptyDir: {}
     read:
       replicas: 2
       extraVolumeMounts:

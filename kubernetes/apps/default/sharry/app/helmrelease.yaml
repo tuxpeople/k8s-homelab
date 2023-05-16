@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.3.2
+      version: 1.5.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: eikek0/sharry
-      tag: v1.12.0
+      tag: v1.12.1
     service:
       main:
         ports:
@@ -63,9 +63,10 @@ spec:
                   oauth = [
                       {
                         enabled = true
-                        id = "internal"
+                        id = "authelia"
                         name = "Homelab Account"
                         icon = "fas fa-address-book"
+                        scope = "profile openid email",
                         authorize-url = "https://auth.${SECRET_DOMAIN_ME}/api/oidc/authorization"
                         token-url = "https://auth.${SECRET_DOMAIN_ME}/api/oidc/token"
                         user-url = "https://auth.${SECRET_DOMAIN_ME}/api/oidc/userinfo"
@@ -111,7 +112,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
           hajimari.io/icon: file-arrow-up-down-outline
         hosts:
-          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN_ME}'
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_ME}"
             paths:
               - path: /
                 pathType: Prefix

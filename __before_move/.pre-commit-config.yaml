@@ -2,7 +2,7 @@
 fail_fast: false
 repos:
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.30.0
+    rev: v1.31.0
     hooks:
       - args:
           - --config-file
@@ -30,6 +30,6 @@ repos:
     hooks:
       - id: forbid-secrets
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.16.2
+    rev: v8.16.3
     hooks:
       - id: gitleaks
