@@ -9,3 +9,4 @@ resources:
   - ./sharry/ks.yaml
   - ./octoprint/ks.yaml
   - ./code-server/ks.yaml
+  - ./externalsecret.yaml
