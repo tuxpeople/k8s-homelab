@@ -30,7 +30,7 @@ spec:
   values:
     image:
       repository: promhippie/github-exporter
-      tag: 2.1.0
+      tag: 2.2.1
     strategy:
       type: Recreate
     service:
