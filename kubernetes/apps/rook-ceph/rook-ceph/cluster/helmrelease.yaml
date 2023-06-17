@@ -86,6 +86,7 @@ spec:
           isDefault: true
           reclaimPolicy: Delete
           allowVolumeExpansion: true
+          mounter: rbd-nbd
           parameters:
             imageFormat: "2"
             imageFeatures: layering
