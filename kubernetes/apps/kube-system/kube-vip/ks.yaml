@@ -10,11 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: DaemonSet
-      name: kube-vip
-      namespace: kube-system
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

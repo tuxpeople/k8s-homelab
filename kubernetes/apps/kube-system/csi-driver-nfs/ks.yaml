@@ -12,11 +12,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: csi-driver-nfs
-      namespace: kube-system
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -36,10 +32,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  healthChecks:
-    - apiVersion: storage.k8s.io/v1
-      kind: StorageClass
-      name: nfs-csi
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

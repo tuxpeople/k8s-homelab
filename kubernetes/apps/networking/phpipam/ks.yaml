@@ -12,11 +12,7 @@ spec:
     name: k8s-homelab
   dependsOn:
     - name: cluster-apps-external-secrets-secretstores
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: phpipam-db
-      namespace: networking
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -34,12 +30,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: phpipam-www
-      namespace: networking
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

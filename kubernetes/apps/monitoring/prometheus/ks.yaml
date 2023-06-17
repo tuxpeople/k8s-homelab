@@ -13,11 +13,7 @@ spec:
   dependsOn:
     - name: cluster-apps-external-secrets-secretstores
     - name: cluster-apps-thanos
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: kube-prometheus-stack
-      namespace: monitoring
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -36,11 +32,7 @@ spec:
   dependsOn:
     - name: cluster-apps-external-secrets-secretstores
     - name: cluster-apps-prometheus-app
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: alertmanager-discord
-      namespace: monitoring
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -58,11 +50,7 @@ spec:
     name: k8s-homelab
   dependsOn:
     - name: cluster-apps-prometheus-app
-  healthChecks:
-    - apiVersion: monitoring.coreos.com/v1
-      kind: PodMonitor
-      name: flux-system
-      namespace: monitoring
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -80,11 +68,7 @@ spec:
     name: k8s-homelab
   dependsOn:
     - name: cluster-apps-prometheus-app
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: prometheus-pushgateway
-      namespace: monitoring
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -102,11 +86,7 @@ spec:
     name: k8s-homelab
   dependsOn:
     - name: cluster-apps-prometheus-app
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: uptimerobot-prometheus
-      namespace: monitoring
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

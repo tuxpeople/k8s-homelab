@@ -10,19 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: radarr-exporter
-      namespace: media
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: sonarr-exporter
-      namespace: media
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: tautulli-exporter
-      namespace: media
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

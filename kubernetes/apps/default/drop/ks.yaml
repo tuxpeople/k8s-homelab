@@ -10,11 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: drop
-      namespace: default
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

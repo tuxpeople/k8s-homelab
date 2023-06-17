@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: cluster-apps-external-secrets-secretstores
     - name: cluster-apps-ingress-nginx
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

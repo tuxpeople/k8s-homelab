@@ -10,11 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: external-secrets
-      namespace: kube-system
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -32,10 +28,7 @@ spec:
     name: k8s-homelab
   dependsOn:
     - name: cluster-apps-external-secrets-operator
-  healthChecks:
-    - apiVersion: external-secrets.io/v1beta1
-      kind: ClusterSecretStore
-      name: onepassword
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m

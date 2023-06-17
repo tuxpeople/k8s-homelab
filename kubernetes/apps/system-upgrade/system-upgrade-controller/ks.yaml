@@ -28,7 +28,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m

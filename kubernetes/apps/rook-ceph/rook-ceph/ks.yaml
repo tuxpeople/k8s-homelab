@@ -28,7 +28,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
-  timeout: 15m
+  timeout: 5m
