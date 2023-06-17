@@ -1,5 +1,6 @@
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps-prometheus-app
@@ -22,7 +23,8 @@ spec:
   retryInterval: 1m
   timeout: 5m
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps-prometheus-alertmanager-discord
@@ -45,7 +47,8 @@ spec:
   retryInterval: 1m
   timeout: 5m
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps-prometheus-prometheus-config
@@ -67,7 +70,8 @@ spec:
   retryInterval: 1m
   timeout: 5m
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps-prometheus-prometheus-pushgateway
@@ -89,7 +93,8 @@ spec:
   retryInterval: 1m
   timeout: 5m
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps-prometheus-prometheus-uptimerobot-exporter
