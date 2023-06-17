@@ -20,4 +20,3 @@ spec:
     substituteFrom:
       - kind: Secret
         name: sharry-secrets
-        namespace: default
