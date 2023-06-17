@@ -22,6 +22,7 @@ resources:
   - metrics-server.yaml
   - neuvector.yaml
   - prometheus-community.yaml
+  - rook-ceph.yaml
   - stakater.yaml
   - uptimerobot-operator.yaml
   - weave-gitops.yaml
