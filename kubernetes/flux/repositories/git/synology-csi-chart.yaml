@@ -8,4 +8,4 @@ spec:
   interval: 30m
   url: https://github.com/christian-schlichtherle/synology-csi-chart
   ref:
-    tag: v0.9.4
+    tag: v0.9.5
