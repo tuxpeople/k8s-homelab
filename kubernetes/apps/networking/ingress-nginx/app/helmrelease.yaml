@@ -29,7 +29,7 @@ spec:
     controller:
       extraEnvs:
         - name: TZ
-          value: ${TIMEZONE}
+          value: "${TIMEZONE}"
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: ${METALLB_INGRESS_ADDR}
@@ -40,18 +40,18 @@ spec:
         default: true
       config:
         client-header-timeout: 120
-        client-body-buffer-size: 100M
+        client-body-buffer-size: "100M"
         client-body-timeout: 120
         custom-http-errors: 400,401,403,404,500,502,503,504
-        enable-brotli: 'true'
+        enable-brotli: "true"
         forwarded-for-header: CF-Connecting-IP
-        hsts-max-age: '31449600'
+        hsts-max-age: "31449600"
         keep-alive: 120
         keep-alive-requests: 10000
         proxy-body-size: 100M
         ssl-protocols: TLSv1.3 TLSv1.2
-        use-forwarded-headers: 'true'
-        log-format-escape-json: 'true'
+        use-forwarded-headers: "true"
+        log-format-escape-json: "true"
         log-format-upstream: >-
           {"time": "$time_iso8601", "remote_addr": "$proxy_protocol_addr",
           "x_forwarded_for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
@@ -63,7 +63,12 @@ spec:
           "$http_referer",
           "http_user_agent": "$http_user_agent"}
       metrics:
-        enabled: false
+        enabled: true
+        serviceMonitor:
+          enabled: true
+          namespace: networking
+          namespaceSelector:
+            any: true
       extraArgs:
         default-ssl-certificate: ${SECRET_DOMAIN_ME//./-}-tls
       podAnnotations:
@@ -83,7 +88,7 @@ spec:
         - name: TEMPLATE_NAME
           value: lost-in-space
         - name: SHOW_DETAILS
-          value: 'false'
+          value: "false"
   valuesFrom:
     # Cloudflare Networks
     # https://www.cloudflare.com/ips/

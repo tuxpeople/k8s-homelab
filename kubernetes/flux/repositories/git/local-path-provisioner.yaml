@@ -9,7 +9,7 @@ spec:
   url: https://github.com/rancher/local-path-provisioner
   ref:
     tag: v0.0.24
-  ignore: |-
+  ignore: |
     # exclude all
     /*
     # include kubernetes directory

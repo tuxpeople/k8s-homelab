@@ -6,7 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  timeout: 5m
   url: https://k8s-at-home.com/charts
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
@@ -16,5 +15,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  timeout: 5m
   url: https://library-charts.k8s-at-home.com
