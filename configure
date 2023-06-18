@@ -30,6 +30,7 @@ main() {
         verify_ansible_hosts
         verify_metallb
         verify_kubevip
+        verify_cluster_service_cidrs
         verify_addressing
         verify_age
         verify_git_repository
@@ -51,23 +52,22 @@ main() {
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/cert-manager-secret.sops.yaml" \
             > "${PROJECT_DIR}/kubernetes/apps/cert-manager/cert-manager/issuers/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/cert-manager/cert-manager/issuers/secret.sops.yaml"
-        envsubst < "${PROJECT_DIR}/tmpl/kubernetes/cloudflare-ddns-secret.sops.yaml" \
-            > "${PROJECT_DIR}/kubernetes/apps/networking/cloudflare-ddns/app/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/networking/cloudflare-ddns/app/secret.sops.yaml"
+        envsubst < "${PROJECT_DIR}/tmpl/kubernetes/cloudflared-secret.sops.yaml" \
+            > "${PROJECT_DIR}/kubernetes/apps/networking/cloudflared/app/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/networking/cloudflared/app/secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/kubernetes/external-dns-secret.sops.yaml" \
             > "${PROJECT_DIR}/kubernetes/apps/networking/external-dns/app/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/networking/external-dns/app/secret.sops.yaml"
-        envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
-            > "${PROJECT_DIR}/terraform/cloudflare/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/terraform/cloudflare/secret.sops.yaml"
         # generate ansible settings
-        envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
-            > "${PROJECT_DIR}/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
+        envsubst < "${PROJECT_DIR}/tmpl/ansible/supplemental.yml" \
+            > "${PROJECT_DIR}/ansible/inventory/group_vars/kubernetes/supplemental.yml"
         # generate ansible hosts file and secrets
         generate_ansible_hosts
         generate_ansible_host_secrets
         setup_github_webhook
         setup_weave_gitops
+        setup_grafana_admin
+        setup_prometheus_endpoints
         success
     fi
 }
@@ -229,7 +229,6 @@ verify_binaries() {
     _has_binary "sops"
     _has_binary "ssh"
     _has_binary "task"
-    _has_binary "terraform"
     _has_binary "yq"
     if ! [[ "$(sops --version)" =~ 3\.[0-9]+\.[0-9]+ ]]; then
         _log "ERROR(${FUNCNAME[0]})" "Incompatible sops version, make sure you are using the latest release of github.com/mozilla/sops"
@@ -254,6 +253,12 @@ verify_metallb() {
     _has_valid_ip "$(echo "${BOOTSTRAP_METALLB_LB_RANGE}" | cut -d- -f2)" "BOOTSTRAP_METALLB_LB_RANGE"
     _has_valid_ip "${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}" "BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR"
     _has_valid_ip "${BOOTSTRAP_METALLB_INGRESS_ADDR}" "BOOTSTRAP_METALLB_INGRESS_ADDR"
+}
+
+verify_cluster_service_cidrs() {
+    #TODO: Validate input is a CIDR range
+    _has_envar "BOOTSTRAP_CLUSTER_CIDR"
+    _has_envar "BOOTSTRAP_SERVICE_CIDR"
 }
 
 verify_git_repository() {
@@ -287,15 +292,14 @@ verify_master_count() {
 }
 
 verify_cloudflare() {
-    local account_zone=
     local errors=
-    _has_envar "BOOTSTRAP_CLOUDFLARE_APIKEY" "true"
+    local account_zone=
+    _has_envar "BOOTSTRAP_CLOUDFLARE_APITOKEN" "true"
     _has_envar "BOOTSTRAP_CLOUDFLARE_DOMAIN" "true"
-    _has_envar "BOOTSTRAP_CLOUDFLARE_EMAIL" "true"
+    _has_envar "BOOTSTRAP_ACME_EMAIL" "true"
     # Try to retrieve zone information from Cloudflare's API
     account_zone=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=${BOOTSTRAP_CLOUDFLARE_DOMAIN}&status=active" \
-        -H "X-Auth-Email: ${BOOTSTRAP_CLOUDFLARE_EMAIL}" \
-        -H "X-Auth-Key: ${BOOTSTRAP_CLOUDFLARE_APIKEY}" \
+        -H "Authorization: Bearer ${BOOTSTRAP_CLOUDFLARE_APITOKEN}" \
         -H "Content-Type: application/json"
     )
     if [[ "$(echo "${account_zone}" | jq ".success")" == "true" ]]; then
@@ -454,11 +458,26 @@ generate_ansible_hosts() {
     } > "${PROJECT_DIR}/ansible/inventory/hosts.yml"
 }
 
+setup_prometheus_endpoints() {
+    yq --inplace 'del(.spec.values.kubeControllerManager.endpoints[])' \
+    "${PROJECT_DIR}/kubernetes/apps/monitoring/kube-prometheus-stack/app/helmrelease.yaml"
+    for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
+        node_id=$(echo "${var}" | awk -F"_" '{print $5}')
+        node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
+        if [[ "${!node_control}" == "true" ]]; then
+            node_addr="BOOTSTRAP_ANSIBLE_HOST_ADDR_${node_id}"
+            _log "INFO(${FUNCNAME[0]})" "Setting up Prometheus endpoint for '${!node_addr}'"
+            yq --inplace ".spec.values.kubeControllerManager.endpoints += \"${!node_addr}\"" \
+                "${PROJECT_DIR}/kubernetes/apps/monitoring/kube-prometheus-stack/app/helmrelease.yaml"
+        fi
+    done
+}
+
 setup_github_webhook() {
     _has_envar "BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET"
     WEBHOOK_SECRET="${BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET}"
     if [[ "${WEBHOOK_SECRET}" == "generated" ]]; then
-        WEBHOOK_SECRET="$(openssl rand -base64 30)"
+        WEBHOOK_SECRET="$(openssl rand -hex 12)"
     fi
     export BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET="${WEBHOOK_SECRET}"
     _log "INFO(${FUNCNAME[0]})" "Using GitHub Token '${WEBHOOK_SECRET}' for Flux"
@@ -471,7 +490,7 @@ setup_weave_gitops() {
     _has_envar "BOOTSTRAP_WEAVE_GITOPS_ADMIN_PASSWORD"
     WEAVE_GITOPS_ADMIN_PASSWORD="${BOOTSTRAP_WEAVE_GITOPS_ADMIN_PASSWORD}"
     if [[ "${WEAVE_GITOPS_ADMIN_PASSWORD}" == "generated" ]]; then
-        WEAVE_GITOPS_ADMIN_PASSWORD="$(openssl rand -base64 30)"
+        WEAVE_GITOPS_ADMIN_PASSWORD="$(openssl rand -hex 12)"
     fi
     export BOOTSTRAP_WEAVE_GITOPS_ADMIN_PASSWORD="${WEAVE_GITOPS_ADMIN_PASSWORD}"
     _log "INFO(${FUNCNAME[0]})" "Using admin password '${WEAVE_GITOPS_ADMIN_PASSWORD}' for Weave Gitops"
@@ -481,6 +500,19 @@ setup_weave_gitops() {
     envsubst < "${PROJECT_DIR}/tmpl/kubernetes/weave-gitops-secret.sops.yaml" \
         > "${PROJECT_DIR}/kubernetes/apps/flux-system/weave-gitops/app/secret.sops.yaml"
     sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/flux-system/weave-gitops/app/secret.sops.yaml"
+}
+
+setup_grafana_admin() {
+    _has_envar "BOOTSTRAP_GRAFANA_ADMIN_PASSWORD"
+    GRAFANA_ADMIN_PASSWORD="${BOOTSTRAP_GRAFANA_ADMIN_PASSWORD}"
+    if [[ "${GRAFANA_ADMIN_PASSWORD}" == "generated" ]]; then
+        GRAFANA_ADMIN_PASSWORD="$(openssl rand -hex 12)"
+    fi
+    export BOOTSTRAP_GRAFANA_ADMIN_PASSWORD="${GRAFANA_ADMIN_PASSWORD}"
+    _log "INFO(${FUNCNAME[0]})" "Using password '${GRAFANA_ADMIN_PASSWORD}' for Grafana"
+    envsubst < "${PROJECT_DIR}/tmpl/kubernetes/grafana-admin-secret.sops.yaml" \
+        > "${PROJECT_DIR}/kubernetes/apps/monitoring/grafana/app/secret.sops.yaml"
+    sops --encrypt --in-place "${PROJECT_DIR}/kubernetes/apps/monitoring/grafana/app/secret.sops.yaml"
 }
 
 success() {

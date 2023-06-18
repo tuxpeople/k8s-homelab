@@ -1,4 +1,5 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
     "docker:enableMajor",
@@ -13,6 +14,7 @@
     ":automergeRequireAllStatusChecks",
     // "github>onedr0p/flux-cluster-template//.github/renovate/autoMerge.json5",
     "github>onedr0p/flux-cluster-template//.github/renovate/commitMessage.json5",
+    "github>onedr0p/flux-cluster-template//.github/renovate/groups.json5",
     "github>onedr0p/flux-cluster-template//.github/renovate/labels.json5",
     "github>onedr0p/flux-cluster-template//.github/renovate/semanticCommits.json5",
     "helpers:pinGitHubActionDigests"
@@ -33,7 +35,7 @@
   },
   "kubernetes": {
     "fileMatch": [
-      "ansible/.+\\.ya?ml.j2$",
+      "ansible/.+\\.ya?ml(\\.j2)?$",
       "kubernetes/.+\\.ya?ml$"
     ]
   },
@@ -41,14 +43,13 @@
     {
       "description": "Process various other dependencies",
       "fileMatch": [
-        "ansible/.+\\.ya?ml$",
+        "ansible/.+\\.ya?ml(\\.j2)?$",
         "kubernetes/.+\\.ya?ml$"
       ],
       "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( registryUrl=(?<registryUrl>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
       ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
     }
   ]
 }

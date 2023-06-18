@@ -19,7 +19,6 @@ includes:
   terraform: .taskfiles/TerraformTasks.yml
 
 tasks:
-
   init:
     desc: Initialize workstation dependencies with Brew
     cmds:
@@ -32,6 +31,7 @@ tasks:
     vars:
       DEPS: >-
         age
+        cilium-cli
         direnv
         fluxcd/tap/flux
         go-task/tap/go-task
