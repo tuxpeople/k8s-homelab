@@ -17,7 +17,7 @@ spec:
         name: gitea
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -38,7 +38,7 @@ spec:
         repository:
           ROOT: ~/gitea-repositories
         repository.pull-request:
-          WORK_IN_PROGRESS_PREFIXES: 'WIP:,[WIP]:'
+          WORK_IN_PROGRESS_PREFIXES: "WIP:,[WIP]:"
         cache:
           builtIn:
             enabled: true
@@ -48,17 +48,17 @@ spec:
           ROOT_URL: https://git.${SECRET_DOMAIN_ME}
           DISABLE_SSH: true
         cron.sync_external_users:
-          ENABLED: 'true'
-          RUN_AT_START: 'true'
-          SCHEDULE: '@every 10m'
-          UPDATE_EXISTING: 'true'
-          NO_SUCCESS_NOTICE: 'true'
+          ENABLED: "true"
+          RUN_AT_START: "true"
+          SCHEDULE: "@every 10m"
+          UPDATE_EXISTING: "true"
+          NO_SUCCESS_NOTICE: "true"
       ldap:
         enabled: true
         name: k8s-ldap
         securityProtocol: unencrypted
         host: openldap.identity.svc.cluster.local
-        port: '1389'
+        port: "1389"
         userSearchBase: ou=users,dc=sky,dc=lab
         userFilter: (sn=%s)
         adminFilter: (&(objectClass=groupOfNames)(cn=admins)))
@@ -80,10 +80,10 @@ spec:
         - git.${SECRET_DOMAIN_ME}
       annotations:
         kubernetes.io/ingress.class: nginx
-        traefik.ingress.kubernetes.io/router.tls: 'true'
-        external-dns/is-public: 'true'
-        external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
-        hajimari.io/enable: 'true'
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        external-dns/is-public: "true"
+        external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
+        hajimari.io/enable: "true"
         hajimari.io/icon: git
       tls:
         - secretName: ${SECRET_DOMAIN_ME//./-}-tls
