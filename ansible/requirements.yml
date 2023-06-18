@@ -10,8 +10,8 @@ collections:
     version: 2.10.3
   - name: kubernetes.core
     version: 2.4.0
-  - name: robertdebock.roles
-    version: 1.10.6
+  # - name: robertdebock.roles
+  #   version: 1.10.6
 roles:
   - name: githubixx.cilium_cli
     version: 2.6.0+0.13.2
