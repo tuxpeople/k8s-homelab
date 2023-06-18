@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: hajimari
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -52,7 +52,7 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host hajimari.${SECRET_DOMAIN_INTERNAL}
+          - host: &host "hajimari.${SECRET_DOMAIN_INTERNAL}"
             paths:
               - path: /
                 pathType: Prefix

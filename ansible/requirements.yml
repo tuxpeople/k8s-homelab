@@ -13,6 +13,8 @@ collections:
   - name: robertdebock.roles
     version: 1.10.6
 roles:
+  - name: githubixx.cilium_cli
+    version: 2.6.0+0.13.2
   - name: xanmanning.k3s
     src: https://github.com/PyratLabs/ansible-role-k3s.git
     version: v3.4.2

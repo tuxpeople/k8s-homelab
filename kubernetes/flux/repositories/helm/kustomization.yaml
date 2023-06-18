@@ -5,6 +5,7 @@ resources:
   - appscode.yaml
   - bitnami.yaml
   - bjw-s.yaml
+  - cilium.yaml
   - csi-driver-nfs.yaml
   - deliveryheroio.yaml
   - external-dns.yaml

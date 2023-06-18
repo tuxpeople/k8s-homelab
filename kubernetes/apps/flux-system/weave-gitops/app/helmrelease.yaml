@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: weave-gitops
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -60,12 +60,3 @@ spec:
     #   clientID: gitops
     #   issuerURL: https://auth.${SECRET_DOMAIN_ME}
     #   redirectURL: https://gitops.${SECRET_DOMAIN_INTERNAL}/oauth2/callback
-  valuesFrom:
-    - kind: Secret
-      name: weave-gitops-secret
-      valuesKey: adminPassword
-      targetPath: adminUser.passwordHash
-    - kind: Secret
-      name: weave-gitops-secret
-      valuesKey: clientSecret
-      targetPath: oidcSecret.clientSecret
