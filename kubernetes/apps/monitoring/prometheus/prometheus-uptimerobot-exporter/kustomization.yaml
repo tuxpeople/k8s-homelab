@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - prometheusrule.yaml
-  - helm-release.yaml
+  - helmrelease.yaml
