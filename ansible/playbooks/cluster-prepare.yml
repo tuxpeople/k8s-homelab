@@ -117,6 +117,7 @@
             state: absent
           loop: ["none", "swap"]
       notify: Reboot
+
     - name: raspberrypi
       ansible.builtin.include_role:
         name: raspberrypi

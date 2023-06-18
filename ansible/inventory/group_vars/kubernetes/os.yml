@@ -1,11 +1,6 @@
 ---
-# (string) Timezone for the servers
-timezone: "Europe/Zurich"
-system_timezone: "{{ timezone }}"
 
-# (list) Additional ssh public keys to add to the nodes
-# ssh_authorized_keys:
-ansible_user: pi
+# ssh_authorized_keys: []
 
 ubuntu:
   packages:
