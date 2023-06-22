@@ -12,7 +12,7 @@ spec:
       version: 100.1.4+up3.17.7
       sourceRef:
         kind: HelmRepository
-        name: rancher-charts-release-2-6
+        name: rancher-charts-release-2-7
         namespace: flux-system
   maxHistory: 2
   install:
