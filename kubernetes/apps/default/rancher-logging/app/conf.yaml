@@ -1,4 +1,13 @@
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: logging-s3
+type: Opaque
+data:
+  awsAccessKeyId: dGVzdHVzZXIK
+  awsSecretAccessKey: dGVzdHBhc3N3b3JkCg==
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -80,8 +89,16 @@ metadata:
   name: s3-output
 spec:
   s3:
-    aws_key_id: testuser
-    aws_sec_key: testpassword
+    aws_key_id:
+      valueFrom:
+        secretKeyRef:
+          name: logging-s3
+          key: awsAccessKeyId
+    aws_sec_key:
+      valueFrom:
+        secretKeyRef:
+          name: logging-s3
+          key: awsSecretAccessKey
     s3_bucket: test
     s3_region: test_region
     s3_endpoint: "http://minio-service.default.svc.cluster.local:9000"
