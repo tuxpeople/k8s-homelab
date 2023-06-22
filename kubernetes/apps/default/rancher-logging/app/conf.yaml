@@ -115,13 +115,8 @@ kind: Flow
 metadata:
   name: flow-test
 spec:
-  # filters:
-  #   - parser:
-  #       remove_key_name_field: true
-  #       parse:
-  #         type: nginx
-  #   - tag_normaliser:
-  #       format: ${namespace_name}.${pod_name}.${container_name}
+  filters:
+    - tag_normaliser: {}
   localOutputRefs:
     - s3-output
   match:
