@@ -104,6 +104,8 @@ spec:
     s3_endpoint: "http://minio.default.svc.cluster.local:9000"
     force_path_style: "true"
     path: "logs/${tag}/%Y/%m/%d"
+    compress:
+      parquet_compression_codec: uncompressed
     format:
       type: out_file
       add_newline: true
