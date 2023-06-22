@@ -104,7 +104,7 @@ spec:
     s3_region: test_region
     s3_endpoint: "http://minio.default.svc.cluster.local:9000"
     force_path_style: "true"
-    path: logs/${tag}/%Y/%m/%d/
+    path: "logs/${tag}/%Y/%m/%d/"
     buffer:
       timekey: 10s
       timekey_wait: 0s
