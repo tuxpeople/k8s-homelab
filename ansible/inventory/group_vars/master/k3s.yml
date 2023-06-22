@@ -30,5 +30,3 @@ k3s_server:
   etcd-expose-metrics: true # Required to monitor etcd with kube-prometheus-stack
   kube-apiserver-arg:
     - "anonymous-auth=true" # Required for HAProxy health-checks
-  node-label:
-    - "plan.upgrade.cattle.io/ubuntu=true"
