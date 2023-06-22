@@ -104,6 +104,10 @@ spec:
     s3_endpoint: "http://minio.default.svc.cluster.local:9000"
     force_path_style: "true"
     path: "logs/${tag}/%Y/%m/%d"
+    format:
+      type: out_file
+      add_newline: true
+    compress: false
     buffer:
       flush_interval: 60s
       timekey: 10s
