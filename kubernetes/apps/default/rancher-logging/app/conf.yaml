@@ -102,7 +102,7 @@ spec:
           key: awsSecretAccessKey
     s3_bucket: test
     s3_region: test_region
-    s3_endpoint: "http://minio-service.default.svc.cluster.local:9000"
+    s3_endpoint: "http://minio.default.svc.cluster.local:9000"
     force_path_style: "true"
     path: logs/${tag}/%Y/%m/%d/
     buffer:
