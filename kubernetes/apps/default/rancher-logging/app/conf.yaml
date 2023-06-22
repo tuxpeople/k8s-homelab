@@ -57,7 +57,7 @@ spec:
         policy: consoleAdmin
       - accessKey: testuser
         secretKey: testpassword
-        policy: readonly
+        policy: writetestpolicy
     buckets:
       - name: test
         policy: none
