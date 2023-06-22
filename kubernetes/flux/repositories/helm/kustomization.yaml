@@ -14,6 +14,7 @@ resources:
   - ./kubernetes-dashboard.yaml
   - ./metallb.yaml
   - ./metrics-server.yaml
+  - ./minio.yaml
   - ./prometheus-community.yaml
   - ./rancher.yaml
   - ./stakater.yaml

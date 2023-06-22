@@ -1,87 +1,78 @@
 ---
-apiVersion: v1
-kind: Secret
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
-  name: logging-s3
-type: Opaque
-data:
-  awsAccessKeyId: bWluaW9fYWNjZXNzX2tleQ==
-  awsSecretAccessKey: bWluaW9fc2VjcmV0X2tleQ==
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: minio-deployment
+  name: minio
+  namespace: default
 spec:
-  selector:
-    matchLabels:
-      app: minio
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: minio
+  interval: 15m
+  chart:
     spec:
-      containers:
-        - name: minio
-          image: minio/minio
-          args:
-            - server
-            - /storage
-          readinessProbe:
-            httpGet:
-              path: /minio/health/ready
-              port: 9000
-            initialDelaySeconds: 10
-            periodSeconds: 5
-          env:
-            - name: MINIO_ROOT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: logging-s3
-                  key: awsAccessKeyId
-            - name: MINIO_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: logging-s3
-                  key: awsSecretAccessKey
-            - name: MINIO_REGION
-              value: "test_region"
-          ports:
-            - containerPort: 9000
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: minio-service
-spec:
-  selector:
-    app: minio
-  ports:
-    - protocol: TCP
-      port: 9000
-      targetPort: 9000
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: minio-mc-deployment
-spec:
-  selector:
-    matchLabels:
-      app: minio-mc
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: minio-mc
-    spec:
-      containers:
-        - name: minio-mc
-          image: minio/mc
-          command: ["tail", "-f", "/dev/null"]
+      chart: minio
+      version: 5.0.11
+      sourceRef:
+        kind: HelmRepository
+        name: minio
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    mode: standalone
+    podLabels:
+      app.kubernetes.io/instance: minio
+      app.kubernetes.io/name: minio
+    persistence:
+      size: 25Gi
+    consoleIngress:
+      enabled: true
+      hosts:
+        - minio.${SECRET_DOMAIN}
+    environment:
+      TZ: Europe/Zurich
+    resources:
+      requests:
+        memory: null
+    users:
+      - accessKey: console
+        secretKey: console123
+        policy: consoleAdmin
+      - accessKey: testuser
+        secretKey: testpassword
+        policy: readonly
+    buckets:
+      - name: test
+        policy: none
+        purge: false
+        versioning: false
+        objectlocking: false
+    policies:
+      - name: writetestpolicy
+        statements:
+          - resources:
+              - "arn:aws:s3:::test*/*"
+            actions:
+              - "s3:AbortMultipartUpload"
+              - "s3:GetObject"
+              - "s3:DeleteObject"
+              - "s3:PutObject"
+              - "s3:ListMultipartUploadParts"
+          - resources:
+              - "arn:aws:s3:::test*"
+            actions:
+              - "s3:CreateBucket"
+              - "s3:DeleteBucket"
+              - "s3:GetBucketLocation"
+              - "s3:ListBucket"
+              - "s3:ListBucketMultipartUploads"
 ---
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: Output
@@ -89,16 +80,8 @@ metadata:
   name: s3-output
 spec:
   s3:
-    aws_key_id:
-      valueFrom:
-        secretKeyRef:
-          name: logging-s3
-          key: awsAccessKeyId
-    aws_sec_key:
-      valueFrom:
-        secretKeyRef:
-          name: logging-s3
-          key: awsSecretAccessKey
+    aws_key_id: testuser
+    aws_sec_key: testpassword
     s3_bucket: test
     s3_region: test_region
     s3_endpoint: "http://minio-service.default.svc.cluster.local:9000"
