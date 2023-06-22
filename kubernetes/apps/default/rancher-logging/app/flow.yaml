@@ -41,5 +41,5 @@ spec:
     - s3-output
   match:
     - select:
-      labels:
-        app: helm-controller
+        labels:
+          app: helm-controller
