@@ -105,6 +105,7 @@ spec:
     force_path_style: "true"
     path: "logs/${tag}/%Y/%m/%d"
     buffer:
+      disable: true
       timekey: 10s
       timekey_wait: 0s
       timekey_use_utc: true
