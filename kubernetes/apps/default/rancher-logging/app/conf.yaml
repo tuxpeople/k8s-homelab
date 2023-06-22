@@ -1,0 +1,129 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: logging-s3
+  namespace: flux-system
+type: Opaque
+data:
+  awsAccessKeyId: bWluaW9fYWNjZXNzX2tleQ==
+  awsSecretAccessKey: bWluaW9fc2VjcmV0X2tleQ==
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-deployment
+  namespace: flux-system
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+        - name: minio
+          image: minio/minio
+          args:
+            - server
+            - /storage
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: 9000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          env:
+            - name: MINIO_ACCESS_KEY
+              value: "minio_access_key"
+            - name: MINIO_SECRET_KEY
+              value: "minio_secret_key"
+            - name: MINIO_REGION
+              value: "test_region"
+          ports:
+            - containerPort: 9000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: minio-service
+  namespace: flux-system
+spec:
+  selector:
+    app: minio
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-mc-deployment
+  namespace: flux-system
+spec:
+  selector:
+    matchLabels:
+      app: minio-mc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: minio-mc
+    spec:
+      containers:
+        - name: minio-mc
+          image: minio/mc
+          command: ["tail", "-f", "/dev/null"]
+---
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Output
+metadata:
+  name: s3-output
+  namespace: flux-system
+spec:
+  s3:
+    aws_key_id:
+      valueFrom:
+        secretKeyRef:
+          name: logging-s3
+          key: awsAccessKeyId
+    aws_sec_key:
+      valueFrom:
+        secretKeyRef:
+          name: logging-s3
+          key: awsSecretAccessKey
+    s3_bucket: test
+    s3_region: test_region
+    s3_endpoint: "http://minio-service.logging.svc.cluster.local:9000"
+    force_path_style: "true"
+    path: logs/${tag}/%Y/%m/%d/
+    buffer:
+      timekey: 10s
+      timekey_wait: 0s
+      timekey_use_utc: true
+---
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Flow
+metadata:
+  name: flow-test
+  namespace: flux-system
+spec:
+  # filters:
+  #   - parser:
+  #       remove_key_name_field: true
+  #       parse:
+  #         type: nginx
+  #   - tag_normaliser:
+  #       format: ${namespace_name}.${pod_name}.${container_name}
+  localOutputRefs:
+    - s3-output
+  match:
+    - select:
+        labels:
+          app: helm-controller
