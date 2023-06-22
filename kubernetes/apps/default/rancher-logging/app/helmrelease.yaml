@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rancher-logging
-      version: 100.1.4+up3.17.7
+      version: 102.0.1+up3.17.10
       sourceRef:
         kind: HelmRepository
         name: rancher-charts-release-2-7
