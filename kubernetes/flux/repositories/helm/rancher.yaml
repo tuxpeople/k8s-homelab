@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: rancher-charts-release-2-6
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://raw.githubusercontent.com/rancher/charts/release-v2.6

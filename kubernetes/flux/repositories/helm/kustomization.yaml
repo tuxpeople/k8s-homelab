@@ -15,5 +15,6 @@ resources:
   - ./metallb.yaml
   - ./metrics-server.yaml
   - ./prometheus-community.yaml
+  - ./rancher.yaml
   - ./stakater.yaml
   - ./weave-gitops.yaml
