@@ -63,8 +63,8 @@ spec:
             initialDelaySeconds: 10
         - name: filebrowser
           image: filebrowser/filebrowser:latest
-          command: ["sh"]
-          args: ["-c", "/filebrowser config init; /filebrowser"]
+          # command: ["sh"]
+          # args: ["-c", "/filebrowser config init; /filebrowser"]
           resources:
             requests:
               cpu: 50m
