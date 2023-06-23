@@ -103,17 +103,19 @@ spec:
     s3_bucket: test
     s3_endpoint: "http://minio.default.svc.cluster.local:9000"
     force_path_style: "true"
-    path: "logs/${tag}/%Y/%m/%d"
+    path: "logs/${tag}/%Y/%m"
     compress:
       parquet_compression_codec: uncompressed
     format:
       type: out_file
       add_newline: true
     buffer:
+      disabled: true
       flush_interval: 60s
-      timekey: 10s
+      timekey: 60m
       timekey_wait: 0s
-      timekey_use_utc: true
+      timekey_use_utc: false
+      timekey_zone: Europe/Zurich
 ---
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: Flow
