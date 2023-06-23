@@ -19,6 +19,8 @@ data:
     # gather all log messages from all facilities
     # at all severity levels to the RemoteLogs template
     *.* -?RemoteLogs
+
+    stop
 ---
 apiVersion: apps/v1
 kind: Deployment
