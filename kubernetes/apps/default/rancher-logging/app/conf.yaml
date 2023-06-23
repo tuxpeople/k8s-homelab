@@ -95,11 +95,12 @@ metadata:
 spec:
   syslog:
     buffer:
-      total_limit_size: 2GB
-      flush_thread_count: 8
-      timekey: 10m
-      timekey_use_utc: true
-      timekey_wait: 1m
+      disabled: true
+      flush_interval: 40m
+      timekey: 30m
+      timekey_wait: 0s
+      timekey_use_utc: false
+      timekey_zone: Europe/Zurich
     format:
       app_name_field: kubernetes.pod_name
       hostname_field: custom-cluster-name
