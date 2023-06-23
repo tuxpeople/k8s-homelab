@@ -17,20 +17,23 @@ spec:
     spec:
       containers:
         - name: rsyslog
-          image: instantlinux/rsyslogd:latest
+          image: cbrosius/rsyslog-loganalyzer
           resources:
             requests:
               cpu: 50m
               memory: 32Mi
             limits:
-              cpu: 500m
-              memory: 320Mi
+              cpu: 1000m
+              memory: 750Mi
           ports:
             - containerPort: 514
               name: udp
               protocol: UDP
             - containerPort: 514
               name: tcp
+              protocol: TCP
+            - containerPort: 8080
+              name: web
               protocol: TCP
           volumeMounts:
             - name: test-volume
