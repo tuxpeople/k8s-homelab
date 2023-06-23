@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: rsyslog
-          image: instantlinux/rsyslogd:latest
+          image: aguslr/docker-rsyslog
           ports:
             - containerPort: 514
           resources:
@@ -26,7 +26,7 @@ spec:
               memory: 524Mi
           volumeMounts:
             - name: test-volume
-              mountPath: /test
+              mountPath: /var/log
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       volumes:
