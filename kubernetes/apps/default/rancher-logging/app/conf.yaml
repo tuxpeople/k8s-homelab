@@ -111,8 +111,8 @@ spec:
       add_newline: true
     buffer:
       disabled: true
-      flush_interval: 60s
-      timekey: 60m
+      flush_interval: 40m
+      timekey: 30m
       timekey_wait: 0s
       timekey_use_utc: false
       timekey_zone: Europe/Zurich
