@@ -112,4 +112,4 @@ spec:
   match:
     - select:
         labels:
-          app.kubernetes.io/name: fluentbit
+          app.kubernetes.io/name: echo-server
