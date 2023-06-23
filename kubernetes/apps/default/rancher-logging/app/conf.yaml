@@ -23,8 +23,8 @@ spec:
               cpu: 50m
               memory: 32Mi
             limits:
-              cpu: 50m
-              memory: 32Mi
+              cpu: 500m
+              memory: 320Mi
           ports:
             - containerPort: 514
               name: udp
