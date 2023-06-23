@@ -14,7 +14,7 @@ data:
     template (
         name="RemoteLogs"
         type="string"
-        string="/var/log/remotelogs/%PROGRAMNAME%/%$Year%/%$Month%/%$Day%.log"
+        string="/var/log/remotelogs/%HOSTNAME%/%PROGRAMNAME%/%$Year%/%$Month%/%$Day%.log"
     )
     # gather all log messages from all facilities
     # at all severity levels to the RemoteLogs template
@@ -120,7 +120,7 @@ spec:
       timekey_zone: Europe/Zurich
     format:
       app_name_field: kubernetes.pod_name
-      hostname_field: custom-cluster-name
+      hostname_field: kubernetes.namespace_name
       log_field: message
       rfc6587_message_size: false
     host: syslog-service-udp.default.svc.cluster.local
