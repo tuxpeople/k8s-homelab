@@ -60,24 +60,6 @@ spec:
               mountPath: /var/log
             - mountPath: /etc/rsyslog.d
               name: config
-        - name: busybox
-          image: busybox
-          command: ["/bin/sh"]
-          args: ["-c", "httpd -f -p 8280 -h /var/log/remotelogs"]
-          resources:
-            requests:
-              cpu: 5m
-              memory: 5Mi
-            limits:
-              cpu: 50m
-              memory: 32Mi
-          ports:
-            - containerPort: 8280
-              name: web
-              protocol: TCP
-          volumeMounts:
-            - name: test-volume
-              mountPath: /var/log
       volumes:
         - name: test-volume
           persistentVolumeClaim:
@@ -97,18 +79,6 @@ spec:
     requests:
       storage: 25Gi
   storageClassName: local-path
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: "web-service"
-spec:
-  ports:
-    - port: 8280
-      targetPort: 8280
-      protocol: TCP
-  selector:
-    app: "rsyslog"
 ---
 apiVersion: v1
 kind: Service
