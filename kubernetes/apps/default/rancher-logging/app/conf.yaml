@@ -17,17 +17,7 @@ spec:
     spec:
       containers:
         - name: rsyslog
-          image: zmazay/rsyslog-k8s-logserver:latest
-          imagePullPolicy: Always
-          readinessProbe:
-            tcpSocket:
-              port: tcp
-            timeoutSeconds: 30
-          livenessProbe:
-            tcpSocket:
-              port: tcp
-            timeoutSeconds: 60
-            failureThreshold: 5
+          image: instantlinux/rsyslogd:latest
           resources:
             requests:
               cpu: 50m
