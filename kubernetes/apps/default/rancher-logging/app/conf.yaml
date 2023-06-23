@@ -14,7 +14,7 @@ data:
     template (
         name="RemoteLogs"
         type="string"
-        string="/var/log/remotelogs/%PROGRAMNAME%/%$Month%/%$Day%.log"
+        string="/var/log/remotelogs/%PROGRAMNAME%/%$Year%/%$Month%/%$Day%.log"
     )
     # gather all log messages from all facilities
     # at all severity levels to the RemoteLogs template
