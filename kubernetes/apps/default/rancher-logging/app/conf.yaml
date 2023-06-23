@@ -101,7 +101,7 @@ spec:
             - name: logstore-volume
               mountPath: /srv
               readOnly: true
-            - mountPath: /
+            - mountPath: /.filebrowser.json
               name: filebrowser-config
               subPath: .filebrowser.json
           livenessProbe:
