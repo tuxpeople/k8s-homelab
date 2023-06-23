@@ -1,121 +1,16 @@
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: logging-s3
-type: Opaque
-data:
-  awsAccessKeyId: dGVzdHVzZXIK
-  awsSecretAccessKey: dGVzdHBhc3N3b3JkCg==
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: minio
-  namespace: default
-spec:
-  interval: 15m
-  chart:
-    spec:
-      chart: minio
-      version: 5.0.11
-      sourceRef:
-        kind: HelmRepository
-        name: minio
-        namespace: flux-system
-  maxHistory: 2
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  values:
-    mode: standalone
-    podLabels:
-      app.kubernetes.io/instance: minio
-      app.kubernetes.io/name: minio
-    persistence:
-      size: 25Gi
-      storageClass: local-path
-    consoleIngress:
-      enabled: true
-      hosts:
-        - minio.${SECRET_DOMAIN}
-    environment:
-      TZ: Europe/Zurich
-    resources:
-      requests:
-        memory: null
-    users:
-      - accessKey: console
-        secretKey: console123
-        policy: consoleAdmin
-      - accessKey: testuser
-        secretKey: testpassword
-        policy: writetestpolicy
-    buckets:
-      - name: test
-        policy: none
-        purge: false
-        versioning: false
-        objectlocking: false
-    policies:
-      - name: writetestpolicy
-        statements:
-          - resources:
-              - "arn:aws:s3:::test*/*"
-            actions:
-              - "s3:AbortMultipartUpload"
-              - "s3:GetObject"
-              - "s3:DeleteObject"
-              - "s3:PutObject"
-              - "s3:ListMultipartUploadParts"
-          - resources:
-              - "arn:aws:s3:::test*"
-            actions:
-              - "s3:CreateBucket"
-              - "s3:DeleteBucket"
-              - "s3:GetBucketLocation"
-              - "s3:ListBucket"
-              - "s3:ListBucketMultipartUploads"
----
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: Output
 metadata:
-  name: s3-output
+  name: file-output
 spec:
-  s3:
-    aws_key_id:
-      valueFrom:
-        secretKeyRef:
-          name: logging-s3
-          key: awsAccessKeyId
-    aws_sec_key:
-      valueFrom:
-        secretKeyRef:
-          name: logging-s3
-          key: awsSecretAccessKey
-    s3_bucket: test
-    s3_endpoint: "http://minio.default.svc.cluster.local:9000"
-    force_path_style: "true"
-    path: "logs/${tag}/%Y/%m"
-    compress:
-      parquet_compression_codec: uncompressed
-    format:
-      type: out_file
-      add_newline: true
+  file:
+    path: /test/logs/${tag}/%Y/%m/%d.%H.%M
+    append: true
     buffer:
-      disabled: true
-      flush_interval: 40m
-      timekey: 30m
-      timekey_wait: 0s
-      timekey_use_utc: false
-      timekey_zone: Europe/Zurich
+      timekey: 1m
+      timekey_wait: 10s
+      timekey_use_utc: true
 ---
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: Flow
@@ -125,7 +20,7 @@ spec:
   filters:
     - tag_normaliser: {}
   localOutputRefs:
-    - s3-output
+    - file-output
   match:
     - select:
         labels:
