@@ -6,23 +6,19 @@ metadata:
 data:
   custom.conf: |
     # This file created from k8s configmap
-    # define template for remote loggin
-    # remote logs will be stored at /var/log/remotelogs directory
-    # each host will have specific directory based on the system %HOSTNAME%
-    # name of the log file is %PROGRAMNAME%.log such as sshd.log, su.log
-    # both %HOSTNAME% and %PROGRAMNAME% is the Rsyslog message properties
+    module(load="imudp")  # needs to be done just once
+    input(
+    	type="imudp"
+    	port="514"
+    )
     template (
         name="RemoteLogs"
         type="string"
-        string="/var/log/remotelogs/%HOSTNAME%/%PROGRAMNAME%.log"
+        string="/var/log/remotelogs/%PROGRAMNAME%/%$Month%/%$Day%.log"
     )
-
     # gather all log messages from all facilities
     # at all severity levels to the RemoteLogs template
     *.* -?RemoteLogs
-
-    # stop the process once the file is written
-    stop
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -62,6 +58,24 @@ spec:
               mountPath: /var/log
             - mountPath: /etc/rsyslog.d
               name: config
+        - name: busybox
+          image: busybox
+          command: ["/bin/sh"]
+          args: ["-c", "httpd -f -p 8280 -h /var/log/remotelogs"]
+          resources:
+            requests:
+              cpu: 5m
+              memory: 5Mi
+            limits:
+              cpu: 50m
+              memory: 32Mi
+          ports:
+            - containerPort: 8280
+              name: web
+              protocol: TCP
+          volumeMounts:
+            - name: test-volume
+              mountPath: /var/log
       volumes:
         - name: test-volume
           persistentVolumeClaim:
@@ -81,6 +95,18 @@ spec:
     requests:
       storage: 25Gi
   storageClassName: local-path
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "web-service"
+spec:
+  ports:
+    - port: 8280
+      targetPort: 8280
+      protocol: TCP
+  selector:
+    app: "rsyslog"
 ---
 apiVersion: v1
 kind: Service
