@@ -6,11 +6,8 @@ metadata:
 data:
   custom.conf: |
     # This file created from k8s configmap
-    module(load="imudp")  # needs to be done just once
-    input(
-    	type="imudp"
-    	port="514"
-    )
+    module(load="imtcp")
+    input(type="imtcp" port="514")
     template (
         name="RemoteLogs"
         type="string"
@@ -57,9 +54,37 @@ spec:
               protocol: TCP
           volumeMounts:
             - name: logstore-volume
-              mountPath: /var/log
+              mountPath: /var/log/remotelogs
             - mountPath: /etc/rsyslog.d
               name: config
+          livenessProbe:
+            tcpSocket:
+              port: 514
+            initialDelaySeconds: 10
+        - name: filebrowser
+          image: filebrowser/filebrowser:latest
+          command: ["sc"]
+          args:
+            ["-c", "/filebrowser config set --auth.method=noauth; /filebrowser"]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 500m
+              memory: 320Mi
+          ports:
+            - containerPort: 80
+              name: web
+              protocol: TCP
+          volumeMounts:
+            - name: logstore-volume
+              mountPath: /srv
+              readOnly: true
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
       volumes:
         - name: logstore-volume
           persistentVolumeClaim:
@@ -79,6 +104,18 @@ spec:
     requests:
       storage: 25Gi
   storageClassName: local-path
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "syslog-service-web"
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: "rsyslog"
 ---
 apiVersion: v1
 kind: Service
@@ -126,7 +163,7 @@ spec:
     host: syslog-service-udp.default.svc.cluster.local
     insecure: true
     port: 514
-    transport: udp
+    transport: tcp
 ---
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: Flow
