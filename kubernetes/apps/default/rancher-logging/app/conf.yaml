@@ -1,18 +1,98 @@
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rsyslog-deployment
+  labels:
+    app: rsyslog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rsyslog
+  template:
+    metadata:
+      labels:
+        app: rsyslog
+    spec:
+      containers:
+        - name: rsyslog
+          image: sudheerc1190/rsyslog:latest
+          ports:
+            - containerPort: 514
+          resources:
+            requests:
+              cpu: 250m
+              memory: 524Mi
+          volumeMounts:
+            - name: test-volume
+              mountPath: /test
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: test-volume
+          persistentVolumeClaim:
+            claimName: test
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 25Gi
+  storageClassName: local-path
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "syslog-service-tcp"
+spec:
+  ports:
+    - port: 514
+      targetPort: 514
+      protocol: TCP
+  selector:
+    app: "rsyslog"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "syslog-service-udp"
+spec:
+  ports:
+    - port: 514
+      targetPort: 514
+      protocol: UDP
+  selector:
+    app: "rsyslog"
+---
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: Output
 metadata:
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-  name: file-output
+  name: syslog-output
 spec:
-  file:
-    path: /test/logs/${tag}/%Y/%m/%d.%H.%M
-    append: true
+  syslog:
     buffer:
-      timekey: 1m
-      timekey_wait: 10s
+      total_limit_size: 2GB
+      flush_thread_count: 8
+      timekey: 10m
       timekey_use_utc: true
+      timekey_wait: 1m
+    format:
+      app_name_field: kubernetes.pod_name
+      hostname_field: custom-cluster-name
+      log_field: message
+      rfc6587_message_size: false
+    host: syslog-service-udp.default.svc.cluster.local
+    insecure: true
+    port: 514
+    transport: udp
 ---
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: Flow
@@ -22,7 +102,7 @@ spec:
   filters:
     - tag_normaliser: {}
   localOutputRefs:
-    - file-output
+    - syslog-output
   match:
     - select:
         labels:
