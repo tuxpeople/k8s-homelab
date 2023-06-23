@@ -63,8 +63,12 @@ spec:
             initialDelaySeconds: 10
         - name: filebrowser
           image: filebrowser/filebrowser:latest
-          # command: ["sh"]
-          # args: ["-c", "/filebrowser config init; /filebrowser"]
+          command: ["sh"]
+          args:
+            [
+              "-c",
+              "/filebrowser config init; /filebrowser config set --auth.method=noauth; /filebrowser --auth.method=noauth",
+            ]
           resources:
             requests:
               cpu: 50m
