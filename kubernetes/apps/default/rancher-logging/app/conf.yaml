@@ -85,9 +85,8 @@ metadata:
 spec:
   syslog:
     buffer:
-      disabled: true
-      flush_interval: 40m
-      timekey: 30m
+      flush_interval: 60s
+      timekey: 10s
       timekey_wait: 0s
       timekey_use_utc: false
       timekey_zone: Europe/Zurich
