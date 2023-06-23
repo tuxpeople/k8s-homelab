@@ -6,9 +6,23 @@ metadata:
 data:
   custom.conf: |
     # This file created from k8s configmap
-    $template RemoteStore, "/var/log/remote/%$year%/%$Month%/%$Day%/%$Hour%.log"
-    :source, !isequal, "localhost" -?RemoteStore
-    :source, isequal, "last" ~
+    # define template for remote loggin
+    # remote logs will be stored at /var/log/remotelogs directory
+    # each host will have specific directory based on the system %HOSTNAME%
+    # name of the log file is %PROGRAMNAME%.log such as sshd.log, su.log
+    # both %HOSTNAME% and %PROGRAMNAME% is the Rsyslog message properties
+    template (
+        name="RemoteLogs"
+        type="string"
+        string="/var/log/remotelogs/%HOSTNAME%/%PROGRAMNAME%.log"
+    )
+
+    # gather all log messages from all facilities
+    # at all severity levels to the RemoteLogs template
+    *.* -?RemoteLogs
+
+    # stop the process once the file is written
+    stop
 ---
 apiVersion: apps/v1
 kind: Deployment
