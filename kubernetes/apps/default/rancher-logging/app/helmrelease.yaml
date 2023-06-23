@@ -28,3 +28,23 @@ spec:
   dependsOn:
     - name: rancher-logging-crd
       namespace: default
+  values:
+    volumeMounts:
+      - name: test-volume
+        mountPath: /test
+    volumes:
+      - name: test-volume
+        persistentVolumeClaim:
+          claimName: test
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 25Gi
+  storageClassName: local-path
