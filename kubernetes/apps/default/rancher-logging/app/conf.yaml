@@ -64,11 +64,7 @@ spec:
         - name: filebrowser
           image: filebrowser/filebrowser:latest
           command: ["sh"]
-          args:
-            [
-              "-c",
-              "/filebrowser config init; /filebrowser config set --auth.method=noauth; /filebrowser",
-            ]
+          args: ["-c", "/filebrowser config init; /filebrowser"]
           resources:
             requests:
               cpu: 50m
