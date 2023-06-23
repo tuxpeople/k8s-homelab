@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: rsyslog-custom
+  name: rsyslog-custom-config
 data:
   custom.conf: |
     # This file created from k8s configmap
@@ -56,22 +56,22 @@ spec:
               name: tcp
               protocol: TCP
           volumeMounts:
-            - name: test-volume
+            - name: logstore-volume
               mountPath: /var/log
             - mountPath: /etc/rsyslog.d
               name: config
       volumes:
-        - name: test-volume
+        - name: logstore-volume
           persistentVolumeClaim:
-            claimName: test
+            claimName: logstore
         - name: config
           configMap:
-            name: rsyslog-custom
+            name: rsyslog-custom-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: test
+  name: logstore
 spec:
   accessModes:
     - ReadWriteOnce
