@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: rsyslog
-          image: aguslr/docker-rsyslog
+          image: aguslr/docker-rsyslog:latest
           ports:
             - containerPort: 514
           resources:
