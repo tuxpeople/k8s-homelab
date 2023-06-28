@@ -1,0 +1,56 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: garbagecollect
+  labels:
+    app: garbagecollect
+spec:
+  suspend: false
+  schedule: "*/10 * * * *"
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: statefulset.kubernetes.io/pod-name
+                        operator: In
+                        values:
+                          - rancher-logging-root-fluentd-0
+                  topologyKey: kubernetes.io/hostname
+          restartPolicy: OnFailure
+          dnsPolicy: ClusterFirst
+          containers:
+            - name: garbagecollect
+              image: alpine
+              imagePullPolicy: Always
+              env:
+                - name: KEEP_DAYS
+                  value: "3"
+              volumeMounts:
+                - mountPath: /mnt/workdir
+                  name: logs
+                - name: garbagecollectscript
+                  mountPath: /script
+              resources:
+                limits:
+                  memory: 1000Mi
+                  cpu: 1000m
+              command:
+                - /bin/sh
+              args:
+                - /script/garbagecollect.sh
+          volumes:
+            - name: logs
+              persistentVolumeClaim:
+                claimName: test-pv
+            - name: garbagecollectscript
+              configMap:
+                name: script-configmap

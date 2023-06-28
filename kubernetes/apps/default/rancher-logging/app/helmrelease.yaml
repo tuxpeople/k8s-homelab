@@ -1,0 +1,50 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rancher-logging
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: rancher-logging
+      version: 102.0.1+up3.17.10
+      sourceRef:
+        kind: HelmRepository
+        name: rancher-charts-release-2-7
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: rancher-logging-crd
+      namespace: default
+  values:
+    loggingOverlay:
+      spec:
+        fluentd:
+          extraVolumes:
+            - volumeName: test
+              path: "/logs"
+              containerName: fluentd
+              volume:
+                pvc:
+                  source:
+                    claimName: test-pv
+                  # spec:
+                  #   accessModes:
+                  #     - ReadWriteOnce
+                  #   resources:
+                  #     requests:
+                  #       storage: 10Gi
+                  #   storageClassName: local-path
+                  #   volumeMode: Filesystem
