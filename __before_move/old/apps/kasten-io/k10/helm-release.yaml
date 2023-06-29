@@ -34,7 +34,7 @@ spec:
     eula:
       accept: true
       company: tuxpeople-k8s-homelab
-      email: ${SECRET_CLOUDFLARE_EMAIL}
+      email: ${SECRET_ACME_EMAIL}
     clusterName: k8s-homelab
     resources:
       requests:

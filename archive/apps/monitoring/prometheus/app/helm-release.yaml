@@ -70,7 +70,7 @@ spec:
           - name: email
             email_configs:
               - send_resolved: true
-                to: ${SECRET_CLOUDFLARE_EMAIL}
+                to: ${SECRET_ACME_EMAIL}
                 from: prometheus@tuxpeople.org
                 smarthost: smtp.utils.svc.cluster.local:25
                 require_tls: false

@@ -46,7 +46,7 @@ spec:
             - name: SEMAPHORE_ADMIN_NAME
               value: admin
             - name: SEMAPHORE_ADMIN_EMAIL
-              value: ${SECRET_CLOUDFLARE_EMAIL}
+              value: ${SECRET_ACME_EMAIL}
             - name: SEMAPHORE_ADMIN
               value: admin
           name: semaphore
