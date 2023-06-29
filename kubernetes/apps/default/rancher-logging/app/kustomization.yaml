@@ -4,6 +4,6 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
-  - ./conf.yaml
-  - ./configmap.yaml
-  - ./cron-job.yaml
+  - ./logging.yaml
+  - ./garbagecollect.yaml
+  - ./webserver.yaml

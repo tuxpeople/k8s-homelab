@@ -117,7 +117,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: nfs-csi
+              storageClassName: local-path
               accessModes:
                 - ReadWriteOnce
               resources:
