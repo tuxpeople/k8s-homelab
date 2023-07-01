@@ -31,6 +31,9 @@ spec:
     ttl: 1
     fallthrough:
       enabled: true
+    extraZonePlugins:
+      - name: forward
+        parameters: . 1.1.1.1
     service:
       type: LoadBalancer
       port: 53
