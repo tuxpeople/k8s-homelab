@@ -1,0 +1,66 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-pv
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 2Gi
+  nfs:
+    path: /volume2/kubernetes/static/test-pv
+    server: 10.20.30.40
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: nfs
+---
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Flow
+metadata:
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+  name: flow-test
+spec:
+  filters:
+    # https://kube-logging.dev/docs/configuration/plugins/filters/dedot/
+    - dedot:
+        de_dot_separator: "-"
+        de_dot_nested: true
+    # https://kube-logging.dev/docs/configuration/plugins/filters/tagnormaliser/
+    - tag_normaliser:
+        format: ${namespace_name}.${labels.app-kubernetes-io/name}.${container_name}
+  localOutputRefs:
+    - file-output
+  match:
+    - select:
+        labels:
+          app.kubernetes.io/name: echo-server
+---
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Output
+metadata:
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+  name: file-output
+spec:
+  file:
+    path: /logs/${tag}
+    append: true
+    buffer:
+      timekey: 1d
+      timekey_use_utc: false
+      flush_mode: interval # immediate
+      flush_interval: 60s
+    format:
+      type: single_value

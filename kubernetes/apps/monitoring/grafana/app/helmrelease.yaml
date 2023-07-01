@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: grafana
-      version: 6.57.2
+      version: 6.57.4
       sourceRef:
         kind: HelmRepository
         name: grafana
@@ -36,6 +36,36 @@ spec:
     env:
       GF_EXPLORE_ENABLED: true
       GF_SERVER_ROOT_URL: "https://grafana.${SECRET_DOMAIN}"
+    auth:
+      signout_redirect_url: https://auth.${SECRET_DOMAIN}/logout
+      oauth_auto_login: false
+    auth.generic_oauth:
+      enabled: true
+      name: Homelab Account
+      icon: signin
+      client_id: grafana
+      client_secret: ${SECRET_OIDC_CLIENT_SECRET_GRAFANA}
+      scopes: openid profile email groups
+      empty_scopes: false
+      auth_url: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
+      token_url: https://auth.${SECRET_DOMAIN}/api/oidc/token
+      api_url: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
+      login_attribute_path: preferred_username
+      groups_attribute_path: groups
+      name_attribute_path: name
+      use_pkce: true
+    auth.generic_oauth.group_mapping:
+      role_attribute_path: |
+        contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'grafana') && 'Viewer'
+      org_id: 1
+    auth.basic:
+      enabled: false
+      # disable_login_form: false
+    auth.anonymous:
+      enabled: false
+      org_name: Homelab
+      org_id: 1
+      org_role: Viewer
     grafana.ini:
       analytics:
         check_for_updates: false

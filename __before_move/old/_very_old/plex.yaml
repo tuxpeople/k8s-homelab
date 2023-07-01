@@ -15,7 +15,7 @@ spec:
         name: k8s-at-home
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -74,7 +74,7 @@ metadata:
   name: plex
 spec:
   friendlyName: K8S Plex
-  url: http://ipv4.${SECRET_DOMAIN_K8S}:32400/identity
+  url: http://${SECRET_DNS_TARGET}:32400/identity
   type: HTTP
   httpMethod: GET
   interval: 300

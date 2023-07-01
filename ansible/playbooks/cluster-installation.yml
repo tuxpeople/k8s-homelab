@@ -56,7 +56,7 @@
     - name: Copy kubeconfig to target
       run_once: true
       ansible.builtin.copy:
-        src: "{{ repo_abs_path.stdout }}/kubeconfig"
+        src: "{{ repository_path.stdout }}/kubeconfig"
         dest: "{{ kubeconfig_target }}"
       delegate_to: localhost
       become: false

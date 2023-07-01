@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pywebserver
+  labels:
+    app: pywebserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pywebserver
+  template:
+    metadata:
+      labels:
+        app: pywebserver
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: statefulset.kubernetes.io/pod-name
+                    operator: In
+                    values:
+                      - rancher-logging-root-fluentd-0
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: pywebserver
+          image: python:3-alpine
+          command: ["sh"]
+          args: ["-c", "python3 /scripts/python-webserver.py"]
+          resources:
+            requests:
+              cpu: 1m
+              memory: 10Mi
+            limits:
+              cpu: 100m
+              memory: 150Mi
+          ports:
+            - containerPort: 80
+              name: tcp
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /http_root
+              name: logs
+              readOnly: true
+            - mountPath: /scripts
+              name: pywebserver-config
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+      volumes:
+        - name: logs
+          persistentVolumeClaim:
+            claimName: test-pv
+        - name: pywebserver-config
+          configMap:
+            name: pywebserver-configmap
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+  name: pywebserver-configmap
+data:
+  python-webserver.py: |-
+    from http.server import SimpleHTTPRequestHandler
+    from socketserver import TCPServer
+    import os
+
+    port = 80
+    host = ''
+
+    # https://gist.github.com/HaiyangXu/ec88cbdce3cdbac7b8d5?permalink_comment_id=3275090#gistcomment-3275090
+    # https://tuxstash.de/gist/python-http-with-mime-types/
+    # https://gist.github.com/wongjustin99/111cbe29f9be40e1b6396262ea22973c
+    # https://gist.github.com/HaiyangXu/ec88cbdce3cdbac7b8d5
+
+    handler = SimpleHTTPRequestHandler
+    handler.extensions_map = {
+      '.log': 'text/plain',
+      '': 'application/octet-stream'
+    }
+
+    server_address = (host, port)
+    httpd = TCPServer((server_address), handler)
+    os.chdir("/http_root")
+    httpd.serve_forever()

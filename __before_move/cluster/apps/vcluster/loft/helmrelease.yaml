@@ -15,7 +15,7 @@ spec:
         name: loft-charts
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     crds: CreateReplace
@@ -31,7 +31,7 @@ spec:
     recreate: true
   values:
     admin:
-      create: 'true'
+      create: "true"
       username: admin
       password: ${CODESERVER_PASSWORD}
     ingress:
@@ -39,10 +39,10 @@ spec:
       host: loft.${SECRET_DOMAIN_K8S}
       ingressClass: traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.tls: 'true'
-        external-dns/is-public: 'true'
-        external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_K8S}
-        hajimari.io/enable: 'true'
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        external-dns/is-public: "true"
+        external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
+        hajimari.io/enable: "true"
         hajimari.io/icon: mdi:chart-arc
       tls:
         enabled: true
@@ -50,7 +50,7 @@ spec:
 
         # audit
     audit:
-      enableSideCar: 'true'
+      enableSideCar: "true"
     config:
       audit:
         enabled: true
