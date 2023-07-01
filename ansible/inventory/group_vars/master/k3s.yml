@@ -30,3 +30,6 @@ k3s_server:
   etcd-expose-metrics: true # Required to monitor etcd with kube-prometheus-stack
   kube-apiserver-arg:
     - "anonymous-auth=true" # Required for HAProxy health-checks
+  kubelet-arg:
+    # Don't pull /etc/resolv.conf from host
+    - "resolv-conf="
