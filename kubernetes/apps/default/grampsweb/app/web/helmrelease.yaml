@@ -1,0 +1,154 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grampsweb
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: grampsweb-redis
+      namespace: default
+  values:
+    controller:
+      strategy: RollingUpdate
+    image:
+      repository: ghcr.io/gramps-project/grampsweb
+      tag: v0.21.1
+    env:
+      GRAMPSWEB_TREE: "Gramps Web" # will create a new tree if not exists
+      GRAMPSWEB_CELERY_CONFIG__broker_url: "redis://grampsweb-redis:6379/0"
+      GRAMPSWEB_CELERY_CONFIG__result_backend: "redis://grampsweb-redis:6379/0"
+      GRAMPSWEB_RATELIMIT_STORAGE_URI: redis://grampsweb-redis:6379/1
+    service:
+      main:
+        ports:
+          http:
+            port: &port 5000
+      # probes:
+      #   liveness: &probes
+      #     enabled: true
+      #     custom: true
+      #     spec:
+      #       httpGet:
+      #         path: /
+      #         port: *port
+      #       initialDelaySeconds: 0
+      #       periodSeconds: 10
+      #       timeoutSeconds: 1
+      #       failureThreshold: 3
+      #   readiness: *probes
+      startup:
+        enabled: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+      limits:
+        memory: 100Mi
+    persistence:
+      users:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /app/users
+        storageClass: local-path
+      indexdir:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /app/indexdir
+        storageClass: local-path
+      thumbnail_cache:
+        enabled: true
+        type: emptydir
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /app/thumbnail_cache
+      cache:
+        enabled: true
+        type: emptydir
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /app/cache
+      secret:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /app/secret
+        storageClass: local-path
+      grampsdb:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /root/.gramps/grampsdb
+        storageClass: local-path
+      tmp:
+        enabled: true
+        type: emptydir
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /tmp
+    sidecars:
+      grampsweb-celery:
+        image: ghcr.io/gramps-project/grampsweb:v0.21.1
+        imagePullPolicy: IfNotPresent
+        env:
+          - { name: GRAMPSWEB_TREE, value: "Gramps Web" }
+          - {
+            name: GRAMPSWEB_CELERY_CONFIG__broker_url,
+            value: redis://grampsweb-redis:6379/0",
+          }
+          - {
+            name: GRAMPSWEB_CELERY_CONFIG__result_backend,
+            value: redis://grampsweb-redis:6379/0",
+          }
+          - {
+            name: GRAMPSWEB_RATELIMIT_STORAGE_URI,
+            value: redis://grampsweb-redis:6379/1,
+          }
+        volumeMounts:
+          - { name: config, mountPath: /config }
+          - { name: users, mountPath: /app/users }
+          - { name: indexdir, mountPath: /app/indexdir }
+          - { name: thumbnail_cache, mountPath: /app/thumbnail_cache }
+          - { name: cache, mountPath: /app/cache }
+          - { name: secret, mountPath: /app/secret }
+          - { name: grampsdb, mountPath: /root/.gramps/grampsdb }
+          - { name: tmp, mountPath: /tmp }
+        command: celery -A gramps_webapi.celery worker --loglevel=INFO
