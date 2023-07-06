@@ -40,7 +40,7 @@ spec:
       DISABLE_SSL: "TRUE"
       PORT: "80"
       BASE_URL: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-      DB_HOST: "webtrees-db"
+      DB_HOST: "webtrees-db-mariadb"
       WT_ADMINPW:
         valueFrom:
           secretKeyRef:
