@@ -50,7 +50,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: mariadb-secret
-            key: mariadb-password
+            key: mariadb-root-password
     service:
       main:
         ports:
