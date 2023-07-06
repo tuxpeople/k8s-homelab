@@ -39,7 +39,7 @@ spec:
     env:
       DISABLE_SSL: "TRUE"
       PORT: "80"
-      BASE_URL: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      BASE_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
       DB_HOST: "webtrees-db-mariadb"
       DB_NAME: webtrees
       DB_USER: webtrees
@@ -78,7 +78,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: *host
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
