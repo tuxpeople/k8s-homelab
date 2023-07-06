@@ -41,16 +41,18 @@ spec:
       PORT: "80"
       BASE_URL: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
       DB_HOST: "webtrees-db-mariadb"
-      WT_ADMINPW:
-        valueFrom:
-          secretKeyRef:
-            name: webtrees-admin-pass
-            key: password
+      DB_NAME: webtrees
+      DB_USER: webtrees
       DB_PASSWORD:
         valueFrom:
           secretKeyRef:
             name: mariadb-secret
             key: mariadb-root-password
+      WT_ADMINPW:
+        valueFrom:
+          secretKeyRef:
+            name: webtrees-admin-pass
+            key: password
     service:
       main:
         ports:

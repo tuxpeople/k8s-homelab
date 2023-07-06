@@ -28,6 +28,8 @@ spec:
   values:
     auth:
       existingSecret: mariadb-secret
+      database: webtrees
+      username: webtrees
     primary:
       extraEnvVars:
         - name: TZ
