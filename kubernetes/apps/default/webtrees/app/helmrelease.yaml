@@ -31,8 +31,6 @@ spec:
     - name: webtrees-db
       namespace: default
   values:
-    controller:
-      strategy: RollingUpdate
     image:
       repository: docker.io/dtjs48jkt/webtrees
       tag: 2.1.16
