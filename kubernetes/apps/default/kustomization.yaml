@@ -6,3 +6,4 @@ resources:
   - ./echo-server/ks.yaml
   - ./hajimari/ks.yaml
   - ./rancher-logging/ks.yaml
+  - ./webtrees/ks.yaml
