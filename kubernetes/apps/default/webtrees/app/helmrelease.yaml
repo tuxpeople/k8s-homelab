@@ -37,7 +37,7 @@ spec:
       repository: docker.io/dtjs48jkt/webtrees
       tag: v2.0.26-0
     env:
-      DISABLE_SSL: "true"
+      DISABLE_SSL: true
       PORT: "80"
       DB_HOST: "webtrees-db"
       WT_ADMINPW:
