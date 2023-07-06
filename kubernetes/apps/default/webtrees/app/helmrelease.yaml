@@ -47,7 +47,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: mariadb-secret
-            key: mariadb-root-password
+            key: mariadb-password
       WT_ADMINPW:
         valueFrom:
           secretKeyRef:
