@@ -38,6 +38,7 @@ spec:
       tag: 2.1.16
     env:
       DISABLE_SSL: "TRUE"
+      PRETTYURLSl: "TRUE"
       PORT: "80"
       BASE_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
       DB_HOST: "webtrees-db-mariadb"
