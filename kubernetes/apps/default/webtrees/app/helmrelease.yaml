@@ -115,7 +115,7 @@ spec:
         storageClass: local-path
       modules:
         enabled: true
-        type: emptydir
+        type: emptyDir
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /var/www/html/modules_v4
