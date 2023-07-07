@@ -37,7 +37,7 @@ spec:
       repository: docker.io/dtjs48jkt/webtrees
       tag: 2.1.16
     initContainers:
-      01-init-artifacts:
+      01-init-modules:
         image: busybox
         imagePullPolicy: IfNotPresent
         volumeMounts:
