@@ -36,6 +36,18 @@ spec:
     image:
       repository: docker.io/dtjs48jkt/webtrees
       tag: 2.1.16
+    initContainers:
+      01-init-artifacts:
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - { name: modules, mountPath: /var/www/html/modules_v4 }
+        command:
+          [
+            "sh",
+            "-c",
+            "cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip; rm -f /tmp/webtrees-theme-modern.0.0.9.zip",
+          ]
     env:
       DISABLE_SSL: "TRUE"
       PRETTYURLSl: "TRUE"
@@ -101,3 +113,9 @@ spec:
         mountPath: /var/www/html/data
         subPath: data
         storageClass: local-path
+      modules:
+        enabled: true
+        type: emptydir
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        mountPath: /var/www/html/modules_v4
