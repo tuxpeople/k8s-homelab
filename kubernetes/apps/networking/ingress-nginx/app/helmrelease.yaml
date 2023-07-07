@@ -65,4 +65,11 @@ spec:
         limits:
           memory: 500Mi
     defaultBackend:
-      enabled: false
+      enabled: true
+      image:
+        repository: ghcr.io/tarampampam/error-pages
+        tag: 2.24.0
+      extraEnvs:
+        - name: TEMPLATE_NAME
+          value: lost-in-space
+        - name: SHOW_DETAILS
