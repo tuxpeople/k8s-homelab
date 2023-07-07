@@ -51,6 +51,8 @@ spec:
     env:
       DISABLE_SSL: "TRUE"
       PRETTYURLSl: "TRUE"
+      ENABLE_REMOTE_USER: "TRUE"
+      HEADER_AUTH_VAR: "Remote-User"
       PORT: "80"
       BASE_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
       DB_HOST: "webtrees-db-mariadb"
