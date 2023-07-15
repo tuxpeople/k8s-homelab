@@ -1,0 +1,131 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app sharry
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: ingress-nginx
+      namespace: networking
+  values:
+    image:
+      repository: eikek0/sharry
+      tag: v1.12.1
+    service:
+      main:
+        ports:
+          http:
+            port: &port 9090
+    args:
+      - /opt/sharry.conf
+    env:
+      TZ: ${TIMEZONE}
+    configMaps:
+      config:
+        enabled: true
+        data:
+          sharry.conf: |
+            sharry.restserver {
+              # base-url = "https://share.${SECRET_DOMAIN}"
+              bind {
+                address = "0.0.0.0"
+                port = {{ .Values.service.main.ports.http.port }}
+              }
+              backend {
+                signup {
+                  mode = "closed"
+                }
+                auth {
+                  fixed {
+                    enabled = false  # set to true to enable this auth provider
+                    user = "admin"
+                    password = "admin"
+                    order = 10
+                  }
+                  oauth = [
+                      {
+                        enabled = true
+                        id = "authelia"
+                        name = "Homelab Account"
+                        icon = "fas fa-address-book"
+                        scope = "profile openid email",
+                        authorize-url = "https://auth.${SECRET_DOMAIN}/api/oidc/authorization"
+                        token-url = "https://auth.${SECRET_DOMAIN}/api/oidc/token"
+                        user-url = "https://auth.${SECRET_DOMAIN}/api/oidc/userinfo"
+                        user-id-key = "login"
+                        client-id = "sharry"
+                        client-secret = "${SHARRY_CLIENT_SECRET}"
+                      }
+                  ]
+                }
+              }
+              # Configures logging
+              logging {
+                # The format for the log messages. Can be one of:
+                # Json, Logfmt, Fancy or Plain
+                format = "Fancy"
+
+                # The minimum level to log. From lowest to highest:
+                # Trace, Debug, Info, Warn, Error
+                minimum-level = "Warn"
+
+                # Override the log level of specific loggers
+                levels = {
+                  "sharry.restserver.oauth.CodeFlow" = "Trace"
+                  "sharry.restserver.routes.LoginRoutes" = "Trace"
+                }
+              }
+            }
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        subPath: sharry.conf
+        name: sharry-config
+        items:
+          - key: sharry.conf
+            path: sharry.conf
+        mountPath: /opt/sharry.conf
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
+          hajimari.io/icon: file-arrow-up-down-outline
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: ${SECRET_DOMAIN//./-}-tls
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+      limits:
+        memory: 400Mi
