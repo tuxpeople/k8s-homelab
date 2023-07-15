@@ -47,7 +47,7 @@ spec:
         data:
           sharry.conf: |
             sharry.restserver {
-              # base-url = "https://share.${SECRET_DOMAIN}"
+              base-url = "https://sharry.${SECRET_DOMAIN}"
               bind {
                 address = "0.0.0.0"
                 port = {{ .Values.service.main.ports.http.port }}
@@ -75,7 +75,7 @@ spec:
                         user-url = "https://auth.${SECRET_DOMAIN}/api/oidc/userinfo"
                         user-id-key = "login"
                         client-id = "sharry"
-                        client-secret = "${SHARRY_CLIENT_SECRET}"
+                        client-secret = "${SECRET_OIDC_CLIENT_SECRET_SHARRY}"
                       }
                   ]
                 }
@@ -88,7 +88,7 @@ spec:
 
                 # The minimum level to log. From lowest to highest:
                 # Trace, Debug, Info, Warn, Error
-                minimum-level = "Warn"
+                minimum-level = "Info"
 
                 # Override the log level of specific loggers
                 levels = {
@@ -113,6 +113,7 @@ spec:
         ingressClassName: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
           hajimari.io/icon: file-arrow-up-down-outline
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -128,4 +129,4 @@ spec:
         cpu: 5m
         memory: 10Mi
       limits:
-        memory: 400Mi
+        memory: 1Gi
