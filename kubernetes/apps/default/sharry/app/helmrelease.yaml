@@ -52,6 +52,22 @@ spec:
                 address = "0.0.0.0"
                 port = {{ .Values.service.main.ports.http.port }}
               }
+            # How files are stored.
+            files {
+              # The id of an enabled store from the `stores` array that should
+              # be used.
+              default-store = "database"
+              stores = {
+                filesystem =
+                  { enabled = true
+                    type = "file-system"
+                    directory = "/data"
+                    # If true, empty directories that can be left behind after deleting
+                    # a file are removed as well.
+                    clean-empty-dirs = true
+                  }
+              }
+              }
               backend {
                 signup {
                   mode = "closed"
@@ -107,6 +123,13 @@ spec:
           - key: sharry.conf
             path: sharry.conf
         mountPath: /opt/sharry.conf
+      data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        mountPath: /data
+        storageClass: local-path
     ingress:
       main:
         enabled: true
