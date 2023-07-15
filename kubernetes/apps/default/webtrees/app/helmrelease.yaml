@@ -35,7 +35,7 @@ spec:
       strategy: Recreate
     image:
       repository: docker.io/dtjs48jkt/webtrees
-      tag: 2.1.16
+      tag: 2.1.17
     initContainers:
       01-init-modules:
         image: busybox
