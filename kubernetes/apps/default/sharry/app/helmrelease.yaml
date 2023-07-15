@@ -73,7 +73,7 @@ spec:
                         authorize-url = "https://auth.${SECRET_DOMAIN}/api/oidc/authorization"
                         token-url = "https://auth.${SECRET_DOMAIN}/api/oidc/token"
                         user-url = "https://auth.${SECRET_DOMAIN}/api/oidc/userinfo"
-                        user-id-key = "login"
+                        user-id-key = "preferred_username"
                         client-id = "sharry"
                         client-secret = "${SECRET_OIDC_CLIENT_SECRET_SHARRY}"
                       }
