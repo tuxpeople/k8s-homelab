@@ -56,7 +56,7 @@ spec:
             files {
               # The id of an enabled store from the `stores` array that should
               # be used.
-              default-store = "database"
+              default-store = "filesystem"
               stores = {
                 filesystem =
                   { enabled = true
