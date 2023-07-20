@@ -30,7 +30,7 @@ spec:
       repository: ghcr.io/linuxserver/code-server
       pullPolicy: Always
       # renovate: datasource=docker depName=ghcr.io/linuxserver/code-server
-      tag: 4.14.0
+      tag: 4.14.1
     strategy:
       type: Recreate
     env:
