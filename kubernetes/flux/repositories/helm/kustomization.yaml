@@ -12,6 +12,7 @@ resources:
   - ingress-nginx.yaml
   - jetstack.yaml
   - k8s-gateway.yaml
+  - kubereboot.yaml
   - kubernetes-dashboard.yaml
   - metallb.yaml
   - metrics-server.yaml
