@@ -254,7 +254,7 @@ spec:
                   storage: 10Gi
     prometheus-node-exporter:
       extraArgs:
-        - --collector.filesystem.ignored-mount-points=^/(mnt|dev|proc|sys|boot/firmware)($|/)
+        - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+|boot/firmware)($|/)
     # # From archive
     # prometheus-node-exporter:
     #   fullnameOverride: node-exporter
