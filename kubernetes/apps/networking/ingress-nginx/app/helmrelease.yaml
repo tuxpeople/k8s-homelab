@@ -29,11 +29,11 @@ spec:
     controller:
       extraEnvs:
         - name: TZ
-          value: "${TIMEZONE}"
+          value: ${TIMEZONE}
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "${SECRET_DNS_TARGET}"
-        loadBalancerIP: "${METALLB_INGRESS_ADDR}"
+          external-dns.alpha.kubernetes.io/hostname: ${SECRET_DNS_TARGET}
+        loadBalancerIP: ${METALLB_INGRESS_ADDR}
         externalTrafficPolicy: Local
       publishService:
         enabled: true
@@ -41,14 +41,14 @@ spec:
         default: true
       config:
         client-header-timeout: 120
-        client-body-buffer-size: "100M"
+        client-body-buffer-size: 100M
         client-body-timeout: 120
-        enable-brotli: "true"
-        hsts-max-age: "31449600"
+        enable-brotli: 'true'
+        hsts-max-age: '31449600'
         keep-alive: 120
         keep-alive-requests: 10000
-        proxy-body-size: "100M"
-        ssl-protocols: "TLSv1.3 TLSv1.2"
+        proxy-body-size: 100M
+        ssl-protocols: TLSv1.3 TLSv1.2
       metrics:
         enabled: true
         serviceMonitor:
@@ -57,7 +57,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: networking/${SECRET_DOMAIN/./-}-production-tls
       resources:
         requests:
           cpu: 10m

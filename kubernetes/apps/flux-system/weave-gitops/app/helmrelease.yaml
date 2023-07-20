@@ -36,7 +36,7 @@ spec:
       annotations:
         hajimari.io/icon: sawtooth-wave
       hosts:
-        - host: &host "gitops.${SECRET_DOMAIN}"
+        - host: &host gitops.${SECRET_DOMAIN}
           paths:
             - path: /
               pathType: Prefix
@@ -49,6 +49,6 @@ spec:
       enabled: true
     rbac:
       create: true
-      impersonationResourceNames: ["admin"]
+      impersonationResourceNames: [admin]
     podAnnotations:
       secret.reloader.stakater.com/reload: cluster-user-auth

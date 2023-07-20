@@ -15,4 +15,4 @@ metadata:
   namespace: networking
 spec:
   addresses:
-    - "${METALLB_LB_RANGE}"
+    - ${METALLB_LB_RANGE}

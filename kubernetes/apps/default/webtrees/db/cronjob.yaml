@@ -6,7 +6,7 @@ metadata:
   namespace: networking
 spec:
   suspend: true
-  schedule: "@daily"
+  schedule: '@daily'
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
@@ -19,7 +19,7 @@ spec:
               image: alpine
               env:
                 - name: DATABASES
-                  value: ""
+                  value: ''
                 - name: MARIADB_HOST
                   value: webtrees-db-mariadb
                 - name: MARIADB_USER

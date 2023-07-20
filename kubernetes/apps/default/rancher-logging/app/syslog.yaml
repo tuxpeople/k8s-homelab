@@ -78,12 +78,9 @@ spec:
             initialDelaySeconds: 10
         - name: filebrowser
           image: filebrowser/filebrowser:latest
-          command: ["sh"]
-          args:
-            [
-              "-c",
-              "/filebrowser config init; /filebrowser config set --auth.method=noauth; /filebrowser --noauth",
-            ]
+          command: [sh]
+          args: [-c, /filebrowser config init; /filebrowser config set --auth.method=noauth;
+                /filebrowser --noauth]
           resources:
             requests:
               cpu: 50m
@@ -137,38 +134,38 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: "syslog-service-web"
+  name: syslog-service-web
 spec:
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
   selector:
-    app: "rsyslog"
+    app: rsyslog
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: "syslog-service-tcp"
+  name: syslog-service-tcp
 spec:
   ports:
     - port: 514
       targetPort: 514
       protocol: TCP
   selector:
-    app: "rsyslog"
+    app: rsyslog
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: "syslog-service-udp"
+  name: syslog-service-udp
 spec:
   ports:
     - port: 514
       targetPort: 514
       protocol: UDP
   selector:
-    app: "rsyslog"
+    app: rsyslog
 ---
 apiVersion: logging.banzaicloud.io/v1beta1
 kind: Output

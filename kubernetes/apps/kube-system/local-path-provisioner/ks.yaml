@@ -5,14 +5,14 @@ metadata:
   name: cluster-apps-local-path-provisioner
   namespace: flux-system
   labels:
-    substitution.flux.home.arpa/disabled: "true"
+    substitution.flux.home.arpa/disabled: 'true'
 spec:
   path: ./kubernetes/apps/kube-system/local-path-provisioner/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false # no flux ks dependents
+  wait: false  # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m

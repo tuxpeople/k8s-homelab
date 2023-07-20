@@ -30,4 +30,4 @@ spec:
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: "imc-config"
+      secret.reloader.stakater.com/reload: imc-config

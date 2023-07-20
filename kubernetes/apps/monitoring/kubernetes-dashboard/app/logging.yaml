@@ -9,7 +9,7 @@ spec:
   filters:
     # https://kube-logging.dev/docs/configuration/plugins/filters/dedot/
     - dedot:
-        de_dot_separator: "-"
+        de_dot_separator: '-'
         de_dot_nested: true
     # https://kube-logging.dev/docs/configuration/plugins/filters/tagnormaliser/
     - tag_normaliser:
@@ -34,7 +34,7 @@ spec:
     buffer:
       timekey: 1d
       timekey_use_utc: false
-      flush_mode: interval # immediate
+      flush_mode: interval  # immediate
       flush_interval: 60s
     format:
       type: single_value

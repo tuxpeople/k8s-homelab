@@ -34,7 +34,7 @@ spec:
         fluentd:
           extraVolumes:
             - volumeName: test
-              path: "/logs"
+              path: /logs
               containerName: fluentd
               volume:
                 pvc:
