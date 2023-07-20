@@ -6,15 +6,15 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
 
-    hajimari.io/enable: 'true'
+    hajimari.io/enable: "true"
     hajimari.io/icon: chart-bar
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
+    - secretName: ${SECRET_DOMAIN//./-}-tls
       hosts:
-        - tautulli.${SECRET_DOMAIN_INTERNAL}
+        - tautulli.${SECRET_DOMAIN}
   rules:
-    - host: tautulli.${SECRET_DOMAIN_INTERNAL}
+    - host: tautulli.${SECRET_DOMAIN}
       http:
         paths:
           - path: /

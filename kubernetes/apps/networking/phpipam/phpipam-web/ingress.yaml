@@ -7,14 +7,14 @@ metadata:
   name: phpipam
   annotations:
     kubernetes.io/ingress.class: nginx
-    hajimari.io/enable: 'true'
+    hajimari.io/enable: "true"
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
+    - secretName: ${SECRET_DOMAIN//./-}-tls
       hosts:
-        - phpipam.${SECRET_DOMAIN_INTERNAL}
+        - phpipam.${SECRET_DOMAIN}
   rules:
-    - host: phpipam.${SECRET_DOMAIN_INTERNAL}
+    - host: phpipam.${SECRET_DOMAIN}
       http:
         paths:
           - path: /

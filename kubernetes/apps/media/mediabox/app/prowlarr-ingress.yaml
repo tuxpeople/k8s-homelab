@@ -6,15 +6,15 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
 
-    hajimari.io/enable: 'true'
+    hajimari.io/enable: "true"
     hajimari.io/icon: plex
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls
+    - secretName: ${SECRET_DOMAIN//./-}-tls
       hosts:
-        - prowlarr.${SECRET_DOMAIN_INTERNAL}
+        - prowlarr.${SECRET_DOMAIN}
   rules:
-    - host: prowlarr.${SECRET_DOMAIN_INTERNAL}
+    - host: prowlarr.${SECRET_DOMAIN}
       http:
         paths:
           - path: /
