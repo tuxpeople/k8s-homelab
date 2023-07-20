@@ -82,4 +82,5 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /config
+        storageClass: local-path
 # docker run --entrypoint /bin/sleep docker.io/fluxcd/flux-cli:v0.37.0 inf
