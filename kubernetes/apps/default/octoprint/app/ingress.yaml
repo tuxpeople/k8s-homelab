@@ -6,21 +6,21 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
-    external-dns/is-public: 'true'
-    hajimari.io/enable: 'true'
+    external-dns/is-public: "true"
+    hajimari.io/enable: "true"
     hajimari.io/icon: printer-3d-nozzle
     # nginx.ingress.kubernetes.io/auth-method: GET
-    # nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN_ME}/api/verify
-    # nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN_ME}?rm=$request_method"
+    # nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
+    # nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}?rm=$request_method"
     # nginx.ingress.kubernetes.io/auth-response-headers: "Remote-User,Remote-Name,Remote-Groups,Remote-Email"
     # nginx.ingress.kubernetes.io/auth-snippet: "proxy_set_header X-Forwarded-Method $request_method;"
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN_ME//./-}-tls
+    - secretName: ${SECRET_DOMAIN//./-}-tls
       hosts:
-        - print.${SECRET_DOMAIN_ME}
+        - print.${SECRET_DOMAIN}
   rules:
-    - host: print.${SECRET_DOMAIN_ME}
+    - host: print.${SECRET_DOMAIN}
       http:
         paths:
           - path: /

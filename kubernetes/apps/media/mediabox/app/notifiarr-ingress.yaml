@@ -6,16 +6,16 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
-    external-dns/is-public: 'true'
-    hajimari.io/enable: 'true'
+    external-dns/is-public: "true"
+    hajimari.io/enable: "true"
     hajimari.io/icon: filmstrip
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN_ME//./-}-tls
+    - secretName: ${SECRET_DOMAIN//./-}-tls
       hosts:
-        - notifiarr.${SECRET_DOMAIN_ME}
+        - notifiarr.${SECRET_DOMAIN}
   rules:
-    - host: notifiarr.${SECRET_DOMAIN_ME}
+    - host: notifiarr.${SECRET_DOMAIN}
       http:
         paths:
           - path: /
