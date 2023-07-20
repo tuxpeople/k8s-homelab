@@ -18,8 +18,6 @@ metadata:
   name: ubuntu
   namespace: system-upgrade
 spec:
-  version: ubuntu
-  serviceAccountName: system-upgrade
   concurrency: 1
   cordon: true
   drain:
@@ -27,24 +25,11 @@ spec:
   # nodeSelector:
   #   matchExpressions:
   #     - {key: plan.upgrade.cattle.io/ubuntu, operator: Exists}
-  tolerations:
-    - { effect: NoSchedule, operator: Exists }
-    - { effect: NoExecute, operator: Exists }
-    - {
-      key: node-role.kubernetes.io/control-plane,
-      effect: NoSchedule,
-      operator: Exists,
-    }
-    - {
-      key: node-role.kubernetes.io/master,
-      effect: NoSchedule,
-      operator: Exists,
-    }
-    - { key: node-role.kubernetes.io/etcd, effect: NoExecute, operator: Exists }
-    - { key: CriticalAddonsOnly, operator: Exists }
+  serviceAccountName: system-upgrade
   secrets:
     - name: ubuntu
       path: /host/run/system-upgrade/secrets/ubuntu
+  version: ubuntu
   upgrade:
     image: ubuntu
     command: ["chroot", "/host"]
