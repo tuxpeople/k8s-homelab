@@ -35,4 +35,4 @@ spec:
     volumePermissions:
       enabled: true
     global:
-      storageClass: nfs-csi
+      storageClass: local-path
