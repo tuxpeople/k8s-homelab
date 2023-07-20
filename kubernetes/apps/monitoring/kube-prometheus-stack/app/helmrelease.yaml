@@ -252,6 +252,9 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
+    prometheus-node-exporter:
+      extraArgs:
+        - --collector.filesystem.ignored-mount-points=^/(mnt|dev|proc|sys|boot/firmware)($|/)
     # # From archive
     # prometheus-node-exporter:
     #   fullnameOverride: node-exporter
