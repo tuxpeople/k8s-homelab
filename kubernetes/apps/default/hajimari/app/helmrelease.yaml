@@ -43,7 +43,10 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - flux-system
+          - media
           - monitoring
+          - networking
     ingress:
       main:
         enabled: true
