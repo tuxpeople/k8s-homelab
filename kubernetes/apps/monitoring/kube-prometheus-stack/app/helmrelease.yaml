@@ -57,6 +57,9 @@ spec:
             - receiver: "null"
               match:
                 alertname: InfoInhibitor
+            - receiver: "null"
+              match:
+                alertname: CPUThrottlingHigh
             - receiver: DeadMansSnitch
               repeat_interval: 30m
               match:
