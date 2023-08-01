@@ -74,12 +74,12 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         storageClass: local-path
-      media:
+      data:
         enabled: true
         type: nfs
         server: 10.20.30.40
-        path: /volume2/data/media
-        mountPath: /media
+        path: /volume2/data
+        mountPath: /data
         readOnly: true
     probes:
       startup:
