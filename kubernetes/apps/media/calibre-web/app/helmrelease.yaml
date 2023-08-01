@@ -33,7 +33,7 @@ spec:
       nameOverride: *app
     image:
       repository: linuxserver/calibre-web
-      tag: version-0.6.18
+      tag: 0.6.20
     env:
       TZ: "${TIMEZONE}"
       PUID: 1000
