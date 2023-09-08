@@ -234,6 +234,7 @@ spec:
         annotations:
           hajimari.io/appName: Prometheus
           hajimari.io/icon: simple-icons:prometheus
+          nginx.ingress.kubernetes.io/ssl-redirect: "false"
         pathType: Prefix
         hosts:
           - &host prometheus.${SECRET_DOMAIN}
