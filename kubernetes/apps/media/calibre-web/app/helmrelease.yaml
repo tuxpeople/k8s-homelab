@@ -42,7 +42,7 @@ spec:
       nameOverride: *app
     image:
       repository: ghcr.io/linuxserver/calibre-web
-      tag: v0.6.20
+      tag: 0.6.20-ls229
     env:
       TZ: "${TZ}"
       PUID: 1000
