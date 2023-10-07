@@ -18,8 +18,9 @@
       "separateMinorPatch": true
     },
     {
-      "packagePatterns": ["^ghcr.io\\/linuxserver\\/calibre-web"],
-      "versionScheme": "regex:^(?!.*(nig(ht|th)ly|develop|development))(?<compatibility>[a-z]*-|v)?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)([\-](?<build>.*))$"
+      "packagePatterns": ["^ghcr.io\\/linuxserver\\/"],
+      "versionScheme": "regex:^(?!.*(nig(ht|th)ly|develop|development))(?<compatibility>[a-z]*-|v)?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:[\.-]?(?<build>.*))?$",
+      "allowedVersions": "< 2000"
     }
   ]
 }
