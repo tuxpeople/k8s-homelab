@@ -9,4 +9,4 @@ resources:
   - ./k8s-gateway/ks.yaml
   - ./metallb/ks.yaml
   - ./ingress-nginx/ks.yaml
-  # - ./ingressmonitorcontroller/ks.yaml
+  - ./ingressmonitorcontroller/ks.yaml
