@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: ingressmonitorcontroller
-      version: 2.1.39
+      version: 2.1.41
       sourceRef:
         kind: HelmRepository
         name: stakater
