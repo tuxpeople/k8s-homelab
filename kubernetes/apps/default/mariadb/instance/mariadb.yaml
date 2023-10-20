@@ -7,8 +7,10 @@ spec:
     name: mariadb
     key: root-password
 
-  image: mariadb:11.0.3
-  imagePullPolicy: IfNotPresent
+  image:
+    repository: mariadb
+    tag: 11.0.3
+    pullPolicy: IfNotPresent
 
   port: 3306
 
