@@ -1,0 +1,11 @@
+apiVersion: mariadb.mmontes.io/v1alpha1
+kind: Database
+metadata:
+  name: phpipam
+  namespace: networking
+spec:
+  mariaDbRef:
+    name: mariadb
+    namespace: database
+  characterSet: utf8
+  collate: utf8_general_ci

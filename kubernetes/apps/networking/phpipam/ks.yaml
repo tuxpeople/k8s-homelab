@@ -5,6 +5,8 @@ metadata:
   name: cluster-apps-phpipam-db
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-mariadb-instance
   path: ./kubernetes/apps/networking/phpipam/phpipam-db
   prune: true
   sourceRef:

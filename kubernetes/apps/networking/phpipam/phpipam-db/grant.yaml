@@ -1,0 +1,15 @@
+---
+apiVersion: mariadb.mmontes.io/v1alpha1
+kind: Grant
+metadata:
+  name: phpipam
+  namespace: networking
+spec:
+  mariaDbRef:
+    name: mariadb
+    namespace: database
+  privileges:
+    - "ALL"
+  database: "phpipam"
+  table: "*"
+  username: phpipam

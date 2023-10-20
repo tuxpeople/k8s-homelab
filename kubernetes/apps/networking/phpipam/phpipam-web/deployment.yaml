@@ -29,9 +29,9 @@ spec:
             - name: TZ
               value: ${TIMEZONE}
             - name: IPAM_DATABASE_WEBHOST
-              value: '%'
+              value: "%"
             - name: IPAM_DATABASE_NAME
-              value: phpipamdb
+              value: phpipam
             - name: IPAM_DATABASE_USER
               value: phpipam
             - name: IPAM_DATABASE_PASS
@@ -40,7 +40,7 @@ spec:
                   name: phpipam-secret
                   key: mariadb-password
             - name: IPAM_DATABASE_HOST
-              value: phpipam-db-mariadb
+              value: mariadb.database.svc.cluster.local
 ---
 apiVersion: apps/v1
 kind: Deployment
