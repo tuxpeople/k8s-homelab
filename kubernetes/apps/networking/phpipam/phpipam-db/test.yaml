@@ -35,6 +35,6 @@ spec:
     namespace: default
   privileges:
     - "ALL"
-  database: "*"
+  database: "phpipam"
   table: "*"
   username: phpipam
