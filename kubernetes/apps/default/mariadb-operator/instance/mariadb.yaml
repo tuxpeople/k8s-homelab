@@ -1,0 +1,43 @@
+apiVersion: mariadb.mmontes.io/v1alpha1
+kind: MariaDB
+metadata:
+  name: mariadb
+spec:
+  rootPasswordSecretKeyRef:
+    name: mariadb
+    key: root-password
+
+  image:
+    repository: mariadb
+    tag: "11.0.3"
+    pullPolicy: IfNotPresent
+
+  port: 3306
+
+  env:
+    - name: TZ
+      value: ${TIMEZONE}
+
+  volumeClaimTemplate:
+    storageClassName: local-path
+    resources:
+      requests:
+        storage: 1Gi
+    accessModes:
+      - ReadWriteOnce
+
+  volumes:
+    - name: tmp
+      emptyDir: {}
+
+  volumeMounts:
+    - name: tmp
+      mountPath: /tmp
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
