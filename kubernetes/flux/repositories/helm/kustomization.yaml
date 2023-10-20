@@ -15,6 +15,7 @@ resources:
   - k8s-gateway.yaml
   - kubereboot.yaml
   - kubernetes-dashboard.yaml
+  - mariadb-operator.yaml
   - metallb.yaml
   - metrics-server.yaml
   - minio.yaml
