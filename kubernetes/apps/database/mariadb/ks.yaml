@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-mariadb-operator
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/default/mariadb/operator
+  path: ./kubernetes/apps/database/mariadb/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -23,7 +23,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-mariadb-operator
-  path: ./kubernetes/apps/default/mariadb/instance
+  path: ./kubernetes/apps/database/mariadb/instance
   prune: true
   sourceRef:
     kind: GitRepository
