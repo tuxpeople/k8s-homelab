@@ -11,6 +11,11 @@ spec:
 
   port: 3306
 
+  replicas: 2
+
+  replication:
+    enabled: true
+
   env:
     - name: TZ
       value: ${TIMEZONE}
