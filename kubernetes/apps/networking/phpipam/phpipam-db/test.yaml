@@ -10,6 +10,19 @@ spec:
   collate: utf8_general_ci
 ---
 apiVersion: mariadb.mmontes.io/v1alpha1
+kind: User
+metadata:
+  name: phpipam
+spec:
+  mariaDbRef:
+    name: mariadb
+    namespace: default
+  passwordSecretKeyRef:
+    name: phpipam-secret
+    key: mariadb-password
+  maxUserConnections: 20
+---
+apiVersion: mariadb.mmontes.io/v1alpha1
 kind: Grant
 metadata:
   name: phpipam
@@ -22,16 +35,3 @@ spec:
   database: "*"
   table: "*"
   username: phpipam
----
-apiVersion: mariadb.mmontes.io/v1alpha1
-kind: User
-metadata:
-  name: phpipam
-spec:
-  mariaDbRef:
-    name: mariadb
-    namespace: default
-  passwordSecretKeyRef:
-    name: phpipam-secret
-    key: mariadb-password
-  maxUserConnections: 20
