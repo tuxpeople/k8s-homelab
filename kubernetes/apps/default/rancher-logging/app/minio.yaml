@@ -25,10 +25,12 @@ spec:
         namespace: flux-system
   maxHistory: 2
   install:
+    crds: CreateReplace
     createNamespace: true
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
     cleanupOnFail: true
     remediation:
       retries: 3
@@ -102,7 +104,7 @@ spec:
           key: awsSecretAccessKey
     s3_bucket: test
     s3_endpoint: http://minio.default.svc.cluster.local:9000
-    force_path_style: 'true'
+    force_path_style: "true"
     path: logs/${tag}/%Y/%m
     compress:
       parquet_compression_codec: uncompressed
