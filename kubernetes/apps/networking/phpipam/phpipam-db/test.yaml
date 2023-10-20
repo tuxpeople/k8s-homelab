@@ -6,7 +6,7 @@ metadata:
 spec:
   mariaDbRef:
     name: mariadb
-    namespace: default
+    namespace: database
   characterSet: utf8
   collate: utf8_general_ci
 ---
@@ -18,7 +18,7 @@ metadata:
 spec:
   mariaDbRef:
     name: mariadb
-    namespace: default
+    namespace: database
   passwordSecretKeyRef:
     name: phpipam-secret
     key: mariadb-password
@@ -32,7 +32,7 @@ metadata:
 spec:
   mariaDbRef:
     name: mariadb
-    namespace: default
+    namespace: database
   privileges:
     - "ALL"
   database: "phpipam"

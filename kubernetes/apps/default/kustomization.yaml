@@ -10,4 +10,3 @@ resources:
   - octoprint/ks.yaml
   - hajimari/ks.yaml
   - sharry/ks.yaml
-  - mariadb/ks.yaml
