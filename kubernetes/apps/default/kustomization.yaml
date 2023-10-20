@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - webtrees/ks.yaml
-  # - rancher-logging/ks.yaml
   - echo-server/ks.yaml
   - drop/ks.yaml
   - code-server/ks.yaml
