@@ -13,3 +13,4 @@ spec:
   database: "phpipam"
   table: "*"
   username: phpipam
+  host: "%"
