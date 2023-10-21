@@ -40,7 +40,7 @@ spec:
                   name: phpipam-secret
                   key: mariadb-password
             - name: IPAM_DATABASE_HOST
-              value: mariadb-internal.database.svc.cluster.local
+              value: mariadb.database.svc.cluster.local
 ---
 apiVersion: apps/v1
 kind: Deployment
