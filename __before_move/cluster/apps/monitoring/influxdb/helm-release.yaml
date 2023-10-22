@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -15,7 +16,7 @@ spec:
         name: influxdata-charts
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -45,6 +46,6 @@ spec:
       hostname: influx.${SECRET_DOMAIN_INTERNAL}
       path: /
       annotations:
-        hajimari.io/enable: 'false'
+        hajimari.io/enable: "false"
       tls: true
       secretName: ${SECRET_DOMAIN_INTERNAL//./-}-tls

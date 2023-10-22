@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -16,7 +17,7 @@ spec:
         name: longhorn
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -36,17 +37,18 @@ spec:
       tlsSecret: ${SECRET_DOMAIN_INTERNAL//./-}-tls
       host: longhorn.${SECRET_DOMAIN_INTERNAL}
       annotations:
-        hajimari.io/enable: 'true'
+        hajimari.io/enable: "true"
         hajimari.io/icon: harddisk
         hajimari.io/appName: Longhorn
-        traefik.ingress.kubernetes.io/router.tls: 'true'
+        traefik.ingress.kubernetes.io/router.tls: "true"
     persistence:
       defaultClassReplicaCount: 2
       defaultClass: true
       reclaimPolicy: Delete
       recurringJobs:
         enable: true
-        jobList: '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":3,"labels":
+        jobList:
+          '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":3,"labels":
           {"interval":"daily"}}]'
     defaultSettings:
       backupTarget: s3://longhornbackup@us-east-1/
@@ -63,17 +65,17 @@ spec:
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Equal
-          value: 'true'
+          value: "true"
           effect: NoSchedule
     longhornDriver:
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Equal
-          value: 'true'
+          value: "true"
           effect: NoSchedule
     longhornUI:
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Equal
-          value: 'true'
+          value: "true"
           effect: NoSchedule

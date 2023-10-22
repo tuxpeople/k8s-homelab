@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -16,7 +17,7 @@ spec:
         name: node-feature-discovery-charts
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -33,7 +34,7 @@ spec:
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Equal
-          value: ''
+          value: ""
           effect: NoSchedule
       affinity:
         nodeAffinity:
@@ -44,7 +45,7 @@ spec:
                   - key: node-role.kubernetes.io/master
                     operator: In
                     values:
-                      - ''
+                      - ""
     worker:
       config: |-
         core:

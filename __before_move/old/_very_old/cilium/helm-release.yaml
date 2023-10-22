@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -59,8 +60,8 @@ spec:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: nginx
-            traefik.ingress.kubernetes.io/router.tls: 'true'
-            hajimari.io/enable: 'true'
+            traefik.ingress.kubernetes.io/router.tls: "true"
+            hajimari.io/enable: "true"
             hajimari.io/icon: telescope
           hosts:
             - hubble.int.eighty-three.me

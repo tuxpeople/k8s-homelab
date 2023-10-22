@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -17,7 +18,7 @@ spec:
         name: democratic-csi
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -93,6 +94,6 @@ spec:
           shareBasePath: /volume2/Kubernetes
           controllerBasePath: /volume2/Kubernetes
           # allow control to PVC creation user and permission
-          dirPermissionsMode: '0700'
+          dirPermissionsMode: "0700"
           dirPermissionsUser: 1000
           dirPermissionsGroup: 1000

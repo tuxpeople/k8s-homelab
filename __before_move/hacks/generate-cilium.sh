@@ -5,6 +5,7 @@ mkdir /tmp/cilium
 helm template cilium cilium/cilium --namespace kube-system --set kubeProxyReplacement=strict --set ipam.operator.clusterPoolIPv4PodCIDR="10.42.0.0/16" > /tmp/cilium/cilium-installation.yaml
 cat <<EOF > /tmp/cilium/kustomization.yaml
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 commonLabels:

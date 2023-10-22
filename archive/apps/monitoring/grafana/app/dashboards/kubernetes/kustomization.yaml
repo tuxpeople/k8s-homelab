@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 commonLabels:
-  grafana_dashboard: '1'
+  grafana_dashboard: "1"
 commonAnnotations:
   grafana_folder: Kubernetes
 resources:

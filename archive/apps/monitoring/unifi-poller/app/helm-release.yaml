@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -17,7 +18,7 @@ spec:
         name: k8s-at-home
         namespace: flux-system
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -38,11 +39,11 @@ spec:
       UP_UNIFI_DEFAULT_USER: unifipoller
       UP_UNIFI_DEFAULT_PASS: Unifi4Poller
       UP_UNIFI_DEFAULT_SAVE_SITES: true
-      UP_UNIFI_DEFAULT_SAVE_ALARMS: 'true'
-      UP_UNIFI_DEFAULT_SAVE_ANOMALIES: 'true'
-      UP_UNIFI_DEFAULT_SAVE_DPI: 'false'
-      UP_UNIFI_DEFAULT_SAVE_EVENTS: 'true'
-      UP_UNIFI_DEFAULT_SAVE_IDS: 'true'
+      UP_UNIFI_DEFAULT_SAVE_ALARMS: "true"
+      UP_UNIFI_DEFAULT_SAVE_ANOMALIES: "true"
+      UP_UNIFI_DEFAULT_SAVE_DPI: "false"
+      UP_UNIFI_DEFAULT_SAVE_EVENTS: "true"
+      UP_UNIFI_DEFAULT_SAVE_IDS: "true"
       UP_INFLUXDB_DISABLE: true
       UP_PROMETHEUS_DISABLE: false
       UP_PROMETHEUS_NAMESPACE: unifipoller

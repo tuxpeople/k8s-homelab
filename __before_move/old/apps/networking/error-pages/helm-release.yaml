@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -19,7 +20,7 @@ spec:
     - name: traefik
       namespace: networking
   test:
-    enable: false  # Enable helm test
+    enable: false # Enable helm test
   install:
     createNamespace: true
     remediation:
@@ -34,4 +35,4 @@ spec:
   values:
     env:
       TEMPLATE_NAME: l7-dark
-      SHOW_DETAILS: 'false'
+      SHOW_DETAILS: "false"
