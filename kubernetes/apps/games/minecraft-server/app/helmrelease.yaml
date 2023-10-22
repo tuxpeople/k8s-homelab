@@ -30,7 +30,7 @@ spec:
     keepHistory: false
   values:
     persistence:
-      storageClass: "local-path"
+      storageClass: local-path
       dataDir:
         enabled: true
         Size: 5Gi
@@ -41,7 +41,7 @@ spec:
       limits:
         memory: 2Gi
     extraEnv:
-      ENABLE_AUTOPAUSE: FALSE
+      ENABLE_AUTOPAUSE: false
     minecraftServer:
       eula: true
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png

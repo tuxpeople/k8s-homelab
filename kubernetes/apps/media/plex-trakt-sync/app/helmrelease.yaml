@@ -33,7 +33,7 @@ spec:
       main:
         type: statefulset
         annotations:
-          reloader.stakater.com/auto: "true"
+          reloader.stakater.com/auto: 'true'
 
         statefulset:
           volumeClaimTemplates:
