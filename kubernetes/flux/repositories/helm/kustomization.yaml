@@ -19,6 +19,7 @@ resources:
   - mariadb-operator.yaml
   - metallb.yaml
   - metrics-server.yaml
+  - minecraft-server-charts.yaml
   - minio.yaml
   - prometheus-community.yaml
   - rancher.yaml

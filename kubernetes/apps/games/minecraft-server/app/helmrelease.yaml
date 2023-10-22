@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app minecraft-server
+  namespace: database
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: minecraft
+      version: 0.22.0
+      sourceRef:
+        kind: HelmRepository
+        name: minecraft-server-charts
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    crds: CreateReplace
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    persistence:
+      storageClass: "local-path"
+      dataDir:
+        enabled: true
+        Size: 5Gi
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 250m
+      limits:
+        memory: 2Gi
+    extraEnv:
+      ENABLE_AUTOPAUSE: FALSE
+    minecraftServer:
+      eula: true
+      icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
+      serviceType: LoadBalancer
+    rcon:
+      enabled: false
