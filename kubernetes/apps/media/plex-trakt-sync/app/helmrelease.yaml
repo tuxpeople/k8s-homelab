@@ -33,14 +33,14 @@ spec:
       main:
         type: statefulset
         annotations:
-          reloader.stakater.com/auto: 'true'
+          reloader.stakater.com/auto: "true"
 
         statefulset:
           volumeClaimTemplates:
             - name: config
               accessMode: ReadWriteOnce
               size: 1Gi
-              storageClass: ceph-block
+              storageClass: local-path
               globalMounts:
                 - path: /app/config
 
