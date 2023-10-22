@@ -9,8 +9,8 @@ spec:
     name: mariadb
     namespace: database
   privileges:
-    - "ALL"
-  database: "phpipam"
-  table: "*"
+    - ALL
+  database: phpipam
+  table: '*'
   username: phpipam
-  host: "%"
+  host: '%'

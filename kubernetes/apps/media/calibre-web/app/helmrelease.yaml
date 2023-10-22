@@ -35,7 +35,7 @@ spec:
     initContainers:
       update-volume-permission:
         image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
-        command: ["sh", "-c", "chown -R 1000:1000 /config"]
+        command: [sh, -c, chown -R 1000:1000 /config]
         volumeMounts:
           - name: config
             mountPath: /config
@@ -47,10 +47,10 @@ spec:
       repository: ghcr.io/linuxserver/calibre-web
       tag: 0.6.20-ls229
     env:
-      TZ: "${TZ}"
+      TZ: ${TZ}
       PUID: 1000
       PGID: 1000
-      DOCKER_MODS: "linuxserver/mods:universal-calibre"
+      DOCKER_MODS: linuxserver/mods:universal-calibre
     service:
       main:
         ports:
@@ -59,11 +59,11 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: nginx
         annotations:
-          hajimari.io/icon: "bookshelf"
+          hajimari.io/icon: bookshelf
         hosts:
-          - host: &host "books.${SECRET_DOMAIN}"
+          - host: &host books.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix

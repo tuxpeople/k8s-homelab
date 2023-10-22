@@ -7,7 +7,7 @@ spec:
   mariaDbRef:
     name: mariadb
   schedule:
-    cron: "1 * * * *"
+    cron: 1 * * * *
   maxRetentionDays: 14
   storage:
     volume:

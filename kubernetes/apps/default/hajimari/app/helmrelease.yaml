@@ -55,7 +55,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/enable: "false"
+          hajimari.io/enable: 'false'
         hosts:
           - host: &host hajimari.${SECRET_DOMAIN}
             paths:
