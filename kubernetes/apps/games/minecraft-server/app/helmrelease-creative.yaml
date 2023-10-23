@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app minecraft-server
+  name: &app minecraft-server-creative
   namespace: database
 spec:
   interval: 15m
@@ -35,11 +35,8 @@ spec:
         enabled: true
         Size: 5Gi
     resources:
-      requests:
-        memory: 2Gi
-        cpu: 2000m
       limits:
-        memory: 3Gi
+        memory: 2Gi
     livenessProbe:
       initialDelaySeconds: 30
       periodSeconds: 5
@@ -61,12 +58,14 @@ spec:
     minecraftServer:
       eula: "TRUE"
       version: "LATEST"
-      enableLanVisibility: false
+      enableLanVisibility: true
       serviceType: LoadBalancer
       loadBalancerIP: ${METALLB_MINECRAFT_ADDR}
       externalTrafficPolicy: Local
       gameMode: creative
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
+      serverName: "Thomas' Creative Server"
+      levelName: world
       # memory: 2048M
     rcon:
       enabled: false
