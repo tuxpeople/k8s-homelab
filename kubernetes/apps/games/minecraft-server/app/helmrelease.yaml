@@ -63,4 +63,4 @@ spec:
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
       serviceType: LoadBalancer
     rcon:
-      enabled: false
+      enabled: true
