@@ -70,7 +70,7 @@ spec:
               limits:
                 memory: 101M
 
-      sync:
+      cronjob:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
