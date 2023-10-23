@@ -138,3 +138,11 @@ spec:
           - path: /app/config/config.yml
             subPath: config.yml
             readOnly: true
+      config:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: local-path
+        globalMounts:
+          - path: /config2
