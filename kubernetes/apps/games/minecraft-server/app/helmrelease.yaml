@@ -63,9 +63,8 @@ spec:
       version: "LATEST"
       difficulty: normal
       maxTickTime: -1
-      serviceType: LoadBalancer
-      loadBalancerIP: ${METALLB_MINECRAFT_ADDR}
-      externalTrafficPolicy: Local
+      serviceType: NodePort
+      nodePort: 30100
       gameMode: creative
       motd: "\u00a7feviljungle\u00a7 - \u00a7a\u00a7lcreative\u00a7"
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
