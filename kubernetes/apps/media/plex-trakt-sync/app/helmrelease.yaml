@@ -138,7 +138,7 @@ spec:
           - path: /app/config/config.yml
             subPath: config.yml
             readOnly: true
-      config2:
+      config:
         enabled: true
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
