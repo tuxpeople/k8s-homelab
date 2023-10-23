@@ -99,10 +99,10 @@ spec:
               requiredDuringSchedulingIgnoredDuringExecution:
                 - labelSelector:
                     matchExpressions:
-                      - key: statefulset.kubernetes.io/pod-name
+                      - key: "statefulset.kubernetes.io/pod-name"
                         operator: In
                         values:
-                          - plex-trakt-sync-0
+                          - "plex-trakt-sync-0"
 
         containers:
           main:
