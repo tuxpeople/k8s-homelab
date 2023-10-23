@@ -63,6 +63,8 @@ spec:
       loadBalancerIP: ${METALLB_MINECRAFT2_ADDR}
       externalTrafficPolicy: Local
       gameMode: survival
+      # One of: peaceful, easy, normal, and hard
+      difficulty: peaceful
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
       serverName: "Thomas' Survival Server"
       levelName: world

@@ -63,8 +63,6 @@ spec:
       loadBalancerIP: ${METALLB_MINECRAFT1_ADDR}
       externalTrafficPolicy: Local
       gameMode: creative
-      # One of: peaceful, easy, normal, and hard
-      difficulty: peaceful
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
       serverName: "Thomas' Creative Server"
       levelName: world
