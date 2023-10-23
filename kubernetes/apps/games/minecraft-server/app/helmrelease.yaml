@@ -61,6 +61,9 @@ spec:
     minecraftServer:
       eula: true
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
+      onlineMode: false
       serviceType: LoadBalancer
+      loadBalancerIP: ${METALLB_MINECRAFT_ADDR}
+      externalTrafficPolicy: Local
     rcon:
       enabled: false
