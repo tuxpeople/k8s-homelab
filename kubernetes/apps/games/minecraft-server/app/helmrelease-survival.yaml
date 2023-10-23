@@ -60,7 +60,7 @@ spec:
       version: "LATEST"
       enableLanVisibility: true
       serviceType: LoadBalancer
-      loadBalancerIP: ${METALLB_MINECRAFT_ADDR_2}
+      loadBalancerIP: ${METALLB_MINECRAFT2_ADDR}
       externalTrafficPolicy: Local
       gameMode: survival
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
