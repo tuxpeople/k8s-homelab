@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,26 +29,39 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: cronjob
-      cronjob:
-        concurrencyPolicy: Forbid
-        schedule: '@hourly'
-    restartPolicy: OnFailure
-    image:
-      repository: ghcr.io/onedr0p/kubernetes-kubectl
-      tag: 1.28.3@sha256:6b68063623c22be538727998ccc1bf0433ea71c7a73f73e3f2250896a390901a
-    command:
-      - /bin/bash
-      - /app/cloudflare-ddns.sh
-    env:
-      CLOUDFLARE_APIKEY:
-        valueFrom:
-          secretKeyRef:
-            name: external-dns-secret
-            key: api-token
-      CLOUDFLARE_EMAIL: ${SECRET_ACME_EMAIL}
-      CLOUDFLARE_RECORD_NAME: ${SECRET_DNS_TARGET}
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "@hourly"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/kubernetes-kubectl
+              tag: 1.28.3@sha256:6b68063623c22be538727998ccc1bf0433ea71c7a73f73e3f2250896a390901a
+            command: ["/bin/bash", "/app/cloudflare-ddns.sh"]
+            env:
+              CLOUDFLARE_APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: external-dns-secret
+                    key: api-token
+              CLOUDFLARE_EMAIL: ${SECRET_ACME_EMAIL}
+              CLOUDFLARE_RECORD_NAME: ${SECRET_DNS_TARGET}
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                memory: 256Mi
     service:
       main:
         enabled: false
@@ -57,7 +70,8 @@ spec:
         enabled: true
         type: configMap
         name: cloudflare-ddns-configmap
-        subPath: cloudflare-ddns.sh
-        mountPath: /app/cloudflare-ddns.sh
-        defaultMode: 0775
-        readOnly: true
+        globalMounts:
+          - path: /app/cloudflare-ddns.sh
+            subPath: cloudflare-ddns.sh
+            defaultMode: 0775
+            readOnly: true
