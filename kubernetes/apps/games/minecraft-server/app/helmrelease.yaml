@@ -9,8 +9,8 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: minecraft
-      version: 4.11.0
+      chart: minecraft-bedrock
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: minecraft-server-charts
@@ -61,15 +61,12 @@ spec:
     minecraftServer:
       eula: "TRUE"
       version: "LATEST"
-      maxTickTime: -1
+      enableLanVisibility: false
       serviceType: LoadBalancer
       loadBalancerIP: ${METALLB_MINECRAFT_ADDR}
       externalTrafficPolicy: Local
-      onlineMode: false
-      pvp: true
       gameMode: creative
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
-      jvmOpts: "-Xms2G -Xmx2G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"
-      memory: 2048M
+      # memory: 2048M
     rcon:
       enabled: false
