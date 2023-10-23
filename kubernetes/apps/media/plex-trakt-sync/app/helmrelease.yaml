@@ -85,16 +85,16 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
-          affinity:
-            podAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: statefulset.kubernetes.io/pod-name
-                        operator: In
-                        values:
-                          - plex-trakt-sync-0
-                  topologyKey: kubernetes.io/hostname
+          # affinity:
+          #   podAffinity:
+          #     requiredDuringSchedulingIgnoredDuringExecution:
+          #       - labelSelector:
+          #           matchExpressions:
+          #             - key: statefulset.kubernetes.io/pod-name
+          #               operator: In
+          #               values:
+          #                 - plex-trakt-sync-0
+          #         topologyKey: kubernetes.io/hostname
 
         containers:
           main:
