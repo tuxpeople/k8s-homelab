@@ -82,7 +82,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
+        ingressClassName: nginx
         annotations:
           # nginx.ingress.kubernetes.io/auth-method: GET
           # nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
