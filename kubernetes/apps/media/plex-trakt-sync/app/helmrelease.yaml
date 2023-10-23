@@ -29,6 +29,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    global:
+      labels:
+        cronjobselector: plex-trakt-sync
     controllers:
       main:
         type: statefulset
@@ -99,10 +102,10 @@ spec:
               requiredDuringSchedulingIgnoredDuringExecution:
                 - labelSelector:
                     matchExpressions:
-                      - key: "statefulset.kubernetes.io/pod-name"
+                      - key: cronjobselector
                         operator: In
                         values:
-                          - "plex-trakt-sync-0"
+                          - plex-trakt-sync-0
 
         containers:
           main:
