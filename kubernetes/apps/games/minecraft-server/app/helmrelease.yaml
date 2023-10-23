@@ -69,6 +69,6 @@ spec:
       gameMode: creative
       motd: "\u00a7feviljungle\u00a7 - \u00a7a\u00a7lcreative\u00a7"
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
-      jvmOpts: "-server -Xms512M -Xmx2048M -XX:+UseG1GC"
+      jvmOpts: "-Xms2G -Xmx2G  -XX:+UseG1GC"
     rcon:
       enabled: false
