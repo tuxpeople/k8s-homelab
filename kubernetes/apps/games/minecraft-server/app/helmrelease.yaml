@@ -39,7 +39,7 @@ spec:
         memory: 2Gi
         cpu: 2000m
       limits:
-        memory: 2Gi
+        memory: 3Gi
     livenessProbe:
       initialDelaySeconds: 30
       periodSeconds: 5
