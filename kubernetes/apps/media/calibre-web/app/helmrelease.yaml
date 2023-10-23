@@ -78,7 +78,7 @@ spec:
       main:
         ports:
           http:
-            port: 8083
+            port: &port 8083
     ingress:
       main:
         enabled: true
@@ -97,6 +97,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: *port
         tls:
           - hosts:
               - *host
