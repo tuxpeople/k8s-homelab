@@ -63,7 +63,6 @@ spec:
       version: "LATEST"
       difficulty: normal
       maxTickTime: -1
-      onlineMode: false
       serviceType: LoadBalancer
       loadBalancerIP: ${METALLB_MINECRAFT_ADDR}
       externalTrafficPolicy: Local
