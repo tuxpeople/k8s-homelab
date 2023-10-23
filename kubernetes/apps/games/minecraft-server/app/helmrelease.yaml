@@ -59,8 +59,16 @@ spec:
     extraEnv:
       ENABLE_AUTOPAUSE: false
     minecraftServer:
-      eula: true
-      icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
+      eula: "TRUE"
+      version: "LATEST"
+      difficulty: normal
+      maxTickTime: -1
       serviceType: LoadBalancer
-    rcon:
-      enabled: true
+      gameMode: creative
+      motd: "\u00a7feviljungle\u00a7 - \u00a7a\u00a7lcreative\u00a7"
+      icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
+      rcon:
+        enabled: false
+        port: 25575
+        password: "mc-rcon"
+        serviceType: LoadBalancer
