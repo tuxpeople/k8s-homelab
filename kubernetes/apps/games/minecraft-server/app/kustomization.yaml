@@ -6,18 +6,3 @@ namespace: games
 resources:
   - ./helmrelease-creative.yaml
   - ./helmrelease-survival.yaml
-
-patches:
-  - patch: |
-      - op: add
-        path: /spec/template/spec/containers/-
-        value:
-          - image: itzg/mc-monitor:0.12.3
-            args: ["status --host localhost"]
-            imagePullPolicy: IfNotPresent
-            name: mc-monitor
-            resources: {}
-    target:
-      kind: Deployment
-      name: minecraft-server-creative-minecraft-bedrock
-      namespace: games
