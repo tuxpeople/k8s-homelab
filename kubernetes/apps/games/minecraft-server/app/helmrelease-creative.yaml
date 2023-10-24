@@ -69,19 +69,19 @@ spec:
     rcon:
       enabled: false
 
-postRenderers:
-  # Instruct helm-controller to use built-in "kustomize" post renderer.
-  - kustomize:
-      patchesJson6902:
-        - patch:
-            - op: add
-              path: /spec/template/spec/containers/-
-              value:
-                - image: itzg/mc-monitor:0.12.3
-                  args: ["status --host localhost"]
-                  imagePullPolicy: IfNotPresent
-                  name: mc-monitor
-                  resources: {}
-          target:
-            kind: Deployment
-            name: minecraft-server-creative-minecraft-bedrock
+  postRenderers:
+    # Instruct helm-controller to use built-in "kustomize" post renderer.
+    - kustomize:
+        patchesJson6902:
+          - patch:
+              - op: add
+                path: /spec/template/spec/containers/-
+                value:
+                  - image: itzg/mc-monitor:0.12.3
+                    args: ["status --host localhost"]
+                    imagePullPolicy: IfNotPresent
+                    name: mc-monitor
+                    resources: {}
+            target:
+              kind: Deployment
+              name: minecraft-server-creative-minecraft-bedrock
