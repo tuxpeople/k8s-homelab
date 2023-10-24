@@ -10,4 +10,5 @@ resources:
   - code-server/ks.yaml
   - octoprint/ks.yaml
   - hajimari/ks.yaml
+  - neuvector/ks.yaml
   - sharry/ks.yaml

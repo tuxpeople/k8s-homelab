@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app neuvector-core
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: core
+      version: 2.4.2
+      sourceRef:
+        kind: HelmRepository
+        name: neuvector
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    crds: CreateReplace
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: ingress-nginx
+      namespace: networking
+  values:
+    controller:
+      replicas: 2
+    manager:
+      svc:
+        type: ClusterIP
+      ingress:
+        enabled: true
+        host: neuvector.${SECRET_DOMAIN}
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          traefik.ingress.kubernetes.io/router.tls: "true"
+        tls: true
+        secretName: ${SECRET_DOMAIN//./-}-tls
+    k3s:
+      enabled: true
+    crdwebhook:
+      enabled: false

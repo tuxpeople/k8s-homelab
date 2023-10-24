@@ -21,6 +21,7 @@ resources:
   - metrics-server.yaml
   - minecraft-server-charts.yaml
   - minio.yaml
+  - neuvector.yaml
   - prometheus-community.yaml
   - rancher.yaml
   - stakater.yaml
