@@ -79,7 +79,7 @@ spec:
         providers:
           - name: default
             orgId: 1
-            folder: ''
+            folder: ""
             type: file
             disableDeletion: false
             editable: true
@@ -94,6 +94,10 @@ spec:
             access: proxy
             url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
             isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki-read.monitoring.svc.cluster.local:3100
     dashboards:
       default:
         cert-manager:
