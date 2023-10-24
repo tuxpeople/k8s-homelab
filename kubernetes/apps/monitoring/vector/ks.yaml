@@ -25,6 +25,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-vector-aggregator
+    - name: cluster-apps-metallb-config
   path: ./kubernetes/apps/monitoring/vector/agent
   prune: true
   sourceRef:

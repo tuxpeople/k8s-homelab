@@ -6,6 +6,8 @@ metadata:
   name: cluster-apps-minecraft-server
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-vector-aggregator
   path: ./kubernetes/apps/games/minecraft-server/app
   prune: true
   sourceRef:
