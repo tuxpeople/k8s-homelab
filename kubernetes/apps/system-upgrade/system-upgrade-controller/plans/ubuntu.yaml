@@ -29,7 +29,7 @@ spec:
   secrets:
     - name: ubuntu
       path: /host/run/system-upgrade/secrets/ubuntu
-  version: 23.04
+  version: "23.04"
   upgrade:
     image: ubuntu
     command: [chroot, /host]
