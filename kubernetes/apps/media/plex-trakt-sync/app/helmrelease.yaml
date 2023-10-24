@@ -74,7 +74,7 @@ spec:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
-          schedule: "@hourly"
+          schedule: "@daily"
         annotations:
           reloader.stakater.com/auto: "true"
 
