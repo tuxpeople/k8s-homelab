@@ -22,9 +22,9 @@ spec:
   cordon: true
   drain:
     force: true
-  # nodeSelector:
-  #   matchExpressions:
-  #     - {key: plan.upgrade.cattle.io/ubuntu, operator: Exists}
+  nodeSelector:
+    matchExpressions:
+      - { key: plan.upgrade.cattle.io/ubuntu, operator: Exists }
   serviceAccountName: system-upgrade
   secrets:
     - name: ubuntu
