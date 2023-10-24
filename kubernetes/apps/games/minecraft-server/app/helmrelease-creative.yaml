@@ -78,8 +78,7 @@ spec:
                 path: /spec/template/spec/containers/-
                 value:
                   image: itzg/mc-monitor:0.12.3
-                  command: ["sleep"]
-                  args: ["60; /mc-monitor status-bedrock --host localhost"]
+                  args: ["status-bedrock --host localhost"]
                   imagePullPolicy: IfNotPresent
                   name: mc-monitor
                   resources: {}
