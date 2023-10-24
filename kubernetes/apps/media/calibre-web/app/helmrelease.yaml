@@ -45,7 +45,7 @@ spec:
               repository: ghcr.io/linuxserver/calibre-web
               tag: 0.6.20-ls229
             env:
-              TZ: ${TZ}
+              TZ: ${TIMEZONE}
               PUID: 1000
               PGID: 1000
               DOCKER_MODS: linuxserver/mods:universal-calibre
