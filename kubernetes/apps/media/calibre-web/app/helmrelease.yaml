@@ -65,15 +65,15 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
-        # initContainers:
-        #   update-volume-permission:
-        #     image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
-        #     command: [sh, -c, chown -R 1000:1000 /config]
-        #     volumeMounts:
-        #       - name: config
-        #         mountPath: /config
-        #     securityContext:
-        #       runAsUser: 0
+        initContainers:
+          update-volume-permission:
+            image: busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
+            command: [sh, -c, chown -R 1000:1000 /config]
+            volumeMounts:
+              - name: config
+                mountPath: /config
+            securityContext:
+              runAsUser: 0
     service:
       main:
         ports:
