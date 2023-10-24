@@ -60,7 +60,7 @@ spec:
           update-volume-permission:
             image:
               repository: busybox
-              tag: 1.36.0
+              tag: 1.36.1
             command: [sh, -c, chown -R 1000:1000 /config]
             volumeMounts:
               - name: config
