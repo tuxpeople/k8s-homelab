@@ -32,3 +32,5 @@ spec:
     metrics:
       serviceMonitor:
         enabled: true
+    image:
+      tag: v0.8.13
