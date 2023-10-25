@@ -134,7 +134,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      aapp: mc-monitor
+      app: mc-monitor
   endpoints:
     - port: "8080"
       interval: 4m
