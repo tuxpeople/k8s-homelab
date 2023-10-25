@@ -6,3 +6,4 @@ namespace: games
 resources:
   - ./helmrelease-creative.yaml
   - ./helmrelease-survival.yaml
+  - ./grafana-dashboard.yaml
