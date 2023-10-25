@@ -124,3 +124,18 @@ spec:
     app: mc-monitor
   ports:
     - port: 8080
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mc-monitor
+spec:
+  selector:
+    matchLabels:
+      app: mc-monitor
+  endpoints:
+    - port: "8080"
+      scheme: http
+      path: /metrics
+      interval: 2m
+      scrapeTimeout: 30s
