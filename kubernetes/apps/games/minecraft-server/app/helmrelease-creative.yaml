@@ -69,19 +69,58 @@ spec:
     rcon:
       enabled: false
 
-  postRenderers:
-    # Instruct helm-controller to use built-in "kustomize" post renderer.
-    - kustomize:
-        patchesJson6902:
-          - patch:
-              - op: add
-                path: /spec/template/spec/containers/-
-                value:
-                  image: itzg/mc-monitor:0.12.3
-                  args: ["status-bedrock --host localhost"]
-                  imagePullPolicy: IfNotPresent
-                  name: mc-monitor
-                  resources: {}
-            target:
-              kind: Deployment
-              name: minecraft-server-creative-minecraft-bedrock
+  # postRenderers:
+  #   # Instruct helm-controller to use built-in "kustomize" post renderer.
+  #   - kustomize:
+  #       patchesJson6902:
+  #         - patch:
+  #             - op: add
+  #               path: /spec/template/spec/containers/-
+  #               value:
+  #                 image: itzg/mc-monitor:0.12.3
+  #                 args: ["status-bedrock --host localhost"]
+  #                 imagePullPolicy: IfNotPresent
+  #                 name: mc-monitor
+  #                 resources: {}
+  #           target:
+  #             kind: Deployment
+  #             name: minecraft-server-creative-minecraft-bedrock
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mc-monitor
+  labels:
+    app: mc-monitor
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mc-monitor
+      labels:
+        app: mc-monitor
+    spec:
+      containers:
+        - name: main
+          image: itzg/mc-monitor
+          env:
+            - name: DEBUG
+              value: "true"
+            - name: EXPORT_BEDROCK_SERVERS
+              value: minecraft-server-creative-minecraft-bedrock,minecraft-server-survival-minecraft-bedrock
+          args:
+            - export-for-prometheus
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: mc-monitor
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mc-monitor
+spec:
+  selector:
+    app: mc-monitor
+  ports:
+    - port: 8080
