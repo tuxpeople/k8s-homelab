@@ -119,6 +119,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mc-monitor
+  labels:
+    app: mc-monitor
 spec:
   selector:
     app: mc-monitor
