@@ -129,13 +129,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: mc-monitor
+  labels:
+    app: mc-monitor
 spec:
   selector:
     matchLabels:
-      app: mc-monitor
+      aapp: mc-monitor
   endpoints:
     - port: "8080"
-      scheme: http
+      interval: 4m
+      scrapeTimeout: 90s
       path: /metrics
-      interval: 2m
-      scrapeTimeout: 30s
