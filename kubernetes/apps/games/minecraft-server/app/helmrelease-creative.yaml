@@ -140,6 +140,6 @@ spec:
       app: mc-monitor
   endpoints:
     - port: monitoring
-      interval: 4m
-      scrapeTimeout: 90s
+      interval: 30s
+      scrapeTimeout: 10s
       path: /metrics
