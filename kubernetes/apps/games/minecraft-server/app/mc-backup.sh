@@ -90,9 +90,9 @@ for i in "${BKUP[@]}"; do
     done
 
     # Also copy settings, whitelist and permissions for this point in time
-    cp "${DATA_DIR}/server.properties" "${BACKUP_DESTINATION}/server.properties"
-    cp "${DATA_DIR}/whitelist.json" "${BACKUP_DESTINATION}/whitelist.json"
-    cp "${DATA_DIR}/permissions.json" "${BACKUP_DESTINATION}/permissions.json"
+    # cp "${DATA_DIR}/server.properties" "${BACKUP_DESTINATION}/server.properties"
+    # cp "${DATA_DIR}/whitelist.json" "${BACKUP_DESTINATION}/whitelist.json"
+    # cp "${DATA_DIR}/permissions.json" "${BACKUP_DESTINATION}/permissions.json"
 
 done
 
