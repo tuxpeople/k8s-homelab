@@ -61,7 +61,6 @@ spec:
       serviceType: LoadBalancer
       loadBalancerIP: ${METALLB_MINECRAFT2_ADDR}
       externalTrafficPolicy: Local
-      ops: "2535470735507957"
       gameMode: survival
       # One of: peaceful, easy, normal, and hard
       difficulty: peaceful
