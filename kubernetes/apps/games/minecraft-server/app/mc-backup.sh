@@ -9,6 +9,8 @@ BACKUP_DIR="/backup/minecraft_backup"
 DATA_DIR="/data"
 SERVER_PID=$(echo `grep -l ${SERVER_TYPE} /proc/+([0-9])/cmdline` | cut -d'/' -f3)
 
+[ ! -z "$BACKUP_NAME" ] || BACKUP_NAME=$(hostname)
+
 readconsole(){
     cat /proc/${SERVER_PID}/fd/1 > /tmp/console
 }
@@ -70,7 +72,7 @@ for i in "${BKUP[@]}"; do
     WORLD_FILE_OFFSET=$(echo "$i" | cut -d ':' -f 2)
 
     # Create backup directory
-    BACKUP_DESTINATION="${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}"
+    BACKUP_DESTINATION="${BACKUP_DIR}/${BACKUP_NAME}/${WORLD_DIR}/${BACKUP_DATETIME}"
     mkdir -p "${BACKUP_DESTINATION}"
 
     # Copy specified backup files into backup dir & truncate files to specified offset
@@ -100,16 +102,16 @@ echo save resume > /proc/${SERVER_PID}/fd/0
 
 # Compress backup
 echo "Compressing backup..."
-cd "${BACKUP_DIR}/${WORLD_DIR}" || exit 1
+cd "${BACKUP_DIR}/${BACKUP_NAME}/${WORLD_DIR}" || exit 1
 # shellcheck disable=SC2016
 tar czvf "${BACKUP_DATETIME}.tar.gz" "${BACKUP_DATETIME}"  | stdbuf -o0 awk '{print "  + " $0}'
 
 # Clean up files now they're compressed
 echo "Removing temporary files..."
-rm -r "${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}"
+rm -r "${BACKUP_DIR}/${BACKUP_NAME}/${WORLD_DIR}/${BACKUP_DATETIME}"
 
 # Show backup file info
-stat --format="Created backup file: '%n', size: %s bytes" "${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}.tar.gz"
+stat --format="Created backup file: '%n', size: %s bytes" "${BACKUP_DIR}/${BACKUP_NAME}/${WORLD_DIR}/${BACKUP_DATETIME}.tar.gz"
 
 # Finished
 echo "======= BACKUP OPERATION FINISHED ======="
