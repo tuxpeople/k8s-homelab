@@ -54,6 +54,8 @@ spec:
       periodSeconds: 10
     extraEnv:
       ENABLE_AUTOPAUSE: false
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: mc-backup-configmap
     minecraftServer:
       eula: "TRUE"
       version: "LATEST"
