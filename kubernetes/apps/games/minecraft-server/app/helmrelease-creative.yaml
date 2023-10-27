@@ -75,7 +75,7 @@ spec:
           - name: mc-backup-volume
             mountPath: /scripts/mc-backup.sh
             subPath: mc-backup.sh
-            defaultMode: 0775
+            defaultMode: 0777
             readOnly: true
         volumes:
           - name: nfs
