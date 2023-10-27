@@ -79,8 +79,9 @@ spec:
             readOnly: true
         volumes:
           - name: nfs
-            server: 10.20.30.40
-            path: /volume2/data/backup/kubernetes
+            nfs:
+              server: 10.20.30.40
+              path: /volume2/data/backup/kubernetes
           - name: mc-backup-volume
             configMap:
               name: mc-backup-configmap
