@@ -7,3 +7,12 @@ resources:
   - ./helmrelease-creative.yaml
   - ./helmrelease-survival.yaml
   - ./grafana-dashboard.yaml
+
+configMapGenerator:
+  - name: mc-backup-configmap
+    files:
+      - ./mc-backup.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
