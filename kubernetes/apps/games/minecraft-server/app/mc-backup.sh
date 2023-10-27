@@ -53,7 +53,7 @@ kill $MYSELF >/dev/null 2>&1
 FILES_TO_BACKUP=$(grep -a -A 1 "Data saved. Files are now ready to be copied." /tmp/console | tail -1 | cut -d "]" -f 2- | sed 's/^ *//g')
 
 # Get current date/time of backup
-BACKUP_DATETIME=$(date +%Y-%m-%d-%H%M.%S.%N)
+BACKUP_DATETIME=$(date +%Y%m%d-%H%M%S)
 
 # Set inter-field separator
 IFS=','
