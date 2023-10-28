@@ -5,10 +5,10 @@ metadata:
   name: backup-role
 rules:
   - apiGroups: [""]
-    resources: ["pods", "pods/log"]
+    resources: ["services", "services/log"]
     verbs: ["get", "list"]
   - apiGroups: [""]
-    resources: ["pods/exec"]
+    resources: ["services/exec"]
     verbs: ["create"]
 ---
 apiVersion: v1
