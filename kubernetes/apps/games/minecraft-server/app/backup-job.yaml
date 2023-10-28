@@ -22,8 +22,7 @@ metadata:
   name: backup-role-binding
 subjects:
   - kind: ServiceAccount
-    name: scheduled-autoscaler-service-account
-    namespace: default
+    name: backup-sa
 roleRef:
   kind: Role
   name: backup-role
