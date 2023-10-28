@@ -12,6 +12,10 @@ BACKUP_DATETIME=$(date +%Y%m%d-%H%M%S)
 
 BACKUP_DIR="${BACKUP_FOLDER}/${BACKUP_NAME:-$(hostname)}"
 
+# checks
+[ -z "${SERVER_PID}" ] && exit 1
+[ -z "${BACKUP_DIR}" ] && exit 1
+
 # create temporary file
 TMPFILE=$(mktemp /tmp/mc-backup.XXXXXX)
 
@@ -67,6 +71,9 @@ IFS=','
 
 # Prepare array
 read -ra BACKUP_LIST <<< "$FILES_TO_BACKUP"
+
+# checks
+[ -z "${BACKUP_LIST}" ] && exit 1
 
 # Loop through the list of files
 for i in "${BACKUP_LIST[@]}"; do
