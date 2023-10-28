@@ -1,6 +1,6 @@
 #!//usr/bin/bash
 # based on https://github.com/mikenye/docker-minecraft_bedrock_server/blob/main/rootfs/usr/local/bin/run_backup
-set -x
+
 # bonus features on
 shopt -s extglob
 
