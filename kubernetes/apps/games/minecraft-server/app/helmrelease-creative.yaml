@@ -91,15 +91,31 @@ spec:
               name: mc-backup-configmap
     extraDeploy:
       - |
-        apiVersion: v1
-        kind: ConfigMap
+        apiVersion: batch/v1
+        kind: CronJob
         metadata:
-          name: {{ template "minecraft.fullname" . }}-extra-cm
-        data:
-          key: |-
-            {
-              "key": "value"
-            }
+          name: {{ template "minecraft.fullname" . }}-backup
+        spec:
+          schedule: "*/2 * * * *"
+          concurrencyPolicy: Forbid
+          successfulJobsHistoryLimit: 1
+          failedJobsHistoryLimit: 1
+          jobTemplate:
+            spec:
+              template:
+                spec:
+                  serviceAccountName: backup-sa
+                  containers:
+                    - name: init-backup
+                      image: ghcr.io/onedr0p/kubernetes-kubectl:1.28.3
+                      command:
+                        - /bin/sh
+                      args:
+                        - -c
+                        - |
+                          kubectl exec svc/{{ template "minecraft.fullname" . }} -- /usr/bin/bash /scripts/mc-backup.sh
+                  restartPolicy: OnFailure
+
   # postRenderers:
   #   # Instruct helm-controller to use built-in "kustomize" post renderer.
   #   - kustomize:

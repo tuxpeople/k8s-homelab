@@ -27,39 +27,3 @@ roleRef:
   kind: Role
   name: backup-role
   apiGroup: ""
----
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: minecraft-backup
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-spec:
-  suspend: false
-  schedule: "*/2 * * * *"
-  concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 1
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          serviceAccountName: backup-sa
-          containers:
-            - name: init-backup
-              image: ghcr.io/onedr0p/kubernetes-kubectl:1.28.3
-              command:
-                - /bin/sh
-              args:
-                - -c
-                - |
-                  for POD in $(kubectl get pods --no-headers -o custom-columns=":metadata.name" -n $MY_NAMESPACE | grep bedrock)
-                  do
-                  kubectl exec ${POD} -- /usr/bin/bash /scripts/mc-backup.sh
-                  done
-              env:
-                - name: MY_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-          restartPolicy: OnFailure
