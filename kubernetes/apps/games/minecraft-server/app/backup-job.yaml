@@ -32,8 +32,7 @@ roleRef:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: mariadb-backup
-  namespace: networking
+  name: minecraft-backup
 spec:
   suspend: true
   schedule: "*/2 * * * *"
