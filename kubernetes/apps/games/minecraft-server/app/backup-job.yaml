@@ -32,6 +32,8 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: minecraft-backup
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
   suspend: false
   schedule: "*/2 * * * *"
@@ -52,7 +54,7 @@ spec:
                 - -c
                 - |
                   echo start
-                  kubectl get pods --no-headers -o custom-columns=":metadata.name" -n games | grep bedrock
+                  kubectl get pods --no-headers -o custom-columns=":metadata.name" -n $MY_NAMESPACE | grep bedrock
                   env
               env:
                 - name: MY_NAMESPACE
