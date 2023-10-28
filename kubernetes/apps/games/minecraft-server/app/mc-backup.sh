@@ -119,6 +119,10 @@ echo "Compressing backup..."
 cd "${BACKUP_DIR}/${WORLD_DIR}" || exit 1
 tar czvf "${BACKUP_DATETIME}.tar.gz" "${BACKUP_DATETIME}"  | stdbuf -o0 awk '{print "  + " $0}'
 
+# Delete old backups
+echo "Deleting older backups"
+ls -tp | grep -v '/$' | tail -n +6 | tr '\n' '\0' | xargs -0 rm --
+
 # Clean up files now they're compressed
 echo "Removing temporary files..."
 rm -r "${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}"
