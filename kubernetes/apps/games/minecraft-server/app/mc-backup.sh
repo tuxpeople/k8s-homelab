@@ -120,5 +120,7 @@ rm -r "${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}"
 stat --format="Created backup file: '%n', size: %s bytes" "${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}.tar.gz"
 
 # Finished
-echo "======= BACKUP OPERATION FINISHED ======="
+echo "Backup Finished"
 echo ""
+
+exit 0
