@@ -1,6 +1,8 @@
 #!//usr/bin/bash
 # based on https://github.com/mikenye/docker-minecraft_bedrock_server/blob/main/rootfs/usr/local/bin/run_backup
 
+set +x
+
 # bonus features on
 shopt -s extglob
 
@@ -44,7 +46,7 @@ echo save hold > /proc/${SERVER_PID}/fd/0
 
 # Continously wait for backup to be ready using save query every 2 seconds and read the console's reaction
 EXITCODE=1
-while [ "$EXITCODE" -ne "0" ]; do
+while [ "${EXITCODE}" -ne "0" ]; do
     echo save query > /proc/${SERVER_PID}/fd/0
     grep "Data saved. Files are now ready to be copied." ${TMPFILE} > /dev/null 2>&1
     EXITCODE=$?
