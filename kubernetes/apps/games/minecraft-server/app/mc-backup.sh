@@ -22,9 +22,6 @@ TMPFILE=$(mktemp /tmp/mc-backup.XXXXXX)
 readconsole(){
     # Write the stdout of the pocess into the temporary file
     cat /proc/${SERVER_PID}/fd/1 > ${TMPFILE}
-
-    # Delete the temporary file. The content will stay available until the cat gets terminated
-    rm ${TMPFILE}
 }
 
 # Ready, steady, go!
@@ -65,6 +62,9 @@ FILES_TO_BACKUP=$(grep -a -A 1 "Data saved. Files are now ready to be copied." $
 
 # Kill background process to listen to the stdout of the server, as we do not longer need it
 kill $RC_PID >/dev/null 2>&1
+
+# Delete the temporary file. The content will stay available until the cat gets terminated
+rm ${TMPFILE}
 
 # Set inter-field separator
 IFS=','
