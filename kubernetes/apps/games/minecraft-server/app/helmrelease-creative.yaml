@@ -55,6 +55,7 @@ spec:
     extraEnv:
       ENABLE_AUTOPAUSE: false
       BACKUP_NAME: *app
+      TZ: ${TIMEZONE}
     podAnnotations:
       configmap.reloader.stakater.com/reload: mc-backup-configmap
     minecraftServer:
