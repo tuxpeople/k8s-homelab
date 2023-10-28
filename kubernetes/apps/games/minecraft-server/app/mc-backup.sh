@@ -5,64 +5,71 @@
 shopt -s extglob
 
 SERVER_TYPE="bedrock_server"
-BACKUP_DIR="/backup/minecraft_backup"
+BACKUP_FOLDER="/backup/minecraft_backup"
 DATA_DIR="/data"
 SERVER_PID=$(echo `grep -l ${SERVER_TYPE} /proc/+([0-9])/cmdline` | cut -d'/' -f3)
+BACKUP_DATETIME=$(date +%Y%m%d-%H%M%S)
 
-[ ! -z "$BACKUP_NAME" ] || BACKUP_NAME=$(hostname)
+BACKUP_DIR="${BACKUP_FOLDER}/${BACKUP_NAME:-$(hostname)}"
 
 readconsole(){
-    cat /proc/${SERVER_PID}/fd/1 > /tmp/console
+    # create temporary file
+    TMPFILE=$(mktemp /tmp/mc-backup.XXXXXX)
+
+    # Write the stdout of the pocess into the temporary file
+    cat /proc/${SERVER_PID}/fd/1 > ${TMPFILE}
+
+    # Delete the temporary file. The content will stay available until the cat gets terminated
+    rm ${TMPFILE}
 }
 
-# Started
-echo "======= BACKUP OPERATION BEGIN ======="
+# Ready, steady, go!
+echo "Starting with the backup"
 
-# Start it in the background
+# Start the background process to listen to the stdout of the server
 readconsole &
 
 # Save readconsole() PID, to kill the function later
-MYSELF=$!
+RC_PID=$!
 
-# Start backup with performing a save resume in case of failed backup
+# Start backup with performing a save resume in case of previously failed backup
 echo save resume > /proc/${SERVER_PID}/fd/0
 
+# Little break, just in case
 sleep 5
 
-# Trigger a backup
+# Trigger a backup by writing save hold into server's stdin
 echo "Placing server into 'save hold'..."
 echo save hold > /proc/${SERVER_PID}/fd/0
 
-# Wait for backup to be ready
+# Continously wait for backup to be ready using save query every 2 seconds and read the console's reaction
 EXITCODE=1
 while [ "$EXITCODE" -ne "0" ]; do
     echo save query > /proc/${SERVER_PID}/fd/0
-    grep "Data saved. Files are now ready to be copied." /tmp/console > /dev/null 2>&1
+    grep "Data saved. Files are now ready to be copied." ${TMPFILE} > /dev/null 2>&1
     EXITCODE=$?
     sleep 2
 done
 
 echo "Server is now in 'save hold', performing backup..."
 
+# Little break, just in case
 sleep 2
 
-# Kill progress
-kill $MYSELF >/dev/null 2>&1
-
 # Get files needed for backup
-FILES_TO_BACKUP=$(grep -a -A 1 "Data saved. Files are now ready to be copied." /tmp/console | tail -1 | cut -d "]" -f 2- | sed 's/^ *//g')
+FILES_TO_BACKUP=$(grep -a -A 1 "Data saved. Files are now ready to be copied." ${TMPFILE} | tail -1 | cut -d "]" -f 2- | sed 's/^ *//g')
 
-# Get current date/time of backup
-BACKUP_DATETIME=$(date +%Y%m%d-%H%M%S)
+# Kill background process to listen to the stdout of the server, as we do not longer need it
+kill $RC_PID >/dev/null 2>&1
 
 # Set inter-field separator
 IFS=','
 
 # Prepare array
-read -ra BKUP <<< "$FILES_TO_BACKUP"
+read -ra BACKUP_LIST <<< "$FILES_TO_BACKUP"
 
-# Loop through files to back up
-for i in "${BKUP[@]}"; do
+# Loop through the list of files
+for i in "${BACKUP_LIST[@]}"; do
 
     i=$(echo "$i" | sed 's/^ *//g' | sed 's/\r//g')
 
@@ -72,7 +79,7 @@ for i in "${BKUP[@]}"; do
     WORLD_FILE_OFFSET=$(echo "$i" | cut -d ':' -f 2)
 
     # Create backup directory
-    BACKUP_DESTINATION="${BACKUP_DIR}/${BACKUP_NAME}/${WORLD_DIR}/${BACKUP_DATETIME}"
+    BACKUP_DESTINATION="${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}"
     mkdir -p "${BACKUP_DESTINATION}"
 
     # Copy specified backup files into backup dir & truncate files to specified offset
@@ -102,16 +109,15 @@ echo save resume > /proc/${SERVER_PID}/fd/0
 
 # Compress backup
 echo "Compressing backup..."
-cd "${BACKUP_DIR}/${BACKUP_NAME}/${WORLD_DIR}" || exit 1
-# shellcheck disable=SC2016
+cd "${BACKUP_DIR}/${WORLD_DIR}" || exit 1
 tar czvf "${BACKUP_DATETIME}.tar.gz" "${BACKUP_DATETIME}"  | stdbuf -o0 awk '{print "  + " $0}'
 
 # Clean up files now they're compressed
 echo "Removing temporary files..."
-rm -r "${BACKUP_DIR}/${BACKUP_NAME}/${WORLD_DIR}/${BACKUP_DATETIME}"
+rm -r "${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}"
 
 # Show backup file info
-stat --format="Created backup file: '%n', size: %s bytes" "${BACKUP_DIR}/${BACKUP_NAME}/${WORLD_DIR}/${BACKUP_DATETIME}.tar.gz"
+stat --format="Created backup file: '%n', size: %s bytes" "${BACKUP_DIR}/${WORLD_DIR}/${BACKUP_DATETIME}.tar.gz"
 
 # Finished
 echo "======= BACKUP OPERATION FINISHED ======="
