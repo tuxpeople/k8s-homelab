@@ -89,6 +89,17 @@ spec:
           - name: mc-backup-volume
             configMap:
               name: mc-backup-configmap
+    extraDeploy:
+      - |
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: {{ template "minecraft.fullname" . }}-extra-cm
+        data:
+          key: |-
+            {
+              "key": "value"
+            }
   # postRenderers:
   #   # Instruct helm-controller to use built-in "kustomize" post renderer.
   #   - kustomize:
