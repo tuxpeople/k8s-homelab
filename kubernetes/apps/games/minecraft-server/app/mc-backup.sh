@@ -14,10 +14,10 @@ BACKUP_DATETIME=$(date +%Y%m%d-%H%M%S)
 
 BACKUP_DIR="${BACKUP_FOLDER}/${BACKUP_NAME:-$(hostname)}"
 
-readconsole(){
-    # create temporary file
-    TMPFILE=$(mktemp /tmp/mc-backup.XXXXXX)
+# create temporary file
+TMPFILE=$(mktemp /tmp/mc-backup.XXXXXX)
 
+readconsole(){
     # Write the stdout of the pocess into the temporary file
     cat /proc/${SERVER_PID}/fd/1 > ${TMPFILE}
 
