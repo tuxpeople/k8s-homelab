@@ -96,7 +96,7 @@ spec:
         metadata:
           name: {{ template "minecraft.fullname" . }}-backup
         spec:
-          schedule: "1 * * * *"
+          schedule: "*/30 * * * *"
           concurrencyPolicy: Forbid
           successfulJobsHistoryLimit: 3
           failedJobsHistoryLimit: 3
