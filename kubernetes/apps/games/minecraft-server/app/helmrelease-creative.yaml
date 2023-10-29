@@ -115,6 +115,7 @@ spec:
                         - -c
                         - |
                           kubectl -it exec svc/{{ template "minecraft.fullname" . }} -- /usr/bin/bash -c "bash /scripts/mc-backup.sh" && exit 0 || exit 1
+                          echo "Test"
                   restartPolicy: OnFailure
 
   # postRenderers:
