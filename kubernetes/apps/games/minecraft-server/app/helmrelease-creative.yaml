@@ -110,15 +110,12 @@ spec:
                     - name: init-backup
                       image: ghcr.io/onedr0p/kubernetes-kubectl:1.28.3
                       command:
-                        - /usr/local/bin/kubectl
-                        - --stdin
-                        - false
-                        - exec
-                        - svc/{{ template "minecraft.fullname" . }}
-                        - --
-                        - /usr/bin/bash
+                        - /bin/sh
+                      args:
                         - -c
-                        - "bash /scripts/mc-backup.sh"
+                        - |
+                          kubectl exec svc/{{ template "minecraft.fullname" . }} -- /usr/bin/bash -c "bash /scripts/mc-backup.sh; exit"
+                          echo "Test2"
                   restartPolicy: OnFailure
 
   # postRenderers:
