@@ -111,6 +111,7 @@ spec:
                       image: ghcr.io/onedr0p/kubernetes-kubectl:1.28.3
                       command:
                         - /usr/local/bin/kubectl
+                        - -it
                         - exec
                         - svc/{{ template "minecraft.fullname" . }}
                         - --
