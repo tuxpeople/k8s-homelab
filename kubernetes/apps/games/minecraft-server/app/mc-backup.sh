@@ -22,6 +22,21 @@ TMPFILE=$(mktemp /tmp/mc-backup.XXXXXX)
 readconsole(){
     # Write the stdout of the pocess into the temporary file
     cat /proc/${SERVER_PID}/fd/1 > ${TMPFILE}
+    if [ $? -eq 0 ]; then
+        echo "Successfully started to read the console output."
+    else
+        echo "Error: unable to read servers console output"
+        exit 1
+    fi
+}
+
+sendcommand(){
+    echo "$@" > /proc/${SERVER_PID}/fd/0
+    if [ $? -eq 0 ]; then
+        echo "Successfully sent command $@ to server"
+    else
+        echo "Sending command $@ to server failed."
+    fi
 }
 
 # Ready, steady, go!
