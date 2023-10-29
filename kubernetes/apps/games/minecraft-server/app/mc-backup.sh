@@ -34,7 +34,7 @@ readconsole &
 RC_PID=$!
 
 # Start backup with performing a save resume in case of previously failed backup
-echo save resume > /proc/${SERVER_PID}/fd/0
+echo save resume > /proc/${SERVER_PID}/fd/0 || exit 1
 
 # Little break, just in case
 sleep 5
@@ -46,7 +46,7 @@ echo save hold > /proc/${SERVER_PID}/fd/0
 # Continously wait for backup to be ready using save query every 2 seconds and read the console's reaction
 EXITCODE=1
 while [ "${EXITCODE}" -ne "0" ]; do
-    echo save query > /proc/${SERVER_PID}/fd/0
+    echo save query > /proc/${SERVER_PID}/fd/0 || exit 1
     grep "Data saved. Files are now ready to be copied." ${TMPFILE} > /dev/null 2>&1
     EXITCODE=$?
     sleep 2
