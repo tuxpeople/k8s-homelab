@@ -110,7 +110,7 @@ spec:
                     - name: init-backup
                       image: ghcr.io/onedr0p/kubernetes-kubectl:1.28.3
                       command:
-                        - /bin/sh
+                        - /usr/local/bin/kubectl
                         - exec
                         - svc/{{ template "minecraft.fullname" . }}
                         - -- /usr/bin/bash -c "bash /scripts/mc-backup.sh" && exit 0 || exit 1
