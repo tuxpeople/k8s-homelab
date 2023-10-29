@@ -61,7 +61,7 @@ spec:
     minecraftServer:
       eula: "TRUE"
       version: "LATEST"
-      enableLanVisibility: true
+      enableLanVisibility: false
       serviceType: LoadBalancer
       loadBalancerIP: ${METALLB_MINECRAFT2_ADDR}
       externalTrafficPolicy: Local
