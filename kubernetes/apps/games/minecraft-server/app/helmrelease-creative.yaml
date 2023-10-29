@@ -113,7 +113,10 @@ spec:
                         - /usr/local/bin/kubectl
                         - exec
                         - svc/{{ template "minecraft.fullname" . }}
-                        - -- /usr/bin/bash -c "bash /scripts/mc-backup.sh" && exit 0 || exit 1
+                        - --
+                        - /usr/bin/bash
+                        - -c
+                        - "bash /scripts/mc-backup.sh"
                   restartPolicy: OnFailure
 
   # postRenderers:
