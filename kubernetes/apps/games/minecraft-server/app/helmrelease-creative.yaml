@@ -111,11 +111,9 @@ spec:
                       image: ghcr.io/onedr0p/kubernetes-kubectl:1.28.3
                       command:
                         - /bin/sh
-                      args:
-                        - -c
-                        - |
-                          kubectl -it exec svc/{{ template "minecraft.fullname" . }} -- /usr/bin/bash -c "bash /scripts/mc-backup.sh; echo Test1" && exit 0 || exit 1
-                          echo Test2
+                        - exec
+                        - svc/{{ template "minecraft.fullname" . }}
+                        - -- /usr/bin/bash -c "bash /scripts/mc-backup.sh" && exit 0 || exit 1
                   restartPolicy: OnFailure
 
   # postRenderers:
