@@ -15,8 +15,6 @@ spec:
         name: traefik-charts
         namespace: flux-system
   dependsOn:
-    - name: uptimerobot-operator
-      namespace: monitoring
     - name: metallb
       namespace: networking
   maxHistory: 2
@@ -71,7 +69,7 @@ spec:
       traefik:
         expose: true
       web:
-        redirectTo: 
+        redirectTo:
           port: websecure
       websecure:
         tls:
