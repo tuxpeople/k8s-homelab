@@ -3,11 +3,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
-  - webtrees/ks.yaml
-  - echo-server/ks.yaml
-  - drop/ks.yaml
+  - namespace.yaml
   - code-server/ks.yaml
-  - octoprint/ks.yaml
+  - drop/ks.yaml
+  - echo-server/ks.yaml
   - hajimari/ks.yaml
+  - octoprint/ks.yaml
   - sharry/ks.yaml
+  - webtrees/ks.yaml

@@ -3,11 +3,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
-  - reloader/ks.yaml
+  - namespace.yaml
+  - cilium/ks.yaml
+  - kubed/ks.yaml
+  - kured/ks.yaml
   - local-path-provisioner/ks.yaml
   - metrics-server/ks.yaml
-  - kured/ks.yaml
   - node-problem-detector/ks.yaml
-  - kubed/ks.yaml
-  - cilium/ks.yaml
+  - reloader/ks.yaml
