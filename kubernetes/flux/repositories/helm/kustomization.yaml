@@ -11,7 +11,7 @@ resources:
   - external-dns.yaml
   - grafana.yaml
   - hajimari.yaml
-  - traefik.yaml
+  - ingress-nginx.yaml
   - jetstack.yaml
   - k8s-gateway.yaml
   - kubereboot.yaml
