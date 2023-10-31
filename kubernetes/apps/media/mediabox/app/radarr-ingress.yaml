@@ -10,7 +10,7 @@ metadata:
     hajimari.io/icon: filmstrip
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN//./-}-tls
+    - secretName: ${SECRET_DOMAIN/./-}-production-tls
       hosts:
         - radarr.${SECRET_DOMAIN}
   rules:

@@ -16,7 +16,7 @@ metadata:
     # nginx.ingress.kubernetes.io/auth-snippet: "proxy_set_header X-Forwarded-Method $request_method;"
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN//./-}-tls
+    - secretName: ${SECRET_DOMAIN/./-}-production-tls
       hosts:
         - print.${SECRET_DOMAIN}
   rules:

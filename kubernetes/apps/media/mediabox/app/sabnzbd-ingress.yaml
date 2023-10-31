@@ -10,7 +10,7 @@ metadata:
     hajimari.io/icon: cloud-download
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN//./-}-tls
+    - secretName: ${SECRET_DOMAIN/./-}-production-tls
       hosts:
         - sabnzbd.${SECRET_DOMAIN}
   rules:

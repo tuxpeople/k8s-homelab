@@ -11,7 +11,7 @@ metadata:
     hajimari.io/icon: filmstrip
 spec:
   tls:
-    - secretName: ${SECRET_DOMAIN//./-}-tls
+    - secretName: ${SECRET_DOMAIN/./-}-production-tls
       hosts:
         - notifiarr.${SECRET_DOMAIN}
   rules:

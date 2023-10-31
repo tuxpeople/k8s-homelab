@@ -149,7 +149,7 @@ spec:
           hajimari.io/appName: Alertmanager
           hajimari.io/icon: mdi:alert-decagram-outline
         tls:
-          - secretName: ${SECRET_DOMAIN//./-}-tls
+          - secretName: ${SECRET_DOMAIN/./-}-production-tls
             hosts:
               - alertmanager.${SECRET_DOMAIN}
         hosts:
@@ -417,7 +417,7 @@ spec:
     #       external-dns/is-public: "true"
     #       external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
     #     tls:
-    #       - secretName: ${SECRET_DOMAIN//./-}-tls
+    #       - secretName: ${SECRET_DOMAIN/./-}-production-tls
     #         hosts:
     #           - prometheus.${SECRET_DOMAIN}
     #     hosts:
