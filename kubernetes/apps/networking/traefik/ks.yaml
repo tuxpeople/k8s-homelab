@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-traefik
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/system-upgrade/traefik/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-traefik-config
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-traefik
+  path: ./kubernetes/apps/system-upgrade/traefik/config
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  wait: false # no flux ks dependents
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m

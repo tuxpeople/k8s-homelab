@@ -6,7 +6,6 @@ metadata:
   name: traefik
 spec:
   interval: 15m
-  timeout: 10m
   chart:
     spec:
       chart: traefik
@@ -20,19 +19,19 @@ spec:
       namespace: monitoring
     - name: metallb
       namespace: networking
-  test:
-    enable: false # Enable helm test
+  maxHistory: 2
   install:
+    crds: CreateReplace
     createNamespace: true
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
     remediation:
       retries: 3
-  rollback:
-    timeout: 10m
-    cleanupOnFail: true
-    recreate: true
+  uninstall:
+    keepHistory: false
   values:
     deployment:
       kind: Deployment
