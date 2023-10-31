@@ -31,6 +31,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    env:
+      - name: TZ
+        value: ${TIMEZONE}
     deployment:
       kind: Deployment
       replicas: 1
@@ -54,6 +57,9 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true
     globalArguments:
       - --api.insecure=true
       - --serverstransport.insecureskipverify=true
@@ -65,7 +71,6 @@ spec:
       - --providers.kubernetesingress.ingressendpoint.ip=${METALLB_INGRESS_ADDR}
       - --providers.kubernetesingress.allowexternalnameservices=true
       - --providers.kubernetescrd.allowexternalnameservices=true
-      - --providers.kubernetescrd.allowCrossNamespace=true
     ports:
       traefik:
         expose: true
