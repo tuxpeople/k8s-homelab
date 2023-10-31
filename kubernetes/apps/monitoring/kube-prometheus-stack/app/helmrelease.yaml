@@ -32,7 +32,7 @@ spec:
   dependsOn:
     - name: local-path-provisioner
       namespace: kube-system
-    - name: ingress-nginx
+    - name: traefik
       namespace: networking
   values:
     cleanPrometheusOperatorObjectNames: true
@@ -55,10 +55,10 @@ spec:
           repeat_interval: 6h
           receiver: discord
           routes:
-            - receiver: 'null'
+            - receiver: "null"
               match:
                 alertname: InfoInhibitor
-            - receiver: 'null'
+            - receiver: "null"
               match:
                 alertname: CPUThrottlingHigh
             - receiver: DeadMansSnitch
@@ -75,7 +75,7 @@ spec:
               #     issue: Portworx*
               #   continue: true
         receivers:
-          - name: 'null'
+          - name: "null"
           - name: email
             email_configs:
               - send_resolved: true
@@ -142,10 +142,10 @@ spec:
         enabled: true
         pathType: Prefix
         annotations:
-          kubernetes.io/ingress.class: nginx
-          external-dns/is-public: 'true'
+          kubernetes.io/ingress.class: traefik
+          external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
-          hajimari.io/enable: 'true'
+          hajimari.io/enable: "true"
           hajimari.io/appName: Alertmanager
           hajimari.io/icon: mdi:alert-decagram-outline
         tls:
@@ -218,7 +218,7 @@ spec:
       enabled: true
       endpoints: *cp
     kubeProxy:
-      enabled: false  # Disabled because eBPF
+      enabled: false # Disabled because eBPF
     kubeScheduler:
       enabled: true
       endpoints: *cp
@@ -231,11 +231,11 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: traefik
         annotations:
           hajimari.io/appName: Prometheus
           hajimari.io/icon: simple-icons:prometheus
-          nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+          nginx.ingress.kubernetes.io/ssl-redirect: "false"
         pathType: Prefix
         hosts:
           - &host prometheus.${SECRET_DOMAIN}
@@ -402,7 +402,7 @@ spec:
     #   ingress:
     #     enabled: true
     #     pathType: Prefix
-    #     ingressClassName: nginx
+    #     ingressClassName: traefik
     #     annotations:
     #       nginx.ingress.kubernetes.io/auth-method: GET
     #       nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify

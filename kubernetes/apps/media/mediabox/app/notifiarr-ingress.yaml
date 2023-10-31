@@ -4,10 +4,10 @@ kind: Ingress
 metadata:
   name: notifiarr
   annotations:
-    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: traefik
     external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
-    external-dns/is-public: 'true'
-    hajimari.io/enable: 'true'
+    external-dns/is-public: "true"
+    hajimari.io/enable: "true"
     hajimari.io/icon: filmstrip
 spec:
   tls:
