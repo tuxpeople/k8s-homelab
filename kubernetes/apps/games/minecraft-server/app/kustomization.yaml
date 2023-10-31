@@ -5,5 +5,16 @@ kind: Kustomization
 namespace: games
 resources:
   - ./helmrelease-creative.yaml
+  - ./helmrelease-family.yaml
   - ./helmrelease-survival.yaml
-  - ./grafana-dashboard.yaml
+  - ./monitoring.yaml
+  - ./backup-sa.yaml
+
+configMapGenerator:
+  - name: mc-backup-configmap
+    files:
+      - ./mc-backup.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

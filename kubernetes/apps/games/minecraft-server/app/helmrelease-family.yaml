@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app minecraft-server-creative
+  name: &app minecraft-server-family
 spec:
   interval: 15m
   chart:
@@ -65,7 +65,7 @@ spec:
       serviceType: LoadBalancer
       loadBalancerIP: ${METALLB_MINECRAFT1_ADDR}
       externalTrafficPolicy: Local
-      gameMode: creative
+      gameMode: family
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
       serverName: "Thomas' Creative Server"
       levelName: world
@@ -132,4 +132,4 @@ spec:
   #                 resources: {}
   #           target:
   #             kind: Deployment
-  #             name: minecraft-server-creative-minecraft-bedrock
+  #             name: minecraft-server-family-minecraft-bedrock
