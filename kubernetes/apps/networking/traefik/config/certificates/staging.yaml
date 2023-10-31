@@ -9,7 +9,10 @@ spec:
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
+  secretTemplate:
+    annotations:
+      kubed.appscode.com/sync: ""
   commonName: ${SECRET_DOMAIN}
   dnsNames:
     - ${SECRET_DOMAIN}
-    - '*.${SECRET_DOMAIN}'
+    - "*.${SECRET_DOMAIN}"
