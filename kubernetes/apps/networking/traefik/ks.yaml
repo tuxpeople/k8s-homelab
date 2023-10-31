@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-traefik
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/system-upgrade/traefik/app
+  path: ./kubernetes/apps/traefik/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-traefik
-  path: ./kubernetes/apps/system-upgrade/traefik/config
+  path: ./kubernetes/apps/traefik/config
   prune: true
   sourceRef:
     kind: GitRepository
