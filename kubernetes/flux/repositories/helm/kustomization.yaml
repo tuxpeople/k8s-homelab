@@ -24,5 +24,6 @@ resources:
   - prometheus-community.yaml
   - rancher.yaml
   - stakater.yaml
+  - traefik-charts.yaml
   - vector-charts.yaml
   - weave-gitops.yaml

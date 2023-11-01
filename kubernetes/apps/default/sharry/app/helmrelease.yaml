@@ -29,7 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: ingress-nginx
+    - name: traefik
       namespace: networking
   values:
     image:
@@ -136,20 +136,19 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: traefik
         annotations:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
-          nginx.ingress.kubernetes.io/proxy-body-size: '0'
           hajimari.io/icon: file-arrow-up-down-outline
         hosts:
-          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
               - *host
-            secretName: ${SECRET_DOMAIN//./-}-tls
+            secretName: ${SECRET_DOMAIN/./-}-production-tls
     resources:
       requests:
         cpu: 5m

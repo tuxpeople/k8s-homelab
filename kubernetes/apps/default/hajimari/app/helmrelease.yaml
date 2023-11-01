@@ -29,7 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: ingress-nginx
+    - name: traefik
       namespace: networking
   values:
     hajimari:
@@ -53,9 +53,9 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: traefik
         annotations:
-          hajimari.io/enable: 'false'
+          hajimari.io/enable: "false"
         hosts:
           - host: &host hajimari.${SECRET_DOMAIN}
             paths:
