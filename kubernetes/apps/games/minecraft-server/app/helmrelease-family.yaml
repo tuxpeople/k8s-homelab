@@ -112,12 +112,33 @@ spec:
                     - name: backup
                       image: registry.eighty-three.me/tuxpeople/kubernetes-kubectl:1.28.3
                       command:
-                        - /bin/sh
+                        - /bin/bash
                       args:
                         - -c
                         - |
                           kubectl exec svc/{{ template "minecraft.fullname" . }} -- /usr/bin/bash -c "bash /scripts/mc-backup.sh"
+                          echo "Convert backups to .mcworld files"
+                          BASEDIR="/backup/minecraft_backup"
+                          cd $BASEDIR
+                          for ARCHIVE in $(find . -type f -name *.tar.gz); do
+                              MYDIR=$(dirname $ARCHIVE)
+                              MYNAME=$(basename $ARCHIVE .tar.gz)
+                              cd $MYDIR
+                              tar xzf $MYNAME.tar.gz && zip $MYNAME.mcworld $(tar tf $MYNAME.tar.gz | grep -v '\./$') && rm -rf -- $(tar tf $MYNAME.tar.gz | grep -v '\./$')
+                              touch -r $MYNAME.tar.gz $MYNAME.mcworld
+                              rm -f $MYNAME.tar.gz
+                              stat --format="Created mcworld file: '%n', size: %s bytes" "$MYNAME.mcworld"
+                              cd $BASEDIR
+                          done
+                      volumeMounts:
+                        - name: nfs
+                          mountPath: /backup/minecraft_backup
                   restartPolicy: OnFailure
+                  volumes:
+                    - name: nfs
+                      nfs:
+                        server: 10.20.30.40
+                        path: /volume2/data/backup/kubernetes/minecraft_backup
 
   # postRenderers:
   #   # Instruct helm-controller to use built-in "kustomize" post renderer.
