@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
         - name: tautulli-exporter
-          image: ghcr.io/tuxpeople/tautulli-exporter:0.1.0
+          image: registry.eighty-three.me/tuxpeople/tautulli-exporter:0.1.0
           imagePullPolicy: Always
           env:
             - name: SERVE_PORT

@@ -59,7 +59,7 @@ spec:
       configmap.reloader.stakater.com/reload: mc-backup-configmap
     minecraftServer:
       eula: "TRUE"
-      version: "LATEST"
+      version: LATEST
       enableLanVisibility: false
       serviceType: LoadBalancer
       loadBalancerIP: ${METALLB_MINECRAFT2_ADDR}
@@ -68,7 +68,7 @@ spec:
       # One of: peaceful, easy, normal, and hard
       difficulty: peaceful
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
-      serverName: "Thomas' Survival Server"
+      serverName: Thomas' Survival Server
       levelName: world
       # memory: 2048M
     rcon:
@@ -91,11 +91,13 @@ spec:
             configMap:
               name: mc-backup-configmap
     extraDeploy:
-      - |
+      - |-
         apiVersion: batch/v1
         kind: CronJob
         metadata:
           name: {{ template "minecraft.fullname" . }}-backup
+          annotations:
+            kustomize.toolkit.fluxcd.io/substitute: disabled
         spec:
           schedule: "@hourly"
           concurrencyPolicy: Forbid
@@ -109,7 +111,7 @@ spec:
                   serviceAccountName: backup-sa
                   containers:
                     - name: backup
-                      image: ghcr.io/onedr0p/kubernetes-kubectl:1.28.3
+                      image: registry.eighty-three.me/tuxpeople/kubernetes-kubectl:1.28.3
                       command:
                         - /bin/sh
                       args:

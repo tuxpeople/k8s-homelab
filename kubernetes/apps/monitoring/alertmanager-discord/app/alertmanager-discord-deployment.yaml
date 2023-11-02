@@ -14,7 +14,7 @@ spec:
         app: alertmanager-discord
     spec:
       containers:
-        - image: ghcr.io/tuxpeople/alertmanager-discord:null
+        - image: registry.eighty-three.me/tuxpeople/alertmanager-discord:null
           imagePullPolicy: Always
           name: main
           ports:

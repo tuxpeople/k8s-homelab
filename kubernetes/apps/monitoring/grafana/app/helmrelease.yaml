@@ -31,7 +31,7 @@ spec:
   dependsOn:
     - name: local-path-provisioner
       namespace: kube-system
-    - name: traefik
+    - name: ingress-nginx
       namespace: networking
   values:
     admin:
@@ -120,7 +120,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: traefik
+      ingressClassName: nginx
       annotations:
         hajimari.io/icon: simple-icons:grafana
       hosts:

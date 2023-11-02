@@ -34,13 +34,13 @@ spec:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
-          schedule: "@hourly"
+          schedule: '@hourly'
         containers:
           main:
             image:
               repository: ghcr.io/onedr0p/kubernetes-kubectl
               tag: 1.28.3@sha256:6b68063623c22be538727998ccc1bf0433ea71c7a73f73e3f2250896a390901a
-            command: ["/bin/bash", "/app/cloudflare-ddns.sh"]
+            command: [/bin/bash, /app/cloudflare-ddns.sh]
             env:
               CLOUDFLARE_APIKEY:
                 valueFrom:

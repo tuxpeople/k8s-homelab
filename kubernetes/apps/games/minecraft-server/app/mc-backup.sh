@@ -142,7 +142,7 @@ sendcommand save resume || exit 1
 # Compress backup
 echo "Compressing backup..."
 cd "${BACKUP_DIR}/${WORLD_DIR}" || exit 1
-tar czvf "${BACKUP_DATETIME}.tar.gz" "${BACKUP_DATETIME}"  | stdbuf -o0 awk '{print "  + " $0}'
+tar -C "${BACKUP_DATETIME}" -czvf "${BACKUP_DATETIME}.tar.gz" .  | stdbuf -o0 awk '{print "  + " $0}'
 
 # Delete old backups
 echo "Deleting older backups"

@@ -42,11 +42,11 @@ spec:
         journal_logs:
           type: vector
           address: 0.0.0.0:6000
-          version: "2"
+          version: '2'
         kubernetes_logs:
           type: vector
           address: 0.0.0.0:6010
-          version: "2"
+          version: '2'
         vector_metrics:
           type: internal_metrics
       transforms:

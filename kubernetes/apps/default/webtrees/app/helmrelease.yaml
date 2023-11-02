@@ -29,7 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: traefik
+    - name: ingress-nginx
       namespace: networking
     - name: webtrees-db
       namespace: default
@@ -46,12 +46,12 @@ spec:
         volumeMounts:
           - { name: modules, mountPath: /var/www/html/modules_v4 }
         command: [
-          sh,
-          -c,
-          cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip
-          -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip;
-          rm -f /tmp/webtrees-theme-modern.0.0.9.zip,
-        ]
+            sh,
+            -c,
+            cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip
+            -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip;
+            rm -f /tmp/webtrees-theme-modern.0.0.9.zip,
+          ]
     env:
       DISABLE_SSL: "TRUE"
       PRETTYURLSl: "TRUE"
@@ -95,9 +95,15 @@ spec:
     ingress:
       main:
         annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: default-forwardauth-authelia@kubernetescrd
+          nginx.ingress.kubernetes.io/auth-method: GET
+          nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
+          nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            proxy_set_header X-Forwarded-Method $request_method;
+            proxy_set_header X-Forwarded-Scheme $scheme;
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
