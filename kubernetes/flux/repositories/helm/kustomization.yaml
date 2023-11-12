@@ -23,6 +23,7 @@ resources:
   - minio.yaml
   - prometheus-community.yaml
   - rancher.yaml
+  - s3gw-charts.yaml
   - stakater.yaml
   - traefik-charts.yaml
   - vector-charts.yaml
