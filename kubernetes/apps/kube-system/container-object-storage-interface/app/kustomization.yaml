@@ -5,4 +5,6 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - https://github.com/kubernetes-sigs/container-object-storage-interface-api
-  - https://github.com/tuxpeople/container-object-storage-interface-controller/blob/patch-1/
+  - resources/sa.yaml
+  - resources/rbac.yaml
+  - resources/deployment.yaml
