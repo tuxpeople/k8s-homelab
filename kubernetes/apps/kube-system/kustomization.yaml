@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cilium/ks.yaml
+  - container-object-storage-interface/ks.yaml
   - kubed/ks.yaml
   - kured/ks.yaml
   - local-path-provisioner/ks.yaml
