@@ -6,3 +6,6 @@ namespace: kube-system
 resources:
   - https://github.com/kubernetes-sigs/container-object-storage-interface-api
   - https://github.com/tuxpeople/container-object-storage-interface-controller/blob/patch-1/
+images:
+  - name: gcr.io/k8s-staging-sig-storage/objectstorage-controller
+    newTag: v20231109-v0.1.2-alpha1-8-g7e7b773
