@@ -45,7 +45,7 @@ jobs:
           kustomize build /tmp/cilium/ > $GITHUB_WORKSPACE/provision/ansible/playbooks/templates/cilium-installation.yaml.j2
           echo "::set-output name=cilium_version::$VERSION"
       - name: Create pull request for Cilium base-install upgrade
-        uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04  # v4
+        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: cilium/upgrade-${{ steps.upgrade.outputs.cilium_version }}
