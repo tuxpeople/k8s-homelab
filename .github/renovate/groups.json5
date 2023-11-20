@@ -21,6 +21,16 @@
       "packagePatterns": ["^ghcr.io\\/linuxserver\\/"],
       "versionScheme": "regex:^(?!.*(nig(ht|th)ly|develop|development))(?<compatibility>[a-z]*-|v)?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:[\.-]?(?<build>.*))?$",
       "allowedVersions": "< 2000"
+    },
+    {
+      "description": "Rook-Ceph Group",
+      "groupName": "Rook-Ceph",
+      "matchPackagePatterns": ["rook.ceph"],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
     }
   ]
 }
