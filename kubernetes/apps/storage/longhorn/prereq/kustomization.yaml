@@ -1,0 +1,10 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # renovate: datasource=docker image=longhornio/longhorn-manager
+  - https://github.com/longhorn/longhorn/blob/v1.5.3/deploy/prerequisite/longhorn-iscsi-installation.yaml
+commonLabels:
+  app.kubernetes.io/name: longhorn
+  app.kubernetes.io/instance: longhorn

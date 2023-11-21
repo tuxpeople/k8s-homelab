@@ -1,0 +1,5 @@
+disk_additional_disks:
+  - disk: /dev/sda
+    fstype: ext4
+    mount_options: defaults
+    mount: /var/lib/longhorn
