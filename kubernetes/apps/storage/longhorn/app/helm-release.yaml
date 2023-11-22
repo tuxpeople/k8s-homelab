@@ -45,7 +45,7 @@ spec:
       defaultDataLocality: best-effort
       defaultReplicaCount: 2
       defaultLonghornStaticStorageClass: longhorn
-      createDefaultDiskLabeledNodes: true
+      createDefaultDiskLabeledNodes: false
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       storageMinimalAvailablePercentage: 10
