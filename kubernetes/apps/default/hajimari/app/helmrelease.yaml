@@ -47,9 +47,11 @@ spec:
         matchNames:
           - default
           - flux-system
+          - kube-system
           - media
           - monitoring
           - networking
+          - storage
     ingress:
       main:
         enabled: true
