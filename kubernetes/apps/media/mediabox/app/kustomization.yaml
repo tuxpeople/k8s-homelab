@@ -17,3 +17,4 @@ resources:
   - sonarr-exporter.yaml
   - tautulli-exporter.yaml
   - prowlarr-exporter.yaml
+  - podsync-ingress.yaml

@@ -30,6 +30,10 @@ spec:
       port: 8484
       protocol: TCP
       targetPort: 8484
+    - name: podsync
+      port: 8888
+      protocol: TCP
+      targetPort: 8888
     - name: bazarr
       port: 6767
       protocol: TCP
