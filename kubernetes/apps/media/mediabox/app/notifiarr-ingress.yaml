@@ -5,9 +5,16 @@ metadata:
   name: notifiarr
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-method: GET
+    nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
+    nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
+    nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_set_header X-Forwarded-Method $request_method;
+      proxy_set_header X-Forwarded-Scheme $scheme;
     external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
-    external-dns/is-public: 'true'
-    hajimari.io/enable: 'true'
+    external-dns/is-public: "true"
+    hajimari.io/enable: "true"
     hajimari.io/icon: filmstrip
 spec:
   tls:
