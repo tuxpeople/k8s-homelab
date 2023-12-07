@@ -60,14 +60,14 @@ spec:
       configmap.reloader.stakater.com/reload: mc-backup-configmap
     minecraftServer:
       eula: "TRUE"
-      version: "LATEST"
+      version: LATEST
       enableLanVisibility: false
       serviceType: LoadBalancer
       loadBalancerIP: ${METALLB_MINECRAFT1_ADDR}
       externalTrafficPolicy: Local
       gameMode: creative
       icon: https://www.freeiconspng.com/uploads/minecraft-server-icon-13.png
-      serverName: "Thomas' Creative Server"
+      serverName: Thomas' Creative Server
       levelName: world
       # memory: 2048M
     rcon:
@@ -95,6 +95,8 @@ spec:
         kind: CronJob
         metadata:
           name: {{ template "minecraft.fullname" . }}-backup
+          annotations:
+            kustomize.toolkit.fluxcd.io/substitute: disabled
         spec:
           schedule: "@hourly"
           concurrencyPolicy: Forbid
@@ -108,15 +110,35 @@ spec:
                   serviceAccountName: backup-sa
                   containers:
                     - name: backup
-                      image: ghcr.io/onedr0p/kubernetes-kubectl:1.28.3
+                      image: registry.eighty-three.me/tuxpeople/kubernetes-kubectl:1.28.3
                       command:
-                        - /bin/sh
+                        - /bin/bash
                       args:
                         - -c
                         - |
                           kubectl exec svc/{{ template "minecraft.fullname" . }} -- /usr/bin/bash -c "bash /scripts/mc-backup.sh"
+                          echo "Convert backups to .mcworld files"
+                          BASEDIR="/backup/minecraft_backup"
+                          cd $BASEDIR
+                          for ARCHIVE in $(find . -type f -name *.tar.gz); do
+                              MYDIR=$(dirname $ARCHIVE)
+                              MYNAME=$(basename $ARCHIVE .tar.gz)
+                              cd $MYDIR
+                              tar xzf $MYNAME.tar.gz && zip $MYNAME.mcworld $(tar tf $MYNAME.tar.gz | grep -v '\./$') && rm -rf -- $(tar tf $MYNAME.tar.gz | grep -v '\./$')
+                              touch -r $MYNAME.tar.gz $MYNAME.mcworld
+                              rm -f $MYNAME.tar.gz
+                              stat --format="Created mcworld file: '%n', size: %s bytes" "$MYNAME.mcworld"
+                              cd $BASEDIR
+                          done
+                      volumeMounts:
+                        - name: nfs
+                          mountPath: /backup/minecraft_backup
                   restartPolicy: OnFailure
-
+                  volumes:
+                    - name: nfs
+                      nfs:
+                        server: 10.20.30.40
+                        path: /volume2/data/backup/kubernetes/minecraft_backup
   # postRenderers:
   #   # Instruct helm-controller to use built-in "kustomize" post renderer.
   #   - kustomize:

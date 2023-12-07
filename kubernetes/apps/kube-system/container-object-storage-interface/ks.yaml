@@ -3,12 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-minecraft-server
+  name: cluster-apps-container-object-storage-interface
   namespace: flux-system
 spec:
-  # dependsOn:
-  #   - name: cluster-apps-vector-aggregator
-  path: ./kubernetes/apps/games/minecraft-server/app
+  path: ./kubernetes/apps/kube-system/container-object-storage-interface/app
   prune: true
   sourceRef:
     kind: GitRepository

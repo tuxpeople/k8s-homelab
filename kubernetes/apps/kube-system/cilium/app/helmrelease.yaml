@@ -61,7 +61,7 @@ spec:
         rollOutPods: true
         ingress:
           enabled: true
-          className: traefik
+          className: nginx
           hosts:
             - &host hubble.${SECRET_DOMAIN}
           tls:

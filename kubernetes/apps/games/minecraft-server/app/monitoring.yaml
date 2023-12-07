@@ -18,7 +18,7 @@ spec:
           image: itzg/mc-monitor
           env:
             - name: DEBUG
-              value: "true"
+              value: 'true'
             - name: EXPORT_BEDROCK_SERVERS
               value: minecraft-server-creative-minecraft-bedrock,minecraft-server-survival-minecraft-bedrock
           args:
@@ -62,7 +62,7 @@ kind: ConfigMap
 metadata:
   name: minecraft-dashboard
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: '1'
     app: mc-monitor
   annotations:
     grafana_folder: Games

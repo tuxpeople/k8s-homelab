@@ -9,7 +9,7 @@ spec:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: loki
-      version: 5.35.0
+      version: 5.36.3
       sourceRef:
         kind: HelmRepository
         name: grafana
@@ -38,7 +38,7 @@ spec:
           grpc_listen_port: 9095
 
         memberlist:
-          join_members: ["loki-memberlist"]
+          join_members: [loki-memberlist]
 
         limits_config:
           retention_period: 60d
@@ -57,7 +57,7 @@ spec:
 
         schema_config:
           configs:
-            - from: "2022-01-11"
+            - from: '2022-01-11'
               store: boltdb-shipper
               object_store: s3
               schema: v12
@@ -131,15 +131,15 @@ spec:
                 topologyKey: kubernetes.io/hostname
       ingress:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: nginx
         hosts:
-          - host: "loki.${SECRET_DOMAIN}"
+          - host: loki.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "loki.${SECRET_DOMAIN}"
+              - loki.${SECRET_DOMAIN}
 
     write:
       replicas: 1
@@ -156,8 +156,8 @@ spec:
         size: 10Gi
         storageClass: local-path
       tolerations:
-        - key: "arm"
-          operator: "Exists"
+        - key: arm
+          operator: Exists
 
     read:
       replicas: 1
@@ -180,8 +180,8 @@ spec:
         - name: rules
           emptyDir: {}
       tolerations:
-        - key: "arm"
-          operator: "Exists"
+        - key: arm
+          operator: Exists
 
     backend:
       replicas: 1
@@ -207,7 +207,7 @@ spec:
           kustomize.toolkit.fluxcd.io/substitute: disabled
           grafana_folder: Loki
         labels:
-          grafana_dashboard: "true"
+          grafana_dashboard: 'true'
       rules:
         enabled: false
       serviceMonitor:

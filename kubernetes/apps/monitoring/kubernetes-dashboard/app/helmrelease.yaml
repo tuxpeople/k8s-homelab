@@ -29,7 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: traefik
+    - name: ingress-nginx
       namespace: networking
   values:
     env:
@@ -41,7 +41,7 @@ spec:
       - --token-ttl=43200
     ingress:
       enabled: true
-      className: traefik
+      className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-staging
         hajimari.io/icon: mdi:kubernetes

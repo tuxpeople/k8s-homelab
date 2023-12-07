@@ -3,8 +3,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: ingress-nginx
+  name: s3gw-charts
   namespace: flux-system
 spec:
-  interval: 1h
-  url: https://kubernetes.github.io/ingress-nginx
+  interval: 5m
+  url: https://aquarist-labs.github.io/s3gw-charts/

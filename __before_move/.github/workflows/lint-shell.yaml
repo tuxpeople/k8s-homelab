@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c  # v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: Get changes
         uses: dorny/paths-filter@v2
         id: filter
@@ -20,6 +20,6 @@ jobs:
               - added|modified: "**.sh"
       - name: Lint files
         if: ${{ steps.filter.outputs.shell == 'true' }}
-        uses: reviewdog/action-shellcheck@f52d78284b4941028952125a10c76676c3d456eb  # v1
+        uses: reviewdog/action-shellcheck@96fa305c16b0f9cc9b093af22dcd09de1c8f1c2d # v1
         with:
           shellcheck_flags: ${{ steps.filter.outputs.shell_files }}

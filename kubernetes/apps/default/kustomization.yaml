@@ -9,5 +9,6 @@ resources:
   - echo-server/ks.yaml
   - hajimari/ks.yaml
   - octoprint/ks.yaml
+  - s3gw/ks.yaml
   - sharry/ks.yaml
   - webtrees/ks.yaml

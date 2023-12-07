@@ -29,7 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: traefik
+    - name: ingress-nginx
       namespace: networking
   values:
     image:
@@ -136,7 +136,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
           hajimari.io/icon: file-arrow-up-down-outline

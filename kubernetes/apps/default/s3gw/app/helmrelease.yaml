@@ -3,17 +3,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: reloader
-  namespace: &namespace kube-system
+  name: &app s3gw
+  namespace: default
 spec:
   interval: 15m
   chart:
     spec:
-      chart: reloader
-      version: 1.0.51
+      chart: s3gw
+      version: 0.22.0
       sourceRef:
         kind: HelmRepository
-        name: stakater
+        name: s3gw-charts
         namespace: flux-system
   maxHistory: 2
   install:
@@ -28,10 +28,3 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    fullnameOverride: reloader
-    reloader:
-      reloadStrategy: annotations
-      podMonitor:
-        enabled: true
-        namespace: *namespace
