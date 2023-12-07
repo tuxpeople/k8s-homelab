@@ -32,3 +32,6 @@ spec:
     publicDomain: s3gw.${SECRET_DOMAIN}
     ui:
       publicDomain: s3gw-ui.${SECRET_DOMAIN}
+    storageClass:
+      name: s3gw
+      create: true
