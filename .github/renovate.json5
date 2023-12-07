@@ -50,6 +50,17 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( registryUrl=(?<registryUrl>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    },
+    {
+      "description": "Process k3s and similiar dependencies",
+      "fileMatch": [
+        "ansible/.+\\.ya?ml(\\.j2)?$",
+        "kubernetes/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( registryUrl=(?<registryUrl>\\S+))?\n *version: (?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
     }
   ],
   "packageRules": [
