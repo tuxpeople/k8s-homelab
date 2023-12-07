@@ -47,15 +47,17 @@ spec:
         matchNames:
           - default
           - flux-system
+          - kube-system
           - media
           - monitoring
           - networking
+          - storage
     ingress:
       main:
         enabled: true
         ingressClassName: traefik
         annotations:
-          hajimari.io/enable: 'false'
+          hajimari.io/enable: "false"
         hosts:
           - host: &host hajimari.${SECRET_DOMAIN}
             paths:
