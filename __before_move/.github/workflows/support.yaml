@@ -8,9 +8,9 @@ on:
       - reopened
 jobs:
   support:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: dessant/support-requests@b1303caf4438e66dea1130aa4c30189dc28e690d  # v3
+      - uses: dessant/support-requests@47d5ea12f6c9e4a081637de9626b7319b415a3bf # v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           support-label: support
