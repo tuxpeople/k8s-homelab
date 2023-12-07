@@ -7,7 +7,6 @@ spec:
   interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: loki
       version: 5.39.0
       sourceRef:
@@ -57,7 +56,7 @@ spec:
 
         schema_config:
           configs:
-            - from: '2022-01-11'
+            - from: "2022-01-11"
               store: boltdb-shipper
               object_store: s3
               schema: v12
@@ -207,7 +206,7 @@ spec:
           kustomize.toolkit.fluxcd.io/substitute: disabled
           grafana_folder: Loki
         labels:
-          grafana_dashboard: 'true'
+          grafana_dashboard: "true"
       rules:
         enabled: false
       serviceMonitor:
