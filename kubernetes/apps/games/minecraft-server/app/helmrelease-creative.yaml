@@ -59,7 +59,7 @@ spec:
     podAnnotations:
       configmap.reloader.stakater.com/reload: mc-backup-configmap
     minecraftServer:
-      eula: "TRUE"
+      eula: 'TRUE'
       version: LATEST
       enableLanVisibility: false
       serviceType: LoadBalancer

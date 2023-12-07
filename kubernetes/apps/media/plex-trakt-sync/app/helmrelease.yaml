@@ -33,7 +33,7 @@ spec:
       main:
         strategy: Recreate
         annotations:
-          reloader.stakater.com/auto: "true"
+          reloader.stakater.com/auto: 'true'
 
         pod:
           enableServiceLinks: false
@@ -74,9 +74,9 @@ spec:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
-          schedule: "@daily"
+          schedule: '@daily'
         annotations:
-          reloader.stakater.com/auto: "true"
+          reloader.stakater.com/auto: 'true'
 
         pod:
           enableServiceLinks: false

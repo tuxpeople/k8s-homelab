@@ -34,7 +34,7 @@ spec:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
-          schedule: "@hourly"
+          schedule: '@hourly'
         containers:
           main:
             image:

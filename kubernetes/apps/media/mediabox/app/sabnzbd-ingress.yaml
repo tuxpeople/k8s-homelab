@@ -4,8 +4,7 @@ kind: Ingress
 metadata:
   name: sabnzbd
   annotations:
-    kubernetes.io/ingress.class: nginx
-
+    kubernetes.io/ingress.class: traefik
     hajimari.io/enable: 'true'
     hajimari.io/icon: cloud-download
 spec:

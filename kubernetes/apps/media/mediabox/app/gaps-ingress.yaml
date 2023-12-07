@@ -4,8 +4,7 @@ kind: Ingress
 metadata:
   name: gaps
   annotations:
-    kubernetes.io/ingress.class: nginx
-
+    kubernetes.io/ingress.class: traefik
     hajimari.io/enable: 'true'
     hajimari.io/icon: filmstrip
 spec:

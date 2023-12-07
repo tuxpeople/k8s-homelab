@@ -29,7 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: ingress-nginx
+    - name: traefik
       namespace: networking
     - name: webtrees-db
       namespace: default
@@ -44,20 +44,16 @@ spec:
         image: busybox
         imagePullPolicy: IfNotPresent
         volumeMounts:
-          - { name: modules, mountPath: /var/www/html/modules_v4 }
-        command: [
-            sh,
-            -c,
-            cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip
-            -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip;
-            rm -f /tmp/webtrees-theme-modern.0.0.9.zip,
-          ]
+          - {name: modules, mountPath: /var/www/html/modules_v4}
+        command: [sh, -c, cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip
+              -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip;
+              rm -f /tmp/webtrees-theme-modern.0.0.9.zip]
     env:
-      DISABLE_SSL: "TRUE"
-      PRETTYURLSl: "TRUE"
-      ENABLE_REMOTE_USER: "TRUE"
+      DISABLE_SSL: 'TRUE'
+      PRETTYURLSl: 'TRUE'
+      ENABLE_REMOTE_USER: 'TRUE'
       HEADER_AUTH_VAR: Remote-User
-      PORT: "80"
+      PORT: '80'
       BASE_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
       DB_HOST: webtrees-db-mariadb
       DB_NAME: webtrees
@@ -103,9 +99,9 @@ spec:
             proxy_set_header X-Forwarded-Method $request_method;
             proxy_set_header X-Forwarded-Scheme $scheme;
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: traefik
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix
