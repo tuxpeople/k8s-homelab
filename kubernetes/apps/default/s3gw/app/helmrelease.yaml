@@ -28,3 +28,5 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  values:
+    publicDomain: s3gw.${SECRET_DOMAIN}
