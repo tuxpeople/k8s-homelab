@@ -30,3 +30,5 @@ spec:
     keepHistory: false
   values:
     publicDomain: s3gw.${SECRET_DOMAIN}
+    ui:
+      publicDomain: s3gw-ui.${SECRET_DOMAIN}
