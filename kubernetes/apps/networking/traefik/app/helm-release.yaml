@@ -95,9 +95,6 @@ spec:
         #  sniStrict: true  # TODO
     pilot:
       enabled: false
-    experimental:
-      plugins:
-        enabled: true
     resources:
       requests:
         memory: 100Mi
