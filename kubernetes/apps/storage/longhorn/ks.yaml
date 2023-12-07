@@ -3,15 +3,53 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-longhorn
+  name: cluster-apps-longhorn-prereq
   namespace: flux-system
 spec:
+  path: ./kubernetes/apps/storage/longhorn/prereq
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  wait: true  # no flux ks dependents
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-longhorn-app
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-longhorn-prereq
   path: ./kubernetes/apps/storage/longhorn/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+# ---
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: cluster-apps-longhorn-conf
+#   namespace: flux-system
+# spec:
+#   dependsOn:
+#     - name: cluster-apps-longhorn-app
+#   path: ./kubernetes/apps/storage/longhorn/conf
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: k8s-homelab
+#   wait: false  # no flux ks dependents
+#   interval: 30m
+#   retryInterval: 1m
+#   timeout: 5m
