@@ -35,6 +35,6 @@ spec:
             privileged: true
       containers:
         - name: sleep
-          image: registry.k8s.io/pause:3.1
+          image: registry.k8s.io/pause:3.9
   updateStrategy:
     type: RollingUpdate
