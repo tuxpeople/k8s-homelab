@@ -63,7 +63,7 @@ spec:
           # external-dns/is-public: "true"
           # external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix

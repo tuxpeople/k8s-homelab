@@ -58,14 +58,14 @@ spec:
     ingress:
       enabled: true
       ingressClassName: traefik
-      host: "longhorn.${SECRET_DOMAIN}"
+      host: longhorn.${SECRET_DOMAIN}
       tlsSecret: ${SECRET_DOMAIN/./-}-production-tls
       tls: true
       path: /
       annotations:
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "cow"
-        hajimari.io/appName: "Longhorn"
+        hajimari.io/enable: 'true'
+        hajimari.io/icon: cow
+        hajimari.io/appName: Longhorn
         # hajimari.io/targetBlank: "true"
         # hajimari.io/info: "Storage"
     # longhornManager:

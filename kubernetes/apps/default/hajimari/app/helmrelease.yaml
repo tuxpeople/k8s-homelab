@@ -57,7 +57,7 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          hajimari.io/enable: "false"
+          hajimari.io/enable: 'false'
         hosts:
           - host: &host hajimari.${SECRET_DOMAIN}
             paths:
