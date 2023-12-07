@@ -8,7 +8,7 @@ spec:
     name: mariadb
     key: root-password
 
-  image: mariadb:11.1.3
+  image: mariadb:11.2.2
 
   port: 3306
 
