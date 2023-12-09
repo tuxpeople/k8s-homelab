@@ -5,7 +5,8 @@ metadata:
   name: sabnzbd
   annotations:
     kubernetes.io/ingress.class: traefik
-    hajimari.io/enable: 'true'
+    traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
+    hajimari.io/enable: "true"
     hajimari.io/icon: cloud-download
 spec:
   tls:
