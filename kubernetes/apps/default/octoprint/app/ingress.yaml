@@ -6,8 +6,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
-    external-dns/is-public: "true"
-    hajimari.io/enable: "true"
+    external-dns/is-public: 'true'
+    hajimari.io/enable: 'true'
     hajimari.io/icon: printer-3d-nozzle
     # traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
 spec:
