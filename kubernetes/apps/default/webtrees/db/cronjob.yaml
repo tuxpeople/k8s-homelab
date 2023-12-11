@@ -18,7 +18,7 @@ spec:
               image: alpine
               env:
                 - name: DATABASES
-                  value: ""
+                  value: webtrees
                 - name: MARIADB_HOST
                   value: webtrees-db-mariadb
                 - name: MARIADB_USER
