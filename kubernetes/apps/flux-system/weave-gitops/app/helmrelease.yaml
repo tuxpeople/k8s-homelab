@@ -29,6 +29,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    additionalArgs:
+      - --auth-methods=oidc
     adminUser:
       create: true
       createSecret: false
@@ -54,4 +56,4 @@ spec:
       create: true
       impersonationResourceNames: [admin]
     podAnnotations:
-      secret.reloader.stakater.com/reload: cluster-user-auth
+      secret.reloader.stakater.com/reload: "auto"
