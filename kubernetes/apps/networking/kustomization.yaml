@@ -11,3 +11,4 @@ resources:
   - metallb/ks.yaml
   - phpipam/ks.yaml
   - traefik/ks.yaml
+  - vpn/ks.yaml
