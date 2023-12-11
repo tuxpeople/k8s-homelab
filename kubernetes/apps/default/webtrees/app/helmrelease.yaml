@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.3.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -34,92 +34,101 @@ spec:
     - name: webtrees-db
       namespace: default
   values:
-    controller:
-      strategy: Recreate
-    image:
-      repository: docker.io/dtjs48jkt/webtrees
-      tag: 2.1.18
-    initContainers:
-      01-init-modules:
-        image: busybox
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-          - {name: modules, mountPath: /var/www/html/modules_v4}
-        command: [sh, -c, cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip
-              -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip;
-              rm -f /tmp/webtrees-theme-modern.0.0.9.zip]
-    env:
-      DISABLE_SSL: 'TRUE'
-      PRETTYURLSl: 'TRUE'
-      ENABLE_REMOTE_USER: 'TRUE'
-      HEADER_AUTH_VAR: Remote-User
-      PORT: '80'
-      BASE_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
-      DB_HOST: webtrees-db-mariadb
-      DB_NAME: webtrees
-      DB_USER: webtrees
-      DB_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            name: mariadb-secret
-            key: mariadb-password
-      WT_ADMINPW:
-        valueFrom:
-          secretKeyRef:
-            name: webtrees-admin-pass
-            key: password
+    controllers:
+      main:
+        strategy: Recreate
+        initContainers:
+          01-init-modules:
+            image: busybox
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+              - {name: modules, mountPath: /var/www/html/modules_v4}
+            command: [sh, -c, cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip
+                  -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip;
+                  rm -f /tmp/webtrees-theme-modern.0.0.9.zip]
+        containers:
+          main:
+            image:
+              repository: docker.io/dtjs48jkt/webtrees
+              tag: 2.1.18
+            env:
+              DISABLE_SSL: 'TRUE'
+              PRETTYURLSl: 'TRUE'
+              ENABLE_REMOTE_USER: 'TRUE'
+              HEADER_AUTH_VAR: Remote-User
+              PORT: '80'
+              BASE_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
+              DB_HOST: webtrees-db-mariadb
+              DB_NAME: webtrees
+              DB_USER: webtrees
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: mariadb-secret
+                    key: mariadb-password
+              WT_ADMINPW:
+                valueFrom:
+                  secretKeyRef:
+                    name: webtrees-admin-pass
+                    key: password
+            # probes:
+            #   liveness: &probes
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /
+            #         port: *port
+            #       initialDelaySeconds: 0
+            #       periodSeconds: 10
+            #       timeoutSeconds: 1
+            #       failureThreshold: 3
+            #   readiness: *probes
+            startup:
+              enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                memory: 500Mi
     service:
       main:
         ports:
           http:
             port: &port 80
-      # probes:
-      #   liveness: &probes
-      #     enabled: true
-      #     custom: true
-      #     spec:
-      #       httpGet:
-      #         path: /
-      #         port: *port
-      #       initialDelaySeconds: 0
-      #       periodSeconds: 10
-      #       timeoutSeconds: 1
-      #       failureThreshold: 3
-      #   readiness: *probes
-      startup:
-        enabled: false
     ingress:
       main:
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         hosts:
           - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    resources:
-      requests:
-        cpu: 5m
-        memory: 10Mi
-      limits:
-        memory: 500Mi
     persistence:
       data:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        mountPath: /var/www/html/data
-        subPath: data
         storageClass: local-path
+        globalMounts:
+          - path: /var/www/html/data
+            subPath: data
       modules:
         enabled: true
         type: emptyDir
         accessMode: ReadWriteOnce
         size: 5Gi
-        mountPath: /var/www/html/modules_v4
+        globalMounts:
+          - path: /var/www/html/modules_v4
+            subPath: modules_v4
