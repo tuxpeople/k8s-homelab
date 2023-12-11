@@ -4,7 +4,7 @@ kind: IngressRouteTCP
 metadata:
   name: sftpgo-sftp
   labels:
-    public: "true"
+    public: 'true'
 spec:
   entryPoints:
     - websecure

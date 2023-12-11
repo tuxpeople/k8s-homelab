@@ -5,7 +5,7 @@ metadata:
   name: webtrees-db-mariadb
 spec:
   suspend: true
-  schedule: "@daily"
+  schedule: '@daily'
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
