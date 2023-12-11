@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.3.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -32,107 +32,26 @@ spec:
     - name: traefik
       namespace: networking
   values:
-    image:
-      repository: eikek0/sharry
-      tag: v1.12.1
-    service:
+    controllers:
       main:
-        ports:
-          http:
-            port: &port 9090
-    args:
-      - /opt/sharry.conf
-    env:
-      TZ: ${TIMEZONE}
-    configMaps:
-      config:
-        enabled: true
-        data:
-          sharry.conf: |
-            sharry.restserver {
-              base-url = "https://sharry.${SECRET_DOMAIN}"
-              bind {
-                address = "0.0.0.0"
-                port = {{ .Values.service.main.ports.http.port }}
-              }
-            # How files are stored.
-            files {
-              # The id of an enabled store from the `stores` array that should
-              # be used.
-              default-store = "filesystem"
-              stores = {
-                filesystem =
-                  { enabled = true
-                    type = "file-system"
-                    directory = "/data"
-                    # If true, empty directories that can be left behind after deleting
-                    # a file are removed as well.
-                    clean-empty-dirs = true
-                  }
-              }
-              }
-              backend {
-                signup {
-                  mode = "closed"
-                }
-                auth {
-                  fixed {
-                    enabled = false  # set to true to enable this auth provider
-                    user = "admin"
-                    password = "admin"
-                    order = 10
-                  }
-                  oauth = [
-                      {
-                        enabled = true
-                        id = "authelia"
-                        name = "Homelab Account"
-                        icon = "fas fa-address-book"
-                        scope = "profile openid email",
-                        authorize-url = "https://auth.${SECRET_DOMAIN}/api/oidc/authorization"
-                        token-url = "https://auth.${SECRET_DOMAIN}/api/oidc/token"
-                        user-url = "https://auth.${SECRET_DOMAIN}/api/oidc/userinfo"
-                        user-id-key = "preferred_username"
-                        client-id = "sharry"
-                        client-secret = "${SECRET_OIDC_CLIENT_SECRET_SHARRY}"
-                      }
-                  ]
-                }
-              }
-              # Configures logging
-              logging {
-                # The format for the log messages. Can be one of:
-                # Json, Logfmt, Fancy or Plain
-                format = "Fancy"
-
-                # The minimum level to log. From lowest to highest:
-                # Trace, Debug, Info, Warn, Error
-                minimum-level = "Info"
-
-                # Override the log level of specific loggers
-                levels = {
-                  "sharry.restserver.oauth.CodeFlow" = "Trace"
-                  "sharry.restserver.routes.LoginRoutes" = "Trace"
-                }
-              }
-            }
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        subPath: sharry.conf
-        name: sharry-config
-        items:
-          - key: sharry.conf
-            path: sharry.conf
-        mountPath: /opt/sharry.conf
-      data:
-        enabled: true
-        type: pvc
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        mountPath: /data
-        storageClass: local-path
+        containers:
+          main:
+            annotations:
+              configMap.reloader.stakater.com/reload: *app
+              secret.reloader.stakater.com/reload: *app
+            args:
+              - /opt/sharry.conf
+            env:
+              TZ: ${TIMEZONE}
+            image:
+              repository: eikek0/sharry
+              tag: v1.12.1@sha256:a842c68ae215fd3407a33732d9588d56915e2fee2b1fc92cd310fe26e979122c
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 5m
+                memory: 10Mi
     ingress:
       main:
         enabled: true
@@ -141,7 +60,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
           hajimari.io/icon: file-arrow-up-down-outline
         hosts:
-          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -149,9 +68,21 @@ spec:
           - hosts:
               - *host
             secretName: ${SECRET_DOMAIN/./-}-production-tls
-    resources:
-      requests:
-        cpu: 5m
-        memory: 10Mi
-      limits:
-        memory: 1Gi
+    service:
+      main:
+        ports:
+          http:
+            port: 9090
+    persistence:
+      config-file:
+        globalMounts:
+          - path: /opt/sharry.conf
+            subPath: sharry.conf
+        name: *app
+        type: configMap
+      data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        storageClass: local-path
