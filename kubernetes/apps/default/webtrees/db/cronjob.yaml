@@ -2,11 +2,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: mariadb-backup
-  namespace: networking
+  name: webtrees-db-mariadb
 spec:
   suspend: true
-  schedule: '@daily'
+  schedule: "@daily"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
@@ -19,7 +18,7 @@ spec:
               image: alpine
               env:
                 - name: DATABASES
-                  value: ''
+                  value: ""
                 - name: MARIADB_HOST
                   value: webtrees-db-mariadb
                 - name: MARIADB_USER
