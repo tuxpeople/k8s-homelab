@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.3.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,9 +29,21 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: lscr.io/linuxserver/pwndrop
-      tag: 1.0.1-ls61
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: lscr.io/linuxserver/pwndrop
+              tag: 1.0.1-ls61
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                memory: 50Mi
+            env:
+              TZ: ${TIMEZONE}
     service:
       main:
         ports:
@@ -45,27 +57,21 @@ spec:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
           hajimari.io/icon: file-arrow-up-down-outline
         hosts:
-          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
             secretName: ${SECRET_DOMAIN/./-}-production-tls
-    resources:
-      requests:
-        cpu: 5m
-        memory: 10Mi
-      limits:
-        memory: 50Mi
     persistence:
-      data:
+      config:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        mountPath: /config
         storageClass: local-path
-    env:
-      TZ: ${TIMEZONE}
