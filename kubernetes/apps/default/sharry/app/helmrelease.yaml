@@ -45,7 +45,7 @@ spec:
               TZ: ${TIMEZONE}
             image:
               repository: eikek0/sharry
-              tag: v1.12.1@sha256:a842c68ae215fd3407a33732d9588d56915e2fee2b1fc92cd310fe26e979122c
+              tag: v1.12.1
             resources:
               limits:
                 memory: 1Gi
