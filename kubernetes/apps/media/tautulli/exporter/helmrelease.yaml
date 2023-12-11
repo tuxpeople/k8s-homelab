@@ -39,7 +39,7 @@ spec:
               tag: 0.1.0
             env:
               SERVE_PORT: &port 9487
-              TAUTULLI_URI: http://tautulli.media.svc.cluster.local:8181
+              TAUTULLI_URI: ${SECRET_TAUTULLI_URL}
               TAUTULLI_API_KEY: ${SECRET_TAUTULLI_API_KEY}
             resources:
               requests:
