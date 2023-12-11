@@ -5,14 +5,3 @@ kind: Kustomization
 namespace: media
 resources:
   - ./helmrelease.yaml
-commonLabels:
-  app.kubernetes.io/name: tautulli
-  app.kubernetes.io/instance: tautulli
-configMapGenerator:
-  - name: plex-tract-sync-configmap
-    files:
-      - ./config/config.yml
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
