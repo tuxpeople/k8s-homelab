@@ -6,6 +6,8 @@ metadata:
   name: cluster-apps-plex-trakt-sync
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/media/plex-trakt-sync/app
   prune: true
   sourceRef:

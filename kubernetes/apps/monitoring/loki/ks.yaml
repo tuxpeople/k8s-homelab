@@ -6,6 +6,8 @@ metadata:
   name: cluster-apps-loki
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/monitoring/loki/app
   prune: true
   sourceRef:

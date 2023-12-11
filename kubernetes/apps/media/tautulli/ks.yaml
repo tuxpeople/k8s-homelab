@@ -6,6 +6,8 @@ metadata:
   name: cluster-apps-tautulli
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/media/tautulli/app
   prune: true
   sourceRef:

@@ -6,6 +6,8 @@ metadata:
   name: cluster-apps-code-server
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/default/code-server/app
   prune: true
   sourceRef:

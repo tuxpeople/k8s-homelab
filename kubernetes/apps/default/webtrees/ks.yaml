@@ -6,14 +6,15 @@ metadata:
   name: cluster-apps-webtrees
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-webtrees-db
   path: ./kubernetes/apps/default/webtrees/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false  # no flux ks dependents
-  dependsOn:
-    - name: cluster-apps-webtrees-db
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -25,6 +26,8 @@ metadata:
   name: cluster-apps-webtrees-db
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/default/webtrees/db
   prune: true
   sourceRef:
