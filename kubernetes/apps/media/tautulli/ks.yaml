@@ -11,7 +11,26 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-tautulli-exporter
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-tautulli
+  path: ./kubernetes/apps/media/tautulli/exporter
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
