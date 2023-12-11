@@ -6,6 +6,8 @@ metadata:
   name: cluster-apps-vpn
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-traefik
   path: ./kubernetes/apps/networking/vpn/app
   prune: true
   sourceRef:
