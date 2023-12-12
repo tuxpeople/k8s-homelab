@@ -53,10 +53,10 @@ spec:
               PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
               PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: "Remote-User"
               # Configure folders
-              PAPERLESS_CONSUMPTION_DIR: /data/consume
-              PAPERLESS_DATA_DIR: /data/data
-              PAPERLESS_EXPORT_DIR: /data/export
-              PAPERLESS_MEDIA_ROOT: /data/media
+              PAPERLESS_CONSUMPTION_DIR: /nfs/consume
+              PAPERLESS_DATA_DIR: /nfs/data
+              PAPERLESS_EXPORT_DIR: /nfs/export
+              PAPERLESS_MEDIA_ROOT: /nfs/media
               # Configure folder importer
               PAPERLESS_CONSUMER_POLLING: "60"
               PAPERLESS_CONSUMER_RECURSIVE: "true"
@@ -108,9 +108,7 @@ spec:
               - *host
             secretName: ${SECRET_DOMAIN/./-}-production-tls
     persistence:
-      nas:
+      nfs:
         type: nfs
         server: 10.20.30.40
         path: /volume2/scanner
-        globalMounts:
-          - path: /data
