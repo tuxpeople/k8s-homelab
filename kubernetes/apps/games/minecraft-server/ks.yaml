@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-minecraft-server
   namespace: flux-system
 spec:
+  targetNamespace: games
   dependsOn:
     - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/games/minecraft-server/app

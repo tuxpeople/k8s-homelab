@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-tautulli
   namespace: flux-system
 spec:
+  targetNamespace: media
   dependsOn:
     - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/media/tautulli/app
@@ -25,6 +26,7 @@ metadata:
   name: cluster-apps-tautulli-exporter
   namespace: flux-system
 spec:
+  targetNamespace: media
   dependsOn:
     - name: cluster-apps-tautulli
   path: ./kubernetes/apps/media/tautulli/exporter

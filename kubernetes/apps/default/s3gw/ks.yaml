@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-s3gw
   namespace: flux-system
 spec:
+  targetNamespace: default
   path: ./kubernetes/apps/default/s3gw/app
   prune: true
   sourceRef:

@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-phpipam-db
   namespace: flux-system
 spec:
+  targetNamespace: networking
   dependsOn:
     - name: cluster-apps-mariadb-instance
   path: ./kubernetes/apps/networking/phpipam/phpipam-db
@@ -25,6 +26,7 @@ metadata:
   name: cluster-apps-phpipam-web
   namespace: flux-system
 spec:
+  targetNamespace: networking
   dependsOn:
     - name: cluster-apps-phpipam-db
   path: ./kubernetes/apps/networking/phpipam/phpipam-web

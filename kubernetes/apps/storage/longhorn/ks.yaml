@@ -6,12 +6,13 @@ metadata:
   name: cluster-apps-longhorn-prereq
   namespace: flux-system
 spec:
+  targetNamespace: storage
   path: ./kubernetes/apps/storage/longhorn/prereq
   prune: true
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: true  # no flux ks dependents
+  wait: true # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -23,6 +24,7 @@ metadata:
   name: cluster-apps-longhorn-app
   namespace: flux-system
 spec:
+  targetNamespace: storage
   dependsOn:
     - name: cluster-apps-longhorn-prereq
   path: ./kubernetes/apps/storage/longhorn/app

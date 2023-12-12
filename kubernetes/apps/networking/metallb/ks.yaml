@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-metallb
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/apps/networking/metallb/app
   prune: true
   sourceRef:
@@ -23,6 +24,7 @@ metadata:
   name: cluster-apps-metallb-config
   namespace: flux-system
 spec:
+  targetNamespace: networking
   dependsOn:
     - name: cluster-apps-metallb
   path: ./kubernetes/apps/networking/metallb/config

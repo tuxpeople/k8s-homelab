@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-alertmanager-discord
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/alertmanager-discord/app
   prune: true
   sourceRef:

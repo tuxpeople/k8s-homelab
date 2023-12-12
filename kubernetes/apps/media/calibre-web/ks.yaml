@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-calibre-web
   namespace: flux-system
 spec:
+  targetNamespace: media
   dependsOn:
     - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/media/calibre-web/app

@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-webtrees
   namespace: flux-system
 spec:
+  targetNamespace: default
   dependsOn:
     - name: cluster-apps-local-path-provisioner
     - name: cluster-apps-webtrees-db
@@ -26,6 +27,7 @@ metadata:
   name: cluster-apps-webtrees-db
   namespace: flux-system
 spec:
+  targetNamespace: default
   dependsOn:
     - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/default/webtrees/db

@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-k8s-gateway
   namespace: flux-system
 spec:
+  targetNamespace: networking
   dependsOn:
     - name: cluster-apps-metallb-config
   path: ./kubernetes/apps/networking/k8s-gateway/app
@@ -13,7 +14,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false  # no flux ks dependents
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m

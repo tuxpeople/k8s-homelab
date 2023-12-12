@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-container-object-storage-interface
   namespace: flux-system
 spec:
+  targetNamespace: kube-system
   path: ./kubernetes/apps/kube-system/container-object-storage-interface/app
   prune: true
   sourceRef:

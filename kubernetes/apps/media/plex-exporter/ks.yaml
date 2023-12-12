@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-plex-exporter
   namespace: flux-system
 spec:
+  targetNamespace: media
   path: ./kubernetes/apps/media/plex-exporter/app
   prune: true
   sourceRef:
