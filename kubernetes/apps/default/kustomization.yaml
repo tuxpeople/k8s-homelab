@@ -10,6 +10,6 @@ resources:
   - hajimari/ks.yaml
   - octoprint/ks.yaml
   - paperless/ks.yaml
-  # - s3gw/ks.yaml
+  - s3gw/ks.yaml
   - sharry/ks.yaml
   - webtrees/ks.yaml

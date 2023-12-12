@@ -16,6 +16,7 @@ resources:
   - k8s-gateway.yaml
   - kubereboot.yaml
   - kubernetes-dashboard.yaml
+  - kubernetes-sigs-descheduler-charts.yaml
   - longhorn.yaml
   - mariadb-operator.yaml
   - metallb.yaml
