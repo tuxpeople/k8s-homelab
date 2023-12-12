@@ -71,8 +71,8 @@ spec:
               # Configure OCR
               PAPERLESS_OCR_LANGUAGES: deu eng
               PAPERLESS_OCR_LANGUAGE: deu+eng
-              PAPERLESS_OCR_MODE: skip
-              PAPERLESS_OCR_SKIP_ARCHIVE_FILE: with_text
+              PAPERLESS_OCR_MODE: redo
+              #PAPERLESS_OCR_SKIP_ARCHIVE_FILE: with_text
               # Configure redis integration
               PAPERLESS_REDIS: redis://paperless-redis:6379
               # Configure admin user
