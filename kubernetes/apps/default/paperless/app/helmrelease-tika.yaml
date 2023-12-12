@@ -41,4 +41,4 @@ spec:
       main:
         ports:
           http:
-            port: 3009998
+            port: 9998
