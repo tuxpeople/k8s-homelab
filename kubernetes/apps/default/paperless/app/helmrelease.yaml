@@ -49,8 +49,8 @@ spec:
               PAPERLESS_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
               PAPERLESS_PORT: "8080"
               PAPERLESS_TIME_ZONE: ${TIMEZONE}
-              PAPERLESS_WEBSERVER_WORKERS: "2"
-              PAPERLESS_TASK_WORKERS: "2"
+              PAPERLESS_WEBSERVER_WORKERS: "1"
+              PAPERLESS_TASK_WORKERS: "1"
               PAPERLESS_TIKA_ENABLED: "1"
               PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
               PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
