@@ -3,17 +3,16 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: cert-manager
-  namespace: cert-manager
+  name: paperless-tika
 spec:
   interval: 15m
   chart:
     spec:
-      chart: cert-manager
-      version: v1.13.3
+      chart: app-template
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
-        name: jetstack
+        name: bjw-s
         namespace: flux-system
   maxHistory: 2
   install:
@@ -29,17 +28,17 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    installCRDs: true
-    extraArgs:
-      - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
-      - --dns01-recursive-nameservers-only
-    podDnsPolicy: None
-    podDnsConfig:
-      nameservers:
-        - 1.1.1.1
-        - 9.9.9.9
-    prometheus:
-      enabled: true
-      servicemonitor:
-        enabled: true
-        prometheusInstance: monitoring
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        containers:
+          main:
+            image:
+              repository: ghcr.io/paperless-ngx/tika
+              tag: 2.9.0-full
+    service:
+      main:
+        ports:
+          http:
+            port: 9998

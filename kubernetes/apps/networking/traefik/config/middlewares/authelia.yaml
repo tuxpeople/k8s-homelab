@@ -12,4 +12,3 @@ spec:
       - Remote-Name
       - Remote-Email
       - Remote-Groups
-      - X-Forwarded-User

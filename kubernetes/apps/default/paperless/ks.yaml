@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: paperless-redis
-  path: "./kubernetes/apps/default/paperless/redis"
+  path: ./kubernetes/apps/default/paperless/redis
   prune: true
   sourceRef:
     kind: GitRepository
@@ -33,12 +33,12 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: paperless
-  path: "./kubernetes/apps/default/paperless/app"
+  path: ./kubernetes/apps/default/paperless/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false # no flux ks dependents
+  wait: false  # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m

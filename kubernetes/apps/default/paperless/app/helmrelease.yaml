@@ -27,43 +27,52 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: paperless-gotenberg
+    - name: paperless-tika
   values:
     controllers:
       main:
         annotations:
-          reloader.stakater.com/auto: "true"
+          reloader.stakater.com/auto: 'true'
         containers:
           main:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
               tag: 2.1.1
             env:
-              # Configure application
               PAPERLESS_SECRET_KEY:
                 valueFrom:
                   secretKeyRef:
                     name: paperless-secret
                     key: PAPERLESS_SECRET_KEY
-              PAPERLESS_URL: https://*host
-              PAPERLESS_PORT: "*port"
-              PAPERLESS_TIME_ZONE: ${TZ}
-              PAPERLESS_WEBSERVER_WORKERS: "2"
-              PAPERLESS_TASK_WORKERS: "2"
+              PAPERLESS_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
+              PAPERLESS_PORT: '8080'
+              PAPERLESS_TIME_ZONE: ${TIMEZONE}
+              PAPERLESS_WEBSERVER_WORKERS: '2'
+              PAPERLESS_TASK_WORKERS: '2'
+              PAPERLESS_TIKA_ENABLED: '1'
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
+              PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
+              PAPERLESS_FILENAME_FORMAT: '{created_year}/{correspondent}/{created_year}-{created_month}-{created_day}
+                {title}'
               # Configure Remote User auth
-              PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
-              PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: "Remote-User"
+              PAPERLESS_ENABLE_HTTP_REMOTE_USER: 'true'
+              PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: Remote-User
+              PAPERLESS_LOGOUT_REDIRECT_URL: https://auth.${SECRET_DOMAIN}
               # Configure folders
-              PAPERLESS_CONSUMPTION_DIR: /data/consume
-              PAPERLESS_DATA_DIR: /data/data
-              PAPERLESS_EXPORT_DIR: /data/export
-              PAPERLESS_MEDIA_ROOT: /data/media
+              PAPERLESS_CONSUMPTION_DIR: /nfs/consume
+              PAPERLESS_DATA_DIR: /nfs/data
+              PAPERLESS_EXPORT_DIR: /nfs/export
+              PAPERLESS_MEDIA_ROOT: /nfs/media
               # Configure folder importer
-              PAPERLESS_CONSUMER_POLLING: "60"
-              PAPERLESS_CONSUMER_RECURSIVE: "true"
-              PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+              PAPERLESS_CONSUMER_POLLING: '60'
+              PAPERLESS_CONSUMER_RECURSIVE: 'true'
+              PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: 'true'
               # Configure OCR
-              PAPERLESS_OCR_LANGUAGES: "deu eng"
-              PAPERLESS_OCR_LANGUAGE: "deu+eng"
+              PAPERLESS_OCR_LANGUAGES: deu eng
+              PAPERLESS_OCR_LANGUAGE: deu+eng
+              PAPERLESS_OCR_MODE: skip_noarchive
               # Configure redis integration
               PAPERLESS_REDIS: redis://paperless-redis:6379
               # Configure admin user
@@ -87,7 +96,7 @@ spec:
       main:
         ports:
           http:
-            port: &port 8000
+            port: 8080
     ingress:
       main:
         enabled: true
@@ -96,7 +105,7 @@ spec:
           hajimari.io/icon: material-symbols:scanner-outline
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix
@@ -108,9 +117,7 @@ spec:
               - *host
             secretName: ${SECRET_DOMAIN/./-}-production-tls
     persistence:
-      nas:
+      nfs:
         type: nfs
         server: 10.20.30.40
         path: /volume2/scanner
-        globalMounts:
-          - path: /data
