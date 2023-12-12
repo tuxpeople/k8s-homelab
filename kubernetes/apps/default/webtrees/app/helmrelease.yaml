@@ -39,7 +39,9 @@ spec:
         strategy: Recreate
         initContainers:
           01-init-modules:
-            image: busybox
+            image:
+              repository: busybox
+              tag: latest
             imagePullPolicy: IfNotPresent
             volumeMounts:
               - {name: modules, mountPath: /var/www/html/modules_v4}
