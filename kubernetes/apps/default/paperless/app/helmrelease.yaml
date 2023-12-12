@@ -46,7 +46,7 @@ spec:
                     key: PAPERLESS_SECRET_KEY
               PAPERLESS_URL: https://*host
               PAPERLESS_PORT: "*port"
-              PAPERLESS_TIME_ZONE: ${TZ}
+              PAPERLESS_TIME_ZONE: ${TIMEZONE}
               PAPERLESS_WEBSERVER_WORKERS: "2"
               PAPERLESS_TASK_WORKERS: "2"
               # Configure Remote User auth
