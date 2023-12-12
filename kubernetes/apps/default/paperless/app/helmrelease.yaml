@@ -45,7 +45,7 @@ spec:
                     name: paperless-secret
                     key: PAPERLESS_SECRET_KEY
               PAPERLESS_URL: https://*host
-              PAPERLESS_PORT: &port 8080
+              PAPERLESS_PORT: "8080"
               PAPERLESS_TIME_ZONE: ${TIMEZONE}
               PAPERLESS_WEBSERVER_WORKERS: "2"
               PAPERLESS_TASK_WORKERS: "2"
@@ -87,7 +87,7 @@ spec:
       main:
         ports:
           http:
-            port: *port
+            port: 8080
     ingress:
       main:
         enabled: true
