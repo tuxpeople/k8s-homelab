@@ -49,8 +49,8 @@ spec:
               PAPERLESS_WEBSERVER_WORKERS: "2"
               PAPERLESS_TASK_WORKERS: "2"
               PAPERLESS_TIKA_ENABLED: "1"
-              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
-              PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
+              PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
               # Configure Remote User auth
               PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
               PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: "Remote-User"
@@ -85,16 +85,6 @@ spec:
                 memory: 500M
               limits:
                 memory: 2000M
-          gotenburg:
-            image:
-              repository: docker.io/gotenberg/gotenberg
-              tag: 7.10.1
-            env:
-              DISABLE_GOOGLE_CHROME: "1"
-          tika:
-            image:
-              repository: ghcr.io/paperless-ngx/tika
-              tag: 2.7.0-full
     service:
       main:
         ports:
