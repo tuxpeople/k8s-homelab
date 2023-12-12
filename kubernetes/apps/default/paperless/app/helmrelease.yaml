@@ -59,8 +59,6 @@ spec:
                 {title}"
               # Configure Remote User auth
               PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
-              PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: Remote-User
-              PAPERLESS_LOGOUT_REDIRECT_URL: https://auth.${SECRET_DOMAIN}
               # Configure folders
               PAPERLESS_CONSUMPTION_DIR: /nfs/consume
               PAPERLESS_DATA_DIR: /nfs/data
