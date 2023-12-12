@@ -38,7 +38,6 @@ spec:
               repository: ghcr.io/paperless-ngx/paperless-ngx
               tag: 2.1.1
             env:
-              # Configure application
               PAPERLESS_SECRET_KEY:
                 valueFrom:
                   secretKeyRef:
@@ -49,6 +48,9 @@ spec:
               PAPERLESS_TIME_ZONE: ${TIMEZONE}
               PAPERLESS_WEBSERVER_WORKERS: "2"
               PAPERLESS_TASK_WORKERS: "2"
+              PAPERLESS_TIKA_ENABLED: "1"
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
+              PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
               # Configure Remote User auth
               PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
               PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: "Remote-User"
@@ -83,6 +85,16 @@ spec:
                 memory: 500M
               limits:
                 memory: 2000M
+          gotenburg:
+            image:
+              repository: thecodingmachine/gotenberg
+              tag: 7.8.3
+            env:
+              DISABLE_GOOGLE_CHROME: "1"
+          tika:
+            image:
+              repository: ghcr.io/paperless-ngx/tika
+              tag: 2.7.0-full
     service:
       main:
         ports:
