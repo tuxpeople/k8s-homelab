@@ -6,5 +6,5 @@ metadata:
   name: s3gw-charts
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 1h
   url: https://aquarist-labs.github.io/s3gw-charts/
