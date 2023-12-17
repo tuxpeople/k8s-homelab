@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.0.3
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,7 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: ingress-nginx
+    - name: traefik
       namespace: networking
   values:
     controllers:
@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: docker.io/jmalloc/echo-server
-              tag: 0.3.5
+              tag: 0.3.6
             env:
               PORT: &port 8080
             probes:
@@ -78,12 +78,11 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: traefik
         annotations:
-          external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
           hajimari.io/icon: video-input-antenna
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
             paths:
               - path: /
                 pathType: Prefix

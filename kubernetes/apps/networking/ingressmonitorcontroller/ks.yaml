@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-ingressmonitorcontroller
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/apps/networking/ingressmonitorcontroller/app
   prune: true
   sourceRef:

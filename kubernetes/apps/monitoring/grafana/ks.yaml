@@ -6,6 +6,9 @@ metadata:
   name: cluster-apps-grafana
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/monitoring/grafana/app
   prune: true
   sourceRef:

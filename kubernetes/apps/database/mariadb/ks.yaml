@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-mariadb-operator
   namespace: flux-system
 spec:
+  targetNamespace: database
   path: ./kubernetes/apps/database/mariadb/operator
   prune: true
   sourceRef:
@@ -23,7 +24,9 @@ metadata:
   name: cluster-apps-mariadb-instance
   namespace: flux-system
 spec:
+  targetNamespace: database
   dependsOn:
+    - name: cluster-apps-local-path-provisioner
     - name: cluster-apps-mariadb-operator
   path: ./kubernetes/apps/database/mariadb/instance
   prune: true

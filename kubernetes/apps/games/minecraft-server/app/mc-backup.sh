@@ -1,36 +1,30 @@
 #!//usr/bin/bash
 # based on https://github.com/mikenye/docker-minecraft_bedrock_server/blob/main/rootfs/usr/local/bin/run_backup
 
-set -x
-
-# bonus features on
+# bonus features on, needed to find the Minecraft server PID
 shopt -s extglob
 
-SERVER_TYPE="bedrock_server"
-BACKUP_FOLDER="/backup/minecraft_backup"
+# assure this is a Bedrock image
+if [ -f /opt/bedrock-entry.sh ] ; then
+    SERVER_TYPE="bedrock_server"
+else
+    echo "Currently only Bedrock is supported"
+    exit 1
+fi
+
+# Set defaults if not given via ENV vars
+[ -z "${BACKUP_FOLDER}" ] && BACKUP_FOLDER="/backup/minecraft_backup"
+[ -z "${BACKUP_NAME}" ] && BACKUP_NAME="$(hostname)"
+
+# Set some variables
 DATA_DIR="/data"
 SERVER_PID=$(echo `grep -l ${SERVER_TYPE} /proc/+([0-9])/cmdline` | cut -d'/' -f3)
 BACKUP_DATETIME=$(date +%Y%m%d-%H%M%S)
-
 BACKUP_DIR="${BACKUP_FOLDER}/${BACKUP_NAME:-$(hostname)}"
 
-# checks
+# Some checks
 [ -z "${SERVER_PID}" ] && exit 1
 [ -z "${BACKUP_DIR}" ] && exit 1
-
-# create temporary file
-TMPFILE=$(mktemp /tmp/mc-backup.XXXXXX)
-
-readconsole(){
-    # Write the stdout of the pocess into the temporary file
-    cat /proc/${SERVER_PID}/fd/1 > ${TMPFILE}
-    if [ $? -eq 0 ]; then
-        echo "Successfully started to read the console output."
-    else
-        echo "Error: unable to read servers console output"
-        exit 1
-    fi
-}
 
 sendcommand(){
     echo "$@" > /proc/${SERVER_PID}/fd/0
@@ -44,11 +38,24 @@ sendcommand(){
 # Ready, steady, go!
 echo "Starting with the backup"
 
-# Start the background process to listen to the stdout of the server
-readconsole &
+# Cleanup old temp files
+rm -f /tmp/mc-backup.*
 
-# Save readconsole() PID, to kill the function later
-RC_PID=$!
+# create temporary file for server output
+TMPFILE=$(mktemp /tmp/mc-backup.XXXXXX)
+
+# Write the stdout of the pocess into the temporary file
+# Start it as background process
+cat /proc/${SERVER_PID}/fd/1 > ${TMPFILE} || exit 1 &
+
+# Save cat PID and all childs, to kill it later
+# Kudos: https://unix.stackexchange.com/a/124131
+pid=$!
+CAT_PID=$(grep -l "PPid.*$$" /proc/*/status | grep -o "[0-9]*"
+    for PROC in $(cat /proc/$pid/task/*/children); do
+        CAT_PID="$PROC $CAT_PID $(cat /proc/$PROC/task/*/children)"
+    done
+    printf '%s ' $CAT_PID)
 
 # Start backup with performing a save resume in case of previously failed backup
 sendcommand save resume || exit 1
@@ -61,6 +68,7 @@ echo "Placing server into 'save hold'..."
 sendcommand save hold  || exit 1
 
 # Continously wait for backup to be ready using save query every 2 seconds and read the console's reaction
+echo "Repeatedly querying the server to see if the files are ready for backup..."
 EXITCODE=1
 while [ "${EXITCODE}" -ne "0" ]; do
     sendcommand save query || exit 1
@@ -78,9 +86,9 @@ sleep 2
 FILES_TO_BACKUP=$(grep -a -A 1 "Data saved. Files are now ready to be copied." ${TMPFILE} | tail -1 | cut -d "]" -f 2- | sed 's/^ *//g')
 
 # Kill background process to listen to the stdout of the server, as we do not longer need it
-kill $RC_PID >/dev/null 2>&1
+kill $CAT_PID >/dev/null 2>&1
 
-# Delete the temporary file. The content will stay available until the cat gets terminated
+# delete temp file
 rm ${TMPFILE}
 
 # Set inter-field separator
@@ -134,7 +142,7 @@ sendcommand save resume || exit 1
 # Compress backup
 echo "Compressing backup..."
 cd "${BACKUP_DIR}/${WORLD_DIR}" || exit 1
-tar czvf "${BACKUP_DATETIME}.tar.gz" "${BACKUP_DATETIME}"  | stdbuf -o0 awk '{print "  + " $0}'
+tar -C "${BACKUP_DATETIME}" -czvf "${BACKUP_DATETIME}.tar.gz" .  | stdbuf -o0 awk '{print "  + " $0}'
 
 # Delete old backups
 echo "Deleting older backups"
@@ -149,8 +157,3 @@ stat --format="Created backup file: '%n', size: %s bytes" "${BACKUP_DIR}/${WORLD
 
 # Finished
 echo "Backup Finished"
-echo ""
-
-exit 0
-exit 0
-exit 0

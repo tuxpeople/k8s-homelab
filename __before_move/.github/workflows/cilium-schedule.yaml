@@ -6,9 +6,9 @@ on:  # yamllint disable-line rule:truthy
     - cron: 0 12 * * *
 jobs:
   cilium-upgrade:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c  # v3
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 1
       - name: Setup Kubernetes Tools
@@ -45,7 +45,7 @@ jobs:
           kustomize build /tmp/cilium/ > $GITHUB_WORKSPACE/provision/ansible/playbooks/templates/cilium-installation.yaml.j2
           echo "::set-output name=cilium_version::$VERSION"
       - name: Create pull request for Cilium base-install upgrade
-        uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04  # v4
+        uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: cilium/upgrade-${{ steps.upgrade.outputs.cilium_version }}

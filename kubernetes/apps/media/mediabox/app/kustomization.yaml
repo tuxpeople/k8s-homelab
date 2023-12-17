@@ -11,9 +11,7 @@ resources:
   - radarr-ingress.yaml
   - service.yaml
   - sonar-ingress.yaml
-  - tautulli-ingress.yaml
   - notifiarr-ingress.yaml
   - radarr-exporter.yaml
   - sonarr-exporter.yaml
-  - tautulli-exporter.yaml
   - prowlarr-exporter.yaml

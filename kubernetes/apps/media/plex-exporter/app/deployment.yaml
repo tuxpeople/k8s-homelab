@@ -18,7 +18,7 @@ spec:
         app: plex-exporter
     spec:
       containers:
-        - image: ghcr.io/tuxpeople/plex-exporter:nightly
+        - image: registry.eighty-three.me/tuxpeople/plex-exporter:nightly
           command:
             - /plex_exporter
           args:

@@ -5,3 +5,12 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
+commonLabels:
+  app.kubernetes.io/name: sharry
+  app.kubernetes.io/instance: sharry
+configMapGenerator:
+  - name: sharry
+    files:
+      - ./config/sharry.conf
+generatorOptions:
+  disableNameSuffixHash: true

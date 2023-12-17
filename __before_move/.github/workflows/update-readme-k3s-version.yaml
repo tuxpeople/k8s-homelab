@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c  # v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
           ref: ${{ env.BRANCH_NAME }}
-      - uses: tj-actions/changed-files@23e3c4300cb904a9d9c36fc2df4111a2fa9b9ff1  # v35
+      - uses: tj-actions/changed-files@94549999469dbfa032becf298d95c87a14c34394 # v40
         id: changed-plan
         with:
           files: ${{ env.PLAN_FILE }}
@@ -40,7 +40,7 @@ jobs:
         run: |
           UPDATE=$(cat readme.md | perl -0777 -pe 's#(${{ env.BEGIN_TAG }})(?:.|\n)*?(${{ env.END_TAG }})#${1}[![k3s](${{ env.BASE_URL }}-${{ env.VERSION }}-${{ env.COLOR }}?style=${{ env.SYTLE }}&logo=${{ env.LOGO }}&logoColor=${{ env.LOGO_COLOR }})](https://k3s.io/)${2}#g')
           echo "${UPDATE}" > readme.md
-      - uses: EndBug/add-and-commit@61a88be553afe4206585b31aa72387c64295d08b  # v9
+      - uses: EndBug/add-and-commit@1bad3abcf0d6ec49a5857d124b0bfb52dc7bb081 # v9
         if: steps.changed-plan.outputs.any_changed == 'true'
         with:
           default_author: github_actions

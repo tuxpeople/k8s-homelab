@@ -6,6 +6,9 @@ metadata:
   name: cluster-apps-sharry
   namespace: flux-system
 spec:
+  targetNamespace: default
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/default/sharry/app
   prune: true
   sourceRef:

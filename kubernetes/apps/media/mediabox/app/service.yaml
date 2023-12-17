@@ -6,10 +6,6 @@ metadata:
 spec:
   externalName: thiazi.home
   ports:
-    - name: tautulli
-      port: 8181
-      protocol: TCP
-      targetPort: 8181
     - name: sonarr
       port: 8989
       protocol: TCP

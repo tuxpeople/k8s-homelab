@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-octoprint
   namespace: flux-system
 spec:
+  targetNamespace: default
   path: ./kubernetes/apps/default/octoprint/app
   prune: true
   sourceRef:

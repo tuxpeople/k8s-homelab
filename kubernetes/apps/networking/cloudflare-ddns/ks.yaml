@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-cloudflare-ddns
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/apps/networking/cloudflare-ddns/app
   prune: true
   sourceRef:

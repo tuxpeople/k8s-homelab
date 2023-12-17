@@ -6,6 +6,9 @@ metadata:
   name: cluster-apps-drop
   namespace: flux-system
 spec:
+  targetNamespace: default
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/default/drop/app
   prune: true
   sourceRef:

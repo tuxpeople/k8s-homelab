@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-kubed
   namespace: flux-system
 spec:
+  targetNamespace: kube-system
   path: ./kubernetes/apps/kube-system/kubed/app
   prune: true
   sourceRef:
