@@ -34,5 +34,9 @@ spec:
       port: 5454
       protocol: TCP
       targetPort: 5454
+    - name: lldap
+      port: 17170
+      protocol: TCP
+      targetPort: 17170
   sessionAffinity: None
   type: ExternalName
