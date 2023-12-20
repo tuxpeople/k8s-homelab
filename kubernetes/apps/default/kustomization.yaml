@@ -8,7 +8,7 @@ resources:
   - drop/ks.yaml
   - echo-server/ks.yaml
   - hajimari/ks.yaml
-  - headscale/ks.yaml
+  # - headscale/ks.yaml
   - octoprint/ks.yaml
   - paperless/ks.yaml
   - sharry/ks.yaml
