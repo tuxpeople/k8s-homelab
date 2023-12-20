@@ -6,6 +6,7 @@ namespace: media
 resources:
   - bazarr-ingress.yaml
   - gaps-ingress.yaml
+  - lldap-ingress.yaml
   - sabnzbd-ingress.yaml
   - prowlarr-ingress.yaml
   - radarr-ingress.yaml
