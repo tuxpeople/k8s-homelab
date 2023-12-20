@@ -94,7 +94,8 @@ spec:
               enabled: false
             #acl_policy_path: "/etc/headscale/acl.hujson"
             ip_prefixes:
-              - ${CONFIG_HEADSCALE_IPV4}
+              - fd7a:115c:a1e0::/48
+              - 100.64.0.0/10
             randomize_client_port: false
             dns_config:
               magic_dns: true
