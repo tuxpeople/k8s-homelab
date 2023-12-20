@@ -1,0 +1,134 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app headscale
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    crds: CreateReplace
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: "ghcr.io/juanfont/headscale"
+              tag: "0.22.3"
+            command: ["headscale", "serve"]
+            env:
+              TZ: ${TIMEZONE}
+    service:
+      main:
+        enabled: true
+        controller: main
+        # type: LoadBalancer
+        # externalTrafficPolicy: Cluster
+        ports:
+          http:
+            enabled: true
+            port: 443
+            targetPort: 8080
+            protocol: HTTPS
+          relay:
+            enabled: true
+            port: 3478
+            protocol: UDP
+          metrics:
+            enabled: true
+            port: 9090
+            protocol: TCP
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: "headscale-config"
+        advancedMounts:
+          main:
+            main:
+              - subPath: "config.yaml"
+                path: "/etc/headscale/config.yaml"
+                readOnly: true
+    configMaps:
+      config:
+        enabled: true
+        data:
+          config.yaml: |-
+            server_url: https://vpn.${SECET_DOMAIN}:443
+            listen_addr: 0.0.0.0:8080
+            metrics_listen_addr: 0.0.0.0:9090
+            grpc_listen_addr: 127.0.0.1:50443
+            grpc_allow_insecure: false
+            private_key_path: /etc/headscale/private.key
+            noise:
+              private_key_path: /etc/headscale/noise_private.key
+            db_type: sqlite3
+            db_path: /var/run/headscale/headscale.db
+            tls_cert_path: "/tls/fullchain.pem"
+            tls_key_path: "/tls/privkey.pem"
+            log:
+              format: json
+              level: info
+            logtail:
+              enabled: false
+            #acl_policy_path: "/etc/headscale/acl.hujson"
+            ip_prefixes:
+              - ${CONFIG_HEADSCALE_IPV4}
+            randomize_client_port: false
+            dns_config:
+              magic_dns: true
+              base_domain: ${SECET_DOMAIN}
+              override_local_dns: true
+              nameservers:
+                - 10.20.30.1
+              domains:
+                - ${SECET_DOMAIN}
+            derp:
+              server:
+                enabled: true
+                region_id: 999
+                region_code: "SKY"
+                region_name: "SKY-Home-Relay"
+                stun_listen_addr: "0.0.0.0:3478"
+              urls:
+                - https://controlplane.tailscale.com/derpmap/default
+              paths: []
+              auto_update_enabled: true
+              update_frequency: 24h
+            disable_check_updates: true
+            ephemeral_node_inactivity_timeout: 30m
+            node_update_check_interval: 10s
+            oidc:
+              only_start_if_oidc_is_available: true
+              issuer: "auth.${SECET_DOMAIN}"
+              client_id: "headscale"
+              client_secret_path: "/oidc/secret"
+              scope: ["openid", "profile", "email"]
+              expiry: 30d
+              use_expiry_from_token: false
+              extra_params:
+                domain_hint: ${SECET_DOMAIN}
+              allowed_domains:
+                - auth.${SECET_DOMAIN}
+                - ${SECET_DOMAIN}
