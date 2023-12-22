@@ -56,7 +56,7 @@ spec:
         app.kubernetes.io/name: radarr-exporter
         app.kubernetes.io/instance: radarr-exporter
       annotations:
-        prometheus.io/scrape: 'true'
+        prometheus.io/scrape: "true"
         prometheus.io/port: monitoring
     spec:
       containers:
@@ -67,15 +67,15 @@ spec:
             - radarr
           env:
             - name: PORT
-              value: '9708'
+              value: "9708"
             - name: URL
               value: ${SECRET_RADARR_URL}
             - name: APIKEY
               value: ${SECRET_RADARR_API_KEY}
             - name: ADDITIONALMETRICS
-              value: 'true'
+              value: "true"
             - name: UNKNOWNQUEUEITEMS
-              value: 'true'
+              value: "true"
           ports:
             - name: monitoring
               containerPort: 9708
@@ -93,8 +93,8 @@ spec:
             periodSeconds: 10
           resources:
             requests:
-              cpu: 100m
-              memory: 64Mi
+              cpu: 5m
+              memory: 10Mi
             limits:
               cpu: 500m
               memory: 256Mi
@@ -104,7 +104,7 @@ kind: ConfigMap
 metadata:
   name: radarr-exporter-dashboard
   labels:
-    grafana_dashboard: '1'
+    grafana_dashboard: "1"
     app: radarr-exporter
   namespace: media
   annotations:

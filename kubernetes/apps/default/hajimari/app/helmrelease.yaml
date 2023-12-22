@@ -57,7 +57,7 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          hajimari.io/enable: 'false'
+          hajimari.io/enable: "false"
         hosts:
           - host: &host hajimari.${SECRET_DOMAIN}
             paths:
@@ -74,5 +74,5 @@ spec:
         type: emptyDir
     resources:
       requests:
-        cpu: 100m
-        memory: 128M
+        cpu: 5m
+        memory: 10Mi
