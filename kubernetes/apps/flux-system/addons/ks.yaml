@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-flux-webhooks
   namespace: flux-system
 spec:
-  targetNamespace: default
+  targetNamespace: flux-system
   path: ./kubernetes/apps/flux-system/addons/webhooks
   prune: true
   sourceRef:
