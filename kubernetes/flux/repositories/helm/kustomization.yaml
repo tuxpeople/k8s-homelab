@@ -10,6 +10,7 @@ resources:
   - cilium.yaml
   - deliveryheroio.yaml
   - external-dns.yaml
+  - fairwinds.yaml
   - grafana.yaml
   - hajimari.yaml
   - ingress-nginx.yaml
