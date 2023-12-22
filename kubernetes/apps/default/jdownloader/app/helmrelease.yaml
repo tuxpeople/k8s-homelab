@@ -75,7 +75,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 1Gi
-        storageClass: local-path
+        storageClass: longhorn
         globalMounts:
           - path: /opt/JDownloader/cfg
       downloads:
@@ -83,4 +83,4 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 1Gi
-        storageClass: local-path
+        storageClass: longhorn
