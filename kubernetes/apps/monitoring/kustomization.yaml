@@ -10,3 +10,4 @@ resources:
   - kubernetes-dashboard/ks.yaml
   - loki/ks.yaml
   - vector/ks.yaml
+  - vpa/ks.yaml
