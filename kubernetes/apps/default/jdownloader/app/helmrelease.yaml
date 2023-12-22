@@ -59,6 +59,10 @@ spec:
                 enabled: false
               startup:
                 enabled: false
+            securityContext:
+              runAsUser: 100
+              runAsGroup: 101
+              fsGroup: 101
     service:
       main:
         ports:
