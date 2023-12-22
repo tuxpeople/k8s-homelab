@@ -37,6 +37,8 @@ spec:
       extraEnvVars:
         - name: TZ
           value: ${TIMEZONE}
+        - name: MYSQL_PASSWORD
+          value: $(MARIADB_ROOT_PASSWORD)
     volumePermissions:
       enabled: true
     global:
