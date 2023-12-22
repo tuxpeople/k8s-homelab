@@ -42,6 +42,7 @@ spec:
         limits:
           memory: 200M
       extraArgs:
+        v: "4"
         pod-recommendation-min-cpu-millicores: 15
         pod-recommendation-min-memory-mb: 61
     updater:
