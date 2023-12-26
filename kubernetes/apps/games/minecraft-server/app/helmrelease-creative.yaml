@@ -105,7 +105,7 @@ spec:
           failedJobsHistoryLimit: 3
           jobTemplate:
             spec:
-              activeDeadlineSeconds: 60
+              activeDeadlineSeconds: 180
               template:
                 spec:
                   serviceAccountName: backup-sa
