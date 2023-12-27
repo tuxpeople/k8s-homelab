@@ -35,7 +35,7 @@ spec:
         Size: 5Gi
     resources:
       limits:
-        memory: 2Gi
+        memory: 3Gi
     livenessProbe:
       initialDelaySeconds: 30
       periodSeconds: 5
