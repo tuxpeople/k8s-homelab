@@ -76,8 +76,8 @@ spec:
             - name: LowNodeUtilization
               args:
                 thresholds:
-                  cpu: 30
-                  memory: 30
+                  cpu: 20
+                  memory: 20
                 targetThresholds:
                   cpu: 70
                   memory: 70
