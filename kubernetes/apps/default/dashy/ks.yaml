@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-longhorn-app
   path: ./kubernetes/apps/default/dashy/app
   prune: true
   sourceRef:

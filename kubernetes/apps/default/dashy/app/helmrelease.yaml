@@ -85,7 +85,10 @@ spec:
             readOnly: true
       data:
         enabled: true
-        existingClaim: dashy
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: longhorn
         advancedMounts:
           main:
             main:
