@@ -48,7 +48,7 @@ spec:
                 cpu: 5m
                 memory: 10Mi
               limits:
-                memory: 50Mi
+                memory: 500Mi
     service:
       main:
         ports:
