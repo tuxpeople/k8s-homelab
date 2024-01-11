@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - code-server/ks.yaml
+  - dashy/ks.yaml
   - drop/ks.yaml
   - echo-server/ks.yaml
   - hajimari/ks.yaml
