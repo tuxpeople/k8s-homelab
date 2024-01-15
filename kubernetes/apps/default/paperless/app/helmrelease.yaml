@@ -117,6 +117,21 @@ spec:
           - hosts:
               - *host
             secretName: ${SECRET_DOMAIN/./-}-production-tls
+      public:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: &host2 "documents.${SECRET_CH_DOMAIN}"
+            paths:
+              - path: /share
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host2
+            secretName: ${SECRET_CH_DOMAIN/./-}-production-tls
     persistence:
       nfs:
         type: nfs
