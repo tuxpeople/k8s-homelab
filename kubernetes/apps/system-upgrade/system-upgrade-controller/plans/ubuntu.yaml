@@ -29,7 +29,7 @@ spec:
   secrets:
     - name: ubuntu
       path: /host/run/system-upgrade/secrets/ubuntu
-  # renovate: datasource=docker image=ubuntu
+  # renovate: datasource=docker depName=ubuntu
   version: lunar-20231004
   upgrade:
     image: ubuntu
