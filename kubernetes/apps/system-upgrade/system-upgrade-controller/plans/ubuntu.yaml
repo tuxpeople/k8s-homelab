@@ -29,9 +29,9 @@ spec:
   secrets:
     - name: ubuntu
       path: /host/run/system-upgrade/secrets/ubuntu
-  version: "lunar"
+  # renovate: datasource=docker image=ubuntu
+  version: "lunar-20231004"
   upgrade:
     image: ubuntu
     command: [chroot, /host]
-    # renovate: datasource=github-releases depName=tuxpeople/k8s-homelab
-    args: [sh, /run/system-upgrade/secrets/ubuntu/upgrade.sh, "v0.27.0"]
+    args: [sh, /run/system-upgrade/secrets/ubuntu/upgrade.sh]
