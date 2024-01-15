@@ -29,7 +29,7 @@ spec:
   secrets:
     - name: ubuntu
       path: /host/run/system-upgrade/secrets/ubuntu
-  version: "23.04.1"
+  version: "ubuntu" # or: noble-20231214
   upgrade:
     image: ubuntu
     command: [chroot, /host]
