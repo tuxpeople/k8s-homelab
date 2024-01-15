@@ -120,6 +120,8 @@ spec:
       public:
         enabled: true
         ingressClassName: traefik
+        annotations:
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
         hosts:
           - host: &host2 "documents.${SECRET_CH_DOMAIN}"
             paths:
