@@ -33,4 +33,5 @@ spec:
   upgrade:
     image: ubuntu
     command: [chroot, /host]
-    args: [sh, /run/system-upgrade/secrets/ubuntu/upgrade.sh]
+    # renovate: datasource=github-releases depName=tuxpeople/k8s-homelab
+    args: [sh, /run/system-upgrade/secrets/ubuntu/upgrade.sh, "v0.27.0"]
