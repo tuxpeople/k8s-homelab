@@ -46,7 +46,7 @@ spec:
                   secretKeyRef:
                     name: paperless-secret
                     key: PAPERLESS_SECRET_KEY
-              PAPERLESS_URL: https://documents.${SECRET_CH_DOMAIN}
+              PAPERLESS_URL: https://${SECRET_PAPERLESS_URL}
               PAPERLESS_PORT: "8080"
               PAPERLESS_TIME_ZONE: ${TIMEZONE}
               PAPERLESS_WEBSERVER_WORKERS: "1"
@@ -103,11 +103,10 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
           hajimari.io/icon: material-symbols:scanner-outline
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
         hosts:
-          - host: &host "documents.${SECRET_CH_DOMAIN}"
+          - host: &host "${SECRET_PAPERLESS_URL}"
             paths:
               - path: /
                 pathType: Prefix
@@ -117,7 +116,7 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: ${SECRET_CH_DOMAIN/./-}-production-tls
+            secretName: ${SECRET_DOMAIN/./-}-production-tls
     persistence:
       nfs:
         type: nfs
