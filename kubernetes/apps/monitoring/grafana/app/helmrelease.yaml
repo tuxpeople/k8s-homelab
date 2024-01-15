@@ -34,6 +34,7 @@ spec:
     - name: traefik
       namespace: networking
   values:
+    assertNoLeakedSecrets: false
     admin:
       existingSecret: grafana-admin-secret
     env:
