@@ -29,7 +29,7 @@ spec:
   secrets:
     - name: ubuntu
       path: /host/run/system-upgrade/secrets/ubuntu
-  version: "noble-20231214"
+  version: "lunar"
   upgrade:
     image: ubuntu
     command: [chroot, /host]
