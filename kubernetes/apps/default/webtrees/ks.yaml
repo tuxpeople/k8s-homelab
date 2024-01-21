@@ -8,14 +8,14 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-csi-driver-nfs
     - name: cluster-apps-webtrees-db
   path: ./kubernetes/apps/default/webtrees/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false  # no flux ks dependents
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -29,7 +29,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-csi-driver-nfs
   path: ./kubernetes/apps/default/webtrees/db
   prune: true
   sourceRef:

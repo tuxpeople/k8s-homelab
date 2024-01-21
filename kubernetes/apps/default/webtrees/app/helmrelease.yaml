@@ -44,21 +44,25 @@ spec:
               tag: latest
             imagePullPolicy: IfNotPresent
             volumeMounts:
-              - {name: modules, mountPath: /var/www/html/modules_v4}
-            command: [sh, -c, cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip
-                  -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip;
-                  rm -f /tmp/webtrees-theme-modern.0.0.9.zip]
+              - { name: modules, mountPath: /var/www/html/modules_v4 }
+            command: [
+              sh,
+              -c,
+              cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip
+              -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip;
+              rm -f /tmp/webtrees-theme-modern.0.0.9.zip,
+            ]
         containers:
           main:
             image:
               repository: docker.io/dtjs48jkt/webtrees
               tag: 2.1.18
             env:
-              DISABLE_SSL: 'TRUE'
-              PRETTYURLSl: 'TRUE'
-              ENABLE_REMOTE_USER: 'TRUE'
+              DISABLE_SSL: "TRUE"
+              PRETTYURLSl: "TRUE"
+              ENABLE_REMOTE_USER: "TRUE"
               HEADER_AUTH_VAR: Remote-User
-              PORT: '80'
+              PORT: "80"
               BASE_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
               DB_HOST: webtrees-db-mariadb
               DB_NAME: webtrees
@@ -106,7 +110,7 @@ spec:
         enabled: true
         className: traefik
         hosts:
-          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -122,7 +126,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: local-path
+        storageClass: csi-nfs
         globalMounts:
           - path: /var/www/html/data
             subPath: data

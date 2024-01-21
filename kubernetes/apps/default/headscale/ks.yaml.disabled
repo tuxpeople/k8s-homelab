@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-csi-driver-nfs
   path: ./kubernetes/apps/default/headscale/app
   prune: true
   sourceRef:

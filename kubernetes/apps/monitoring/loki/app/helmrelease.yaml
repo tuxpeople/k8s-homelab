@@ -153,7 +153,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       persistence:
         size: 10Gi
-        storageClass: local-path
+        storageClass: csi-nfs
       tolerations:
         - key: arm
           operator: Exists
@@ -171,7 +171,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       persistence:
         size: 10Gi
-        storageClass: local-path
+        storageClass: csi-nfs
       extraVolumeMounts:
         - name: rules
           mountPath: /rules
@@ -185,7 +185,7 @@ spec:
     backend:
       replicas: 1
       persistence:
-        storageClass: local-path
+        storageClass: csi-nfs
       extraVolumeMounts:
         - name: rules
           mountPath: /rules/fake

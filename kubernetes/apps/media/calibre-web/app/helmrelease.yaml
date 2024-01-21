@@ -38,7 +38,7 @@ spec:
       main:
         strategy: Recreate
         annotations:
-          reloader.stakater.com/auto: 'true'
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
@@ -96,7 +96,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: local-path
+        storageClass: csi-nfs
         globalMounts:
           - path: /config
       data:

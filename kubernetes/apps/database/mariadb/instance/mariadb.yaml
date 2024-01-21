@@ -22,7 +22,7 @@ spec:
       value: ${TIMEZONE}
 
   volumeClaimTemplate:
-    storageClassName: local-path
+    storageClassName: csi-nfs
     resources:
       requests:
         storage: 1Gi

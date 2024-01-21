@@ -30,7 +30,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: local-path-provisioner
+    - name: csi-driver-nfs
       namespace: kube-system
     - name: traefik
       namespace: networking
@@ -121,7 +121,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: csi-nfs
               accessModes:
                 - ReadWriteOnce
               resources:
@@ -253,7 +253,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: csi-nfs
               resources:
                 requests:
                   storage: 10Gi
@@ -315,7 +315,7 @@ spec:
     #     storageSpec:
     #       volumeClaimTemplate:
     #         spec:
-    #           storageClassName: local-path
+    #           storageClassName: csi-nfs
     #           resources:
     #             requests:
     #               storage: 10Gi

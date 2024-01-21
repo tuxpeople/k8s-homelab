@@ -8,6 +8,7 @@ resources:
   - bitnami.yaml
   - bjw-s.yaml
   - cilium.yaml
+  - csi-driver-nfs.yaml
   - deliveryheroio.yaml
   - external-dns.yaml
   - fairwinds.yaml

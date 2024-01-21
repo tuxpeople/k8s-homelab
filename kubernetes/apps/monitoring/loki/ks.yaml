@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   dependsOn:
-    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-csi-driver-nfs
   path: ./kubernetes/apps/monitoring/loki/app
   prune: true
   sourceRef:

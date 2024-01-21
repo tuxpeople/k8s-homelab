@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: media
   dependsOn:
-    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-csi-driver-nfs
   path: ./kubernetes/apps/media/tautulli/app
   prune: true
   sourceRef:

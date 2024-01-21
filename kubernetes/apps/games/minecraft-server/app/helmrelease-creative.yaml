@@ -29,7 +29,7 @@ spec:
     keepHistory: false
   values:
     persistence:
-      storageClass: local-path
+      storageClass: csi-nfs
       dataDir:
         enabled: true
         Size: 5Gi
