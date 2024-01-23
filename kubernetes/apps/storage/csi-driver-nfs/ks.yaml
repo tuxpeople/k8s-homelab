@@ -8,7 +8,6 @@ metadata:
 spec:
   dependsOn:
     - name: snapshot-controller
-    - name: cluster-apps-kube-prometheus-stack
   targetNamespace: storage
   path: ./kubernetes/apps/storage/csi-driver-nfs/app
   prune: true
