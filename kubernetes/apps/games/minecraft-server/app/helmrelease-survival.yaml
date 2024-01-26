@@ -29,7 +29,7 @@ spec:
     keepHistory: false
   values:
     persistence:
-      storageClass: csi-nfs
+      storageClass: longhorn
       dataDir:
         enabled: true
         Size: 5Gi
