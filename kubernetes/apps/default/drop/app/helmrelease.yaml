@@ -36,14 +36,19 @@ spec:
             image:
               repository: lscr.io/linuxserver/pwndrop
               tag: 1.0.1-ls61
+            env:
+              TZ: ${TIMEZONE}
+              PUID: 911
+              PGID: 911
             resources:
               requests:
                 cpu: 5m
                 memory: 10Mi
               limits:
                 memory: 50Mi
-            env:
-              TZ: ${TIMEZONE}
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 911
     service:
       main:
         ports:
