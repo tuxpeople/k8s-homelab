@@ -42,4 +42,4 @@ spec:
     volumePermissions:
       enabled: true
     global:
-      storageClass: csi-nfs
+      storageClass: longhorn
