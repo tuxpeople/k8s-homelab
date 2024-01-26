@@ -31,7 +31,7 @@ spec:
     keepHistory: false
   dependsOn:
     - name: csi-driver-nfs
-      namespace: kube-system
+      namespace: storage
     - name: traefik
       namespace: networking
   values:

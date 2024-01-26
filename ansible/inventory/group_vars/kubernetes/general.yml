@@ -7,3 +7,5 @@ system_timezone: "{{ timezone }}"
 ansible_user: ansible
 
 kubeconfig_target: "/Users/tdeutsch/iCloudDrive/Allgemein/kubectl/homelab.yaml"
+
+datadisk: "/dev/sda"
