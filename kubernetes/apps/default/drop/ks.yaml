@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-csi-driver-nfs
+    - name: cluster-apps-longhorn-app
   path: ./kubernetes/apps/default/drop/app
   prune: true
   sourceRef:

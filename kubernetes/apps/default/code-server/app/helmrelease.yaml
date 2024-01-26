@@ -80,7 +80,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: csi-nfs
+        storageClass: longhorn
         globalMounts:
           - path: /config
 # docker run --entrypoint /bin/sleep docker.io/fluxcd/flux-cli:v0.37.0 inf
