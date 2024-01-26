@@ -8,7 +8,7 @@ spec:
     name: mariadb
   schedule:
     cron: 1 * * * *
-  maxRetentionDays: 14
+  maxRetention: 336h # 14 days
   storage:
     volume:
       nfs:
