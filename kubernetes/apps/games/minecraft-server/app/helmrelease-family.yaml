@@ -6,6 +6,7 @@ metadata:
   name: &app family-server
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: minecraft-bedrock
