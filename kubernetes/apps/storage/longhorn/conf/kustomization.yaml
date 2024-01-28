@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: storage
 resources:
   - monitoring
-  # - recurringjobs
+  - recurringjobs
