@@ -6,7 +6,7 @@ metadata:
 spec:
   name: daily-trim
   concurrency: 1
-  cron: 45 23 * * *
+  cron: 45 22 * * *
   groups:
     - normal
   retain: 1

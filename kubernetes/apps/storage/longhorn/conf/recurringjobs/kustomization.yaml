@@ -7,6 +7,6 @@ resources:
   - 30min-snapshot.yaml
   - daily-backup.yaml
   - daily-cleanup.yaml
-  - daily-daily.yaml
+  - daily-delete.yaml
+  - daily-trim.yaml
   - hourly-backup.yaml
-  - weekly-trim.yaml
