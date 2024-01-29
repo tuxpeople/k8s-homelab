@@ -135,6 +135,6 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: csi-nfs
+        storageClass: longhorn
         globalMounts:
           - path: /app/config

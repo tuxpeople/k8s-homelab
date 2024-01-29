@@ -89,4 +89,4 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 10Gi
-        storageClass: csi-nfs
+        storageClass: longhorn

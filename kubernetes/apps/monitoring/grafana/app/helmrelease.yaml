@@ -131,6 +131,6 @@ spec:
             - *host
     persistence:
       enabled: true
-      storageClassName: csi-nfs
+      storageClassName: longhorn
     testFramework:
       enabled: false
