@@ -7,6 +7,7 @@ metadata:
   namespace: media
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -67,9 +68,6 @@ spec:
                 mountPath: /config
             securityContext:
               runAsUser: 0
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 1000
     service:
       main:
         ports:
@@ -99,7 +97,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: csi-nfs
+        storageClass: longhorn
         globalMounts:
           - path: /config
       data:

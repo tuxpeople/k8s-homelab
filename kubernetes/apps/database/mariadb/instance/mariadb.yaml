@@ -22,7 +22,7 @@ spec:
       value: ${TIMEZONE}
 
   volumeClaimTemplate:
-    storageClassName: csi-nfs
+    storageClassName: longhorn
     resources:
       requests:
         storage: 1Gi

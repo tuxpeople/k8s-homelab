@@ -7,6 +7,7 @@ metadata:
   namespace: default
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -37,7 +38,7 @@ spec:
           main:
             image:
               repository: ghcr.io/linuxserver/code-server
-              tag: 4.20.0
+              tag: 4.20.1
             env:
               TZ: ${TIMEZONE}
               PUID: 911
@@ -49,9 +50,6 @@ spec:
               # DOCKER_MODS: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:code-server-terraform|linuxserver/mods:universal-git|linuxserver/mods:universal-tshoot|linuxserver/mods:universal-package-install"
               # INSTALL_PACKAGES: "rsync|git|nginx"
               # INSTALL_PIP_PACKAGES: "apprise"
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 911
     service:
       main:
         ports:
@@ -83,7 +81,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: csi-nfs
+        storageClass: longhorn
         globalMounts:
           - path: /config
 # docker run --entrypoint /bin/sleep docker.io/fluxcd/flux-cli:v0.37.0 inf

@@ -6,6 +6,7 @@ metadata:
   name: &app minecraft-server-survival
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: minecraft-bedrock
@@ -29,7 +30,7 @@ spec:
     keepHistory: false
   values:
     persistence:
-      storageClass: csi-nfs
+      storageClass: longhorn
       dataDir:
         enabled: true
         Size: 5Gi

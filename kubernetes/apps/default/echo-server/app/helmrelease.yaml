@@ -7,6 +7,7 @@ metadata:
   namespace: default
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -82,7 +83,7 @@ spec:
         annotations:
           hajimari.io/icon: video-input-antenna
         hosts:
-          - host: &host '{{ .Release.Name }}.${SECRET_DOMAIN}'
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

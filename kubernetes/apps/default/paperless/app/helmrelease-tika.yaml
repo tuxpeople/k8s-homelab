@@ -6,6 +6,7 @@ metadata:
   name: paperless-tika
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -31,7 +32,7 @@ spec:
     controllers:
       main:
         annotations:
-          reloader.stakater.com/auto: 'true'
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:

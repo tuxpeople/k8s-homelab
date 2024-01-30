@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-csi-driver-nfs
+    - name: cluster-apps-longhorn-app
     - name: cluster-apps-webtrees-db
   path: ./kubernetes/apps/default/webtrees/app
   prune: true
@@ -29,7 +29,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-csi-driver-nfs
+    - name: cluster-apps-longhorn-app
   path: ./kubernetes/apps/default/webtrees/db
   prune: true
   sourceRef:

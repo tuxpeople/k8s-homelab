@@ -6,6 +6,7 @@ metadata:
   name: &app longhorn
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: longhorn
@@ -44,6 +45,7 @@ spec:
     defaultSettings:
       backupstorePollInterval: 300
       backupTarget: nfs://10.20.30.40:/volume2/data/backup/kubernetes/longhorn-backup
+      snapshotDataIntegrity: "fast-check"
       defaultDataPath: /var/lib/longhorn
       defaultDataLocality: best-effort
       defaultReplicaCount: 2
@@ -63,9 +65,10 @@ spec:
       tls: true
       path: /
       annotations:
-        hajimari.io/enable: 'true'
+        hajimari.io/enable: "true"
         hajimari.io/icon: cow
         hajimari.io/appName: Longhorn
+        hajimari.io/group: "storage"
         # hajimari.io/targetBlank: "true"
         # hajimari.io/info: "Storage"
     # longhornManager:

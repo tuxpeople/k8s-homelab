@@ -6,6 +6,7 @@ metadata:
   name: paperless
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -39,7 +40,7 @@ spec:
           main:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.4.0
+              tag: 2.4.2
             env:
               PAPERLESS_SECRET_KEY:
                 valueFrom:

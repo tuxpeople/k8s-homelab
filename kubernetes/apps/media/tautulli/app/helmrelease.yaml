@@ -7,6 +7,7 @@ metadata:
   namespace: media
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -107,6 +108,6 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: csi-nfs
+        storageClass: longhorn
       add-ons:
         type: emptyDir

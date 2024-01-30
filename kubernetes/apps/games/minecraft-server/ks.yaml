@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: games
   dependsOn:
-    - name: cluster-apps-csi-driver-nfs
+    - name: cluster-apps-longhorn-app
   path: ./kubernetes/apps/games/minecraft-server/app
   prune: true
   sourceRef:

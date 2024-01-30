@@ -6,6 +6,7 @@ metadata:
   name: paperless-gotenberg
 spec:
   interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -31,14 +32,14 @@ spec:
     controllers:
       main:
         annotations:
-          reloader.stakater.com/auto: 'true'
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
               repository: docker.io/gotenberg/gotenberg
               tag: 8.0.2
             env:
-              DISABLE_GOOGLE_CHROME: '1'
+              DISABLE_GOOGLE_CHROME: "1"
     service:
       main:
         ports:
