@@ -17,7 +17,6 @@ resources:
   - ingress-nginx.yaml
   - jetstack.yaml
   - k8s-gateway.yaml
-  - kasten-charts.yaml
   - kubereboot.yaml
   - kubernetes-dashboard.yaml
   - kubernetes-sigs-descheduler-charts.yaml
