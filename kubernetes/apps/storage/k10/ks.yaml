@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: k10
+  namespace: flux-system
+spec:
+  targetNamespace: storage
+  path: ./kubernetes/apps/storage/k10/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-homelab
+  wait: false # no flux ks dependents
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
