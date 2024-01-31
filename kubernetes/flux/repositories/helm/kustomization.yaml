@@ -33,4 +33,5 @@ resources:
   - stakater.yaml
   - traefik-charts.yaml
   - vector-charts.yaml
+  - vmware-charts.yaml
   - weave-gitops.yaml
