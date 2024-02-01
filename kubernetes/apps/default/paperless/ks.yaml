@@ -30,6 +30,7 @@ spec:
   targetNamespace: default
   dependsOn:
     - name: cluster-apps-paperless-redis
+    - name: cluster-apps-traefik
   commonMetadata:
     labels:
       app.kubernetes.io/name: paperless
@@ -38,7 +39,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
-  wait: false  # no flux ks dependents
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m
