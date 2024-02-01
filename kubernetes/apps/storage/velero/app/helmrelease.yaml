@@ -73,7 +73,7 @@ spec:
             - orders.acme.cert-manager.io
             - challenges.acme.cert-manager.io
             - certificaterequests.cert-manager.io
-          snapshotVolumes: false
+          snapshotVolumes: true
           storageLocation: velero-minio
           snapshotMoveData: false
           datamover: velero
