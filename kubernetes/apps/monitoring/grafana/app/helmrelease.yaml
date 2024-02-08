@@ -6,7 +6,8 @@ metadata:
   name: grafana
   namespace: monitoring
 spec:
-  interval: 30m
+  interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: grafana
