@@ -14,8 +14,6 @@ spec:
         kind: HelmRepository
         name: vector-charts
         namespace: flux-system
-  dependsOn:
-    - name: loki
   maxHistory: 2
   install:
     crds: CreateReplace

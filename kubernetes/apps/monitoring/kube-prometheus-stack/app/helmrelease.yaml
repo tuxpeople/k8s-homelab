@@ -29,11 +29,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: csi-driver-nfs
-      namespace: storage
-    - name: traefik
-      namespace: networking
   values:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:

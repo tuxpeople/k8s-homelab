@@ -7,8 +7,6 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: media
-  dependsOn:
-    - name: cluster-apps-csi-driver-nfs
   path: ./kubernetes/apps/media/podsync/app
   prune: true
   sourceRef:

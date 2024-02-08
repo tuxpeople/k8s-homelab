@@ -29,11 +29,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: traefik
-      namespace: networking
-    - name: webtrees-db
-      namespace: default
   values:
     controllers:
       main:
