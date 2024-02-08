@@ -37,7 +37,7 @@ spec:
           main:
             image:
               repository: docker.io/gotenberg/gotenberg
-              tag: 8.0.2
+              tag: 8.0.3
             env:
               DISABLE_GOOGLE_CHROME: "1"
     service:
