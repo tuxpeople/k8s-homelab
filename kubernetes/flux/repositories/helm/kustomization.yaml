@@ -3,7 +3,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - appscode.yaml
   - backube.yaml
   - bitnami.yaml
   - bjw-s.yaml
@@ -26,6 +25,7 @@ resources:
   - metrics-server.yaml
   - minecraft-server-charts.yaml
   - minio.yaml
+  - mittwald-charts.yaml
   - piraeus.yaml
   - prometheus-community.yaml
   - rancher.yaml

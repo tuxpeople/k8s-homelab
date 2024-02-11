@@ -11,7 +11,7 @@ spec:
     kind: ClusterIssuer
   secretTemplate:
     annotations:
-      kubed.appscode.com/sync: ""
+      replicator.v1.mittwald.de/replicate-to: ".*"
   commonName: ${SECRET_DOMAIN}
   dnsNames:
     - ${SECRET_DOMAIN}
@@ -29,7 +29,7 @@ spec:
     kind: ClusterIssuer
   secretTemplate:
     annotations:
-      kubed.appscode.com/sync: ""
+      replicator.v1.mittwald.de/replicate-to: ".*"
   commonName: ${SECRET_CH_DOMAIN}
   dnsNames:
     - ${SECRET_CH_DOMAIN}
