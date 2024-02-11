@@ -1,0 +1,22 @@
+DOCKER_USERNAME: tdeutsch
+DOCKER_PASSWORD: zovso9-deTfok-sorcob
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1y0kzuf0tn94a74whazwae4r9qal4snuqfuhl5jacscrpr7up5gts74fe5w
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB1SXZvYytPNDM2QUJLb2hs
+            UEl3T1ZzbTRmajYzN1hFZ3k4cmhCck5lY2hFCkVWam9FdnNnNWg2T2wrWXQvUWZi
+            TVFHcXpOeVA4Wmo4cEpEWEtLMGl1TVUKLS0tIFR6MFNkUVZ6ZTlpdG81N2hPaWNu
+            YS80MHlNbkZ6TStGVHBGaTZsREZaZkkKUSBW9jph+iYeWFqkAUixMBDIJQtl3Ew4
+            6CCIjDW3Y9gMqGWKfBH0hArK6ix1w80FJMK2VA+Oj5YEU9eHJueSYQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-02-11T18:51:12Z"
+    mac: ENC[AES256_GCM,data:NulkyBJy3IPc8djTOfaWmr6AfIK6K5dakLqqHc4jRMkIw/Y0rndSOxnxPxtOiczL3giROPkXeyDjIU9oCLnzSs6pxRqeeixtG2XopCKPrdbCKV8wo+BkfQPh3l8c14EveA+5s4nW/Nklj1sjVp688KflGgqsX8/0XHgGTRJuHGk=,iv:oZx9Q4MT8CJzdJ7sgRgqM2+q/loZDKyxjTTINLzNyu4=,tag:A6E9R15jzaacgejZ9lMvgw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.8.1
