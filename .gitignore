@@ -1,6 +1,7 @@
 # Trash
 .DS_Store
 Thumbs.db
+pv-migrate.log
 # k8s
 kubeconfig
 # vscode-sops
