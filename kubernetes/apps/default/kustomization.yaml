@@ -4,13 +4,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
-  - code-server/ks.yaml
-  - dashy/ks.yaml
   - drop/ks.yaml
-  - echo-server/ks.yaml
   - hajimari/ks.yaml
-  - jdownloader/ks.yaml
   - octoprint/ks.yaml
   - paperless/ks.yaml
-  - sharry/ks.yaml
   - webtrees/ks.yaml
