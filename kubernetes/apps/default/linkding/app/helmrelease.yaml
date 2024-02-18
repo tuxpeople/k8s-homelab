@@ -51,9 +51,64 @@ spec:
               TZ: ${TIMEZONE}
               LD_SUPERUSER_NAME: tdeutsch
               LD_ENABLE_AUTH_PROXY: "True"
-              LD_AUTH_PROXY_USERNAME_HEADER: "Remote-User"
+              LD_AUTH_PROXY_USERNAME_HEADER: "HTTP_REMOTE_USER"
               LD_AUTH_PROXY_LOGOUT_URL: "https://auth.eighty-three.me/"
               # to use a db see https://github.com/bjw-s/home-ops/blob/main/kubernetes/main/apps/selfhosted/linkding/app/helmrelease.yaml
+          litestream: &ls
+            imagePullPolicy: IfNotPresent
+            image:
+              repository: "docker.io/litestream/litestream"
+              tag: "0.3.13"
+            args: ["replicate"]
+            env: &lsenv
+              LITESTREAM_ACCESS_KEY_ID:
+                valueFrom:
+                  secretKeyRef:
+                    name: "linkding-secrets"
+                    key: "litestream-minio-id"
+              LITESTREAM_SECRET_ACCESS_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: "linkding-secrets"
+                    key: "litestream-minio-key"
+              MINIO_ENDPOINT:
+                valueFrom:
+                  secretKeyRef:
+                    name: "linkding-secrets"
+                    key: "litestream-minio-endpoint"
+              MINIO_BUCKET:
+                valueFrom:
+                  secretKeyRef:
+                    name: "linkding-secrets"
+                    key: "litestream-minio-bucket"
+              AGE_PUBKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: "linkding-secrets"
+                    key: "litestream-age-pubkey"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 1024Mi
+        initContainers:
+          01-litestream-restore:
+            <<: *ls
+            args:
+              [
+                "restore",
+                "-if-db-not-exists",
+                "-if-replica-exists",
+                "/etc/linkding/data/db.sqlite3",
+              ]
+            env:
+              <<: *lsenv
+              AGE_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: "linkding-secrets"
+                    key: "litestream-age-secret"
     service:
       main:
         ports:
@@ -88,3 +143,51 @@ spec:
         storageClass: longhorn
         globalMounts:
           - path: /etc/linkding/data
+      config:
+        enabled: true
+        type: configMap
+        name: "linkding-config"
+        advancedMounts:
+          main:
+            litestream:
+              - &lsmnt
+                subPath: "litestream-replicate"
+                path: "/etc/litestream.yml"
+                readOnly: true
+            01-litestream-restore:
+              - <<: *lsmnt
+                subPath: "litestream-restore"
+    configMaps:
+      config:
+        enabled: true
+        data:
+          litestream-replicate: |
+            dbs:
+              - path: /etc/linkding/data/db.sqlite3
+                replicas:
+                  - name: "minio"
+                    type: "s3"
+                    endpoint: "$${MINIO_ENDPOINT}"
+                    bucket: "$${MINIO_BUCKET}"
+                    path: "linkding"
+                    force-path-style: true
+                    retention: 168h
+                    validation-interval: 24h
+                    age:
+                      recipients:
+                        - $${AGE_PUBKEY}
+          litestream-restore: |
+            dbs:
+              - path: /etc/linkding/data/db.sqlite3
+                replicas:
+                  - name: "minio"
+                    type: "s3"
+                    endpoint: "$${MINIO_ENDPOINT}"
+                    bucket: "$${MINIO_BUCKET}"
+                    path: "linkding"
+                    force-path-style: true
+                    retention: 168h
+                    validation-interval: 24h
+                    age:
+                      identities:
+                        - $${AGE_SECRET}
