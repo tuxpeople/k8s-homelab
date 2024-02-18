@@ -1,0 +1,90 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app linkding
+  namespace: default
+spec:
+  interval: 15m
+  timeout: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    crds: CreateReplace
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          enableServiceLinks: false
+        containers:
+          main:
+            image:
+              repository: sissbruecker/linkding
+              tag: 1.24.0
+            resources:
+              requests:
+                cpu: 12m
+                memory: 64M
+              limits:
+                memory: 256M
+            env:
+              TZ: ${TIMEZONE}
+              LD_SUPERUSER_NAME: tdeutsch
+              LD_ENABLE_AUTH_PROXY: "True"
+              LD_AUTH_PROXY_USERNAME_HEADER: "Remote-User"
+              # to use a db see https://github.com/bjw-s/home-ops/blob/main/kubernetes/main/apps/selfhosted/linkding/app/helmrelease.yaml
+    service:
+      main:
+        ports:
+          http:
+            port: &port 9090
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
+          hajimari.io/icon: "mdi:link-variant"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: ${SECRET_DOMAIN/./-}-production-tls
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: longhorn
+        globalMounts:
+          - path: /etc/linkding/data
