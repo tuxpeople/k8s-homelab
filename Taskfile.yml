@@ -23,6 +23,7 @@ tasks:
     desc: Initialize workstation dependencies with Brew
     cmds:
       - brew install {{.DEPS}} {{.CLI_ARGS}}
+      - python3 -m pip install yamlfix
     preconditions:
       - sh: command -v brew
         msg: |
