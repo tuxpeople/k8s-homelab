@@ -65,13 +65,12 @@ echo disable flux
 flux suspend kustomization --all -n flux-system > /dev/null
 
 echo scale replicas down
+kubectl scale deployment -n kube-system descheduler --replicas=0
 # kubectl get kustomizations.kustomize.toolkit.fluxcd.io -n flux-system --no-headers | awk '{ print $1 }' | xargs -L1 flux suspend kustomization
 kubectl get deployments -A --no-headers | grep -v 'kube-system\|storage\|flux-system\|networking\|pv-backup' | awk '{ print $1 " " $2 }' | xargs -L1 kubectl scale deployment --replicas=0 -n
 kubectl get statefulsets -A --no-headers | grep -v 'kube-system\|storage\|flux-system\|networking' | awk '{ print $1 " " $2 }' | xargs -L1 kubectl scale statefulset --replicas=0 -n
 
-sleep 5
-
-kubectl scale deployment -n kube-system descheduler --replicas=0
+sleep 10
 
 # kubectl get deployments -n storage --no-headers | awk '{ print $1 }' | xargs -L1 kubectl scale deployment --replicas=01 -n storage
 # kubectl get statefulsets -n storage  --no-headers | awk '{ print $1 }' | xargs -L1 kubectl scale statefulset --replicas=1 -n storage
@@ -91,7 +90,7 @@ for namespace in $(kubectl get ns --no-headers | awk '{ print $1 }'); do
         kubectl exec -it ${backuppod} -- bash -c "mkdir -p /pv-backup/${namespace}"
         kubectl exec -it ${backuppod} -- bash -c "cd /pv-backup/${namespace}; tar -xzf /nfs-backup/${namespace}--${pvc}.tar.gz"
         # kubectl describe pvc -n ${namespace} ${pvc} | grep Used | awk '{ print $3 }' | xargs -L1 kubectl delete pod -n ${namespace}
-        pv-migrate migrate pv-backup ${pvc} --strategies "svc,mnt2,lbsvc" --no-progress-bar -i --source-path ${namespace}/${pvc} --source-namespace default --dest-namespace ${namespace} -d | tee -a pv-migrate.log | grep '❌\|✅ '
+        pv-migrate migrate pv-backup ${pvc} --strategies "svc,mnt2,lbsvc" --no-progress-bar -i --source-path ${namespace}/${pvc}/ --source-namespace default --dest-namespace ${namespace} -d | tee -a pv-migrate.log | grep '❌\|✅ '
         kubectl exec -it ${backuppod} -- bash -c "rm -rf /pv-backup/${namespace}/${pvc}"
         # kubectl describe pvc -n ${namespace} ${pvc} | grep Used | awk '{ print $3 }' | xargs -L1 kubectl delete pod -n ${namespace}
         echo "" | tee -a pv-migrate.log
@@ -120,13 +119,13 @@ kubectl delete persistentvolumeclaim pv-backup
 for d in $(kubectl get deployments.apps -o wide --no-headers -A | grep '0/0' | awk '{ print $1 ";" $2 }')
 do
     kubectl scale deployment --replicas=1 -n $(echo $d | sed 's/;/ /g')
-    sleep 2
+    sleep 5
 done
 
 for d in $(kubectl get statefulsets -o wide --no-headers -A | grep '0/0' | awk '{ print $1 ";" $2 }')
 do
     kubectl scale statefulsets --replicas=1 -n $(echo $d | sed 's/;/ /g')
-    sleep 2
+    sleep 5
 done
 
 for k in $(kubectl get kustomizations.kustomize.toolkit.fluxcd.io -n flux-system --no-headers | awk '{ print $1 }')
@@ -134,6 +133,10 @@ do
     flux reconcile kustomization $k &
 done
 
-wait
+# wait
 
-kubectl get helmrelease -A --no-headers | awk '{ print $1 " " $2  }' | xargs -L1 flux reconcile helmrelease -n
+# kubectl get helmrelease -A --no-headers | grep -v descheduler | awk '{ print $1 " " $2  }' | xargs -L1 flux reconcile helmrelease -n
+
+# wait
+
+# kubectl scale deployment -n kube-system descheduler --replicas=1

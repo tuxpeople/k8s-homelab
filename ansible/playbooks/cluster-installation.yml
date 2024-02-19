@@ -61,6 +61,12 @@
       delegate_to: localhost
       become: false
 
+# TODO
+#   yq e -i ".clusters[0].name = \"homelab\"" kubeconfig
+#   yq e -i ".contexts[0].name = \"homelab\"" kubeconfig
+#   yq e -i ".contexts[0].context.cluster = \"homelab\"" kubeconfig
+#   yq e -i ".current-context = \"homelab\"" kubeconfig
+
     - name: Post installation of custom manifests
       when:
         - k3s_primary_control_node
