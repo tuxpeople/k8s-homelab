@@ -100,9 +100,6 @@ date >> pv-migrate.log
 
 sleep 10
 
-echo enable flux
-flux resume kustomization --all -n flux-system > /dev/null
-
 # for ns in $(kubectl get ns --no-headers | grep -v 'kube-system\|storage\|flux-system' | awk '{ print $1 }')
 # do
 #     kubectl get deployments -n ${ns} --no-headers | grep -v pv-backup | awk '{ print $1 }' | xargs -L1 kubectl scale deployment --replicas=1 -n ${ns}
@@ -116,7 +113,7 @@ kubectl delete deployment pv-backup
 kubectl get pods -A --no-headers | grep pv- | awk '{ print $1 " " $2 }' | xargs -L1 kubectl delete pod -n
 kubectl delete persistentvolumeclaim pv-backup
 
-for d in $(kubectl get deployments.apps -o wide --no-headers -A | grep '0/0' | awk '{ print $1 ";" $2 }')
+for d in $(kubectl get deployments.apps -o wide --no-headers -A | grep -v descheduler | grep '0/0' | awk '{ print $1 ";" $2 }')
 do
     kubectl scale deployment --replicas=1 -n $(echo $d | sed 's/;/ /g')
     sleep 5
@@ -127,6 +124,10 @@ do
     kubectl scale statefulsets --replicas=1 -n $(echo $d | sed 's/;/ /g')
     sleep 5
 done
+
+
+echo enable flux
+flux resume kustomization --all -n flux-system > /dev/null
 
 for k in $(kubectl get kustomizations.kustomize.toolkit.fluxcd.io -n flux-system --no-headers | awk '{ print $1 }')
 do
@@ -140,3 +141,6 @@ done
 # wait
 
 # kubectl scale deployment -n kube-system descheduler --replicas=1
+kubectl scale deployment -n kube-system descheduler --replicas=1
+
+# kubectl get helmrelease -A --no-headers | awk '{ print $1 " " $2  }' | xargs -L1 flux reconcile helmrelease -n
