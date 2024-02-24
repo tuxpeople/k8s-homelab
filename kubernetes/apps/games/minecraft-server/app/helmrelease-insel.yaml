@@ -171,3 +171,15 @@ spec:
             target:
               kind: Deployment
               name: minecraft-server-insel-minecraft-bedrock
+          - patch:
+              - op: add
+                path: /spec/ports/-
+                value:
+                  - name: minecraft-ssh
+                    nodePort: 2222
+                    port: 2222
+                    protocol: TCP
+                    targetPort: minecraft
+            target:
+              kind: Service
+              name: minecraft-server-insel-minecraft-bedrock
