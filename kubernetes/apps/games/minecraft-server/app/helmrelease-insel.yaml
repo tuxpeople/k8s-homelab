@@ -156,7 +156,6 @@ spec:
                 path: /spec/template/spec/containers/-
                 value:
                   image: kaiede/minecraft-bedrock-backup:latest
-                  args: ["status-bedrock --host localhost"]
                   imagePullPolicy: IfNotPresent
                   name: backup
                   resources: {}
