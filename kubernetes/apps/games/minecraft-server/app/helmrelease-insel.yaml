@@ -57,6 +57,7 @@ spec:
       BACKUP_NAME: *app
       TZ: ${TIMEZONE}
       ENABLE_SSH: "TRUE"
+      RCON_PASSWORD: "letmetrythis"
     # podAnnotations:
     #   configmap.reloader.stakater.com/reload: mc-backup-configmap
     minecraftServer:
