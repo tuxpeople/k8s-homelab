@@ -56,6 +56,7 @@ spec:
       ENABLE_AUTOPAUSE: false
       BACKUP_NAME: *app
       TZ: ${TIMEZONE}
+      ENABLE_SSH: "TRUE"
     podAnnotations:
       configmap.reloader.stakater.com/reload: mc-backup-configmap
     minecraftServer:
@@ -146,19 +147,27 @@ spec:
                       nfs:
                         server: 10.20.30.40
                         path: /volume2/data/backup/kubernetes/minecraft_backup
-  # postRenderers:
-  #   # Instruct helm-controller to use built-in "kustomize" post renderer.
-  #   - kustomize:
-  #       patchesJson6902:
-  #         - patch:
-  #             - op: add
-  #               path: /spec/template/spec/containers/-
-  #               value:
-  #                 image: itzg/mc-monitor:0.12.3
-  #                 args: ["status-bedrock --host localhost"]
-  #                 imagePullPolicy: IfNotPresent
-  #                 name: mc-monitor
-  #                 resources: {}
-  #           target:
-  #             kind: Deployment
-  #             name: minecraft-server-insel-minecraft-bedrock
+  postRenderers:
+    # Instruct helm-controller to use built-in "kustomize" post renderer.
+    - kustomize:
+        patchesJson6902:
+          - patch:
+              - op: add
+                path: /spec/template/spec/containers/-
+                value:
+                  image: kaiede/minecraft-bedrock-backup:latest
+                  args: ["status-bedrock --host localhost"]
+                  imagePullPolicy: IfNotPresent
+                  name: backup
+                  resources: {}
+                  env:
+                    - name: TZ
+                      value: ${TIMEZONE}
+                  volumeMounts:
+                    - mountPath: /data
+                      name: datadir
+                    - mountPath: /backups
+                      name: nfs
+            target:
+              kind: Deployment
+              name: minecraft-server-insel-minecraft-bedrock
