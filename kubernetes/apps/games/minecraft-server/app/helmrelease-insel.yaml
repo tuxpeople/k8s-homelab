@@ -94,9 +94,9 @@ spec:
           nfs:
             server: 10.20.30.40
             path: /volume2/data/backup/kubernetes/mc-backup
-        - name: mc-backup-volume
-          configMap:
-            name: mc-backup-configmap
+        # - name: mc-backup-volume
+        #   configMap:
+        #     name: mc-backup-configmap
     # extraDeploy:
     #   - |
     #     apiVersion: batch/v1
