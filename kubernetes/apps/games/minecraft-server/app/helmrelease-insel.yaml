@@ -81,71 +81,43 @@ spec:
       enabled: false
     extraVolumes:
       - volumeMounts:
-          # - name: nfs
-          #   mountPath: /backup/minecraft_backup
-        #       - name: mc-backup-volume
-        #         mountPath: /scripts/mc-backup.sh
-        #         subPath: mc-backup.sh
-        #         defaultMode: 0744
-        #         readOnly: true
         volumes:
           - name: nfs
             nfs:
               server: 10.20.30.40
               path: /volume2/data/backup/kubernetes/mc-backup/minecraft-server-insel
-        # - name: mc-backup-volume
-        #   configMap:
-        #     name: mc-backup-configmap
-    # extraDeploy:
-    #   - |
-    #     apiVersion: batch/v1
-    #     kind: CronJob
-    #     metadata:
-    #       name: {{ template "minecraft.fullname" . }}-backup
-    #       annotations:
-    #         kustomize.toolkit.fluxcd.io/substitute: disabled
-    #     spec:
-    #       schedule: "@hourly"
-    #       concurrencyPolicy: Forbid
-    #       successfulJobsHistoryLimit: 3
-    #       failedJobsHistoryLimit: 3
-    #       jobTemplate:
-    #         spec:
-    #           activeDeadlineSeconds: 180
-    #           template:
-    #             spec:
-    #               serviceAccountName: backup-sa
-    #               containers:
-    #                 - name: backup
-    #                   image: registry.eighty-three.me/tuxpeople/kubernetes-kubectl:1.29.2
-    #                   command:
-    #                     - /bin/bash
-    #                   args:
-    #                     - -c
-    #                     - |
-    #                       kubectl exec svc/{{ template "minecraft.fullname" . }} -- /usr/bin/bash -c "bash /scripts/mc-backup.sh"
-    #                       echo "Convert backups to .mcworld files"
-    #                       BASEDIR="/backup/minecraft_backup"
-    #                       cd $BASEDIR
-    #                       for ARCHIVE in $(find . -type f -name *.tar.gz); do
-    #                           MYDIR=$(dirname $ARCHIVE)
-    #                           MYNAME=$(basename $ARCHIVE .tar.gz)
-    #                           cd $MYDIR
-    #                           tar xzf $MYNAME.tar.gz && zip $MYNAME.mcworld $(tar tf $MYNAME.tar.gz | grep -v '\./$') && rm -rf -- $(tar tf $MYNAME.tar.gz | grep -v '\./$')
-    #                           touch -r $MYNAME.tar.gz $MYNAME.mcworld
-    #                           rm -f $MYNAME.tar.gz
-    #                           stat --format="Created mcworld file: '%n', size: %s bytes" "$MYNAME.mcworld"
-    #                           cd $BASEDIR
-    #                       done
-    #                   volumeMounts:
-    #                     - name: nfs
-    #                       mountPath: /backup/minecraft_backup
-    #               restartPolicy: OnFailure
-    #               volumes:
-    #                 - name: nfs
-    #                   nfs:
-    #                     server: 10.20.30.40
-    #                     path: /volume2/data/backup/kubernetes/minecraft_backup
+          - name: backup-config
+            configMap:
+              name: backup-{{ template "minecraft.fullname" . }}
+    extraDeploy:
+      - |
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: backup-{{ template "minecraft.fullname" . }}
+        data:
+          config2.yml: |
+            schedule:
+              onPlayerLogin: true
+              onPlayerLogout: true
+              minInterval: 1h
+              startupDelay: 5m
+
+            trim:
+              trimDays: 2
+              keepDays: 14
+              minKeep: 2
+
+            containers:
+              bedrock:
+                - name: minecraft-server-insel
+                  # The hostname here is the name of the service in the compose YML.
+                  ssh: 127.0.0.1:2222
+                  # itzg writes out the password as yaml to the root of /data
+                  passwordFile: /data/.remote-console.yaml
+                  worlds:
+                    - /data/worlds/insel
+            loggingLevel: debug
   postRenderers:
     # Instruct helm-controller to use built-in "kustomize" post renderer.
     - kustomize:
@@ -166,6 +138,11 @@ spec:
                       name: datadir
                     - mountPath: /backups
                       name: nfs
+                    - name: backup-config
+                      mountPath: /backups/config2.yml
+                      subPath: config2.yml
+                      defaultMode: 0444
+                      readOnly: true
             target:
               kind: Deployment
               name: minecraft-server-insel-minecraft-bedrock
