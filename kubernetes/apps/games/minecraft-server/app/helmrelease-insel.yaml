@@ -88,13 +88,13 @@ spec:
               path: /volume2/data/backup/kubernetes/mc-backup/minecraft-server-insel
           - name: backup-config
             configMap:
-              name: backup-{{ template "minecraft.fullname" . }}
+              name: backup-*app
     extraDeploy:
       - |
         apiVersion: v1
         kind: ConfigMap
         metadata:
-          name: backup-{{ template "minecraft.fullname" . }}
+          name: backup-*app
         data:
           config2.yml: |
             schedule:
