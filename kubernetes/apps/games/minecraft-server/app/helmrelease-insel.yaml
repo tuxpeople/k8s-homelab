@@ -85,7 +85,7 @@ spec:
           - name: nfs
             nfs:
               server: 10.20.30.40
-              path: /volume2/data/backup/kubernetes/mc-backup/minecraft-server-insel
+              path: /volume2/data/backup/kubernetes/mc-backup/test
           - name: backup-config
             configMap:
               name: minecraft-server-insel-backup
@@ -96,7 +96,7 @@ spec:
         metadata:
           name: minecraft-server-insel-backup
         data:
-          config2.yml: |
+          config.yml: |
             schedule:
               onPlayerLogin: true
               onPlayerLogout: true
@@ -139,8 +139,8 @@ spec:
                     - mountPath: /backups
                       name: nfs
                     - name: backup-config
-                      mountPath: /backups/config2.yml
-                      subPath: config2.yml
+                      mountPath: /backups/config.yml
+                      subPath: config.yml
                       defaultMode: 0444
                       readOnly: true
             target:
