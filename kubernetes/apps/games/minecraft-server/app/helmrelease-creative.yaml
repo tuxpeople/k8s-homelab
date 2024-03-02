@@ -55,7 +55,6 @@ spec:
     extraEnv:
       ENABLE_AUTOPAUSE: false
       TZ: ${TIMEZONE}
-      ENABLE_SSH: "TRUE"
     minecraftServer:
       eula: "TRUE"
       version: LATEST
@@ -74,6 +73,7 @@ spec:
       serverName: Thomas' Creative Server
       levelName: world
       # memory: 2048M
+      enableSSH: true
     rcon:
       enabled: false
     extraVolumes:

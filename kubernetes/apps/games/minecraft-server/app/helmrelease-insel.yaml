@@ -55,7 +55,6 @@ spec:
     extraEnv:
       ENABLE_AUTOPAUSE: false
       TZ: ${TIMEZONE}
-      ENABLE_SSH: "TRUE"
     # podAnnotations:
     #   configmap.reloader.stakater.com/reload: mc-backup-configmap
     minecraftServer:
@@ -77,6 +76,7 @@ spec:
       serverName: Thomas' Insel Server
       levelName: insel
       # memory: 2048M
+      enableSSH: true
     rcon:
       enabled: false
     extraVolumes:
