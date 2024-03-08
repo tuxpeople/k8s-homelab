@@ -1,0 +1,59 @@
+---
+- name: Create longhorn disk
+  hosts:
+    - master
+    - worker
+  become: true
+  tasks:
+    - name: Install open-iscsi
+      package:
+        name: "open-iscsi"
+        state: present
+    - name: Create /var/lib/longhorn if it does not exist
+      file:
+        path: /var/lib/longhorn
+        state: directory
+        mode: '0755'
+    - name: Create /var/lib/rancher if it does not exist
+      file:
+        path: /var/lib/rancher
+        state: directory
+        mode: '0755'
+    - name: Create volume group
+      lvg:
+        vg: longhorn_vg
+        pvs: '{{ datadisk }}'
+    - name: Create logical volume for rancher
+      lvol:
+        vg: longhorn_vg
+        lv: rancher_lv
+        size: 50G
+        resizefs: true
+    - name: Create logical volume for longhorn
+      lvol:
+        vg: longhorn_vg
+        lv: data_lv
+        size: +100%FREE # 100%PVS
+        resizefs: true
+    - name: Create filesystem for rancher
+      filesystem:
+        fstype: ext4
+        dev: /dev/longhorn_vg/rancher_lv
+    - name: Create filesystem for longhorn
+      filesystem:
+        fstype: ext4
+        dev: /dev/longhorn_vg/data_lv
+    - name: Ensure lv mount exists for rancher
+      mount:
+        src: /dev/longhorn_vg/rancher_lv
+        path: /var/lib/rancher
+        opts: rw,nosuid
+        state: mounted
+        fstype: ext4
+    - name: Ensure lv mount exists for longhorn
+      mount:
+        src: /dev/longhorn_vg/data_lv
+        path: /var/lib/longhorn
+        opts: rw,nosuid
+        state: mounted
+        fstype: ext4
