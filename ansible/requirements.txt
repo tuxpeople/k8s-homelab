@@ -1,1 +1,2 @@
 openshift==0.13.2
+yamlfix==1.16.0
