@@ -26,6 +26,7 @@ resources:
   - minecraft-server-charts.yaml
   - minio.yaml
   - mittwald-charts.yaml
+  - netdata.yaml
   - piraeus.yaml
   - prometheus-community.yaml
   - rancher.yaml
