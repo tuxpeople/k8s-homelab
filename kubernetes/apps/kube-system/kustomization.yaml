@@ -6,6 +6,7 @@ resources:
   - namespace.yaml
   - cilium/ks.yaml
   - descheduler/ks.yaml
+  - kube-vip/ks.yaml
   - kubernetes-replicator/ks.yaml
   - kured/ks.yaml
   - metrics-server/ks.yaml
