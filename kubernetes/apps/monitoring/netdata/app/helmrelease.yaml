@@ -45,15 +45,15 @@ spec:
     env:
       TZ: ${TIMEZONE}
 
-    parent:
-      enabled: true
-      alarms:
-        storageclass: "longhorn"
-      database:
-        storageclass: "longhorn"
+    # parent:
+    #   enabled: true
+    #   alarms:
+    #     storageclass: "longhorn"
+    #   database:
+    #     storageclass: "longhorn"
 
-    child:
-      enabled: false
+    # child:
+    #   enabled: false
 
-    k8sState:
-      enabled: false
+    # k8sState:
+    #   enabled: false
