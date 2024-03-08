@@ -34,11 +34,8 @@ spec:
       enabled: true
       path: /
       pathType: Prefix
-      spec:
-        ingressClassName: traefik
       hosts:
         - &host netdata.${SECRET_DOMAIN}
-
       tls:
         - secretName: "${SECRET_DOMAIN/./-}-production-tls"
           hosts:
