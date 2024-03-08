@@ -29,9 +29,9 @@ spec:
   secrets:
     - name: ubuntu
       path: /host/run/system-upgrade/secrets/ubuntu
-  # renovate: datasource=docker depName=library/ubuntu
-  version: lunar-20231004
+  # renovate: datasource=docker depName=ghcr.io/tuxpeople/ubuntu-weekly
+  version: 0.2024.0301
   upgrade:
-    image: ubuntu
+    image: ghcr.io/tuxpeople/ubuntu-weekly
     command: [chroot, /host]
     args: [sh, /run/system-upgrade/secrets/ubuntu/upgrade.sh]
