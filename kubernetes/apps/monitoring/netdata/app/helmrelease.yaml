@@ -32,6 +32,8 @@ spec:
   values:
     ingress:
       enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
       path: /
       pathType: Prefix
       hosts:
@@ -40,7 +42,6 @@ spec:
         - secretName: "${SECRET_DOMAIN/./-}-production-tls"
           hosts:
             - *host
-
     env:
       TZ: ${TIMEZONE}
 
