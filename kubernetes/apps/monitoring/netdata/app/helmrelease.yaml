@@ -44,7 +44,16 @@ spec:
             - *host
     env:
       TZ: ${TIMEZONE}
-
+    child:
+      configs:
+        sonarr-exporter:
+          enabled: true
+          path: /etc/netdata/go.d/sonarr-exporter.conf
+          data: |
+            update_every: 1
+            autodetection_retry: 0
+            jobs:
+              - url: http://sonarr-exporter.media.svc.cluster.local:9707/metrics
     # parent:
     #   enabled: true
     #   alarms:
