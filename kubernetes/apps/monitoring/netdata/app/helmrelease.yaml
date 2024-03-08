@@ -32,17 +32,17 @@ spec:
   values:
     ingress:
       enabled: true
+      path: /
+      pathType: Prefix
       spec:
         ingressClassName: traefik
       hosts:
-        - host: &host netdata.${SECRET_DOMAIN}
-          paths:
-            - path: /
-              type: Prefix
+        - &host netdata.${SECRET_DOMAIN}
+
       tls:
-        - hosts:
+        - secretName: "${SECRET_DOMAIN/./-}-production-tls"
+          hosts:
             - *host
-          secretName: ${SECRET_DOMAIN/./-}-production-tls
 
     env:
       TZ: ${TIMEZONE}
