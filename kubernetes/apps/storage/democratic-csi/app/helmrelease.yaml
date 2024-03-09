@@ -36,7 +36,7 @@ spec:
         defaultClass: false
         reclaimPolicy: Delete
         volumeBindingMode: Immediate
-        allowVolumeExpansion: true
+        allowVolumeExpansion: false
         parameters:
           fsType: nfs
           detachedVolumesFromSnapshots: "false"
