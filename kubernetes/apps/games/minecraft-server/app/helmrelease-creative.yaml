@@ -63,7 +63,7 @@ spec:
       loadBalancerIP: ${METALLB_MINECRAFT1_ADDR}
       externalTrafficPolicy: Local
       onlineMode: false
-      gameMode: creative
+      gameMode: survival
       # The world is ticked this many chunks away from any player.
       tickDistance: 4
       # Max view distance (in chunks).
