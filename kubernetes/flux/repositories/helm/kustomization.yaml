@@ -9,6 +9,7 @@ resources:
   - cilium.yaml
   - csi-driver-nfs.yaml
   - deliveryheroio.yaml
+  - democratic-csi.yaml
   - external-dns.yaml
   - fairwinds.yaml
   - grafana.yaml
