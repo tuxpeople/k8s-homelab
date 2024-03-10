@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: media
   dependsOn:
-    - name: cluster-apps-longhorn-app
+    - name: ${STORAGE_KUST}
   path: ./kubernetes/apps/media/calibre-web/app
   prune: true
   sourceRef:

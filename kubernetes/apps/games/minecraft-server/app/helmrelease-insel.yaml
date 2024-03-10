@@ -30,7 +30,7 @@ spec:
     keepHistory: false
   values:
     persistence:
-      storageClass: longhorn
+      storageClass: ${MAIN_SC}
       dataDir:
         enabled: true
         Size: 5Gi

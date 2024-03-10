@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: games
   dependsOn:
-    - name: cluster-apps-longhorn-app
+    - name: ${STORAGE_KUST}
   path: ./kubernetes/apps/games/minecraft-server/app
   prune: true
   sourceRef:

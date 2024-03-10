@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-longhorn-app
+    - name: ${STORAGE_KUST}
   path: ./kubernetes/apps/default/drop/app
   prune: true
   sourceRef:

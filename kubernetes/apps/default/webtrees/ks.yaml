@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-longhorn-app
+    - name: ${STORAGE_KUST}
     - name: cluster-apps-webtrees-db
   path: ./kubernetes/apps/default/webtrees/app
   prune: true
@@ -29,7 +29,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-longhorn-app
+    - name: ${STORAGE_KUST}
   path: ./kubernetes/apps/default/webtrees/db
   prune: true
   sourceRef:

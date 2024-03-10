@@ -6,6 +6,8 @@ metadata:
   namespace: flux-system
 data:
   TIMEZONE: Europe/Zurich
+  STORAGE_KUST: cluster-apps-longhorn-app
+  MAIN_SC: longhorn
   METALLB_LB_RANGE: 192.168.8.60-192.168.8.79
   METALLB_MINECRAFT4_ADDR: 192.168.8.66
   METALLB_VECTOR_ADDR: 192.168.8.65

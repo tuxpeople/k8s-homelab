@@ -127,6 +127,6 @@ spec:
             - *host
     persistence:
       enabled: true
-      storageClassName: longhorn
+      storageClassName: ${MAIN_SC}
     testFramework:
       enabled: false

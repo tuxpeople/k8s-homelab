@@ -57,9 +57,9 @@ spec:
     # parent:
     #   enabled: true
     #   alarms:
-    #     storageclass: "longhorn"
+    #     storageclass: "${MAIN_SC}"
     #   database:
-    #     storageclass: "longhorn"
+    #     storageclass: "${MAIN_SC}"
 
     # child:
     #   enabled: false

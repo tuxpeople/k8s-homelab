@@ -43,4 +43,4 @@ spec:
     volumePermissions:
       enabled: true
     global:
-      storageClass: longhorn
+      storageClass: ${MAIN_SC}

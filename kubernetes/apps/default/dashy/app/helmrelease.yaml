@@ -89,7 +89,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: longhorn
+        storageClass: ${MAIN_SC}
         advancedMounts:
           main:
             main:
