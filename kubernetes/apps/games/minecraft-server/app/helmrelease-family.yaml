@@ -35,8 +35,11 @@ spec:
         enabled: true
         Size: 5Gi
     resources:
+      requests:
+        cpu: 750m
+        memory: 750Mi
       limits:
-        memory: 2Gi
+        memory: 3Gi
     livenessProbe:
       initialDelaySeconds: 30
       periodSeconds: 5
