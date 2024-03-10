@@ -44,14 +44,10 @@ spec:
       initialDelaySeconds: 30
       periodSeconds: 5
       failureThreshold: 10
-      successThreshold: 1
-      timeoutSeconds: 1
     readinessProbe:
       initialDelaySeconds: 30
       periodSeconds: 5
       failureThreshold: 10
-      successThreshold: 1
-      timeoutSeconds: 1
     startupProbe:
       enabled: true
       failureThreshold: 30
