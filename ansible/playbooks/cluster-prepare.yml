@@ -1,4 +1,16 @@
 ---
+- name: Prep
+  hosts:
+    - master
+    - worker
+  become: yes  # `no` will also work.
+  gather_facts: no
+
+  tasks:
+    - name: bootstrap
+      import_role:
+        name: robertdebock.roles.bootstrap
+
 - hosts:
     - master
     - worker
@@ -37,12 +49,12 @@
         - name: Packages | Remove leaf packages
           ansible.builtin.apt:
             autoremove: true
-        - name: Packages | RasPi packages
-          ansible.builtin.apt:
-            name: ["linux-modules-extra-raspi"]
-            install_recommends: false
-          notify: Reboot
-          when: "'raspi' in ansible_kernel"
+        # - name: Packages | RasPi packages
+        #   ansible.builtin.apt:
+        #     name: ["linux-modules-extra-raspi"]
+        #     install_recommends: false
+        #   notify: Reboot
+        #   when: "'raspi' in ansible_kernel"
 
     - name: Packages | Cilium CLI
       ansible.builtin.include_role:
@@ -112,10 +124,10 @@
           loop: ["none", "swap"]
       notify: Reboot
 
-    - name: raspberrypi
-      ansible.builtin.include_role:
-        name: raspberrypi
-        public: true
+    # - name: raspberrypi
+    #   ansible.builtin.include_role:
+    #     name: raspberrypi
+    #     public: true
 
   handlers:
     - name: Reboot

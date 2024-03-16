@@ -1,5 +1,4 @@
 ---
-
 # ssh_authorized_keys: []
 
 ubuntu:
@@ -14,3 +13,4 @@ ubuntu:
     - socat
     - python3-kubernetes
     - python3-yaml
+    - lvm2
