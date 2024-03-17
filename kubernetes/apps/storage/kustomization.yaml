@@ -9,5 +9,4 @@ resources:
   - longhorn/ks.yaml
   - snapshot-controller/ks.yaml
   - synology-csi/ks.yaml
-  - velero/ks.yaml
   - volsync/ks.yaml

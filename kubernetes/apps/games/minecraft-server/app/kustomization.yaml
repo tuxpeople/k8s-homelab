@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: games
 resources:
   - ./helmrelease-creative.yaml
-  - ./helmrelease-family.yaml
+  ##- ./helmrelease-family.yaml
   # - ./helmrelease-survival.yaml
   # - ./helmrelease-insel.yaml
   - ./monitoring.yaml
