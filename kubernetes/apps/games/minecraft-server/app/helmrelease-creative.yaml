@@ -41,17 +41,20 @@ spec:
       limits:
         memory: 3Gi
     livenessProbe:
+      enabled: true
       initialDelaySeconds: 30
       periodSeconds: 5
       failureThreshold: 10
     readinessProbe:
+      enabled: true
       initialDelaySeconds: 30
       periodSeconds: 5
       failureThreshold: 10
     startupProbe:
       enabled: true
-      failureThreshold: 30
+      failureThreshold: 60
       periodSeconds: 10
+      initialDelaySeconds: 60
     extraEnv:
       ENABLE_AUTOPAUSE: false
       TZ: ${TIMEZONE}
