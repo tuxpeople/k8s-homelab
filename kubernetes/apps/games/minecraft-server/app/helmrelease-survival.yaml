@@ -39,12 +39,12 @@ spec:
         memory: 2Gi
     livenessProbe:
       enabled: true
-      initialDelaySeconds: 30
+      initialDelaySeconds: 60
       periodSeconds: 5
       failureThreshold: 10
     readinessProbe:
       enabled: true
-      initialDelaySeconds: 30
+      initialDelaySeconds: 60
       periodSeconds: 5
       failureThreshold: 10
     startupProbe:
