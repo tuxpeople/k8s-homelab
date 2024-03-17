@@ -42,17 +42,17 @@ spec:
         memory: 3Gi
     livenessProbe:
       enabled: true
-      initialDelaySeconds: 60
+      initialDelaySeconds: 120
       periodSeconds: 5
       failureThreshold: 10
     readinessProbe:
       enabled: true
-      initialDelaySeconds: 60
+      initialDelaySeconds: 120
       periodSeconds: 5
       failureThreshold: 10
     startupProbe:
       enabled: true
-      failureThreshold: 60
+      failureThreshold: 120
       periodSeconds: 10
       initialDelaySeconds: 60
     extraEnv:
