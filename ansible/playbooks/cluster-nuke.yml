@@ -31,6 +31,7 @@
       environment:
         KUBECONFIG: /etc/rancher/k3s/k3s.yaml
       timeout: 300
+      ignore_errors: True
 
     - name: Prevent k3s from starting on reboot
       ansible.builtin.systemd:
@@ -61,3 +62,9 @@
         path: "{{ item.path }}"
         state: absent
       loop: "{{ directory_contents.files }}"
+
+    - name: Delete volume group
+      lvg:
+        vg: data_vg
+        state: absent
+        force: true
