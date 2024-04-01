@@ -10,6 +10,7 @@ resources:
   - echo-server/ks.yaml
   - hajimari/ks.yaml
   - jdownloader/ks.yaml
+  - kasm/ks.yaml
   - linkding/ks.yaml
   - octoprint/ks.yaml
   - paperless/ks.yaml
