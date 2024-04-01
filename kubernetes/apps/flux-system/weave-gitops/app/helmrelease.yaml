@@ -65,7 +65,7 @@ spec:
     logLevel: info
     rbac:
       create: true
-      impersonationResourceNames: ["admin"]
+      impersonationResourceNames: ["tdeutsch"]
       additionalRules:
         - apiGroups:
             - "infra.contrib.fluxcd.io"
@@ -75,14 +75,5 @@ spec:
             - "get"
             - "list"
             - "patch"
-        - apiGroups:
-            - ""
-          resourceNames:
-            - tdeutsch
-          resources:
-            - users
-            - groups
-          verbs:
-            - impersonate
     podAnnotations:
       secret.reloader.stakater.com/reload: auto
