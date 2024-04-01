@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kasm
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
+    external-dns/is-public: "true"
+    hajimari.io/enable: "true"
+    # hajimari.io/icon: printer-3d-nozzle
+    # traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
+spec:
+  tls:
+    - secretName: ${SECRET_DOMAIN/./-}-production-tls
+      hosts:
+        - kasm.${SECRET_DOMAIN}
+  rules:
+    - host: kasm.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kasm
+                port:
+                  number: 80
