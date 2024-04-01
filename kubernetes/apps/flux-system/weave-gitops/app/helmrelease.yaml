@@ -75,5 +75,14 @@ spec:
             - "get"
             - "list"
             - "patch"
+        - apiGroups:
+            - ""
+          resourceNames:
+            - admin
+          resources:
+            - users
+            - groups
+          verbs:
+            - impersonate
     podAnnotations:
       secret.reloader.stakater.com/reload: auto
