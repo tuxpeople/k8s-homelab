@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: registry.eighty-three.me/tuxpeople/podsync
-              tag: v2.6.1
+              tag: v2.7.0
             env:
               TZ: ${TIMEZONE}
             resources:
