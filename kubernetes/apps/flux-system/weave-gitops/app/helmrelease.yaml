@@ -65,7 +65,7 @@ spec:
     logLevel: info
     rbac:
       create: true
-      impersonationResourceNames: ["tdeutsch"]
+      #impersonationResourceNames: ["tdeutsch"]
       additionalRules:
         - apiGroups:
             - "infra.contrib.fluxcd.io"
