@@ -63,12 +63,8 @@ spec:
                 memory: 10Mi
               limits:
                 memory: 256Mi
-    service:
-      cloudflare-ddns:
-        enabled: false
     persistence:
       config:
-        enabled: true
         type: configMap
         name: cloudflare-ddns-configmap
         globalMounts:
