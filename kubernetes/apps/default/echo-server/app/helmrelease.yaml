@@ -31,11 +31,11 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      echo-server:
         replicas: 1
         strategy: RollingUpdate
         containers:
-          main:
+          echo-server:
             image:
               repository: docker.io/jmalloc/echo-server
               tag: 0.3.6
@@ -74,7 +74,7 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     ingress:
-      main:
+      echo-server:
         enabled: true
         className: traefik
         annotations:
@@ -91,7 +91,7 @@ spec:
           - hosts:
               - *host
     service:
-      main:
+      echo-server:
         controller: main
         ports:
           http:
