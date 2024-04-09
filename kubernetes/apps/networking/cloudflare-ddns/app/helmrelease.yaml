@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -31,13 +31,13 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      cloudflare-ddns:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
           schedule: "@hourly"
         containers:
-          main:
+          cloudflare-ddns:
             image:
               repository: ghcr.io/onedr0p/kubernetes-kubectl
               tag: 1.29.2@sha256:6324f99979877f3ded7647f4efa4df6d73f11bb9d8302dc81ab4a5d38e406867
@@ -64,7 +64,7 @@ spec:
               limits:
                 memory: 256Mi
     service:
-      main:
+      cloudflare-ddns:
         enabled: false
     persistence:
       config:
