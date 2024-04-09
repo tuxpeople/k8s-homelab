@@ -67,8 +67,8 @@ spec:
       config:
         type: configMap
         name: cloudflare-ddns-configmap
+        defaultMode: 0775
         globalMounts:
           - path: /app/cloudflare-ddns.sh
             subPath: cloudflare-ddns.sh
-            defaultMode: 0775
             readOnly: true
