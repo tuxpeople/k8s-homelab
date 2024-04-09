@@ -76,7 +76,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         annotations:
           hajimari.io/icon: video-input-antenna
         hosts:
@@ -92,6 +92,7 @@ spec:
               - *host
     service:
       main:
+        controller: main
         ports:
           http:
             port: *port
