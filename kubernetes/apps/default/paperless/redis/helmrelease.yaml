@@ -30,9 +30,9 @@ spec:
     keepHistory: false
   values:
     controllers:
-      paperless-redis:
+      main:
         containers:
-          paperless-redis:
+          main:
             image:
               repository: public.ecr.aws/docker/library/redis
               tag: 7.2.4
@@ -43,8 +43,8 @@ spec:
               limits:
                 memory: 32M
     service:
-      paperless-redis:
-        controller: paperless-redis
+      main:
+        controller: main
         ports:
           redis:
             enabled: true
