@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -85,6 +85,7 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
     service:
       main:
+        controller: main
         ports:
           http:
             port: *port
@@ -98,7 +99,7 @@ spec:
               - path: /
                 service:
                   name: main
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - *host
