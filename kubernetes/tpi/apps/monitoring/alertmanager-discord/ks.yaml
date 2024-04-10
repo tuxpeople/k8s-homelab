@@ -3,9 +3,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: alertmanager-discord
+  name: &app alertmanager-discord
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   targetNamespace: monitoring
   path: ./kubernetes/tpi/apps/monitoring/alertmanager-discord/app
   prune: true

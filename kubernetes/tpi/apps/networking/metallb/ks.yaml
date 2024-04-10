@@ -3,9 +3,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: metallb
+  name: &app metallb
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   targetNamespace: networking
   path: ./kubernetes/tpi/apps/networking/metallb/app
   prune: true
@@ -21,9 +24,12 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: metallb-config
+  name: &app metallb-config
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   targetNamespace: networking
   dependsOn:
     - name: metallb

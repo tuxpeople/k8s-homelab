@@ -3,9 +3,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: container-object-storage-interface
+  name: &app container-object-storage-interface
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   targetNamespace: kube-system
   path: ./kubernetes/tpi/apps/kube-system/container-object-storage-interface/app
   prune: true
