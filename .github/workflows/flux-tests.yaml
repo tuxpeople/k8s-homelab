@@ -56,6 +56,6 @@ jobs:
   #     - name: Test Resources
   #       uses: allenporter/flux-local/action/test@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
   #       with:
-  #         path: kubernetes/flux/config
+  #         path: kubernetes/tpi/flux/config
   #         enable-helm: true
   #         enable-kyverno: false

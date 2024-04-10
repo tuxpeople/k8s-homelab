@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FOLDERS="kubernetes/flux/repositories/oci kubernetes/flux/repositories/helm kubernetes/flux/repositories/git kubernetes/flux/vars kubernetes/flux/config"
+FOLDERS="kubernetes/tpi/flux/repositories/oci kubernetes/tpi/flux/repositories/helm kubernetes/tpi/flux/repositories/git kubernetes/tpi/flux/vars kubernetes/tpi/flux/config"
 
 _pwd="$(pwd)"
 _basedir="${_pwd}/$(dirname $(which ${0}))"

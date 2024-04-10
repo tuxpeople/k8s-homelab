@@ -9,7 +9,7 @@ vars:
 dotenv: [".config.env"]
 
 env:
-  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
+  KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig"
   SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
 
 includes:
