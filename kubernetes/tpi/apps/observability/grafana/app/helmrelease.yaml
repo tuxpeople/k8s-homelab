@@ -1,0 +1,132 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: observability
+spec:
+  interval: 15m
+  timeout: 15m
+  chart:
+    spec:
+      chart: grafana
+      version: 7.3.7
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    crds: CreateReplace
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    assertNoLeakedSecrets: false
+    admin:
+      existingSecret: grafana-admin-secret
+    env:
+      GF_EXPLORE_ENABLED: true
+      GF_SERVER_ROOT_URL: https://grafana.${SECRET_DOMAIN}
+    grafana.ini:
+      analytics:
+        check_for_updates: false
+        check_for_plugin_updates: false
+      auth:
+        signout_redirect_url: https://auth.${SECRET_DOMAIN}/logout
+        oauth_auto_login: false
+      auth.generic_oauth:
+        enabled: true
+        name: Homelab Account
+        icon: signin
+        client_id: grafana
+        client_secret: ${SECRET_OIDC_CLIENT_SECRET_GRAFANA}
+        scopes: openid profile email groups
+        empty_scopes: false
+        auth_url: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
+        token_url: https://auth.${SECRET_DOMAIN}/api/oidc/token
+        api_url: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
+        login_attribute_path: preferred_username
+        groups_attribute_path: groups
+        name_attribute_path: name
+        use_pkce: true
+      auth.generic_oauth.group_mapping:
+        role_attribute_path: |
+          contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'grafana') && 'Viewer'
+        org_id: 1
+      auth.basic:
+        enabled: false
+        # disable_login_form: false
+      auth.anonymous:
+        enabled: false
+        org_name: Homelab
+        org_id: 1
+        org_role: Viewer
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: default
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            access: proxy
+            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
+            isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki-read.observability.svc.cluster.local:3100
+    dashboards:
+      default:
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          datasource: Prometheus
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
+          datasource: Prometheus
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
+          datasource: Prometheus
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+      datasources:
+        enabled: true
+        searchNamespace: ALL
+    serviceMonitor:
+      enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        hajimari.io/icon: simple-icons:grafana
+      hosts:
+        - &host grafana.${SECRET_DOMAIN}
+      tls:
+        - hosts:
+            - *host
+    persistence:
+      enabled: true
+      storageClassName: ${MAIN_SC}
+    testFramework:
+      enabled: false
