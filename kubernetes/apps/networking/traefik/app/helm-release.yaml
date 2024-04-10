@@ -72,8 +72,8 @@ spec:
       - --providers.kubernetescrd.allowexternalnameservices=true
     ports:
       traefik:
-        # expose:
-        #   default: true
+        expose:
+          default: false
       web:
         redirectTo:
           port: websecure
