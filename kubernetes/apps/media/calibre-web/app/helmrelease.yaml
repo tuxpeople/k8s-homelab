@@ -60,20 +60,18 @@ spec:
               repository: busybox
               tag: 1.36.1
             command: [sh, -c, chown -R 1000:1000 /config]
-            volumeMounts:
-              - name: config
-                mountPath: /config
             securityContext:
               runAsUser: 0
     service:
       main:
+        controller: main
         ports:
           http:
             port: &port 8083
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         annotations:
           # traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
           hajimari.io/icon: bookshelf
@@ -104,7 +102,7 @@ spec:
         path: /volume2/data
         globalMounts:
           - path: /data
-        readOnly: true
+            readOnly: true
       cache:
         type: emptyDir
         globalMounts:

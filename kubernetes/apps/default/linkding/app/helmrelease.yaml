@@ -55,7 +55,6 @@ spec:
               LD_AUTH_PROXY_LOGOUT_URL: "https://auth.eighty-three.me/"
               # to use a db see https://github.com/bjw-s/home-ops/blob/main/kubernetes/main/apps/selfhosted/linkding/app/helmrelease.yaml
           litestream: &ls
-            imagePullPolicy: IfNotPresent
             image:
               repository: "docker.io/litestream/litestream"
               tag: "0.3.13"
@@ -111,13 +110,14 @@ spec:
                     key: "litestream-age-secret"
     service:
       main:
+        controller: main
         ports:
           http:
             port: &port 9090
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
@@ -129,7 +129,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - *host

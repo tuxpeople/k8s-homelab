@@ -52,13 +52,14 @@ spec:
                 memory: 500Mi
     service:
       main:
+        controller: main
         ports:
           http:
             port: &port 80
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         annotations:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
@@ -70,7 +71,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - *host

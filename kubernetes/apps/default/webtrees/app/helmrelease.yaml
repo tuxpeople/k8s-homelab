@@ -40,9 +40,6 @@ spec:
             image:
               repository: busybox
               tag: latest
-            imagePullPolicy: IfNotPresent
-            volumeMounts:
-              - { name: modules, mountPath: /var/www/html/modules_v4 }
             command: [
                 sh,
                 -c,
@@ -88,8 +85,6 @@ spec:
             #       timeoutSeconds: 1
             #       failureThreshold: 3
             #   readiness: *probes
-            startup:
-              enabled: false
             resources:
               requests:
                 cpu: 5m
@@ -98,6 +93,7 @@ spec:
                 memory: 500Mi
     service:
       main:
+        controller: main
         ports:
           http:
             port: &port 80
@@ -114,7 +110,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - *host
@@ -131,8 +127,6 @@ spec:
       modules:
         enabled: true
         type: emptyDir
-        accessMode: ReadWriteOnce
-        size: 5Gi
         globalMounts:
           - path: /var/www/html/modules_v4
             subPath: modules_v4

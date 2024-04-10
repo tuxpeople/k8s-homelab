@@ -47,13 +47,14 @@ spec:
               TZ: ${TIMEZONE}
     service:
       main:
+        controller: main
         ports:
           http:
             port: &port 8080
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         annotations:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
           hajimari.io/icon: file-arrow-up-down-outline
@@ -64,7 +65,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - *host
