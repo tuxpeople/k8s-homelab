@@ -39,6 +39,7 @@ spec:
           01-init-modules:
             image:
               repository: busybox
+              pullPolicy: Always
               tag: latest
             command: [
                 sh,

@@ -35,8 +35,8 @@ spec:
         containers:
           main:
             image:
-              repository: "ghcr.io/juanfont/headscale"
-              tag: "0.23.0"
+              repository: ghcr.io/juanfont/headscale
+              tag: 0.23.0
             command: ["headscale", "serve"]
             env:
               TZ: ${TIMEZONE}
