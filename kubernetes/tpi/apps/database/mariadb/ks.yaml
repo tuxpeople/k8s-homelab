@@ -32,7 +32,7 @@ spec:
       app.kubernetes.io/name: *app
   targetNamespace: database
   dependsOn:
-    - name: csi-driver-nfs
+    - name: ${STORAGE_KUST}
     - name: mariadb-operator
   path: ./kubernetes/tpi/apps/database/mariadb/instance
   prune: true

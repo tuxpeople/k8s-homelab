@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   targetNamespace: default
   dependsOn:
-    - name: csi-driver-nfs
+    - name: ${STORAGE_KUST}
   path: ./kubernetes/tpi/apps/default/jdownloader/app
   prune: true
   sourceRef:

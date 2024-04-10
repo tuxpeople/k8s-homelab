@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   targetNamespace: monitoring
   dependsOn:
-    - name: csi-driver-nfs
+    - name: ${STORAGE_KUST}
   path: ./kubernetes/tpi/apps/monitoring/grafana/app
   prune: true
   sourceRef:

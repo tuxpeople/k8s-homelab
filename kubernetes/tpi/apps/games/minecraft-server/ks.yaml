@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   targetNamespace: games
   dependsOn:
+    - name: csi-driver-nfs
     - name: cilium-config
     - name: ${STORAGE_KUST}
   path: ./kubernetes/tpi/apps/games/minecraft-server/app
