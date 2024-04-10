@@ -96,7 +96,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 8080
+            port: &port 8080
     ingress:
       main:
         enabled: true
@@ -111,7 +111,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - *host
@@ -128,7 +128,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: *port
         tls:
           - hosts:
               - *host2
