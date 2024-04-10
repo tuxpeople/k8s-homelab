@@ -3,7 +3,7 @@
 Thumbs.db
 pv-migrate.log
 # k8s
-kubeconfig
+kubeconfig*
 # vscode-sops
 .decrypted~*.yaml
 .config.env
