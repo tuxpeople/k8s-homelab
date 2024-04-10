@@ -10,9 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   targetNamespace: default
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: paperless-redis
   path: ./kubernetes/tpi/apps/default/paperless/redis
   prune: true
   sourceRef:
@@ -37,9 +34,6 @@ spec:
   dependsOn:
     - name: paperless-redis
     - name: traefik
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: paperless
   path: ./kubernetes/tpi/apps/default/paperless/app
   prune: true
   sourceRef:
