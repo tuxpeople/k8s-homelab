@@ -118,7 +118,7 @@ spec:
             secretName: ${SECRET_DOMAIN/./-}-production-tls
       public:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         annotations:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
         hosts:
