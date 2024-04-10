@@ -21,4 +21,4 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: "${NODE_CIDR}"
+    - cidr: "${CILIUM_LB_RANGE}"
