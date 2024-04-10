@@ -100,7 +100,7 @@ spec:
       enabled: true
       type: LoadBalancer
       annotations:
-        metallb.universe.tf/loadBalancerIPs: ${METALLB_VECTOR_ADDR}
+        io.cilium/lb-ipam-ip: ${CILIUM_LB_VECTOR_ADDR}
     podMonitor:
       enabled: true
   postRenderers:

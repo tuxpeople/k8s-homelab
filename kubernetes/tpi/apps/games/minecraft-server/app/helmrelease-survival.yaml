@@ -63,7 +63,7 @@ spec:
       version: LATEST
       enableLanVisibility: false
       serviceType: LoadBalancer
-      loadBalancerIP: ${METALLB_MINECRAFT2_ADDR}
+      loadBalancerIP: ${CILIUM_LB_MINECRAFT2_ADDR}
       externalTrafficPolicy: Local
       gameMode: survival
       # One of: peaceful, easy, normal, and hard

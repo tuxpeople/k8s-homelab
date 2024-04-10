@@ -8,7 +8,6 @@ resources:
   - external-dns/ks.yaml
   - ingressmonitorcontroller/ks.yaml
   - k8s-gateway/ks.yaml
-  - metallb/ks.yaml
   - phpipam/ks.yaml
   - traefik/ks.yaml
   - vpn/ks.yaml

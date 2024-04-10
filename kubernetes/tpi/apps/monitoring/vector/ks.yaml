@@ -9,6 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cilium-config
   targetNamespace: monitoring
   path: ./kubernetes/tpi/apps/monitoring/vector/aggregator
   prune: true
@@ -33,7 +35,7 @@ spec:
   targetNamespace: monitoring
   dependsOn:
     - name: vector-aggregator
-    - name: metallb-config
+    - name: cilium-config
   path: ./kubernetes/tpi/apps/monitoring/vector/agent
   prune: true
   sourceRef:

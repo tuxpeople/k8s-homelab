@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   targetNamespace: networking
   dependsOn:
-    - name: metallb-config
+    - name: cilium-config
   path: ./kubernetes/tpi/apps/networking/k8s-gateway/app
   prune: true
   sourceRef:
