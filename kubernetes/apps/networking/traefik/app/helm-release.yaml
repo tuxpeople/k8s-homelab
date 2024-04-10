@@ -82,9 +82,13 @@ spec:
           enabled: true
           options: default
       metrics:
-        port: 8082
-        expose: true
-        exposedPort: 8082
+        expose:
+          default: false
+    metrics:
+      prometheus:
+        entryPoint: metrics
+        service:
+          enabled: true
     tlsOptions:
       default:
         minVersion: VersionTLS12
