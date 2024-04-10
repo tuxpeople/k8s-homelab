@@ -14,42 +14,42 @@
         path: /var/lib/longhorn
         state: directory
         mode: '0755'
-    - name: Create /var/lib/rancher if it does not exist
-      file:
-        path: /var/lib/rancher
-        state: directory
-        mode: '0755'
+    # - name: Create /var/lib/rancher if it does not exist
+    #   file:
+    #     path: /var/lib/rancher
+    #     state: directory
+    #     mode: '0755'
     - name: Create volume group
       lvg:
         vg: data_vg
         pvs: '{{ datadisk }}'
-    - name: Create logical volume for rancher
-      lvol:
-        vg: data_vg
-        lv: rancher_lv
-        size: 50G
-        resizefs: true
+    # - name: Create logical volume for rancher
+    #   lvol:
+    #     vg: data_vg
+    #     lv: rancher_lv
+    #     size: 50G
+    #     resizefs: true
     - name: Create logical volume for longhorn
       lvol:
         vg: data_vg
         lv: longhorn_lv
         size: +100%FREE # 100%PVS
         resizefs: true
-    - name: Create filesystem for rancher
-      filesystem:
-        fstype: ext4
-        dev: /dev/data_vg/rancher_lv
+    # - name: Create filesystem for rancher
+    #   filesystem:
+    #     fstype: ext4
+    #     dev: /dev/data_vg/rancher_lv
     - name: Create filesystem for longhorn
       filesystem:
         fstype: ext4
         dev: /dev/data_vg/longhorn_lv
-    - name: Ensure lv mount exists for rancher
-      mount:
-        src: /dev/data_vg/rancher_lv
-        path: /var/lib/rancher
-        opts: rw,nosuid
-        state: mounted
-        fstype: ext4
+    # - name: Ensure lv mount exists for rancher
+    #   mount:
+    #     src: /dev/data_vg/rancher_lv
+    #     path: /var/lib/rancher
+    #     opts: rw,nosuid
+    #     state: mounted
+    #     fstype: ext4
     - name: Ensure lv mount exists for longhorn
       mount:
         src: /dev/data_vg/longhorn_lv
