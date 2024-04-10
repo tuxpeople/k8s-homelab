@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-code-server
+  name: code-server
   namespace: flux-system
 spec:
   targetNamespace: default

@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-paperless-redis
+  name: paperless-redis
   namespace: flux-system
 spec:
   targetNamespace: default
@@ -24,13 +24,13 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-paperless
+  name: paperless
   namespace: flux-system
 spec:
   targetNamespace: default
   dependsOn:
-    - name: cluster-apps-paperless-redis
-    - name: cluster-apps-traefik
+    - name: paperless-redis
+    - name: traefik
   commonMetadata:
     labels:
       app.kubernetes.io/name: paperless

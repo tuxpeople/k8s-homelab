@@ -3,12 +3,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-phpipam-db
+  name: phpipam-db
   namespace: flux-system
 spec:
   targetNamespace: networking
   dependsOn:
-    - name: cluster-apps-mariadb-instance
+    - name: mariadb-instance
   path: ./kubernetes/apps/networking/phpipam/phpipam-db
   prune: true
   sourceRef:
@@ -23,12 +23,12 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-phpipam-web
+  name: phpipam-web
   namespace: flux-system
 spec:
   targetNamespace: networking
   dependsOn:
-    - name: cluster-apps-phpipam-db
+    - name: phpipam-db
   path: ./kubernetes/apps/networking/phpipam/phpipam-web
   prune: true
   sourceRef:

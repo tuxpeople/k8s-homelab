@@ -3,7 +3,7 @@
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
-#   name: cluster-apps-longhorn-prereq
+#   name: longhorn-prereq
 #   namespace: flux-system
 # spec:
 #   targetNamespace: storage
@@ -21,12 +21,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-longhorn-app
+  name: longhorn-app
   namespace: flux-system
 spec:
   targetNamespace: storage
   # dependsOn:
-  #   - name: cluster-apps-longhorn-prereq
+  #   - name: longhorn-prereq
   path: ./kubernetes/apps/storage/longhorn/app
   prune: true
   sourceRef:
@@ -41,11 +41,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-longhorn-conf
+  name: longhorn-conf
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-longhorn-app
+    - name: longhorn-app
   path: ./kubernetes/apps/storage/longhorn/conf
   prune: true
   sourceRef:

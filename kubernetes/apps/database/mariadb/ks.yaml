@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-mariadb-operator
+  name: mariadb-operator
   namespace: flux-system
 spec:
   targetNamespace: database
@@ -21,13 +21,13 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-mariadb-instance
+  name: mariadb-instance
   namespace: flux-system
 spec:
   targetNamespace: database
   dependsOn:
-    - name: cluster-apps-csi-driver-nfs
-    - name: cluster-apps-mariadb-operator
+    - name: csi-driver-nfs
+    - name: mariadb-operator
   path: ./kubernetes/apps/database/mariadb/instance
   prune: true
   sourceRef:

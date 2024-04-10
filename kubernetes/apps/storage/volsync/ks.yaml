@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: snapshot-controller
-    - name: cluster-apps-kube-prometheus-stack
+    - name: kube-prometheus-stack
   targetNamespace: storage
   path: ./kubernetes/apps/storage/volsync/app
   prune: true
