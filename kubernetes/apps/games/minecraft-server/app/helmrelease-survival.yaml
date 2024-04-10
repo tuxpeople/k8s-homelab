@@ -51,7 +51,7 @@ spec:
       enabled: true
       failureThreshold: 120
       periodSeconds: 10
-      initialDelaySeconds: 60
+      initialDelaySeconds: 120
     extraEnv:
       ENABLE_AUTOPAUSE: false
       BACKUP_NAME: *app
