@@ -50,13 +50,13 @@ spec:
               # DOCKER_MODS: "linuxserver/mods:code-server-docker|linuxserver/mods:code-server-python3|linuxserver/mods:code-server-shellcheck|linuxserver/mods:code-server-terraform|linuxserver/mods:universal-git|linuxserver/mods:universal-tshoot|linuxserver/mods:universal-package-install"
               # INSTALL_PACKAGES: "rsync|git|nginx"
               # INSTALL_PIP_PACKAGES: "apprise"
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
+            # probes:
+            #   liveness:
+            #     enabled: true
+            #   readiness:
+            #     enabled: true
+            #   startup:
+            #     enabled: true
     service:
       main:
         controller: main
