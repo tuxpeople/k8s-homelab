@@ -42,6 +42,7 @@ spec:
               DISABLE_GOOGLE_CHROME: "1"
     service:
       main:
+        controller: main
         ports:
           http:
             port: 3000

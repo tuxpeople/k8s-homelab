@@ -93,13 +93,14 @@ spec:
                 memory: 2000M
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8080
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         annotations:
           hajimari.io/icon: material-symbols:scanner-outline
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
