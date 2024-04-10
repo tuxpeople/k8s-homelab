@@ -63,6 +63,14 @@
         state: absent
       loop: "{{ directory_contents.files }}"
 
+    - name: Unmount a mounted volumes
+      ansible.posix.mount:
+        path: "{{ item }}"
+        state: unmounted
+      loop:
+        - "/var/lib/rancher"
+        - "/var/lib/longhorn"
+
     - name: Delete volume group
       lvg:
         vg: data_vg
