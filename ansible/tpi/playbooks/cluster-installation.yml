@@ -53,6 +53,23 @@
         regexp: https://127.0.0.1:6443
         replace: "https://{{ k3s_registration_address }}:6443"
 
+    - name: Adjust cluster name in Kubeconfig
+      delegate_to: localhost
+      become: false
+      run_once: true
+      check_mode: false
+      ansible.builtin.command: yq e -i "{{ item }} = \"tpi\"" {{ repository_path.stdout }}/kubeconfig-tpi
+      loop:
+        - ".clusters[0].name"
+        - ".contexts[0].name"
+        - ".contexts[0].context.cluster"
+        - ".current-context"
+# TODO
+#   yq e -i ".clusters[0].name = \"homelab\"" kubeconfig
+#   yq e -i ".contexts[0].name = \"homelab\"" kubeconfig
+#   yq e -i ".contexts[0].context.cluster = \"homelab\"" kubeconfig
+#   yq e -i ".current-context = \"homelab\"" kubeconfig
+
     - name: Copy kubeconfig to target
       run_once: true
       ansible.builtin.copy:
@@ -60,12 +77,6 @@
         dest: "{{ kubeconfig_target }}"
       delegate_to: localhost
       become: false
-
-# TODO
-#   yq e -i ".clusters[0].name = \"homelab\"" kubeconfig
-#   yq e -i ".contexts[0].name = \"homelab\"" kubeconfig
-#   yq e -i ".contexts[0].context.cluster = \"homelab\"" kubeconfig
-#   yq e -i ".current-context = \"homelab\"" kubeconfig
 
     - name: Post installation of custom manifests
       when:
