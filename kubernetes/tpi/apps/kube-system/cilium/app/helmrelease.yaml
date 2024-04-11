@@ -32,7 +32,7 @@ spec:
   values:
     autoDirectNodeRoutes: true
     bgpControlPlane:
-      enabled: false
+      enabled: true
     bpf:
       masquerade: false
     cgroup:
@@ -45,6 +45,8 @@ spec:
     containerRuntime:
       integration: containerd
       socketPath: /var/run/k3s/containerd/containerd.sock
+    # NOTE: devices might need to be set if you have more than one active NIC on your hosts
+    # devices: eno+ eth+
     endpointRoutes:
       enabled: true
     hubble:
@@ -84,13 +86,11 @@ spec:
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.69.0.0/16
-    k8sServiceHost: ${KUBE_VIP_ADDR}
-    k8sServicePort: 6443
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 6444
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
-      enabled: true
-    externalIPs:
       enabled: true
     loadBalancer:
       algorithm: maglev
@@ -136,6 +136,3 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
-    k8sClientRateLimit:
-      qps: 50
-      burst: 100
