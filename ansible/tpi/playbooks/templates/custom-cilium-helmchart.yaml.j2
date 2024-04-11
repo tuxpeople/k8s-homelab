@@ -14,7 +14,7 @@ spec:
   valuesContent: |-
     autoDirectNodeRoutes: true
     bgpControlPlane:
-      enabled: true
+      enabled: false
     bpf:
       masquerade: false
     cgroup:
@@ -37,8 +37,8 @@ spec:
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.69.0.0/16
-    k8sServiceHost: 127.0.0.1
-    k8sServicePort: 6444
+    k8sServiceHost: {{ k3s_registration_address }}
+    k8sServicePort: 6443
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
