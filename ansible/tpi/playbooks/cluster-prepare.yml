@@ -7,9 +7,32 @@
   gather_facts: no
 
   tasks:
+    - name: Wait 600 seconds for target connection to become reachable/usable
+      ansible.builtin.wait_for_connection:
+
+    - name: check for cloud-init status to be finished
+      ansible.builtin.shell: cat /var/lib/cloud/data/status.json | jq .v1.stage | grep null
+      retries: 600
+      delay: 10
+
+    - name: check for dpkg lock to be removed
+      ansible.builtin.shell: fuser /var/lib/dpkg/lock
+      register: dpkglock
+      until: dpkglock.rc == 1
+      ignore_errors: true
+
     - name: bootstrap
       import_role:
         name: robertdebock.roles.bootstrap
+
+    - name: Check if reboot required
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    - name: Reboot if required
+      ansible.builtin.reboot:
+      when: reboot_required_file.stat.exists == true
 
 - hosts:
     - master

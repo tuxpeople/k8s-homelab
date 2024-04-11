@@ -136,3 +136,6 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
+    k8sClientRateLimit:
+      qps: 50
+      burst: 100
