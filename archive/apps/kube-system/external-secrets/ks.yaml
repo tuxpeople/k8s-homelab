@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-external-secrets-operator
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/kube-system/external-secrets/operator
+  path: ./kubernetes/tpi/apps/kube-system/external-secrets/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -23,7 +23,7 @@ metadata:
   name: cluster-apps-external-secrets-secretstores
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/kube-system/external-secrets/secretstores
+  path: ./kubernetes/tpi/apps/kube-system/external-secrets/secretstores
   prune: true
   sourceRef:
     kind: GitRepository

@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-uptimerobot-operator
-  path: ./kubernetes/apps/monitoring/grafana/app
+  path: ./kubernetes/tpi/apps/monitoring/grafana/app
   prune: true
   sourceRef:
     kind: GitRepository

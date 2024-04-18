@@ -10,7 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-snapshot-controller
-  path: ./kubernetes/apps/storage/volsync/volsync/app
+  path: ./kubernetes/tpi/apps/storage/volsync/volsync/app
   prune: true
   sourceRef:
     kind: GitRepository

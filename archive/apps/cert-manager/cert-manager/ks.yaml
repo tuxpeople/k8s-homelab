@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-cert-manager
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/cert-manager/cert-manager/app
+  path: ./kubernetes/tpi/apps/cert-manager/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ spec:
   dependsOn:
     - name: cluster-apps-external-secrets-secretstores
     - name: cluster-apps-cert-manager
-  path: ./kubernetes/apps/cert-manager/cert-manager/issuers
+  path: ./kubernetes/tpi/apps/cert-manager/cert-manager/issuers
   prune: true
   sourceRef:
     kind: GitRepository
@@ -45,7 +45,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-cert-manager-issuers
-  path: ./kubernetes/apps/cert-manager/cert-manager/certificates
+  path: ./kubernetes/tpi/apps/cert-manager/cert-manager/certificates
   prune: true
   sourceRef:
     kind: GitRepository

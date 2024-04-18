@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-speedtest-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/speedtest-exporter/app
+  path: ./kubernetes/tpi/apps/monitoring/speedtest-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

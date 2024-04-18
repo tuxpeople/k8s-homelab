@@ -48,6 +48,10 @@ spec:
           version: "2"
         vector_metrics:
           type: internal_metrics
+        syslog:
+          type: syslog
+          address: 0.0.0.0:9000
+          mode: tcp
       transforms:
         kubernetes_logs_remap:
           type: remap

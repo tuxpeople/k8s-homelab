@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: cilium
-      version: 1.15.4
+      version: 1.15.3
       sourceRef:
         kind: HelmRepository
         name: cilium
@@ -45,7 +45,7 @@ spec:
     containerRuntime:
       integration: containerd
       socketPath: /var/run/k3s/containerd/containerd.sock
-    devices: eno+ eth+
+    devices: eth+
     endpointRoutes:
       enabled: true
     hubble:
@@ -87,7 +87,7 @@ spec:
     ipv4NativeRoutingCIDR: 10.69.0.0/16
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 6444
-    kubeProxyReplacement: true
+    kubeProxyReplacement: strict
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
       enabled: true
@@ -139,3 +139,5 @@ spec:
     k8sClientRateLimit:
       qps: 50
       burst: 100
+    externalIPs:
+      enabled: true

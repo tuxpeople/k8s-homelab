@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-mystrom-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/mystrom-exporter/app
+  path: ./kubernetes/tpi/apps/monitoring/mystrom-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

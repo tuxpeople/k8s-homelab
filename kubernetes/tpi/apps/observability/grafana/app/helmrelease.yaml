@@ -60,7 +60,7 @@ spec:
         use_pkce: true
       auth.generic_oauth.group_mapping:
         role_attribute_path: |
-          contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'grafana') && 'Viewer'
+          contains(groups[*], 'applications_grafana_admins') && 'Admin' || contains(groups[*], 'applications_grafana') && 'Viewer'
         org_id: 1
       auth.basic:
         enabled: false

@@ -34,6 +34,18 @@ tasks:
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --list-hosts
 
+  fix-ssh:
+    desc: List all the hosts
+    requires:
+      vars: ["cluster"]
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    dir: "{{.ANSIBLE_DIR}}/{{.cluster}}"
+    cmds:
+      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --list-hosts | grep -v hosts | xargs -L1 fix-ssh-key
+      - ansible-inventory -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --list | jq -r '._meta.hostvars[].ansible_host' | xargs -L1 fix-ssh-key
+
   prepare:
     desc: Prepare all the k8s nodes for running k3s
     requires:

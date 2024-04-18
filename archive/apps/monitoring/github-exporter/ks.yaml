@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-github-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/github-exporter/app
+  path: ./kubernetes/tpi/apps/monitoring/github-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

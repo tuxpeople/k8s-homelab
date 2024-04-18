@@ -8,7 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/disabled: "true"
 spec:
-  path: ./kubernetes/apps/kube-system/csi-driver-nfs/app
+  path: ./kubernetes/tpi/apps/kube-system/csi-driver-nfs/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,7 +27,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/disabled: "true"
 spec:
-  path: ./kubernetes/apps/kube-system/csi-driver-nfs/sc
+  path: ./kubernetes/tpi/apps/kube-system/csi-driver-nfs/sc
   prune: true
   dependsOn:
     - name: cluster-apps-csi-driver-nfs

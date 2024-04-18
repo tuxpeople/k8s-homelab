@@ -10,7 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-snapshot-controller
-  path: ./kubernetes/apps/storage/volsync/snapscheduler/app
+  path: ./kubernetes/tpi/apps/storage/volsync/snapscheduler/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -47,7 +47,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-snapscheduler
-  path: ./kubernetes/apps/storage/volsync/snapscheduler/schedules
+  path: ./kubernetes/tpi/apps/storage/volsync/snapscheduler/schedules
   prune: true
   sourceRef:
     kind: GitRepository

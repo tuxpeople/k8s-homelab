@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-system-upgrade-controller
-  path: ./kubernetes/apps/neuvector/core
+  path: ./kubernetes/tpi/apps/neuvector/core
   prune: true
   sourceRef:
     kind: GitRepository

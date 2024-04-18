@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-vmware-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/vmware-exporter/app
+  path: ./kubernetes/tpi/apps/monitoring/vmware-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

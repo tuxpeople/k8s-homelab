@@ -10,7 +10,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-system-upgrade-controller-crds
-  path: ./kubernetes/apps/system-upgrade-controller/app
+  path: ./kubernetes/tpi/apps/system-upgrade-controller/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -45,7 +45,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  path: ./kubernetes/apps/system-upgrade-controller/crds
+  path: ./kubernetes/tpi/apps/system-upgrade-controller/crds
   prune: true
   sourceRef:
     kind: GitRepository

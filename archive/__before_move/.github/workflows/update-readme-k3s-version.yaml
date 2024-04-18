@@ -7,7 +7,7 @@ on:  # yamllint disable-line rule:truthy
       - master
 env:
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-  PLAN_FILE: kubernetes/apps/system-upgrade-controller/app/plans/server.yaml
+  PLAN_FILE: kubernetes/tpi/apps/system-upgrade-controller/app/plans/server.yaml
 jobs:
   build:
     name: Lint

@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-prometheus-app
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/prometheus/app
+  path: ./kubernetes/tpi/apps/monitoring/prometheus/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ metadata:
   name: cluster-apps-prometheus-alertmanager-discord
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/prometheus/alertmanager-discord
+  path: ./kubernetes/tpi/apps/monitoring/prometheus/alertmanager-discord
   prune: true
   sourceRef:
     kind: GitRepository
@@ -46,7 +46,7 @@ metadata:
   name: cluster-apps-prometheus-prometheus-config
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/prometheus/prometheus-config
+  path: ./kubernetes/tpi/apps/monitoring/prometheus/prometheus-config
   prune: true
   sourceRef:
     kind: GitRepository
@@ -65,7 +65,7 @@ metadata:
   name: cluster-apps-prometheus-prometheus-pushgateway
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/prometheus/prometheus-pushgateway
+  path: ./kubernetes/tpi/apps/monitoring/prometheus/prometheus-pushgateway
   prune: true
   sourceRef:
     kind: GitRepository
@@ -84,7 +84,7 @@ metadata:
   name: cluster-apps-prometheus-prometheus-uptimerobot-exporter
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/prometheus/prometheus-uptimerobot-exporter
+  path: ./kubernetes/tpi/apps/monitoring/prometheus/prometheus-uptimerobot-exporter
   prune: true
   sourceRef:
     kind: GitRepository

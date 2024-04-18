@@ -9,7 +9,7 @@ spec:
   interval: 10m0s
   dependsOn:
     - name: base
-  path: ./kubernetes/apps
+  path: ./kubernetes/tpi/apps
   prune: true
   sourceRef:
     kind: GitRepository

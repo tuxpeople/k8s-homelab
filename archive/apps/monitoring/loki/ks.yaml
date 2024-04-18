@@ -6,7 +6,7 @@ metadata:
   name: cluster-apps-loki
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/loki/app
+  path: ./kubernetes/tpi/apps/monitoring/loki/app
   prune: true
   sourceRef:
     kind: GitRepository
