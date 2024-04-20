@@ -40,7 +40,7 @@ spec:
           main:
             image:
               repository: sissbruecker/linkding
-              tag: 1.29.0
+              tag: 1.30.0
             resources:
               requests:
                 cpu: 12m
