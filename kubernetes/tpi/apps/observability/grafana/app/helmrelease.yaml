@@ -110,7 +110,7 @@ spec:
         unifi-insights:
           # renovate: dashboardName="UniFi-Poller: Client Insights - Prometheus"
           gnetId: 11315
-          revision: 8
+          revision: 9
           datasource: Prometheus
         unifi-network-sites:
           # renovate: dashboardName="UniFi-Poller: Network Sites - Prometheus"
