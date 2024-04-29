@@ -42,7 +42,7 @@ spec:
       type: LoadBalancer
       spec:
         loadBalancerIP: ${METALLB_TRAEFIK_ADDR}
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
     logs:
       general:
         format: json

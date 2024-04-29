@@ -67,7 +67,7 @@ spec:
       levelSeed: "-1671764914"
       serviceType: LoadBalancer
       loadBalancerIP: ${CILIUM_LB_MINECRAFT4_ADDR}
-      externalTrafficPolicy: Local
+      externalTrafficPolicy: Cluster
       onlineMode: false
       gameMode: creative
       # The world is ticked this many chunks away from any player.

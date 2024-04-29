@@ -64,7 +64,7 @@ spec:
       enableLanVisibility: false
       serviceType: LoadBalancer
       loadBalancerIP: ${CILIUM_LB_MINECRAFT1_ADDR}
-      externalTrafficPolicy: Local
+      externalTrafficPolicy: Cluster
       onlineMode: false
       gameMode: survival
       # The world is ticked this many chunks away from any player.

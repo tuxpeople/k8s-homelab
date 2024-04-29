@@ -39,7 +39,7 @@ spec:
       monitor:
         enabled: false
     service:
-      externalTrafficPolicy: Local
+      externalTrafficPolicy: Cluster
       loadBalancerIP: ${METALLB_COREDNS_ADDR}
     rbac:
       create: true

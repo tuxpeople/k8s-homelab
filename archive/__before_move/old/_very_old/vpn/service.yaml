@@ -16,7 +16,7 @@ spec:
       protocol: UDP
       port: 4500
       targetPort: 4500
-  externalTrafficPolicy: Local
+  externalTrafficPolicy: Cluster
   loadBalancerIP: ${METALLB_VPN_ADDR}
   selector:
     app.kubernetes.io/name: vpn

@@ -16,7 +16,7 @@ spec:
       targetPort: 500
       protocol: UDP
       name: isakmp
-  externalTrafficPolicy: Local
+  externalTrafficPolicy: Cluster
   loadBalancerIP: ${METALLB_VPN_ADDR}
   selector:
     app.kubernetes.io/name: vpn

@@ -30,4 +30,4 @@ spec:
       name: http
   selector:
     app: smtp
-  externalTrafficPolicy: Local
+  externalTrafficPolicy: Cluster

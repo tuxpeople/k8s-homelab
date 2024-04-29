@@ -64,7 +64,7 @@ spec:
       enableLanVisibility: false
       serviceType: LoadBalancer
       loadBalancerIP: ${CILIUM_LB_MINECRAFT2_ADDR}
-      externalTrafficPolicy: Local
+      externalTrafficPolicy: Cluster
       gameMode: survival
       # One of: peaceful, easy, normal, and hard
       difficulty: peaceful

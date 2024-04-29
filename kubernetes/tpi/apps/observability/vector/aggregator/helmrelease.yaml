@@ -116,4 +116,4 @@ spec:
             patch:
               - op: replace
                 path: /spec/externalTrafficPolicy
-                value: Local
+                value: Cluster

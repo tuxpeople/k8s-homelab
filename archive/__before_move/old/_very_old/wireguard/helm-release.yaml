@@ -44,7 +44,7 @@ spec:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: ${METALLB_WIREGUARD_ADDR}
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
     persistence:
       config:
         enabled: true
