@@ -40,7 +40,7 @@ spec:
       type: LoadBalancer
       spec:
         loadBalancerIP: ${CILIUM_LB_INGRESS_ADDR}
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
     logs:
       general:
         format: json
