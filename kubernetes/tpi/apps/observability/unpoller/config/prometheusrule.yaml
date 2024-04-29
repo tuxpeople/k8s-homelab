@@ -96,3 +96,9 @@ spec:
           expr: delta(unpoller_device_wan_receive_errors_total[15m]) > 0
           labels:
             severity: warning
+        - alert: UnPollerDeviceRebooted
+          annotations:
+            summary: "Device {{$labels.name}} has been rebooted in the last 24 hours."
+          expr: delta(unpoller_device_uptime_seconds[24h]) < 0
+          labels:
+            severity: warning
