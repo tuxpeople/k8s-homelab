@@ -42,6 +42,6 @@ spec:
       tls:
         - secretName: ${SECRET_DOMAIN/./-}-production-tls
           hosts:
-            - prometheus-pushgateway.${SECRET_DOMAIN}
+            - prometheus-pushgateway.int.${SECRET_DOMAIN}
       hosts:
-        - prometheus-pushgateway.${SECRET_DOMAIN}
+        - prometheus-pushgateway.int.${SECRET_DOMAIN}
