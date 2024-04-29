@@ -9,6 +9,7 @@ resources:
   - grafana/ks.yaml
   - kube-prometheus-stack/ks.yaml
   - kubernetes-dashboard/ks.yaml
+  - prometheus-pushgateway/ks.yaml
   - unpoller/ks.yaml
   - vector/ks.yaml
   - vpa/ks.yaml
