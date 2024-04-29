@@ -138,6 +138,6 @@ spec:
     # Increase rate limit when doing L2 announcements
     k8sClientRateLimit:
       qps: 50
-      burst: 100
+      burst: 200
     externalIPs:
       enabled: true
