@@ -82,6 +82,22 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
+          - name: unpoller
+            orgId: 1
+            folder: "unpoller"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/unpoller
+          - name: apps
+            orgId: 1
+            folder: "apps"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/apps
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -95,8 +111,20 @@ spec:
             type: loki
             access: proxy
             url: http://loki-read.observability.svc.cluster.local:3100
+          - name: Alertmanager
+            type: alertmanager
+            uid: alertmanager
+            access: proxy
+            url: http://alertmanager-operated.observability.svc.cluster.local:9093
+            jsonData:
+              implementation: prometheus
     dashboards:
       default:
+        alertmanager-alerts:
+          # renovate: dashboardName="OPEN ALERTS OF ALERTMANAGER"
+          gnetId: 12947
+          revision: 1
+          datasource: Alertmanager
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
