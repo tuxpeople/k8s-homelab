@@ -138,7 +138,7 @@ spec:
         minio:
           # renovate: dashboardName="MinIO Dashboard"
           gnetId: 13502
-          revision: 10
+          revision: 26
           datasource: Prometheus
         sonarrv3:
           # renovate: dashboardName="Sonarr v3"
