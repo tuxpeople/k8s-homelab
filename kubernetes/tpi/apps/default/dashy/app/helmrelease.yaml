@@ -38,7 +38,7 @@ spec:
           main:
             image:
               repository: ghcr.io/lissy93/dashy
-              tag: 3.0.0
+              tag: 3.0.1
             env:
               TZ: ${TIMEZONE}
               GID: 1000
