@@ -256,39 +256,39 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
-        additionalScrapeConfigs:
-          - job_name: node-exporter
-            scrape_interval: 1m
-            scrape_timeout: 30s
-            honor_timestamps: true
-            # basic_auth:
-            #   username: randomuser
-            #   password: examplepassword
-            static_configs:
-              - targets: # k3s-node1
-                  - 192.168.8.111:9100
-                labels:
-                  node: "k3s-node1"
-              - targets: # k3s-node2
-                  - 192.168.8.112:9100
-                labels:
-                  node: "k3s-node2"
-              - targets: # k3s-node3
-                  - 192.168.8.113:9100
-                labels:
-                  node: "k3s-node3"
-              - targets: # k3s-node4
-                  - 192.168.8.114:9100
-                labels:
-                  node: "k3s-node4"
-              - targets: # NAS
-                  - 10.20.30.40:9100
-                labels:
-                  node: "nas"
-              - targets: # laptop2
-                  - laptop2.home:9100
-                labels:
-                  node: "laptop-work"
+        # additionalScrapeConfigs:
+        #   - job_name: node-exporter
+        #     scrape_interval: 1m
+        #     scrape_timeout: 30s
+        #     honor_timestamps: true
+        #     # basic_auth:
+        #     #   username: randomuser
+        #     #   password: examplepassword
+        #     static_configs:
+        #       - targets: # k3s-node1
+        #           - 192.168.8.111:9100
+        #         labels:
+        #           node: "k3s-node1"
+        #       - targets: # k3s-node2
+        #           - 192.168.8.112:9100
+        #         labels:
+        #           node: "k3s-node2"
+        #       - targets: # k3s-node3
+        #           - 192.168.8.113:9100
+        #         labels:
+        #           node: "k3s-node3"
+        #       - targets: # k3s-node4
+        #           - 192.168.8.114:9100
+        #         labels:
+        #           node: "k3s-node4"
+        #       - targets: # NAS
+        #           - 10.20.30.40:9100
+        #         labels:
+        #           node: "nas"
+        #       - targets: # laptop2
+        #           - laptop2.home:9100
+        #         labels:
+        #           node: "laptop-work"
     prometheus-node-exporter:
       extraArgs:
         - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+|boot/firmware)($|/)
