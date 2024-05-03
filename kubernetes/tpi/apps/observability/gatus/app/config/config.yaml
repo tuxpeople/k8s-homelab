@@ -3,7 +3,7 @@
 web:
   port: $${CUSTOM_WEB_PORT}
 metrics: true
-debug: false
+debug: true
 ui:
   title: Status | Gatus
   header: Status
