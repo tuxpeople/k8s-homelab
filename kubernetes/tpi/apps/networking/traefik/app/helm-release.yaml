@@ -73,7 +73,7 @@ spec:
     ports:
       traefik:
         expose:
-          default: false
+          default: true
       web:
         redirectTo:
           port: websecure
@@ -83,7 +83,7 @@ spec:
           options: default
       metrics:
         expose:
-          default: false
+          default: true
     metrics:
       prometheus:
         entryPoint: metrics
