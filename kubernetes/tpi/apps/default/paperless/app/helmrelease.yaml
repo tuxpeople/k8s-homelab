@@ -30,7 +30,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -92,13 +92,13 @@ spec:
               limits:
                 memory: 2000M
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: &port 8080
     ingress:
-      main:
+      app:
         enabled: true
         className: traefik
         annotations:
@@ -110,8 +110,8 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
-                  port: *port
+                  identifier: app
+                  port: http
         tls:
           - hosts:
               - *host
@@ -127,8 +127,8 @@ spec:
               - path: /share
                 pathType: Prefix
                 service:
-                  name: main
-                  port: *port
+                  identifier: app
+                  port: http
         tls:
           - hosts:
               - *host2

@@ -31,7 +31,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid

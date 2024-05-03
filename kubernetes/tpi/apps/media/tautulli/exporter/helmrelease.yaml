@@ -30,7 +30,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -60,8 +60,8 @@ spec:
             runAsGroup: 568
             runAsNonRoot: true
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: *port

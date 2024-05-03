@@ -31,7 +31,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
@@ -109,13 +109,13 @@ spec:
                     name: "linkding-secrets"
                     key: "litestream-age-secret"
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: &port 9090
     ingress:
-      main:
+      app:
         enabled: true
         className: traefik
         annotations:
@@ -128,7 +128,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: *port
         tls:
           - hosts:

@@ -31,7 +31,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         containers:
           main:
             image:
@@ -66,8 +66,8 @@ spec:
         runAsGroup: 101
         fsGroup: 101
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: &port 3129

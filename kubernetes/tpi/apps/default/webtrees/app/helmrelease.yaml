@@ -33,7 +33,7 @@ spec:
     - name: webtrees-db
   values:
     controllers:
-      main:
+      app:
         strategy: Recreate
         initContainers:
           01-init-modules:
@@ -93,13 +93,13 @@ spec:
               limits:
                 memory: 500Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: &port 80
     ingress:
-      main:
+      app:
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
         enabled: true
@@ -110,7 +110,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: *port
         tls:
           - hosts:

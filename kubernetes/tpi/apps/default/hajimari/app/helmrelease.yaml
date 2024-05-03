@@ -51,7 +51,7 @@ spec:
           - networking
           - storage
     ingress:
-      main:
+      app:
         enabled: true
         ingressClassName: traefik
         annotations:

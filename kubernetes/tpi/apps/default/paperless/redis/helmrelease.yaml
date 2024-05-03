@@ -30,7 +30,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         containers:
           main:
             image:
@@ -43,8 +43,8 @@ spec:
               limits:
                 memory: 32M
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           redis:
             enabled: true

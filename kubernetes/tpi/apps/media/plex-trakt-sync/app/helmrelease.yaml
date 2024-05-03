@@ -31,7 +31,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"

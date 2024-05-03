@@ -30,7 +30,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -39,8 +39,8 @@ spec:
               repository: ghcr.io/paperless-ngx/tika
               tag: 2.9.1-full
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: 9998

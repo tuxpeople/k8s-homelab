@@ -31,7 +31,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         containers:
           main:
             image:
@@ -41,9 +41,9 @@ spec:
             env:
               TZ: ${TIMEZONE}
     service:
-      main:
+      app:
         enabled: true
-        controller: main
+        controller: app
         # type: LoadBalancer
         # externalTrafficPolicy: Cluster
         ports:

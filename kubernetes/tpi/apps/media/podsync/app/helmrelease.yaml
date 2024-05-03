@@ -32,7 +32,7 @@ spec:
     global:
       nameOverride: *app
     controllers:
-      main:
+      app:
         strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -76,12 +76,12 @@ spec:
     #     runAsUser: 1026
     #     runAsGroup: 100
     service:
-      main:
+      app:
         ports:
           http:
             port: *port
     ingress:
-      main:
+      app:
         enabled: true
         ingressClassName: traefik
         annotations:
@@ -93,7 +93,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: *port
         tls:
           - hosts:

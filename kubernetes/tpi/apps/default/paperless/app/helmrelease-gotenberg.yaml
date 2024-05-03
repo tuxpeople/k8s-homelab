@@ -30,7 +30,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      app:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -41,8 +41,8 @@ spec:
             env:
               DISABLE_GOOGLE_CHROME: "1"
     service:
-      main:
-        controller: main
+      app:
+        controller: app
         ports:
           http:
             port: 3000
