@@ -92,7 +92,7 @@ spec:
         size: 5Gi
         storageClass: ${MAIN_SC}
         advancedMounts:
-          main:
+          app:
             main:
               - subPath: "icons"
                 path: "/app/public/item-icons"

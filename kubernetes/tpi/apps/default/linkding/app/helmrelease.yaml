@@ -148,7 +148,7 @@ spec:
         type: configMap
         name: "linkding-config"
         advancedMounts:
-          main:
+          app:
             litestream:
               - &lsmnt
                 subPath: "litestream-replicate"
