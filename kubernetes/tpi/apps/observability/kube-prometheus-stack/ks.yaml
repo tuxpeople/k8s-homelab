@@ -36,7 +36,7 @@ spec:
   targetNamespace: observability
   dependsOn:
     - name: kube-prometheus-stack
-  path: ./kubernetes/tpi/apps/observability/kube-prometheus-config/app
+  path: ./kubernetes/tpi/apps/observability/kube-prometheus-stack/config
   prune: true
   sourceRef:
     kind: GitRepository
