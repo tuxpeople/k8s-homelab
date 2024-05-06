@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  targetNamespace: networking
+  targetNamespace: database
   dependsOn:
     - name: mariadb-instance
   path: ./kubernetes/tpi/apps/networking/phpipam/phpipam-db
