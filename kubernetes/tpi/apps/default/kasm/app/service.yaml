@@ -4,8 +4,8 @@ kind: Service
 metadata:
   name: kasm
   annotations:
-    traefik.ingress.kubernetes.io/service.serversscheme: https
-    traefik.ingress.kubernetes.io/service.serverstransport: networking-insecureskipverify@kubernetescrd
+    # traefik.ingress.kubernetes.io/service.serversscheme: https
+    # traefik.ingress.kubernetes.io/service.serverstransport: networking-insecureskipverify@kubernetescrd
 spec:
   externalName: 192.168.13.214
   ports:

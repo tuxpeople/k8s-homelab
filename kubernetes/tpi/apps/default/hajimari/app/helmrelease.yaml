@@ -53,7 +53,7 @@ spec:
     ingress:
       app:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx-default
         annotations:
           hajimari.io/enable: "false"
         hosts:

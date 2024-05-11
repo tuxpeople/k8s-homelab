@@ -33,7 +33,7 @@ spec:
   targetNamespace: default
   dependsOn:
     - name: paperless-redis
-    - name: traefik
+    - name: ingress-nginx-app
   path: ./kubernetes/tpi/apps/default/paperless/app
   prune: true
   sourceRef:

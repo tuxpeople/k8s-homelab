@@ -42,7 +42,7 @@ spec:
       replicaCount: 1
       ingress:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx-default
         hosts:
           - host: &host goldilocks.${SECRET_DOMAIN}
             paths:

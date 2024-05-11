@@ -262,7 +262,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: traefik
+      ingressClassName: nginx-default
       annotations:
         hajimari.io/icon: simple-icons:grafana
       hosts:

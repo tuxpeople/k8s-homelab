@@ -128,7 +128,7 @@ spec:
             port: *apiPort
     ingress:
       app:
-        className: traefik
+        className: nginx-default
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:

@@ -77,7 +77,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: traefik
+        className: nginx-default
         annotations:
           hajimari.io/icon: video-input-antenna
         hosts:

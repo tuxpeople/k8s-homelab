@@ -59,10 +59,13 @@ spec:
     ingress:
       app:
         enabled: true
-        className: traefik
+        className: nginx-default
         annotations:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
-          traefik.ingress.kubernetes.io/router.middlewares: networking-forwardauth-authelia@kubernetescrd
+          nginx.ingress.kubernetes.io/auth-method: "GET"
+          nginx.ingress.kubernetes.io/auth-url: "http://auth.${SECRET_DOMAIN}/api/authz/auth-request"
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}?rm=$request_method"
+          nginx.ingress.kubernetes.io/auth-response-headers: "Remote-User,Remote-Name,Remote-Groups,Remote-Email"
           hajimari.io/icon: file-arrow-up-down-outline
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

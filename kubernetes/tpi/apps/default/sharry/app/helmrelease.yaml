@@ -58,7 +58,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: traefik
+        className: nginx-default
         annotations:
           external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
           hajimari.io/icon: file-arrow-up-down-outline

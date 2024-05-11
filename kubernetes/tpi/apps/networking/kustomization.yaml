@@ -10,4 +10,3 @@ resources:
   - ingressmonitorcontroller/ks.yaml
   - k8s-gateway/ks.yaml
   - phpipam/ks.yaml
-  - vpn/ks.yaml

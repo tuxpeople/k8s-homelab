@@ -131,7 +131,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       ingress:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx-default
         hosts:
           - host: loki.${SECRET_DOMAIN}
             paths:

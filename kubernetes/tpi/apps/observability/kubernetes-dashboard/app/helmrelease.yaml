@@ -39,7 +39,7 @@ spec:
       - --token-ttl=43200
     ingress:
       enabled: true
-      className: traefik
+      className: nginx-default
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-staging
         hajimari.io/icon: mdi:kubernetes

@@ -47,7 +47,7 @@ spec:
       username: admin
     ingress:
       enabled: true
-      className: traefik
+      className: nginx-default
       annotations:
         hajimari.io/icon: sawtooth-wave
       hosts:

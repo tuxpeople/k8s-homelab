@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   targetNamespace: networking
   dependsOn:
-    - name: traefik
+    - name: ingress-nginx-app
   path: ./kubernetes/tpi/apps/networking/vpn/app
   prune: true
   sourceRef:

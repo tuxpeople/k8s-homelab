@@ -58,7 +58,7 @@ spec:
       # upgradeChecker: true
     ingress:
       enabled: true
-      ingressClassName: traefik
+      ingressClassName: nginx-default
       host: longhorn.${SECRET_DOMAIN}
       tlsSecret: ${SECRET_DOMAIN/./-}-production-tls
       tls: true
