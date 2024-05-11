@@ -5,13 +5,13 @@ metadata:
   name: &app ingress-nginx-certificates
   namespace: flux-system
 spec:
-  targetNamespace: network
+  targetNamespace: networking
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cert-manager-issuers
-  path: ./kubernetes/apps/network/ingress-nginx/certificates
+  path: ./kubernetes/tpi/apps/networking/ingress-nginx/certificates
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,16 +24,16 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app ingress-nginx-app
+  name: &app ingress-nginx
   namespace: flux-system
 spec:
-  targetNamespace: network
+  targetNamespace: networking
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: ingress-nginx-certificates
-  path: ./kubernetes/apps/network/ingress-nginx/app
+  path: ./kubernetes/tpi/apps/networking/ingress-nginx/app
   prune: true
   sourceRef:
     kind: GitRepository
