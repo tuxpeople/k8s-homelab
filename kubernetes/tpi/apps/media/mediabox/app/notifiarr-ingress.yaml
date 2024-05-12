@@ -4,12 +4,12 @@ kind: Ingress
 metadata:
   name: notifiarr
   annotations:
-    kubernetes.io/ingress.class: nginx-default
     external-dns.alpha.kubernetes.io/target: ${SECRET_DNS_TARGET}
     external-dns/is-public: "true"
     hajimari.io/enable: "true"
     hajimari.io/icon: filmstrip
 spec:
+  ingressClassName: nginx-default
   tls:
     - secretName: ${SECRET_DOMAIN/./-}-production-tls
       hosts:
