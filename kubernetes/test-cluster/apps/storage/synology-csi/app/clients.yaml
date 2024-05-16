@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: client-info-secret
+  namespace: core
+type: Opaque
+stringData:
+  client-info.yml: |
+    clients:
+      - host: ${NAS_ADDRESS}
+        https: false
+        username: ${CSI_USERNAME}
+        password: ${CSI_PASSWORD}
+        port: 5000
