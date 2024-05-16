@@ -7,21 +7,16 @@ spec:
   rootPasswordSecretKeyRef:
     name: mariadb
     key: root-password
-
   image: mariadb:11.3.2
-
   port: 3306
-
   replicas: 2
-
   replication:
     enabled: true
-
   env:
     - name: TZ
       value: ${TIMEZONE}
-
   storage:
+    size: 1GB
     volumeClaimTemplate:
       storageClassName: ${MAIN_SC}
       resources:
@@ -29,15 +24,6 @@ spec:
           storage: 1Gi
       accessModes:
         - ReadWriteOnce
-
-  volumes:
-    - name: tmp
-      emptyDir: {}
-
-  volumeMounts:
-    - name: tmp
-      mountPath: /tmp
-
   resources:
     requests:
       cpu: 35m
@@ -45,3 +31,18 @@ spec:
     limits:
       cpu: 500m
       memory: 750M
+  metrics:
+    enabled: true
+    exporter:
+      image: prom/mysqld-exporter:v0.15.1
+      imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        limits:
+          cpu: 300m
+          memory: 512Mi
+    serviceMonitor:
+      interval: 10s
+      scrapeTimeout: 10s
