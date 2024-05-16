@@ -31,8 +31,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: ingress-nginx-certificates
+  # dependsOn:
+  #   - name: ingress-nginx-certificates
   path: ./kubernetes/test-cluster/apps/networking/ingress-nginx/app
   prune: true
   sourceRef:
