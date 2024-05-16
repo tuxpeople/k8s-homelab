@@ -16,7 +16,7 @@ spec:
     - name: TZ
       value: ${TIMEZONE}
   storage:
-    size: 1GB
+    size: 1Gi
     volumeClaimTemplate:
       storageClassName: ${MAIN_SC}
       resources:
