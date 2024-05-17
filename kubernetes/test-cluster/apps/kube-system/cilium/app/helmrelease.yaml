@@ -46,6 +46,7 @@ spec:
       integration: containerd
       socketPath: /var/run/k3s/containerd/containerd.sock
     devices: ens???
+    direct-routing-device: "lo"
     endpointRoutes:
       enabled: true
     hubble:
