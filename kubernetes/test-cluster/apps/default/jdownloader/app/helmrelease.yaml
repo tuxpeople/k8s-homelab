@@ -35,7 +35,7 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/tuxpeople/jdownloader-headless
+              repository: registry.eighty-three.me/tuxpeople/jdownloader-headless
               tag: pr-71
               pullPolicy: Always
             resources:

@@ -129,7 +129,7 @@ spec:
               - op: add
                 path: /spec/template/spec/containers/-
                 value:
-                  image: ghcr.io/tuxpeople/bedrockifier:rolling
+                  image: registry.eighty-three.me/tuxpeople/bedrockifier:rolling
                   imagePullPolicy: Always
                   name: backup
                   resources: {}

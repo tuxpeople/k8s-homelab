@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    reloader.stakater.com/auto: 'true'
+    reloader.stakater.com/auto: "true"
   name: debugcontainer
 spec:
   replicas: 1
@@ -24,7 +24,7 @@ spec:
             secretName: git-secret
       containers:
         - name: debugcontainer
-          image: ghcr.io/tuxpeople/debugcontainer:devel
+          image: registry.eighty-three.me/tuxpeople/debugcontainer:devel
           env:
             - name: TZ
               value: ${TIMEZONE}

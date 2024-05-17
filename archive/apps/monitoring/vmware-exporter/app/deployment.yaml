@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: vmware-exporter
-          image: ghcr.io/tuxpeople/vmware_exporter:0.18.4
+          image: registry.eighty-three.me/tuxpeople/vmware_exporter:0.18.4
           imagePullPolicy: Always
           ports:
             - containerPort: 9272

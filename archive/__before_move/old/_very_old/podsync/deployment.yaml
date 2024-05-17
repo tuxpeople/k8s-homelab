@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    reloader.stakater.com/auto: 'true'
+    reloader.stakater.com/auto: "true"
   labels:
     app: podsync
   name: podsync
@@ -18,7 +18,7 @@ spec:
         app: podsync
     spec:
       containers:
-        - image: ghcr.io/tuxpeople/podsync:v2.4.2
+        - image: registry.eighty-three.me/tuxpeople/podsync:v2.4.2
           imagePullPolicy: Always
           name: podsync
           ports:
