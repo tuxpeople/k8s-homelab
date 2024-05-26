@@ -107,13 +107,13 @@ spec:
         io.cilium/lb-ipam-ips: ${CILIUM_LB_VECTOR_ADDR}
     podMonitor:
       enabled: true
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: Service
-              name: vector-aggregator
-            patch:
-              - op: replace
-                path: /spec/externalTrafficPolicy
-                value: Cluster
+  # postRenderers:
+  #   - kustomize:
+  #       patchesJson6902:
+  #         - target:
+  #             kind: Service
+  #             name: vector-aggregator
+  #           patch:
+  #             - op: replace
+  #               path: /spec/externalTrafficPolicy
+  #               value: Cluster
