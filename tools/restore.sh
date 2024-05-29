@@ -16,7 +16,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Gi
+      storage: 30Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -86,14 +86,16 @@ echo "" >> pv-migrate.log
 
 for namespace in $(kubectl get ns --no-headers | awk '{ print $1 }'); do
     for pvc in $(kubectl get pvc --no-headers -n ${namespace} | awk '{ print $1 }' | grep -v pv-backup); do
-        echo "Restore ${pvc} ..." | tee -a pv-migrate.log
-        kubectl exec -it ${backuppod} -- bash -c "mkdir -p /pv-backup/${namespace}"
-        kubectl exec -it ${backuppod} -- bash -c "cd /pv-backup/${namespace}; tar -xzf /nfs-backup/${namespace}--${pvc}.tar.gz"
-        # kubectl describe pvc -n ${namespace} ${pvc} | grep Used | awk '{ print $3 }' | xargs -L1 kubectl delete pod -n ${namespace}
-        pv-migrate migrate pv-backup ${pvc} --strategies "svc,mnt2,lbsvc" --no-progress-bar -i --source-path ${namespace}/${pvc}/ --source-namespace default --dest-namespace ${namespace} -d | tee -a pv-migrate.log | grep '❌\|✅ '
-        kubectl exec -it ${backuppod} -- bash -c "rm -rf /pv-backup/${namespace}/${pvc}"
-        # kubectl describe pvc -n ${namespace} ${pvc} | grep Used | awk '{ print $3 }' | xargs -L1 kubectl delete pod -n ${namespace}
-        echo "" | tee -a pv-migrate.log
+        if kubectl exec -it ${backuppod} -- bash -c "test -f /nfs-backup/${namespace}--${pvc}.tar.gz"; then
+            echo "Restore ${pvc} ..." | tee -a pv-migrate.log
+            kubectl exec -it ${backuppod} -- bash -c "mkdir -p /pv-backup/${namespace}"
+            kubectl exec -it ${backuppod} -- bash -c "cd /pv-backup/${namespace}; tar -xzf /nfs-backup/${namespace}--${pvc}.tar.gz"
+            # kubectl describe pvc -n ${namespace} ${pvc} | grep Used | awk '{ print $3 }' | xargs -L1 kubectl delete pod -n ${namespace}
+            pv-migrate migrate pv-backup ${pvc} --strategies "svc,mnt2,lbsvc" --no-progress-bar -i --source-path ${namespace}/${pvc}/ --source-namespace default --dest-namespace ${namespace} -d | tee -a pv-migrate.log | grep '❌\|✅ '
+            kubectl exec -it ${backuppod} -- bash -c "rm -rf /pv-backup/${namespace}/${pvc}"
+            # kubectl describe pvc -n ${namespace} ${pvc} | grep Used | awk '{ print $3 }' | xargs -L1 kubectl delete pod -n ${namespace}
+            echo "" | tee -a pv-migrate.log
+        fi
     done
 done
 date >> pv-migrate.log
