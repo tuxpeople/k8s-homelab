@@ -7,3 +7,4 @@ resources:
   - monitoring
   - other
   - recurringjobs
+  - snap-class.yaml
