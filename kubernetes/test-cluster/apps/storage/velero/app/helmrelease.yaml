@@ -45,16 +45,8 @@ spec:
             s3ForcePathStyle: "true"
             s3Url: "http://minio.lab.tdeutsch.ch:9091"
       volumeSnapshotLocation:
-        - name: velero-minio
-          provider: aws
-          default: true
-          credential:
-            name: velero-minio
-            key: cloud
-          config:
-            region: us-east-1
-            s3ForcePathStyle: "true"
-            s3Url: "http://minio.lab.tdeutsch.ch:9091"
+        - name: local
+          provider: csi
     initContainers:
       - name: velero-plugin-for-csi
         image: velero/velero-plugin-for-csi:v0.6.0
