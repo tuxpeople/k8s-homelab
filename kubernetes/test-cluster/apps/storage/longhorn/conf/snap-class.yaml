@@ -6,11 +6,4 @@ metadata:
   labels:
     velero.io/csi-volumesnapshot-class: "true"
 driver: driver.longhorn.io
-deletionPolicy: Delete
-parameters:
-  dataLocality: disabled
-  fromBackup: ""
-  fsType: ext4
-  numberOfReplicas: "2"
-  staleReplicaTimeout: "30"
-  unmapMarkSnapChainRemoved: ignored
+deletionPolicy: Retain
