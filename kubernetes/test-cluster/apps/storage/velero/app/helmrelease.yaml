@@ -36,6 +36,7 @@ spec:
           bucket: velero
           defaultVolumesToFsBackup: False
           provider: aws
+          default: true
           credential:
             name: velero-minio
             key: cloud
@@ -46,6 +47,7 @@ spec:
       volumeSnapshotLocation:
         - name: velero-minio
           provider: aws
+          default: true
           credential:
             name: velero-minio
             key: cloud
