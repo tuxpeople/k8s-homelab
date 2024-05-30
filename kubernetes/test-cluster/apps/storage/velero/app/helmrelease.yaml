@@ -32,7 +32,8 @@ spec:
     configuration:
       uploaderType: kopia
       backupStorageLocation:
-        - bucket: velero
+        - name: velero-minio
+          bucket: velero
           defaultVolumesToFsBackup: False
           provider: aws
           credential:
@@ -43,7 +44,8 @@ spec:
             s3ForcePathStyle: "true"
             s3Url: "http://minio.lab.tdeutsch.ch:9091"
       volumeSnapshotLocation:
-        - provider: aws
+        - name: velero-minio
+          provider: aws
           credential:
             name: velero-minio
             key: cloud
@@ -66,6 +68,26 @@ spec:
             name: plugins
     deployNodeAgent: true
     features: EnableCSI
+    schedules:
+      minio:
+        disabled: false
+        schedule: 12 */6 * * *
+        useOwnershipReferencesInBackup: false
+        template:
+          resourcePolicy:
+            kind: configmap
+            name: resource-policy
+          ttl: 168h
+          includedNamespaces:
+            - default
+          excludedResources:
+            - orders.acme.cert-manager.io
+            - challenges.acme.cert-manager.io
+            - certificaterequests.cert-manager.io
+          snapshotVolumes: true
+          storageLocation: velero-minio
+          snapshotMoveData: true
+          datamover: velero
     # initContainers:
     #   - name: velero-plugin-for-aws
     #     image: velero/velero-plugin-for-aws:v1.9.2
