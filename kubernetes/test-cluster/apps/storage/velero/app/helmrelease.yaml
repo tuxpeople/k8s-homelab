@@ -29,20 +29,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      - name: velero-plugin-for-aws
-        image: velero/velero-plugin-for-aws:v1.9.2
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-          - mountPath: /target
-            name: plugins
     configuration:
+      uploaderType: kopia
       backupStorageLocation:
-        - name: velero-minio
+        - bucket: velero
+          defaultVolumesToFsBackup: False
           provider: aws
-          bucket: velero
-          default: true
-          accessMode: ReadWrite # change to ReadOnly during migrations/restores
           credential:
             name: velero-minio
             key: cloud
@@ -51,29 +43,74 @@ spec:
             s3ForcePathStyle: "true"
             s3Url: "http://minio.lab.tdeutsch.ch:9091"
       volumeSnapshotLocation:
-        - name: velero-local
-          provider: csi
-      # uploaderType: restic
-      # backupSyncPeriod: 240m
-      # restoreOnlyMode: false
-      # defaultVolumesToFsBackup: true
-    schedules:
-      minio:
-        disabled: false
-        schedule: 12 */6 * * *
-        useOwnershipReferencesInBackup: false
-        template:
-          resourcePolicy:
-            kind: configmap
-            name: resource-policy
-          ttl: 168h
-          includedNamespaces:
-            - default
-          excludedResources:
-            - orders.acme.cert-manager.io
-            - challenges.acme.cert-manager.io
-            - certificaterequests.cert-manager.io
-          snapshotVolumes: true
-          storageLocation: velero-minio
-          snapshotMoveData: false
-          datamover: velero
+        - provider: aws
+          credential:
+            name: velero-minio
+            key: cloud
+          config:
+            region: us-east-1
+            s3ForcePathStyle: "true"
+            s3Url: "http://minio.lab.tdeutsch.ch:9091"
+    initContainers:
+      - name: velero-plugin-for-csi
+        image: velero/velero-plugin-for-csi:v0.6.0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+      - name: velero-plugin-for-aws
+        image: velero/velero-plugin-for-aws:v1.8.0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+    deployNodeAgent: true
+    features: EnableCSI
+    # initContainers:
+    #   - name: velero-plugin-for-aws
+    #     image: velero/velero-plugin-for-aws:v1.9.2
+    #     imagePullPolicy: IfNotPresent
+    #     volumeMounts:
+    #       - mountPath: /target
+    #         name: plugins
+    # configuration:
+    #   backupStorageLocation:
+    #     - name: velero-minio
+    #       provider: aws
+    #       bucket: velero
+    #       default: true
+    #       accessMode: ReadWrite # change to ReadOnly during migrations/restores
+    #       credential:
+    #         name: velero-minio
+    #         key: cloud
+    #       config:
+    #         region: us-east-1
+    #         s3ForcePathStyle: "true"
+    #         s3Url: "http://minio.lab.tdeutsch.ch:9091"
+    #   volumeSnapshotLocation:
+    #     - name: velero-local
+    #       provider: csi
+    #   # uploaderType: restic
+    #   # backupSyncPeriod: 240m
+    #   # restoreOnlyMode: false
+    #   # defaultVolumesToFsBackup: true
+    # schedules:
+    #   minio:
+    #     disabled: false
+    #     schedule: 12 */6 * * *
+    #     useOwnershipReferencesInBackup: false
+    #     template:
+    #       resourcePolicy:
+    #         kind: configmap
+    #         name: resource-policy
+    #       ttl: 168h
+    #       includedNamespaces:
+    #         - default
+    #       excludedResources:
+    #         - orders.acme.cert-manager.io
+    #         - challenges.acme.cert-manager.io
+    #         - certificaterequests.cert-manager.io
+    #       snapshotVolumes: true
+    #       storageLocation: velero-minio
+    #       snapshotMoveData: false
+    #       datamover: velero
