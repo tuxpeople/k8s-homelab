@@ -16,12 +16,12 @@ spec:
     - name: TZ
       value: ${TIMEZONE}
   storage:
-    size: 1Gi
+    size: 10Gi
     volumeClaimTemplate:
       storageClassName: ${MAIN_SC}
       resources:
         requests:
-          storage: 1Gi
+          storage: 10Gi
       accessModes:
         - ReadWriteOnce
   resources:
