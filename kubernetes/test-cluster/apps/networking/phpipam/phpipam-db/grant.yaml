@@ -8,8 +8,11 @@ spec:
     name: mariadb
     namespace: database
   privileges:
-    - ALL
-  database: phpipam
+    - "ALL"
+  database: "phpipam"
   table: "*"
   username: phpipam
+  grantOption: true
   host: "%"
+  requeueInterval: 30s
+  retryInterval: 5s

@@ -10,4 +10,8 @@ spec:
   passwordSecretKeyRef:
     name: phpipam-secret
     key: mariadb-password
+  # This field is immutable and defaults to 10
   maxUserConnections: 20
+  host: "%"
+  requeueInterval: 30s
+  retryInterval: 5s
