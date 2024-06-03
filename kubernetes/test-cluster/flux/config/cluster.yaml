@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 30m
   ref:
-    branch: legacy
+    branch: main
   url: https://github.com/tuxpeople/k8s-homelab
   ignore: |
     # exclude all
