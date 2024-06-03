@@ -7,6 +7,7 @@ spec:
   rootPasswordSecretKeyRef:
     name: mariadb
     key: root-password
+    generate: false
   image: mariadb:11.3.2
   port: 3306
   replicas: 2
@@ -46,3 +47,10 @@ spec:
     serviceMonitor:
       interval: 10s
       scrapeTimeout: 10s
+  myCnf: |
+    [mariadb]
+    bind-address=*
+    default_storage_engine=InnoDB
+    binlog_format=row
+    innodb_autoinc_lock_mode=2
+    max_allowed_packet=256M
