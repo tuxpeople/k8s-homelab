@@ -36,7 +36,6 @@ includes:
     optional: true
 
 tasks:
-
   default: task --list
 
   init:
@@ -58,6 +57,7 @@ tasks:
       - task: .template
       - task: sops:encrypt
       - task: .validate
+      - cmd: bash {{.ROOT_DIR}}/scripts/rebuild-kustomizations.sh
 
   .template:
     internal: true

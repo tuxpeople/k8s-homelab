@@ -1,0 +1,47 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lldap
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/icon: account-group
+spec:
+  ingressClassName: internal
+  tls:
+    - secretName: ${SECRET_DOMAIN/./-}-production-tls
+      hosts:
+        - lldap.${SECRET_DOMAIN}
+  rules:
+    - host: lldap.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mediabox
+                port:
+                  name: lldap
+
+---
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: lldap
+    gatus.io/enabled: "true"
+  name: lldap-gatus-ep
+apiVersion: v1
+data:
+  config.yaml: |
+    endpoints:
+      - name: "lldap"
+        group: internal-kubernetes
+        url: "https://lldap.${SECRET_DOMAIN}/"
+        interval: 1m
+        client:
+          dns-resolver: tcp://192.168.13.1:53
+        conditions:
+          - "[STATUS] == 200"
+        alerts:
+          - type: discord
