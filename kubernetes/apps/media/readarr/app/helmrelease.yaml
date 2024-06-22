@@ -1,0 +1,118 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app readarr
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      readarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/readarr-develop
+              tag: 0.3.28.2554@sha256:4beda7d63d2cb014a860bf4f8fa367f9621e378675396b684d300f1e3a0380dc
+            env:
+              READARR__AUTHENTICATION_METHOD: External
+              READARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              READARR__INSTANCE_NAME: Readarr
+              READARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+              READARR__LOG_LEVEL: info
+              READARR__PORT: &port 8787
+              READARR__THEME: dark
+              TZ: ${TIMEZONE}
+            envFrom: &envFrom
+              - secretRef:
+                  name: readarr-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1027
+        runAsGroup: 100
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 65539
+    ingress:
+      app:
+        className: internal
+        annotations:
+          hajimari.io/icon: mdi:filmstrip
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 20Gi
+        storageClass: ${MAIN_SC}
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      data:
+        enabled: true
+        type: nfs
+        server: 10.20.30.40
+        globalMounts:
+          - path: /data/media
+        path: /volume2/data/media
+      tmp:
+        type: emptyDir
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
