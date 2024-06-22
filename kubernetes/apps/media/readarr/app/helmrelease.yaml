@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/readarr-develop
-              tag: 0.3.28.2554@sha256:4beda7d63d2cb014a860bf4f8fa367f9621e378675396b684d300f1e3a0380dc
+              tag: 0.3.27
             env:
               READARR__AUTHENTICATION_METHOD: External
               READARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
