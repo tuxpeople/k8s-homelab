@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - kasm/ks.yaml
   - linkding/ks.yaml
+  - obsidian/ks.yaml
   - octoprint/ks.yaml
   - paperless/ks.yaml
   - webtrees/ks.yaml
