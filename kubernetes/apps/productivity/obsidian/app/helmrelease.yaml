@@ -67,7 +67,7 @@ spec:
           - hosts:
               - *host
     persistence:
-      data:
+      config:
         enabled: true
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
