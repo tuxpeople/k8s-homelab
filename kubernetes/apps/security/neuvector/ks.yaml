@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-neuvector-core
+  name: neuvector-core
   namespace: flux-system
 spec:
   targetNamespace: security
