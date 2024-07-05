@@ -7,8 +7,6 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: security
-  dependsOn:
-    - name: cluster-apps-system-upgrade-controller
   path: ./kubernetes/apps/security/neuvector/core
   prune: true
   sourceRef:
