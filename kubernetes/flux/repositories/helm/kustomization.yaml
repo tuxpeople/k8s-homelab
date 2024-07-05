@@ -15,6 +15,7 @@ resources:
   - longhorn.yaml
   - metrics-server.yaml
   - mittwald-charts.yaml
+  - neuvector.yaml
   - openebs.yaml
   - postfinance.yaml
   - prometheus-community.yaml
