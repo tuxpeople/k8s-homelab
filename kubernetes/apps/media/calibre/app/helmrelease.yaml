@@ -29,6 +29,8 @@ spec:
             image:
               repository: lscr.io/linuxserver/calibre
               tag: 7.13.0
+            env:
+              UMASK: 002
             resources:
               requests:
                 cpu: 5m
