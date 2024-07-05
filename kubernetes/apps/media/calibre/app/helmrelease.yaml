@@ -81,3 +81,10 @@ spec:
         accessMode: ReadWriteOnce
         size: 20Gi
         storageClass: ${MAIN_SC}
+      data:
+        enabled: true
+        type: nfs
+        server: 10.20.30.40
+        globalMounts:
+          - path: /data/media
+        path: /volume2/data/media

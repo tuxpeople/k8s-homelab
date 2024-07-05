@@ -39,6 +39,7 @@ spec:
               READARR__PORT: &port 8787
               READARR__THEME: dark
               TZ: ${TIMEZONE}
+              UMASK: 002
             envFrom: &envFrom
               - secretRef:
                   name: readarr-secret
