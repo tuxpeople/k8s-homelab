@@ -30,7 +30,8 @@ spec:
               repository: lscr.io/linuxserver/calibre
               tag: 7.13.0
             env:
-              UMASK: 002
+              PUID: "1026"
+              PGID: "100"
             resources:
               requests:
                 cpu: 5m
