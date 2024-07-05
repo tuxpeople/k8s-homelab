@@ -75,12 +75,12 @@ spec:
           - hosts:
               - *host
     persistence:
-      # config:
-      #   enabled: true
-      #   type: persistentVolumeClaim
-      #   accessMode: ReadWriteOnce
-      #   size: 20Gi
-      #   storageClass: ${MAIN_SC}
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: ${MAIN_SC}
       data:
         enabled: true
         type: nfs
