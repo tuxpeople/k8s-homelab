@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - calibre-web/ks.yaml
+  - calibre/ks.yaml
   - mediabox/ks.yaml
   - overseerr/ks.yaml
   - plex-exporter/ks.yaml
