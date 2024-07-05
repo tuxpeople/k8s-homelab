@@ -22,7 +22,7 @@ spec:
       retries: 3
   values:
     controllers:
-      obsidian:
+      calibre:
         strategy: Recreate
         containers:
           app:
