@@ -67,6 +67,21 @@ spec:
               capabilities:
                 drop:
                   - ALL
+              runAsNonRoot: true
+              runAsUser: 1026
+              runAsGroup: 100
+              fsGroup: 100
+              fsGroupChangePolicy: OnRootMismatch
+              supplementalGroups:
+                - 65539
+        initContainers:
+          update-volume-permission:
+            image:
+              repository: busybox
+              tag: 1.36.1
+            command: [sh, -c, chown -R 1000:1000 /config]
+            securityContext:
+              runAsUser: 0
     # defaultPodOptions:
     #   securityContext:
     #     runAsNonRoot: true
@@ -75,7 +90,7 @@ spec:
     #     fsGroup: 100
     #     fsGroupChangePolicy: OnRootMismatch
     #     supplementalGroups:
-    #       - 65539
+          - 65539
     ingress:
       app:
         className: internal
