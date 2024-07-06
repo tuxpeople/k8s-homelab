@@ -67,6 +67,14 @@ spec:
               capabilities:
                 drop:
                   - ALL
+        initContainers:
+          update-volume-permission:
+            image:
+              repository: busybox
+              tag: 1.36.1
+            command: [sh, -c, chown -R 1026:100 /config]
+            securityContext:
+              runAsUser: 0
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
