@@ -61,19 +61,19 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-              runAsNonRoot: true
-              runAsUser: 1024
-              runAsGroup: 100
-              fsGroup: 100
-              fsGroupChangePolicy: OnRootMismatch
-              supplementalGroups:
-                - 65539
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities:
+            #     drop:
+            #       - ALL
+            #   runAsNonRoot: true
+            #   runAsUser: 1024
+            #   runAsGroup: 100
+            #   fsGroup: 100
+            #   fsGroupChangePolicy: OnRootMismatch
+            #   supplementalGroups:
+            #     - 65539
         initContainers:
           update-volume-permission:
             image:
