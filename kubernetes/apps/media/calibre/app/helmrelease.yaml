@@ -30,7 +30,7 @@ spec:
               repository: lscr.io/linuxserver/calibre
               tag: 7.13.0
             env:
-              PUID: "1026"
+              PUID: "1024"
               PGID: "100"
             resources:
               requests:
@@ -43,7 +43,7 @@ spec:
             image:
               repository: busybox
               tag: 1.36.1
-            command: [sh, -c, chown -R 1026:100 /config]
+            command: [sh, -c, chown -R 1024:100 /config]
             securityContext:
               runAsUser: 0
     service:

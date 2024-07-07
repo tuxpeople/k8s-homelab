@@ -68,7 +68,7 @@ spec:
                 drop:
                   - ALL
               runAsNonRoot: true
-              runAsUser: 1026
+              runAsUser: 1024
               runAsGroup: 100
               fsGroup: 100
               fsGroupChangePolicy: OnRootMismatch
@@ -79,13 +79,13 @@ spec:
             image:
               repository: busybox
               tag: 1.36.1
-            command: [sh, -c, chown -R 1026:100 /config]
+            command: [sh, -c, chown -R 1024:100 /config]
             securityContext:
               runAsUser: 0
     # defaultPodOptions:
     #   securityContext:
     #     runAsNonRoot: true
-    #     runAsUser: 1026
+    #     runAsUser: 1024
     #     runAsGroup: 100
     #     fsGroup: 100
     #     fsGroupChangePolicy: OnRootMismatch
