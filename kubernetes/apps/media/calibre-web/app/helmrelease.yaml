@@ -96,7 +96,7 @@ spec:
         enabled: true
         type: nfs
         server: 10.20.30.40
-        path: /volume2/data/calibre
+        path: /volume2/data/media/books
         globalMounts:
           - path: /data/calibre
       cache:

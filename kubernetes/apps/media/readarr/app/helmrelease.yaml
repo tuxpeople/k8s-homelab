@@ -28,14 +28,69 @@ spec:
         containers:
           app:
             image:
-              repository: tdeutsch/debugcontainer
-              tag: latest
+              repository: ghcr.io/onedr0p/readarr-develop
+              tag: 0.3.29
+            env:
+              READARR__AUTHENTICATION_METHOD: External
+              READARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              READARR__INSTANCE_NAME: Readarr
+              READARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+              READARR__LOG_LEVEL: info
+              READARR__PORT: &port 8787
+              READARR__THEME: dark
+              TZ: ${TIMEZONE}
+              UMASK: 002
+            envFrom: &envFrom
+              - secretRef:
+                  name: readarr-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 600
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
-                cpu: 5m
-                memory: 101M
+                cpu: 10m
               limits:
-                memory: 2048M
+                memory: 1Gi
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities:
+            #     drop:
+            #       - ALL
+            #   runAsNonRoot: true
+            #   runAsUser: 1024
+            #   runAsGroup: 100
+            #   fsGroup: 100
+            #   fsGroupChangePolicy: OnRootMismatch
+            #   supplementalGroups:
+            #     - 65539
+        initContainers:
+          update-volume-permission:
+            image:
+              repository: busybox
+              tag: 1.36.1
+            command: [sh, -c, chown -R 1024:100 /config]
+            securityContext:
+              runAsUser: 0
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 1024
+    #     runAsGroup: 100
+    #     fsGroup: 100
+    #     fsGroupChangePolicy: OnRootMismatch
+    #     supplementalGroups:
+    #       - 65539
     ingress:
       app:
         className: internal
