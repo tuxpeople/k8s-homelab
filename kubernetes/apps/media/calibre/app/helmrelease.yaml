@@ -27,25 +27,14 @@ spec:
         containers:
           app:
             image:
-              repository: lscr.io/linuxserver/calibre
-              tag: 7.13.0
-            env:
-              PUID: "1024"
-              PGID: "100"
+              repository: tdeutsch/debugcontainer
+              tag: latest
             resources:
               requests:
                 cpu: 5m
                 memory: 101M
               limits:
                 memory: 2048M
-        initContainers:
-          update-volume-permission:
-            image:
-              repository: busybox
-              tag: 1.36.1
-            command: [sh, -c, chown -R 1024:100 /config]
-            securityContext:
-              runAsUser: 0
     service:
       app:
         controller: *app
