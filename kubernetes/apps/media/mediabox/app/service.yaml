@@ -34,6 +34,10 @@ spec:
       port: 5454
       protocol: TCP
       targetPort: 5454
+    - name: readarr
+      port: 8787
+      protocol: TCP
+      targetPort: 8787
     - name: lldap
       port: 17170
       protocol: TCP
