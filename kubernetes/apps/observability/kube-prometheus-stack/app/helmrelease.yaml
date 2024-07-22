@@ -112,7 +112,7 @@ spec:
               - alertname
               - namespace
       alertmanagerSpec:
-        replicas: 2
+        replicas: 1
         podAntiAffinity: hard
         storage:
           volumeClaimTemplate:
@@ -242,7 +242,7 @@ spec:
           - hosts:
               - *host
       prometheusSpec:
-        replicas: 2
+        replicas: 1
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
