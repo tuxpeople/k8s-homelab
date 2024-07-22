@@ -13,6 +13,16 @@ env:
   TALOSCONFIG: "{{.TALOSCONFIG_FILE}}"
 
 tasks:
+  health:
+    desc: Check health of the Talos cluster
+    dir: "{{.KUBERNETES_DIR}}/bootstrap/talos"
+    cmds:
+      - talosctl health --server=false
+    preconditions:
+      - msg: Missing talosconfig
+        sh: test -f {{.TALOSCONFIG_FILE}}
+      - msg: Unable to retrieve Talos config
+        sh: talosctl config info >/dev/null 2>&1
 
   bootstrap:
     desc: Bootstrap the Talos cluster

@@ -1,0 +1,124 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app tooler
+  namespace: tools
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      tooler:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          loading-data:
+            image:
+              repository: registry.eighty-three.me/tuxpeople/tooler
+              tag: git-766862d
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 101M
+              limits:
+                memory: 101M
+        containers:
+          app:
+            image:
+              repository: busybox
+              tag: 1.36.1
+            command: ["sh"]
+            args:
+              - -c
+              - httpd -f -p 80 -h /output
+            resources:
+              requests:
+                cpu: 5m
+                memory: 101M
+              limits:
+                memory: 101M
+
+      cronjob:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "@hourly"
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          main:
+            image:
+              repository: registry.eighty-three.me/tuxpeople/tooler
+              tag: git-766862d
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 101M
+              limits:
+                memory: 101M
+
+    ingress:
+      app:
+        className: external
+        annotations:
+          hajimari.io/url: https://tooler.${SECRET_DOMAIN}
+        hosts:
+          - host: &host "tooler.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 80
+
+    persistence:
+      config-yaml:
+        type: configMap
+        name: tooler-configmap
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
+      output:
+        enabled: true
+        type: emptyDir
