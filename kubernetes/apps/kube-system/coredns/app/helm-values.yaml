@@ -3,13 +3,6 @@ fullnameOverride: coredns
 k8sAppLabelOverride: kube-dns
 serviceAccount:
   create: true
-resources:
-  limits:
-    cpu: 150m
-    memory: 150Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
 service:
   name: kube-dns
   clusterIP: "10.96.0.10"
