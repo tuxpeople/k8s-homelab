@@ -34,7 +34,7 @@ spec:
               - sabnzbd
             env:
               PORT: &port 9712
-              URL: http://thiazi.home:8080
+              URL: http://mediabox.media.svc.cluster.local:8080
             envFrom:
               - secretRef:
                   name: sabnzbd-exporter-secret

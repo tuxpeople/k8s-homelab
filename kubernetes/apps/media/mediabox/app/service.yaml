@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: mediabox
 spec:
-  externalName: thiazi.home
+  externalName: ${SECRET_MEDIABOX_IP}
   ports:
     - name: sonarr
       port: 8989
