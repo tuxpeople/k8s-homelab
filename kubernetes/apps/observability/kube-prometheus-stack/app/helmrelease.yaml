@@ -202,9 +202,9 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints: &cp
-        - 192.168.8.111
-        - 192.168.8.112
-        - 192.168.8.113
+        - 192.168.13.11
+        - 192.168.13.12
+        - 192.168.13.13
       serviceMonitor:
         metricRelabelings:
           # Remove duplicate metrics
@@ -267,19 +267,19 @@ spec:
         #     #   password: examplepassword
         #     static_configs:
         #       - targets: # k3s-node1
-        #           - 192.168.8.111:9100
+        #           - 192.168.13.11:9100
         #         labels:
         #           node: "k3s-node1"
         #       - targets: # k3s-node2
-        #           - 192.168.8.112:9100
+        #           - 192.168.13.12:9100
         #         labels:
         #           node: "k3s-node2"
         #       - targets: # k3s-node3
-        #           - 192.168.8.113:9100
+        #           - 192.168.13.13:9100
         #         labels:
         #           node: "k3s-node3"
         #       - targets: # k3s-node4
-        #           - 192.168.8.114:9100
+        #           - 192.168.13.14:9100
         #         labels:
         #           node: "k3s-node4"
         #       - targets: # NAS
@@ -425,11 +425,11 @@ spec:
     #         #   password: examplepassword
     #         static_configs:
     #           - targets:  # k3s-node01
-    #               - 192.168.8.111:9100
+    #               - 192.168.13.11:9100
     #           - targets:  # k3s-node02
-    #               - 192.168.8.112:9100
+    #               - 192.168.13.12:9100
     #           - targets:  # k3s-node03
-    #               - 192.168.8.113:9100
+    #               - 192.168.13.13:9100
     #           - targets:  # NAS
     #               - 10.20.30.40:9100
     #   ingress:
