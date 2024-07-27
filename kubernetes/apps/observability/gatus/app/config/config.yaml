@@ -24,8 +24,8 @@ alerting:
     default-alert:
       # description: "health check failed"
       send-on-resolved: true
-      failure-threshold: 2
-      success-threshold: 2
+      failure-threshold: 3
+      success-threshold: 3
 endpoints:
   # - name: status
   #   group: external
