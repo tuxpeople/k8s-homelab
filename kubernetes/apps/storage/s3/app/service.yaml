@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s3
+  # annotations:
+  # traefik.ingress.kubernetes.io/service.serversscheme: https
+  # traefik.ingress.kubernetes.io/service.serverstransport: networking-insecureskipverify@kubernetescrd
+spec:
+  externalName: thiazi.home
+  ports:
+    - name: api
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: console
+      port: 9001
+      protocol: TCP
+      targetPort: 9001
+  sessionAffinity: None
+  type: ExternalName
