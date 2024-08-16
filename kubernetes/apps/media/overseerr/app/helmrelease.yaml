@@ -26,8 +26,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/sct/overseerr
-              tag: 1.33.2@sha256:714ea6db2bc007a2262d112bef7eec74972eb33d9c72bddb9cbd98b8742de950
+              repository: lscr.io/linuxserver/overseerr
+              tag: 1.33.2
             env:
               LOG_LEVEL: info
               PORT: &port 5055
@@ -87,20 +87,6 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         storageClass: ${MAIN_SC}
-        globalMounts:
-          - path: /app/config
-      config-cache:
-        enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: ${MAIN_SC}
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /app/config/logs
-      tmp:
-        type: emptyDir
     service:
       app:
         controller: *app
