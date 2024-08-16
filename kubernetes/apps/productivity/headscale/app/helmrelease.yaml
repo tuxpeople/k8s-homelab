@@ -1,0 +1,159 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app headscale
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      headscale:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/juanfont/headscale
+              tag: 0.22.3@sha256:aadf29a875bb2ffdf6579869e5759935f7a64b9fd19fcea9d5385c5d7220dc7b
+              pullPolicy: IfNotPresent
+            command: [headscale, serve]
+            env:
+              HEADSCALE_SERVER_URL: https://hs.${SECRET_DOMAIN}
+              HEADSCALE_LISTEN_ADDR: 0.0.0.0:8080
+              HEADSCALE_METRICS_LISTEN_ADDR: 0.0.0.0:9090
+              HEADSCALE_PRIVATE_KEY_PATH: /etc/headscale/private.key
+              HEADSCALE_NOISE: "{}"
+              HEADSCALE_NOISE_PRIVATE_KEY_PATH: /etc/headscale/noise_private.key
+              HEADSCALE_IP_PREFIXES: 100.64.0.0/10 fd7a:115c:a1e0::/48
+              HEADSCALE_DERP_URLS: https://controlplane.tailscale.com/derpmap/default
+              HEADSCALE_DERP_AUTO_UPDATE_ENABLED: "true"
+              HEADSCALE_DERP_UPDATE_FREQUENCY: "24h"
+              HEADSCALE_EPHEMERAL_NODE_INACTIVITY_TIMEOUT: "30m"
+              HEADSCALE_DNS_CONFIG_NAMESERVERS: "1.1.1.1 1.0.0.1"
+              HEADSCALE_DNS_CONFIG_MAGIC_DNS: "true"
+              HEADSCALE_DNS_CONFIG_BASE_DOMAIN: hs.${SECRET_DOMAIN}
+            probes:
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              readOnlyRootFilesystem: true
+        pod:
+          terminationGracePeriodSeconds: 3
+      ui:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gurucomputing/headscale-ui
+              tag: 2024.02.24-beta1@sha256:4c618a7b6e8b32f5ef6af3c7e6936c63e8568ad9ae8d190dafb2551a64ff40a2
+              pullPolicy: IfNotPresent
+            securityContext:
+              readOnlyRootFilesystem: true
+        pod:
+          terminationGracePeriodSeconds: 3
+          labels:
+            policy.gabe565.com/ingress-ingress: "true"
+    ingress:
+      app:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        hosts:
+          - host: &host "hs.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: headscale
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: ${SECRET_DOMAIN/./-}-production-tls
+      ui:
+        enabled: true
+        hosts:
+          - host: *host
+            paths:
+              - path: /web
+                service:
+                  identifier: ui
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: ${SECRET_DOMAIN/./-}-production-tls
+    service:
+      headscale:
+        controller: headscale
+        ports:
+          http:
+            primary: true
+            port: 8080
+          metrics:
+            port: 9090
+      ui:
+        controller: ui
+        ports:
+          http:
+            port: 80
+
+    persistence:
+      config:
+        enabled: true
+        type: secret
+        name: headscale-config
+        advancedMounts:
+          headscale:
+            app:
+              - path: /etc/headscale/config.yaml
+                subPath: config.yaml
+      tmp:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          headscale:
+            app:
+              - path: /var/run/headscale
+                subPath: run
+          ui:
+            app:
+              - path: /data
+                subPath: data
+              - path: /home/appuser/.local
+                subPath: .local
+    secrets:
+      config:
+        enabled: true
+        stringData:
+          config.yaml: "{}"
+    serviceMonitor:
+      main:
+        enabled: true
+        serviceName: headscale
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
