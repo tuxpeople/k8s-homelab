@@ -106,6 +106,7 @@ spec:
             secretName: ${SECRET_DOMAIN/./-}-production-tls
       ui:
         enabled: true
+        className: external
         hosts:
           - host: *host
             paths:
