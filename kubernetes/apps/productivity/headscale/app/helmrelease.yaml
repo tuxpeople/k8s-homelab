@@ -54,6 +54,7 @@ spec:
               HEADSCALE_SERVER_URL: "https://headscale.${SECRET_DOMAIN}"
               HEADSCALE_TLS_LETSENCRYPT_HOSTNAME: "headscale.${SECRET_DOMAIN}"
               HEADSCALE_DERP_AUTO_UPDATE_ENABLED: "true"
+              HEADSCALE_NOISE: "{}"
               HEADSCALE_NOISE_PRIVATE_KEY_PATH: "/etc/headscale/noise_private.key"
             probes:
               startup:
