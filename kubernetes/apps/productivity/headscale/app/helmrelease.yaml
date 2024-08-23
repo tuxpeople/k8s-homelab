@@ -28,8 +28,8 @@ spec:
             image:
               repository: ghcr.io/juanfont/headscale
               tag: 0.22.3@sha256:aadf29a875bb2ffdf6579869e5759935f7a64b9fd19fcea9d5385c5d7220dc7b
-              pullPolicy: IfNotPresent
-            command: [headscale, serve]
+            command: [headscale]
+            args: [serve]
             env:
               HEADSCALE_SERVER_URL: https://hs.${SECRET_DOMAIN}
               HEADSCALE_LISTEN_ADDR: 0.0.0.0:8080
@@ -71,8 +71,11 @@ spec:
               readOnlyRootFilesystem: true
         pod:
           terminationGracePeriodSeconds: 3
-          labels:
-            policy.gabe565.com/ingress-ingress: "true"
+    defaultPodOptions:
+      securityContext:
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: "0"
     ingress:
       app:
         enabled: true
@@ -84,7 +87,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: headscale
+                  identifier: *app
                   port: http
         tls:
           - hosts:
@@ -105,7 +108,7 @@ spec:
             secretName: ${SECRET_DOMAIN/./-}-production-tls
     service:
       headscale:
-        controller: headscale
+        controller: *app
         ports:
           http:
             primary: true
@@ -117,7 +120,6 @@ spec:
         ports:
           http:
             port: 80
-
     persistence:
       config:
         enabled: true
@@ -157,3 +159,31 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
+    # persistence:
+    #   config-yaml:
+    #     type: configMap
+    #     name: headscale-configmap
+    #     globalMounts:
+    #       - path: /etc/headscale/config.yaml
+    #         subPath: config.yaml
+    #         readOnly: true
+    #   var-lib-headscale:
+    #     enabled: true
+    #     type: persistentVolumeClaim
+    #     advancedMounts:
+    #       headscale:
+    #         app:
+    #           - path: /var/lib/headscale
+    #   tmp:
+    #     type: emptyDir
+    #     advancedMounts:
+    #       headscale:
+    #         app:
+    #           - path: /var/run/headscale
+    #             subPath: run
+    #       ui:
+    #         app:
+    #           - path: /data
+    #             subPath: data
+    #           - path: /home/appuser/.local
+    #             subPath: .local
