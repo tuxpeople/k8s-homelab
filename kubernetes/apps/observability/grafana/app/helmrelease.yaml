@@ -219,7 +219,7 @@ spec:
         kubernetes-api-server:
           # renovate: dashboardName="Kubernetes / System / API Server"
           gnetId: 15761
-          revision: 16
+          revision: 17
           datasource: Prometheus
         kubernetes-coredns:
           # renovate: dashboardName="Kubernetes / System / CoreDNS"
