@@ -34,7 +34,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   targetNamespace: productivity
-  dependsOn:
   path: ./kubernetes/apps/productivity/webtrees/db
   prune: true
   sourceRef:
