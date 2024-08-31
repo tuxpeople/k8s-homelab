@@ -47,8 +47,6 @@ spec:
         enabled: true
         name: Homelab Account
         icon: signin
-        client_id: grafana
-        client_secret: ${SECRET_OIDC_CLIENT_SECRET_GRAFANA}
         scopes: openid profile email groups
         empty_scopes: false
         auth_url: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
@@ -262,7 +260,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: nginx-default
+      ingressClassName: external
       annotations:
         hajimari.io/icon: simple-icons:grafana
       hosts:
@@ -275,3 +273,7 @@ spec:
       storageClassName: ${MAIN_SC}
     testFramework:
       enabled: false
+  valuesFrom:
+    - kind: Secret
+      name: grafana-oidc-secret
+      optional: false

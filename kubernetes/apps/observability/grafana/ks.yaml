@@ -9,6 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-secretstores
   targetNamespace: observability
   path: ./kubernetes/apps/observability/grafana/app
   prune: true
