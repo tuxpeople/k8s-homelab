@@ -268,9 +268,9 @@ spec:
       tls:
         - hosts:
             - *host
-    persistence:
-      enabled: true
-      storageClassName: ${MAIN_SC}
+    # persistence:
+    #   enabled: true
+    #   storageClassName: ${MAIN_SC}
     testFramework:
       enabled: false
   valuesFrom:
