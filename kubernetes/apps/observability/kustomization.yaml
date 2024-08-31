@@ -5,6 +5,7 @@ resources:
 - alertmanager-discord/ks.yaml
 - blackbox-exporter/ks.yaml
 - gatus/ks.yaml
+- grafana/ks.yaml
 - kube-prometheus-stack/ks.yaml
 - overseerr-exporter/ks.yaml
 - prometheus-operator-crds/ks.yaml
