@@ -42,6 +42,7 @@ spec:
         - pushgateway.${SECRET_DOMAIN}
     serviceMonitor:
       enabled: true
+      namespace: observability
     persistentVolume:
       enabled: true
       size: 4Gi
