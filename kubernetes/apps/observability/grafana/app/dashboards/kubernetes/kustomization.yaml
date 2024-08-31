@@ -6,5 +6,6 @@ commonLabels:
   grafana_dashboard: "1"
 commonAnnotations:
   grafana_folder: Kubernetes
+  kustomize.toolkit.fluxcd.io/substitute: disabled
 resources:
   - https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/grafana-dashboardDefinitions.yaml
