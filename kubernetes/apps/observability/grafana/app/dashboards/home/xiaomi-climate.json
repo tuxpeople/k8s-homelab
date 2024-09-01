@@ -119,7 +119,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_temperature{room=\"$Raum\"}",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -260,7 +260,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_temperature{room=\"$Raum\"} < 50",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -357,7 +357,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_humidity{room=\"$Raum\"} < 90",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -438,7 +438,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_temperature{room=\"$Raum\"}",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -556,7 +556,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_humidity{room=\"$Raum\"}",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -652,7 +652,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_dew_point{room=\"$Raum\"} < 50",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -749,7 +749,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_battery{room=\"$Raum\"} < 301",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -814,7 +814,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_dew_point{room=\"$Raum\"}",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -911,7 +911,7 @@
           },
           "editorMode": "builder",
           "expr": "xiaomi_battery{room=\"$Raum\"}",
-          "legendFormat": "__auto",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
