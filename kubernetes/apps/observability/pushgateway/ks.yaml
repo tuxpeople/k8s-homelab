@@ -5,6 +5,9 @@ metadata:
   name: pushgateway
   namespace: flux-system
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   targetNamespace: observability
   path: ./kubernetes/apps/observability/pushgateway/app
   dependsOn:
