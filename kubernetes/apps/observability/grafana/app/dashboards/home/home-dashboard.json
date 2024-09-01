@@ -125,7 +125,7 @@
               "uid": "Prometheus"
             },
             "editorMode": "builder",
-            "expr": "xiaomi_temperature < 50",
+            "expr": "xiaomi_temperature{job=\"indoorclimate\"} < 50",
             "legendFormat": "{{room}}",
             "range": true,
             "refId": "A"
@@ -218,7 +218,7 @@
               "uid": "Prometheus"
             },
             "editorMode": "builder",
-            "expr": "xiaomi_humidity[3h]",
+            "expr": "xiaomi_humidity{job=\"indoorclimate\"}",
             "legendFormat": "{{room}}",
             "range": true,
             "refId": "A"

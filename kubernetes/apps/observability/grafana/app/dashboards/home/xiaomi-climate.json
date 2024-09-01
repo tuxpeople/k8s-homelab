@@ -356,7 +356,7 @@
             "uid": "grafanacloud-prom"
           },
           "editorMode": "builder",
-          "expr": "xiaomi_humidity{room=\"$Raum\"} < 50",
+          "expr": "xiaomi_humidity{room=\"$Raum\"} < 90",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -748,7 +748,7 @@
             "uid": "grafanacloud-prom"
           },
           "editorMode": "builder",
-          "expr": "xiaomi_battery{room=\"$Raum\"} < 101",
+          "expr": "xiaomi_battery{room=\"$Raum\"} < 301",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
