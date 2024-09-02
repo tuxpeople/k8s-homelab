@@ -1,18 +1,19 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- namespace.yaml
-- alertmanager-discord/ks.yaml
-- blackbox-exporter/ks.yaml
-- gatus/ks.yaml
-- grafana/ks.yaml
-- kube-prometheus-stack/ks.yaml
-- overseerr-exporter/ks.yaml
-- prometheus-operator-crds/ks.yaml
-- prowlarr-exporter/ks.yaml
-- pushgateway/ks.yaml
-- radarr-exporter/ks.yaml
-- sabnzbd-exporter/ks.yaml
-- sonarr-exporter/ks.yaml
-- speedtest-exporter/ks.yaml
-- tautulli-exporter/ks.yaml
+  - namespace.yaml
+  - alertmanager-discord/ks.yaml
+  - blackbox-exporter/ks.yaml
+  - gatus/ks.yaml
+  - grafana/ks.yaml
+  - kube-prometheus-stack/ks.yaml
+  - overseerr-exporter/ks.yaml
+  - prometheus-operator-crds/ks.yaml
+  - prowlarr-exporter/ks.yaml
+  - pushgateway/ks.yaml
+  - radarr-exporter/ks.yaml
+  - sabnzbd-exporter/ks.yaml
+  - sonarr-exporter/ks.yaml
+  - speedtest-exporter/ks.yaml
+  - tautulli-exporter/ks.yaml
