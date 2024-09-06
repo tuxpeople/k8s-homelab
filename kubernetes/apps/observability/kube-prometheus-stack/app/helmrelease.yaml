@@ -263,6 +263,10 @@ spec:
               resources:
                 requests:
                   storage: 12Gi
+        scrapeConfigNamespaceSelector:
+          matchExpressions:
+            - key: kubernetes.io/metadata.name
+              operator: Exists
         # additionalScrapeConfigs:
         #   - job_name: node-exporter
         #     scrape_interval: 1m
