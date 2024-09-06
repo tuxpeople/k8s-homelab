@@ -176,6 +176,12 @@ spec:
     kubelet:
       enabled: true
       serviceMonitor:
+        cAdvisor: true
+        cAdvisorMetricRelabelings: []
+        cAdvisorRelabelings:
+          - sourceLabels:
+              - __metrics_path__
+            targetLabel: metrics_path
         metricRelabelings:
           # Remove duplicate metrics
           - sourceLabels: [__name__]
