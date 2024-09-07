@@ -139,7 +139,6 @@ spec:
         pathType: Prefix
         ingressClassName: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           hajimari.io/enable: "true"
           hajimari.io/appName: Alertmanager
           hajimari.io/icon: mdi:alert-decagram-outline
@@ -454,7 +453,6 @@ spec:
     #       hajimari.io/enable: "true"
     #       hajimari.io/appName: Prometheus
     #       hajimari.io/icon: mdi:fire
-    #       external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     #     tls:
     #       - secretName: ${SECRET_DOMAIN/./-}-production-tls
     #         hosts:

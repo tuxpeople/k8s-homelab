@@ -4,7 +4,6 @@ kind: Ingress
 metadata:
   name: octoprint
   annotations:
-    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     hajimari.io/enable: "true"
     hajimari.io/icon: printer-3d-nozzle
     # nginx.ingress.kubernetes.io/auth-method: GET

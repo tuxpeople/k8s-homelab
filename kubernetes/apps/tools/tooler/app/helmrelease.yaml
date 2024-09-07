@@ -5,7 +5,8 @@ metadata:
   name: &app tooler
   namespace: tools
 spec:
-  interval: 30m
+  interval: 15m
+  timeout: 15m
   chart:
     spec:
       chart: app-template

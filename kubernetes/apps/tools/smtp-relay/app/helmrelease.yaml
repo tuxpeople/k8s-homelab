@@ -52,12 +52,12 @@ spec:
                 cpu: 10m
               limits:
                 memory: 128Mi
-    defaultPodOptions:
+    toolsPodOptions:
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
         runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: { type: Runtimetools }
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname

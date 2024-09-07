@@ -4,7 +4,6 @@ kind: Ingress
 metadata:
   name: s3
   annotations:
-    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     hajimari.io/enable: "true"
 spec:
   ingressClassName: external
@@ -29,7 +28,6 @@ kind: Ingress
 metadata:
   name: s3-console
   annotations:
-    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     hajimari.io/enable: "true"
 spec:
   ingressClassName: external
