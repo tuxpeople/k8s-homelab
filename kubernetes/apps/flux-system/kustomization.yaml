@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - monitoring/ks.yaml
+  - notification/ks.yaml
   - weave-gitops/ks.yaml
   - webhooks/ks.yaml
