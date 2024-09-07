@@ -35,7 +35,7 @@ spec:
               TZ: ${TIMEZONE}
             image:
               repository: eikek0/sharry
-              tag: v1.13.2
+              tag: v1.14.0
             resources:
               requests:
                 cpu: 50m
