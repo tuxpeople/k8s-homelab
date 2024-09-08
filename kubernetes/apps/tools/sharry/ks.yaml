@@ -10,8 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   targetNamespace: tools
-  dependsOn:
-    - name: ${STORAGE_KUST}
   path: ./kubernetes/apps/tools/sharry/app
   prune: true
   sourceRef:
