@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   targetNamespace: productivity
-  path: ./kubernetes/apps/default/code-server/app
+  path: ./kubernetes/apps/productivity/code-server/app
   prune: true
   sourceRef:
     kind: GitRepository
