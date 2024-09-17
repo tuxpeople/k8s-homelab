@@ -27,40 +27,37 @@ spec:
       config:
         insecure: true
     queryFrontend:
-      enabled: true
-      replicaCount: 1
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        annotations:
-          hajimari.io/enable: "false"
-        hostname: &host thanos-query-frontend.${SECRET_DOMAIN}
-        tls: true
-        extraTls:
-          - secretName: ${SECRET_DOMAIN//./-}-tls
-            hosts:
-              - *host
+      enabled: false
     query:
       enabled: true
       replicaCount: 1
-      replicaLabel: [__replica__]
+      replicaLabels:
+        - replica
       dnsDiscovery:
-        sidecarsService: prometheus-thanos-discovery
+        sidecarsService: kube-prometheus-stack-thanos-discovery
         sidecarsNamespace: observability
+      ingress:
+        enabled: true
+        hostname: thanos.${SECRET_DOMAIN}
+        ingressClassName: internal
+        tls: true
     bucketweb:
       enabled: true
       replicaCount: 1
     compactor:
       enabled: true
-      extraFlags:
-        - --compact.concurrency=4
-        - --delete-delay=30m
-      retentionResolutionRaw: 14d
+      extraFlags: ["--compact.concurrency", "4"]
+      retentionResolutionRaw: 7d
       retentionResolution5m: 14d
-      retentionResolution1h: 14d
+      retentionResolution1h: 30d
       persistence:
         enabled: true
         size: 20Gi
+      ingress:
+        enabled: true
+        hostname: thanos-compactor.${SECRET_DOMAIN}
+        ingressClassName: internal
+        tls: true
     storegateway:
       enabled: true
       replicaCount: 1
@@ -70,23 +67,24 @@ spec:
     ruler:
       enabled: true
       replicaCount: 1
-      replicaLabel: __replica__
+      dnsDiscovery:
+        enabled: true
       alertmanagers:
         [
           http://kube-prometheus-stack-alertmanager.observability.svc.cluster.local:9093,
         ]
-      extraFlags: [--web.prefix-header=X-Forwarded-Prefix]
+      extraFlags: ["--web.prefix-header=X-Forwarded-Prefix"]
       config: |-
         groups:
-          - name: PrometheusWatcher
+          - name: "PrometheusWatcher"
             rules:
-              - alert: PrometheusDown
-                annotations:
-                  summary: A Prometheus has disappeared from Prometheus target discovery
+              - alert: "PrometheusDown"
                 expr: absent(up{job="kube-prometheus-stack-prometheus"})
-                for: 5m
-                labels:
-                  severity: critical
+      ingress:
+        enabled: true
+        hostname: thanos-ruler.${SECRET_DOMAIN}
+        ingressClassName: internal
+        tls: true
       persistence:
         enabled: true
         size: 20Gi
