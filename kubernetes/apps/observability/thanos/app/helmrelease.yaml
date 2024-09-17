@@ -86,7 +86,7 @@ spec:
         ingressClassName: internal
         tls: true
       persistence:
-        enabled: true
+        enabled: false
         size: 10Gi
     metrics:
       enabled: true
