@@ -52,7 +52,7 @@ spec:
       retentionResolution1h: 30d
       persistence:
         enabled: true
-        size: 20Gi
+        size: 10Gi
       ingress:
         enabled: true
         hostname: thanos-compactor.${SECRET_DOMAIN}
@@ -63,7 +63,7 @@ spec:
       replicaCount: 1
       persistence:
         enabled: true
-        size: 20Gi
+        size: 10Gi
     ruler:
       enabled: true
       replicaCount: 1
@@ -87,7 +87,7 @@ spec:
         tls: true
       persistence:
         enabled: true
-        size: 20Gi
+        size: 10Gi
     metrics:
       enabled: true
       serviceMonitor:
