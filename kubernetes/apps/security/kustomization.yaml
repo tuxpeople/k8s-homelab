@@ -5,4 +5,3 @@ resources:
   - namespace.yaml
   - external-secrets/ks.yaml
   - kyverno/ks.yaml
-  - neuvector/ks.yaml
