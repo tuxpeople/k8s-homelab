@@ -263,8 +263,7 @@ spec:
         probeSelectorNilUsesHelmValues: false
         enableAdminAPI: true
         walCompression: true
-        retention: 1h
-        retentionSize: 1GB
+        retentionSize: 8GB
         storageSpec:
           volumeClaimTemplate:
             spec:
