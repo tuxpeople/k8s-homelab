@@ -248,15 +248,6 @@ spec:
               - *host
       prometheusSpec:
         replicas: 1
-        remoteWrite:
-          - basicAuth:
-              password:
-                key: GRAFANA_CLOUD_PROM_PASS
-                name: grafana-cloud-prom-credentials
-              username:
-                key: GRAFANA_CLOUD_PROM_USER
-                name: grafana-cloud-prom-credentials
-            url: https://prometheus-blocks-prod-us-central1.grafana.net/api/prom/push
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
