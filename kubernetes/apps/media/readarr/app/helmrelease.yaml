@@ -78,7 +78,7 @@ spec:
           update-volume-permission:
             image:
               repository: busybox
-              tag: 1.36.1
+              tag: 1.37.0
             command: [sh, -c, chown -R 1024:100 /config]
             securityContext:
               runAsUser: 0
