@@ -232,7 +232,7 @@ spec:
         kubernetes-namespaces:
           # renovate: dashboardName="Kubernetes / Views / Namespaces"
           gnetId: 15758
-          revision: 35
+          revision: 38
           datasource: Prometheus
         kubernetes-nodes:
           # renovate: dashboardName="Kubernetes / Views / Nodes"
