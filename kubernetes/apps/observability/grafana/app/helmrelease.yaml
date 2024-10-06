@@ -237,7 +237,7 @@ spec:
         kubernetes-nodes:
           # renovate: dashboardName="Kubernetes / Views / Nodes"
           gnetId: 15759
-          revision: 29
+          revision: 32
           datasource: Prometheus
         kubernetes-pods:
           # renovate: dashboardName="Kubernetes / Views / Pods"
