@@ -21,3 +21,7 @@ spec:
     remediation:
       retries: 3
   values:
+    ingress:
+      enabled: true
+      hostname: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      ingressClassName: internal
