@@ -11,8 +11,6 @@ cluster:
   name: talos-test
 cni:
   exclusive: false
-containerRuntime:
-  integration: containerd
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
 # devices: eno+ eth+
 endpointRoutes:
