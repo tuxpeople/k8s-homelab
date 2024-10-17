@@ -8,7 +8,6 @@ resources:
   - gatus/ks.yaml
   - grafana/ks.yaml
   - kube-prometheus-stack/ks.yaml
-  - overseerr-exporter/ks.yaml
   - prometheus-operator-crds/ks.yaml
   - prowlarr-exporter/ks.yaml
   - pushgateway/ks.yaml
