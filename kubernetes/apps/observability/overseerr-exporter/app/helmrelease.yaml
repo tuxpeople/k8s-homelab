@@ -34,7 +34,7 @@ spec:
               - --overseerr.address
               - https://requests.eighty-three.me
               - --overseerr.api-key
-              - $(OVERSEERR_API_KEY)
+              - $$(OVERSEERR_API_KEY)
             envFrom:
               - secretRef:
                   name: overseerr-exporter-secret
