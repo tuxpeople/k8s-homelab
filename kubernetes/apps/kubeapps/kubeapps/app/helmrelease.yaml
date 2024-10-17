@@ -23,5 +23,5 @@ spec:
   values:
     ingress:
       enabled: true
-      hostname: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      hostname: kubeapps.${SECRET_DOMAIN}
       ingressClassName: internal
