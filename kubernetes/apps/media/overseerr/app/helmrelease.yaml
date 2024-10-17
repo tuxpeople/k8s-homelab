@@ -1,6 +1,5 @@
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
 metadata:
   name: &app overseerr
 spec:
@@ -27,7 +26,7 @@ spec:
           app:
             image:
               repository: lscr.io/linuxserver/overseerr
-              tag: 2021.12.12
+              tag: v1.33.2-ls121
             env:
               LOG_LEVEL: info
               PORT: &port 5055
