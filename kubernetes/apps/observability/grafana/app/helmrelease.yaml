@@ -253,6 +253,11 @@ spec:
       dashboards:
         enabled: true
         searchNamespace: ALL
+        multicluster:
+          global:
+            enabled: true
+          etcd:
+            enabled: true
       datasources:
         enabled: true
         searchNamespace: ALL
