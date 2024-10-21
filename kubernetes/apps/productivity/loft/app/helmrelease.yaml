@@ -27,3 +27,14 @@ spec:
       create: "true"
       username: admin
       password: ${CODESERVER_PASSWORD}
+    ingress:
+      enabled: true
+      name: loft-ingress
+      # labels: {}            # {key: value} map of labels for the ingress
+      # annotations: {}       # {key: value} map of annotations for the ingress
+      host: loft.${SECRET_DOMAIN}"
+      ingressClass: external
+      path: /
+      tls:
+        enabled: true
+        secret: ${SECRET_DOMAIN/./-}-production-tls
