@@ -15,6 +15,7 @@ resources:
   - k8s-gateway.yaml
   - kubernetes-sigs-descheduler-charts.yaml
   - kyverno-charts.yaml
+  - loft-charts.yaml
   - longhorn.yaml
   - metrics-server.yaml
   - mittwald-charts.yaml

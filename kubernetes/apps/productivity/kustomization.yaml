@@ -8,6 +8,7 @@ resources:
   - headscale-ui/ks.yaml
   - kasm/ks.yaml
   - linkding/ks.yaml
+  - loft/ks.yaml
   - obsidian/ks.yaml
   - octoprint/ks.yaml
   - paperless/ks.yaml
