@@ -3,6 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
+  - dashy/ks.yaml
   - sharry/ks.yaml
   - smtp-relay/ks.yaml
   - tooler/ks.yaml
