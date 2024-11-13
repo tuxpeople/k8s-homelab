@@ -7,7 +7,7 @@ resources:
   - ./helmrelease.yaml
 configMapGenerator:
   - files:
-      - conf.yml./config/dashy.yml
+      - ./config/conf.yml
     name: dashy
 generatorOptions:
   disableNameSuffixHash: true
