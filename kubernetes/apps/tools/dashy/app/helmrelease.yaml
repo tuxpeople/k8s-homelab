@@ -43,7 +43,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 80
+            port: 8080
     ingress:
       app:
         enabled: true
