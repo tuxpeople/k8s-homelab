@@ -68,3 +68,7 @@ spec:
             subPath: conf.yml
         name: *app
         type: configMap
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /dist
