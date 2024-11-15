@@ -6,4 +6,4 @@ resources:
   - ./gatus-internal.yaml
   - ./ingress.yaml
   - ./limits.yaml
-  - ./ndots.yaml
+  # - ./ndots.yaml
