@@ -2,13 +2,13 @@ CONFIGFILE="${BASEDIR}/kubernetes/bootstrap/talos/talconfig.yaml"
 
 [ -f ${CONFIGFILE} ] || exit 1
 
-controller=192.168.13.10
+export controller=192.168.13.10
 talosImageURL=$(grep talosImageURL ${BASEDIR}/kubernetes/bootstrap/talos/talconfig.yaml | awk '{ print $2 }' | head -1)
 k8sVersion=$(grep kubernetesVersion ${BASEDIR}/kubernetes/bootstrap/talos/talconfig.yaml | awk '{ print $2 }')
 talosVersion=$(grep talosVersion ${BASEDIR}/kubernetes/bootstrap/talos/talconfig.yaml | awk '{ print $2 }')
-image=${talosImageURL}:${talosVersion}
-to=${k8sVersion}
-node=$(kubectl get nodes -o wide --no-headers | grep -v $talosVersion |  awk '{ print $6 }' | tr '\n' ',' | sed '$s/,$/\n/')
+export image=${talosImageURL}:${talosVersion}
+export to=${k8sVersion}
+export node=$(kubectl get nodes -o wide --no-headers | grep -v $talosVersion |  awk '{ print $6 }' | tr '\n' ',' | sed '$s/,$/\n/')
 
 [ ! -z "$talosImageURL" ] || exit 1
 [ ! -z "$k8sVersion" ] || exit 1
