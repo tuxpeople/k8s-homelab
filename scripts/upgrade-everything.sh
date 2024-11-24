@@ -8,7 +8,7 @@ k8sVersion=$(grep kubernetesVersion ${BASEDIR}/kubernetes/bootstrap/talos/talcon
 talosVersion=$(grep talosVersion ${BASEDIR}/kubernetes/bootstrap/talos/talconfig.yaml | awk '{ print $2 }')
 export image=${talosImageURL}:${talosVersion}
 export to=${k8sVersion}
-export node=$(kubectl get nodes -o wide --no-headers | grep -v $talosVersion |  awk '{ print $6 }' | tr '\n' ',' | sed '$s/,$/\n/')
+node_loop=$(kubectl get nodes -o wide --no-headers | grep -v $talosVersion |  awk '{ print $6 }' | tr '\n' ' ' | sed '$s/ $/\n/')
 
 [ ! -z "$talosImageURL" ] || exit 1
 [ ! -z "$k8sVersion" ] || exit 1
@@ -17,7 +17,10 @@ export node=$(kubectl get nodes -o wide --no-headers | grep -v $talosVersion |  
 echo Updating Talos to ${talosVersion} if neccessary in 10s
 sleep 10
 
-task talos:upgrade
+for n in $node_loop
+do
+    node=$n task talos:upgrade
+done
 
 nodesWithOldReleaseShouldBe=0
 nodesWithOldReleaseAre=$(kubectl get nodes -o wide --no-headers | grep -v ${talosVersion} | wc -l)
