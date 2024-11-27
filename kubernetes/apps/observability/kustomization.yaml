@@ -16,4 +16,3 @@ resources:
   - sonarr-exporter/ks.yaml
   - speedtest-exporter/ks.yaml
   - tautulli-exporter/ks.yaml
-  - thanos/ks.yaml
