@@ -222,7 +222,7 @@ spec:
         kubernetes-coredns:
           # renovate: dashboardName="Kubernetes / System / CoreDNS"
           gnetId: 15762
-          revision: 18
+          revision: 19
           datasource: Prometheus
         kubernetes-global:
           # renovate: dashboardName="Kubernetes / Views / Global"
