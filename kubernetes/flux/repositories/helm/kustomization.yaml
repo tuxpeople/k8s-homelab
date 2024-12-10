@@ -25,4 +25,5 @@ resources:
   - prometheus-community.yaml
   - spegel.yaml
   - stakater.yaml
+  - vmware-tanzu-charts.yaml
   - weave-gitops.yaml
