@@ -29,15 +29,15 @@ spec:
     configuration:
       extraEnvVars:
         TZ: "Europe/Paris"
-      provider: aws
-      backupStorageLocation:
-        name: default
-        bucket: velero
-        default: true
-        config:
-          region: eu-west-1
-          s3ForcePathStyle: true
-          s3Url: http://minio.lab.tdeutsch.ch:9000
+        backupStorageLocation:
+          - name: default
+            provider: aws
+            bucket: velero
+            default: true
+            config:
+              region: eu-west-1
+              s3ForcePathStyle: true
+              s3Url: http://minio.lab.tdeutsch.ch:9000
       resticTimeout: 4h
     credentials:
       existingSecret: velero-s3-secret
