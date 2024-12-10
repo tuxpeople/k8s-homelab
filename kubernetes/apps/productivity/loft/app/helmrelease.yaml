@@ -32,7 +32,7 @@ spec:
       name: loft-ingress
       # labels: {}            # {key: value} map of labels for the ingress
       # annotations: {}       # {key: value} map of annotations for the ingress
-      host: loft.${SECRET_DOMAIN}"
+      host: loft.${SECRET_DOMAIN}
       ingressClass: external
       path: /
       tls:
