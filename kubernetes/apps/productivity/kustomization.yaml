@@ -10,6 +10,5 @@ resources:
   - linkding/ks.yaml
   - loft/ks.yaml
   - obsidian/ks.yaml
-  - octoprint/ks.yaml
   - paperless/ks.yaml
   - webtrees/ks.yaml
