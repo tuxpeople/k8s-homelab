@@ -7,7 +7,7 @@
     ':dependencyDashboard',
     ':semanticCommits',
     ':automergeBranch',
-    'github>bjw-s/home-ops//.github/renovate/grafanaDashboards.json5',
+    'github>bjw-s/home-ops//.renovate/grafanaDashboards.json5',
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: 'Renovate Dashboard 🤖',
