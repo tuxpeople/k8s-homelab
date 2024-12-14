@@ -78,6 +78,13 @@ spec:
         enabled: true
     config:
       webhooks:
+        # Exclude namespaces
+        - namespaceSelector:
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: NotIn
+                values:
+                  - kube-system
         - objectSelector:
             matchExpressions:
               - key: webhooks.kyverno.io/exclude
