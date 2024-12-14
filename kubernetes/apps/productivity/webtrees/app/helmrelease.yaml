@@ -50,7 +50,7 @@ spec:
           main:
             image:
               repository: docker.io/dtjs48jkt/webtrees
-              tag: 2.1.22
+              tag: 2.2.1
             env:
               DISABLE_SSL: "TRUE"
               PRETTYURLSl: "TRUE"
