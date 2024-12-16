@@ -26,43 +26,17 @@ spec:
     grafana:
       enabled: true
     admissionController:
-      replicas: 3
-      rbac:
-        clusterRole:
-          extraResources:
-            - apiGroups:
-                - ""
-              resources:
-                - pods
-              verbs:
-                - create
-                - update
-                - delete
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/instance: *app
-              app.kubernetes.io/component: admission-controller
+      replicas: 2
+      clusterRole:
+        extraResources: &extraResources
+          - apiGroups: ["*"]
+            resources: ["*"]
+            verbs: ["get", "list", "watch"]
       serviceMonitor:
         enabled: true
     backgroundController:
-      rbac:
-        clusterRole:
-          extraResources:
-            - apiGroups:
-                - ""
-              resources:
-                - pods
-              verbs:
-                - create
-                - update
-                - patch
-                - delete
-                - get
-                - list
+      clusterRole:
+        extraResources: *extraResources
       resources:
         requests:
           cpu: 100m
@@ -70,22 +44,11 @@ spec:
           memory: 1Gi
       serviceMonitor:
         enabled: true
+    reportsController:
+      clusterRole:
+        extraResources: *extraResources
+      serviceMonitor:
+        enabled: true
     cleanupController:
       serviceMonitor:
         enabled: true
-    reportsController:
-      serviceMonitor:
-        enabled: true
-    config:
-      webhooks:
-        # Exclude namespaces
-        - namespaceSelector:
-            matchExpressions:
-              - key: kubernetes.io/metadata.name
-                operator: NotIn
-                values:
-                  - kube-system
-        - objectSelector:
-            matchExpressions:
-              - key: webhooks.kyverno.io/exclude
-                operator: DoesNotExist
