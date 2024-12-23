@@ -31,8 +31,8 @@ spec:
         containers:
           main:
             image:
-              repository: lscr.io/linuxserver/calibre-web
-              tag: 0.6.20-ls229
+              repository: crocodilestick/calibre-web-automated
+              tag: V2.1.2
             env:
               TZ: ${TIMEZONE}
               PUID: 1027
