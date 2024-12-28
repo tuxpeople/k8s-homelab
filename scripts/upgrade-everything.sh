@@ -19,7 +19,9 @@ sleep 10
 
 for n in $node_loop
 do
+    echo Upgrading Node $n
     node=$n task talos:upgrade
+    sleep 20
 done
 
 nodesWithOldReleaseShouldBe=0
@@ -33,12 +35,5 @@ fi
 
 echo Updating Kubernetes to ${k8sVersion} if neccessary in 10s
 sleep 10
-
-nodesWithOldReleaseAre=$(kubectl get nodes -o wide --no-headers | grep -v ${k8sVersion} | wc -l)
-if [[ $nodesWithOldReleaseAre -eq $nodesWithOldReleaseShouldBe ]]
-   then
-       echo "Not all nodes have been upgraded. Exiting now"
-       exit 1
-fi
 
 task talos:upgrade-k8s
