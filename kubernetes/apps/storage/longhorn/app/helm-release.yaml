@@ -50,6 +50,7 @@ spec:
       concurrentAutomaticEngineUpgradePerNodeLimit: 2
       storageMinimalAvailablePercentage: 10
       StorageOverProvisioningPercentage: 110
+      autoDeletePodWhenVolumeDetachedUnexpectedly: true
       # taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
       # upgradeChecker: true
     ingress:
