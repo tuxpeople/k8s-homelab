@@ -9,7 +9,7 @@ resources:
 configMapGenerator:
   - name: plex-exporter-dashboard
     files:
-      - https://raw.githubusercontent.com/jsclayton/prometheus-plex-exporter/refs/heads/main/examples/dashboards/Media%20Server.json
+      - "https://raw.githubusercontent.com/jsclayton/prometheus-plex-exporter/refs/heads/main/examples/dashboards/Media Server.json"
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
