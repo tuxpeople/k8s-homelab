@@ -185,9 +185,6 @@ spec:
             - name: "DS_PROMETHEUS"
               value: Prometheus
       apps:
-        octoprint:
-          url: https://raw.githubusercontent.com/tg44/OctoPrint-prometheus-Exporter/master/extras/octoprint-grafana.json
-          datasource: Prometheus
         minio:
           # renovate: dashboardName="MinIO Dashboard"
           gnetId: 13502

@@ -6,6 +6,5 @@ resources:
   - home
   - kubernetes
   - systems
-  - octoprint
   - apps
   - vmware
