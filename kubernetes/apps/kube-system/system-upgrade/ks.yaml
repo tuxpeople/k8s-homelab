@@ -15,6 +15,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
+    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: true
@@ -44,6 +45,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-homelab
+    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: false
