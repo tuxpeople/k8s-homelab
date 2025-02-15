@@ -27,7 +27,7 @@ spec:
       repository: quay.io/prometheus/snmp-exporter
     serviceMonitor:
       enabled: true
-      namespace: monitoring
+      namespace: observability
       params:
         - name: thiazi
           module:
