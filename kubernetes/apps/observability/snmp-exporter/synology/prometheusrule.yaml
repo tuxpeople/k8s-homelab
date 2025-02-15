@@ -10,15 +10,23 @@ spec:
       rules:
         - alert: SynologyVolumeAlmostFull
           annotations:
-            summary: Volume {{$labels.raidName}} on {{$labels.instance}} is over 90% full
-          expr: 100 - (100 / raidTotalSize{target="thiazi"} * raidFreeSize{target="thiazi"}) > 90
+            summary: Volume {{$labels.raidName}} on {{$labels.target}} is over 90% full
+          expr: 100 - (100 / raidTotalSize{job="snmp-exporter-synology"} * raidFreeSize{job="snmp-exporter-synology"}) > 90
           for: 15m
           labels:
             severity: critical
         - alert: SynologyDiskTemperatureHigh
           annotations:
-            summary: Disk {{$labels.diskID}} on {{$labels.instance}} has a temperature higher than 70°C
-          expr: diskTemperature{target="thiazi"} > 70
+            summary: Disk {{$labels.diskID}} on {{$labels.target}} has a temperature higher than 70°C
+          expr: diskTemperature{job="snmp-exporter-synology"} > 70
           for: 15m
           labels:
             severity: critical
+        - alert: SynologySystemTemperatureHigh
+          annotations:
+            summary: Synology NAS {{$labels.target}} has a temperature higher than 70°C
+          expr: diskTemperature{job="snmp-exporter-synology"} > 70
+          for: 15m
+          labels:
+            severity: critical
+temperature{job=~'$job'

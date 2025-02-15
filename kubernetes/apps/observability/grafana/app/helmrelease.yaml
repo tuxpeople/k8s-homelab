@@ -104,6 +104,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/kubernetes
+          - name: systems
+            orgId: 1
+            folder: "systems"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/systems
     datasources:
       datasources.yaml:
         apiVersion: 1

@@ -5,3 +5,15 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
+
+configMapGenerator:
+  - name: synology-dashboard
+    files:
+      - https://raw.githubusercontent.com/petebeegle/homelab/cc021301546441bb68250af94e81697f8635926d/kubernetes/apps/base/grafana/dashboards/synology.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: Systems
+  labels:
+    grafana_dashboard: "1"
