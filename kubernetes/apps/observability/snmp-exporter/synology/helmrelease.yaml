@@ -29,12 +29,139 @@ spec:
       enabled: true
       namespace: observability
       params:
-        - name: thiazi
+        - name: synology
           module:
             - synology
+          auth:
+            - public_v2
           target: 10.20.30.40
-      relabelings:
-        - sourceLabels: [__param_target]
-          targetLabel: instance
-      interval: 5m
-      scrapeTimeout: 30s
+        - name: ucd-system-stats
+          module:
+            - ucd_system_stats
+          auth:
+            - public_v2
+          target: 10.20.30.40
+        - name: ucd-memory
+          module:
+            - ucd_memory
+          auth:
+            - public_v2
+          target: 10.20.30.40
+        - name: if-mib
+          module:
+            - if_mib
+          auth:
+            - public_v2
+          target: 10.20.30.40
+        - name: ucd-la-table
+          module:
+            - ucd_la_table
+          auth:
+            - public_v2
+          target: 10.20.30.40
+        - name: hr-system
+          module:
+            - hrSystem
+          auth:
+            - public_v2
+          target: 10.20.30.40
+    scrape_configs:
+      - job_name: "snmp-synology"
+        static_configs:
+          - targets:
+              - "10.20.30.40"
+        params:
+          auth:
+            - public_v2
+          module:
+            - synology
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: 127.0.0.1:9116
+      - job_name: "snmp-udc-system-stats"
+        static_configs:
+          - targets:
+              - "10.20.30.40"
+        params:
+          auth:
+            - public_v2
+          module:
+            - ucd_system_stats
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: 127.0.0.1:9116
+      - job_name: "snmp-ucd-memory"
+        static_configs:
+          - targets:
+              - "10.20.30.40"
+        params:
+          auth:
+            - public_v2
+          module:
+            - ucd_memory
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: 127.0.0.1:9116
+      - job_name: "snmp-if-mib"
+        static_configs:
+          - targets:
+              - "10.20.30.40"
+        params:
+          auth:
+            - public_v2
+          module:
+            - if_mib
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: 127.0.0.1:9116
+      - job_name: "snmp-ucd-la-table"
+        static_configs:
+          - targets:
+              - "10.20.30.40"
+        params:
+          auth:
+            - public_v2
+          module:
+            - ucd_la_table
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: 127.0.0.1:9116
+      - job_name: "snmp-hr-system"
+        static_configs:
+          - targets:
+              - "10.20.30.40"
+        params:
+          auth:
+            - public_v2
+          module:
+            - hrSystem
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: 127.0.0.1:9116
+      - job_name: "snmp_exporter"
+        static_configs:
+          - targets: ["localhost:9116"]
