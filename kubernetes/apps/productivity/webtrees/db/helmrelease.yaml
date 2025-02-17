@@ -31,7 +31,10 @@ spec:
         - name: TZ
           value: ${TIMEZONE}
         - name: MYSQL_PASSWORD
-          value: $(MARIADB_ROOT_PASSWORD)
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-secret
+              key: mariadb-root-password
     volumePermissions:
       enabled: true
     global:
