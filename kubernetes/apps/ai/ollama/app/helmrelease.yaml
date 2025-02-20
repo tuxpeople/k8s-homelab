@@ -60,11 +60,17 @@ spec:
     persistence:
       models:
         enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
         advancedMounts:
           ollama:
             app:
               - path: *modelPath
       config:
         enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
         globalMounts:
           - path: /root/.ollama

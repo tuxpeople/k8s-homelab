@@ -51,5 +51,8 @@ spec:
     persistence:
       data:
         enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
         globalMounts:
           - path: /app/backend/data
