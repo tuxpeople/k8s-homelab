@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ollama
+  namespace: ai
+spec:
+  interval: 15m
+  timeout: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      ollama:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/ollama/ollama
+              tag: 0.5.11
+            env:
+              - name: OLLAMA_HOST
+                value: 0.0.0.0
+              - name: OLLAMA_ORIGINS
+                value: "*"
+              - name: OLLAMA_MODELS
+                value: &modelPath "/models"
+              - name: OLLAMA_KEEP_ALIVE
+                value: "24h"
+              - name: OLLAMA_LOAD_TIMEOUT
+                value: "600"
+            resources:
+              requests:
+                cpu: 500m
+                memory: 2Gi
+              limits:
+                memory: 16Gi
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 11434
+
+    persistence:
+      models:
+        enabled: true
+        advancedMounts:
+          ollama:
+            app:
+              - path: *modelPath
+      config:
+        enabled: true
+        globalMounts:
+          - path: /root/.ollama
