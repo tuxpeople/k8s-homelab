@@ -66,9 +66,19 @@ data:
     # install-extension yzdann.k8s-snippets
     # install-extension yzhang.markdown-all-in-one
     # echo ""
+    TMP_DIR=$(mktemp -d)
+    cd ${TMP_DIR}
     echo "**** Installing kubectl ****"
     curl -LOs "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl"
     curl -LOs "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl.sha256"
     echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
     echo 'source <(kubectl completion bash)' > /etc/bash_completion.d/kubectl
+
+    echo ""
+    echo "**** Installing k9s ****"
+    curl -LOs https://github.com/derailed/k9s/releases/latest/download/k9s_linux_$(dpkg --print-architecture).deb
+    sudo dpkg -i k9s_linux_$(dpkg --print-architecture).deb
+
+    cd
+    rm -rf ${TMP_DIR}
