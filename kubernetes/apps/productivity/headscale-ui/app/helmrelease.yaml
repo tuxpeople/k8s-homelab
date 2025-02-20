@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: goodieshq/headscale-admin
-              tag: 0.24.9
+              tag: 0.25.2
             resources:
               requests:
                 cpu: 10m
