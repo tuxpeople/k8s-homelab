@@ -68,6 +68,8 @@ data:
     # echo ""
     TMP_DIR=$(mktemp -d)
     cd ${TMP_DIR}
+    pwd
+
     echo "**** Installing kubectl ****"
     curl -LOs "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl"
     curl -LOs "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl.sha256"
@@ -79,12 +81,14 @@ data:
     echo "**** Installing k9s ****"
     curl -LOs https://github.com/derailed/k9s/releases/latest/download/k9s_linux_$(dpkg --print-architecture).deb
     sudo dpkg -i k9s_linux_$(dpkg --print-architecture).deb
+    k9s completion bash > /etc/bash_completion.d/k9s
 
     echo ""
     echo "**** Installing Helm ****"
     curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
     chmod 700 get_helm.sh
     ./get_helm.sh
+    helm completion bash > /etc/bash_completion.d/helm
 
     cd
     rm -rf ${TMP_DIR}
