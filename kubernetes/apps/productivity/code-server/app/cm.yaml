@@ -80,5 +80,11 @@ data:
     curl -LOs https://github.com/derailed/k9s/releases/latest/download/k9s_linux_$(dpkg --print-architecture).deb
     sudo dpkg -i k9s_linux_$(dpkg --print-architecture).deb
 
+    echo ""
+    echo "**** Installing Helm ****"
+    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    chmod 700 get_helm.sh
+    ./get_helm.sh
+
     cd
     rm -rf ${TMP_DIR}
