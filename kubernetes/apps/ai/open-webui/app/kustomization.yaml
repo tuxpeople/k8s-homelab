@@ -5,9 +5,3 @@ kind: Kustomization
 namespace: ai
 resources:
   - ./helmrelease.yaml
-configMapGenerator:
-  - files:
-      - ./config/conf.yml
-    name: open-webui
-generatorOptions:
-  disableNameSuffixHash: true
