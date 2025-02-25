@@ -7,6 +7,7 @@ data:
   install-extensions: |
     #!/bin/bash
     # echo "**** Installing Extensions ****"
+    # install-extension 1Password.op-vscode
     # install-extension 4ops.terraform
     # install-extension albert.tabout
     # install-extension britesnow.vscode-toggle-quotes
