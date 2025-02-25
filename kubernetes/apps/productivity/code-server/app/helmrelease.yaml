@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: ghcr.io/linuxserver/code-server
-              tag: 4.96.4
+              tag: 4.97.2
             env:
               TZ: ${TIMEZONE}
               PUID: 911
