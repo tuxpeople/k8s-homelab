@@ -10,3 +10,10 @@ cluster:
   scheduler:
     extraArgs:
       bind-address: 0.0.0.0
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
