@@ -22,6 +22,8 @@ spec:
     remediation:
       retries: 3
   values:
+    operator:
+      scanJobTimeout: "10m"
     serviceMonitor:
       enabled: true
     nodeCollector:

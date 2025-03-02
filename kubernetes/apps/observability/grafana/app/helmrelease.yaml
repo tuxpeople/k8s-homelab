@@ -26,9 +26,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: prometheus-operator-crds
-      namespace: observability
   values:
     assertNoLeakedSecrets: false
     admin:

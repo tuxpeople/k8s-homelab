@@ -3,20 +3,20 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app snmp-exporter-synology
-  namespace: flux-system
+  namespace: &namespace observability
 spec:
   dependsOn:
-    - name: prometheus-operator-crds
-  targetNamespace: observability
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  interval: 1h
   path: ./kubernetes/apps/observability/snmp-exporter/synology
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: k8s-homelab
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 15m
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m

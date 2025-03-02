@@ -4,21 +4,22 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app smtp-relay
-  namespace: flux-system
+  namespace: &namespace tools
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  targetNamespace: tools
   dependsOn:
     - name: external-secrets-secretstores
-    - name: ingress-nginx-internal
+      namespace: security
+  interval: 1h
   path: ./kubernetes/apps/tools/smtp-relay/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: k8s-homelab
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 15m
   wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m

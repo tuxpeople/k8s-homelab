@@ -4,42 +4,48 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app webtrees
-  namespace: flux-system
+  namespace: &namespace productivity
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  targetNamespace: productivity
   dependsOn:
+    - name: kyverno-policies
+      namespace: security
+    - name: longhorn
+      namespace: storage
     - name: webtrees-db
+      namespace: productivity
+  interval: 1h
   path: ./kubernetes/apps/productivity/webtrees/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: k8s-homelab
-  wait: false # no flux ks dependents
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
-
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 15m
+  wait: false
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app webtrees-db
-  namespace: flux-system
+  namespace: &namespace productivity
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  targetNamespace: productivity
+  interval: 1h
   path: ./kubernetes/apps/productivity/webtrees/db
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: k8s-homelab
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 15m
   wait: true
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m

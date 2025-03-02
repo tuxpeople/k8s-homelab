@@ -1,63 +1,72 @@
 # ---
-# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
-#   name: longhorn-prereq
-#   namespace: flux-system
+#   name: &app longhorn
+#   namespace: &namespace storage
 # spec:
-#   targetNamespace: storage
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: *app
+#   interval: 1h
 #   path: ./kubernetes/apps/storage/longhorn/prereq
 #   prune: true
+#   retryInterval: 2m
 #   sourceRef:
 #     kind: GitRepository
-#     name: k8s-homelab
-#   wait: true  # no flux ks dependents
-#   interval: 30m
-#   retryInterval: 1m
+#     name: flux-system
+#     namespace: flux-system
+#   targetNamespace: *namespace
 #   timeout: 5m
+#   wait: true
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app longhorn
-  namespace: flux-system
+  namespace: &namespace storage
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  targetNamespace: storage
-  # dependsOn:
+  dependsOn:
+    - name: kyverno-policies
+      namespace: security
   #   - name: longhorn-prereq
+  interval: 1h
   path: ./kubernetes/apps/storage/longhorn/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: k8s-homelab
-  wait: true
-  interval: 30m
-  retryInterval: 1m
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
   timeout: 5m
+  wait: true
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app longhorn-conf
-  namespace: flux-system
+  namespace: &namespace storage
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: longhorn
+  interval: 1h
   path: ./kubernetes/apps/storage/longhorn/conf
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: k8s-homelab
-  wait: false # no flux ks dependents
-  interval: 30m
-  retryInterval: 1m
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
   timeout: 5m
+  wait: false

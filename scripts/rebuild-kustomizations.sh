@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FOLDERS="kubernetes/flux/repositories/oci kubernetes/flux/repositories/helm kubernetes/flux/repositories/git"
+FOLDERS="kubernetes/flux/meta/repositories/oci kubernetes/flux/meta/repositories/helm kubernetes/flux/meta/repositories/git"
 
 _pwd="$(pwd)"
 _basedir="${_pwd}/$(dirname $(which ${0}))"
@@ -18,7 +18,7 @@ for i in ${FOLDERS}; do
   if [[ ! -z "${f}" ]]; then
     rm -f kustomization.yaml
     kustomize create --autodetect
-    #gawk -i inplace 'NR==1{print "# yaml-language-server: $schema=https://json.schemastore.org/kustomization"}1' kustomization.yaml
+    gawk -i inplace 'NR==1{print "# yaml-language-server: $schema=https://json.schemastore.org/kustomization"}1' kustomization.yaml
     yamlfix kustomization.yaml
   fi
   cd ${_gitdir}
@@ -28,10 +28,19 @@ cd ${_gitdir}
 
 for d in $(for i in $(find kubernetes -name ks.yaml); do echo $i | rev | cut -d/ -f3- | rev; done | sort -u); do
   cd ${d}
-  rm -f kustomization.yaml
-  kustomize create --autodetect
+  # rm -f kustomization.yaml
+  # kustomize create --autodetect
+  cat <<EOF > kustomization.yaml
+# yaml-language-server: \$schema=https://json.schemastore.org/kustomization
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: $(basename ${d})
+components:
+  - ../../components/common
+EOF
   for k in */ks.yaml; do
-    kustomize edit add resource ${k}
+    kustomize edit add resource ./${k}
   done
   #gawk -i inplace 'NR==1{print "# yaml-language-server: $schema=https://json.schemastore.org/kustomization"}1' kustomization.yaml
   yamlfix kustomization.yaml
