@@ -1,0 +1,95 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-cont-init
+data:
+  install-extensions: |
+    #!/bin/bash
+    # echo "**** Installing Extensions ****"
+    # install-extension 1Password.op-vscode
+    # install-extension 4ops.terraform
+    # install-extension albert.tabout
+    # install-extension britesnow.vscode-toggle-quotes
+    # install-extension codezombiech.gitignore
+    # install-extension davidanson.vscode-markdownlint
+    # install-extension dhoeric.ansible-vault
+    # install-extension donjayamanne.githistory
+    # install-extension eamodio.gitlens
+    # install-extension editorconfig.editorconfig
+    # install-extension esbenp.prettier-vscode
+    # install-extension exiasr.hadolint
+    # install-extension fcrespo82.markdown-table-formatter
+    # install-extension foxundermoon.shell-format
+    # install-extension github.vscode-github-actions
+    # install-extension github.vscode-pull-request-github
+    # install-extension gitlab.gitlab-workflow
+    # install-extension golang.go
+    # install-extension hashicorp.terraform
+    # install-extension joaompinto.vscode-graphviz
+    # install-extension kennylong.kubernetes-yaml-formatter
+    # install-extension lunuan.kubernetes-templates
+    # install-extension mgtrrz.terraform-completer
+    # install-extension mitchdenny.ecdc
+    # install-extension mohamedfaizal.tf-az-codesnippet
+    # install-extension mohsen1.prettify-json
+    # install-extension ms-azuretools.vscode-azureresourcegroups
+    # install-extension ms-azuretools.vscode-azureterraform
+    # install-extension ms-azuretools.vscode-docker
+    # install-extension ms-kubernetes-tools.vscode-kubernetes-tools
+    # install-extension ms-python.debugpy
+    # install-extension ms-python.isort
+    # install-extension ms-python.python
+    # install-extension ms-python.vscode-pylance
+    # install-extension ms-vscode-remote.remote-containers
+    # install-extension ms-vscode-remote.remote-ssh
+    # install-extension ms-vscode-remote.remote-ssh-edit
+    # install-extension ms-vscode.azure-account
+    # install-extension ms-vscode.azurecli
+    # install-extension ms-vscode.cpptools
+    # install-extension ms-vscode.hexeditor
+    # install-extension ms-vscode.remote-explorer
+    # install-extension oderwat.indent-rainbow
+    # install-extension pjmiravalle.terraform-advanced-syntax-highlighting
+    # install-extension platformio.platformio-ide
+    # install-extension psykosoldi3r.vscode-git-flow
+    # install-extension redhat.ansible
+    # install-extension redhat.vscode-commons
+    # install-extension redhat.vscode-xml
+    # install-extension redhat.vscode-yaml
+    # install-extension run-at-scale.terraform-doc-snippets
+    # install-extension samuelcolvin.jinjahtml
+    # install-extension signageos.signageos-vscode-sops
+    # install-extension tfsec.tfsec
+    # install-extension usernamehw.errorlens
+    # install-extension vscode-icons-team.vscode-icons
+    # install-extension will-stone.in-any-case
+    # install-extension yzdann.k8s-snippets
+    # install-extension yzhang.markdown-all-in-one
+    # echo ""
+    TMP_DIR=$(mktemp -d)
+    cd ${TMP_DIR}
+    pwd
+
+    echo "**** Installing kubectl ****"
+    curl -LOs "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl"
+    curl -LOs "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl.sha256"
+    echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    echo 'source <(kubectl completion bash)' > /etc/bash_completion.d/kubectl
+
+    echo ""
+    echo "**** Installing k9s ****"
+    curl -LOs https://github.com/derailed/k9s/releases/latest/download/k9s_linux_$(dpkg --print-architecture).deb
+    sudo dpkg -i k9s_linux_$(dpkg --print-architecture).deb
+    k9s completion bash > /etc/bash_completion.d/k9s
+
+    echo ""
+    echo "**** Installing Helm ****"
+    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    chmod 700 get_helm.sh
+    ./get_helm.sh
+    helm completion bash > /etc/bash_completion.d/helm
+
+    cd
+    rm -rf ${TMP_DIR}

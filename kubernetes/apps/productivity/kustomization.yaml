@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: productivity
+components:
+  - ../../components/common
+resources:
+  - ./code-server/ks.yaml
+  - ./drop/ks.yaml
+  - ./kasm/ks.yaml
+  - ./linkding/ks.yaml
+  - ./obsidian/ks.yaml
+  - ./paperless/ks.yaml
+  - ./webtrees/ks.yaml
