@@ -16,17 +16,33 @@ for i in ${FOLDERS}; do
   cd ${i}
   f=$(ls -1 | grep -v kustomization.yaml)
   if [[ ! -z "${f}" ]]; then
-    rm -f kustomization.yaml
-    kustomize create --autodetect
-    gawk -i inplace 'NR==1{print "# yaml-language-server: $schema=https://json.schemastore.org/kustomization"}1' kustomization.yaml
-    yamlfix kustomization.yaml
+  cat <<EOF > kustomization.yaml
+# yaml-language-server: \$schema=https://json.schemastore.org/kustomization
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+EOF
+  for k in ${f}; do
+    kustomize edit add resource ./${k}
+  done
+  #gawk -i inplace 'NR==1{print "# yaml-language-server: $schema=https://json.schemastore.org/kustomization"}1' kustomization.yaml
+  yamlfix kustomization.yaml
+  cd ${_gitdir}
+  else
+  cat <<EOF > kustomization.yaml
+# yaml-language-server: \$schema=https://json.schemastore.org/kustomization
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: []
+EOF
   fi
   cd ${_gitdir}
 done
 
 cd ${_gitdir}
 
-for d in $(for i in $(find kubernetes -name ks.yaml); do echo $i | rev | cut -d/ -f3- | rev; done | sort -u); do
+for d in $(for i in $(find kubernetes/apps -name ks.yaml); do echo $i | rev | cut -d/ -f3- | rev; done | sort -u); do
   cd ${d}
   # rm -f kustomization.yaml
   # kustomize create --autodetect
