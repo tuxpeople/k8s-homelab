@@ -1,0 +1,14 @@
+---
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: homelab
+spec:
+  module: icmp
+  prober:
+    url: blackbox-exporter.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - thiazi.${SECRET_PRIVATE_DOMAIN}
+        - router.${SECRET_PRIVATE_DOMAIN}

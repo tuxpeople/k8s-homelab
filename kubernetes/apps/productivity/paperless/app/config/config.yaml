@@ -1,0 +1,27 @@
+PAPERLESS_WEBSERVER_WORKERS: "1"
+PAPERLESS_TASK_WORKERS: "1"
+PAPERLESS_TIKA_ENABLED: "1"
+PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
+PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
+PAPERLESS_FILENAME_FORMAT:
+  "{{created_year}}/{{correspondent}}/{{created_year}}-{{created_month}}-{{created_day}}
+  {{title}}"
+# Configure Remote User auth
+PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
+# Configure folders
+PAPERLESS_CONSUMPTION_DIR: /nfs/consume
+PAPERLESS_DATA_DIR: /nfs/data
+PAPERLESS_EXPORT_DIR: /nfs/export
+PAPERLESS_MEDIA_ROOT: /nfs/media
+# Configure folder importer
+PAPERLESS_CONSUMER_POLLING: "60"
+PAPERLESS_CONSUMER_RECURSIVE: "true"
+PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+# Configure OCR
+PAPERLESS_OCR_LANGUAGES: deu eng
+PAPERLESS_OCR_LANGUAGE: deu+eng
+PAPERLESS_OCR_MODE: skip
+PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
+#PAPERLESS_OCR_SKIP_ARCHIVE_FILE: with_text
+# Configure redis integration
+PAPERLESS_REDIS: redis://paperless-redis:6379

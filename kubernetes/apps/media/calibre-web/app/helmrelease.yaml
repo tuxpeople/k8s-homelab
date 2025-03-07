@@ -1,0 +1,104 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app calibre-web
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      nameOverride: *app
+    controllers:
+      app:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: crocodilestick/calibre-web-automated
+              tag: V2.1.2
+            env:
+              TZ: ${TIMEZONE}
+              PUID: 1027
+              PGID: 100
+              DOCKER_MODS: linuxserver/mods:universal-calibre
+              CACHE_DIR: /cache
+            resources:
+              requests:
+                cpu: 5m
+                memory: 100Mi
+              limits:
+                memory: 1000Mi
+        initContainers:
+          update-volume-permission:
+            image:
+              repository: busybox
+              tag: 1.37.0
+            command: [sh, -c, chown -R 1000:1000 /config]
+            securityContext:
+              runAsUser: 0
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: &port 8083
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          # nginx.ingress.kubernetes.io/auth-method: GET
+          # nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
+          # nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
+          # nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+          # nginx.ingress.kubernetes.io/auth-snippet: |
+          #  proxy_set_header X-Forwarded-Method $request_method;
+          #  proxy_set_header X-Forwarded-Scheme $scheme;
+          hajimari.io/icon: bookshelf
+        hosts:
+          - host: &host books.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: *port
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        globalMounts:
+          - path: /config
+      data:
+        enabled: true
+        type: nfs
+        server: 10.20.30.40
+        path: /volume2/data/media/books
+        globalMounts:
+          - path: /calibre-library
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /cache

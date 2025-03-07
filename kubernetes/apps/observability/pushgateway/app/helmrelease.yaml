@@ -1,0 +1,48 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app pushgateway
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: prometheus-pushgateway
+      version: 3.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    nameOverride: *app
+    fullnameOverride: *app
+    replicaCount: 1
+    runAsStatefulSet: true
+    podAntiAffinity: soft
+    # podDisruptionBudget:
+    #   minAvailable: 1
+    # priorityClassName: system-cluster-critical
+    extraVars:
+      - name: TZ
+        value: ${TIMEZONE}
+    ingress:
+      enabled: true
+      className: internal
+      pathType: Prefix
+      annotations:
+        hajimari.io/enable: "false"
+      hosts:
+        - pushgateway.${SECRET_DOMAIN}
+    serviceMonitor:
+      enabled: true
+      namespace: observability
+    persistentVolume:
+      enabled: true
+      size: 4Gi
