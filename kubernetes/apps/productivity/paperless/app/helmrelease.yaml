@@ -61,15 +61,35 @@ spec:
             resources:
               requests:
                 cpu: 500m
-                memory: 700M
+                memory: 1000M
               limits:
-                memory: 2000M
+                memory: 2500M
+
+      redis:
+        containers:
+          redis:
+            image:
+              repository: docker.io/valkey/valkey
+              tag: 8.0.2
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+
     service:
       app:
+        primary: true
         controller: app
         ports:
           http:
             port: &port 8080
+      redis:
+        controller: redis
+        ports:
+          http:
+            port: 6379
     ingress:
       app:
         enabled: true
