@@ -21,7 +21,6 @@ resources:
   - ./loft-charts.yaml
   - ./longhorn.yaml
   - ./metrics-server.yaml
-  - ./mittwald-charts.yaml
   - ./neuvector.yaml
   - ./openebs.yaml
   - ./postfinance.yaml
