@@ -11,8 +11,6 @@ spec:
   dependsOn:
     - name: kyverno-policies
       namespace: security
-    - name: paperless-redis
-      namespace: productivity
   interval: 1h
   path: ./kubernetes/apps/productivity/paperless/app
   prune: true
