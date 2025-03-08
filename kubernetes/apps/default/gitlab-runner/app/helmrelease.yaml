@@ -23,6 +23,7 @@ spec:
       retries: 3
   values: # https://gitlab.com/gitlab-org/charts/gitlab-runner/blob/main/values.yaml
     imagePullPolicy: IfNotPresent
+    gitlabUrl: https://gitlab.com/
     rbac:
       create: true
       rules:
