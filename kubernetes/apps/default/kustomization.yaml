@@ -7,3 +7,4 @@ components:
   - ../../components/common
 resources:
   - ./echo-server/ks.yaml
+  - ./gitlab-runner/ks.yaml

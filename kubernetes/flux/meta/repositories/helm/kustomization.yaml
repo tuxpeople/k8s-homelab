@@ -11,6 +11,7 @@ resources:
   - ./coredns.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
+  - ./gitlab.yaml
   - ./grafana.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml

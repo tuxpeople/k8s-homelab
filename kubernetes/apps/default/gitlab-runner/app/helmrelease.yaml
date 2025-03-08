@@ -53,3 +53,8 @@ spec:
           [runners.kubernetes]
             namespace = "{{.Release.Namespace}}"
             image = "node"
+
+  valuesFrom:
+    - kind: Secret
+      name: gitlab-k8s-runner-secrets
+      valuesKey: values.yaml
