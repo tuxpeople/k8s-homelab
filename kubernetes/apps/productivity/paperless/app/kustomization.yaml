@@ -4,6 +4,4 @@ kind: Kustomization
 resources:
   - ./secret.sops.yaml
   - ./helmrelease.yaml
-  - ./helmrelease-gotenberg.yaml
-  - ./helmrelease-tika.yaml
   - ./paperless-config.yaml

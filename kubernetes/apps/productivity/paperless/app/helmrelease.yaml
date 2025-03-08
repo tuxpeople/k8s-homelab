@@ -88,6 +88,22 @@ spec:
               limits:
                 memory: 128Mi
 
+      tika:
+        containers:
+          tika:
+            image:
+              repository: ghcr.io/paperless-ngx/tika
+              tag: 2.9.1-full
+
+      gotenberg:
+        containers:
+          gotenberg:
+            image:
+              repository: docker.io/gotenberg/gotenberg
+              tag: 8.17.3
+            env:
+              DISABLE_GOOGLE_CHROME: "1"
+
     service:
       app:
         primary: true
@@ -100,6 +116,17 @@ spec:
         ports:
           http:
             port: 6379
+      tika:
+        controller: tika
+        ports:
+          http:
+            port: 9998
+      gotenberg:
+        controller: gotenberg
+        ports:
+          http:
+            port: 3000
+
     ingress:
       app:
         enabled: true
