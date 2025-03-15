@@ -28,7 +28,7 @@ spec:
         containers:
           app:
             image:
-              repository: dockerhub.io/tdeutsch/foobar
+              repository: docker.io/tdeutsch/foobar
               tag: latest
             securityContext:
               allowPrivilegeEscalation: false
