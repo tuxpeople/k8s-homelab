@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: docker.io/tdeutsch/foobar
-              tag: latest@sha256:90197f638c7d7d14f016249d1114b375310e00aef36cd7b23ba1c9eba4a65cf3
+              tag: latest@sha256:6f5705aa31e929c7de8ecfb968e6315d1de8e90abc132bef6443db212a1d2025
               pullPolicy: Always
             securityContext:
               allowPrivilegeEscalation: false
