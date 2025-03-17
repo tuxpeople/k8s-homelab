@@ -53,7 +53,8 @@ spec:
         [[runners]]
           [runners.kubernetes]
             namespace = "{{.Release.Namespace}}"
-            image = "node"
+            image = "docker:19"
+            privileged = true
 
   valuesFrom:
     - kind: Secret
