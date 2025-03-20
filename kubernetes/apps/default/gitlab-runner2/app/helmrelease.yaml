@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gitlab-runner
+  name: gitlab-runner2
 spec:
   interval: 1h
   chart:
@@ -21,7 +21,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  values: # https://gitlab.com/gitlab-org/charts/gitlab-runner/blob/main/values.yaml
+  values: # https://gitlab.com/gitlab-org/charts/gitlab-runner2/blob/main/values.yaml
     imagePullPolicy: IfNotPresent
     gitlabUrl: https://gitlab.com/
     rbac:
@@ -37,5 +37,5 @@ spec:
 
   valuesFrom:
     - kind: Secret
-      name: gitlab-k8s-runner-secrets
+      name: gitlab-k8s-runner-secrets2
       valuesKey: values.yaml
