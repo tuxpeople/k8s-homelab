@@ -37,7 +37,7 @@ spec:
               PAPERLESS_SECRET_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: paperless-secret
+                    name: paperless-secret-values
                     key: PAPERLESS_SECRET_KEY
               PAPERLESS_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
               PAPERLESS_PORT: "8080"
@@ -46,12 +46,12 @@ spec:
               PAPERLESS_ADMIN_USER:
                 valueFrom:
                   secretKeyRef:
-                    name: paperless-secret
+                    name: paperless-secret-values
                     key: PAPERLESS_ADMIN_USER
               PAPERLESS_ADMIN_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: paperless-secret
+                    name: paperless-secret-values
                     key: PAPERLESS_ADMIN_PASSWORD
             probes:
               liveness:
@@ -175,6 +175,13 @@ spec:
         defaultMode: 0775
         globalMounts:
           - path: /usr/src/paperless/scripts
+      passwords:
+        type: configMap
+        name: paperless-scripts
+        defaultMode: 0775
+        globalMounts:
+          - path: /usr/src/paperless/scripts/passwords.txt
+            subPath: passwords.txt
           # - path: /usr/src/paperless/scripts/pre-consume.sh
           #   subPath: pre-consume.sh
           # - path: /usr/src/paperless/scripts/remove-blank-pages.sh
