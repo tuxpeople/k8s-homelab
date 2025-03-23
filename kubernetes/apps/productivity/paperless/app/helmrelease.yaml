@@ -179,7 +179,7 @@ spec:
         type: secret
         name: paperless-passwords
         globalMounts:
-          - path: /usr/src/paperless/scripts/passwords.txt
+          - path: /usr/src/paperless/passwords/passwords.txt
             subPath: passwords.txt
             readOnly: true
           # - path: /usr/src/paperless/scripts/pre-consume.sh
