@@ -24,7 +24,7 @@ echo >&2 Total pages $PAGES
 # Threshold for HP scanners
 # THRESHOLD=1
 # Threshold for Lexmar MC2425
-THRESHOLD=0.8
+THRESHOLD=1
 
 non_blank() {
     for i in $(seq 1 $PAGES); do
