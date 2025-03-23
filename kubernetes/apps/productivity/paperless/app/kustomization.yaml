@@ -5,3 +5,10 @@ resources:
   - ./secret.sops.yaml
   - ./helmrelease.yaml
   - ./paperless-config.yaml
+configMapGenerator:
+  - name: paperless-scripts
+    files:
+      - pre-consume.sh=./scripts/pre-consume.sh
+      - remove-blank-pages.sh=./scripts/remove-blank-pages.sh
+generatorOptions:
+  disableNameSuffixHash: true

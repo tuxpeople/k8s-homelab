@@ -95,7 +95,7 @@ spec:
           gotenberg:
             image:
               repository: docker.io/gotenberg/gotenberg
-              tag: 8.18.0
+              tag: 8.17.3
             env:
               DISABLE_GOOGLE_CHROME: "1"
 
@@ -169,3 +169,13 @@ spec:
         type: nfs
         server: 10.20.30.40
         path: /volume2/scanner
+      scripts:
+        type: configMap
+        name: paperless-scripts
+        defaultMode: 0775
+        globalMounts:
+          - path: /usr/src/paperless/scripts
+          # - path: /usr/src/paperless/scripts/pre-consume.sh
+          #   subPath: pre-consume.sh
+          # - path: /usr/src/paperless/scripts/remove-blank-pages.sh
+          #   subPath: remove-blank-pages.sh
