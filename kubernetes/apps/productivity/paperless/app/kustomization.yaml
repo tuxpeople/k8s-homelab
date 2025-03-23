@@ -11,6 +11,6 @@ configMapGenerator:
     files:
       - pre-consume.sh=./scripts/pre-consume.sh
       - remove-blank-pages.sh=./scripts/remove-blank-pages.sh
-      - pdfpassword.py./scripts/pdfpassword.py
+      - pdfpassword.py=./scripts/pdfpassword.py
 generatorOptions:
   disableNameSuffixHash: true
