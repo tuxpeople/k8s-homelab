@@ -23,8 +23,8 @@ echo >&2 Total pages $PAGES
 
 # Threshold for HP scanners
 # THRESHOLD=1
-# Threshold for Canon MX925
-THRESHOLD=1
+# Threshold for Lexmar MC2425
+THRESHOLD=0.8
 
 non_blank() {
     for i in $(seq 1 $PAGES); do
@@ -43,5 +43,5 @@ NON_BLANK=$(non_blank)
 
 if [ -n "$NON_BLANK" ]; then
     NON_BLANK=$(echo $NON_BLANK | tr ' ' ",")
-    qpdf "$IN" --replace-input --pages . $NON_BLANK --
+    qpdf "$IN" --warning-exit-0 --replace-input --pages . $NON_BLANK --
 fi
