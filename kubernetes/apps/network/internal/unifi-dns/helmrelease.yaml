@@ -59,7 +59,6 @@ spec:
           timeoutSeconds: 5
     extraArgs:
       - --ignore-ingress-tls-spec
-    triggerLoopOnEvent: true
     policy: sync
     sources: ["gateway-httproute", "service"]
     txtOwnerId: main
