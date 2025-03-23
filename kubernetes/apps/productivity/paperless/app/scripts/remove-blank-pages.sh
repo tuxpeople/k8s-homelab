@@ -9,7 +9,7 @@ IN="$DOCUMENT_WORKING_PATH"
 # Check for PDF format
 TYPE=$(file -b "$IN")
 
-if [ "${TYPE%%,*}" != "PDF document" ]; then
+if [[ $TYPE != *"PDF document"* ]]; then
     echo >&2 "Skipping $IN - non PDF [$TYPE]."
     exit 0
 fi
