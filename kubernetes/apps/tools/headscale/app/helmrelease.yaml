@@ -49,8 +49,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/gurucomputing/headscale-ui
-              tag: 2024.02.24-beta1
+              repository: ghcr.io/tale/headplane
+              tag: 0.5.10
             securityContext:
               readOnlyRootFilesystem: true
     # defaultPodOptions:
@@ -78,7 +78,7 @@ spec:
         controller: ui
         ports:
           http:
-            port: 80
+            port: 3000
     persistence:
       config:
         type: secret
@@ -104,6 +104,9 @@ spec:
         size: 5Gi
         advancedMounts:
           headscale:
+            app:
+              - path: /etc/headscale
+          ui:
             app:
               - path: /etc/headscale
       tmp:
