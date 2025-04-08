@@ -80,7 +80,7 @@ spec:
           http:
             port: 3000
     persistence:
-      config:
+      headscale-config:
         type: secret
         name: headscale-secret
         advancedMounts:
@@ -90,6 +90,18 @@ spec:
                 subPath: config.yaml
               # - path: /etc/headscale/policy.json
               #   subPath: policy.json
+          ui:
+            app:
+              - path: /etc/headscale/config.yaml
+                subPath: config.yaml
+      headplane-config:
+        type: secret
+        name: headplane-secret
+        advancedMounts:
+          ui:
+            app:
+              - path: /etc/headplane/config.yaml
+                subPath: config.yaml
       var-lib-headscale:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
