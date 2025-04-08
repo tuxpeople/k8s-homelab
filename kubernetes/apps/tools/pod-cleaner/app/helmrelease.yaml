@@ -21,7 +21,7 @@ spec:
     remediation:
       retries: 3
   values:
-    controller:
+    controllers:
       main:
         type: cronjob
 
@@ -31,7 +31,7 @@ spec:
         containers:
           main:
             image:
-              repository: registry.eighty-three.me/tuxpeople
+              repository: registry.eighty-three.me/tuxpeople/debugcontainer
               tag: v3.2.0
             command:
               - /bin/sh
@@ -49,16 +49,29 @@ spec:
                     fi
                   done
 
-        serviceAccount:
-          create: true
-          name: pod-cleaner-sa
+    serviceAccount:
+      create: true
+      name: pod-cleaner-sa
 
-        rbac:
-          create: true
+    rbac:
+      roles:
+        pod-cleaner-role:
+          type: ClusterRole
           rules:
             - apiGroups: [""]
               resources: ["pods"]
-              verbs: ["list", "delete"]
+              verbs: ["delete", "list"]
+      bindings:
+        pod-cleaner-binding:
+          type: ClusterRoleBinding
+          roleRef:
+            apiGroup: rbac.authorization.k8s.io
+            kind: ClusterRole
+            name: pod-cleaner-role
+          subjects:
+            - kind: ServiceAccount
+              name: pod-cleaner-sa
+              namespace: tools
 
     # Optional: Logging
     resources:
