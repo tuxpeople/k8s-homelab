@@ -26,7 +26,8 @@ spec:
         type: cronjob
 
         cronjob:
-          schedule: "0 */6 * * *" # alle 6 Stunden
+          schedule: "0 * * * *"
+          # schedule: "0 */6 * * *" # alle 6 Stunden
 
         containers:
           main:
@@ -37,7 +38,7 @@ spec:
               - /bin/sh
               - -c
               - |
-                AGE_HOURS=6
+                AGE_HOURS=1
                 NOW=$(date +%s)
                 kubectl get pods --all-namespaces --field-selector=status.phase==Succeeded -o json | \
                   jq -r '.items[] | "\(.metadata.namespace) \(.metadata.name) \(.status.startTime)"' | while read namespace name startTime; do
