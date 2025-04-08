@@ -42,7 +42,7 @@ spec:
                 kubectl get pods --all-namespaces --field-selector=status.phase==Succeeded -o json | \
                   jq -r '.items[] | "\(.metadata.namespace) \(.metadata.name) \(.status.startTime)"' | while read namespace name startTime; do
                     pod_time=$(date -d "$startTime" +%s)
-                    age_hours=$(( (NOW - pod_time) / 3600 ))
+                    age_hours=$(( ($NOW - $pod_time) / 3600 ))
                     if [ "$age_hours" -ge "$AGE_HOURS" ]; then
                         echo "Deleting pod $name in namespace $namespace (age: ${age_hours}h)"
                         kubectl delete pod "$name" -n "$namespace"
