@@ -98,6 +98,14 @@ spec:
           headscale:
             app:
               - path: /var/lib/headscale
+      etcd-headscale:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        advancedMounts:
+          headscale:
+            app:
+              - path: /etc/headscale
       tmp:
         type: emptyDir
         advancedMounts:
