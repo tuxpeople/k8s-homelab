@@ -92,6 +92,8 @@ spec:
               #   subPath: policy.json
       var-lib-headscale:
         type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
         advancedMounts:
           headscale:
             app:
