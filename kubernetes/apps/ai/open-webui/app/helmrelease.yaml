@@ -46,7 +46,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: &port 3000
+            port: &port 8080
     ingress:
       app:
         annotations:
