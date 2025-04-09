@@ -53,6 +53,9 @@ spec:
     service:
       app:
         controller: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: ${SECRET_CILIUMLB_OLLAMA}
         ports:
           http:
             port: 11434
