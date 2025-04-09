@@ -34,7 +34,7 @@ spec:
               WEBUI_SECRET_KEY: ""
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: git-cf4bbcd-ollama
+              tag: v0.6.2
             resources:
               requests:
                 cpu: 10m
