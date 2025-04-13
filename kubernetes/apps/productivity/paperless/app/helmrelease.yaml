@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.14.7
+              tag: 2.15.1
             envFrom:
               - configMapRef:
                   name: paperless-config
