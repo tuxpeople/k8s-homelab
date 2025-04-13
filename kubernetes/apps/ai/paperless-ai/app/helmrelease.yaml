@@ -113,6 +113,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app/logs
+      public:
+        type: emptyDir
+        globalMounts:
+          - path: /public
       tmp:
         type: emptyDir
         globalMounts:
