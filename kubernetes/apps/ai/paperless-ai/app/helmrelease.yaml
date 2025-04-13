@@ -116,7 +116,7 @@ spec:
       public:
         type: emptyDir
         globalMounts:
-          - path: /public
+          - path: /app/public/images
       tmp:
         type: emptyDir
         globalMounts:
