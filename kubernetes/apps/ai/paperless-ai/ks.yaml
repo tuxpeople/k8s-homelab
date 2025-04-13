@@ -11,6 +11,8 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   dependsOn:
+    - name: ollama
+      namespace: ai
     - name: longhorn
       namespace: storage
     - name: external-secrets-secretstores
