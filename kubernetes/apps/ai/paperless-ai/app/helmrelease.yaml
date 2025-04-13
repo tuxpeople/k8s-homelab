@@ -105,6 +105,8 @@ spec:
       config:
         enabled: true
         type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 50Gi
         globalMounts:
           - path: /app/data
       logs:
