@@ -30,9 +30,9 @@ spec:
       darkTheme: espresso
       alwaysTargetBlank: true
       showGreeting: false
-      # showAppGroups: false
-      # showAppStatus: false
-      # showBookmarkGroups: false
+      showAppGroups: true
+      showAppStatus: true
+      showBookmarkGroups: true
       showGlobalBookmarks: true
       showAppUrls: false
       defaultEnable: true
