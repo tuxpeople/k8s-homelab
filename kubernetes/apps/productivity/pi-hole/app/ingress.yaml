@@ -4,7 +4,6 @@ kind: Ingress
 metadata:
   name: pi-hole
   annotations:
-    hajimari.io/enable: "true"
     hajimari.io/icon: dns
     hajimari.io/group: Network
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"

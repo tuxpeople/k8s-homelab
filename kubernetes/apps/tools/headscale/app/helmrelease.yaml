@@ -136,6 +136,8 @@ spec:
                 subPath: .local
     ingress:
       app:
+        annotations:
+          hajimari.io/icon: "chef-hat"
         enabled: true
         className: internal
         hosts:

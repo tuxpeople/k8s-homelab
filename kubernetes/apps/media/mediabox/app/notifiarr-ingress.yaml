@@ -4,8 +4,7 @@ kind: Ingress
 metadata:
   name: notifiarr
   annotations:
-    hajimari.io/enable: "true"
-    hajimari.io/icon: filmstrip
+    hajimari.io/enable: "false"
 spec:
   ingressClassName: external
   tls:

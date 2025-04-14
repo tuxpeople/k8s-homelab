@@ -63,7 +63,6 @@ spec:
       tls: true
       path: /
       annotations:
-        hajimari.io/enable: "true"
         hajimari.io/icon: cow
         hajimari.io/appName: Longhorn
         hajimari.io/group: "storage"

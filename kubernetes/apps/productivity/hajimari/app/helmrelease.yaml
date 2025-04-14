@@ -76,7 +76,6 @@ spec:
         enabled: true
         ingressClassName: internal
         annotations:
-          hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
           hajimari.io/instance: "admin"
           gethomepage.dev/enabled: "true"

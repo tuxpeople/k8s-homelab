@@ -124,6 +124,7 @@ spec:
         className: internal
         annotations:
           gatus.io/path: *path
+          hajimari.io/enable: "false"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:

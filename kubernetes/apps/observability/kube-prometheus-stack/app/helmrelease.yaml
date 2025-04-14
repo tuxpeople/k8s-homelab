@@ -136,7 +136,6 @@ spec:
         pathType: Prefix
         ingressClassName: internal
         annotations:
-          hajimari.io/enable: "true"
           hajimari.io/appName: Alertmanager
           hajimari.io/icon: mdi:alert-decagram-outline
         tls:
@@ -438,7 +437,6 @@ spec:
     # nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/authz/auth-request"
     # nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}?rm=$request_method"
     # nginx.ingress.kubernetes.io/auth-response-headers: "Remote-User,Remote-Name,Remote-Groups,Remote-Email"
-    #       hajimari.io/enable: "true"
     #       hajimari.io/appName: Prometheus
     #       hajimari.io/icon: mdi:fire
     #     tls:

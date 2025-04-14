@@ -4,7 +4,6 @@ kind: Ingress
 metadata:
   name: lldap
   annotations:
-    hajimari.io/enable: "true"
     hajimari.io/icon: account-group
 spec:
   ingressClassName: internal

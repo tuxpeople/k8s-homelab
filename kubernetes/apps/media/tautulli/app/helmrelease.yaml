@@ -86,6 +86,8 @@ spec:
         enabled: true
         className: internal
         annotations:
+          hajimari.io/appName: Tautulli
+          hajimari.io/icon: movie-cog
           gatus.io/path: *path
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
