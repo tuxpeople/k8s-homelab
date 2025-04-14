@@ -152,6 +152,7 @@ spec:
         className: external
         annotations:
           gatus.io/enabled: "false"
+          hajimari.io/enable: "false"
         hosts:
           - host: &host2 "documents.${SECRET_CH_DOMAIN}"
             paths:
