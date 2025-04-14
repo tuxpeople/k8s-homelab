@@ -65,7 +65,7 @@ spec:
         enabled: true
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
-        size: 100Gi
+        size: 60Gi
         advancedMounts:
           ollama:
             app:
