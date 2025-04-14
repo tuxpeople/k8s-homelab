@@ -12,4 +12,5 @@ resources:
   - ./linkding/ks.yaml
   - ./obsidian/ks.yaml
   - ./paperless/ks.yaml
+  - ./pi-hole/ks.yaml
   - ./webtrees/ks.yaml
