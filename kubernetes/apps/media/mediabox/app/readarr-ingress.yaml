@@ -13,7 +13,6 @@ metadata:
       proxy_set_header X-Forwarded-Scheme $scheme;
     hajimari.io/appName: Readarr
     hajimari.io/icon: book-open-blank-variant
-    hajimari.io/group: Downloads
 spec:
   ingressClassName: external
   tls:
