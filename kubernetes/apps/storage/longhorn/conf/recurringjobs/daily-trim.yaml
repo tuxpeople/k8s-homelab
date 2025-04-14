@@ -8,6 +8,6 @@ spec:
   concurrency: 1
   cron: 45 22 * * *
   groups:
-    - normal
+    - default
   retain: 1
   task: filesystem-trim

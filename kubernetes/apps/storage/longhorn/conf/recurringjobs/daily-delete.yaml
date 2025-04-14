@@ -8,6 +8,6 @@ spec:
   concurrency: 1
   cron: 45 3 * * *
   groups:
-    - normal
+    - default
   retain: 1
   task: snapshot-delete
