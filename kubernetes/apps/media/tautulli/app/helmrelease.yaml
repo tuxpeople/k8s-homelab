@@ -86,7 +86,6 @@ spec:
         enabled: true
         className: internal
         annotations:
-          hajimari.io/enable: "true"
           gatus.io/path: *path
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

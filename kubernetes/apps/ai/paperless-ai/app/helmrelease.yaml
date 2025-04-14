@@ -81,7 +81,6 @@ spec:
         enabled: true
         className: internal
         annotations:
-          hajimari.io/enable: "true"
           hajimari.io/icon: material-symbols:scanner-outline
           nginx.ingress.kubernetes.io/auth-method: GET
           nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify

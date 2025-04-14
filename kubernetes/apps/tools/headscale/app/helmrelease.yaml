@@ -136,8 +136,6 @@ spec:
                 subPath: .local
     ingress:
       app:
-        annotations:
-          hajimari.io/enable: "true"
         enabled: true
         className: internal
         hosts:
