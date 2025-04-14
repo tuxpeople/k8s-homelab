@@ -36,6 +36,8 @@ spec:
       showGlobalBookmarks: true
       showAppUrls: false
       defaultEnable: true
+      namespaceSelector:
+        any: true
       globalBookmarks:
         - group: Dev
           bookmarks:
