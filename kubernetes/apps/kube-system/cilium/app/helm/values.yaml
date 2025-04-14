@@ -48,6 +48,8 @@ hubble:
     enabled: true
     rollOutPods: true
     ingress:
+      annotations:
+        hajimari.io/enable: "true"
       enabled: true
       className: internal
       hosts: ["hubble.${SECRET_DOMAIN}"]

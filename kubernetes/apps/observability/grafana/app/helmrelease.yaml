@@ -269,6 +269,7 @@ spec:
       enabled: true
       ingressClassName: external
       annotations:
+        hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:grafana
       hosts:
         - &host grafana.${SECRET_DOMAIN}

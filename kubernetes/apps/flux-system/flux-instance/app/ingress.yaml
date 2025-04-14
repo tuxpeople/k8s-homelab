@@ -4,6 +4,7 @@ kind: Ingress
 metadata:
   name: flux-webhook
   annotations:
+    hajimari.io/enable: "false"
     external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     gatus.io/enabled: false
 spec:

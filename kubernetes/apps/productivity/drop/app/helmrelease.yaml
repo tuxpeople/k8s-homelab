@@ -49,6 +49,7 @@ spec:
         enabled: true
         className: external
         annotations:
+          hajimari.io/enable: "true"
           hajimari.io/icon: file-arrow-up-down-outline
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
