@@ -51,6 +51,7 @@ hubble:
       annotations:
         hajimari.io/appName: hubble
         hajimari.io/icon: lan
+        hajimari.io/group: Network
       enabled: true
       className: internal
       hosts: ["hubble.${SECRET_DOMAIN}"]

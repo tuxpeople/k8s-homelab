@@ -86,6 +86,7 @@ spec:
         className: external
         annotations:
           hajimari.io/icon: "video-input-antenna"
+          hajimari.io/group: Network
           hajimari.io/info: ""
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hosts:

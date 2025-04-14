@@ -137,7 +137,8 @@ spec:
     ingress:
       app:
         annotations:
-          hajimari.io/icon: "chef-hat"
+          hajimari.io/icon: "server-security"
+          hajimari.io/group: Network
         enabled: true
         className: internal
         hosts:
