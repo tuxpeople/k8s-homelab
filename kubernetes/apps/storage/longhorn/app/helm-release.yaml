@@ -21,6 +21,9 @@ spec:
     remediation:
       retries: 3
   values:
+    # https://longhorn.io/docs/1.8.1/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-helm
+    defaultBackupStore:
+      backupTarget: nfs://10.20.30.40:/volume2/data/backup/kubernetes/longhorn-backup
     persistence:
       defaultClass: true
       defaultClassReplicaCount: 2
@@ -33,7 +36,6 @@ spec:
       #     {"interval":"daily"}}]'
     defaultSettings:
       backupstorePollInterval: 300
-      backupTarget: nfs://10.20.30.40:/volume2/data/backup/kubernetes/longhorn-backup
       snapshotDataIntegrity: "fast-check"
       defaultDataPath: /var/lib/longhorn
       defaultDataLocality: best-effort
