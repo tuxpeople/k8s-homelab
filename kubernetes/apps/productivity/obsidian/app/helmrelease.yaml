@@ -47,7 +47,7 @@ spec:
         annotations:
           hajimari.io/icon: note
           hajimari.io/appName: "Obsidian"
-          hajimari.io/group: Productivity
+          hajimari.io/group: productivity
           nginx.ingress.kubernetes.io/auth-method: GET
           nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
           nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
