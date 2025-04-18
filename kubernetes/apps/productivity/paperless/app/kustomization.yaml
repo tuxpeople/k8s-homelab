@@ -12,5 +12,7 @@ configMapGenerator:
       - pre-consume.sh=./scripts/pre-consume.sh
       - remove-blank-pages.sh=./scripts/remove-blank-pages.sh
       - pdfpassword.py=./scripts/pdfpassword.py
+      - paperless-preprocess-forms.py=./scripts/paperless-preprocess-forms.py
+      # - paperless-preprocess-removebadchars.py=./scripts/paperless-preprocess-removebadchars.py
 generatorOptions:
   disableNameSuffixHash: true
