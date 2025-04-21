@@ -1,0 +1,21 @@
+---
+apiVersion: k8up.io/v1
+kind: Backup
+metadata:
+  name: backup-test
+spec:
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  backend:
+    repoPasswordSecretRef:
+      name: k8up-credentials
+      key: repo-password
+    s3:
+      endpoint: http://minio.lab.tdeutsch.ch:9091
+      bucket: k8up
+      accessKeyIDSecretRef:
+        name: k8up-credentials
+        key: minio-username
+      secretAccessKeySecretRef:
+        name: k8up-credentials
+        key: minio-password
