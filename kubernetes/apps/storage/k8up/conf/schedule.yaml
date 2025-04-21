@@ -20,12 +20,10 @@ spec:
     schedule: '*/5 * * * *'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
-    # optional
-    #promURL: https://prometheus-io-instance:8443
+    promURL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
   check:
     schedule: '0 1 * * 1'
-    # optional
-    #promURL: https://prometheus-io-instance:8443
+    promURL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
   prune:
     schedule: '0 1 * * 0'
     retention:
