@@ -30,4 +30,7 @@ spec:
     schedule: '0 1 * * 0'
     retention:
       keepLast: 5
-      keepDaily: 14
+      keepDaily: 7
+      keepWeekly: 4
+      keepMonthly: 3
+      keepYearly: 1

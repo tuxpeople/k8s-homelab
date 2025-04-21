@@ -21,3 +21,12 @@ spec:
     remediation:
       retries: 3
   values:
+    k8up:
+      timezone: ${TZ}
+    metrics:
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+      grafanaDashboard:
+        enabled: true
