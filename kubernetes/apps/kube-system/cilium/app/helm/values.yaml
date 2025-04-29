@@ -54,7 +54,7 @@ hubble:
         hajimari.io/group: Network
       enabled: true
       className: internal
-      hosts: ["hubble.${SECRET_DOMAIN}"]
+      hosts: ["hubble.eighty-three.me"]
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.42.0.0/16"
