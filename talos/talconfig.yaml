@@ -16,6 +16,7 @@ clusterSvcNets:
 additionalApiServerCertSans: &sans
   - "127.0.0.1"
   - "192.168.13.10"
+  - "talos-test.lab.tdeutsch.ch"
 additionalMachineCertSans: *sans
 
 # Disable built-in CNI to use Cilium
@@ -32,7 +33,7 @@ nodes:
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "b2:46:57:e3:e4:52"
+          hardwareAddr: "e4:5f:01:ec:18:7f"
         dhcp: false
         addresses:
           - "192.168.13.11/24"
@@ -51,7 +52,7 @@ nodes:
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "5e:a2:56:18:3c:c8"
+          hardwareAddr: "e4:5f:01:ec:18:37"
         dhcp: false
         addresses:
           - "192.168.13.12/24"
@@ -70,7 +71,7 @@ nodes:
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "9e:a9:2a:00:ab:4d"
+          hardwareAddr: "e4:5f:01:ec:17:fb"
         dhcp: false
         addresses:
           - "192.168.13.13/24"
@@ -89,7 +90,7 @@ nodes:
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "e6:e1:01:cb:6c:ee"
+          hardwareAddr: "e4:5f:01:ec:17:f8"
         dhcp: false
         addresses:
           - "192.168.13.14/24"
