@@ -15,10 +15,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install talhelper
-        id: install
-        run: |
-          curl https://i.jpillora.com/budimanjojo/talhelper! | sudo bash
+      - name: Setup mise
+        uses: jdx/mise-action@v2
+
+      - name: Install dependencies
+        run: mise run deps
 
       - name: Check talconfig
         id: check
