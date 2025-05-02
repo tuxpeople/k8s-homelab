@@ -3,7 +3,7 @@
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 talosVersion: v1.9.5
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.33.0
+kubernetesVersion: v1.32.0
 
 clusterName: kubernetes
 endpoint: https://192.168.13.10:6443
@@ -26,7 +26,7 @@ cniConfig:
 nodes:
   - hostname: "talos-test01"
     ipAddress: "192.168.13.11"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/mmcblk0"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
@@ -45,7 +45,7 @@ nodes:
           ip: "192.168.13.10"
   - hostname: "talos-test02"
     ipAddress: "192.168.13.12"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/mmcblk0"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
@@ -64,7 +64,7 @@ nodes:
           ip: "192.168.13.10"
   - hostname: "talos-test03"
     ipAddress: "192.168.13.13"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/mmcblk0"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
@@ -83,7 +83,7 @@ nodes:
           ip: "192.168.13.10"
   - hostname: "talos-test04"
     ipAddress: "192.168.13.14"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/mmcblk0"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7

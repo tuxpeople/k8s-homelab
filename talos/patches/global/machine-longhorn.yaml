@@ -8,7 +8,7 @@ machine:
           - bind
           - rshared
           - rw
-  # disks:
-  #   - device: /dev/sdb
-  #     partitions:
-  #       - mountpoint: /var/mnt/longhorn
+  disks:
+    - device: /dev/sda
+      partitions:
+        - mountpoint: /var/mnt/longhorn
