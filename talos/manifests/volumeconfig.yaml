@@ -1,0 +1,8 @@
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: longhorn-data
+provisioning:
+  diskSelector:
+    match: disk.dev_path == '/dev/sda'
+  minSize: 1TB
+  # maxSize: 2TB
