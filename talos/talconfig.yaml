@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
-clusterName: kubernetes
+clusterName: turingpi
 
 talosVersion: "${talosVersion}"
 kubernetesVersion: "${kubernetesVersion}"
@@ -21,7 +21,7 @@ cniConfig:
 nodes:
   - hostname: "talos-test01"
     ipAddress: "192.168.13.11"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/mmcblk0"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
@@ -38,9 +38,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: "disk.transport == 'sata'"
+          minSize: 100GiB
   - hostname: "talos-test02"
     ipAddress: "192.168.13.12"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/mmcblk0"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
@@ -57,9 +63,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: "disk.transport == 'sata'"
+          minSize: 100GiB
   - hostname: "talos-test03"
     ipAddress: "192.168.13.13"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/mmcblk0"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
@@ -76,9 +88,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: "disk.transport == 'sata'"
+          minSize: 100GiB
   - hostname: "talos-test04"
     ipAddress: "192.168.13.14"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/mmcblk0"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
@@ -93,11 +111,18 @@ nodes:
           - network: "0.0.0.0/0"
             gateway: "192.168.13.1"
         mtu: 1500
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: "disk.transport == 'usb'"
+          minSize: 100GiB
 
 # Global patches
 patches:
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-longhorn.yaml"
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
@@ -107,4 +132,3 @@ controlPlane:
   patches:
     - "@./patches/controller/admission-controller-patch.yaml"
     - "@./patches/controller/cluster.yaml"
-
