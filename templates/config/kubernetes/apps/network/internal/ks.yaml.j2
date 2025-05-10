@@ -18,6 +18,13 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -44,6 +51,13 @@ spec:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:

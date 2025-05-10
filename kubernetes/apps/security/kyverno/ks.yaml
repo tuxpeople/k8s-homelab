@@ -10,6 +10,13 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/security/kyverno/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -34,6 +41,13 @@ spec:
       namespace: security
   interval: 1h
   path: ./kubernetes/apps/security/kyverno/policies
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:

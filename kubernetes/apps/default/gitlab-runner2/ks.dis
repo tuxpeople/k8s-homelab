@@ -11,6 +11,13 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/default/gitlab-runner2/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:

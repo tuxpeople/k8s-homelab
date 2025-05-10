@@ -17,6 +17,13 @@ spec:
     - name: alertmanager-discord
   interval: 1h
   path: ./kubernetes/apps/observability/kube-prometheus-stack/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -42,6 +49,13 @@ spec:
       namespace: observability
   interval: 1h
   path: ./kubernetes/apps/observability/kube-prometheus-stack/config
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:
