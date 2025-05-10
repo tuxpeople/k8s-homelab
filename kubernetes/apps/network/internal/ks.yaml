@@ -6,6 +6,9 @@ metadata:
   name: &app internal-unifi-dns
   namespace: &namespace network
 spec:
+  dependsOn:
+    - name: external-secrets-secretstores
+      namespace: security
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
