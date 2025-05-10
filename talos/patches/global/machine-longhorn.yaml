@@ -1,9 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/main/website/content/v1.10/schemas/v1alpha1_config.schema.json
 machine:
   kubelet:
     extraMounts:
-      - destination: /var/lib/longhorn
+      - source: /var/mnt/longhorn
+        destination: /var/mnt/longhorn
         type: bind
-        source: /var/mnt/longhorn-data
         options:
           - bind
           - rshared

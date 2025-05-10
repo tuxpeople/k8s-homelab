@@ -43,6 +43,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: disk.dev_path == '/dev/sda'
+          minSize: 1TB
+          # maxSize: 2TB
+        filesystem:
+          type: xfs
   - hostname: "talos-test02"
     ipAddress: "192.168.13.12"
     installDisk: "/dev/mmcblk0"
@@ -62,6 +71,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: disk.dev_path == '/dev/sda'
+          minSize: 1TB
+          # maxSize: 2TB
+        filesystem:
+          type: xfs
   - hostname: "talos-test03"
     ipAddress: "192.168.13.13"
     installDisk: "/dev/mmcblk0"
@@ -81,6 +99,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: disk.dev_path == '/dev/sda'
+          minSize: 1TB
+          # maxSize: 2TB
+        filesystem:
+          type: xfs
   - hostname: "talos-test04"
     ipAddress: "192.168.13.14"
     installDisk: "/dev/mmcblk0"
@@ -98,6 +125,15 @@ nodes:
           - network: "0.0.0.0/0"
             gateway: "192.168.13.1"
         mtu: 1500
+    userVolumes:
+      - name: longhorn
+        provisioning:
+          diskSelector:
+            match: disk.dev_path == '/dev/sda'
+          minSize: 1TB
+          # maxSize: 2TB
+        filesystem:
+          type: xfs
 
 # Global patches
 patches:
@@ -113,9 +149,3 @@ controlPlane:
     - "@./patches/controller/admission-controller-patch.yaml"
     - "@./patches/controller/cluster.yaml"
     - "@./patches/controller/api-access.yaml"
-  extraManifests:
-    - ./manifests/volumeconfig.yaml
-
-worker:
-  extraManifests:
-    - ./manifests/volumeconfig.yaml
