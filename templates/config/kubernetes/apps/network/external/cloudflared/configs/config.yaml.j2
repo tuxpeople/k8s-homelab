@@ -4,15 +4,7 @@ originRequest:
 
 ingress:
   - hostname: "${SECRET_DOMAIN}"
-    service: https://external-ingress-nginx-controller.network.svc.cluster.local:443
-    #% if cloudflare_cluster_issuer == 'staging' %#
-    originRequest:
-      noTLSVerify: true
-    #% endif %#
+    service: &svc https://external-ingress-nginx-controller.network.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN}"
-    service: https://external-ingress-nginx-controller.network.svc.cluster.local:443
-    #% if cloudflare_cluster_issuer == 'staging' %#
-    originRequest:
-      noTLSVerify: true
-    #% endif %#
+    service: *svc
   - service: http_status:404

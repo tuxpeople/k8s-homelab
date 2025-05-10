@@ -2,8 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/helmfile
 
 helmDefaults:
-  timeout: 600
-  force: true
+  cleanupOnFail: true
   wait: true
   waitForJobs: true
 
@@ -11,32 +10,47 @@ repositories:
   - name: cilium
     url: https://helm.cilium.io
 
-  - name: jetstack
-    url: https://charts.jetstack.io
-
 releases:
   - name: cilium
     namespace: kube-system
+    atomic: true
     chart: cilium/cilium
     version: 1.17.3
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/apps/kube-system/cilium/app/helm/values.yaml']
 
   - name: coredns
     namespace: kube-system
+    atomic: true
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.42.1
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/apps/kube-system/coredns/app/helm/values.yaml']
     needs: ['kube-system/cilium']
 
+  #% if spegel_enabled %#
+  - name: spegel
+    namespace: kube-system
+    atomic: true
+    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
+    version: 0.2.0
+    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/apps/kube-system/spegel/app/helm/values.yaml']
+    needs: ['kube-system/coredns']
+  #% endif %#
+
   - name: cert-manager
     namespace: cert-manager
-    chart: jetstack/cert-manager
+    atomic: true
+    chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.17.2
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/apps/cert-manager/cert-manager/app/helm/values.yaml']
+    #% if spegel_enabled %#
+    needs: ['kube-system/spegel']
+    #% else %#
     needs: ['kube-system/coredns']
+    #% endif %#
 
   - name: flux-operator
     namespace: flux-system
+    atomic: true
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.19.0
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/apps/flux-system/flux-operator/app/helm/values.yaml']
@@ -44,8 +58,8 @@ releases:
 
   - name: flux-instance
     namespace: flux-system
+    atomic: true
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.19.0
-    wait: false
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/apps/flux-system/flux-instance/app/helm/values.yaml']
     needs: ['flux-system/flux-operator']

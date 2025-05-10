@@ -23,7 +23,7 @@ function wait_for_nodes() {
     done
 }
 
-# The application namespaces are created before applying the resources
+# Namespaces to be applied before the SOPS secrets are installed
 function apply_namespaces() {
     log debug "Applying namespaces"
 
@@ -49,35 +49,6 @@ function apply_namespaces() {
             log info "Namespace resource applied" "resource=${namespace}"
         else
             log error "Failed to apply namespace resource" "resource=${namespace}"
-        fi
-    done
-}
-
-# ConfigMaps to be applied before the helmfile charts are installed
-function apply_configmaps() {
-    log debug "Applying ConfigMaps"
-
-    local -r configmaps=(
-        "${ROOT_DIR}/kubernetes/components/common/cluster-settings.yaml"
-    )
-
-    for configmap in "${configmaps[@]}"; do
-        if [ ! -f "${configmap}" ]; then
-            log warn "File does not exist" file "${configmap}"
-            continue
-        fi
-
-        # Check if the configmap resources are up-to-date
-        if kubectl --namespace flux-system diff --filename "${configmap}" &>/dev/null; then
-            log info "ConfigMap resource is up-to-date" "resource=$(basename "${configmap}" ".yaml")"
-            continue
-        fi
-
-        # Apply configmap resources
-        if kubectl --namespace flux-system apply --server-side --filename "${configmap}" &>/dev/null; then
-            log info "ConfigMap resource applied successfully" "resource=$(basename "${configmap}" ".yaml")"
-        else
-            log error "Failed to apply ConfigMap resource" "resource=$(basename "${configmap}" ".yaml")"
         fi
     done
 }
@@ -113,6 +84,30 @@ function apply_sops_secrets() {
     done
 }
 
+# CRDs to be applied before the helmfile charts are installed
+function apply_crds() {
+    log debug "Applying CRDs"
+
+    local -r crds=(
+        # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
+        https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.82.1/stripped-down-crds.yaml
+        # renovate: datasource=github-releases depName=kubernetes-sigs/external-dns
+        https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.16.1/docs/sources/crd/crd-manifest.yaml
+    )
+
+    for crd in "${crds[@]}"; do
+        if kubectl diff --filename "${crd}" &>/dev/null; then
+            log info "CRDs are up-to-date" "crd=${crd}"
+            continue
+        fi
+        if kubectl apply --server-side --filename "${crd}" &>/dev/null; then
+            log info "CRDs applied" "crd=${crd}"
+        else
+            log error "Failed to apply CRDs" "crd=${crd}"
+        fi
+    done
+}
+
 # Apply Helm releases using helmfile
 function apply_helm_releases() {
     log debug "Applying Helm releases with helmfile"
@@ -136,8 +131,8 @@ function main() {
     # Apply resources and Helm releases
     wait_for_nodes
     apply_namespaces
-    apply_configmaps
     apply_sops_secrets
+    apply_crds
     apply_helm_releases
 
     log info "Congrats! The cluster is bootstrapped and Flux is syncing the Git repository"
