@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: security
 components:
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./external-secrets/ks.yaml
   - ./kyverno/ks.yaml

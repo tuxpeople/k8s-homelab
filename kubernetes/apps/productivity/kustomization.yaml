@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: productivity
 components:
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./code-server/ks.yaml
   - ./drop/ks.yaml

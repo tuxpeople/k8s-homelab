@@ -1,23 +1,18 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
-# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.10.1
-# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.33.0
-
 clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
 endpoint: https://192.168.13.10:6443
-
-clusterPodNets:
-  - "10.42.0.0/16"
-clusterSvcNets:
-  - "10.43.0.0/16"
-
 additionalApiServerCertSans: &sans
   - "127.0.0.1"
   - "192.168.13.10"
-  - "talos-test.lab.tdeutsch.ch"
 additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
 
 # Disable built-in CNI to use Cilium
 cniConfig:
@@ -26,14 +21,14 @@ cniConfig:
 nodes:
   - hostname: "talos-test01"
     ipAddress: "192.168.13.11"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
+    talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "e4:5f:01:ec:18:7f"
+          hardwareAddr: "b2:46:57:e3:e4:52"
         dhcp: false
         addresses:
           - "192.168.13.11/24"
@@ -43,25 +38,16 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: "disk.transport == 'sata'"
-          minSize: 800GiB
-          # maxSize: 2TB
-        filesystem:
-          type: xfs
   - hostname: "talos-test02"
     ipAddress: "192.168.13.12"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
+    talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "e4:5f:01:ec:18:37"
+          hardwareAddr: "5e:a2:56:18:3c:c8"
         dhcp: false
         addresses:
           - "192.168.13.12/24"
@@ -71,25 +57,16 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: "disk.transport == 'sata'"
-          minSize: 800GiB
-          # maxSize: 2TB
-        filesystem:
-          type: xfs
   - hostname: "talos-test03"
     ipAddress: "192.168.13.13"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
+    talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "e4:5f:01:ec:17:fb"
+          hardwareAddr: "9e:a9:2a:00:ab:4d"
         dhcp: false
         addresses:
           - "192.168.13.13/24"
@@ -99,25 +76,16 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: "disk.transport == 'sata'"
-          minSize: 800GiB
-          # maxSize: 2TB
-        filesystem:
-          type: xfs
   - hostname: "talos-test04"
     ipAddress: "192.168.13.14"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
+    talosImageURL: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "e4:5f:01:ec:17:f8"
+          hardwareAddr: "e6:e1:01:cb:6c:ee"
         dhcp: false
         addresses:
           - "192.168.13.14/24"
@@ -125,21 +93,11 @@ nodes:
           - network: "0.0.0.0/0"
             gateway: "192.168.13.1"
         mtu: 1500
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: "disk.transport == 'usb'"
-          minSize: 800GiB
-          # maxSize: 2TB
-        filesystem:
-          type: xfs
 
 # Global patches
 patches:
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
-  - "@./patches/global/machine-longhorn.yaml"
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
@@ -149,4 +107,4 @@ controlPlane:
   patches:
     - "@./patches/controller/admission-controller-patch.yaml"
     - "@./patches/controller/cluster.yaml"
-    - "@./patches/controller/api-access.yaml"
+

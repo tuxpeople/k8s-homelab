@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: media
 components:
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./calibre-web/ks.yaml
   - ./mediabox/ks.yaml

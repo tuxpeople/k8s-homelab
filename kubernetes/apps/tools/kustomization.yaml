@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: tools
 components:
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./headscale/ks.yaml
   - ./pod-cleaner/ks.yaml

@@ -11,6 +11,13 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/network/external/external-dns
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -31,11 +38,15 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: external-external-dns
-      namespace: network
   interval: 1h
   path: ./kubernetes/apps/network/external/cloudflared
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -61,6 +72,13 @@ spec:
       namespace: cert-manager
   interval: 1h
   path: ./kubernetes/apps/network/external/ingress-nginx
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: true
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -92,5 +110,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
----
-

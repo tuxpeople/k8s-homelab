@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: storage
 components:
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./longhorn/ks.yaml
   - ./velero/ks.yaml
