@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app snmp-exporter-synology
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: prometheus-snmp-exporter
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
