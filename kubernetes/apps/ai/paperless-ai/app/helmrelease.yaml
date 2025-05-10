@@ -30,7 +30,7 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/clusterzx/paperless-ai
+              repository: mirror.gcr.io/clusterzx/paperless-ai
               tag: 2.7.6
             env:
               PAPERLESS_API_URL: http://paperless.productivity.svc.cluster.local:8080/api
