@@ -47,8 +47,8 @@ nodes:
       - name: longhorn
         provisioning:
           diskSelector:
-            match: disk.dev_path == '/dev/sda'
-          minSize: 1TB
+            match: "disk.transport == 'sata'"
+          minSize: 800GiB
           # maxSize: 2TB
         filesystem:
           type: xfs
@@ -75,8 +75,8 @@ nodes:
       - name: longhorn
         provisioning:
           diskSelector:
-            match: disk.dev_path == '/dev/sda'
-          minSize: 1TB
+            match: "disk.transport == 'sata'"
+          minSize: 800GiB
           # maxSize: 2TB
         filesystem:
           type: xfs
@@ -103,8 +103,8 @@ nodes:
       - name: longhorn
         provisioning:
           diskSelector:
-            match: disk.dev_path == '/dev/sda'
-          minSize: 1TB
+            match: "disk.transport == 'sata'"
+          minSize: 800GiB
           # maxSize: 2TB
         filesystem:
           type: xfs
@@ -129,8 +129,8 @@ nodes:
       - name: longhorn
         provisioning:
           diskSelector:
-            match: disk.dev_path == '/dev/sda'
-          minSize: 1TB
+            match: "disk.transport == 'usb'"
+          minSize: 800GiB
           # maxSize: 2TB
         filesystem:
           type: xfs
@@ -139,6 +139,7 @@ nodes:
 patches:
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-longhorn.yaml"
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
