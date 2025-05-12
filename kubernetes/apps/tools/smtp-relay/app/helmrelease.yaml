@@ -23,6 +23,9 @@ spec:
   values:
     controllers:
       smtp-relay:
+        pod:
+          nodeSelector:
+            kubernetes.io/arch: amd64
         replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
