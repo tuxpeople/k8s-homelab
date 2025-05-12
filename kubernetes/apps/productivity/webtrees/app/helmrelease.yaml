@@ -49,7 +49,7 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/dtjs48jkt/webtrees
+              repository: mirror.gcr.io/dtjs48jkt/webtrees
               tag: 2.2.1
             env:
               DISABLE_SSL: "TRUE"
