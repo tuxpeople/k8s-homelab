@@ -41,7 +41,7 @@ items:
       spec:
         automountServiceAccountToken: true
         containers:
-        - image: docker.io/tdeutsch/foobar:latest@sha256:1a43c2265bfe6c8ec4d2ce6b5480853f3d6457f0fab231ac82a17a20d0cebe1a
+        - image: mirror.gcr.io/tdeutsch/foobar:latest@sha256:1a43c2265bfe6c8ec4d2ce6b5480853f3d6457f0fab231ac82a17a20d0cebe1a
           imagePullPolicy: Always
           name: app
           resources:
