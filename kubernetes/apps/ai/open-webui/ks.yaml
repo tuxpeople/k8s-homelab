@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: ollama
-      namespace: ai
+    # - name: ollama
+    #   namespace: ai
     - name: longhorn
       namespace: storage
   interval: 1h
