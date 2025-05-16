@@ -30,6 +30,24 @@ spec:
         containers:
           app:
             env:
+              - name: ENABLE_OAUTH_SIGNUP
+                value: true
+              - name: AUTH_MERGE_ACCOUNTS_BY_EMAIL
+                value: true
+              - name: OPENID_PROVIDER_URL
+                value: https://auth.eighty-three.me/.well-known/openid-configuration
+              - name: OAUTH_PROVIDER_NAME
+                value: Authelia
+              - name: OAUTH_SCOPES
+                value: openid email profile groups
+              - name: ENABLE_OAUTH_ROLE_MANAGEMENT
+                value: true
+              - name: OAUTH_ALLOWED_ROLES
+                value: applications_openwebui,applications_openwebui_admin
+              - name: OAUTH_ADMIN_ROLES
+                value: applications_openwebui_admin
+              - name: OAUTH_ROLES_CLAIM
+                value: groups
               - name: OLLAMA_BASE_URL
                 value: http://192.168.8.25:11434
               - name: ENABLE_RAG_WEB_SEARCH
@@ -38,6 +56,9 @@ spec:
               #   value: searxng
               # - name: SEARXNG_QUERY_URL
               #   value: http://searxng.services.svc.cluster.local:8080/search?q=<query>
+            envFrom:
+              - secretRef:
+                  name: open-webui-valuesw
             image:
               repository: ghcr.io/open-webui/open-webui
               tag: v0.6.9
