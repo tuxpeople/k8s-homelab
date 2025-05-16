@@ -101,11 +101,12 @@ spec:
     persistence:
       data:
         enabled: true
+        type: emptyDir
         # type: persistentVolumeClaim
         # accessMode: ReadWriteOnce
         # size: 5Gi
-        type: nfs
-        server: 10.20.30.40
-        path: /volume2/kubernetes/openwebui
+        # type: nfs
+        # server: 10.20.30.40
+        # path: /volume2/kubernetes/openwebui
         globalMounts:
           - path: /app/backend/data
