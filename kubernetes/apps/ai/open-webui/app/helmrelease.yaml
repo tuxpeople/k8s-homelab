@@ -58,7 +58,7 @@ spec:
               #   value: http://searxng.services.svc.cluster.local:8080/search?q=<query>
             envFrom:
               - secretRef:
-                  name: open-webui-valuesw
+                  name: open-webui-values
             image:
               repository: ghcr.io/open-webui/open-webui
               tag: v0.6.9
