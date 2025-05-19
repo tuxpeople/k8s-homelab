@@ -59,7 +59,7 @@ spec:
                   name: open-webui-values
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: v0.6.9
+              tag: v0.6.10
             resources:
               requests:
                 cpu: 10m
