@@ -31,7 +31,7 @@ spec:
           app:
             env:
               TZ: ${TIMEZONE}
-              WEBUI_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+              WEBUI_URL: "ai.${SECRET_DOMAIN}"
               WEBUI_NAME: "Toemu AI"
               ENABLE_LOGIN_FORM: false
               DEFAULT_USER_ROLE: user
@@ -87,7 +87,7 @@ spec:
         enabled: true
         className: external
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "ai.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
