@@ -37,7 +37,7 @@ spec:
     defaultSettings:
       backupstorePollInterval: 300
       snapshotDataIntegrity: "fast-check"
-      defaultDataPath: "/var/mnt/longhorn/"
+      defaultDataPath: "/var/lib/longhorn/"
       defaultDataLocality: best-effort
       orphanAutoDeletion: true
       fastReplicaRebuildEnabled: true
