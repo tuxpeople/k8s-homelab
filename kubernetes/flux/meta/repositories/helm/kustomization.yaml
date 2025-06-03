@@ -30,5 +30,6 @@ resources:
   - ./prometheus-community.yaml
   - ./spegel.yaml
   - ./stakater.yaml
+  - ./synology-csi.yaml
   - ./vmware-tanzu-charts.yaml
   - ./weave-gitops.yaml

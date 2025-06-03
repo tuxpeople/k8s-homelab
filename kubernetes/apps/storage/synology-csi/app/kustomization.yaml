@@ -3,9 +3,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: storage
-components:
-  - ../../components/common
 resources:
-  - ./longhorn/ks.yaml
-  - ./synology-csi/ks.yaml
-  - ./velero/ks.yaml
+  - externalsecret.yaml
+  - helm-release.yaml
