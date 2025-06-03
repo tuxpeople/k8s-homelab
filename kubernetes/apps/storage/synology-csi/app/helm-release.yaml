@@ -21,31 +21,3 @@ spec:
     remediation:
       retries: 3
   values:
-    deployNodeAgent: true
-    nodeAgent:
-      containerSecurityContext:
-        privileged: true
-    configuration:
-      features: EnableCSI
-      backupStorageLocation:
-        - bucket: *app
-          name: default
-          provider: aws
-          prefix: csi
-          default: true
-          config:
-            region: minio
-            s3ForcePathStyle: true
-            s3Url: http://minio.lab.tdeutsch.ch:9091
-      volumeSnapshotLocation:
-        - name: default
-          provider: csi
-    initContainers:
-      - name: synology-csi-plugin-for-aws
-        image: synology-csi/synology-csi-plugin-for-aws:v1.12.1
-        volumeMounts:
-          - mountPath: /target
-            name: plugins
-    credentials:
-      useSecret: true
-      existingSecret: minio-secrets
