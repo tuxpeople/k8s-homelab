@@ -21,3 +21,22 @@ spec:
     remediation:
       retries: 3
   values:
+    storageClasses:
+      nfs-delete:
+        mountOptions:
+          - vers=4.1
+        parameters:
+          protocol: nfs
+          dsm: "10.20.30.40"
+          location: "/kubernetes/csi"
+          mountPermissions: "0755"
+        reclaimPolicy: Delete
+        test: true
+      nfs-retain:
+        mountOptions:
+          - vers=4.1
+        parameters:
+          protocol: nfs
+          dsm: "10.20.30.40"
+          location: "/kubernetes/csi"
+        reclaimPolicy: Retain
