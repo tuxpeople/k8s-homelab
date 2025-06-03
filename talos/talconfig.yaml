@@ -21,7 +21,7 @@ cniConfig:
 nodes:
   - hostname: "talos-test01"
     ipAddress: "192.168.13.11"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
@@ -38,15 +38,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: "disk.transport == 'sata'"
-          minSize: 100GiB
+    # userVolumes:
+    #   - name: longhorn
+    #     provisioning:
+    #       diskSelector:
+    #         match: "disk.transport == 'sata'"
+    #       minSize: 100GiB
   - hostname: "talos-test02"
     ipAddress: "192.168.13.12"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
@@ -63,15 +63,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: "disk.transport == 'sata'"
-          minSize: 100GiB
+    # userVolumes:
+    #   - name: longhorn
+    #     provisioning:
+    #       diskSelector:
+    #         match: "disk.transport == 'sata'"
+    #       minSize: 100GiB
   - hostname: "talos-test03"
     ipAddress: "192.168.13.13"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
@@ -88,15 +88,15 @@ nodes:
         mtu: 1500
         vip:
           ip: "192.168.13.10"
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: "disk.transport == 'sata'"
-          minSize: 100GiB
+    # userVolumes:
+    #   - name: longhorn
+    #     provisioning:
+    #       diskSelector:
+    #         match: "disk.transport == 'sata'"
+    #       minSize: 100GiB
   - hostname: "talos-test04"
     ipAddress: "192.168.13.14"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
@@ -111,12 +111,12 @@ nodes:
           - network: "0.0.0.0/0"
             gateway: "192.168.13.1"
         mtu: 1500
-    userVolumes:
-      - name: longhorn
-        provisioning:
-          diskSelector:
-            match: "disk.transport == 'usb'"
-          minSize: 100GiB
+    # userVolumes:
+    #   - name: longhorn
+    #     provisioning:
+    #       diskSelector:
+    #         match: "disk.transport == 'usb'"
+    #       minSize: 100GiB
 
 # Global patches
 patches:

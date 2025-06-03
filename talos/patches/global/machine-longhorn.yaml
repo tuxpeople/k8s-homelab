@@ -2,10 +2,14 @@
 machine:
   kubelet:
     extraMounts:
-      - source: /var/mnt/longhorn
-        destination: /var/mnt/longhorn
+      - source: /var/lib/longhorn
+        destination: /var/lib/longhorn
         type: bind
         options:
           - bind
           - rshared
           - rw
+  # disks:
+  #   - device: /dev/sda
+  #     partitions:
+  #       - mountpoint: /var/lib/longhorn

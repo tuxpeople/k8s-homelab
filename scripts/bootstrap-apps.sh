@@ -43,9 +43,8 @@ function apply_namespaces() {
         fi
 
         # Apply the namespace resources
-        if kubectl create namespace "${namespace}" --dry-run=client --output=yaml \
-            | kubectl apply --server-side --filename - &>/dev/null;
-        then
+        if kubectl create namespace "${namespace}" --dry-run=client --output=yaml |
+            kubectl apply --server-side --filename - &>/dev/null; then
             log info "Namespace resource applied" "resource=${namespace}"
         else
             log error "Failed to apply namespace resource" "resource=${namespace}"
@@ -92,7 +91,7 @@ function apply_crds() {
         # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
         https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.83.0/stripped-down-crds.yaml
         # renovate: datasource=github-releases depName=kubernetes-sigs/external-dns
-        https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.17.0/docs/sources/crd/crd-manifest.yaml
+        https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.17.0/config/crd/standard/dnsendpoint.yaml
     )
 
     for crd in "${crds[@]}"; do
