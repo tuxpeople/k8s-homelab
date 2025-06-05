@@ -9,7 +9,7 @@ machine:
           - bind
           - rshared
           - rw
-  # disks:
-  #   - device: /dev/sda
-  #     partitions:
-  #       - mountpoint: /var/lib/longhorn
+  disks:
+    - device: /dev/sda
+      partitions:
+        - mountpoint: /var/lib/longhorn
