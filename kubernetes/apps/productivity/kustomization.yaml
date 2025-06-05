@@ -8,6 +8,7 @@ components:
 resources:
   - ./code-server/ks.yaml
   - ./drop/ks.yaml
+  - ./freshrss/ks.yaml
   - ./hajimari/ks.yaml
   - ./linkding/ks.yaml
   - ./obsidian/ks.yaml
