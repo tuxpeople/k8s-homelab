@@ -70,3 +70,16 @@ spec:
           - hosts:
               - *host
             secretName: ${SECRET_DOMAIN/./-}-production-tls
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        globalMounts:
+          - path: /var/www/FreshRSS/data
+            subPath: data
+            readOnly: false
+          - path: /var/www/FreshRSS/extensions
+            subPath: extensions
+            readOnly: false
