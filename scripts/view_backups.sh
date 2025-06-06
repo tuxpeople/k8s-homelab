@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 (
   printf '%s\t%s\t%s\t%s\t%s\n' 'Namespace' 'BackupName' 'PVName' 'PVCName' 'SnapshotCreatedAt'
     kubectl get backups.longhorn.io -A -o=json |

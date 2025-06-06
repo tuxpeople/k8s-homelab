@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "ShellCheck"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/**/*.sh"
+      - ".shellcheckrc"
+
+jobs:
+  lint:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@0f449ef8a073588b81c6db542f54c1fac1e0ea20 # v2.0.0
+        with:
+          scandir: scripts
+          severity: warning
+          config: .shellcheckrc
+
