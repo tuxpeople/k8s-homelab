@@ -9,6 +9,7 @@ resources:
   - ./cilium.yaml
   - ./controlplaneio.yaml
   - ./coredns.yaml
+  - ./descheduler.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./gitlab.yaml
