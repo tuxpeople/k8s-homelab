@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: ghcr.io/everywall/ladder
-              tag: v0.0.2
+              tag: v0.0.21
             env:
               RULESET: https://raw.githubusercontent.com/everywall/ladder-rules/main/ruleset.yaml
               TZ: ${TIMEZONE}
