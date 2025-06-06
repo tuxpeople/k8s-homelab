@@ -44,6 +44,8 @@ spec:
               N8N_HOST: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
               N8N_LOG_LEVEL: info
               N8N_LOG_OUTPUT: console
+              N8N_RUNNERS_ENABLED: true
+              N8N_EXPRESS_TRUST_PROXY: true
               N8N_ENCRYPTION_KEY:
                 valueFrom:
                   secretKeyRef:
@@ -56,14 +58,14 @@ spec:
               # N8N_HIRING_BANNER_ENABLED: false
               # N8N_USER_MANAGEMENT_DISABLED: false
               # N8N_AUTH_DISABLED: "false"
-              # N8N_COMMUNITY_PACKAGES_ENABLED: true
-              # N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE: true
+              N8N_COMMUNITY_PACKAGES_ENABLED: true
+              N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE: true
               # # Public API
               # N8N_PUBLIC_API_DISABLED: false
               # N8N_PUBLIC_API_SWAGGERUI_DISABLED: true
               # NODE_FUNCTION_ALLOW_BUILTIN: "*"
               # NODE_FUNCTION_ALLOW_EXTERNAL: tweetnacl
-              # N8N_METRICS: true
+              N8N_METRICS: true
               # DB_TYPE: postgresdb
               # DB_POSTGRESDB_PORT: 5432
               # N8N_USER_FOLDER: /home/n8n/app
