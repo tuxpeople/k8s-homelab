@@ -12,6 +12,7 @@ resources:
   - ./hajimari/ks.yaml
   - ./ladder/ks.yaml
   - ./linkding/ks.yaml
+  - ./n8n/ks.yaml
   - ./obsidian/ks.yaml
   - ./paperless/ks.yaml
   - ./pi-hole/ks.yaml
