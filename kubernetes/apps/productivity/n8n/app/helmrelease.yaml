@@ -44,14 +44,14 @@ spec:
               N8N_HOST: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
               N8N_LOG_LEVEL: info
               N8N_LOG_OUTPUT: console
-              N8N_RUNNERS_ENABLED: true
+              N8N_RUNNERS_ENABLED: false
               N8N_EXPRESS_TRUST_PROXY: true
               N8N_ENCRYPTION_KEY:
                 valueFrom:
                   secretKeyRef:
                     name: n8n-secret
                     key: N8N_ENCRYPTION_KEY
-              # WEBHOOK_URL: "https://n8n.${SECRET_DOMAIN}"
+              N8N_WEBHOOK_URL: "https://n8n.${SECRET_DOMAIN}"
               # N8N_PERSONALIZATION_ENABLED: true
               # N8N_VERSION_NOTIFICATIONS_ENABLED: true
               # N8N_DIAGONISTICS_ENABLED: true
