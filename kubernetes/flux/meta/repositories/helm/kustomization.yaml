@@ -19,7 +19,6 @@ resources:
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./k8up.yaml
-  - ./kubernetes-sigs-descheduler-charts.yaml
   - ./kyverno-charts.yaml
   - ./loft-charts.yaml
   - ./longhorn.yaml

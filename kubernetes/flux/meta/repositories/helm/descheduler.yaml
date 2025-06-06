@@ -6,6 +6,5 @@ metadata:
   name: descheduler
   namespace: flux-system
 spec:
-  type: oci
-  interval: 5m
-  url: https://kubernetes-sigs.github.io/descheduler/
+  interval: 1h
+  url: https://kubernetes-sigs.github.io/descheduler
