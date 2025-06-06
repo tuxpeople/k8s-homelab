@@ -27,6 +27,7 @@ resources:
   - ./neuvector.yaml
   - ./openebs.yaml
   - ./postfinance.yaml
+  - ./postgres-operator.yaml
   - ./prometheus-community.yaml
   - ./searxng.yaml
   - ./spegel.yaml
