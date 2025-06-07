@@ -147,7 +147,7 @@ def generate_manifests():
 
         # Volume manifest
         volume_manifest = {
-            "apiVersion": "longhorn.io/v1beta1",
+            "apiVersion": "longhorn.io/v1beta2",
             "kind": "Volume",
             "metadata": {"name": volume_name},
             "spec": {
