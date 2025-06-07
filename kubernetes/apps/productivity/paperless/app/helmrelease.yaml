@@ -68,6 +68,7 @@ spec:
                 cpu: 500m
                 memory: 1000M
               limits:
+                cpu: 500m
                 memory: 2500M
 
       redis:
@@ -81,6 +82,7 @@ spec:
                 cpu: 5m
                 memory: 32Mi
               limits:
+                cpu: 500m
                 memory: 128Mi
 
       tika:

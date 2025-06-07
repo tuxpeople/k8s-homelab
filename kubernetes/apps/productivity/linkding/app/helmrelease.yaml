@@ -33,11 +33,12 @@ spec:
               repository: sissbruecker/linkding
               tag: 1.40.0
             resources:
-              requests:
-                cpu: 12m
-                memory: 64M
               limits:
-                memory: 256M
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 100m
+                memory: 128Mi
             env:
               TZ: ${TIMEZONE}
               LD_SUPERUSER_NAME: tdeutsch

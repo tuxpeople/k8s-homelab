@@ -67,11 +67,12 @@ spec:
               startup:
                 enabled: false
             resources:
-              requests:
-                cpu: 5m
-                memory: 101M
               limits:
-                memory: 101M
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 100m
+                memory: 128Mi
 
       cronjob:
         type: cronjob

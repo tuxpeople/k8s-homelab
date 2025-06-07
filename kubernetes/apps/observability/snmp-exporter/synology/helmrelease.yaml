@@ -165,3 +165,10 @@ spec:
       - job_name: "snmp_exporter"
         static_configs:
           - targets: ["localhost:9116"]
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
