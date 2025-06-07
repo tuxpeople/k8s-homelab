@@ -7,3 +7,4 @@ components:
   - ../../components/common
 resources:
   - ./alertmanager-discord/ks.yaml
+  - ./pushgateway/ks.yaml
