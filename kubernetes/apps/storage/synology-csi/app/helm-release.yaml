@@ -41,7 +41,7 @@ spec:
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
-          location: "/volume2/kubernetes"
+          location: "kubernetes"
           mountPermissions: "0755"
         reclaimPolicy: Delete
         test: true
@@ -50,7 +50,7 @@ spec:
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
-          location: "/volume2/kubernetes"
+          location: "kubernetes"
         reclaimPolicy: Retain
     resources:
       limits:
