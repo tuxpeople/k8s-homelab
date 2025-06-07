@@ -26,8 +26,7 @@ spec:
       name: dsm-client-info
     storageClasses:
       nfs-delete:
-        mountOptions:
-          - vers=4.1
+        mountOptions: []
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
@@ -36,8 +35,7 @@ spec:
         reclaimPolicy: Delete
         test: true
       nfs-retain:
-        mountOptions:
-          - vers=4.1
+        mountOptions: []
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
