@@ -21,6 +21,17 @@ spec:
     remediation:
       retries: 3
   values:
+    nfs:
+      enabled: true
+      nodeServerInfo:
+        - nodeName: talos-test01
+          server: 10.20.30.40
+        - nodeName: talos-test02
+          server: 10.20.30.40
+        - nodeName: talos-test03
+          server: 10.20.30.40
+        - nodeName: talos-test04
+          server: 10.20.30.40
     clientInfoSecret:
       create: false
       name: dsm-client-info
