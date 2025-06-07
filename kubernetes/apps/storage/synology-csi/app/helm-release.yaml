@@ -21,6 +21,9 @@ spec:
     remediation:
       retries: 3
   values:
+    clientInfoSecret:
+      create: false
+      name: dsm-client-info
     storageClasses:
       nfs-delete:
         mountOptions:
