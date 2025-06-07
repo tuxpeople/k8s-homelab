@@ -8,4 +8,3 @@ components:
 resources:
   - ./longhorn/ks.yaml
   - ./synology-csi/ks.yaml
-  - ./velero/ks.yaml
