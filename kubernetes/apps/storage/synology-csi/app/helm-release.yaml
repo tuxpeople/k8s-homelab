@@ -31,7 +31,7 @@ spec:
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
-          location: "/kubernetes/csi"
+          location: "/volume2/kubernetes/csi"
           mountPermissions: "0755"
         reclaimPolicy: Delete
         test: true
@@ -41,7 +41,7 @@ spec:
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
-          location: "/kubernetes/csi"
+          location: "/volume2/kubernetes/csi"
         reclaimPolicy: Retain
     resources:
       limits:
