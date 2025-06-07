@@ -98,7 +98,8 @@ There are **5 stages** outlined below for completing this project, make sure you
     task init
     ```
 
-2. Fill out `cluster.yaml` and `nodes.yaml` configuration files using the comments in those file as a guide.
+2. Fill out `cluster.yaml` and `nodes.yaml` configuration files using the comments in those files as a guide.  \
+   The provided `cluster.sample.yaml` and `nodes.sample.yaml` show example values you can adapt for your environment.
 
 3. Template out the kubernetes and talos configuration files, if any issues come up be sure to read the error and adjust your config files accordingly.
 
