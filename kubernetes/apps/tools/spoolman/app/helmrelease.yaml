@@ -44,13 +44,60 @@ spec:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
               readOnlyRootFilesystem: true
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+          litestream: &ls
+            image:
+              repository: "mirror.gcr.io/litestream/litestream"
+              tag: "0.3.13"
+            args: ["replicate"]
+            env: &lsenv
+              LITESTREAM_ACCESS_KEY_ID:
+                valueFrom:
+                  secretKeyRef:
+                    name: "spoolman-secrets"
+                    key: "litestream-minio-id"
+              LITESTREAM_SECRET_ACCESS_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: "spoolman-secrets"
+                    key: "litestream-minio-key"
+              MINIO_ENDPOINT:
+                valueFrom:
+                  secretKeyRef:
+                    name: "spoolman-secrets"
+                    key: "litestream-minio-endpoint"
+              MINIO_BUCKET:
+                valueFrom:
+                  secretKeyRef:
+                    name: "spoolman-secrets"
+                    key: "litestream-minio-bucket"
+              AGE_PUBKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: "spoolman-secrets"
+                    key: "litestream-age-pubkey"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 1024Mi
+        initContainers:
+          01-litestream-restore:
+            <<: *ls
+            args:
+              [
+                "restore",
+                "-if-db-not-exists",
+                "-if-replica-exists",
+                "/home/app/.local/share/spoolman/spoolman.db",
+              ]
+            env:
+              <<: *lsenv
+              AGE_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: "spoolman-secrets"
+                    key: "litestream-age-secret"
     persistence:
       data:
         type: persistentVolumeClaim
@@ -58,6 +105,54 @@ spec:
         size: 5Gi
         globalMounts:
           - path: /home/app/.local/share/spoolman
+      config:
+        enabled: true
+        type: configMap
+        name: "spoolman-config"
+        advancedMounts:
+          app:
+            litestream:
+              - &lsmnt
+                subPath: "litestream-replicate"
+                path: "/etc/litestream.yml"
+                readOnly: true
+            01-litestream-restore:
+              - <<: *lsmnt
+                subPath: "litestream-restore"
+    configMaps:
+      config:
+        enabled: true
+        data:
+          litestream-replicate: |
+            dbs:
+              - path: /home/app/.local/share/spoolman/spoolman.db
+                replicas:
+                  - name: "minio"
+                    type: "s3"
+                    endpoint: "$${MINIO_ENDPOINT}"
+                    bucket: "$${MINIO_BUCKET}"
+                    path: "spoolman"
+                    force-path-style: true
+                    retention: 168h
+                    validation-interval: 24h
+                    age:
+                      recipients:
+                        - $${AGE_PUBKEY}
+          litestream-restore: |
+            dbs:
+              - path: /home/app/.local/share/spoolman/spoolman.db
+                replicas:
+                  - name: "minio"
+                    type: "s3"
+                    endpoint: "$${MINIO_ENDPOINT}"
+                    bucket: "$${MINIO_BUCKET}"
+                    path: "spoolman"
+                    force-path-style: true
+                    retention: 168h
+                    validation-interval: 24h
+                    age:
+                      identities:
+                        - $${AGE_SECRET}
     ingress:
       app:
         enabled: true
