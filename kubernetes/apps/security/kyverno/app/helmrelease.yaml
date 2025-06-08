@@ -27,16 +27,21 @@ spec:
       enabled: true
     admissionController:
       replicas: 2
-      clusterRole:
-        extraResources: &extraResources
-          - apiGroups: ["*"]
-            resources: ["*"]
-            verbs: ["get", "list", "watch"]
+      rbac:
+        clusterRole:
+          extraResources: &extraResources
+            - apiGroups: ["*"]
+              resources: ["*"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: [""]
+              resources: ["namespaces"]
+              verbs: ["get", "list", "watch", "update", "patch"]
       serviceMonitor:
         enabled: true
     backgroundController:
-      clusterRole:
-        extraResources: *extraResources
+      rbac:
+        clusterRole:
+          extraResources: *extraResources
       resources:
         requests:
           cpu: 100m
@@ -45,8 +50,9 @@ spec:
       serviceMonitor:
         enabled: true
     reportsController:
-      clusterRole:
-        extraResources: *extraResources
+      rbac:
+        clusterRole:
+          extraResources: *extraResources
       serviceMonitor:
         enabled: true
     cleanupController:
