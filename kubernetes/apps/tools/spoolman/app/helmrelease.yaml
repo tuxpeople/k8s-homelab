@@ -81,6 +81,10 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 1024Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+              readOnlyRootFilesystem: true
         initContainers:
           01-litestream-restore:
             <<: *ls
@@ -98,6 +102,17 @@ spec:
                   secretKeyRef:
                     name: "spoolman-secrets"
                     key: "litestream-age-secret"
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     persistence:
       data:
         type: persistentVolumeClaim
