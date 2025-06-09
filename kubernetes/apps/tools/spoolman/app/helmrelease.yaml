@@ -110,7 +110,7 @@ spec:
         type: configMap
         name: "spoolman-config"
         advancedMounts:
-          app:
+          spoolman:
             litestream:
               - &lsmnt
                 subPath: "litestream-replicate"
