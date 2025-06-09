@@ -115,9 +115,8 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     persistence:
       data:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
+        enabled: true
+        type: emptyDir
         globalMounts:
           - path: /home/app/.local/share/spoolman
       config:
