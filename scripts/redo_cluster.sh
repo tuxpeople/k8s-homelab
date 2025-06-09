@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 task talos:reset
 task talos:reset
 sleep 300
