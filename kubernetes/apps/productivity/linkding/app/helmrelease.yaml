@@ -82,7 +82,7 @@ spec:
                 cpu: 11m
                 memory: 50Mi
               limits:
-                cpu: 15m
+                cpu: 150m
                 memory: 60Mi
         initContainers:
           01-litestream-restore:
