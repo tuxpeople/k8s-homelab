@@ -99,9 +99,9 @@ spec:
         enabled: true
         type: emptyDir
     resources:
-      limits:
-        cpu: 500m
-        memory: 512Mi
       requests:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        cpu: 18m
+        memory: 120Mi

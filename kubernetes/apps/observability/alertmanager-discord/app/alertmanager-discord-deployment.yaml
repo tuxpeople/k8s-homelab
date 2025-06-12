@@ -22,11 +22,11 @@ spec:
               name: http
           resources:
             requests:
-              cpu: 10m
-              memory: 10Mi
+              cpu: 15m
+              memory: 100Mi
             limits:
-              cpu: 20m
-              memory: 40Mi
+              cpu: 18m
+              memory: 120Mi
           env:
             - name: DISCORD_WEBHOOK
               valueFrom:

@@ -74,6 +74,8 @@ spec:
         default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
       resources:
         requests:
-          cpu: 100m
+          cpu: 126m
+          memory: 120Mi
         limits:
-          memory: 500Mi
+          cpu: 214m
+          memory: 182Mi

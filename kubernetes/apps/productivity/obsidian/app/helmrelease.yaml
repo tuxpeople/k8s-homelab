@@ -31,12 +31,12 @@ spec:
               repository: lscr.io/linuxserver/obsidian
               tag: v1.6.3-ls12
             resources:
-              limits:
-                cpu: 500m
-                memory: 512Mi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 15m
+                memory: 259Mi
+              limits:
+                cpu: 18m
+                memory: 425Mi
     service:
       app:
         controller: *app

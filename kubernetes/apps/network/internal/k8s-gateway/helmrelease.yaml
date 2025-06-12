@@ -50,3 +50,10 @@ spec:
       - name: loop
       - name: reload
       - name: loadbalance
+    resources:
+      requests:
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        cpu: 18m
+        memory: 120Mi

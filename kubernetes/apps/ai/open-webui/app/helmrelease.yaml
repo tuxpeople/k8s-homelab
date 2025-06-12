@@ -61,12 +61,12 @@ spec:
               repository: ghcr.io/open-webui/open-webui
               tag: v0.6.14
             resources:
-              limits:
-                cpu: 500m
-                memory: 512Mi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 587m
+                memory: 728Mi
+              limits:
+                cpu: 884m
+                memory: 1099Mi
     service:
       app:
         controller: *app

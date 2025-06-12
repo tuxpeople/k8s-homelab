@@ -67,9 +67,11 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources: &resources
               requests:
-                cpu: 10m
+                cpu: 11m
+                memory: 50Mi
               limits:
-                memory: 256M
+                cpu: 15m
+                memory: 60Mi
           sync:
             image:
               repository: mirror.gcr.io/1password/connect-sync
@@ -103,8 +105,14 @@ spec:
                     path: /health
                     port: *syncPort
                   initialDelaySeconds: 15
+            resources:
+              requests:
+                cpu: 11m
+                memory: 50Mi
+              limits:
+                cpu: 15m
+                memory: 60Mi
             securityContext: *securityContext
-            resources: *resources
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

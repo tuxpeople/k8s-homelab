@@ -65,11 +65,11 @@ spec:
                   periodSeconds: 5
             resources:
               requests:
-                cpu: 500m
-                memory: 1000M
+                cpu: 23m
+                memory: 1181Mi
               limits:
-                cpu: 500m
-                memory: 2500M
+                cpu: 33m
+                memory: 1880Mi
 
       redis:
         containers:
@@ -79,11 +79,11 @@ spec:
               tag: 8.1.1
             resources:
               requests:
-                cpu: 5m
-                memory: 32Mi
+                cpu: 23m
+                memory: 100Mi
               limits:
-                cpu: 500m
-                memory: 128Mi
+                cpu: 33m
+                memory: 120Mi
 
       tika:
         containers:
@@ -91,6 +91,13 @@ spec:
             image:
               repository: ghcr.io/paperless-ngx/tika
               tag: 2.9.1-full
+            resources:
+              requests:
+                cpu: 15m
+                memory: 308Mi
+              limits:
+                cpu: 18m
+                memory: 463Mi
 
       gotenberg:
         containers:
@@ -100,6 +107,13 @@ spec:
               tag: 8.21.0
             env:
               DISABLE_GOOGLE_CHROME: "1"
+          resources:
+            requests:
+              cpu: 15m
+              memory: 334Mi
+            limits:
+              cpu: 18m
+              memory: 503Mi
 
     service:
       app:

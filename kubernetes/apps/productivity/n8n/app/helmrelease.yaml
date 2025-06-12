@@ -76,12 +76,12 @@ spec:
               readiness:
                 enabled: false
             resources:
-              limits:
-                cpu: 500m
-                memory: 512Mi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 23m
+                memory: 214Mi
+              limits:
+                cpu: 33m
+                memory: 323Mi
     defaultPodOptions:
       securityContext:
         runAsUser: 1000

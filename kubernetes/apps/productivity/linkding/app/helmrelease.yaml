@@ -33,12 +33,12 @@ spec:
               repository: sissbruecker/linkding
               tag: 1.40.0
             resources:
-              limits:
-                cpu: 500m
-                memory: 512Mi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 11m
+                memory: 155Mi
+              limits:
+                cpu: 15m
+                memory: 234Mi
             env:
               TZ: ${TIMEZONE}
               LD_SUPERUSER_NAME: tdeutsch
@@ -79,10 +79,11 @@ spec:
                     key: "litestream-age-pubkey"
             resources:
               requests:
-                cpu: 10m
-                memory: 128Mi
+                cpu: 11m
+                memory: 50Mi
               limits:
-                memory: 1024Mi
+                cpu: 15m
+                memory: 60Mi
         initContainers:
           01-litestream-restore:
             <<: *ls

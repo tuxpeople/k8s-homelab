@@ -38,15 +38,24 @@ spec:
               verbs: ["get", "list", "watch", "update", "patch"]
       serviceMonitor:
         enabled: true
+      resources:
+        requests:
+          cpu: 35m
+          memory: 100Mi
+        limits:
+          cpu: 51m
+          memory: 120Mi
     backgroundController:
       rbac:
         clusterRole:
           extraResources: *extraResources
       resources:
         requests:
-          cpu: 100m
+          cpu: 15m
+          memory: 100Mi
         limits:
-          memory: 1Gi
+          cpu: 18m
+          memory: 120Mi
       serviceMonitor:
         enabled: true
     reportsController:
@@ -55,6 +64,20 @@ spec:
           extraResources: *extraResources
       serviceMonitor:
         enabled: true
+      resources:
+        requests:
+          cpu: 23m
+          memory: 100Mi
+        limits:
+          cpu: 33m
+          memory: 120Mi
     cleanupController:
       serviceMonitor:
         enabled: true
+      resources:
+        requests:
+          cpu: 63m
+          memory: 100Mi
+        limits:
+          cpu: 116m
+          memory: 120Mi

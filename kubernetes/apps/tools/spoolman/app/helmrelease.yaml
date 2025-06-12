@@ -27,6 +27,13 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           spoolman:
+            resources:
+              requests:
+                cpu: 11m
+                memory: 120Mi
+              limits:
+                cpu: 15m
+                memory: 207Mi
             image:
               repository: ghcr.io/donkie/spoolman
               tag: 0.22.1@sha256:238ea5bfb2eeda4436c39f54e73df5fef4ee904fb7c291617588b856786fe0ef
@@ -45,6 +52,13 @@ spec:
               capabilities: { drop: ["ALL"] }
               readOnlyRootFilesystem: true
           litestream: &ls
+            resources:
+              requests:
+                cpu: 11m
+                memory: 50Mi
+              limits:
+                cpu: 16m
+                memory: 60Mi
             image:
               repository: "mirror.gcr.io/litestream/litestream"
               tag: "0.3.13"
