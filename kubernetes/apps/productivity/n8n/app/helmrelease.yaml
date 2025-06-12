@@ -80,7 +80,7 @@ spec:
                 cpu: 23m
                 memory: 214Mi
               limits:
-                cpu: 33m
+                cpu: 500m
                 memory: 323Mi
     defaultPodOptions:
       securityContext:
