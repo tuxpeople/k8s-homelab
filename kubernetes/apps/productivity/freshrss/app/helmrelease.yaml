@@ -44,7 +44,7 @@ spec:
               OIDC_X_FORWARDED_HEADERS: X-Forwarded-Host X-Forwarded-Port X-Forwarded-Proto
             envFrom:
               - secretRef:
-                  name: freshrss-secret
+                  name: freshrss-secrets
             probes:
               liveness:
                 enabled: true
