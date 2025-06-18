@@ -52,13 +52,6 @@ spec:
               capabilities: { drop: ["ALL"] }
               readOnlyRootFilesystem: true
           litestream: &ls
-            resources:
-              requests:
-                cpu: 11m
-                memory: 50Mi
-              limits:
-                cpu: 16m
-                memory: 60Mi
             image:
               repository: "mirror.gcr.io/litestream/litestream"
               tag: "0.3.13"
