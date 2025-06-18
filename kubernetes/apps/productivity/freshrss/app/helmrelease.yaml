@@ -84,6 +84,8 @@ spec:
     persistence:
       data:
         enabled: true
+        annotations:
+          k8up.io/backup: "true"
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
