@@ -107,13 +107,13 @@ spec:
               tag: 8.21.0
             env:
               DISABLE_GOOGLE_CHROME: "1"
-          resources:
-            requests:
-              cpu: 15m
-              memory: 334Mi
-            limits:
-              cpu: 18m
-              memory: 503Mi
+            resources:
+              requests:
+                cpu: 15m
+                memory: 334Mi
+              limits:
+                cpu: 18m
+                memory: 503Mi
 
     service:
       app:
