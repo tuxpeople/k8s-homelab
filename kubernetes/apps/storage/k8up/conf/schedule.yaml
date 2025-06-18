@@ -17,18 +17,21 @@ spec:
         name: k8up-credentials
         key: minio-password
   backup:
-    schedule: '*/5 * * * *'
+    schedule: "@daily-random" # damit nicht alle Backups zur gleichen Zeit starten
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
     promURL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
   check:
-    schedule: '0 1 * * 1'
+    schedule: "0 1 * * 1" # 01:00 on Monday
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 2
     promURL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
   prune:
-    schedule: '0 1 * * 0'
+    schedule: "0 1 * * 0" # 00:00 on Monday
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 2
     retention:
-      keepLast: 5
+      keepLast: 3
       keepDaily: 7
-      keepWeekly: 4
-      keepMonthly: 3
-      keepYearly: 1
+      keepWeekly: 5
+      keepMonthly: 12
