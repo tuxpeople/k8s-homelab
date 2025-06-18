@@ -82,7 +82,7 @@ spec:
                 cpu: 23m
                 memory: 100Mi
               limits:
-                cpu: 33m
+                cpu: 150m
                 memory: 120Mi
 
       tika:
@@ -96,8 +96,8 @@ spec:
                 cpu: 15m
                 memory: 308Mi
               limits:
-                cpu: 18m
-                memory: 463Mi
+                cpu: 250m
+                memory: 500Mi
 
       gotenberg:
         containers:
@@ -112,7 +112,7 @@ spec:
                 cpu: 15m
                 memory: 334Mi
               limits:
-                cpu: 18m
+                cpu: 250m
                 memory: 503Mi
 
     service:
