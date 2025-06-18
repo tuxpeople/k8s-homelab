@@ -20,12 +20,12 @@ spec:
     schedule: "@daily-random" # damit nicht alle Backups zur gleichen Zeit starten
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
-    promURL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
+    #promURL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
   check:
     schedule: "0 1 * * 1" # 01:00 on Monday
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
-    promURL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
+    #promURL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
   prune:
     schedule: "0 1 * * 0" # 00:00 on Monday
     failedJobsHistoryLimit: 2
