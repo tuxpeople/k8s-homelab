@@ -7,3 +7,5 @@ components:
   - ../../components/common
 resources:
   - ./mediabox/ks.yaml
+  - ./overseerr/ks.yaml
+  - ./tautulli/ks.yaml
