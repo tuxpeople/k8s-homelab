@@ -16,12 +16,13 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Setup mise
-        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2
-
-      - name: Install dependencies
-        run: mise run deps
+        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Check talconfig
         id: check
         run: |
+          export talosVersion=$(yq '.talosVersion'  talos/talenv.yaml)
+          export kubernetesVersion=$(yq '.kubernetesVersion'  talos/talenv.yaml)
           talhelper validate talconfig talos/talconfig.yaml
