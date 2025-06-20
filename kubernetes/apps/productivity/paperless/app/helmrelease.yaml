@@ -104,7 +104,7 @@ spec:
           gotenberg:
             image:
               repository: mirror.gcr.io/gotenberg/gotenberg
-              tag: 8.21.0
+              tag: 8.21.1
             env:
               DISABLE_GOOGLE_CHROME: "1"
             resources:
