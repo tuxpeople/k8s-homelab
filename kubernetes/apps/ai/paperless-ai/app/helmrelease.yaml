@@ -1,12 +1,11 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app paperless-ai
   namespace: ai
 spec:
-  interval: 15m
-  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  interval: 1h
   install:
     remediation:
       retries: 3

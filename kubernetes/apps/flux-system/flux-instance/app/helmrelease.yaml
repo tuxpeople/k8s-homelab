@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: flux-instance
 spec:
-  interval: 1h
   chart:
     spec:
       chart: flux-instance
@@ -14,13 +13,13 @@ spec:
         kind: HelmRepository
         name: controlplaneio
         namespace: flux-system
+  interval: 1h
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   dependsOn:
     - name: flux-operator

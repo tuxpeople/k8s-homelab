@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: &app unifi-dns
 spec:
-  interval: 1h
   chart:
     spec:
       chart: external-dns
@@ -24,7 +23,6 @@ spec:
     cleanupOnFail: true
     crds: CreateReplace
     remediation:
-      strategy: rollback
       retries: 3
   values:
     fullnameOverride: *app

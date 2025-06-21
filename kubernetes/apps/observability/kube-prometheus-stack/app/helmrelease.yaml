@@ -1,11 +1,11 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
   namespace: observability
 spec:
-  interval: 30m
-  timeout: 15m
   chart:
     spec:
       chart: kube-prometheus-stack
@@ -19,10 +19,9 @@ spec:
     remediation:
       retries: 3
   upgrade:
-    cleanupOnFail: true
     crds: Skip
+    cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     cleanPrometheusOperatorObjectNames: true

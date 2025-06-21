@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: aquasecurity
 spec:
-  interval: 30m
   chart:
     spec:
       chart: trivy-operator
@@ -14,6 +13,7 @@ spec:
         kind: HelmRepository
         name: aquasecurity
         namespace: flux-system
+  interval: 1h
   install:
     remediation:
       retries: 3

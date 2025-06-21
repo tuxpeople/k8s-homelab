@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: gitlab-runner
 spec:
-  interval: 1h
   chart:
     spec:
       chart: gitlab-runner
@@ -14,6 +13,7 @@ spec:
         kind: HelmRepository
         name: gitlab
         namespace: flux-system
+  interval: 1h
   install:
     remediation:
       retries: 3
@@ -21,6 +21,10 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  valuesFrom:
+    - kind: Secret
+      name: gitlab-k8s-runner-secrets
+      valuesKey: values.yaml
   values: # https://gitlab.com/gitlab-org/charts/gitlab-runner/blob/main/values.yaml
     imagePullPolicy: IfNotPresent
     gitlabUrl: https://gitlab.com/
@@ -34,8 +38,3 @@ spec:
           [runners.kubernetes]
             namespace = "default"
             privileged = true
-
-  valuesFrom:
-    - kind: Secret
-      name: gitlab-k8s-runner-secrets
-      valuesKey: values.yaml

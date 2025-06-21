@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: &app goldilocks
 spec:
-  interval: 1h
   chart:
     spec:
       chart: *app
@@ -14,13 +13,13 @@ spec:
         kind: HelmRepository
         name: fairwinds
         namespace: flux-system
+  interval: 1h
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     vpa:

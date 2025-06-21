@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: &app system-upgrade-controller
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -14,13 +13,13 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  interval: 1h
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     controllers:

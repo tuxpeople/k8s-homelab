@@ -6,8 +6,6 @@ metadata:
   name: grafana
   namespace: observability
 spec:
-  interval: 30m
-  timeout: 15m
   chart:
     spec:
       chart: grafana
@@ -21,10 +19,9 @@ spec:
     remediation:
       retries: 3
   upgrade:
-    cleanupOnFail: true
     crds: Skip
+    cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     assertNoLeakedSecrets: false
