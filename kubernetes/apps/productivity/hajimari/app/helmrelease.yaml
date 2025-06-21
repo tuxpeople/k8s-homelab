@@ -6,7 +6,7 @@ metadata:
   name: &app hajimari
   namespace: default
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: hajimari

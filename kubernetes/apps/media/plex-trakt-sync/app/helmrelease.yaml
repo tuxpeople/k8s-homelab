@@ -1,11 +1,12 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app plex-trakt-sync
   namespace: media
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: app-template

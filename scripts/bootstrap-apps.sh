@@ -92,6 +92,9 @@ function apply_crds() {
         https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.83.0/stripped-down-crds.yaml
         # renovate: datasource=github-releases depName=kubernetes-sigs/external-dns
         https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.17.0/config/crd/standard/dnsendpoint.yaml
+        # renovate: registryUrl=https://k8up-io.github.io/k8up chart=k8up
+        https://github.com/k8up-io/k8up/releases/download/k8up-4.8.3/k8up-crd.yaml
+
     )
 
     for crd in "${crds[@]}"; do
