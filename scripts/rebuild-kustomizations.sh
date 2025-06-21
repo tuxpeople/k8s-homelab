@@ -34,13 +34,8 @@ EOF
         yamlfix kustomization.yaml
         cd ${_gitdir}
     else
-        cat <<EOF >kustomization.yaml
-# yaml-language-server: \$schema=https://json.schemastore.org/kustomization
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources: []
-EOF
+        # Remove lingering kustomization files when no resources are present
+        rm -f kustomization.yaml
     fi
     cd ${_gitdir}
 done
