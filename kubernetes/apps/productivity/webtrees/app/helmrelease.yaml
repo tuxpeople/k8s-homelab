@@ -3,8 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: webtrees
-  namespace: productivity
+  name: &app webtrees
 spec:
   chart:
     spec:
