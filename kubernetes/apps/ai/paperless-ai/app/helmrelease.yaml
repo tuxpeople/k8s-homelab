@@ -6,8 +6,7 @@ metadata:
   name: &app paperless-ai
   namespace: ai
 spec:
-  interval: 15m
-  timeout: 15m
+  interval: 1h
   chart:
     spec:
       chart: app-template

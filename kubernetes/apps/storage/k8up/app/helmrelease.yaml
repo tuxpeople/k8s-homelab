@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app k8up
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: k8up

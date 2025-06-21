@@ -5,8 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app open-webui
 spec:
-  interval: 15m
-  timeout: 15m
+  interval: 1h
   chart:
     spec:
       chart: app-template

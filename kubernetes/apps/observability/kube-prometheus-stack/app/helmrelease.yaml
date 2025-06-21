@@ -5,8 +5,7 @@ metadata:
   name: kube-prometheus-stack
   namespace: observability
 spec:
-  interval: 30m
-  timeout: 15m
+  interval: 1h
   chart:
     spec:
       chart: kube-prometheus-stack
@@ -20,10 +19,9 @@ spec:
     remediation:
       retries: 3
   upgrade:
-    cleanupOnFail: true
     crds: Skip
+    cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     cleanPrometheusOperatorObjectNames: true
