@@ -21,6 +21,10 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  valuesFrom:
+    - kind: Secret
+      name: gitlab-k8s-runner-secrets
+      valuesKey: values.yaml
   values: # https://gitlab.com/gitlab-org/charts/gitlab-runner/blob/main/values.yaml
     imagePullPolicy: IfNotPresent
     gitlabUrl: https://gitlab.com/
@@ -35,7 +39,3 @@ spec:
             namespace = "default"
             privileged = true
 
-  valuesFrom:
-    - kind: Secret
-      name: gitlab-k8s-runner-secrets
-      valuesKey: values.yaml

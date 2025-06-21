@@ -5,7 +5,7 @@ metadata:
   name: webtrees-db
   namespace: productivity
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: mariadb
