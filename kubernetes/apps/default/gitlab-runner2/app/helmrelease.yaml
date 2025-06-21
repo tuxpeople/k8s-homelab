@@ -1,11 +1,10 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gitlab-runner2
+  name: &app gitlab-runner2
 spec:
-  interval: 1h
   chart:
     spec:
       chart: gitlab-runner
@@ -14,6 +13,7 @@ spec:
         kind: HelmRepository
         name: gitlab
         namespace: flux-system
+  interval: 1h
   install:
     remediation:
       retries: 3
@@ -21,6 +21,10 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  valuesFrom:
+    - kind: Secret
+      name: gitlab-k8s-runner-secrets2
+      valuesKey: values.yaml
   values: # https://gitlab.com/gitlab-org/charts/gitlab-runner2/blob/main/values.yaml
     imagePullPolicy: IfNotPresent
     gitlabUrl: https://gitlab.com/
@@ -34,8 +38,3 @@ spec:
           [runners.kubernetes]
             namespace = "default"
             privileged = true
-
-  valuesFrom:
-    - kind: Secret
-      name: gitlab-k8s-runner-secrets2
-      valuesKey: values.yaml

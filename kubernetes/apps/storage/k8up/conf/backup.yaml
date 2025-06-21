@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/k8up.io/backup_v1.json
 apiVersion: k8up.io/v1
 kind: Backup
 metadata:
