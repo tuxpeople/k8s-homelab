@@ -30,7 +30,7 @@ spec:
           app:
             env:
               TZ: ${TIMEZONE}
-              WEBUI_URL: "ai.${SECRET_DOMAIN}"
+              WEBUI_URL: "https://ai.${SECRET_DOMAIN}"
               WEBUI_NAME: "Toemu AI"
               ENABLE_LOGIN_FORM: false
               DEFAULT_USER_ROLE: user
