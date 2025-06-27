@@ -35,7 +35,7 @@ spec:
               ENABLE_LOGIN_FORM: false
               DEFAULT_USER_ROLE: user
               DEFAULT_MODELS: default
-              CORS_ALLOW_ORIGIN: ${SECRET_DOMAIN}
+              CORS_ALLOW_ORIGIN: "https://ai.${SECRET_DOMAIN}"
               ENABLE_OLLAMA_API: true
               OLLAMA_BASE_URL: http://192.168.8.25:11434
               ENABLE_RAG_WEB_SEARCH: true
