@@ -12,7 +12,7 @@ spec:
       name: k8up-credentials
       key: repo-password
     s3:
-      endpoint: http://minio.lab.tdeutsch.ch:9091
+      endpoint: http://192.168.8.9:9091
       bucket: k8up
       accessKeyIDSecretRef:
         name: k8up-credentials

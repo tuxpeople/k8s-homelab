@@ -379,7 +379,7 @@ spec:
     #         scheme: http
     #         static_configs:
     #           - targets:
-    #               - minio.lab.tdeutsch.ch:9091
+    #               - 192.168.8.9:9091
     #       - job_name: mystrom-exporter
     #         scrape_interval: 1m
     #         metrics_path: /device

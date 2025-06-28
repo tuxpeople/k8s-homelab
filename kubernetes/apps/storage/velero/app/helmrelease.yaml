@@ -37,7 +37,7 @@ spec:
           config:
             region: minio
             s3ForcePathStyle: true
-            s3Url: http://minio.lab.tdeutsch.ch:9091
+            s3Url: http://192.168.8.9:9091
       volumeSnapshotLocation:
         - name: default
           provider: csi
