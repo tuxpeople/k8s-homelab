@@ -34,6 +34,7 @@ spec:
           provider: aws
           prefix: csi
           default: true
+          ttl: 720h # Backup bleibt 30 Tage
           config:
             region: minio
             s3ForcePathStyle: true
