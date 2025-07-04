@@ -27,6 +27,7 @@ resources:
   - ./mittwald-charts.yaml
   - ./neuvector.yaml
   - ./openebs.yaml
+  - ./piraeus.yaml
   - ./postfinance.yaml
   - ./postgres-operator.yaml
   - ./prometheus-community.yaml
