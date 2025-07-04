@@ -9,3 +9,4 @@ resources:
   - ./k8up/ks.yaml
   - ./longhorn/ks.yaml
   - ./synology-csi/ks.yaml
+  - ./velero/ks.yaml
