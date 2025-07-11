@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/ollama/ollama
-              tag: 0.9.5
+              tag: 0.9.6
             env:
               - name: OLLAMA_HOST
                 value: 0.0.0.0
