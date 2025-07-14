@@ -30,7 +30,7 @@ spec:
           init-config:
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.30.5
+              tag: 1.30.7
             env:
               FOLDER: /config
               LABEL: gatus.io/enabled
@@ -50,7 +50,7 @@ spec:
           app:
             image:
               repository: ghcr.io/twin/gatus
-              tag: v5.18.1
+              tag: v5.20.0
             env:
               TZ: Europe/Zurich
               GATUS_CONFIG_PATH: /config
