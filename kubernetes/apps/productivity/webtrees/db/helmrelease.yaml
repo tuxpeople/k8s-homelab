@@ -35,10 +35,19 @@ spec:
             secretKeyRef:
               name: mariadb-secret
               key: mariadb-root-password
+    image:
+      repository: bitnamilegacy/mariadb
     volumePermissions:
       enabled: true
+      image:
+        repository: bitnamilegacy/os-shell
+    metrics:
+      image:
+        repository: bitnamilegacy/mysqld-exporter
     global:
       storageClass: ${MAIN_SC}
+      security:
+        allowInsecureImages: true
     resources:
       limits:
         cpu: 500m
