@@ -19,6 +19,7 @@ metadata:
       "live" image details. As a result, it requires access to the source registry and the existence
       of the target image to verify those details.
 spec:
+  background: false
   rules:
     - name: redirect-docker
       match:
@@ -29,6 +30,11 @@ spec:
               operations:
                 - CREATE
                 - UPDATE
+      exclude:
+        any:
+          - resources:
+              namespaces:
+                - storage
       mutate:
         foreach:
           - list: request.object.spec.initContainers[]
