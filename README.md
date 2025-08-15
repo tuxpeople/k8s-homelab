@@ -88,6 +88,9 @@ task bootstrap:apps
 # Force Flux reconciliation
 task reconcile
 
+# Debug cluster resources
+task debug
+
 # Talos node operations
 task talos:apply-node IP=<node-ip> MODE=<auto|try|reboot>
 task talos:upgrade-node IP=<node-ip>
