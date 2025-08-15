@@ -74,6 +74,15 @@
       },
     },
     {
+      description: "Group app-template updates per application",
+      groupName: "app-template-{{packageFileDir}}",
+      matchPackageNames: ["bjw-s-labs/helm-charts"],
+      matchDatasources: ["helm", "github-releases"],
+      group: {
+        commitMessageTopic: "app-template in {{packageFileDir}}",
+      },
+    },
+    {
       description: "Auto-merge GitHub Actions",
       matchManagers: ["github-actions"],
       automerge: true,
@@ -167,6 +176,17 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)",
       ],
       datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+    },
+    {
+      description: "Update app-template schema URLs in values files",
+      customType: "regex",
+      managerFilePatterns: ["/(^|/)kubernetes/.+/values\\.ya?ml$/"],
+      matchStrings: [
+        "# yaml-language-server: \\$schema=https://raw\\.githubusercontent\\.com/bjw-s-labs/helm-charts/app-template-(?<currentValue>[^/]+)/charts/other/app-template/values\\.schema\\.json"
+      ],
+      datasourceTemplate: "github-releases",
+      depNameTemplate: "bjw-s-labs/helm-charts",
+      extractVersionTemplate: "app-template-{{version}}",
     },
   ],
 }
