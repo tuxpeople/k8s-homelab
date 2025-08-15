@@ -31,7 +31,6 @@ resources:
   - ./postfinance.yaml
   - ./postgres-operator.yaml
   - ./prometheus-community.yaml
-  - ./searxng.yaml
   - ./spegel.yaml
   - ./stakater.yaml
   - ./synology-csi.yaml
