@@ -67,17 +67,14 @@ The cluster runs various applications organized by category:
 
 ## 🔧 Management Tools
 
-### Template System
-This repository uses [makejinja](https://github.com/mirkolenz/makejinja) to generate Kubernetes and Talos configurations from Jinja2 templates. Configuration is driven by:
-- `cluster.yaml` - Main cluster configuration
-- `nodes.yaml` - Node-specific settings (not present in this deployment)
+### Configuration Management
+This repository uses direct manifest editing for Kubernetes configurations. The cluster has moved beyond template-based generation to direct YAML editing for better simplicity and maintainability.
 
 ### Task Runner
 All operations are managed through [Task](https://taskfile.dev/) with the `Taskfile.yaml`. Common commands:
 
 ```bash
-# Generate all configuration files
-task configure
+# Core cluster operations
 
 # Bootstrap Talos cluster
 task bootstrap:talos

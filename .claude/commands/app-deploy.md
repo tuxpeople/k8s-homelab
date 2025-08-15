@@ -6,7 +6,7 @@ argument-hint: [app-name or category] - Name of app to deploy or category (ai, m
 # App Deployment Protocol
 
 **MISSION**: Guide the structured deployment of new applications to the k8s-homelab cluster
-following GitOps best practices, template system patterns, and security requirements.
+following GitOps best practices, direct manifest editing, and security requirements.
 
 **SCOPE**: $ARGUMENTS
 
@@ -16,7 +16,7 @@ following GitOps best practices, template system patterns, and security requirem
 
 1. **Application Research** - Find suitable Helm charts and understand requirements
 2. **Category & Placement** - Determine correct app category and namespace strategy
-3. **Template Creation** - Create templates following cluster patterns
+3. **Manifest Creation** - Create Kubernetes manifests following cluster patterns
 4. **Security Integration** - Configure secrets, ingress, and network policies
 5. **Resource Planning** - Set appropriate requests, limits, and storage
 6. **Testing & Validation** - Deploy safely and verify functionality
@@ -30,9 +30,9 @@ following GitOps best practices, template system patterns, and security requirem
 - Identify security considerations and best practices
 - Determine integration points with existing cluster services
 
-**Template-Based Implementation:**
+**Direct Manifest Implementation:**
 
-- Create templates in `templates/kubernetes/apps/[category]/[app]/`
+- Create manifests in `kubernetes/apps/[category]/[app]/`
 - Follow established patterns from existing applications
 - Configure secrets using SOPS or ExternalSecrets
 - Set up ingress routing (internal vs external)
@@ -49,12 +49,11 @@ following GitOps best practices, template system patterns, and security requirem
 ```yaml
 1. Research: Chart options, requirements, best practices
 2. Planning: Category, namespace, dependencies, security
-3. Templates: Create Jinja2 templates following cluster patterns
+3. Manifests: Create Kubernetes manifests following cluster patterns
 4. Configuration: Helm values, ingress, secrets, storage
-5. Generation: Run `task configure` to create manifests
-6. Validation: Schema validation and dry-run testing
-7. Deployment: Commit templates and monitor Flux reconciliation
-8. Testing: Verify functionality and access
+5. Validation: Schema validation and dry-run testing
+6. Deployment: Commit manifests and monitor Flux reconciliation
+7. Testing: Verify functionality and access
 ```
 
 ## Application Categories & Patterns
@@ -76,53 +75,51 @@ kubernetes/apps/
 
 **Standard App Structure:**
 ```
-templates/kubernetes/apps/[category]/[app-name]/
+kubernetes/apps/[category]/[app-name]/
 ├── app/
-│   ├── helmrelease.yaml.j2     # Main Helm chart deployment
-│   ├── kustomization.yaml.j2   # Kustomize configuration
-│   └── externalsecret.yaml.j2  # Secret configuration (if needed)
-├── ks.yaml.j2                  # Flux Kustomization resource
-└── secrets.sops.yaml.j2        # SOPS encrypted secrets (if needed)
+│   ├── helmrelease.yaml        # Main Helm chart deployment
+│   ├── kustomization.yaml      # Kustomize configuration
+│   └── externalsecret.yaml     # Secret configuration (if needed)
+├── ks.yaml                     # Flux Kustomization resource
+└── secrets.sops.yaml           # SOPS encrypted secrets (if needed)
 ```
 
-## Template Patterns & Examples
+## Manifest Patterns & Examples
 
-**Basic HelmRelease Template:**
+**Basic HelmRelease:**
 ```yaml
-#{%- set app = "app-name" -%}#
-#{%- set namespace = "category" -%}#
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: #{app}#
-  namespace: #{namespace}#
+  name: app-name
+  namespace: category
 spec:
   interval: 30m
   chart:
     spec:
-      chart: #{app}#
+      chart: app-name
       version: "1.0.0"
       sourceRef:
         kind: HelmRepository
-        name: #{app}#
+        name: app-name
         namespace: flux-system
   values:
     global:
-      nameOverride: #{app}#
+      nameOverride: app-name
     ingress:
       main:
         enabled: true
         ingressClassName: "internal"  # or "external" for public access
         hosts:
-          - host: "#{app}#.#{cluster.domain}#"
+          - host: "app-name.eighty-three.me"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "#{app}#.#{cluster.domain}#"
-            secretName: "#{cluster.domain | replace('.', '-')}#-production-tls"
+              - "app-name.eighty-three.me"
+            secretName: "eighty-three-me-production-tls"
     resources:
       requests:
         cpu: 100m
@@ -132,17 +129,15 @@ spec:
         memory: 512Mi
 ```
 
-**Kustomization Template:**
+**Kustomization:**
 ```yaml
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: #{namespace}#
+namespace: category
 resources:
   - ./helmrelease.yaml
-#{%- if secrets_needed %}#
-  - ./externalsecret.yaml
-#{%- endif %}#
+  - ./externalsecret.yaml  # if secrets needed
 ```
 
 **Flux Kustomization Resource:**
@@ -151,18 +146,18 @@ resources:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: #{app}#-#{namespace}#
+  name: app-name-category
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./kubernetes/apps/#{namespace}#/#{app}#/app"
+  path: "./kubernetes/apps/category/app-name/app"
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
   wait: false
   dependsOn:
-    - name: #{namespace}#-namespace
+    - name: category-namespace
 ```
 
 ## Security & Configuration Guidelines
@@ -236,21 +231,21 @@ resources:
 3. Check resource requirements and dependencies
 4. Identify security considerations
 
-**Template Creation:**
+**Manifest Creation:**
 1. Choose appropriate category and namespace
-2. Create template structure following patterns
+2. Create manifest structure following patterns
 3. Configure Helm values for cluster environment
 4. Set up ingress routing and TLS
 5. Configure secrets if needed
 
 **Validation & Testing:**
-1. Run `task configure` to generate manifests
-2. Run `task validate-schemas` for validation
-3. Review generated YAML files
-4. Test with `kubectl apply --dry-run`
+1. Review created YAML files
+2. Test with `kubectl apply --dry-run`
+3. Validate YAML syntax and Kubernetes resources
+4. Check dependencies and resource references
 
 **Deployment & Monitoring:**
-1. Commit templates to Git repository
+1. Commit manifests to Git repository
 2. Monitor Flux reconciliation: `flux get hr -A`
 3. Check pod status: `kubectl get pods -n <namespace>`
 4. Verify ingress and connectivity
@@ -296,10 +291,9 @@ This command establishes app deployment workflow:
 ## Quick Reference
 
 ```bash
-# Template workflow
-task configure                    # Generate manifests from templates
-task validate-schemas            # Validate configuration
-kubectl apply --dry-run=client  # Test generated manifests
+# Manifest validation workflow
+kubectl apply --dry-run=client  # Test created manifests
+yq eval . manifest.yaml          # Validate YAML syntax
 
 # Deployment monitoring
 flux get hr -A                  # Monitor HelmRelease status

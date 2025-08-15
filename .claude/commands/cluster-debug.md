@@ -19,7 +19,7 @@ solutions for the k8s-homelab cluster.
 2. **Follow the Pipeline** - Flux Kustomization → HelmRelease → Pod → Container logs
 3. **Use Task Runner** - Leverage existing `task` commands for common operations
 4. **Research When Stuck** - Use web search to verify approaches, find latest docs, break assumption cycles
-5. **Template Awareness** - Remember: most files are generated, edit templates in `templates/` directory
+5. **Direct Editing** - Files are edited directly in `kubernetes/` directory
 6. **Collaborative** - Present findings, ask questions, propose solutions
 
 ## What I Will Do
@@ -48,8 +48,7 @@ solutions for the k8s-homelab cluster.
 
 **GitOps Changes Only:**
 
-- Edit templates in `templates/` directory (NOT generated files)
-- Run `task configure` to regenerate manifests after template changes
+- Edit manifests directly in `kubernetes/` directory
 - Run pre-commit checks if available
 - Stop and wait for you to commit/push
 - Never modify cluster directly with kubectl apply/patch/delete
@@ -64,7 +63,7 @@ solutions for the k8s-homelab cluster.
 5. Logs: Application and system container logs
 6. Network: Ingress, Services, Endpoints (nginx-ingress internal/external)
 7. Dependencies: Databases, Longhorn storage, external services
-8. Templates: Check if issue requires template modification
+8. Manifests: Check if issue requires manifest modification
 ```
 
 ## Read-Only Operations
@@ -86,12 +85,11 @@ solutions for the k8s-homelab cluster.
 - `flux get hr -A` - HelmRelease status
 - `flux reconcile kustomization <name> --with-source` - Force reconciliation
 
-**Template Operations:**
+**Manifest Operations:**
 
-- Check if files are generated (look for template comments)
-- Identify source templates in `templates/` directory
-- `task configure` - Regenerate from templates (after template edits)
-- `task validate-schemas` - Validate configuration schemas
+- Edit Kubernetes manifests directly in `kubernetes/` directory
+- Validate YAML syntax with standard tools
+- Test changes with `kubectl apply --dry-run`
 
 **PROHIBITED**: apply, delete, patch, edit, scale, or any cluster mutations
 
@@ -135,11 +133,10 @@ This command establishes our collaborative workflow:
 1. **Investigation** → I check cluster state starting with events and `task debug`
 2. **Analysis** → I identify root causes and propose solutions
 3. **Discussion** → We discuss options and agree on approach
-4. **Implementation** → I modify templates (NOT generated files) or suggest task commands
-5. **Generation** → I run `task configure` if templates were modified
-6. **Validation** → I run available validation tasks
-7. **Handoff** → You commit/push changes
-8. **Next Cycle** → Return to step 1 to verify resolution or identify new issues
+4. **Implementation** → I modify manifests directly or suggest task commands
+5. **Validation** → I run available validation tasks
+6. **Handoff** → You commit/push changes
+7. **Next Cycle** → Return to step 1 to verify resolution or identify new issues
 
 ## Critical Reminders
 
@@ -167,9 +164,9 @@ kubectl get pods -n <namespace> -o wide
 kubectl logs -n <namespace> <pod> -f
 kubectl describe pod -n <namespace> <pod>
 
-# Template operations (after editing templates)
-task configure
-task validate-schemas
+# Manifest validation
+kubectl apply --dry-run=client -f manifest.yaml
+yq eval . manifest.yaml
 
 # Force Flux reconciliation
 flux reconcile kustomization <app-name> --with-source
