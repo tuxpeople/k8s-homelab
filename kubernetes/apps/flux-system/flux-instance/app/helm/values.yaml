@@ -15,3 +15,28 @@ instance:
     url: "https://github.com/tuxpeople/k8s-homelab.git"
     ref: "refs/heads/main"
     path: kubernetes/flux/cluster
+
+# Resource requests based on VPA recommendations
+controllerManager:
+  resources:
+    requests:
+      memory: "140Mi"  # VPA recommends 121Mi for source-controller
+      cpu: "30m"       # VPA recommends 23m
+
+kustomizeController:
+  resources:
+    requests:
+      memory: "120Mi"  # VPA recommends 105Mi
+      cpu: "140m"      # VPA recommends 126m
+
+helmController:
+  resources:
+    requests:
+      memory: "250Mi"  # VPA recommends 215Mi
+      cpu: "30m"       # VPA recommends 23m
+
+notificationController:
+  resources:
+    requests:
+      memory: "120Mi"  # VPA recommends 100Mi
+      cpu: "20m"       # VPA recommends 15m

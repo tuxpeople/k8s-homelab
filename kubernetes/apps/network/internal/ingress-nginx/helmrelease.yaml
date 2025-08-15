@@ -75,8 +75,8 @@ spec:
         default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
       resources:
         requests:
-          cpu: 126m
+          cpu: 30m   # VPA recommends 23m, rounded up (internal has less traffic)
           memory: 120Mi
         limits:
-          cpu: 214m
+          cpu: 200m
           memory: 182Mi

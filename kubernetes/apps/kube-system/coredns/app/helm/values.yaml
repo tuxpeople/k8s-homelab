@@ -49,3 +49,9 @@ tolerations:
   - key: node-role.kubernetes.io/control-plane
     operator: Exists
     effect: NoSchedule
+
+# Resource requests based on VPA recommendations
+resources:
+  requests:
+    memory: "120Mi"  # VPA recommends 100Mi
+    cpu: "120m"      # VPA recommends 109m

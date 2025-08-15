@@ -1,3 +1,8 @@
 ---
 serviceMonitor:
   create: true
+
+resources:
+  requests:
+    memory: "200Mi"  # VPA recommends 175Mi, rounded up
+    cpu: "30m"       # VPA recommends 23m, rounded up
