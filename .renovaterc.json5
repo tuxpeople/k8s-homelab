@@ -35,6 +35,7 @@
       matchUpdateTypes: ["patch"],
       automerge: true,
       automergeType: "pr",
+      ignoreTests: false,
     },
     {
       description: "Cert-Manager Group",
