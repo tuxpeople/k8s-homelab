@@ -9,6 +9,10 @@ on:
       - "scripts/**/*.sh"
       - ".shellcheckrc"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     name: ShellCheck

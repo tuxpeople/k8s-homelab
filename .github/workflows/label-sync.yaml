@@ -8,6 +8,10 @@ on:
     branches: ["main"]
     paths: [".github/labels.yaml"]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   label-sync:
     name: Label Sync
