@@ -1,0 +1,205 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "App Template Validation"
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "kubernetes/**/values.yaml"
+      - "kubernetes/**/helmrelease.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect-changes:
+    name: Detect App Template Changes
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.changes.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c # v46.0.5
+        with:
+          files: |
+            kubernetes/**/values.yaml
+            kubernetes/**/helmrelease.yaml
+          json: true
+          escape_json: false
+
+      - name: Detect App Template Applications
+        id: changes
+        run: |
+          echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
+          
+          apps=()
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            # Check if this is an app-template application
+            app_dir=$(dirname "$file")
+            if [[ -f "$app_dir/helmrelease.yaml" ]] && grep -q "chart: app-template" "$app_dir/helmrelease.yaml" 2>/dev/null; then
+              # Check if it has a values.yaml with schema
+              if [[ -f "$app_dir/values.yaml" ]] && head -1 "$app_dir/values.yaml" | grep -q "yaml-language-server.*app-template"; then
+                echo "Found app-template app: $app_dir"
+                apps+=("$app_dir")
+              fi
+            fi
+          done
+          
+          # Remove duplicates and create JSON array
+          unique_apps=($(printf "%s\n" "${apps[@]}" | sort -u))
+          
+          if [ ${#unique_apps[@]} -eq 0 ]; then
+            echo "matrix=[]" >> $GITHUB_OUTPUT
+          else
+            printf -v joined '"%s",' "${unique_apps[@]}"
+            echo "matrix=[${joined%,}]" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "Matrix: $(cat $GITHUB_OUTPUT)"
+
+  validate-schemas:
+    name: Validate App Template Schemas
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.matrix != '[]' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.4
+        with:
+          node-version: '20'
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli
+
+      - name: Extract Schema URL and Chart Version
+        id: extract
+        working-directory: ${{ matrix.app }}
+        run: |
+          # Extract schema URL from values.yaml
+          schema_url=$(head -1 values.yaml | grep -o 'https://[^"]*\.json' || echo "")
+          echo "schema_url=$schema_url" >> $GITHUB_OUTPUT
+          
+          # Extract chart version from helmrelease.yaml
+          chart_version=$(yq eval '.spec.chart.spec.version' helmrelease.yaml)
+          echo "chart_version=$chart_version" >> $GITHUB_OUTPUT
+          
+          # Extract app name
+          app_name=$(basename "${{ matrix.app }}")
+          echo "app_name=$app_name" >> $GITHUB_OUTPUT
+          
+          echo "Schema URL: $schema_url"
+          echo "Chart Version: $chart_version"
+          echo "App Name: $app_name"
+
+      - name: Download Schema
+        if: ${{ steps.extract.outputs.schema_url != '' }}
+        working-directory: ${{ matrix.app }}
+        run: |
+          echo "Downloading schema from: ${{ steps.extract.outputs.schema_url }}"
+          curl -sL "${{ steps.extract.outputs.schema_url }}" -o schema.json
+          
+          # Check if schema was downloaded successfully
+          if [ ! -s schema.json ]; then
+            echo "❌ Failed to download schema or schema is empty"
+            exit 1
+          fi
+          
+          echo "✅ Schema downloaded successfully"
+
+      - name: Validate Values Against Schema
+        if: ${{ steps.extract.outputs.schema_url != '' }}
+        working-directory: ${{ matrix.app }}
+        continue-on-error: true
+        id: validate
+        run: |
+          echo "🔍 Validating values.yaml against app-template schema..."
+          
+          # Run validation and capture output
+          if ajv validate -s schema.json -d values.yaml --verbose 2>&1 | tee validation.log; then
+            echo "✅ Validation passed for ${{ steps.extract.outputs.app_name }}"
+            echo "status=success" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Validation failed for ${{ steps.extract.outputs.app_name }}"
+            echo "status=failed" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check Version Mismatch
+        working-directory: ${{ matrix.app }}
+        run: |
+          schema_version=""
+          if [[ "${{ steps.extract.outputs.schema_url }}" =~ app-template-([^/]+)/ ]]; then
+            schema_version="${BASH_REMATCH[1]}"
+          fi
+          
+          chart_version="${{ steps.extract.outputs.chart_version }}"
+          
+          echo "Schema version: $schema_version"
+          echo "Chart version: $chart_version"
+          
+          if [[ "$schema_version" != "$chart_version" ]]; then
+            echo "⚠️  Version mismatch detected:"
+            echo "  - HelmRelease chart version: $chart_version"
+            echo "  - Values schema version: $schema_version"
+            echo "  This may indicate the schema URL needs updating."
+          else
+            echo "✅ Schema and chart versions match"
+          fi
+
+      - name: Post Validation Results
+        if: always()
+        uses: mshick/add-pr-comment@b8f338c590a895d50bcbfa6c5859251edc8952fc # v2.8.2
+        with:
+          message-id: "app-template-validation-${{ matrix.app }}"
+          message: |
+            ## App Template Validation: `${{ steps.extract.outputs.app_name }}`
+            
+            **Location:** `${{ matrix.app }}`  
+            **Chart Version:** `${{ steps.extract.outputs.chart_version }}`
+            
+            ${{ steps.validate.outputs.status == 'success' && '✅ **Validation Passed**' || '❌ **Validation Failed**' }}
+            
+            ${{ steps.validate.outputs.status == 'failed' && format('
+            <details>
+            <summary>Validation Errors</summary>
+            
+            ```
+            {0}
+            ```
+            </details>', steps.validate.outputs.errors) || '' }}
+            
+            ---
+            *This comment will be updated if you push new changes to this PR.*
+
+  validation-status:
+    name: App Template Validation Status
+    needs: ["detect-changes", "validate-schemas"]
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    steps:
+      - name: Check validation results
+        run: |
+          if [[ "${{ needs.detect-changes.outputs.matrix }}" == "[]" ]]; then
+            echo "ℹ️ No app-template applications with schema validation found in this PR"
+            exit 0
+          fi
+          
+          if [[ "${{ contains(needs.validate-schemas.result, 'failure') }}" == "true" ]]; then
+            echo "❌ Some app-template validations failed"
+            echo "Please check the validation results and fix any schema violations"
+            exit 1
+          fi
+          
+          echo "✅ All app-template validations passed"
