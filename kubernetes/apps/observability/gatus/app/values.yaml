@@ -1,0 +1,115 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  gatus:
+    annotations:
+      reloader.stakater.com/auto: "true"
+    initContainers:
+      init-config:
+        image:
+          repository: ghcr.io/kiwigrid/k8s-sidecar
+          tag: 1.30.9
+        env:
+          FOLDER: /config
+          LABEL: gatus.io/enabled
+          NAMESPACE: ALL
+          RESOURCE: both
+          UNIQUE_FILENAMES: true
+          METHOD: WATCH
+        restartPolicy: Always
+        resources: &resources
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+    containers:
+      app:
+        image:
+          repository: ghcr.io/twin/gatus
+          tag: v5.22.0
+        env:
+          TZ: Europe/Zurich
+          GATUS_CONFIG_PATH: /config
+          GATUS_DELAY_START_SECONDS: 5
+          CUSTOM_WEB_PORT: &port 80
+        envFrom:
+          - secretRef:
+              name: gatus-discord-webhook-secret
+        probes:
+          liveness: &probes
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: &path /health
+                port: *port
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+              failureThreshold: 3
+          readiness: *probes
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+        resources: *resources
+
+service:
+  app:
+    controller: gatus
+    ports:
+      http:
+        port: *port
+
+serviceMonitor:
+  app:
+    serviceName: gatus
+    endpoints:
+      - port: http
+        scheme: http
+        path: /metrics
+        interval: 1m
+        scrapeTimeout: 10s
+
+ingress:
+  app:
+    className: external
+    annotations:
+      gatus.io/path: *path
+      hajimari.io/icon: simple-icons:statuspage
+      hajimari.io/url: https://status.${PUBLIC_DOMAIN}
+    hosts:
+      - host: &host "status.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
+    tls:
+      - hosts:
+          - *host
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
+
+serviceAccount:
+  create: true
+  name: gatus
+
+persistence:
+  config:
+    type: emptyDir
+  config-file:
+    type: configMap
+    name: gatus-configmap
+    globalMounts:
+      - path: /config/config.yaml
+        subPath: config.yaml
+        readOnly: true
+  data:
+    type: emptyDir
+
+defaultPodOptions:
+  dnsConfig:
+    options:
+      - { name: ndots, value: "1" }

@@ -10,5 +10,8 @@ configMapGenerator:
   - name: gatus-configmap
     files:
       - config.yaml=./config/config.yaml
+  - name: gatus-values
+    files:
+      - values.yaml
 generatorOptions:
   disableNameSuffixHash: true
