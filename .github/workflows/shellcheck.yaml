@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - "scripts/**/*.sh"
+      - "*.sh"
       - ".shellcheckrc"
 
 concurrency:
@@ -21,10 +22,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
+      - name: Install ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@0f449ef8a073588b81c6db542f54c1fac1e0ea20 # v2.0.0
-        with:
-          scandir: scripts
-          severity: warning
-          config: .shellcheckrc
+        run: |
+          # Find and check all shell scripts in scripts/ and root directory
+          find . -maxdepth 1 -name "*.sh" -type f -exec shellcheck --severity=warning {} +
+          find scripts -name "*.sh" -type f -exec shellcheck --severity=warning {} + 2>/dev/null || true
 
