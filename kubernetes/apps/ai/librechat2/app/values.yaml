@@ -164,7 +164,7 @@ persistence:
     type: configMap
     name: librechat-config
     advancedMounts:
-      librechat:
+      librechat2:
         app:
           - subPath: librechat.yaml
             path: /app/librechat.yaml
@@ -173,7 +173,7 @@ persistence:
     enabled: true
     type: emptyDir
     advancedMounts:
-      librechat:
+      librechat2:
         app:
           - path: /app/data
           - path: /app/api/data
@@ -190,7 +190,7 @@ persistence:
     accessMode: ReadWriteOnce
     size: 5Gi
     advancedMounts:
-      librechat:
+      librechat2:
         app:
           - subPath: logs
             path: /app/api/logs
