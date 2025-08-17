@@ -69,6 +69,7 @@ if ! task bootstrap:apps; then
 fi
 
 log "Step 7: Waiting for critical components"
+sleep 30
 log "Waiting for Flux to be ready..."
 kubectl wait --for=condition=Ready pods -l app=source-controller -n flux-system --timeout=300s
 kubectl wait --for=condition=Ready pods -l app=kustomize-controller -n flux-system --timeout=300s
