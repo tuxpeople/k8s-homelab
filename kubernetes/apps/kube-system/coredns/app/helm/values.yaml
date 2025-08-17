@@ -54,4 +54,7 @@ tolerations:
 resources:
   requests:
     memory: "120Mi"  # VPA recommends 100Mi
-    cpu: "120m"      # VPA recommends 109m
+    cpu: "100m"      # Adjusted to not exceed limits
+  limits:
+    memory: "128Mi"
+    cpu: "100m"
