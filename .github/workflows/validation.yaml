@@ -81,15 +81,27 @@ jobs:
             exit 1
           fi
           
-          # Check for common secret patterns
-          if find kubernetes/ -name "*.yaml" -not -name "*.sops.*" -exec grep -l -E "(password|token|key|secret):\s*['\"]?[a-zA-Z0-9]" {} \; | head -5; then
-            echo "⚠️  Found potential secrets that may need encryption. Please review."
+          # Check for common secret patterns (exclude references to secrets)
+          echo "🔍 Checking for potential hardcoded secrets..."
+          potential_secrets=$(find kubernetes/ -name "*.yaml" -not -name "*.sops.*" -exec grep -l -E "(password|token|secret):\s*['\"]?[a-zA-Z0-9]{8,}" {} \; | grep -v -E "(externalsecret|secretstore|values\.yaml)" | head -5 || true)
+          if [[ -n "$potential_secrets" ]]; then
+            echo "⚠️  Found potential hardcoded secrets that may need encryption:"
+            echo "$potential_secrets"
+            echo "Please review these files and encrypt any actual secrets."
+          else
+            echo "✅ No potential hardcoded secrets found"
           fi
           
           # Verify SOPS encrypted files have ENC markers
-          if find kubernetes/ -name "*.sops.*" -exec grep -L "ENC\[AES256_GCM" {} \; | head -5; then
-            echo "❌ Found .sops files without proper encryption markers."
-            exit 1
+          echo "🔍 Checking SOPS encrypted files..."
+          if invalid_sops=$(find kubernetes/ -name "*.sops.*" -exec grep -L "ENC\[AES256_GCM" {} \; 2>/dev/null | head -5); then
+            if [[ -n "$invalid_sops" ]]; then
+              echo "❌ Found .sops files without proper encryption markers:"
+              echo "$invalid_sops"
+              exit 1
+            else
+              echo "✅ All .sops files are properly encrypted"
+            fi
           fi
           
           echo "✅ SOPS encryption check passed"
