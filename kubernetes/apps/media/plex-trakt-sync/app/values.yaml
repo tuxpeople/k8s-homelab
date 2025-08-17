@@ -9,10 +9,10 @@ defaultPodOptions:
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                  - *app
+                  - plex-trakt-sync
           topologyKey: kubernetes.io/hostname
 controllers:
-  app:
+  plex-trakt-sync: &app
     strategy: Recreate
     annotations:
       reloader.stakater.com/auto: "true"

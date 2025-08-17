@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
 
 controllers:
-  ollama:
+  ollama: &app
     annotations:
       reloader.stakater.com/auto: "true"
     containers:
@@ -28,7 +28,7 @@ controllers:
             memory: 16Gi
 service:
   app:
-    controller: *app
+    controller: ollama
     type: LoadBalancer
     annotations:
       lbipam.cilium.io/ips: ${SECRET_CILIUMLB_OLLAMA}

@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
 
 controllers:
-  speedtest-exporter:
+  speedtest-exporter: &app
     containers:
       app:
         image:
@@ -43,13 +43,13 @@ persistence:
       - path: /.config
 service:
   app:
-    controller: *app
+    controller: speedtest-exporter
     ports:
       http:
         port: *port
 serviceMonitor:
   app:
-    serviceName: *app
+    serviceName: speedtest-exporter
     endpoints:
       - port: http
         scheme: http

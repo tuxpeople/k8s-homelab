@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
 
 controllers:
-  tautulli-exporter:
+  tautulli-exporter: &app
     annotations:
       reloader.stakater.com/auto: "true"
     containers:
@@ -44,13 +44,13 @@ defaultPodOptions:
     runAsGroup: 568
 service:
   app:
-    controller: *app
+    controller: tautulli-exporter
     ports:
       http:
         port: *port
 serviceMonitor:
   app:
-    serviceName: *app
+    serviceName: tautulli-exporter
     endpoints:
       - port: http
         scheme: http

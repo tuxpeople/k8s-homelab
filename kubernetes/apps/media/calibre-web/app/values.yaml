@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
 
 global:
-  nameOverride: *app
+  nameOverride: calibre-web
 controllers:
-  app:
+  calibre-web: &app
     strategy: Recreate
     annotations:
       reloader.stakater.com/auto: "true"
@@ -35,7 +35,7 @@ controllers:
           runAsUser: 0
 service:
   app:
-    controller: app
+    controller: calibre-web
     ports:
       http:
         port: &port 8083
