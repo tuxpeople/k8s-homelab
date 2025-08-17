@@ -1,0 +1,136 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  headscale:
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      app:
+        image:
+          repository: ghcr.io/juanfont/headscale
+          tag: v0.26.1
+        command: [headscale]
+        args: ["serve", "-c", "/etc/headscale/config.yaml"]
+        probes:
+          startup:
+            enabled: true
+            spec:
+              failureThreshold: 30
+              periodSeconds: 5
+          liveness:
+            enabled: true
+          readiness:
+            enabled: true
+        securityContext:
+          readOnlyRootFilesystem: true
+  ui:
+    strategy: RollingUpdate
+    containers:
+      app:
+        image:
+          repository: ghcr.io/tale/headplane
+          tag: 0.6.0
+        securityContext:
+          readOnlyRootFilesystem: true
+# defaultPodOptions:
+#   securityContext:
+#     sysctls:
+#       - name: net.ipv4.ip_unprivileged_port_start
+#         value: '0'
+service:
+  headscale:
+    controller: headscale
+    ports:
+      http:
+        primary: true
+        port: 8080
+      metrics:
+        port: 9090
+      relay:
+        enabled: true
+        port: 3478
+        protocol: UDP
+    type: LoadBalancer
+    annotations:
+      lbipam.cilium.io/ips: ${SECRET_CILIUMLB_HS}
+  ui:
+    controller: ui
+    ports:
+      http:
+        port: 3000
+persistence:
+  headscale-config:
+    type: secret
+    name: headscale-secret
+    advancedMounts:
+      headscale:
+        app:
+          - path: /etc/headscale/config.yaml
+            subPath: config.yaml
+            # - path: /etc/headscale/policy.json
+            #   subPath: policy.json
+      ui:
+        app:
+          - path: /etc/headscale/config.yaml
+            subPath: config.yaml
+  headplane-config:
+    type: secret
+    name: headplane-secret
+    advancedMounts:
+      ui:
+        app:
+          - path: /etc/headplane/config.yaml
+            subPath: config.yaml
+  var-lib-headscale:
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      headscale:
+        app:
+          - path: /var/lib/headscale
+  etcd-headscale:
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      headscale:
+        app:
+          - path: /etc/headscale
+      ui:
+        app:
+          - path: /etc/headscale
+  tmp:
+    type: emptyDir
+    advancedMounts:
+      headscale:
+        app:
+          - path: /var/run/headscale
+            subPath: run
+      ui:
+        app:
+          - path: /data
+            subPath: data
+          - path: /home/appuser/.local
+            subPath: .local
+ingress:
+  app:
+    annotations:
+      hajimari.io/icon: "server-security"
+      hajimari.io/group: Network
+    enabled: true
+    className: internal
+    hosts:
+      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: headscale
+              port: http
+          - path: /web
+            service:
+              identifier: ui
+              port: http
+    tls:
+      - hosts:
+          - *host

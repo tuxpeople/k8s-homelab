@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  ollama:
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      app:
+        image:
+          repository: mirror.gcr.io/ollama/ollama
+          tag: 0.11.4
+        env:
+          - name: OLLAMA_HOST
+            value: 0.0.0.0
+          - name: OLLAMA_ORIGINS
+            value: "*"
+          - name: OLLAMA_MODELS
+            value: &modelPath "/models"
+          - name: OLLAMA_KEEP_ALIVE
+            value: "24h"
+          - name: OLLAMA_LOAD_TIMEOUT
+            value: "600"
+        resources:
+          requests:
+            cpu: 500m
+            memory: 5Gi
+          limits:
+            memory: 16Gi
+service:
+  app:
+    controller: *app
+    type: LoadBalancer
+    annotations:
+      lbipam.cilium.io/ips: ${SECRET_CILIUMLB_OLLAMA}
+    ports:
+      http:
+        port: 11434
+persistence:
+  models:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 60Gi
+    advancedMounts:
+      ollama:
+        app:
+          - path: *modelPath
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    globalMounts:
+      - path: /root/.ollama

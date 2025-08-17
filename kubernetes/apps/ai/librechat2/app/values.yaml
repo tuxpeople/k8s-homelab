@@ -1,0 +1,219 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  librechat2:
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      app:
+        image:
+          repository: ghcr.io/danny-avila/librechat-dev
+          tag: latest@sha256:1f7234ddb1b5343ae460c81974c14ce8ec961162eeb1aab36ee37f9fd3399beb
+        env:
+          PORT: "3080"
+          NODE_ENV: "production"
+          MONGO_URI: "mongodb://localhost:27017/LibreChat"
+        envFrom:
+          - secretRef:
+              name: librechat2-secret
+          - secretRef:
+              name: librechat2-oidc-secret
+          - configMapRef:
+              name: librechat2-configmap
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities: { drop: ["ALL"] }
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            memory: 1000Mi
+        probes:
+          liveness:
+            enabled: true
+          readiness:
+            enabled: true
+          startup:
+            enabled: false
+
+      exporter:
+        dependsOn: app
+        image:
+          repository: ghcr.io/wipash/librechatmetrics
+          tag: latest
+        env:
+          MONGODB_URI: "mongodb://localhost:27017/LibreChat"
+          PROMETHEUS_PORT: "9123"
+
+      ragapi:
+        image:
+          repository: ghcr.io/danny-avila/librechat-rag-api-dev-lite
+          tag: latest@sha256:3d3109cb6fc55d99cfbb3e3be855f2abb9c40d0b0284c7d27a69998156a54190
+        env:
+          RAG_MAX_TOKENS: "8192"
+          EMBEDDINGS_PROVIDER: "openai"
+          CHUNK_SIZE: "1500"
+          CHUNK_OVERLAP: "100"
+          RAG_OPENAI_API_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: librechat2-secret
+                key: OPENAI_API_KEY
+        envFrom:
+          - secretRef:
+              name: librechat2-secret
+          - secretRef:
+              name: librechat2-oidc-secret
+          - configMapRef:
+              name: librechat2-configmap
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+
+      meilisearch:
+        image:
+          repository: getmeili/meilisearch
+          tag: v1.17.1 # DO NOT BLINDLY UPDATE: https://www.meilisearch.com/docs/learn/update_and_migration/updating
+        envFrom:
+          - secretRef:
+              name: librechat2-secret
+          - configMapRef:
+              name: librechat2-configmap
+        env:
+          MEILI_DB_PATH: "/meili_data"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+
+      mongodb:
+        image:
+          repository: mongo
+          tag: "8.0.12"
+        command: ["mongod", "--noauth"]
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+
+      mongo-express:
+        image:
+          repository: mongo-express
+          tag: "1.0.2"
+        env:
+          ME_CONFIG_MONGODB_SERVER: 127.0.0.1
+          ME_CONFIG_BASICAUTH_USERNAME: admin
+          ME_CONFIG_BASICAUTH_PASSWORD: password
+          PORT: "8081"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 568
+    runAsGroup: 568
+    fsGroup: 568
+    fsGroupChangePolicy: OnRootMismatch
+    seccompProfile: { type: RuntimeDefault }
+
+service:
+  app:
+    controller: librechat2
+    ports:
+      http:
+        port: 3080
+      mongo-express:
+        port: 8081
+      metrics:
+        port: 9123
+ingress:
+  app:
+    annotations:
+      hajimari.io/icon: cloud-search
+      hajimari.io/info: "AI Chat"
+      # nginx.ingress.kubernetes.io/auth-method: GET
+      # nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
+      # nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
+      # nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+      # nginx.ingress.kubernetes.io/auth-snippet: |
+      #   proxy_set_header X-Forwarded-Method $request_method;
+      #   proxy_set_header X-Forwarded-Scheme $scheme;
+    enabled: true
+    className: internal
+    hosts:
+      - host: &host "chat.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: 3080
+    tls:
+      - hosts:
+          - *host
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
+
+persistence:
+  config:
+    enabled: true
+    type: configMap
+    name: librechat-config
+    advancedMounts:
+      librechat:
+        app:
+          - subPath: librechat.yaml
+            path: /app/librechat.yaml
+
+  app-data:
+    enabled: true
+    type: emptyDir
+    advancedMounts:
+      librechat:
+        app:
+          - path: /app/data
+          - path: /app/api/data
+
+  tmp:
+    enabled: true
+    type: emptyDir
+    globalMounts:
+      - path: /tmp
+
+  data:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      librechat:
+        app:
+          - subPath: logs
+            path: /app/api/logs
+          - subPath: images
+            path: /app/client/public/images
+          - subPath: uploads
+            path: /app/uploads
+        mongodb:
+          - subPath: mongodb
+            path: /data/db
+        meilisearch:
+          - subPath: meilisearch
+            path: /meili_data
+        ragapi:
+          - subPath: ragapi
+            path: /app/uploads
+
+serviceMonitor:
+  app:
+    serviceName: librechat
+    endpoints:
+      - port: metrics
+        scheme: http
+        path: /
+        interval: 1m
+        scrapeTimeout: 30s

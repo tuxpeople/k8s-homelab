@@ -15,5 +15,8 @@ configMapGenerator:
       - pdfpassword.py=./scripts/pdfpassword.py
       - paperless-preprocess-forms.py=./scripts/paperless-preprocess-forms.py
       # - paperless-preprocess-removebadchars.py=./scripts/paperless-preprocess-removebadchars.py
+  - name: paperless-values
+    files:
+      - values.yaml
 generatorOptions:
   disableNameSuffixHash: true

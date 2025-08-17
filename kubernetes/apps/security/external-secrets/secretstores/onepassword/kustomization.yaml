@@ -6,3 +6,9 @@ resources:
   - ./helmrelease.yaml
   - ./secret.sops.yaml
   - ./secretstore.yaml
+configMapGenerator:
+  - name: onepassword-connect-values
+    files:
+      - values.yaml
+generatorOptions:
+  disableNameSuffixHash: true

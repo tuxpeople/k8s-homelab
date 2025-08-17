@@ -21,45 +21,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  values:
-    controllers:
-      openvpn:
-        pod:
-          nodeSelector:
-            kubernetes.io/arch: amd64
-        strategy: RollingUpdate
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          app:
-            image:
-              repository: mirror.gcr.io/domrod/openvpn_server
-              tag: 2.6.12
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-              privileged: true
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 256Mi
-    service:
-      app:
-        controller: openvpn
-        type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: ${SECRET_CILIUMLB_VPN}
-        ports:
-          openvpn-udp:
-            port: 1194
-            protocol: UDP
-    persistence:
-      config:
-        enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        globalMounts:
-          - path: /etc/openvpn
+  valuesFrom:
+    - kind: ConfigMap
+      name: openvpn-values
+      valuesKey: values.yaml

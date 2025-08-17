@@ -1,0 +1,88 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  app:
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      main:
+        image:
+          repository: ghcr.io/onedr0p/tautulli
+          tag: 2.15.1@sha256:74468ecce40f44c449675ec7fcb7c86ebff89961572d141ad743b8ccbdde3c98
+        env:
+          TZ: ${TIMEZONE}
+        probes:
+          liveness: &probes
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: &path /status
+                port: &port 8181
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+              failureThreshold: 3
+          readiness: *probes
+          startup:
+            enabled: false
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      jbops:
+        image:
+          repository: registry.k8s.io/git-sync/git-sync
+          tag: v4.4.2
+        env:
+          GITSYNC_REPO: https://github.com/blacktwin/JBOPS
+          GITSYNC_REF: master
+          GITSYNC_PERIOD: 24h
+          GITSYNC_ROOT: /add-ons
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10M
+          limits:
+            memory: 128M
+    pod:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+service:
+  app:
+    controller: app
+    ports:
+      http:
+        port: *port
+ingress:
+  app:
+    enabled: true
+    className: internal
+    annotations:
+      hajimari.io/appName: Tautulli
+      hajimari.io/icon: movie-cog
+      gatus.io/path: *path
+    hosts:
+      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: *port
+    tls:
+      - hosts:
+          - *host
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+  add-ons:
+    type: emptyDir

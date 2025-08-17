@@ -1,0 +1,182 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  spoolman:
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      spoolman:
+        resources:
+          requests:
+            cpu: 11m
+            memory: 120Mi
+          limits:
+            cpu: 15m
+            memory: 207Mi
+        image:
+          repository: ghcr.io/donkie/spoolman
+          tag: 0.22.1@sha256:238ea5bfb2eeda4436c39f54e73df5fef4ee904fb7c291617588b856786fe0ef
+        command:
+          - uvicorn
+          - spoolman.main:app
+          - --host
+          - 0.0.0.0
+          - --port
+          - "8000"
+        env:
+          SPOOLMAN_METRICS_ENABLED: "true"
+          TZ: ${TIMEZONE}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {drop: ["ALL"]}
+          readOnlyRootFilesystem: true
+      litestream: &ls
+        image:
+          repository: "mirror.gcr.io/litestream/litestream"
+          tag: "0.3.13"
+        args: ["replicate"]
+        env: &lsenv
+          LITESTREAM_ACCESS_KEY_ID:
+            valueFrom:
+              secretKeyRef:
+                name: "spoolman-secrets"
+                key: "litestream-minio-id"
+          LITESTREAM_SECRET_ACCESS_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: "spoolman-secrets"
+                key: "litestream-minio-key"
+          MINIO_ENDPOINT:
+            valueFrom:
+              secretKeyRef:
+                name: "spoolman-secrets"
+                key: "litestream-minio-endpoint"
+          MINIO_BUCKET:
+            valueFrom:
+              secretKeyRef:
+                name: "spoolman-secrets"
+                key: "litestream-minio-bucket"
+          AGE_PUBKEY:
+            valueFrom:
+              secretKeyRef:
+                name: "spoolman-secrets"
+                key: "litestream-age-pubkey"
+        resources:
+          requests:
+            cpu: 10m
+            memory: 128Mi
+          limits:
+            memory: 1024Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {drop: ["ALL"]}
+          readOnlyRootFilesystem: true
+    initContainers:
+      01-litestream-restore:
+        !!merge <<: *ls
+        args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/home/app/.local/share/spoolman/spoolman.db"]
+        env:
+          !!merge <<: *lsenv
+          AGE_SECRET:
+            valueFrom:
+              secretKeyRef:
+                name: "spoolman-secrets"
+                key: "litestream-age-secret"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {drop: ["ALL"]}
+          readOnlyRootFilesystem: true
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+persistence:
+  data:
+    enabled: true
+    type: emptyDir
+    globalMounts:
+      - path: /home/app/.local/share/spoolman
+  config:
+    enabled: true
+    type: configMap
+    name: "spoolman-config"
+    advancedMounts:
+      spoolman:
+        litestream:
+          - &lsmnt
+            subPath: "litestream-replicate"
+            path: "/etc/litestream.yml"
+            readOnly: true
+        01-litestream-restore:
+          - !!merge <<: *lsmnt
+            subPath: "litestream-restore"
+configMaps:
+  config:
+    enabled: true
+    data:
+      litestream-replicate: |
+        dbs:
+          - path: /home/app/.local/share/spoolman/spoolman.db
+            replicas:
+              - name: "minio"
+                type: "s3"
+                endpoint: "$${MINIO_ENDPOINT}"
+                bucket: "$${MINIO_BUCKET}"
+                path: "spoolman"
+                force-path-style: true
+                retention: 168h
+                validation-interval: 24h
+                age:
+                  recipients:
+                    - $${AGE_PUBKEY}
+      litestream-restore: |
+        dbs:
+          - path: /home/app/.local/share/spoolman/spoolman.db
+            replicas:
+              - name: "minio"
+                type: "s3"
+                endpoint: "$${MINIO_ENDPOINT}"
+                bucket: "$${MINIO_BUCKET}"
+                path: "spoolman"
+                force-path-style: true
+                retention: 168h
+                validation-interval: 24h
+                age:
+                  identities:
+                    - $${AGE_SECRET}
+ingress:
+  app:
+    enabled: true
+    className: internal
+    hosts:
+      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: spoolman
+              port: http
+    tls:
+      - hosts:
+          - *host
+service:
+  spoolman:
+    controller: spoolman
+    type: ClusterIP
+    ports:
+      http:
+        port: 8000
+serviceMonitor:
+  spoolman:
+    serviceName: spoolman
+    endpoints:
+      - port: http
+        scheme: http
+        path: /metrics
+        interval: 1m
+        scrapeTimeout: 10s
+        metricRelabelings:
+          - action: labeldrop
+            regex: (pod)

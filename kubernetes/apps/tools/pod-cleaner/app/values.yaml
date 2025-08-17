@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  main:
+    type: cronjob
+
+    cronjob:
+      schedule: "0 * * * *"
+      # schedule: "0 */6 * * *" # alle 6 Stunden
+
+    containers:
+      main:
+        image:
+          repository: registry.eighty-three.me/tuxpeople/debugcontainer
+          tag: v3.4.0
+        command:
+          - /bin/sh
+          - -c
+          - |
+            AGE_HOURS=1
+            NOW=$(date +%s)
+            kubectl get pods --all-namespaces --field-selector=status.phase==Succeeded -o json | \
+              jq -r '.items[] | "\(.metadata.namespace) \(.metadata.name) \(.status.startTime)"' | while read namespace name startTime; do
+                pod_time=$(date -d "$startTime" +%s)
+                age_hours=$(( ($NOW - $pod_time) / 3600 ))
+                if [ "$age_hours" -ge "$AGE_HOURS" ]; then
+                    echo "Deleting pod $name in namespace $namespace (age: ${age_hours}h)"
+                    kubectl delete pod "$name" -n "$namespace"
+                fi
+              done
+
+serviceAccount:
+  create: true
+  name: pod-cleaner-sa
+
+rbac:
+  roles:
+    role:
+      type: ClusterRole
+      rules:
+        - apiGroups: [""]
+          resources: ["pods"]
+          verbs: ["delete", "list"]
+  bindings:
+    pod-cleaner-binding:
+      type: ClusterRoleBinding
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: pod-cleaner-role
+      subjects:
+        - kind: ServiceAccount
+          name: pod-cleaner-sa
+          namespace: tools
+
+# Optional: Logging
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

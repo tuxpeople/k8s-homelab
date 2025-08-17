@@ -21,50 +21,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  values:
-    controllers:
-      app:
-        containers:
-          main:
-            image:
-              repository: lscr.io/linuxserver/pwndrop
-              tag: 1.0.1-ls61
-            resources:
-              limits:
-                cpu: 500m
-                memory: 512Mi
-              requests:
-                cpu: 100m
-                memory: 128Mi
-            env:
-              TZ: ${TIMEZONE}
-    service:
-      app:
-        controller: app
-        ports:
-          http:
-            port: &port 8080
-    ingress:
-      app:
-        enabled: true
-        className: external
-        annotations:
-          hajimari.io/icon: file-arrow-up-down-outline
-        hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: *port
-        tls:
-          - hosts:
-              - *host
-            secretName: ${SECRET_DOMAIN/./-}-production-tls
-    persistence:
-      config:
-        enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
+  valuesFrom:
+    - kind: ConfigMap
+      name: drop-values
+      valuesKey: values.yaml

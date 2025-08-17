@@ -9,5 +9,8 @@ configMapGenerator:
   - name: smtp-relay-configmap
     files:
       - maddy.conf=./config/maddy.conf
+  - name: smtp-relay-values
+    files:
+      - values.yaml
 generatorOptions:
   disableNameSuffixHash: true

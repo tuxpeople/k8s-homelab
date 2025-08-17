@@ -10,5 +10,8 @@ configMapGenerator:
   - name: cloudflared-configmap
     files:
       - ./configs/config.yaml
+  - name: cloudflared-values
+    files:
+      - values.yaml
 generatorOptions:
   disableNameSuffixHash: true

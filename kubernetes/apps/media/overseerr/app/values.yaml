@@ -1,0 +1,81 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  overseerr:
+    containers:
+      app:
+        image:
+          repository: lscr.io/linuxserver/overseerr
+          tag: v1.33.2-ls121
+        env:
+          LOG_LEVEL: info
+          PORT: &port 5055
+          TZ: ${TIMEZONE}
+          PUID: 1000
+          PGID: 1000
+        probes:
+          liveness: &probes
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: &path /api/v1/status
+                port: *port
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+              failureThreshold: 3
+          readiness: *probes
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+#         securityContext:
+#           allowPrivilegeEscalation: false
+#           readOnlyRootFilesystem: true
+#           capabilities:
+#             drop:
+#               - ALL
+
+# defaultPodOptions:
+#   securityContext:
+#     runAsNonRoot: true
+#     runAsUser: 1000
+#     runAsGroup: 1000
+#     fsGroup: 1000
+#     fsGroupChangePolicy: OnRootMismatch
+
+ingress:
+  app:
+    className: external
+    annotations:
+      gatus.io/path: *path
+      hajimari.io/icon: mdi:eye-circle
+      hajimari.io/url: https://requests.${SECRET_DOMAIN}
+    hosts:
+      - host: &host "requests.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
+    tls:
+      - hosts:
+          - *host
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+
+service:
+  app:
+    controller: &app overseerr
+    ports:
+      http:
+        port: *port

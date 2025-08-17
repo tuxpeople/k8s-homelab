@@ -1,0 +1,94 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  open-webui:
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      app:
+        env:
+          TZ: ${TIMEZONE}
+          WEBUI_URL: "https://ai.${SECRET_DOMAIN}"
+          WEBUI_NAME: "Toemu AI"
+          ENABLE_LOGIN_FORM: false
+          DEFAULT_USER_ROLE: user
+          DEFAULT_MODELS: default
+          CORS_ALLOW_ORIGIN: "https://ai.${SECRET_DOMAIN}"
+          ENABLE_OLLAMA_API: true
+          OLLAMA_BASE_URL: http://192.168.8.25:11434
+          ENABLE_RAG_WEB_SEARCH: true
+          ENABLE_OAUTH_SIGNUP: true
+          OAUTH_PROVIDER_NAME: Homelab Login
+          OAUTH_SCOPES: "openid email profile groups"
+          OPENID_PROVIDER_URL: https://auth.${SECRET_DOMAIN}/.well-known/openid-configuration
+          WEBUI_SESSION_COOKIE_SAME_SITE: none
+          WEBUI_SESSION_COOKIE_SECURE: true
+          WEBUI_AUTH_COOKIE_SAME_SITE: none
+          WEBUI_AUTH_COOKIE_SECURE: true
+          OAUTH_MERGE_ACCOUNTS_BY_EMAIL: true
+          ENABLE_OAUTH_ROLE_MANAGEMENT: true
+          OAUTH_ALLOWED_ROLES: applications_openwebui,applications_openwebui_admin
+          OAUTH_ADMIN_ROLES: applications_openwebui_admin
+          OAUTH_ROLES_CLAIM: groups
+          # RAG_WEB_SEARCH_ENGINE: searxng
+          # SEARXNG_QUERY_URL: http://searxng.services.svc.cluster.local:8080/search?q=<query>
+        envFrom:
+          - secretRef:
+              name: open-webui-values
+        image:
+          repository: ghcr.io/open-webui/open-webui
+          tag: 0.6.22
+        resources:
+          requests:
+            cpu: 750m
+            memory: 1000Mi
+          limits:
+            cpu: 1500m
+            memory: 1500Mi
+
+service:
+  app:
+    controller: &app open-webui
+    ports:
+      http:
+        port: &port 8080
+
+ingress:
+  app:
+    annotations:
+      hajimari.io/icon: cloud-search
+      hajimari.io/info: "Ollama frontend"
+      # nginx.ingress.kubernetes.io/auth-method: GET
+      # nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
+      # nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
+      # nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+      # nginx.ingress.kubernetes.io/auth-snippet: |
+      #   proxy_set_header X-Forwarded-Method $request_method;
+      #   proxy_set_header X-Forwarded-Scheme $scheme;
+    enabled: true
+    className: external
+    hosts:
+      - host: &host "ai.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: *port
+    tls:
+      - hosts:
+          - *host
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
+
+persistence:
+  data:
+    enabled: true
+    type: emptyDir
+    # type: persistentVolumeClaim
+    # accessMode: ReadWriteOnce
+    # size: 5Gi
+    # type: nfs
+    # server: 10.20.30.40
+    # path: /volume2/kubernetes/openwebui
+    globalMounts:
+      - path: /app/backend/data
