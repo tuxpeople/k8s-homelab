@@ -11,6 +11,7 @@ resources:
   - ./hajimari/ks.yaml
   - ./ladder/ks.yaml
   - ./linkding/ks.yaml
+  - ./miniflux/ks.yaml
   - ./n8n/ks.yaml
   - ./obsidian/ks.yaml
   - ./paperless/ks.yaml
