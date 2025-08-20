@@ -1,45 +1,69 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
 
 controllers:
-  app:
+  miniflux:
+    strategy: RollingUpdate
     annotations:
       reloader.stakater.com/auto: "true"
     containers:
-      main:
+      app:
         image:
-          repository: mirror.gcr.io/miniflux/miniflux
-          tag: 1.26.3
+          repository: ghcr.io/miniflux/miniflux
+          tag: 2.2.3-distroless@sha256:6b778e125817592cf67b7eaf4a2fbb7a269d59ea82c82bfaae0c7daee4bc4ef6
         env:
-          CRON_MIN: 18,48
-          DOMAIN: "https://{{ .Release.Name }}.${SECRET_DOMAIN}/"
-          LISTEN: &port 8080
-          TZ: ${TIMEZONE}
-          OIDC_ENABLED: 1
-          OIDC_PROVIDER_METADATA_URL: https://auth.${SECRET_DOMAIN}/.well-known/openid-configuration
-          OIDC_REMOTE_USER_CLAIM: preferred_username
-          OIDC_SCOPES: openid groups email profile
-          OIDC_X_FORWARDED_HEADERS: X-Forwarded-Host X-Forwarded-Port X-Forwarded-Proto
-        envFrom:
-          - secretRef:
-              name: miniflux-secrets
+          BASE_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
+          CREATE_ADMIN: "1"
+          # DEBUG: "1"
+          LOG_DATE_TIME: "1"
+          METRICS_ALLOWED_NETWORKS: 10.42.0.0/16
+          METRICS_COLLECTOR: "1"
+          POLLING_SCHEDULER: entry_frequency
+          POLLING_FREQUENCY: "15"
+          PORT: &port 80
+          RUN_MIGRATIONS: "1"
         probes:
-          liveness:
+          liveness: &probes
             enabled: true
-          readiness:
-            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /healthcheck
+                port: *port
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+              failureThreshold: 3
+          readiness: *probes
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
         resources:
           requests:
-            cpu: 15m
-            memory: 100Mi
+            cpu: 10m
           limits:
-            cpu: 500m
-            memory: 120Mi
+            memory: 512Mi
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    runAsGroup: 65534
+    seccompProfile: { type: RuntimeDefault }
 service:
   app:
-    controller: app
+    controller: miniflux
     ports:
       http:
         port: *port
+serviceMonitor:
+  app:
+    serviceName: miniflux
+    endpoints:
+      - port: http
+        scheme: http
+        path: /metrics
+        interval: 1m
+        scrapeTimeout: 10s
 ingress:
   app:
     enabled: true
@@ -58,18 +82,3 @@ ingress:
       - hosts:
           - *host
         secretName: ${SECRET_DOMAIN/./-}-production-tls
-persistence:
-  data:
-    enabled: true
-    annotations:
-      k8up.io/backup: "true"
-    type: persistentVolumeClaim
-    accessMode: ReadWriteOnce
-    size: 5Gi
-    globalMounts:
-      - path: /var/www/miniflux/data
-        subPath: data
-        readOnly: false
-      - path: /var/www/miniflux/extensions
-        subPath: extensions
-        readOnly: false
