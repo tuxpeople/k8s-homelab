@@ -80,7 +80,7 @@ controllers:
       gotenberg:
         image:
           repository: mirror.gcr.io/gotenberg/gotenberg
-          tag: 8.21.1
+          tag: 8.22.0
         env:
           DISABLE_GOOGLE_CHROME: "1"
         resources:
