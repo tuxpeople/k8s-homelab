@@ -8,7 +8,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/paperless-ngx/paperless-ngx
-          tag: 2.18.1
+          tag: 2.18.2
         envFrom:
           - configMapRef:
               name: paperless-config
