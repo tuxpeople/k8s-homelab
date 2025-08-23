@@ -28,7 +28,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/twin/gatus
-          tag: v5.22.0
+          tag: v5.23.2
         env:
           TZ: Europe/Zurich
           GATUS_CONFIG_PATH: /config
