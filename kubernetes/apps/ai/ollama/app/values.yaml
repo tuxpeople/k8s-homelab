@@ -8,7 +8,7 @@ controllers:
       app:
         image:
           repository: mirror.gcr.io/ollama/ollama
-          tag: 0.11.4
+          tag: 0.11.6
         env:
           - name: OLLAMA_HOST
             value: 0.0.0.0
