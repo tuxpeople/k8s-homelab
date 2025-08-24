@@ -14,6 +14,7 @@ spec:
         name: ingress-nginx
         namespace: flux-system
   interval: 1h
+  timeout: 15m
   install:
     remediation:
       retries: 3
@@ -75,7 +76,7 @@ spec:
         default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
       resources:
         requests:
-          cpu: 30m   # VPA recommends 23m, rounded up (internal has less traffic)
+          cpu: 30m # VPA recommends 23m, rounded up (internal has less traffic)
           memory: 120Mi
         limits:
           cpu: 200m
