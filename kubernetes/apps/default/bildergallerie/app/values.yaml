@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  bildergallerie:
+    strategy: RollingUpdate
+    containers:
+      app:
+        image:
+          repository: registry.eighty-three.me/tuxpeople/bildergallerie
+          tag: 20250822
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+        resources:
+          requests:
+            cpu: 15m
+            memory: 100Mi
+          limits:
+            cpu: 150m
+            memory: 120Mi
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    runAsGroup: 65534
+    seccompProfile: { type: RuntimeDefault }
+service:
+  app:
+    controller: bildergallerie
+    ports:
+      http:
+        port: *port
+ingress:
+  app:
+    className: internal
+    annotations:
+      hajimari.io/icon: "video-input-antenna"
+      hajimari.io/group: Network
+      hajimari.io/info: ""
+    hosts:
+      - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
