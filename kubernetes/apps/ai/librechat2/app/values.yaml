@@ -162,7 +162,7 @@ persistence:
   config:
     enabled: true
     type: configMap
-    name: librechat-config
+    name: librechat2-configmap
     advancedMounts:
       librechat2:
         app:

@@ -7,7 +7,7 @@ resources:
   - ./configmap.yaml
 
 configMapGenerator:
-  - name: librechat-config
+  - name: librechat2-configmap
     files:
       - ./resources/librechat.yaml
   - name: librechat2-values
