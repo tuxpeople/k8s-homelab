@@ -6,7 +6,7 @@ controllers:
     containers:
       app:
         image:
-          repository: registry.eighty-three.me/tuxpeople/containers/bildergallerie
+          repository: registry.eighty-three.me/tuxpeople/bildergallerie
           tag: d20250822
         securityContext:
           allowPrivilegeEscalation: false
