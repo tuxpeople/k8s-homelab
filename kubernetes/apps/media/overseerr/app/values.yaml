@@ -13,19 +13,19 @@ controllers:
           TZ: ${TIMEZONE}
           PUID: 1000
           PGID: 1000
-        probes:
-          liveness: &probes
-            enabled: true
-            custom: true
-            spec:
-              httpGet:
-                path: &path /api/v1/status
-                port: *port
-              initialDelaySeconds: 0
-              periodSeconds: 10
-              timeoutSeconds: 1
-              failureThreshold: 3
-          readiness: *probes
+        # probes:
+        #   liveness: &probes
+        #     enabled: true
+        #     custom: true
+        #     spec:
+        #       httpGet:
+        #         path: &path /api/v1/status
+        #         port: *port
+        #       initialDelaySeconds: 0
+        #       periodSeconds: 10
+        #       timeoutSeconds: 1
+        #       failureThreshold: 3
+        #   readiness: *probes
         resources:
           limits:
             cpu: 500m

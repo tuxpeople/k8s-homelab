@@ -14,10 +14,10 @@ controllers:
           NODE_ENV: "production"
           MONGO_URI: "mongodb://localhost:27017/LibreChat"
         envFrom:
-          - secretRef:
-              name: librechat2-secret
-          - secretRef:
-              name: librechat2-oidc-secret
+          # - secretRef:
+          #     name: librechat2-secret
+          # - secretRef:
+          #     name: librechat2-oidc-secret
           - configMapRef:
               name: librechat2-configmap
         securityContext:

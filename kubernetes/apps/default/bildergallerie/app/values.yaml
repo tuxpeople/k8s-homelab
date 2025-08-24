@@ -7,7 +7,7 @@ controllers:
       app:
         image:
           repository: registry.eighty-three.me/tuxpeople/containers/bildergallerie
-          tag: 20250822
+          tag: d20250822
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
