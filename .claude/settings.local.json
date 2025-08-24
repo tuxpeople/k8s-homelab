@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      // kubectl - Read-only operations
       "Bash(kubectl get:*)",
       "Bash(kubectl describe:*)",
       "Bash(kubectl logs:*)",
@@ -19,12 +18,10 @@
       "Bash(kubectl events:*)",
       "Bash(kubectl port-forward:*)",
       "Bash(kubectl proxy:*)",
-      // kubectl with --dry-run flag (safe testing)
       "Bash(kubectl apply --dry-run:*)",
       "Bash(kubectl create --dry-run:*)",
       "Bash(kubectl replace --dry-run:*)",
       "Bash(kubectl patch --dry-run:*)",
-      // flux - Read-only and safe operations
       "Bash(flux get:*)",
       "Bash(flux get ks:*)",
       "Bash(flux get hr:*)",
@@ -36,15 +33,12 @@
       "Bash(flux version:*)",
       "Bash(flux tree:*)",
       "Bash(flux diff:*)",
-      // flux reconcile (forces sync but doesn't modify manifests)
       "Bash(flux reconcile:*)",
       "Bash(flux reconcile kustomization:*)",
       "Bash(flux reconcile source:*)",
       "Bash(flux reconcile helmrelease:*)",
-      // flux suspend/resume (operational, not destructive)
       "Bash(flux suspend:*)",
       "Bash(flux resume:*)",
-      // helm - Read-only operations
       "Bash(helm list:*)",
       "Bash(helm status:*)",
       "Bash(helm get:*)",
@@ -59,17 +53,14 @@
       "Bash(helm lint:*)",
       "Bash(helm template:*)",
       "Bash(helm diff:*)",
-      // helm with --dry-run flag
       "Bash(helm install --dry-run:*)",
       "Bash(helm upgrade --dry-run:*)",
-      // Task runner (your workflow system)
       "Bash(task:*)",
       "Bash(task --list:*)",
       "Bash(task debug:*)",
       "Bash(task reconcile:*)",
       "Bash(task configure:*)",
       "Bash(task validate-schemas:*)",
-      // Additional safe tools commonly used
       "Bash(make:*)",
       "Bash(yq:*)",
       "Bash(jq:*)",
@@ -92,12 +83,9 @@
       "Bash(ping:*)",
       "Bash(nslookup:*)",
       "Bash(dig:*)",
-      // File operations (read-only)
       "Bash(cp:*)",
-      // SOPS operations (read-only)
       "Bash(sops --decrypt:*)",
       "Bash(sops --encrypt:*)",
-      // Git operations (read-only)
       "Bash(git status:*)",
       "Bash(git log:*)",
       "Bash(git show:*)",
@@ -105,7 +93,6 @@
       "Bash(git branch:*)",
       "Bash(git remote:*)",
       "Bash(git config:*)",
-      // Talos read-only operations
       "Bash(talosctl version:*)",
       "Bash(talosctl config:*)",
       "Bash(talosctl get:*)",
