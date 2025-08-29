@@ -24,6 +24,13 @@ servers:
           class error
       - name: prometheus
         parameters: 0.0.0.0:9153
+      - name: hosts
+        configBlock: |-
+          192.168.13.11 talos-test01
+          192.168.13.12 talos-test02
+          192.168.13.13 talos-test03
+          192.168.13.14 talos-test04
+          fallthrough
       - name: kubernetes
         parameters: cluster.local in-addr.arpa ip6.arpa
         configBlock: |-
@@ -53,8 +60,8 @@ tolerations:
 # Resource requests based on VPA recommendations
 resources:
   requests:
-    memory: "120Mi"  # VPA recommends 100Mi
-    cpu: "100m"      # Adjusted to not exceed limits
+    memory: "120Mi" # VPA recommends 100Mi
+    cpu: "100m" # Adjusted to not exceed limits
   limits:
     memory: "128Mi"
     cpu: "100m"
