@@ -101,7 +101,8 @@
       "Bash(talosctl *netstat*)",
       "Bash(talosctl *dmesg*)",
       "Bash(talosctl *mounts*)",
-      "Bash(talosctl *disks*)"
+      "Bash(talosctl *disks*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
   }
