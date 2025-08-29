@@ -13,6 +13,15 @@ tasks:
       - test -f {{.SOPS_AGE_KEY_FILE}}
       - which talhelper
 
+  node-health:
+    desc: Check the health of all nodes in the cluster using talosctl and a check for "bootedWithUKI"
+    dir: "{{.TALOS_DIR}}"
+    cmd: >
+      talosctl get securitystate -o json | 
+      jq -s -r '.[] | "\(.node): \(if .spec.bootedWithUKI then "unhealthy" else "healthy" end)"'
+    preconditions:
+      - test -f {{.TALOS_DIR}}/talconfig.yaml
+
   apply-node:
     desc: Apply Talos config to a node [IP=required]
     dir: "{{.TALOS_DIR}}"

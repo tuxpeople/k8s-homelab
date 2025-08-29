@@ -66,6 +66,9 @@ task debug
 # Generate Talos configuration
 task talos:generate-config
 
+# Check node health status
+task talos:node-health
+
 # Apply config to specific node
 task talos:apply-node IP=<node-ip> MODE=<auto|try|reboot>
 
