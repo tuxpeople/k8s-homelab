@@ -26,6 +26,7 @@ servers:
         parameters: 0.0.0.0:9153
       - name: hosts
         configBlock: |-
+          192.168.13.10 talos
           192.168.13.11 talos-test01
           192.168.13.12 talos-test02
           192.168.13.13 talos-test03
