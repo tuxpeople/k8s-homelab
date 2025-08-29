@@ -17,6 +17,10 @@ _gitdir="$(git rev-parse --show-toplevel)"
 export YAMLFIX_SEQUENCE_STYLE="block_style"
 
 for i in "${FOLDERS[@]}"; do
+    if [[ ! -d "${i}" ]]; then
+        echo "Directory ${i} does not exist, skipping..."
+        continue
+    fi
     cd "${i}"
     f=$(ls -1 | grep -v kustomization.yaml)
     if [[ -n "${f}" ]]; then
