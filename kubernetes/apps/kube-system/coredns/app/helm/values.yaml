@@ -6,7 +6,7 @@ serviceAccount:
 service:
   name: kube-dns
   clusterIP: "10.43.0.10"
-replicaCount: 2
+replicaCount: 1
 servers:
   - zones:
       - zone: .
@@ -53,8 +53,8 @@ tolerations:
 # Resource requests based on VPA recommendations
 resources:
   requests:
-    memory: "120Mi"  # VPA recommends 100Mi
-    cpu: "100m"      # Adjusted to not exceed limits
+    memory: "120Mi" # VPA recommends 100Mi
+    cpu: "100m" # Adjusted to not exceed limits
   limits:
     memory: "128Mi"
     cpu: "100m"
