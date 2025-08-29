@@ -58,5 +58,5 @@ resources:
     memory: "120Mi" # VPA recommends 100Mi
     cpu: "100m" # Adjusted to not exceed limits
   limits:
-    memory: "128Mi"
-    cpu: "100m"
+    memory: "150Mi"
+    cpu: "200m"
