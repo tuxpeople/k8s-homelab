@@ -90,6 +90,9 @@ task talos:reset
 # Encrypt all SOPS secrets
 task encrypt-secrets
 
+# Rebuild kustomization.yaml files for flux repositories and apps
+./scripts/rebuild-kustomizations.sh
+
 # Validate YAML syntax
 yq eval . file.yaml
 
@@ -306,11 +309,50 @@ Comprehensive observability stack:
 
 ## Documentation Maintenance Protocol
 
-When making significant architectural changes to this repository (like removing template systems, changing workflows, etc.), ALWAYS check and update these documentation files to keep them accurate:
+**CRITICAL: Documentation must be kept current with ALL changes**
 
-1. **CLAUDE.md** - This file - Update project overview, architecture sections, and workflow instructions
-2. **.claude/commands/*.md** - Command protocol files - Update workflow instructions and examples  
-3. **README.md** - User-facing documentation - Update if it contains outdated setup instructions
-4. **IMPROVEMENT_PLAN.md** and **RESOURCE_ANALYSIS.md** - Check if they reference removed systems
+When making ANY changes to this repository, you MUST check and update documentation files:
+
+### Required Documentation Review for ALL Changes:
+
+1. **CLAUDE.md** (this file) - Update for:
+   - New Tasks, commands, or scripts
+   - Architecture changes (networking, storage, etc.)
+   - Workflow modifications
+   - Tool dependency changes
+   - New applications or removed applications
+   - Security/secret management changes
+
+2. **README.md** - Update for:
+   - Major infrastructure changes
+   - New core components or removed components
+   - Updated network configuration
+   - Changed application lists or categories
+
+3. **scripts/README.md** - Update for:
+   - New scripts in scripts/ directory
+   - Modified script functionality
+   - Changed script dependencies
+
+### Documentation Review Checklist:
+
+**Before ANY commit, ask:**
+- [ ] Does this change affect commands/tasks users run?
+- [ ] Are new tools, scripts, or workflows introduced?
+- [ ] Are applications added, removed, or significantly changed?
+- [ ] Do networking, DNS, or ingress configurations change?
+- [ ] Are storage classes, backup procedures, or security practices modified?
+- [ ] Would a new Claude Code session need this information?
+
+**If YES to any question → Update relevant documentation files FIRST**
+
+### Special Cases Requiring Documentation:
+- Adding/removing applications in kubernetes/apps/
+- Modifying Taskfile.yaml or .taskfiles/
+- Changes to networking (IPs, domains, ingress classes)
+- New GitHub Actions workflows
+- Script modifications in scripts/
+- Tool dependency changes in .mise.toml
+- Security/SOPS/secret management changes
 
 This prevents confusion and ensures future Claude Code sessions have accurate guidance. Always prioritize keeping documentation aligned with the actual repository state.
