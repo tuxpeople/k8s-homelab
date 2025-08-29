@@ -174,6 +174,20 @@ This repository uses direct manifest editing:
 3. **YAML validation**: Use standard YAML validation tools
 4. **GitOps workflow**: Commit changes and let Flux handle deployment
 
+### Claude Code Integration
+The repository includes automated Claude Code assistance for failed workflows:
+
+**Automatic Failure Detection:**
+- Failed PRs are automatically labeled with `🤖 needs-claude-fix` and `🔴 workflow-failed`
+- Detailed failure logs and fix suggestions are posted as PR comments
+- Filter PRs needing attention: `is:pr label:needs-claude-fix`
+
+**Manual Claude Assistance:**
+- Comment `@claude-code <request>` on any PR to get analysis
+- Examples: `@claude-code fix shellcheck errors`, `@claude-code analyze flux validation`
+- Provides PR context, workflow status, and exact local command to run
+- PRs are labeled with `🤖 claude-requested` for tracking
+
 ### Secret Management Workflow
 ```bash
 # Create new encrypted secret
@@ -207,6 +221,8 @@ kubectl -n <namespace> logs -l app.kubernetes.io/name=<app> -f
 - **e2e.yaml**: End-to-end testing of template generation
 - **mise.yaml**: Tool dependency management validation
 - **shellcheck.yaml**: Shell script linting
+- **claude-helper.yaml**: Automatically labels failed PRs and provides Claude Code assistance
+- **claude-manual-trigger.yaml**: Manual Claude Code trigger via `@claude-code` PR comments
 
 ### Renovate Configuration
 - **Auto-updates**: Container images, Helm charts, GitHub Actions
