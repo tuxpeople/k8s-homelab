@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: librechat2-configmap
+  name: librechat2-env-config
 data:
   #==================================================#
   #                      App                         #

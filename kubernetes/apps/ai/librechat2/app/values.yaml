@@ -19,7 +19,7 @@ controllers:
           # - secretRef:
           #     name: librechat2-oidc-secret
           - configMapRef:
-              name: librechat2-configmap
+              name: librechat2-env-config
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
@@ -66,7 +66,7 @@ controllers:
           - secretRef:
               name: librechat2-oidc-secret
           - configMapRef:
-              name: librechat2-configmap
+              name: librechat2-env-config
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -80,7 +80,7 @@ controllers:
           - secretRef:
               name: librechat2-secret
           - configMapRef:
-              name: librechat2-configmap
+              name: librechat2-env-config
         env:
           MEILI_DB_PATH: "/meili_data"
         securityContext:
