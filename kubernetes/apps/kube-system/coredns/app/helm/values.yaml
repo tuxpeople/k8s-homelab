@@ -19,16 +19,13 @@ servers:
         configBlock: |-
           lameduck 5s
       - name: ready
-      - name: log
-        configBlock: |-
-          class error
-      - name: prometheus
-        parameters: 0.0.0.0:9153
       - name: kubernetes
         parameters: cluster.local in-addr.arpa ip6.arpa
         configBlock: |-
           pods insecure
           fallthrough in-addr.arpa ip6.arpa
+      - name: autopath
+        parameters: "@kubernetes"
       - name: forward
         parameters: . 192.168.13.1 /etc/resolv.conf
       - name: cache
@@ -36,6 +33,11 @@ servers:
       - name: loop
       - name: reload
       - name: loadbalance
+      - name: prometheus
+        parameters: 0.0.0.0:9153
+      - name: log
+        configBlock: |-
+          class error
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
