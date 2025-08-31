@@ -75,7 +75,7 @@ controllers:
       meilisearch:
         image:
           repository: getmeili/meilisearch
-          tag: v1.18.0 # DO NOT BLINDLY UPDATE: https://www.meilisearch.com/docs/learn/update_and_migration/updating
+          tag: v1.19.1@sha256:abab6e9054572fea9fd409cf0f4fe3b65f6c8e70cd0f213004592b6d0e9587ac # DO NOT BLINDLY UPDATE: https://www.meilisearch.com/docs/learn/update_and_migration/updating
         envFrom:
           - secretRef:
               name: librechat2-secret
