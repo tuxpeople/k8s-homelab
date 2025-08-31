@@ -9,18 +9,18 @@ spec:
   version: v1.33.1
   concurrency: 1
   exclusive: true
-  nodeSelector:
-    matchExpressions:
-      - key: node-role.kubernetes.io/control-plane
-        operator: Exists
+  serviceAccountName: system-upgrade-controller
   secrets:
     - name: system-upgrade-controller
       path: /var/run/secrets/talos.dev
       ignoreUpdates: true
-  serviceAccountName: system-upgrade-controller
+  nodeSelector:
+    matchExpressions:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
   upgrade:
-    image: ghcr.io/siderolabs/talosctl:${TALOS_VERSION}
+    image: ghcr.io/siderolabs/talosctl:v1.10.7
     args:
-      - --nodes=$(SYSTEM_UPGRADE_NODE_NAME)
+      - --nodes=$(NODE_IP)
       - upgrade-k8s
       - --to=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
