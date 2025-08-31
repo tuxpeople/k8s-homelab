@@ -45,3 +45,9 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
+  postBuild:
+    substitute:
+      # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+      TALOS_VERSION: v1.10.7
+      # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+      KUBERNETES_VERSION: v1.33.4
