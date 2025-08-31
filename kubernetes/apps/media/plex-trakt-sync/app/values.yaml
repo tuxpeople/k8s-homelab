@@ -27,7 +27,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/taxel/plextraktsync
-          tag: 0.34.12
+          tag: 0.34.14@sha256:d53c5314f0e528c9abbf9fbc2f37d3d359c3d84e414185d88bb523a72ea6cce1
         args:
           - watch
         env:
@@ -68,7 +68,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/taxel/plextraktsync
-          tag: 0.34.12
+          tag: 0.34.14@sha256:d53c5314f0e528c9abbf9fbc2f37d3d359c3d84e414185d88bb523a72ea6cce1
         args:
           - sync
         env:
