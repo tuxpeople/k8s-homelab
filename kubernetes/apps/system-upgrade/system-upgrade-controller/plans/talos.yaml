@@ -5,25 +5,23 @@ kind: Plan
 metadata:
   name: talos
 spec:
-  version: ${TALOS_VERSION}
+  # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+  version: v1.10.6
   concurrency: 1
+  postCompleteDelay: 2m
   exclusive: true
-  nodeSelector:
-    matchExpressions:
-      - key: kubernetes.io/hostname
-        operator: Exists
+  serviceAccountName: system-upgrade-controller
   secrets:
     - name: system-upgrade-controller
       path: /var/run/secrets/talos.dev
       ignoreUpdates: true
-  serviceAccountName: system-upgrade-controller
+  nodeSelector:
+    matchExpressions:
+      - key: kubernetes.io/hostname
+        operator: Exists
   upgrade:
     image: ghcr.io/jfroy/tnu:0.4.3
-    envs:
-      - name: NODE_IP
-        valueFrom:
-          fieldRef:
-            fieldPath: status.hostIP
     args:
       - --node=$(NODE_IP)
       - --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --powercycle
