@@ -2,7 +2,7 @@ name: Claude Helper - Failure Notification
 
 on:
   workflow_run:
-    workflows: ["flux-local", "e2e", "mise", "shellcheck"]
+    workflows: ["Flux Local", "Mise", "ShellCheck"]
     types: [completed]
 
 jobs:
