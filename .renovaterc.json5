@@ -37,6 +37,15 @@
   },
   packageRules: [
     {
+      description: "Pin Docker digests",
+      matchDatasources: ["docker"],
+      rangeStrategy: "pin",
+      semanticCommitType: "chore",
+      semanticCommitScope: "container",
+      commitMessageTopic: "pin image {{depName}}",
+      commitMessageExtra: "digest",
+    },
+    {
       description: "Automerge patch updates",
       matchUpdateTypes: ["patch"],
       automerge: true,
