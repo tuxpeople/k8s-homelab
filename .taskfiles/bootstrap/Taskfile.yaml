@@ -12,7 +12,8 @@ tasks:
       - talhelper gencommand apply --extra-flags="--insecure" | bash
       - until talhelper gencommand bootstrap | bash; do sleep 10; done
       - until talhelper gencommand kubeconfig --extra-flags="{{.ROOT_DIR}} --force" | bash; do sleep 10; done
-      - cp {{.KUBECONFIG}} "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/Dateien/Allgemein/kubectl/$(yq .clusterName {{.TALOS_DIR}}/talconfig.yaml).yaml"
+      - sed -i '' 's/kubernetes/turingpi/g' {{.KUBECONFIG}}
+      - cp {{.KUBECONFIG}} "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/Dateien/Allgemein/kubectl/turingpi.yaml"
     preconditions:
       - test -f {{.ROOT_DIR}}/.sops.yaml
       - test -f {{.SOPS_AGE_KEY_FILE}}
