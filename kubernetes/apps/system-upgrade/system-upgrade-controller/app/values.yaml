@@ -22,8 +22,10 @@ controllers:
             valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
-          SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: "99"
+          SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: "3"
           SYSTEM_UPGRADE_JOB_PRIVILEGED: false
+          SYSTEM_UPGRADE_JOB_TTL_SECONDS_AFTER_FINISHED: "900"
+          SYSTEM_UPGRADE_CONTROLLER_LOCK_DUR: "0"
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true

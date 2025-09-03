@@ -7,13 +7,16 @@ metadata:
 spec:
   version: ${KUBERNETES_VERSION}
   concurrency: 1
-  postCompleteDelay: 30s
+  postCompleteDelay: 2m
   exclusive: true
   nodeSelector:
     matchExpressions:
       - key: feature.node.kubernetes.io/system-os_release.ID
         operator: In
         values: ["talos"]
+      - key: feature.node.kubernetes.io/system-os_release.VERSION_ID
+        operator: In
+        values: ["${TALOS_VERSION}"]
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
   secrets:
