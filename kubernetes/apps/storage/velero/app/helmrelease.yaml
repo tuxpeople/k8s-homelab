@@ -26,6 +26,7 @@ spec:
     kubectl:
       image:
         repository: docker.io/bitnamilegacy/kubectl
+        tag: 1.33
     deployNodeAgent: true
     nodeAgent:
       containerSecurityContext:
