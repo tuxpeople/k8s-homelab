@@ -14,7 +14,7 @@ controllers:
             memory: 259Mi
           limits:
             cpu: 500m
-            memory: 750Mi
+            memory: 850Mi
 service:
   app:
     controller: obsidian
