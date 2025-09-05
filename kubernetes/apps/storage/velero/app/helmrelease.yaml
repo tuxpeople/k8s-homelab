@@ -23,6 +23,9 @@ spec:
     remediation:
       retries: 3
   values:
+    kubectl:
+      image:
+        repository: docker.io/bitnamilegacy/kubectl
     deployNodeAgent: true
     nodeAgent:
       containerSecurityContext:
