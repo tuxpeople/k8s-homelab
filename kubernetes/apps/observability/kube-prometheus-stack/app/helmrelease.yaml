@@ -86,3 +86,94 @@ spec:
           limits:
             cpu: 500m
             memory: 400Mi
+      enabled: true
+      config:
+        global:
+          slack_api_url: ${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}
+          resolve_timeout: 5m
+        #  smtp_smarthost: smtp.gmail.com:587
+        #  smtp_auth_username: you@gmail.com
+        #  smtp_auth_password: yourapppassword  # https://support.google.com/mail/answer/185833?hl=en-GB
+        #  smtp_auth_identity: you@gmail.com
+        route:
+          group_by:
+            - alertname
+            - job
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 6h
+          receiver: discord
+          routes:
+            - receiver: "null"
+              match:
+                alertname: InfoInhibitor
+            - receiver: "null"
+              match:
+                alertname: CPUThrottlingHigh
+            - receiver: DeadMansSnitch
+              repeat_interval: 30m
+              match:
+                alertname: Watchdog
+            - receiver: discord
+              matchers:
+                - severity = "critical"
+              continue: true
+              # - receiver: discord
+              #   group_wait: 10s
+              #   match_re:
+              #     issue: Portworx*
+              #   continue: true
+        receivers:
+          - name: "null"
+          - name: email
+            email_configs:
+              - send_resolved: true
+                to: ${SECRET_ACME_EMAIL}
+                from: prometheus@tuxpeople.org
+                smarthost: smtp.utils.svc.cluster.local:25
+                require_tls: false
+          - name: DeadMansSnitch
+            webhook_configs:
+              - url: https://nosnch.in/c15491ac44
+                send_resolved: false
+          - name: discord
+            webhook_configs:
+              - send_resolved: true
+                url: http://alertmanager-discord:9094
+                # title: |-
+                #   [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}
+                # text: >-
+                #   {{ range .Alerts -}}
+                #     **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+                #   **Description:** {{ if ne .Annotations.description ""}}{{ .Annotations.description }}{{else}}N/A{{ end }}
+                #   **Details:**
+                #     {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                #     {{ end }}
+                #   {{ end }}
+          # - name: discord
+          #   webhook_configs:
+          #     - send_resolved: true
+          #       url: 'http://alertmanager-discord:9094'
+        # Inhibition rules allow to mute a set of alerts given that another alert is firing.
+        # We use this to mute any warning-level notifications if the same alert is already critical.
+        inhibit_rules:
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
+            equal:
+              - alertname
+              - namespace
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: internal
+        annotations:
+          hajimari.io/appName: Alertmanager
+          hajimari.io/icon: mdi:alert-decagram-outline
+        tls:
+          - secretName: ${SECRET_DOMAIN/./-}-production-tls
+            hosts:
+              - alertmanager.${SECRET_DOMAIN}
+        hosts:
+          - alertmanager.${SECRET_DOMAIN}
