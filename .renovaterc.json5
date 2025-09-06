@@ -47,6 +47,11 @@
       enabled: false,
     },
     {
+      description: "Disable digest pinning for Talos version files",
+      matchFiles: ["talos/talenv.yaml"],
+      pinDigests: false,
+    },
+    {
       description: "Pin Docker digests for container images",
       matchDatasources: ["docker"],
       matchPackageNames: [
