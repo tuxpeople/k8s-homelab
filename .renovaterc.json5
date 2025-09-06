@@ -3,7 +3,6 @@
   extends: [
     "config:recommended",
     "docker:enableMajor",
-    "docker:pinDigests",
     "helpers:pinGitHubActionDigests",
     ":automergeBranch",
     ":dependencyDashboard",
@@ -37,20 +36,31 @@
   },
   packageRules: [
     {
-      description: "Pin Docker digests for container images only",
+      description: "Disable digest pinning for Helm chart registries",
       matchDatasources: ["docker"],
-      matchPackageNames: ["!*/charts/*", "!*/helm/*"],
+      matchPackageNames: [
+        "ghcr.io/coredns/charts/*",
+        "ghcr.io/controlplaneio-fluxcd/charts/*",
+        "ghcr.io/spegel-org/helm-charts/*",
+        "ghcr.io/bjw-s/helm/*"
+      ],
+      enabled: false,
+    },
+    {
+      description: "Pin Docker digests for container images",
+      matchDatasources: ["docker"],
+      matchPackageNames: [
+        "!ghcr.io/coredns/charts/*",
+        "!ghcr.io/controlplaneio-fluxcd/charts/*",
+        "!ghcr.io/spegel-org/helm-charts/*",
+        "!ghcr.io/bjw-s/helm/*"
+      ],
+      pinDigests: true,
       rangeStrategy: "pin",
       semanticCommitType: "chore",
       semanticCommitScope: "container",
       commitMessageTopic: "pin image {{depName}}",
       commitMessageExtra: "digest",
-    },
-    {
-      description: "Disable digest pinning for Helm charts",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["*/charts/*", "*/helm/*"],
-      pinDigests: false,
     },
     {
       description: "Automerge patch updates",
