@@ -16,9 +16,9 @@ fi
 
 function check_longhorn_backups() {
     check_cli kubectl jq
-    
+
     local now=$($DATE_CMD -u +%s)
-    
+
     log info "Checking Longhorn backups in namespace '$NAMESPACE'..."
 
     # Get all volumes

@@ -1,29 +1,28 @@
 ---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: '3'
+version: "3"
 
 set: [pipefail]
 shopt: [globstar]
 
 vars:
-  BOOTSTRAP_DIR: '{{.ROOT_DIR}}/bootstrap'
-  KUBERNETES_DIR: '{{.ROOT_DIR}}/kubernetes'
-  SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
-  TALOS_DIR: '{{.ROOT_DIR}}/talos'
-  PRIVATE_DIR: '{{.ROOT_DIR}}/.private'
-  TALOSCONFIG: '{{.ROOT_DIR}}/talos/clusterconfig/talosconfig'
+  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
+  TALOS_DIR: "{{.ROOT_DIR}}/talos"
+  PRIVATE_DIR: "{{.ROOT_DIR}}/.private"
+  TALOSCONFIG: "{{.ROOT_DIR}}/talos/clusterconfig/talosconfig"
 
 env:
-  KUBECONFIG: '{{.ROOT_DIR}}/kubeconfig'
-  SOPS_AGE_KEY_FILE: '{{.ROOT_DIR}}/age.key'
-  TALOSCONFIG: '{{.TALOSCONFIG}}'
+  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
+  SOPS_AGE_KEY_FILE: "{{.ROOT_DIR}}/age.key"
+  TALOSCONFIG: "{{.TALOSCONFIG}}"
 
 includes:
   bootstrap: .taskfiles/bootstrap
   talos: .taskfiles/talos
 
 tasks:
-
   default: task --list
 
   reconcile:
@@ -32,3 +31,48 @@ tasks:
     preconditions:
       - test -f {{.KUBECONFIG}}
       - which flux
+
+  # Pre-commit hooks management
+  pre-commit:install:
+    desc: Install pre-commit hooks
+    cmds:
+      - mise install pre-commit
+      - pre-commit install
+      - pre-commit install --hook-type commit-msg
+
+  pre-commit:run:
+    desc: Run pre-commit on all files
+    cmd: pre-commit run --all-files
+
+  pre-commit:update:
+    desc: Update pre-commit hooks
+    cmd: pre-commit autoupdate
+
+  # Validation tasks
+  validate:
+    desc: Run all validation checks
+    deps:
+      - validate:yaml
+      - validate:flux
+
+  validate:yaml:
+    desc: Validate all YAML files
+    cmd: |
+      find kubernetes -name "*.yaml" -not -path "*/templates/*" \
+      -not -name "*.sops.yaml" -exec yq eval . {} \; > /dev/null
+
+  validate:flux:
+    desc: Validate Flux Kubernetes manifests
+    cmd: |
+      find kubernetes -name "*.yaml" -type f | head -20 | \
+      xargs -I {} sh -c 'echo "Validating {}" && flux validate --path {}'
+    preconditions:
+      - which flux
+
+  cleanup-stuck-pods:
+    desc: Clean up ContainerStatusUnknown pods
+    cmd: |
+      kubectl get pods -A --field-selector=status.phase=Failed -o json | \
+      jq -r '.items[] | select(.status.containerStatuses[].state.terminated.reason == "ContainerStatusUnknown") | \
+      "\(.metadata.namespace) \(.metadata.name)"' | \
+      while read ns pod; do kubectl delete pod -n $ns $pod; done

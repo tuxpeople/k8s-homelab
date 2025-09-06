@@ -15,7 +15,7 @@ jobs:
       pull-requests: write
       issues: write
       contents: read
-    
+
     steps:
       - name: Parse Claude request
         id: parse
@@ -24,7 +24,7 @@ jobs:
           script: |
             const comment = context.payload.comment.body;
             const claudeMatch = comment.match(/@claude-code\s+(.+)/i);
-            
+
             if (claudeMatch) {
               return claudeMatch[1].trim();
             }
@@ -40,13 +40,13 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number,
             });
-            
+
             const { data: files } = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
             });
-            
+
             return {
               title: pr.title,
               branch: pr.head.ref,
@@ -65,7 +65,7 @@ jobs:
               branch: prDetails.branch,
               per_page: 5,
             });
-            
+
             return runs.workflow_runs.map(run => ({
               name: run.name,
               status: run.conclusion,
@@ -79,7 +79,7 @@ jobs:
             const request = `${{ steps.parse.outputs.result }}`;
             const prDetails = JSON.parse(`${{ steps.pr-details.outputs.result }}`);
             const workflows = JSON.parse(`${{ steps.workflows.outputs.result }}`);
-            
+
             // Add label
             await github.rest.issues.addLabels({
               issue_number: context.issue.number,
@@ -87,7 +87,7 @@ jobs:
               repo: context.repo.repo,
               labels: ['🤖 claude-requested']
             });
-            
+
             // Build comment
             let comment = '## 🤖 Claude Code Instructions\\n\\n';
             comment += `**Request:** ${request}\\n\\n`;
@@ -96,13 +96,13 @@ jobs:
             comment += `- **Branch:** \\`${prDetails.branch}\\`\\n`;
             comment += `- **Files changed:** ${prDetails.files.join(', ')}\\n\\n`;
             comment += '### Recent Workflow Status:\\n';
-            
+
             workflows.forEach(run => {
-              const status = run.status === 'success' ? '✅' : 
+              const status = run.status === 'success' ? '✅' :
                            run.status === 'failure' ? '❌' : '🟡';
               comment += `- ${status} [${run.name}](${run.url})\\n`;
             });
-            
+
             comment += '\\n### 💻 Local Command:\\n';
             comment += '```bash\\n';
             comment += 'cd /Volumes/development/github/tuxpeople/k8s-homelab\\n';
@@ -111,7 +111,7 @@ jobs:
             comment += '```\\n\\n';
             comment += '---\\n';
             comment += '*Run this command locally to get Claude\\'s analysis and fixes*';
-            
+
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,

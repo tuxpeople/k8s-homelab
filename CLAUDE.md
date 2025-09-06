@@ -130,6 +130,80 @@ Install all tools: `mise trust && pip install pipx && mise install`
 - All `*.sops.yaml` files are encrypted
 - Verify secrets are encrypted before committing
 
+## Code Quality & Pre-commit Hooks
+
+The repository uses pre-commit hooks to automatically validate code quality and prevent common issues before they reach the repository.
+
+### Pre-commit Setup
+
+Pre-commit hooks are configured to catch issues that previously caused problems (like the YAML parsing errors that broke Renovate digest updates).
+
+#### Installation
+```bash
+# Install pre-commit hooks (automatic with mise)
+task pre-commit:install
+
+# Or manually if mise is not available
+python -m pip install pre-commit
+pre-commit install
+```
+
+#### Available Commands
+```bash
+# Run pre-commit on all files
+task pre-commit:run
+
+# Run pre-commit on specific files
+pre-commit run --files path/to/file.yaml
+
+# Update hook versions
+task pre-commit:update
+
+# Skip hooks for emergency commits
+git commit --no-verify -m "emergency fix"
+```
+
+#### Configured Hooks
+
+The `.pre-commit-config.yaml` includes:
+
+- **YAML Validation**: Prevents syntax errors and duplicate keys that break Renovate
+  - `check-yaml`: Basic YAML syntax validation
+  - `yamllint`: Advanced YAML linting with 120-character line limit
+  - Custom Kubernetes YAML validation using `yq`
+
+- **Code Quality**:
+  - `trailing-whitespace`: Removes trailing spaces
+  - `end-of-file-fixer`: Ensures files end with newlines
+  - `check-merge-conflict`: Detects merge conflict markers
+
+- **Security**:
+  - `detect-secrets`: Scans for potential secrets (uses `.secrets.baseline`)
+  - Excludes SOPS-encrypted files and age keys
+
+- **Shell & Markdown**:
+  - `shellcheck`: Validates shell scripts
+  - `markdownlint`: Validates Markdown files
+
+#### Configuration Files
+
+- `.pre-commit-config.yaml`: Main pre-commit configuration
+- `.yamllint`: YAML linting rules (120 char line limit, 2-space indentation)
+- `.secrets.baseline`: Baseline for secret detection to avoid false positives
+
+#### Workflow Integration
+
+Pre-commit hooks run automatically on `git commit` and will:
+- **Block commits** with YAML syntax errors (preventing Renovate failures)
+- **Auto-fix** formatting issues where possible
+- **Warn about** potential security issues
+
+The hooks are designed to work with the GitOps workflow and exclude:
+- SOPS-encrypted files (`*.sops.yaml`)
+- Generated template files
+- Age encryption keys
+- Log files
+
 ## Networking Architecture
 
 - **Node Network**: 192.168.13.0/24
@@ -207,7 +281,7 @@ grep -r "ENC\[AES256_GCM" kubernetes/
 ```bash
 # Check Flux resources status
 flux get sources git -A
-flux get ks -A  
+flux get ks -A
 flux get hr -A
 
 # Force reconciliation of specific app
@@ -250,7 +324,7 @@ kubectl -n <namespace> logs -l app.kubernetes.io/name=<app> -f
 ### Common Issues to Avoid
 1. **Hardcoded values**: Use consistent values across similar resources
 2. **Missing health checks**: Add readiness/liveness probes
-3. **No resource limits**: Can cause cluster resource exhaustion  
+3. **No resource limits**: Can cause cluster resource exhaustion
 4. **Inconsistent patterns**: Follow established manifest patterns in the repository
 5. **Ingress annotation risks**: Be cautious with `allow-snippet-annotations`
 

@@ -8,11 +8,11 @@ This repository contains the configuration and deployment manifests for my perso
 - **Operating System**: [Talos Linux](https://github.com/siderolabs/talos) - Immutable OS designed for Kubernetes
 - **GitOps**: [FluxCD](https://github.com/fluxcd/flux2) - Continuous deployment from Git
 - **Networking**: [Cilium](https://github.com/cilium/cilium) with CNI disabled in Talos
-- **Storage**: 
+- **Storage**:
   - [Longhorn](https://github.com/longhorn/longhorn) for distributed block storage
   - [Synology CSI](https://github.com/SynologyOpenSource/synology-csi) for external NAS storage
 - **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes
-- **DNS**: 
+- **DNS**:
   - [k8s_gateway](https://github.com/ori-edge/k8s_gateway) for internal DNS (`192.168.13.65`)
   - [external-dns](https://github.com/kubernetes-sigs/external-dns) for public DNS via Cloudflare
 - **Secrets**: [SOPS](https://github.com/getsops/sops) encryption with Age keys + [external-secrets](https://github.com/external-secrets/external-secrets) with 1Password integration

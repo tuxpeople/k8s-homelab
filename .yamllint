@@ -1,0 +1,19 @@
+---
+extends: default
+
+rules:
+  line-length:
+    max: 160  # Allow longer lines for schema URLs and app-template comments
+    allow-non-breakable-words: true  # Allow long URLs
+    allow-non-breakable-inline-mappings: true
+  comments:
+    min-spaces-from-content: 1
+    require-starting-space: false  # Allow app-template schema comments
+  indentation:
+    spaces: 2
+  truthy:
+    allowed-values: ['true', 'false', 'on', 'off']
+  document-start: disable  # Allow both with and without --- markers
+  braces:
+    max-spaces-inside: 1  # Allow single spaces in braces for template vars
+    min-spaces-inside: 0

@@ -6,14 +6,23 @@ tasks:
   talos:
     desc: Bootstrap the Talos cluster
     dir: "{{.TALOS_DIR}}"
+    env:
+      DOCKER_USERNAME:
+        sh: sops -d {{.TALOS_DIR}}/talsecret.sops.yaml | yq -r '.DOCKER_USERNAME'
+      DOCKER_PASSWORD:
+        sh: sops -d {{.TALOS_DIR}}/talsecret.sops.yaml | yq -r '.DOCKER_PASSWORD'
     cmds:
-      - "[ -f talsecret.sops.yaml ] || talhelper gensecret | sops --filename-override talos/talsecret.sops.yaml --encrypt /dev/stdin > talsecret.sops.yaml"
+      - |
+        [ -f talsecret.sops.yaml ] || talhelper gensecret | \
+        sops --filename-override talos/talsecret.sops.yaml --encrypt /dev/stdin > talsecret.sops.yaml
       - talhelper genconfig
       - talhelper gencommand apply --extra-flags="--insecure" | bash
       - until talhelper gencommand bootstrap | bash; do sleep 10; done
       - until talhelper gencommand kubeconfig --extra-flags="{{.ROOT_DIR}} --force" | bash; do sleep 10; done
       - sed -i '' 's/kubernetes/turingpi/g' {{.KUBECONFIG}}
-      - cp {{.KUBECONFIG}} "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/Dateien/Allgemein/kubectl/turingpi.yaml"
+      - |
+        cp {{.KUBECONFIG}} \
+        "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/Dateien/Allgemein/kubectl/turingpi.yaml"
     preconditions:
       - test -f {{.ROOT_DIR}}/.sops.yaml
       - test -f {{.SOPS_AGE_KEY_FILE}}

@@ -5,9 +5,9 @@ source "$(dirname "${0}")/lib/common.sh"
 
 function view_longhorn_backups() {
     check_cli kubectl jq column
-    
+
     log info "Retrieving Longhorn backup information..."
-    
+
     (
         printf '%s\t%s\t%s\t%s\t%s\n' 'Namespace' 'BackupName' 'PVName' 'PVCName' 'SnapshotCreatedAt'
         kubectl get backups.longhorn.io -A -o=json |
@@ -30,7 +30,7 @@ function view_longhorn_backups() {
           | @tsv
         '
     ) | column -s $'\t' -t
-    
+
     log info "Backup listing completed"
 }
 

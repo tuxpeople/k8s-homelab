@@ -32,4 +32,3 @@ jobs:
           # Find and check all shell scripts in scripts/ and root directory
           find . -maxdepth 1 -name "*.sh" -type f -exec shellcheck --severity=warning {} +
           find scripts -name "*.sh" -type f -exec shellcheck --severity=warning {} + 2>/dev/null || true
-

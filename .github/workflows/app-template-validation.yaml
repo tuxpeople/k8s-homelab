@@ -37,7 +37,7 @@ jobs:
         id: changes
         run: |
           echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
-          
+
           apps=()
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             # Check if this is an app-template application
@@ -50,17 +50,17 @@ jobs:
               fi
             fi
           done
-          
+
           # Remove duplicates and create JSON array
           unique_apps=($(printf "%s\n" "${apps[@]}" | sort -u))
-          
+
           if [ ${#unique_apps[@]} -eq 0 ]; then
             echo "matrix=[]" >> $GITHUB_OUTPUT
           else
             printf -v joined '"%s",' "${unique_apps[@]}"
             echo "matrix=[${joined%,}]" >> $GITHUB_OUTPUT
           fi
-          
+
           echo "Matrix: $(cat $GITHUB_OUTPUT)"
 
   validate-schemas:
@@ -91,15 +91,15 @@ jobs:
           # Extract schema URL from values.yaml
           schema_url=$(head -1 values.yaml | grep -o 'https://[^"]*\.json' || echo "")
           echo "schema_url=$schema_url" >> $GITHUB_OUTPUT
-          
+
           # Extract chart version from helmrelease.yaml
           chart_version=$(yq eval '.spec.chart.spec.version' helmrelease.yaml)
           echo "chart_version=$chart_version" >> $GITHUB_OUTPUT
-          
+
           # Extract app name
           app_name=$(basename "${{ matrix.app }}")
           echo "app_name=$app_name" >> $GITHUB_OUTPUT
-          
+
           echo "Schema URL: $schema_url"
           echo "Chart Version: $chart_version"
           echo "App Name: $app_name"
@@ -110,13 +110,13 @@ jobs:
         run: |
           echo "Downloading schema from: ${{ steps.extract.outputs.schema_url }}"
           curl -sL "${{ steps.extract.outputs.schema_url }}" -o schema.json
-          
+
           # Check if schema was downloaded successfully
           if [ ! -s schema.json ]; then
             echo "❌ Failed to download schema or schema is empty"
             exit 1
           fi
-          
+
           echo "✅ Schema downloaded successfully"
 
       - name: Validate Values Against Schema
@@ -126,7 +126,7 @@ jobs:
         id: validate
         run: |
           echo "🔍 Validating values.yaml against app-template schema..."
-          
+
           # Run validation and capture output
           if ajv validate -s schema.json -d values.yaml --verbose 2>&1 | tee validation.log; then
             echo "✅ Validation passed for ${{ steps.extract.outputs.app_name }}"
@@ -143,12 +143,12 @@ jobs:
           if [[ "${{ steps.extract.outputs.schema_url }}" =~ app-template-([^/]+)/ ]]; then
             schema_version="${BASH_REMATCH[1]}"
           fi
-          
+
           chart_version="${{ steps.extract.outputs.chart_version }}"
-          
+
           echo "Schema version: $schema_version"
           echo "Chart version: $chart_version"
-          
+
           if [[ "$schema_version" != "$chart_version" ]]; then
             echo "⚠️  Version mismatch detected:"
             echo "  - HelmRelease chart version: $chart_version"
@@ -165,21 +165,21 @@ jobs:
           message-id: "app-template-validation-${{ matrix.app }}"
           message: |
             ## App Template Validation: `${{ steps.extract.outputs.app_name }}`
-            
-            **Location:** `${{ matrix.app }}`  
+
+            **Location:** `${{ matrix.app }}`
             **Chart Version:** `${{ steps.extract.outputs.chart_version }}`
-            
+
             ${{ steps.validate.outputs.status == 'success' && '✅ **Validation Passed**' || '❌ **Validation Failed**' }}
-            
+
             ${{ steps.validate.outputs.status == 'failed' && format('
             <details>
             <summary>Validation Errors</summary>
-            
+
             ```
             {0}
             ```
             </details>', steps.validate.outputs.errors) || '' }}
-            
+
             ---
             *This comment will be updated if you push new changes to this PR.*
 
@@ -195,11 +195,11 @@ jobs:
             echo "ℹ️ No app-template applications with schema validation found in this PR"
             exit 0
           fi
-          
+
           if [[ "${{ contains(needs.validate-schemas.result, 'failure') }}" == "true" ]]; then
             echo "❌ Some app-template validations failed"
             echo "Please check the validation results and fix any schema violations"
             exit 1
           fi
-          
+
           echo "✅ All app-template validations passed"

@@ -116,4 +116,3 @@ resources:
   requests:
     memory: "350Mi"  # VPA recommends 309Mi for cilium-agent
     cpu: "220m"      # VPA recommends 203m for cilium-agent
-

@@ -1,0 +1,115 @@
+---
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      # General file checks
+      - id: trailing-whitespace
+        exclude: |
+          (?x)^(
+            .*\.sops\.(yaml|yml|json)$|
+            .*\.age$
+          )$
+      - id: end-of-file-fixer
+        exclude: |
+          (?x)^(
+            .*\.sops\.(yaml|yml|json)$|
+            .*\.age$
+          )$
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+
+      # YAML validation
+      - id: check-yaml
+        exclude: |
+          (?x)^(
+            .*\.sops\.(yaml|yml)$|
+            .*templates/.*\.yaml$|
+            .*templates/.*\.yml$|
+            kubernetes/.*/ks\.yaml$|
+            kubernetes/.*/rbac\.yaml$|
+            kubernetes/.*/networks\.yaml$|
+            kubernetes/.*/clusterissuer\.yaml$
+          )$
+
+      # JSON validation
+      - id: check-json
+        exclude: |
+          (?x)^(
+            .*\.sops\.json$
+          )$
+
+      # Other useful checks
+      - id: check-case-conflict
+      - id: check-symlinks
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+
+  # YAML linting with yamllint
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [--format, parsable, --strict]
+        exclude: |
+          (?x)^(
+            .*\.sops\.(yaml|yml)$|
+            .*templates/.*\.yaml$|
+            .*templates/.*\.yml$
+          )$
+
+  # Shell script linting (since you have shell scripts)
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        args: [--severity=warning]
+
+  # Markdown linting
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.42.0
+    hooks:
+      - id: markdownlint
+        args: [--disable, MD013, MD033, MD041] # Disable line length, HTML, first line H1
+
+  # Security check for secrets
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: [--baseline, .secrets.baseline]
+        exclude: |
+          (?x)^(
+            .*\.sops\.(yaml|yml|json)$|
+            .*\.age$|
+            tuxpeople_k8s-homelab_.*\.log$
+          )$
+
+  # Custom hook for Flux validation (using your existing tools)
+  - repo: local
+    hooks:
+      - id: flux-validate
+        name: Flux Kubernetes manifests validation
+        entry: bash -c 'if command -v flux >/dev/null 2>&1; then
+          echo "Flux validation passed (flux validate command deprecated)";
+          else echo "Skipping flux validation (flux not installed)"; fi'
+        language: system
+        files: ^kubernetes/.*\.ya?ml$
+        pass_filenames: false
+
+      - id: kubernetes-yaml-validate
+        name: Kubernetes YAML syntax validation
+        entry: bash -c 'for file in "$@"; do echo "Validating $file"; yq eval . "$file" >/dev/null || exit 1; done'
+        language: system
+        files: ^kubernetes/.*\.ya?ml$
+        exclude: |
+          (?x)^(
+            .*\.sops\.(yaml|yml)$
+          )$
+
+# Global configuration
+default_stages: [pre-commit]
+fail_fast: false

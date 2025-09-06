@@ -22,20 +22,20 @@ apps=(
 for app_dir in "${apps[@]}"; do
     kustomization_file="$app_dir/kustomization.yaml"
     values_file="$app_dir/values.yaml"
-    
+
     if [[ ! -f "$kustomization_file" ]] || [[ ! -f "$values_file" ]]; then
         echo "Skipping $app_dir - missing files"
         continue
     fi
-    
+
     # Get app name
     app_name=$(basename "$app_dir")
     if [[ "$app_name" == "app" ]]; then
         app_name=$(basename "$(dirname "$app_dir")")
     fi
-    
+
     echo "Fixing $app_name in $app_dir"
-    
+
     # Check if configMapGenerator already exists
     if grep -q "configMapGenerator:" "$kustomization_file"; then
         echo "  Adding to existing configMapGenerator"
@@ -51,7 +51,7 @@ configMapGenerator:\
       - values.yaml
 ' "$kustomization_file" && rm "$kustomization_file.bak"
     fi
-    
+
     echo "  ✅ Fixed $app_name"
 done
 

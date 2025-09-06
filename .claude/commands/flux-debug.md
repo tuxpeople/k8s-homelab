@@ -65,7 +65,7 @@ flux get all -A
 
 # Specific resource types
 flux get sources git -A
-flux get ks -A  
+flux get ks -A
 flux get hr -A
 flux get alerts -A
 ```

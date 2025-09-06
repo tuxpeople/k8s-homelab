@@ -23,7 +23,7 @@ tasks:
     desc: Check the health of all nodes in the cluster using talosctl and a check for "bootedWithUKI"
     dir: "{{.TALOS_DIR}}"
     cmd: >
-      talosctl get securitystate -o json | 
+      talosctl get securitystate -o json |
       jq -s -r '.[] | "\(.node): \(if .spec.bootedWithUKI then "unhealthy" else "healthy" end)"'
     preconditions:
       - test -f {{.TALOS_DIR}}/talconfig.yaml
@@ -60,7 +60,9 @@ tasks:
   upgrade-node:
     desc: Upgrade Talos on a single node [IP=required]
     dir: "{{.TALOS_DIR}}"
-    cmd: talhelper gencommand upgrade --node {{.IP}} --extra-flags "--image='{{.TALOS_IMAGE}}:{{.TALOS_VERSION}}' --timeout=10m" | bash
+    cmd: |
+      talhelper gencommand upgrade --node {{.IP}} \
+      --extra-flags "--image='{{.TALOS_IMAGE}}:{{.TALOS_VERSION}}' --timeout=10m" | bash
     vars:
       TALOS_IMAGE:
         sh: yq '.nodes[] | select(.ipAddress == "{{.IP}}") | .talosImageURL' {{.TALOS_DIR}}/talconfig.yaml
@@ -90,6 +92,9 @@ tasks:
     desc: Resets nodes back to maintenance mode
     dir: "{{.TALOS_DIR}}"
     prompt: This will destroy your cluster and reset the nodes back to maintenance mode... continue?
-    cmd: talhelper gencommand reset --extra-flags="--reboot {{- if eq .CLI_FORCE false }} --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL{{ end }} --graceful=false --wait=false" | bash
+    cmd: |
+      talhelper gencommand reset --extra-flags="--reboot \
+      {{- if eq .CLI_FORCE false }} --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL{{ end }} \
+      --graceful=false --wait=false" | bash
     preconditions:
       - which talhelper
