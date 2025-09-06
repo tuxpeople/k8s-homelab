@@ -40,7 +40,7 @@ controllers:
           startup:
             enabled: true
             spec:
-              failureThreshold: 30
+              failureThreshold: 60
               periodSeconds: 10
         resources:
           requests:
@@ -173,7 +173,7 @@ persistence:
       - path: /usr/src/paperless/passwords/passwords.txt
         subPath: passwords.txt
         readOnly: true
-    # - path: /usr/src/paperless/scripts/pre-consume.sh
-    #   subPath: pre-consume.sh
-    # - path: /usr/src/paperless/scripts/remove-blank-pages.sh
-    #   subPath: remove-blank-pages.sh
+        # - path: /usr/src/paperless/scripts/pre-consume.sh
+        #   subPath: pre-consume.sh
+        # - path: /usr/src/paperless/scripts/remove-blank-pages.sh
+        #   subPath: remove-blank-pages.sh
