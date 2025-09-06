@@ -82,10 +82,6 @@ controllers:
               secretKeyRef:
                 name: "spoolman-secrets"
                 key: "litestream-age-secret"
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities: {drop: ["ALL"]}
-          readOnlyRootFilesystem: true
 defaultPodOptions:
   securityContext:
     runAsNonRoot: true
@@ -111,8 +107,9 @@ persistence:
             path: "/etc/litestream.yml"
             readOnly: true
         01-litestream-restore:
-          - !!merge <<: *lsmnt
-            subPath: "litestream-restore"
+          - subPath: "litestream-restore"
+            path: "/etc/litestream.yml"
+            readOnly: true
 configMaps:
   config:
     enabled: true

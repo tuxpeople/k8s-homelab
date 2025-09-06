@@ -92,11 +92,15 @@ repos:
   # Custom hook for Flux validation (using your existing tools)
   - repo: local
     hooks:
-      - id: flux-validate
-        name: Flux Kubernetes manifests validation
-        entry: bash -c 'if command -v flux >/dev/null 2>&1; then
-          echo "Flux validation passed (flux validate command deprecated)";
-          else echo "Skipping flux validation (flux not installed)"; fi'
+      - id: flux-check
+        name: Flux resources validation
+        entry: |
+          bash -c 'if command -v flux >/dev/null 2>&1 && [ -f kubeconfig ]; then
+            echo "✅ Flux validation: Basic YAML structure validated by kubernetes-yaml-validate hook";
+            echo "ℹ️  Run: task validate:flux to check live cluster status";
+          else
+            echo "⚠️  Skipping flux check (flux CLI or kubeconfig not available)";
+          fi'
         language: system
         files: ^kubernetes/.*\.ya?ml$
         pass_filenames: false

@@ -123,8 +123,9 @@ persistence:
             path: "/etc/litestream.yml"
             readOnly: true
         01-litestream-restore:
-          - !!merge <<: *lsmnt
-            subPath: "litestream-restore"
+          - subPath: "litestream-restore"
+            path: "/etc/litestream.yml"
+            readOnly: true
 configMaps:
   config:
     enabled: true

@@ -53,6 +53,7 @@ tasks:
     desc: Run all validation checks
     deps:
       - validate:yaml
+      - validate:kubernetes
       - validate:flux
 
   validate:yaml:
@@ -61,13 +62,39 @@ tasks:
       find kubernetes -name "*.yaml" -not -path "*/templates/*" \
       -not -name "*.sops.yaml" -exec yq eval . {} \; > /dev/null
 
-  validate:flux:
-    desc: Validate Flux Kubernetes manifests
+  validate:kubernetes:
+    desc: Validate Kubernetes manifests structure
     cmd: |
-      find kubernetes -name "*.yaml" -type f | head -20 | \
-      xargs -I {} sh -c 'echo "Validating {}" && flux validate --path {}'
+      echo "🔍 Validating Kubernetes manifests with kubeconform..."
+      if command -v kubeconform >/dev/null 2>&1; then
+        find kubernetes -name "*.yaml" \
+        -not -path "*/templates/*" \
+        -not -path "*/helm/*" \
+        -not -path "*/config/*" \
+        -not -path "*/configs/*" \
+        -not -path "*/resources/*" \
+        -not -name "*.sops.yaml" \
+        -not -name "values.yaml" \
+        -not -name "kustomizeconfig.yaml" \
+        -not -name "config.yaml" | \
+        xargs kubeconform -strict -ignore-missing-schemas -skip CustomResourceDefinition
+      else
+        echo "⚠️  kubeconform not found, falling back to yq validation"
+        find kubernetes -name "*.yaml" -not -path "*/templates/*" \
+        -not -name "*.sops.yaml" -exec yq eval . {} \; > /dev/null
+        echo "✅ Basic YAML syntax validation completed"
+      fi
+
+  validate:flux:
+    desc: Check Flux resources status and health
+    cmd: |
+      echo "🔍 Checking Flux installation status..."
+      flux check
+      echo "📊 Getting Flux resources status..."
+      flux get all -A
     preconditions:
       - which flux
+      - test -f {{.KUBECONFIG}}
 
   cleanup-stuck-pods:
     desc: Clean up ContainerStatusUnknown pods
