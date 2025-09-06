@@ -47,8 +47,8 @@ controllers:
             cpu: 500m
             memory: 1181Mi
           limits:
-            cpu: 2000m
-            memory: 2000Mi
+            cpu: 2500m
+            memory: 2500Mi
   redis:
     containers:
       redis:
