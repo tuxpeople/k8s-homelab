@@ -32,7 +32,8 @@ repos:
             kubernetes/.*/ks\.yaml$|
             kubernetes/.*/rbac\.yaml$|
             kubernetes/.*/networks\.yaml$|
-            kubernetes/.*/clusterissuer\.yaml$
+            kubernetes/.*/clusterissuer\.yaml$|
+            kubernetes/.*/scrapeconfigs\.yaml$
           )$
 
       # JSON validation
