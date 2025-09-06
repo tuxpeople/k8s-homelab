@@ -204,6 +204,40 @@ The hooks are designed to work with the GitOps workflow and exclude:
 - Age encryption keys
 - Log files
 
+### VS Code Integration
+
+The repository includes VS Code workspace configuration that aligns YAML formatting with yamllint standards to prevent conflicts between editor auto-formatting and pre-commit hooks.
+
+#### Configuration Files
+
+- `.vscode/settings.json`: Workspace settings that configure YAML formatting to match yamllint rules
+  - 160 character line limit (matching yamllint config)
+  - 2-space indentation for YAML files
+  - Disables Prettier for YAML files to avoid conflicts
+  - Enables format-on-save with RedHat YAML extension
+  - Configures Kubernetes and Helm schemas for validation
+
+- `.vscode/extensions.json`: Recommended extensions for optimal development experience
+  - `redhat.vscode-yaml`: Primary YAML formatter and validator
+  - `ms-kubernetes-tools.vscode-kubernetes-tools`: Kubernetes integration
+  - `signageos.signageos-vscode-sops`: SOPS integration
+  - `timonwong.shellcheck`: Shell script validation
+
+- `.vscode/tasks.json`: Quick tasks for running linting and validation
+  - `Ctrl+Shift+P` > "Run Task" > "Run pre-commit on current file"
+  - `Ctrl+Shift+P` > "Run Task" > "Run yamllint on current file"
+
+- `.editorconfig`: Cross-editor configuration ensuring consistent formatting
+
+#### Usage
+
+1. **Install Recommended Extensions**: VS Code will prompt to install recommended extensions when opening the workspace
+2. **Automatic Formatting**: Files will auto-format on save according to yamllint rules
+3. **Real-time Validation**: YAML errors appear as you type with proper schema validation
+4. **Quick Tasks**: Use Command Palette tasks to run validation on current file
+
+This setup prevents the common issue where VS Code formats YAML files in a way that conflicts with pre-commit hooks, ensuring consistency between editor formatting and repository standards.
+
 ## Networking Architecture
 
 - **Node Network**: 192.168.13.0/24

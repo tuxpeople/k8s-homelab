@@ -10,6 +10,17 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
+# YAML files (matches yamllint config)
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+max_line_length = 160
+
+# JSON files
+[*.{json,json5}]
+indent_style = space
+indent_size = 2
+
 [*.cue]
 indent_style = tab
 indent_size = 4
@@ -17,6 +28,12 @@ indent_size = 4
 [*.md]
 indent_size = 4
 trim_trailing_whitespace = false
+max_line_length = off
 
 [*.sh]
-indent_size = 4
+indent_size = 2
+
+# Ignore generated files
+[talos/clusterconfig/**]
+indent_style = unset
+indent_size = unset

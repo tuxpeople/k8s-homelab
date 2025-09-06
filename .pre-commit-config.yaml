@@ -58,7 +58,8 @@ repos:
           (?x)^(
             .*\.sops\.(yaml|yml)$|
             .*templates/.*\.yaml$|
-            .*templates/.*\.yml$
+            .*templates/.*\.yml$|
+            \.vscode/.*$
           )$
 
   # Shell script linting (since you have shell scripts)

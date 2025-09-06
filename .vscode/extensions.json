@@ -1,8 +1,23 @@
 {
   "recommendations": [
-    "blueglassblock.better-json5",
-    "irongeek.vscode-env",
     "redhat.vscode-yaml",
-    "signageos.signageos-vscode-sops"
+    "blueglassblock.better-json5",
+    "fnando.linter",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "ms-vscode.vscode-json",
+    "signageos.signageos-vscode-sops",
+    "timonwong.shellcheck",
+    "foxundermoon.shell-format",
+    "irongeek.vscode-env",
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    "davidanson.vscode-markdownlint",
+    "yzhang.markdown-all-in-one",
+    "ms-azuretools.vscode-docker",
+    "editorconfig.editorconfig",
+    "streetsidesoftware.code-spell-checker"
+  ],
+  "unwantedRecommendations": [
+    "esbenp.prettier-vscode"
   ]
 }
