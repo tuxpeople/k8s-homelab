@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Parse Claude request
         id: parse
-        uses: actions/github-script@v7
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           script: |
             const comment = context.payload.comment.body;
@@ -32,7 +32,7 @@ jobs:
 
       - name: Get PR details
         id: pr-details
-        uses: actions/github-script@v7
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           script: |
             const { data: pr } = await github.rest.pulls.get({
@@ -55,7 +55,7 @@ jobs:
 
       - name: Get recent workflow runs
         id: workflows
-        uses: actions/github-script@v7
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           script: |
             const prDetails = JSON.parse(`${{ steps.pr-details.outputs.result }}`);
@@ -73,7 +73,7 @@ jobs:
             }));
 
       - name: Add label and reply
-        uses: actions/github-script@v7
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           script: |
             const request = `${{ steps.parse.outputs.result }}`;
