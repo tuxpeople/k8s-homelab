@@ -37,13 +37,20 @@
   },
   packageRules: [
     {
-      description: "Pin Docker digests",
+      description: "Pin Docker digests for container images only",
       matchDatasources: ["docker"],
+      matchPackageNames: ["!*/charts/*", "!*/helm/*"],
       rangeStrategy: "pin",
       semanticCommitType: "chore",
       semanticCommitScope: "container",
       commitMessageTopic: "pin image {{depName}}",
       commitMessageExtra: "digest",
+    },
+    {
+      description: "Disable digest pinning for Helm charts",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["*/charts/*", "*/helm/*"],
+      pinDigests: false,
     },
     {
       description: "Automerge patch updates",
