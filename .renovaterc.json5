@@ -36,20 +36,18 @@
   },
   packageRules: [
     {
-      description: "Disable digest pinning for Helm chart registries",
+      description: "Disable digest pinning for Helm chart registries and Talos components",
       matchDatasources: ["docker"],
       matchPackageNames: [
         "ghcr.io/coredns/charts/*",
         "ghcr.io/controlplaneio-fluxcd/charts/*",
         "ghcr.io/spegel-org/helm-charts/*",
-        "ghcr.io/bjw-s/helm/*"
+        "ghcr.io/bjw-s/helm/*",
+        "ghcr.io/siderolabs/installer",
+        "ghcr.io/siderolabs/kubelet",
+        "ghcr.io/siderolabs/talosctl"
       ],
       enabled: false,
-    },
-    {
-      description: "Disable digest pinning for Talos version files",
-      matchFiles: ["talos/talenv.yaml"],
-      pinDigests: false,
     },
     {
       description: "Pin Docker digests for container images",
@@ -58,7 +56,10 @@
         "!ghcr.io/coredns/charts/*",
         "!ghcr.io/controlplaneio-fluxcd/charts/*",
         "!ghcr.io/spegel-org/helm-charts/*",
-        "!ghcr.io/bjw-s/helm/*"
+        "!ghcr.io/bjw-s/helm/*",
+        "!ghcr.io/siderolabs/installer",
+        "!ghcr.io/siderolabs/kubelet",
+        "!ghcr.io/siderolabs/talosctl"
       ],
       pinDigests: true,
       rangeStrategy: "pin",
