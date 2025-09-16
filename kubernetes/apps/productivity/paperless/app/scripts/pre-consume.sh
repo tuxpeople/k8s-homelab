@@ -5,7 +5,18 @@
 
 set -e
 
+# Optionales Logging
+echo "Pre-consume script starting…"
+
 # https://github.com/ocrmypdf/OCRmyPDF/issues/1483
+cat <<"EOF"
+______ _                        _ _          _  __________________
+|  ___(_)                      (_) |        | | | ___ \  _  \  ___|
+| |_   ___  __  _ __ ___   __ _ _| | ___  __| | | |_/ / | | | |_ ___
+|  _| | \ \/ / | '_ ` _ \ / _` | | |/ _ \/ _` | |  __/| | | |  _/ __|
+| |   | |>  <  | | | | | | (_| | | |  __/ (_| | | |   | |/ /| | \__ \
+\_|   |_/_/\_\ |_| |_| |_|\__,_|_|_|\___|\__,_| \_|   |___/ \_| |___/
+EOF
 MIME_TYPE=$(file --mime-type -b "${DOCUMENT_SOURCE_PATH}")
 
 if [ "$MIME_TYPE" == "application/pdf" ]; then
@@ -14,9 +25,6 @@ fi
 
 exit 0
 
-
-# Optionales Logging
-echo "Pre-consume script starting…"
 
 # Stelle sicher, dass pymupdf installiert ist (nur beim ersten Lauf nötig, ggf. rausnehmen)
 pip install --quiet pymupdf
