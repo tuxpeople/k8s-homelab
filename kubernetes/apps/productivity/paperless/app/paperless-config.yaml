@@ -11,8 +11,7 @@ data:
   PAPERLESS_TIKA_ENABLE: "0"
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
   PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
-  PAPERLESS_FILENAME_FORMAT:
-    "{{created_year}}/{{correspondent}}/{{created_year}}-{{created_month}}-{{created_day}}
+  PAPERLESS_FILENAME_FORMAT: "{{created_year}}/{{correspondent}}/{{created_year}}-{{created_month}}-{{created_day}}
     {{title}}"
   # Configure Remote User auth
   PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
@@ -34,5 +33,5 @@ data:
   # Configure redis integration
   PAPERLESS_REDIS: redis://paperless-redis:6379
   # Working around the "DecompressionBombError: Image size exceeds limit" issue as described in https://github.com/paperless-ngx/paperless-ngx/issues/416
-  # PAPERLESS_OCR_MAX_IMAGE_PIXELS: "600000000"
-  # PAPERLESS_WORKER_TIMEOUT: "10000"
+  PAPERLESS_OCR_MAX_IMAGE_PIXELS: "600000000"
+  PAPERLESS_WORKER_TIMEOUT: "10000"
