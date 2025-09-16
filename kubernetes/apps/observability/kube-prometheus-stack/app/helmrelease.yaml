@@ -69,7 +69,7 @@ spec:
             memory: 512Mi
           limits:
             cpu: 1000m
-            memory: 1Gi
+            memory: 1024Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -140,22 +140,6 @@ spec:
             webhook_configs:
               - send_resolved: true
                 url: http://alertmanager-discord:9094
-                # title: |-
-                #   [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}
-                # text: >-
-                #   {{ range .Alerts -}}
-                #     **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-                #   **Description:** {{ if ne .Annotations.description ""}}{{ .Annotations.description }}{{else}}N/A{{ end }}
-                #   **Details:**
-                #     {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
-                #     {{ end }}
-                #   {{ end }}
-          # - name: discord
-          #   webhook_configs:
-          #     - send_resolved: true
-          #       url: 'http://alertmanager-discord:9094'
-        # Inhibition rules allow to mute a set of alerts given that another alert is firing.
-        # We use this to mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
           - source_matchers:
               - severity = "critical"
