@@ -1,9 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
 # Titel von https://ascii.today
 # Variante "DOOM BY FRANS P. DE VRIES"
 
 set -e
+
+# https://github.com/ocrmypdf/OCRmyPDF/issues/1483
+MIME_TYPE=$(file --mime-type -b "${DOCUMENT_SOURCE_PATH}")
+
+if [ "$MIME_TYPE" == "application/pdf" ]; then
+        gs -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -sOutputFile="${DOCUMENT_WORKING_PATH}" "${DOCUMENT_SOURCE_PATH}"
+fi
+
+exit 0
+
 
 # Optionales Logging
 echo "Pre-consume script starting…"
