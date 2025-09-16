@@ -28,10 +28,13 @@ data:
   PAPERLESS_OCR_LANGUAGES: deu eng
   PAPERLESS_OCR_LANGUAGE: deu+eng
   PAPERLESS_OCR_MODE: redo
-  PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
+  PAPERLESS_OCR_USER_ARGS: "{
+    optimize = 1;
+    invalidate_digital_signatures = true;,
+    }"
   #PAPERLESS_OCR_SKIP_ARCHIVE_FILE: with_text
   # Configure redis integration
   PAPERLESS_REDIS: redis://paperless-redis:6379
   # Working around the "DecompressionBombError: Image size exceeds limit" issue as described in https://github.com/paperless-ngx/paperless-ngx/issues/416
-  PAPERLESS_OCR_MAX_IMAGE_PIXELS: "600000000"
-  PAPERLESS_WORKER_TIMEOUT: "10000"
+  # PAPERLESS_OCR_MAX_IMAGE_PIXELS: "600000000"
+  # PAPERLESS_WORKER_TIMEOUT: "10000"
