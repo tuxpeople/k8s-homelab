@@ -5,7 +5,7 @@ kind: ConfigMap
 metadata:
   name: paperless-config
 data:
-  PAPERLESS_PRE_CONSUME_SCRIPT: /usr/src/paperless/scripts/pre-consume.sh
+  # PAPERLESS_PRE_CONSUME_SCRIPT: /usr/src/paperless/scripts/pre-consume.sh
   PAPERLESS_WEBSERVER_WORKERS: "1"
   PAPERLESS_TASK_WORKERS: "1"
   PAPERLESS_TIKA_ENABLE: "0"
@@ -27,7 +27,7 @@ data:
   # Configure OCR
   PAPERLESS_OCR_LANGUAGES: deu eng
   PAPERLESS_OCR_LANGUAGE: deu+eng
-  PAPERLESS_OCR_MODE: redo
+  PAPERLESS_OCR_MODE: skip
   PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
   #PAPERLESS_OCR_SKIP_ARCHIVE_FILE: with_text
   # Configure redis integration
