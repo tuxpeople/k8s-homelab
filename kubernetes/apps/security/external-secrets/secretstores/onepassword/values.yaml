@@ -8,7 +8,7 @@ controllers:
     containers:
       api:
         image:
-          repository: mirror.gcr.io/1password/connect-api
+          repository: docker.io/1password/connect-api
           tag: 1.7.4
         env:
           XDG_DATA_HOME: &configDir /config
@@ -42,7 +42,7 @@ controllers:
         securityContext: &securityContext
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-          capabilities: {drop: ["ALL"]}
+          capabilities: { drop: ["ALL"] }
         resources: &resources
           requests:
             cpu: 11m
@@ -52,7 +52,7 @@ controllers:
             memory: 60Mi
       sync:
         image:
-          repository: mirror.gcr.io/1password/connect-sync
+          repository: docker.io/1password/connect-sync
           tag: 1.7.4
         env:
           XDG_DATA_HOME: *configDir
@@ -98,7 +98,7 @@ defaultPodOptions:
     runAsGroup: 999
     fsGroup: 999
     fsGroupChangePolicy: OnRootMismatch
-    seccompProfile: {type: RuntimeDefault}
+    seccompProfile: { type: RuntimeDefault }
 service:
   app:
     controller: onepassword-connect

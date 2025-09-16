@@ -11,7 +11,7 @@ controllers:
     containers:
       app:
         image:
-          repository: mirror.gcr.io/domrod/openvpn_server
+          repository: docker.io/domrod/openvpn_server
           tag: 2.6.12
         securityContext:
           capabilities:

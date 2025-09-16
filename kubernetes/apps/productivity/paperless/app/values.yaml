@@ -53,7 +53,7 @@ controllers:
     containers:
       redis:
         image:
-          repository: mirror.gcr.io/valkey/valkey
+          repository: docker.io/valkey/valkey
           tag: 8.1.3
         resources:
           requests:
@@ -79,7 +79,7 @@ controllers:
     containers:
       gotenberg:
         image:
-          repository: mirror.gcr.io/gotenberg/gotenberg
+          repository: docker.io/gotenberg/gotenberg
           tag: 8.23.0@sha256:3e9d970c395dfd7f0f98fd8da5adc01dab6bf95881d8d232f77a9feafe6d4977
         env:
           DISABLE_GOOGLE_CHROME: "1"

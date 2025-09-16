@@ -9,11 +9,16 @@ controllers:
           repository: busybox
           pullPolicy: Always
           tag: latest
-        command: [sh, -c, 'cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip; rm -f /tmp/webtrees-theme-modern.0.0.9.zip']
+        command:
+          [
+            sh,
+            -c,
+            "cd /var/www/html/modules_v4/; wget https://github.com/JesseWebDotCom/webtrees-theme-modern/releases/download/0.0.9/webtrees-theme-modern.0.0.9.zip -O /tmp/webtrees-theme-modern.0.0.9.zip; unzip /tmp/webtrees-theme-modern.0.0.9.zip; rm -f /tmp/webtrees-theme-modern.0.0.9.zip",
+          ]
     containers:
       main:
         image:
-          repository: mirror.gcr.io/dtjs48jkt/webtrees
+          repository: docker.io/dtjs48jkt/webtrees
           tag: 2.2.1
         env:
           DISABLE_SSL: "TRUE"

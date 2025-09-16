@@ -8,7 +8,7 @@ controllers:
     containers:
       app:
         image:
-          repository: mirror.gcr.io/cloudflare/cloudflared
+          repository: docker.io/cloudflare/cloudflared
           tag: 2025.8.1
         env:
           NO_AUTOUPDATE: true
@@ -40,7 +40,7 @@ controllers:
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-          capabilities: {drop: ["ALL"]}
+          capabilities: { drop: ["ALL"] }
         resources:
           requests:
             cpu: 10m
@@ -51,7 +51,7 @@ defaultPodOptions:
     runAsNonRoot: true
     runAsUser: 65534
     runAsGroup: 65534
-    seccompProfile: {type: RuntimeDefault}
+    seccompProfile: { type: RuntimeDefault }
 service:
   app:
     controller: cloudflared

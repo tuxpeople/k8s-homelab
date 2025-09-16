@@ -27,7 +27,7 @@ controllers:
           # to use a db see https://github.com/bjw-s/home-ops/blob/main/ kubernetes/apps/selfhosted/linkding/app/helmrelease.yaml
       litestream: &ls
         image:
-          repository: "mirror.gcr.io/litestream/litestream"
+          repository: "docker.io/litestream/litestream"
           tag: "0.3.13"
         args: ["replicate"]
         env: &lsenv

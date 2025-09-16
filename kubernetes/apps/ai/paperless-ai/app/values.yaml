@@ -7,7 +7,7 @@ controllers:
     containers:
       app:
         image:
-          repository: mirror.gcr.io/clusterzx/paperless-ai
+          repository: docker.io/clusterzx/paperless-ai
           tag: 2.7.6
         env:
           PAPERLESS_API_URL: http://paperless.productivity.svc.cluster.local:8080/api
@@ -36,7 +36,7 @@ defaultPodOptions:
     runAsGroup: 1000
     fsGroup: 1000
     fsGroupChangePolicy: OnRootMismatch
-    seccompProfile: {type: RuntimeDefault}
+    seccompProfile: { type: RuntimeDefault }
     # affinity:
     #   # Image not yet built for arm64
     #   nodeAffinity:
