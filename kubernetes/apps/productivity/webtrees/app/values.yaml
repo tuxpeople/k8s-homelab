@@ -19,7 +19,7 @@ controllers:
       main:
         image:
           repository: docker.io/dtjs48jkt/webtrees
-          tag: 2.2.1
+          tag: 2.2.4
         env:
           DISABLE_SSL: "TRUE"
           PRETTYURLSl: "TRUE"
