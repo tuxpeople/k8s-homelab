@@ -28,6 +28,8 @@ servers:
         parameters: "@kubernetes"
       - name: forward
         parameters: . 192.168.13.1 /etc/resolv.conf
+        configBlock: |-
+          policy sequential
       - name: cache
         parameters: 30
       - name: loop
