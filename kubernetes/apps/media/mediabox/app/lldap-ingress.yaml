@@ -30,7 +30,7 @@ kind: Service
 metadata:
   name: lldap
 spec:
-  externalName: lldap.media.tdeutsch.ch
+  externalName: thiazi.home.tdeutsch.ch
   ports:
     - name: lldap
       port: 17170
