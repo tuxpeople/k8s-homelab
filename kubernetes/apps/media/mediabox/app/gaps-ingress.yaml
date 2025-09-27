@@ -43,3 +43,5 @@ spec:
       port: 8484
       protocol: TCP
       targetPort: 8484
+  sessionAffinity: None
+  type: ExternalName

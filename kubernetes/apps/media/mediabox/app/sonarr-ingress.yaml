@@ -43,3 +43,5 @@ spec:
       port: 8989
       protocol: TCP
       targetPort: 8989
+  sessionAffinity: None
+  type: ExternalName

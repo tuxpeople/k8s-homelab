@@ -36,3 +36,5 @@ spec:
       port: 5454
       protocol: TCP
       targetPort: 5454
+  sessionAffinity: None
+  type: ExternalName

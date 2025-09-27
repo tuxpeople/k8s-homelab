@@ -43,3 +43,5 @@ spec:
       port: 6767
       protocol: TCP
       targetPort: 6767
+  sessionAffinity: None
+  type: ExternalName

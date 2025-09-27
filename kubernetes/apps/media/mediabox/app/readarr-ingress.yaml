@@ -44,3 +44,5 @@ spec:
       port: 8787
       protocol: TCP
       targetPort: 8787
+  sessionAffinity: None
+  type: ExternalName
