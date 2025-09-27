@@ -23,3 +23,18 @@ spec:
                 name: mediabox
                 port:
                   name: lldap
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: lldap
+spec:
+  externalName: lldap.media.tdeutsch.ch
+  ports:
+    - name: lldap
+      port: 17170
+      protocol: TCP
+      targetPort: 17170
+  sessionAffinity: None
+  type: ExternalName

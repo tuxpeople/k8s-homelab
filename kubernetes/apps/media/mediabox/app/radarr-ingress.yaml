@@ -27,6 +27,19 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mediabox
+                name: radarr
                 port:
                   name: radarr
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+spec:
+  externalName: radarr.media.tdeutsch.ch
+  ports:
+    - name: radarr
+      port: 7878
+      protocol: TCP
+      targetPort: 7878

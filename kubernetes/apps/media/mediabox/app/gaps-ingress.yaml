@@ -30,3 +30,16 @@ spec:
                 name: mediabox
                 port:
                   name: gaps
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: gaps
+spec:
+  externalName: gaps.media.tdeutsch.ch
+  ports:
+    - name: gaps
+      port: 8484
+      protocol: TCP
+      targetPort: 8484

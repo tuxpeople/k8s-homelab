@@ -27,6 +27,19 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mediabox
+                name: sonarr
                 port:
                   name: sonarr
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+spec:
+  externalName: sonarr.media.tdeutsch.ch
+  ports:
+    - name: sonarr
+      port: 8989
+      protocol: TCP
+      targetPort: 8989

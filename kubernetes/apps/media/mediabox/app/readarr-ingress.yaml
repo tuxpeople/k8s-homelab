@@ -28,6 +28,19 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mediabox
+                name: readarr
                 port:
                   name: readarr
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifiarr
+spec:
+  externalName: notifiarr.media.tdeutsch.ch
+  ports:
+    - name: readarr
+      port: 8787
+      protocol: TCP
+      targetPort: 8787

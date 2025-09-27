@@ -27,6 +27,19 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mediabox
+                name: sabnzbd
                 port:
                   name: sabnzbd
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: sabnzbd
+spec:
+  externalName: sabnzbd.media.tdeutsch.ch
+  ports:
+    - name: sabnzbd
+      port: 8080
+      protocol: TCP
+      targetPort: 8080

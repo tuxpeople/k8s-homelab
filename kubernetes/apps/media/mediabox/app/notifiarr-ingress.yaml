@@ -20,6 +20,19 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mediabox
+                name: notifiarr
                 port:
                   name: notifiarr
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifiarr
+spec:
+  externalName: notifiarr.media.tdeutsch.ch
+  ports:
+    - name: notifiarr
+      port: 5454
+      protocol: TCP
+      targetPort: 5454
