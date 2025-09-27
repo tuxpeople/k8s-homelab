@@ -36,9 +36,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: notifiarr
+  name: readarr
 spec:
-  externalName: notifiarr.media.tdeutsch.ch
+  externalName: readarr.media.tdeutsch.ch
   ports:
     - name: readarr
       port: 8787
