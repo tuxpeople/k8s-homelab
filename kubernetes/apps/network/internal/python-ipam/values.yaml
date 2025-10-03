@@ -14,18 +14,26 @@ controllers:
           repository: registry.eighty-three.me/tuxpeople/python-ipam
           tag: 1.0.0
         securityContext:
-          privileged: false
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
         resources:
           requests:
             cpu: 10m
           limits:
-            memory: 256Mi
+            memory: 512Mi
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    runAsGroup: 65534
+    seccompProfile: { type: RuntimeDefault }
 service:
   app:
     controller: python-ipam
     ports:
       http:
-        port: *port
+        port: &port 5000
 ingress:
   app:
     enabled: true
