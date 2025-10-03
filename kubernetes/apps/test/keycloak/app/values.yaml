@@ -21,6 +21,9 @@ resources:
 dbchecker:
   enabled: true
 
+cache:
+  stack: jdbc-ping
+
 database:
   vendor: postgres
   hostname: keycloak-db
@@ -41,6 +44,16 @@ extraEnv: |
       secretKeyRef:
         name: keycloak-admin
         key: password
+  - name: KC_HOSTNAME
+    value: keycloak.${SECRET_DOMAIN}
+  - name: KC_PROXY
+    value: edge
+  - name: KC_PROXY_HEADERS
+    value: xforwarded
+  - name: KC_HTTP_ENABLED
+    value: "true"
+  - name: KC_HTTP_RELATIVE_PATH
+    value: /
 
 http:
   relativePath: "/"
