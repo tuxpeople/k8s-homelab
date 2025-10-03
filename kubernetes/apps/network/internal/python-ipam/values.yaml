@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  python-ipam:
+    pod:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+    strategy: RollingUpdate
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      app:
+        image:
+          repository: registry.eighty-three.me/tuxpeople/python-ipam
+          tag: 1.0.0
+        securityContext:
+          privileged: false
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            memory: 256Mi
+service:
+  app:
+    controller: python-ipam
+    ports:
+      http:
+        port: *port
+ingress:
+  app:
+    enabled: true
+    className: internal
+    hosts:
+      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: *port
+    tls:
+      - hosts:
+          - *host
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
