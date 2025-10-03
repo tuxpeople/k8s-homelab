@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bitnami/charts/main/bitnami/keycloak/values.schema.json
+
+replicaCount: 1
+production: false
+proxyAddressForwarding: true
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+
+ingress:
+  enabled: true
+  ingressClassName: internal
+  hostname: keycloak.${SECRET_DOMAIN}
+  annotations:
+    hajimari.io/icon: mdi:key
+  path: /
+  pathType: Prefix
+  tls: true
+  extraTls:
+    - hosts:
+        - keycloak.${SECRET_DOMAIN}
+      secretName: ${SECRET_DOMAIN/./-}-production-tls
+
+postgresql:
+  enabled: true
+  architecture: standalone
+  auth:
+    username: bn_keycloak
+    database: bitnami_keycloak
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+      storageClass: ${MAIN_SC}
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+global:
+  storageClass: ${MAIN_SC}
