@@ -1,8 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bitnami/charts/main/bitnami/keycloak/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/codecentric/helm-charts/master/charts/keycloakx/values.schema.json
 
-replicaCount: 1
-production: false
-proxyAddressForwarding: true
+replicas: 1
+
+image:
+  repository: quay.io/keycloak/keycloak
+  tag: 26.3.3
+  pullPolicy: IfNotPresent
 
 resources:
   requests:
@@ -12,38 +15,44 @@ resources:
     cpu: 1000m
     memory: 2Gi
 
+dbchecker:
+  enabled: true
+
+database:
+  vendor: postgres
+  hostname: keycloak-db
+  port: 5432
+  database: keycloak
+  username: keycloak
+  existingSecret: keycloak-db-keycloak
+  existingSecretKey: password
+
+extraEnv: |
+  - name: KEYCLOAK_ADMIN
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-admin
+        key: username
+  - name: KEYCLOAK_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-admin
+        key: password
+
+http:
+  relativePath: "/"
+
 ingress:
   enabled: true
   ingressClassName: internal
-  hostname: keycloak.${SECRET_DOMAIN}
   annotations:
     hajimari.io/icon: mdi:key
-  path: /
-  pathType: Prefix
-  tls: true
-  extraTls:
+  rules:
+    - host: keycloak.${SECRET_DOMAIN}
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
     - hosts:
         - keycloak.${SECRET_DOMAIN}
       secretName: ${SECRET_DOMAIN/./-}-production-tls
-
-postgresql:
-  enabled: true
-  architecture: standalone
-  auth:
-    username: bn_keycloak
-    database: bitnami_keycloak
-  primary:
-    persistence:
-      enabled: true
-      size: 8Gi
-      storageClass: ${MAIN_SC}
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
-
-global:
-  storageClass: ${MAIN_SC}

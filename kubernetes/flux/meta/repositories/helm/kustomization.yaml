@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./aquasecurity.yaml
   - ./bitnami.yaml
+  - ./codecentric.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
   - ./controlplaneio.yaml
