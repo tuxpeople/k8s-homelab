@@ -7,6 +7,9 @@ image:
   tag: 26.3.3
   pullPolicy: IfNotPresent
 
+args:
+  - start
+
 resources:
   requests:
     cpu: 250m
