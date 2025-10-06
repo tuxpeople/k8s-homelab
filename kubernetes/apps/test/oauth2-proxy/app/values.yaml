@@ -72,5 +72,5 @@ ingress:
         paths:
           - path: /
             service:
-              identifier: app
+              identifier: oauth2-proxy
               port: http
