@@ -20,4 +20,6 @@ talosconfig
 .DS_Store
 Thumbs.db
 test*
+!kubernetes/apps/test/
+!kubernetes/apps/test/**
 data/**
