@@ -19,6 +19,7 @@ controllers:
           OAUTH2_PROXY_SET_AUTHORIZATION_HEADER: "true"
           OAUTH2_PROXY_SET_XAUTHREQUEST: "true"
           OAUTH2_PROXY_SCOPE: "openid profile email groups"
+          OAUTH2_PROXY_PASS_USER_HEADERS: "true"
         envFrom:
           - secretRef:
               name: oauth2-proxy-config
