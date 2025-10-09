@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airgapped-tools-server
+  namespace: test
+spec:
+  ingressClassName: internal
+  rules:
+    - host: "airgapped-tools.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: airgapped-tools-server
+                port:
+                  number: 80

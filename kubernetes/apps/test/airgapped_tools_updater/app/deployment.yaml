@@ -1,31 +1,9 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: git-sync-config
-data:
-  GIT_SYNC_REPO: "https://github.com/your-org/airgapped-tools-config.git"
-  GIT_SYNC_BRANCH: "main"
-  GIT_SYNC_ROOT: "/git-sync"
-  GIT_SYNC_DEST: "config"
-  GIT_SYNC_USERNAME: "git"
-  GIT_SYNC_MAX_SYNC_FAILURES: "3"
-
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: github-credentials
-type: Opaque
-data:
-  # Base64 encoded values
-  github-token: "" # echo -n "your-github-token" | base64
-  git-password: "" # echo -n "your-git-token" | base64
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: packages-storage
+  namespace: test
 spec:
   accessModes:
     - ReadWriteOnce
@@ -38,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: airgapped-tools-server
+  namespace: test
   labels:
     app: airgapped-tools-server
 spec:
@@ -53,17 +32,20 @@ spec:
       imagePullSecrets:
         - name: airgapped-tools-updater-pullsecret
       initContainers:
-        # 1. Git Sync Pull - Download current config
+        # 1. Git Sync Pull - Download current config from GitLab
         - name: git-sync-pull
           image: registry.k8s.io/git-sync/git-sync:v4.2.3
-          command: ["/git-sync"]
+          command: ["/bin/sh"]
           args:
-            - --repo=$(GIT_SYNC_REPO)
-            - --branch=$(GIT_SYNC_BRANCH)
-            - --root=$(GIT_SYNC_ROOT)
-            - --dest=$(GIT_SYNC_DEST)
-            - --one-time
-            - --v=2
+            - -c
+            - |
+              set -e
+              echo "Syncing GitLab repository..."
+              /git-sync --repo=$(GIT_SYNC_REPO) --branch=$(GIT_SYNC_BRANCH) --root=$(GIT_SYNC_ROOT) --dest=$(GIT_SYNC_DEST) --one-time --v=2
+              echo "Copying config to app directory..."
+              mkdir -p /app/config
+              cp /git-sync/repo/config/tools_config.json /app/config/
+              echo "Git sync pull completed"
           env:
             - name: GIT_SYNC_REPO
               valueFrom:
@@ -93,8 +75,8 @@ spec:
             - name: GIT_SYNC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: github-credentials
-                  key: git-password
+                  name: gitlab-credentials
+                  key: gitlab-token
           volumeMounts:
             - name: git-sync-volume
               mountPath: /git-sync
@@ -103,13 +85,14 @@ spec:
 
         # 2. Tools Updater - Download packages and update config
         - name: tools-updater
-          image: airgapped-tools-updater:latest
-          command: ["python", "airgapped_tools_updater.py", "--package"]
+          image: registry.gitlab.com/umb.tdeutsch/airgapped_tools_updater:latest
+          command: ["python", "src/airgapped_tools_updater.py", "--package"]
           env:
+            # GitHub Token für API-Calls zu GitHub Releases
             - name: GITHUB_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: github-credentials
+                  name: github-token
                   key: github-token
             - name: PYTHONUNBUFFERED
               value: "1"
@@ -121,7 +104,7 @@ spec:
             - name: downloads-volume
               mountPath: /app/downloads
 
-        # 3. Git Sync Push - Commit updated config
+        # 3. Git Sync Push - Commit updated config back to GitLab
         - name: git-sync-push
           image: registry.k8s.io/git-sync/git-sync:v4.2.3
           command: ["/bin/sh"]
@@ -130,12 +113,12 @@ spec:
             - |
               set -e
               echo "Setting up Git credentials..."
-              cd /git-sync/config
+              cd /git-sync/repo
               git config user.name "Airgapped Tools Updater"
               git config user.email "tools-updater@kubernetes.local"
 
               echo "Copying updated config..."
-              cp /app/config/tools_config.json ./tools_config.json
+              cp /app/config/tools_config.json ./config/tools_config.json
 
               echo "Checking for changes..."
               if git diff --quiet; then
@@ -144,11 +127,11 @@ spec:
               fi
 
               echo "Committing changes..."
-              git add tools_config.json
+              git add config/tools_config.json
               git commit -m "Auto-update tool versions - $(date '+%Y-%m-%d %H:%M:%S')"
 
-              echo "Pushing to remote..."
-              git push https://${GIT_SYNC_USERNAME}:${GIT_SYNC_PASSWORD}@$(echo ${GIT_SYNC_REPO} | sed 's|https://||') ${GIT_SYNC_BRANCH}
+              echo "Pushing to GitLab..."
+              git push https://${GIT_SYNC_USERNAME}:${GITLAB_TOKEN}@$(echo ${GIT_SYNC_REPO} | sed 's|https://||') ${GIT_SYNC_BRANCH}
 
               echo "Git sync push completed successfully"
           env:
@@ -167,11 +150,11 @@ spec:
                 configMapKeyRef:
                   name: git-sync-config
                   key: GIT_SYNC_USERNAME
-            - name: GIT_SYNC_PASSWORD
+            - name: GITLAB_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: github-credentials
-                  key: git-password
+                  name: gitlab-credentials
+                  key: gitlab-token
           volumeMounts:
             - name: git-sync-volume
               mountPath: /git-sync
@@ -221,7 +204,8 @@ spec:
           persistentVolumeClaim:
             claimName: packages-storage
         - name: downloads-volume
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 5Gi
 
       restartPolicy: Always
 
@@ -230,6 +214,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: airgapped-tools-server
+  namespace: test
   labels:
     app: airgapped-tools-server
 spec:
@@ -247,13 +232,14 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: airgapped-tools-updater
+  namespace: test
 spec:
   schedule: "0 2 * * *" # Daily at 2 AM
   jobTemplate:
     spec:
       template:
         spec:
-          serviceAccountName: default
+          serviceAccountName: airgapped-tools-updater
           containers:
             - name: restart-deployment
               image: bitnami/kubectl:latest
@@ -262,29 +248,8 @@ spec:
                 - -c
                 - |
                   echo "Triggering airgapped-tools-server restart for updates..."
-                  kubectl rollout restart deployment/airgapped-tools-server
+                  kubectl rollout restart deployment/airgapped-tools-server -n test
                   echo "Restart triggered successfully"
           restartPolicy: OnFailure
       successfulJobsHistoryLimit: 3
       failedJobsHistoryLimit: 1
-
----
-# Optional: Ingress for external access
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: airgapped-tools-server
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-    - host: airgapped-tools.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: airgapped-tools-server
-                port:
-                  number: 80
