@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app airgapped_tools_updater
+  name: &app airgapped-tools-updater
   namespace: &namespace test
 spec:
   commonMetadata:
