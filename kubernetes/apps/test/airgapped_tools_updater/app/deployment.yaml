@@ -41,33 +41,33 @@ spec:
             - |
               set -e
               echo "Syncing GitLab repository..."
-              /git-sync --repo=$(GIT_SYNC_REPO) --branch=$(GIT_SYNC_BRANCH) --root=/tmp/git --dest=$(GIT_SYNC_DEST) --one-time --v=2
+              /git-sync --repo=$(GITSYNC_REPO) --ref=$(GITSYNC_REF) --root=/tmp/git --link=$(GITSYNC_LINK) --one-time --verbose=2
               echo "Copying config to app directory..."
               mkdir -p /app/config
               cp /tmp/git/repo/config/tools_config.json /app/config/
               echo "Git sync pull completed"
           env:
-            - name: GIT_SYNC_REPO
+            - name: GITSYNC_REPO
               valueFrom:
                 configMapKeyRef:
                   name: git-sync-config
                   key: GIT_SYNC_REPO
-            - name: GIT_SYNC_BRANCH
+            - name: GITSYNC_REF
               valueFrom:
                 configMapKeyRef:
                   name: git-sync-config
                   key: GIT_SYNC_BRANCH
-            - name: GIT_SYNC_DEST
+            - name: GITSYNC_LINK
               valueFrom:
                 configMapKeyRef:
                   name: git-sync-config
                   key: GIT_SYNC_DEST
-            - name: GIT_SYNC_USERNAME
+            - name: GITSYNC_USERNAME
               valueFrom:
                 configMapKeyRef:
                   name: git-sync-config
                   key: GIT_SYNC_USERNAME
-            - name: GIT_SYNC_PASSWORD
+            - name: GITSYNC_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: gitlab-credentials
