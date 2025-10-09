@@ -41,10 +41,10 @@ spec:
             - |
               set -e
               echo "Syncing GitLab repository..."
-              /git-sync --repo=$(GIT_SYNC_REPO) --branch=$(GIT_SYNC_BRANCH) --root=$(GIT_SYNC_ROOT) --dest=$(GIT_SYNC_DEST) --one-time --v=2
+              /git-sync --repo=$(GIT_SYNC_REPO) --branch=$(GIT_SYNC_BRANCH) --root=/tmp/git --dest=$(GIT_SYNC_DEST) --one-time --v=2
               echo "Copying config to app directory..."
               mkdir -p /app/config
-              cp /git-sync/repo/config/tools_config.json /app/config/
+              cp /tmp/git/repo/config/tools_config.json /app/config/
               echo "Git sync pull completed"
           env:
             - name: GIT_SYNC_REPO
@@ -57,11 +57,6 @@ spec:
                 configMapKeyRef:
                   name: git-sync-config
                   key: GIT_SYNC_BRANCH
-            - name: GIT_SYNC_ROOT
-              valueFrom:
-                configMapKeyRef:
-                  name: git-sync-config
-                  key: GIT_SYNC_ROOT
             - name: GIT_SYNC_DEST
               valueFrom:
                 configMapKeyRef:
@@ -79,7 +74,7 @@ spec:
                   key: gitlab-token
           volumeMounts:
             - name: git-sync-volume
-              mountPath: /git-sync
+              mountPath: /tmp/git
             - name: app-config
               mountPath: /app/config
 
@@ -113,7 +108,7 @@ spec:
             - |
               set -e
               echo "Setting up Git credentials..."
-              cd /git-sync/repo
+              cd /tmp/git/repo
               git config user.name "Airgapped Tools Updater"
               git config user.email "tools-updater@kubernetes.local"
 
@@ -157,7 +152,7 @@ spec:
                   key: gitlab-token
           volumeMounts:
             - name: git-sync-volume
-              mountPath: /git-sync
+              mountPath: /tmp/git
             - name: app-config
               mountPath: /app/config
 

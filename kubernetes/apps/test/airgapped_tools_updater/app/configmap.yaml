@@ -8,7 +8,6 @@ data:
   # GitLab Repository mit tools_config.json im config/ Verzeichnis
   GIT_SYNC_REPO: "https://gitlab.com/umb.tdeutsch/airgapped_tools_updater.git"
   GIT_SYNC_BRANCH: "main"
-  GIT_SYNC_ROOT: "/git-sync"
   GIT_SYNC_DEST: "repo"
   # For GitLab Personal Access Token or Project Access Token, use your GitLab username
   # For Deploy Tokens, use the deploy token username
