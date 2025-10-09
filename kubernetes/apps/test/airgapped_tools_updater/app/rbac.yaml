@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/codecentric/helm-charts/master/charts/airgapped_tools_updaterx/values.schema.json
+
+replicas: 1
+
+image:
+  repository: quay.io/airgapped_tools_updater/airgapped_tools_updater
+  tag: 26.3.3
+  pullPolicy: IfNotPresent
+
+args:
+  - start
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+
+dbchecker:
+  enabled: true
+
+cache:
+  stack: jdbc-ping
+
+database:
+  vendor: postgres
+  hostname: airgapped_tools_updater-db
+  port: 5432
+  database: airgapped_tools_updater
+  username: airgapped_tools_updater
+  existingSecret: airgapped_tools_updater.airgapped_tools_updater-db.credentials.postgresql.acid.zalan.do
+  existingSecretKey: password
+
+extraEnv: |
+  - name: airgapped_tools_updater_ADMIN
+    valueFrom:
+      secretKeyRef:
+        name: airgapped_tools_updater-admin
+        key: username
+  - name: airgapped_tools_updater_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: airgapped_tools_updater-admin
+        key: password
+  - name: KC_HOSTNAME
+    value: airgapped_tools_updater.${SECRET_DOMAIN}
+  - name: KC_PROXY
+    value: edge
+  - name: KC_PROXY_HEADERS
+    value: xforwarded
+  - name: KC_HTTP_ENABLED
+    value: "true"
+  - name: KC_HTTP_RELATIVE_PATH
+    value: /
+
+http:
+  relativePath: "/"
+
+ingress:
+  enabled: true
+  ingressClassName: internal
+  annotations:
+    hajimari.io/icon: mdi:key
+  rules:
+    - host: airgapped_tools_updater.${SECRET_DOMAIN}
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - airgapped_tools_updater.${SECRET_DOMAIN}
+      secretName: ${SECRET_DOMAIN/./-}-production-tls
