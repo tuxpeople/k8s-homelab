@@ -159,7 +159,7 @@ spec:
       containers:
         # 4. HTTP Server - Serve packages for download
         - name: package-server
-          image: python:3.11-slim
+          image: python:3.14-slim
           command: ["python", "-m", "http.server"]
           args: ["8080"]
           workingDir: /packages
