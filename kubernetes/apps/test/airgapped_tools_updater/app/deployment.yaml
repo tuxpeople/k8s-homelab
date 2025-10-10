@@ -34,7 +34,7 @@ spec:
       initContainers:
         # 1. Git Sync Pull - Download current config from GitLab
         - name: git-sync-pull
-          image: registry.k8s.io/git-sync/git-sync:v4.2.3
+          image: registry.k8s.io/git-sync/git-sync:v4.5.0
           command: ["/bin/sh"]
           args:
             - -c
@@ -101,7 +101,7 @@ spec:
 
         # 3. Git Sync Push - Commit updated config back to GitLab
         - name: git-sync-push
-          image: registry.k8s.io/git-sync/git-sync:v4.2.3
+          image: registry.k8s.io/git-sync/git-sync:v4.5.0
           command: ["/bin/sh"]
           args:
             - -c
