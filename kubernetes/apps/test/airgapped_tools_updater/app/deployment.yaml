@@ -80,7 +80,7 @@ spec:
 
         # 2. Tools Updater - Download packages and update config
         - name: tools-updater
-          image: registry.gitlab.com/umb.tdeutsch/airgapped_tools_updater:v4.1.2
+          image: registry.gitlab.com/umb.tdeutsch/airgapped_tools_updater:v4.2.1
           command: ["python", "src/airgapped_tools_updater.py", "--package"]
           env:
             # GitHub Token für API-Calls zu GitHub Releases
