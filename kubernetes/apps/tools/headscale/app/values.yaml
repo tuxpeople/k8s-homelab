@@ -29,7 +29,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/tale/headplane
-          tag: 0.6.0
+          tag: 0.6.1
         securityContext:
           readOnlyRootFilesystem: true
 # defaultPodOptions:
