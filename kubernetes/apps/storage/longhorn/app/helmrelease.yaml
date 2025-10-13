@@ -49,14 +49,14 @@ spec:
       replicaAutoBalance: best-effort
       removeSnapshotsDuringFilesystemTrim: true
       staleReplicaTimeout: "30"
-      defaultReplicaCount: 2
+      defaultReplicaCount: "2"
       defaultLonghornStaticStorageClass: longhorn
       createDefaultDiskLabeledNodes: false
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       nodeDrainPolicy: allow-if-replica-is-stopped
-      concurrentAutomaticEngineUpgradePerNodeLimit: 2
-      storageMinimalAvailablePercentage: 10
-      StorageOverProvisioningPercentage: 110
+      concurrentAutomaticEngineUpgradePerNodeLimit: "2"
+      storageMinimalAvailablePercentage: "10"
+      StorageOverProvisioningPercentage: "110"
       autoDeletePodWhenVolumeDetachedUnexpectedly: true
       # taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
       # upgradeChecker: true
