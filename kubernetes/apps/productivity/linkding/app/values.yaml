@@ -10,7 +10,7 @@ controllers:
       main:
         image:
           repository: sissbruecker/linkding
-          tag: 1.44.0
+          tag: 1.44.1
         resources:
           requests:
             cpu: 11m
