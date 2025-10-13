@@ -44,8 +44,8 @@ spec:
       snapshotDataIntegrity: "fast-check"
       defaultDataPath: "/var/lib/longhorn/"
       defaultDataLocality: best-effort
-      orphanAutoDeletion: true
-      fastReplicaRebuildEnabled: true
+      orphanAutoDeletion: "true"
+      fastReplicaRebuildEnabled: "true"
       replicaAutoBalance: best-effort
       removeSnapshotsDuringFilesystemTrim: true
       staleReplicaTimeout: "30"
@@ -57,9 +57,9 @@ spec:
       concurrentAutomaticEngineUpgradePerNodeLimit: "2"
       storageMinimalAvailablePercentage: "10"
       StorageOverProvisioningPercentage: "110"
-      autoDeletePodWhenVolumeDetachedUnexpectedly: true
+      autoDeletePodWhenVolumeDetachedUnexpectedly: "true"
       # taintToleration: "node-role.kubernetes.io/master=true:NoSchedule"
-      # upgradeChecker: true
+      # upgradeChecker: "true"
     ingress:
       enabled: true
       ingressClassName: internal
