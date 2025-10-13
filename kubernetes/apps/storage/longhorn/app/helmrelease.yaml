@@ -40,7 +40,7 @@ spec:
       #     '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":3,"labels":
       #     {"interval":"daily"}}]'
     defaultSettings:
-      backupstorePollInterval: 300
+      backupstorePollInterval: "300"
       snapshotDataIntegrity: "fast-check"
       defaultDataPath: "/var/lib/longhorn/"
       defaultDataLocality: best-effort
