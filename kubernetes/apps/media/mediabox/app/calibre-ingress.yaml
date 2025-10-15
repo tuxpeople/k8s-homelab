@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/networking.k8s.io/ingress_v1.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: calibre
+  annotations:
+    nginx.ingress.kubernetes.io/auth-method: GET
+    nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
+    nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
+    nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_set_header X-Forwarded-Method $request_method;
+      proxy_set_header X-Forwarded-Scheme $scheme;
+    hajimari.io/icon: television-box
+spec:
+  ingressClassName: external
+  tls:
+    - secretName: ${SECRET_DOMAIN/./-}-production-tls
+      hosts:
+        - calibre.${SECRET_DOMAIN}
+  rules:
+    - host: calibre.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: calibre
+                port:
+                  name: calibre
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: calibre
+spec:
+  externalName: calibre.media.tdeutsch.ch
+  ports:
+    - name: calibre
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  sessionAffinity: None
+  type: ExternalName
