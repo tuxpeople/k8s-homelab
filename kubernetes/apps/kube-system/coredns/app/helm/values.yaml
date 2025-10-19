@@ -6,7 +6,7 @@ serviceAccount:
 service:
   name: kube-dns
   clusterIP: "10.43.0.10"
-replicaCount: 1
+replicaCount: 2
 servers:
   - zones:
       - zone: .
