@@ -45,3 +45,9 @@ ingress:
             service:
               identifier: app
               port: http
+persistence:
+  pictures:
+    enabled: true
+    type: nfs
+    server: 10.20.30.40
+    path: /volume2/scanner/luca_bilder
