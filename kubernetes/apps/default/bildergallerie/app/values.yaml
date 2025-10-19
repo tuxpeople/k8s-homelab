@@ -19,6 +19,9 @@ controllers:
           limits:
             cpu: 150m
             memory: 120Mi
+        env:
+          - name: GALLERY_TITLE
+            value: "Luca's Bildergallerie"
 defaultPodOptions:
   securityContext:
     runAsNonRoot: true
