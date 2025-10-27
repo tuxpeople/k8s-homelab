@@ -6,8 +6,6 @@ controllers:
       reloader.stakater.com/auto: "true"
     replicas: 1
     strategy: Recreate
-    deployment:
-      progressDeadlineSeconds: 3600
     containers:
       main:
         image:
