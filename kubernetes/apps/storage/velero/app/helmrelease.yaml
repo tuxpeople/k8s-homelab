@@ -14,7 +14,7 @@ spec:
         name: vmware-tanzu-charts
         namespace: flux-system
   interval: 1h
-  timeout: 15m
+  timeout: 45m
   install:
     remediation:
       retries: 3

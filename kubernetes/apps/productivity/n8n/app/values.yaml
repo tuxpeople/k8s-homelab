@@ -35,7 +35,7 @@ controllers:
           N8N_COMMUNITY_PACKAGES_ENABLED: true
           N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE: true
           N8N_METRICS: true
-          N8N_PAYLOAD_SIZE_MAX: "32mb"
+          N8N_PAYLOAD_SIZE_MAX: 33554432
         probes:
           liveness:
             enabled: true

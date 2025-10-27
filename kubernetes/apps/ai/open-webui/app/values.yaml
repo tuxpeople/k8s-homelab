@@ -83,10 +83,10 @@ ingress:
 persistence:
   data:
     enabled: true
-    type: emptyDir
-    # type: persistentVolumeClaim
-    # accessMode: ReadWriteOnce
-    # size: 5Gi
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    storageClass: longhorn
     # type: nfs
     # server: 10.20.30.40
     # path: /volume2/kubernetes/openwebui
