@@ -6,6 +6,5 @@ namespace: test
 components:
   - ../../components/common
 resources:
-  - ./airgapped_tools_updater/ks.yaml
   - ./keycloak/ks.yaml
   - ./oauth2-proxy/ks.yaml
