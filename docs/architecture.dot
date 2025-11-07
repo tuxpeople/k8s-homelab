@@ -1,0 +1,58 @@
+digraph Homelab {
+  rankdir=LR;
+  node [shape=rectangle style="rounded,filled" fontname="Helvetica"];
+
+  subgraph cluster_talos {
+    label="Talos Cluster";
+    color="#6C8EBF";
+    style="rounded";
+    node [fillcolor="#DAE8FC" color="#6C8EBF"];
+    talos1 [label="talos-test01\nCP + Worker"];
+    talos2 [label="talos-test02\nCP + Worker"];
+    talos3 [label="talos-test03\nWorker"];
+    talos4 [label="talos-test04\nWorker"];
+
+    node [fillcolor="#FFE6CC" color="#D79B00"];
+    flux [label="FluxCD\nflux-system"];
+    backups [label="K8up / Velero"];
+
+    node [fillcolor="#FFFFFF" color="#82B366"];
+    ingress_ext [label="Ingress NGINX\nclass=external"];
+    ingress_int [label="Ingress NGINX\nclass=internal"];
+
+    node [fillcolor="#E1D5E7" color="#9673A6"];
+    longhorn [label="Longhorn"];
+    synology [label="Synology CSI"];
+
+    node [fillcolor="#FFFFFF" color="#000000"];
+    apps [label="Applications\n(media/productivity/etc.)"];
+  }
+
+  node [fillcolor="#FFF2CC" color="#D6B656"];
+  github [label="GitHub Repo\nk8s-homelab"];
+
+  node [fillcolor="#F8CECC" color="#B85450"];
+  pubusers [label="Internet Users"];
+  lanusers [label="LAN Clients"];
+
+  node [fillcolor="#FFFFFF" color="#82B366"];
+  cloudflared [label="Cloudflared Tunnel"];
+  dns [label="Cloudflare DNS\n+ k8s-gateway"];
+
+  node [fillcolor="#E1D5E7" color="#9673A6"];
+  offsite [label="Offsite Storage\n(S3/MinIO)"];
+
+  github -> flux -> apps;
+  longhorn -> apps;
+  synology -> apps;
+  apps -> ingress_ext;
+  apps -> ingress_int;
+  cloudflared -> ingress_ext;
+  dns -> ingress_int;
+
+  pubusers -> cloudflared;
+  lanusers -> dns;
+
+  backups -> offsite;
+  backups -> apps;
+}
