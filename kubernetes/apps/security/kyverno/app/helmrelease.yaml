@@ -14,7 +14,7 @@ spec:
         name: kyverno-charts
         namespace: flux-system
   interval: 1h
-  timeout: 25m
+  timeout: 30m
   install:
     remediation:
       retries: 3
