@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: weave-gitops
+spec:
+  chart:
+    spec:
+      chart: weave-gitops
+      version: 4.0.36
+      sourceRef:
+        kind: HelmRepository
+        name: weave-gitops
+        namespace: flux-system
+  interval: 1h
+  timeout: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    adminUser:
+      create: false
+    ingress:
+      enabled: true
+      className: internal
+      annotations:
+        hajimari.io/icon: sawtooth-wave
+        hajimari.io/appName: Weave GitOps
+        hajimari.io/group: "flux"
+      hosts:
+        - host: &host "gitops.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - *host
+          secretName: ${SECRET_DOMAIN/./-}-production-tls
+    networkPolicy:
+      create: false
+    metrics:
+      enabled: true
+    rbac:
+      create: true
+      impersonationResourceNames: ["admin"]
+      additionalRules:
+        - apiGroups: ["infra.contrib.fluxcd.io"]
+          resources: ["terraforms"]
+          verbs: ["get", "list", "patch"]
+    podAnnotations:
+      secret.reloader.stakater.com/reload: weave-gitops-oidc-secret
+    oidcSecret:
+      create: true
+      clientID: ""
+      clientSecret: ""
+      issuerURL: https://auth.${SECRET_DOMAIN}
+      redirectURL: https://gitops.${SECRET_DOMAIN}/oauth2/callback
+  valuesFrom:
+    - kind: Secret
+      name: weave-gitops-oidc-secret
+      valuesKey: clientID
+      targetPath: oidcSecret.clientID
+    - kind: Secret
+      name: weave-gitops-oidc-secret
+      valuesKey: clientSecret
+      targetPath: oidcSecret.clientSecret
