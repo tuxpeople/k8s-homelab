@@ -67,7 +67,7 @@ controllers:
       tika:
         image:
           repository: ghcr.io/paperless-ngx/tika
-          tag: 2.9.1-full
+          tag: latest-full
         resources:
           requests:
             cpu: 15m

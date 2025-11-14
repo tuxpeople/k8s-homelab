@@ -56,11 +56,6 @@ controllers:
               secretKeyRef:
                 name: "spoolman-secrets"
                 key: "litestream-minio-bucket"
-          AGE_PUBKEY:
-            valueFrom:
-              secretKeyRef:
-                name: "spoolman-secrets"
-                key: "litestream-age-pubkey"
         resources:
           requests:
             cpu: 10m
@@ -75,13 +70,6 @@ controllers:
       01-litestream-restore:
         !!merge <<: *ls
         args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/home/app/.local/share/spoolman/spoolman.db"]
-        env:
-          !!merge <<: *lsenv
-          AGE_SECRET:
-            valueFrom:
-              secretKeyRef:
-                name: "spoolman-secrets"
-                key: "litestream-age-secret"
 defaultPodOptions:
   securityContext:
     runAsNonRoot: true
@@ -126,9 +114,6 @@ configMaps:
                 force-path-style: true
                 retention: 168h
                 validation-interval: 24h
-                age:
-                  recipients:
-                    - $${AGE_PUBKEY}
       litestream-restore: |
         dbs:
           - path: /home/app/.local/share/spoolman/spoolman.db
@@ -141,9 +126,6 @@ configMaps:
                 force-path-style: true
                 retention: 168h
                 validation-interval: 24h
-                age:
-                  identities:
-                    - $${AGE_SECRET}
 ingress:
   app:
     enabled: true
