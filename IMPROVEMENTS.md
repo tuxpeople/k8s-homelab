@@ -729,6 +729,209 @@ Items intentionally not included in this roadmap:
 
 ---
 
+## 🔵 ADDITIONAL TOPICS TO ANALYZE (Future Deep Dives)
+
+### Backup Strategy & Consolidation
+**Status**: To Be Analyzed
+**Priority**: HIGH
+**Complexity**: High - Multiple systems overlap
+
+**Current State**:
+- **Longhorn**: NFS backup to 10.20.30.40:/volume2/data/backup/kubernetes/longhorn-backup (recurring jobs DISABLED - lines 37-41)
+- **K8up**: Restic backups to Minio (192.168.8.9:9091), daily backups with @daily-random schedule
+- **Velero**: CSI snapshots + cluster backups to Minio (192.168.8.9:9091), 30 day retention
+
+**Questions to Address**:
+1. Which PVCs are backed up by which system? (potential overlap/gaps)
+2. Is having 3 backup systems necessary or redundant?
+3. Which system should be primary for PVC backups?
+4. Are recurring Longhorn backups intentionally disabled? Should they be enabled?
+5. Backup testing & restore procedures documented?
+
+**Monitoring Gaps**:
+- ✅ Longhorn: Has PrometheusRules for backup failures (lines 98-112 in prometheusrule.yaml)
+- ❓ K8up: No PrometheusRules or ServiceMonitors found
+- ❓ Velero: No PrometheusRules or ServiceMonitors found
+- Missing: Unified backup dashboard in Grafana
+
+**Action Items** (to be detailed later):
+- [ ] Document which backup system handles what (PVCs, cluster state, etc.)
+- [ ] Create backup coverage matrix (which data is backed up where)
+- [ ] Decide on primary backup system and consolidate if possible
+- [ ] Add ServiceMonitors for K8up and Velero
+- [ ] Add PrometheusRules for K8up and Velero backup failures
+- [ ] Create Grafana dashboard for all backup systems
+- [ ] Document and test DR procedures for PVC restoration
+- [ ] Enable Longhorn recurring backups or document why they're disabled
+
+---
+
+### Prometheus Configuration Review
+**Status**: To Be Analyzed
+**Priority**: MEDIUM
+**Complexity**: Medium
+
+**Questions to Address**:
+1. Are all important metrics being scraped? (missing ServiceMonitors already identified)
+2. Are scrape intervals optimal? (30s default, may need tuning)
+3. Are there missing PrometheusRules for critical alerts?
+4. Is retention configured optimally? (currently 2GiB, PVC is 12Gi)
+5. Are there unused or redundant scrape configs?
+6. Recording rules needed for performance?
+
+**Action Items** (to be detailed later):
+- [ ] Audit all existing ScrapeConfigs in kube-prometheus-stack
+- [ ] Review alert rules for gaps (already have Longhorn, need K8up, Velero, etc.)
+- [ ] Verify all critical components have ServiceMonitors
+- [ ] Check if recording rules needed for dashboards
+- [ ] Review and optimize scrape intervals
+- [ ] Document alerting strategy and escalation
+
+---
+
+### Grafana Dashboard Review
+**Status**: To Be Analyzed
+**Priority**: MEDIUM
+**Complexity**: Low-Medium
+
+**Current State**:
+- Grafana activated but configuration to be reviewed
+- Dashboard directories exist:
+  - apps/ (tautulli.json)
+  - home/ (home-dashboard.json, xiaomi-climate.json)
+  - systems/ (ssh-logs-2.json)
+  - kubernetes/ (empty kustomization.yaml)
+  - vmware/ (empty kustomization.yaml)
+
+**Questions to Address**:
+1. Are dashboards connected to datasources correctly?
+2. Are there missing dashboards for key components (Longhorn, Cilium, Flux, etc.)?
+3. Are existing dashboards showing useful metrics?
+4. Should we import standard dashboards from Grafana.com?
+5. Is dashboard provisioning working correctly?
+
+**Action Items** (to be detailed later):
+- [ ] Review existing dashboard JSON files
+- [ ] Identify missing dashboards (storage, networking, GitOps, backups)
+- [ ] Test dashboard functionality after Grafana activation
+- [ ] Consider importing community dashboards (Kubernetes, Longhorn, etc.)
+- [ ] Document dashboard organization strategy
+- [ ] Fill kubernetes/ and vmware/ directories or remove if unused
+
+---
+
+### Kyverno Policy Expansion
+**Status**: To Be Analyzed (partial analysis done)
+**Priority**: HIGH
+**Complexity**: Medium
+
+**Current State**: 6 policies deployed
+- gatus-external.yaml
+- gatus-internal.yaml
+- ingress.yaml
+- label-existing-namespaces.yaml
+- limits.yaml
+- ndots.yaml
+
+**Questions to Address**:
+1. Which Pod Security Standards should be enforced? (Baseline? Restricted?)
+2. Are current policies effective? (audit vs enforce mode)
+3. What additional policies are needed for security posture?
+4. Should there be namespace-specific policy exceptions?
+5. How to roll out new policies without breaking existing workloads?
+
+**Action Items** (already detailed in H-9.1 above, but needs deep dive):
+- [ ] Audit existing policy effectiveness
+- [ ] Run policies in audit mode first to see violations
+- [ ] Document policy exceptions and justifications
+- [ ] Plan rollout strategy for new policies
+- [ ] Create policy documentation for developers
+
+---
+
+### Secret Management & 1Password Migration
+**Status**: To Be Analyzed
+**Priority**: MEDIUM
+**Complexity**: High - Requires 1Password CLI access
+
+**Current State**:
+- External-secrets with 1Password (48 ExternalSecrets)
+- SOPS encrypted secrets (15 .sops.yaml files)
+- Regular Kubernetes secrets (5 non-SOPS secrets)
+
+**Questions to Address**:
+1. Should ALL secrets be in 1Password? (currently mix of SOPS and ExternalSecret)
+2. Which secrets should stay in SOPS vs 1Password?
+3. Can Claude automate migration with 1Password CLI access?
+4. What's the secret rotation strategy?
+5. Are there hardcoded secrets in values that should be externalized?
+
+**Current Secret Distribution**:
+- 48 ExternalSecrets → 1Password
+- 15 SOPS-encrypted secrets
+- 5 regular Kubernetes secrets (should be reviewed)
+
+**Action Items** (to be detailed later):
+- [ ] Audit all 5 non-SOPS secrets (should they be SOPS or ExternalSecret?)
+- [ ] Document which secrets should be SOPS vs 1Password
+  - SOPS: Good for git-tracked, cluster-specific configs
+  - 1Password: Good for API keys, credentials, rotatable secrets
+- [ ] Create migration plan for consolidation
+- [ ] Document secret rotation procedures
+- [ ] If 1Password CLI available: Automate secret migration
+- [ ] Scan HelmRelease values for hardcoded secrets
+
+**1Password CLI Integration Potential**:
+If `op` CLI is available and configured, Claude can:
+- List existing 1Password secrets
+- Create new secrets in 1Password
+- Migrate SOPS secrets to 1Password
+- Generate ExternalSecret manifests automatically
+
+---
+
+### Documentation Improvements
+**Status**: To Be Analyzed
+**Priority**: MEDIUM
+**Complexity**: Ongoing
+
+**Questions to Address**:
+1. Which apps need dedicated README files?
+2. Is CLAUDE.md complete and up-to-date?
+3. Should there be runbooks for common procedures?
+4. Are disaster recovery procedures documented?
+5. Is there onboarding documentation for new contributors?
+
+**Action Items** (to be detailed later):
+- [ ] Create README template for complex apps
+- [ ] Document DR procedures (backup restoration, cluster rebuild)
+- [ ] Create runbooks for:
+  - Adding new application
+  - Rotating secrets
+  - Upgrading Flux/Talos/Kubernetes
+  - Backup restoration
+  - Troubleshooting common issues
+- [ ] Update CLAUDE.md with new patterns discovered
+- [ ] Create SECRETS.md inventory
+- [ ] Consider creating BACKUP.md with strategy documentation
+
+---
+
+## 📋 ANALYSIS QUEUE
+
+These items are queued for detailed analysis in future sessions:
+
+1. **Backup Strategy Consolidation** (highest priority of deep dives)
+2. **Prometheus Configuration Audit**
+3. **Grafana Dashboard Review & Creation**
+4. **Kyverno Policy Effectiveness Review**
+5. **Secret Management Consolidation Strategy**
+6. **Documentation Gaps & Runbook Creation**
+
+**Estimated Effort for All Deep Dives**: 8-12 hours total
+
+---
+
 **Document maintained by**: Claude Code
 **Next Review Date**: 2025-12-01
 **Contact**: Refer to CLAUDE.md for AI assistant guidance
