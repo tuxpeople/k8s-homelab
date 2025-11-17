@@ -15,6 +15,7 @@ spec:
     - name: longhorn
       namespace: storage
     - name: alertmanager-discord
+      namespace: observability
   interval: 1h
   path: ./kubernetes/apps/observability/kube-prometheus-stack/app
   prune: true
