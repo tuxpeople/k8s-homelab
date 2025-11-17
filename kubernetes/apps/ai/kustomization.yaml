@@ -6,4 +6,5 @@ namespace: ai
 components:
   - ../../components/common
 resources:
+  - ./librechat2/ks.yaml
   - ./open-webui/ks.yaml

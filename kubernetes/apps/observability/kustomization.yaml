@@ -7,5 +7,15 @@ components:
   - ../../components/common
 resources:
   - ./alertmanager-discord/ks.yaml
+  - ./blackbox-exporter/ks.yaml
+  - ./gatus/ks.yaml
+  - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
+  - ./prowlarr-exporter/ks.yaml
   - ./pushgateway/ks.yaml
+  - ./radarr-exporter/ks.yaml
+  - ./sabnzbd-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
+  - ./sonarr-exporter/ks.yaml
+  - ./speedtest-exporter/ks.yaml
+  - ./tautulli-exporter/ks.yaml

@@ -8,3 +8,4 @@ components:
 resources:
   - ./bildergallerie/ks.yaml
   - ./echo-server/ks.yaml
+  - ./homepage/ks.yaml
