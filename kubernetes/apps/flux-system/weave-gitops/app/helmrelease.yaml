@@ -56,8 +56,8 @@ spec:
       secret.reloader.stakater.com/reload: weave-gitops-oidc-secret
     oidcSecret:
       create: true
-      clientID: ""
-      clientSecret: ""
+      clientID: "placeholder"
+      clientSecret: "placeholder"  # pragma: allowlist secret
       issuerURL: https://auth.${SECRET_DOMAIN}
       redirectURL: https://gitops.${SECRET_DOMAIN}/oauth2/callback
   valuesFrom:
