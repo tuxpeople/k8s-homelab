@@ -23,7 +23,7 @@ controllers:
           LD_SUPERUSER_NAME: tdeutsch
           LD_ENABLE_AUTH_PROXY: "True"
           LD_AUTH_PROXY_USERNAME_HEADER: "HTTP_REMOTE_USER"
-          LD_AUTH_PROXY_LOGOUT_URL: "https://auth.eighty-three.me/"
+          LD_AUTH_PROXY_LOGOUT_URL: "https://auth.${SECRET_DOMAIN}/"
           # to use a db see https://github.com/bjw-s/home-ops/blob/main/ kubernetes/apps/selfhosted/linkding/app/helmrelease.yaml
       litestream: &ls
         image:

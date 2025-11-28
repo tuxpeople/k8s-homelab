@@ -7,3 +7,20 @@ metadata:
 data:
   TIMEZONE: Europe/Zurich
   MAIN_SC: longhorn
+
+  # Auth
+  AUTH_SUBDOMAIN: auth
+
+  # Ingress
+  INGRESS_CLASS_INTERNAL: internal
+  INGRESS_CLASS_EXTERNAL: external
+
+  # TLS
+  SECRET_TLS_CERT: "${SECRET_DOMAIN/./-}-production-tls"
+
+  # Cert-Manager
+  CERT_ISSUER: letsencrypt-production
+
+  # SMTP
+  SMTP_RELAY_HOST: smtp.utils.svc.cluster.local
+  SMTP_RELAY_PORT: "25"

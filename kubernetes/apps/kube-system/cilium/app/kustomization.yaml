@@ -9,5 +9,8 @@ configMapGenerator:
   - name: cilium-values
     files:
       - values.yaml=./helm/values.yaml
+  - name: cilium-hubble-values
+    files:
+      - values.yaml=./helm/ingress-values.yaml
 configurations:
   - ./helm/kustomizeconfig.yaml

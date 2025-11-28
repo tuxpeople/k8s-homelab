@@ -1,0 +1,14 @@
+---
+# Hubble Ingress override for Flux-managed deployments
+# This file is only used by Flux (not helmfile bootstrap)
+# Enables Hubble UI ingress with cluster-specific domain
+hubble:
+  ui:
+    ingress:
+      enabled: true
+      annotations:
+        hajimari.io/appName: hubble
+        hajimari.io/icon: lan
+        hajimari.io/group: Network
+      className: internal
+      hosts: ["hubble.${SECRET_DOMAIN}"]

@@ -48,13 +48,8 @@ hubble:
     enabled: true
     rollOutPods: true
     ingress:
-      annotations:
-        hajimari.io/appName: hubble
-        hajimari.io/icon: lan
-        hajimari.io/group: Network
-      enabled: true
+      enabled: false  # Enabled later by Flux via ingress-values.yaml
       className: internal
-      hosts: ["hubble.eighty-three.me"]
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.42.0.0/16"
