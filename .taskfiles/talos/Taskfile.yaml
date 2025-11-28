@@ -98,3 +98,69 @@ tasks:
       --graceful=false --wait=false" | bash
     preconditions:
       - which talhelper
+
+  shutdown-workers:
+    desc: Gracefully shutdown all worker nodes
+    dir: "{{.TALOS_DIR}}"
+    prompt: This will shutdown all worker nodes... continue?
+    cmd: |
+      echo "Shutting down worker nodes..."
+      {{- range $node := .WORKER_NODES}}
+      talosctl -n {{$node}} shutdown --wait=false && echo "  ✓ Shutdown initiated: {{$node}}"
+      {{- end}}
+    vars:
+      WORKER_NODES:
+        sh: yq -r '.nodes[] | select(.controlPlane == false) | .ipAddress' {{.TALOS_DIR}}/talconfig.yaml
+    preconditions:
+      - which talosctl yq
+      - talosctl config info
+
+  shutdown-control-plane:
+    desc: Gracefully shutdown control-plane node
+    dir: "{{.TALOS_DIR}}"
+    prompt: This will shutdown the control-plane node... continue?
+    cmd: |
+      echo "Shutting down control-plane node..."
+      {{- range $node := .CONTROL_PLANE_NODES}}
+      talosctl -n {{$node}} shutdown --wait=false && echo "  ✓ Shutdown initiated: {{$node}}"
+      {{- end}}
+    vars:
+      CONTROL_PLANE_NODES:
+        sh: yq -r '.nodes[] | select(.controlPlane == true) | .ipAddress' {{.TALOS_DIR}}/talconfig.yaml
+    preconditions:
+      - which talosctl yq
+      - talosctl config info
+
+  shutdown-cluster:
+    desc: Gracefully shutdown entire cluster (workers first, then control-plane)
+    prompt: This will shutdown the entire cluster... continue?
+    cmds:
+      - task: shutdown-workers
+      - cmd: echo "Waiting 30s for workers to shutdown..."
+      - cmd: sleep 30
+      - task: shutdown-control-plane
+      - cmd: echo "✓ Cluster shutdown initiated. You can now power off the TuringPi."
+
+  reboot-cluster:
+    desc: Gracefully reboot entire cluster (workers first, then control-plane)
+    prompt: This will reboot the entire cluster... continue?
+    cmds:
+      - cmd: echo "Rebooting worker nodes..."
+      - for:
+          var: WORKER_NODES
+        cmd: talosctl -n {{.ITEM}} reboot --wait=false && echo "  ✓ Reboot initiated {{.ITEM}}"
+      - cmd: echo "Waiting 30s before rebooting control-plane..."
+      - cmd: sleep 30
+      - cmd: echo "Rebooting control-plane node..."
+      - for:
+          var: CONTROL_PLANE_NODES
+        cmd: talosctl -n {{.ITEM}} reboot --wait=false && echo "  ✓ Reboot initiated {{.ITEM}}"
+      - cmd: echo "✓ Cluster reboot initiated. Waiting for nodes to come back online..."
+    vars:
+      WORKER_NODES:
+        sh: yq -r '.nodes[] | select(.controlPlane == false) | .ipAddress' {{.TALOS_DIR}}/talconfig.yaml | tr '\n' ' '
+      CONTROL_PLANE_NODES:
+        sh: yq -r '.nodes[] | select(.controlPlane == true) | .ipAddress' {{.TALOS_DIR}}/talconfig.yaml | tr '\n' ' '
+    preconditions:
+      - which talosctl yq
+      - talosctl config info

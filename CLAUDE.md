@@ -81,6 +81,14 @@ task talos:upgrade-all-nodes
 # Upgrade Kubernetes version across cluster
 task talos:upgrade-k8s
 
+# Shutdown operations
+task talos:shutdown-workers             # Shutdown all worker nodes
+task talos:shutdown-control-plane       # Shutdown control-plane node
+task talos:shutdown-cluster             # Orchestrated cluster shutdown (workers → control-plane)
+
+# Reboot operations
+task talos:reboot-cluster               # Orchestrated cluster reboot (workers → control-plane)
+
 # Reset cluster to maintenance mode (destructive!)
 task talos:reset
 ```
