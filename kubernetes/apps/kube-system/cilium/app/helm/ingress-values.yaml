@@ -3,7 +3,31 @@
 # This file is only used by Flux (not helmfile bootstrap)
 # Enables Hubble UI ingress with cluster-specific domain
 hubble:
+  enabled: true
+  metrics:
+    enabled:
+      - dns:query
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+    serviceMonitor:
+      enabled: true
+    dashboards:
+      enabled: true
+      annotations:
+        grafana_folder: Cilium
+  relay:
+    enabled: true
+    rollOutPods: true
+    prometheus:
+      serviceMonitor:
+        enabled: true
   ui:
+    enabled: true
+    rollOutPods: true
     ingress:
       enabled: true
       annotations:

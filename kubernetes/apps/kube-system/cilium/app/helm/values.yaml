@@ -22,34 +22,7 @@ dashboards:
   annotations:
     grafana_folder: Cilium
 hubble:
-  enabled: true
-  metrics:
-    enabled:
-      - dns:query
-      - drop
-      - tcp
-      - flow
-      - port-distribution
-      - icmp
-      - http
-    serviceMonitor:
-      enabled: true
-    dashboards:
-      enabled: true
-      annotations:
-        grafana_folder: Cilium
-  relay:
-    enabled: true
-    rollOutPods: true
-    prometheus:
-      serviceMonitor:
-        enabled: true
-  ui:
-    enabled: true
-    rollOutPods: true
-    ingress:
-      enabled: false  # Enabled later by Flux via ingress-values.yaml
-      className: internal
+  enabled: false
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.42.0.0/16"
@@ -74,8 +47,8 @@ operator:
   rollOutPods: true
   resources:
     requests:
-      memory: "120Mi"  # VPA recommends 100Mi for cilium-operator
-      cpu: "30m"       # VPA recommends 23m for cilium-operator
+      memory: "120Mi" # VPA recommends 100Mi for cilium-operator
+      cpu: "30m" # VPA recommends 23m for cilium-operator
 prometheus:
   enabled: true
   serviceMonitor:
@@ -109,5 +82,5 @@ socketLB:
 # Resource requests based on VPA recommendations
 resources:
   requests:
-    memory: "350Mi"  # VPA recommends 309Mi for cilium-agent
-    cpu: "220m"      # VPA recommends 203m for cilium-agent
+    memory: "350Mi" # VPA recommends 309Mi for cilium-agent
+    cpu: "220m" # VPA recommends 203m for cilium-agent
