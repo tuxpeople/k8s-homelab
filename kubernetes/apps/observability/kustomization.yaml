@@ -6,8 +6,4 @@ namespace: observability
 components:
   - ../../components/common
 resources:
-  - ./alertmanager-discord/ks.yaml
   - ./gatus/ks.yaml
-  - ./grafana/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
-  - ./pushgateway/ks.yaml
