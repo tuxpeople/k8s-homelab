@@ -34,7 +34,9 @@ spec:
               args:
                 evictFailedBarePods: true
                 evictLocalStoragePods: true
-                evictSystemCriticalPods: true
+                evictSystemCriticalPods: false
+                priorityThreshold:
+                  value: 1000000000
             - name: RemoveFailedPods
               args:
                 reasons:
@@ -64,17 +66,24 @@ spec:
                   cpu: 35
                   memory: 35
                   pods: 35
+            - name: HighNodeUtilization
+              args:
+                targetThresholds:
+                  cpu: 70
+                  memory: 70
+                  pods: 70
           plugins:
             balance:
               enabled:
                 - RemovePodsViolatingTopologySpreadConstraint
+                - LowNodeUtilization
+                - HighNodeUtilization
             deschedule:
               enabled:
                 - RemoveFailedPods
                 - RemovePodsViolatingInterPodAntiAffinity
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingNodeTaints
-                - LowNodeUtilization
     service:
       enabled: true
     serviceMonitor:
