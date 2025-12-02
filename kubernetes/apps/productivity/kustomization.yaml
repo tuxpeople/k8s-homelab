@@ -9,8 +9,6 @@ resources:
   - ./code-server/ks.yaml
   - ./freshrss/ks.yaml
   - ./hajimari/ks.yaml
-  - ./ladder/ks.yaml
   - ./linkding/ks.yaml
-  - ./n8n/ks.yaml
   - ./obsidian/ks.yaml
   - ./paperless/ks.yaml
