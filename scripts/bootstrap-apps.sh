@@ -118,10 +118,26 @@ function apply_helm_releases() {
 
     if [[ ! -f "${helmfile_file}" ]]; then
         log error "File does not exist" "file=${helmfile_file}"
+        return 1
     fi
 
-    if ! helmfile --file "${helmfile_file}" apply --hide-notes --skip-diff-on-install --suppress-diff --suppress-secrets; then
+    local existing_repos
+    existing_repos="$(helm repo list -o json | jq -r '.[].name')"
+
+    yq '.repositories[].name' "${helmfile_file}" | while read -r repo; do
+        [[ -z "${repo}" ]] && continue
+        if grep -qx "${repo}" <<<"${existing_repos}"; then
+            log debug "Updating existing Helm repo" "repo=${repo}"
+            helm repo update "${repo}"
+        else
+            log debug "Skipping repo update, repo not yet added" "repo=${repo}"
+            # helmfile will add the repo on the first run
+        fi
+    done
+
+    if ! helmfile --file "${helmfile_file}" sync --skip-deps; then
         log error "Failed to apply Helm releases"
+        return 1
     fi
 
     log info "Helm releases applied successfully"
