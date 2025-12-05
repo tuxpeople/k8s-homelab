@@ -66,8 +66,8 @@ controllers:
     containers:
       tika:
         image:
-          repository: ghcr.io/paperless-ngx/tika
-          tag: latest-full
+          repository: docker.io/apache/tika
+          tag: 3.2.3.0-full
         resources:
           requests:
             cpu: 15m
