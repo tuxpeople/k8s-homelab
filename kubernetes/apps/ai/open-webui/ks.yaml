@@ -10,6 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
+    - name: external-secrets-secretstores
+      namespace: security
     # - name: ollama
     #   namespace: ai
     - name: longhorn
