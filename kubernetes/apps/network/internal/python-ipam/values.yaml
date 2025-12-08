@@ -9,7 +9,7 @@ controllers:
       app:
         image:
           repository: registry.eighty-three.me/tuxpeople/python-ipam
-          tag: 1.0.3
+          tag: 1.0.4
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
