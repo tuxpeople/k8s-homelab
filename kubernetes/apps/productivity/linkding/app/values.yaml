@@ -51,11 +51,6 @@ controllers:
               secretKeyRef:
                 name: "linkding-secrets"
                 key: "litestream-minio-bucket"
-          AGE_PUBKEY:
-            valueFrom:
-              secretKeyRef:
-                name: "linkding-secrets"
-                key: "litestream-age-pubkey"
         resources:
           requests:
             cpu: 11m
@@ -67,13 +62,6 @@ controllers:
       01-litestream-restore:
         !!merge <<: *ls
         args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/etc/linkding/data/db.sqlite3"]
-        env:
-          !!merge <<: *lsenv
-          AGE_SECRET:
-            valueFrom:
-              secretKeyRef:
-                name: "linkding-secrets"
-                key: "litestream-age-secret"
 service:
   app:
     controller: app
@@ -142,9 +130,6 @@ configMaps:
                 force-path-style: true
                 retention: 168h
                 validation-interval: 24h
-                age:
-                  recipients:
-                    - $${AGE_PUBKEY}
       litestream-restore: |
         dbs:
           - path: /etc/linkding/data/db.sqlite3
@@ -157,6 +142,3 @@ configMaps:
                 force-path-style: true
                 retention: 168h
                 validation-interval: 24h
-                age:
-                  identities:
-                    - $${AGE_SECRET}
