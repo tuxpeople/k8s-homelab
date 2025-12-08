@@ -9,6 +9,9 @@
 #   commonMetadata:
 #     labels:
 #       app.kubernetes.io/name: *app
+#   dependsOn:
+#     - name: external-secrets-secretstores
+#       namespace: security
 #   interval: 1h
 #   path: ./kubernetes/apps/network/internal/unifi-dns
 #   prune: true
