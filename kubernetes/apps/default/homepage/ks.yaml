@@ -9,6 +9,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-secretstores
+      namespace: security
+    - name: kyverno-policies
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/default/homepage/app
   prune: true

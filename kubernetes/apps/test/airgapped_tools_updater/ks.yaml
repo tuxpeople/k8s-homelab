@@ -9,6 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-secretstores
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/test/airgapped_tools_updater/app
   prune: true
