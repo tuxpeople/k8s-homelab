@@ -9,6 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: kyverno-policies
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/default/echo-server/app
   prune: true

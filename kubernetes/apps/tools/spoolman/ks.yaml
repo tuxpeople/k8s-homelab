@@ -12,6 +12,8 @@ spec:
   dependsOn:
     - name: external-secrets-secretstores
       namespace: security
+    - name: kyverno-policies
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/tools/spoolman/app
   prune: true
