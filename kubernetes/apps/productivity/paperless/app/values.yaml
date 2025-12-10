@@ -220,5 +220,9 @@ persistence:
           - subPath: litestream-replicate.yml
             path: /etc/litestream.yml
             readOnly: true
-            # Phase 2: Add mount for restore init container
-# Phase 2: Add Longhorn PVC for database storage
+  database:
+    enabled: true
+    type: persistentVolumeClaim
+    storageClass: longhorn
+    accessMode: ReadWriteOnce
+    size: 5Gi
