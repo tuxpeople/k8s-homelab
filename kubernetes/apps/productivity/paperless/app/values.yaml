@@ -226,3 +226,7 @@ persistence:
     storageClass: longhorn
     accessMode: ReadWriteOnce
     size: 5Gi
+    advancedMounts:
+      app:
+        litestream:
+          - path: /database
