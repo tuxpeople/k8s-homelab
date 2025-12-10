@@ -48,7 +48,7 @@ controllers:
             memory: 1181Mi
           limits:
             cpu: 2500m
-            memory: 2500Mi
+            memory: 3500Mi
       litestream:
         image:
           repository: docker.io/litestream/litestream
