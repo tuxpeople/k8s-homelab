@@ -49,6 +49,67 @@ controllers:
           limits:
             cpu: 2500m
             memory: 2500Mi
+      litestream:
+        image:
+          repository: docker.io/litestream/litestream
+          tag: 0.5.2
+        args: ["replicate"]
+        env:
+          LITESTREAM_ACCESS_KEY_ID:
+            valueFrom:
+              secretKeyRef:
+                name: paperless-secrets
+                key: litestream-minio-id
+          LITESTREAM_SECRET_ACCESS_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: paperless-secrets
+                key: litestream-minio-key
+          MINIO_ENDPOINT:
+            valueFrom:
+              secretKeyRef:
+                name: paperless-secrets
+                key: litestream-minio-endpoint
+          MINIO_BUCKET:
+            valueFrom:
+              secretKeyRef:
+                name: paperless-secrets
+                key: litestream-minio-bucket
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            cpu: 500m
+            memory: 128Mi
+    # Phase 2: Uncomment this init container after initial backup is complete
+    # initContainers:
+    #   01-litestream-restore:
+    #     image:
+    #       repository: docker.io/litestream/litestream
+    #       tag: 0.5.2
+    #     args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/data/db.sqlite3"]
+    #     env:
+    #       LITESTREAM_ACCESS_KEY_ID:
+    #         valueFrom:
+    #           secretKeyRef:
+    #             name: paperless-secrets
+    #             key: litestream-minio-id
+    #       LITESTREAM_SECRET_ACCESS_KEY:
+    #         valueFrom:
+    #           secretKeyRef:
+    #             name: paperless-secrets
+    #             key: litestream-minio-key
+    #       MINIO_ENDPOINT:
+    #         valueFrom:
+    #           secretKeyRef:
+    #             name: paperless-secrets
+    #             key: litestream-minio-endpoint
+    #       MINIO_BUCKET:
+    #         valueFrom:
+    #           secretKeyRef:
+    #             name: paperless-secrets
+    #             key: litestream-minio-bucket
   redis:
     containers:
       redis:
@@ -177,3 +238,32 @@ persistence:
         #   subPath: pre-consume.sh
         # - path: /usr/src/paperless/scripts/remove-blank-pages.sh
         #   subPath: remove-blank-pages.sh
+  litestream-config:
+    type: configMap
+    name: paperless-litestream-config
+    advancedMounts:
+      app:
+        litestream:
+          - subPath: litestream-replicate.yml
+            path: /etc/litestream.yml
+            readOnly: true
+        # Phase 2: Uncomment when enabling init container
+        # 01-litestream-restore:
+        #   - subPath: litestream-restore.yml
+        #     path: /etc/litestream.yml
+        #     readOnly: true
+  # Phase 2: Uncomment this for Longhorn storage
+  # database:
+  #   enabled: true
+  #   type: persistentVolumeClaim
+  #   storageClass: longhorn
+  #   accessMode: ReadWriteOnce
+  #   size: 5Gi
+  #   advancedMounts:
+  #     app:
+  #       main:
+  #         - path: /data
+  #       litestream:
+  #         - path: /data
+  #       01-litestream-restore:
+  #         - path: /data

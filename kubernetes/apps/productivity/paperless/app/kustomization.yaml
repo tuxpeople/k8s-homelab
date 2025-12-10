@@ -4,9 +4,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./externalsecret-values.yaml
+  - ./externalsecret-litestream.yaml
   - ./secret-passwords.sops.yaml
   - ./helmrelease.yaml
   - ./paperless-config.yaml
+  - ./litestream-configmap.yaml
 configMapGenerator:
   - name: paperless-scripts
     files:
