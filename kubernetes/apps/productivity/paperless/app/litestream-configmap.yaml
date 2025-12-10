@@ -12,8 +12,8 @@ data:
         replicas:
           - name: minio
             type: s3
-            endpoint: ${MINIO_ENDPOINT}
-            bucket: ${MINIO_BUCKET}
+            endpoint: $${MINIO_ENDPOINT}
+            bucket: $${MINIO_BUCKET}
             path: paperless
             force-path-style: true
             retention: 168h
@@ -26,7 +26,7 @@ data:
         replicas:
           - name: minio
             type: s3
-            endpoint: ${MINIO_ENDPOINT}
-            bucket: ${MINIO_BUCKET}
+            endpoint: $${MINIO_ENDPOINT}
+            bucket: $${MINIO_BUCKET}
             path: paperless
             force-path-style: true
