@@ -17,7 +17,7 @@ data:
   PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
   # Configure folders
   PAPERLESS_CONSUMPTION_DIR: /nfs/consume
-  PAPERLESS_DATA_DIR: /nfs/data
+  PAPERLESS_DATA_DIR: /data
   PAPERLESS_EXPORT_DIR: /nfs/export
   PAPERLESS_MEDIA_ROOT: /nfs/media
   # Configure folder importer

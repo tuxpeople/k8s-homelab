@@ -5,10 +5,10 @@ kind: ConfigMap
 metadata:
   name: paperless-litestream-config
 data:
-  # Phase 1: Replicate from NFS location
+  # Phase 2: Replicate from Longhorn location
   litestream-replicate.yml: |
     dbs:
-      - path: /nfs/data/db.sqlite3
+      - path: /data/db.sqlite3
         replicas:
           - name: minio
             type: s3
