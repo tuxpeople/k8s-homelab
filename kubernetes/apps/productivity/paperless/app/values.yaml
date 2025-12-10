@@ -7,50 +7,6 @@ controllers:
     containers:
       main:
         image:
-          repository: ghcr.io/paperless-ngx/paperless-ngx
-          tag: 2.20.1@sha256:98528e58787e48c73748608e8d4c03b1692c185e69fc237c00c44d3b4f68b335
-        envFrom:
-          - configMapRef:
-              name: paperless-config
-        env:
-          PAPERLESS_SECRET_KEY:
-            valueFrom:
-              secretKeyRef:
-                name: paperless-secret-values
-                key: PAPERLESS_SECRET_KEY
-          PAPERLESS_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
-          PAPERLESS_PORT: "8080"
-          PAPERLESS_TIME_ZONE: ${TIMEZONE}
-          # Configure admin user
-          PAPERLESS_ADMIN_USER:
-            valueFrom:
-              secretKeyRef:
-                name: paperless-secret-values
-                key: PAPERLESS_ADMIN_USER
-          PAPERLESS_ADMIN_PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: paperless-secret-values
-                key: PAPERLESS_ADMIN_PASSWORD
-        probes:
-          liveness:
-            enabled: true
-          readiness:
-            enabled: true
-          startup:
-            enabled: true
-            spec:
-              failureThreshold: 60
-              periodSeconds: 10
-        resources:
-          requests:
-            cpu: 500m
-            memory: 1181Mi
-          limits:
-            cpu: 2500m
-            memory: 2500Mi
-      litestream:
-        image:
           repository: docker.io/litestream/litestream
           tag: 0.5.2
         args: ["replicate"]
@@ -216,7 +172,7 @@ persistence:
     name: paperless-litestream-config
     advancedMounts:
       app:
-        litestream:
+        main:
           - subPath: litestream-replicate.yml
             path: /etc/litestream.yml
             readOnly: true
@@ -228,5 +184,5 @@ persistence:
     size: 5Gi
     advancedMounts:
       app:
-        litestream:
+        main:
           - path: /database
