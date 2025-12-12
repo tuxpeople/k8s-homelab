@@ -60,10 +60,10 @@ spec:
     extraArgs:
       - --ignore-ingress-tls-spec
     policy: sync
-    sources: ["gateway-httproute", "service"]
+    sources: ["ingress", "gateway-httproute", "service"]
     txtOwnerId: main
     txtPrefix: k8s.main.
-    domainFilters: ["lan.${SECRET_CH_DOMAIN}"]
+    domainFilters: ["eighty-three.me"]
     serviceMonitor:
       enabled: true
     podAnnotations:
