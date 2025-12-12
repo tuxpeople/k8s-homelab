@@ -17,8 +17,11 @@ Automatische DNS-Einträge in der UniFi Dream Machine für Kubernetes Ingresses.
 ### 1. 1Password Secret vorbereiten
 
 Erstelle in 1Password ein Item mit dem Namen `unifi-dns`:
-- **Anmeldedaten**: Der API Key von deiner UDM
-- **Hostname**: `https://192.168.13.1`
+- **Benutzername**: Der Admin-Username (z.B. `externaldns`)
+- **Anmeldedaten**: Das Passwort des Admin-Users
+- **Hostname**: `https://10.20.30.1`
+
+**Hinweis**: Dieses Setup verwendet Username/Password statt API Keys, da ältere UniFi OS Versionen keine API Keys unterstützen.
 
 ### 2. Commit & Push
 
