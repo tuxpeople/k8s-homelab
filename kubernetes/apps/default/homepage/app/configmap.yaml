@@ -7,6 +7,10 @@ metadata:
 data:
   bookmarks.yaml: |
     ---
+    - Luca:
+        - Bildergallerie:
+            - abbr: BG
+              href: https://bildergallerie.${SECRET_DOMAIN}
   docker.yaml: |
     ---
   kubernetes.yaml: |
