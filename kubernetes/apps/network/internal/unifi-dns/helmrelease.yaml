@@ -60,7 +60,7 @@ spec:
     extraArgs:
       - --ignore-ingress-tls-spec
     policy: sync
-    sources: ["ingress", "gateway-httproute", "service"]
+    sources: ["ingress", "service"]
     txtOwnerId: main
     txtPrefix: k8s.main.
     domainFilters: ["eighty-three.me"]
