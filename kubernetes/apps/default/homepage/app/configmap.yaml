@@ -147,10 +147,10 @@ data:
             icon: mdi:chart-timeline-variant
             href: https://tautulli.${SECRET_DOMAIN}
             description: Plex insights & notifications
-            siteMonitor: https://tautulli.${SECRET_DOMAIN}
+            siteMonitor: http://tautulli.media.svc.cluster.local:8181/status
             widget:
               type: tautulli
-              url: https://tautulli.${SECRET_DOMAIN}
+              url: http://tautulli.media.svc.cluster.local:8181
               key: "{{HOMEPAGE_VAR_TAUTULLI_API_KEY}}"
         - Calibre Server:
             icon: mdi:bookshelf
@@ -182,11 +182,6 @@ data:
             href: https://freshrss.${SECRET_DOMAIN}
             description: Multi-user RSS reader
             siteMonitor: https://freshrss.${SECRET_DOMAIN}
-        - Ladder:
-            icon: mdi:format-list-bulleted
-            href: https://ladder.${SECRET_DOMAIN}
-            description: Knowledge base ruleset
-            siteMonitor: https://ladder.${SECRET_DOMAIN}
         - Calibre Web:
             icon: mdi:book-open-page-variant
             href: https://books.${SECRET_DOMAIN}
@@ -203,16 +198,6 @@ data:
             href: https://ai.${SECRET_DOMAIN}
             description: Ollama powered AI assistant
             siteMonitor: https://ai.${SECRET_DOMAIN}
-        - LibreChat:
-            icon: mdi:message-text-lock
-            href: https://chat.${SECRET_DOMAIN}
-            description: Multi-provider chat interface
-            siteMonitor: https://chat.${SECRET_DOMAIN}
-        - n8n:
-            icon: simple-icons:n8n
-            href: https://n8n.${SECRET_DOMAIN}
-            description: Workflow automation
-            siteMonitor: https://n8n.${SECRET_DOMAIN}
         - Code Server:
             icon: mdi:microsoft-visual-studio-code
             href: https://code-server.${SECRET_DOMAIN}
@@ -244,37 +229,11 @@ data:
             href: https://hajimari.${SECRET_DOMAIN}
             description: Service discovery dashboard
             siteMonitor: https://hajimari.${SECRET_DOMAIN}
-        - Blackbox Exporter:
-            icon: mdi:radar
-            href: https://blackbox.${SECRET_DOMAIN}
-            description: Probe configuration for Prometheus
-            siteMonitor: https://blackbox.${SECRET_DOMAIN}
         - Python IPAM:
             icon: mdi:ip-network-outline
             href: https://python-ipam.${SECRET_DOMAIN}
             description: Lightweight IP address manager
-            siteMonitor: https://python-ipam.${SECRET_DOMAIN}
-    - Identity & Security:
-        - Keycloak:
-            icon: mdi:key
-            href: https://keycloak.${SECRET_DOMAIN}
-            description: Central identity provider
-            siteMonitor: https://keycloak.${SECRET_DOMAIN}
-        - OAuth2 Proxy:
-            icon: mdi:shield-lock-outline
-            href: https://oauth2-proxy.${SECRET_DOMAIN}
-            description: Shared OIDC proxy for internal apps
-            siteMonitor: https://oauth2-proxy.${SECRET_DOMAIN}
-        - LLDAP:
-            icon: mdi:account-group-outline
-            href: https://lldap.${SECRET_DOMAIN}
-            description: Lightweight directory service
-            siteMonitor: https://lldap.${SECRET_DOMAIN}
-        - 1Password Connect:
-            icon: simple-icons:1password
-            href: https://onepassword-connect.${SECRET_DOMAIN}
-            description: Secret sync for ExternalSecrets
-            siteMonitor: https://onepassword-connect.${SECRET_DOMAIN}
+            siteMonitor: http://python-ipam.network.svc.cluster.local:5000
 
   settings.yaml: |
     ---
@@ -297,9 +256,6 @@ data:
         style: row
         columns: 4
       Platform & Ops:
-        style: row
-        columns: 3
-      Identity & Security:
         style: row
         columns: 3
     quicklaunch:
