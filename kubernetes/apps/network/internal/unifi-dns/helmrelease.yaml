@@ -60,7 +60,7 @@ spec:
     extraArgs:
       - --ignore-ingress-tls-spec
       - --ingress-class=internal
-      - --annotation-filter=external-dns.alpha.kubernetes.io/target!=external.${SECRET_DOMAIN}
+      - --annotation-filter=external-dns.alpha.kubernetes.io/target=192.168.13.64
     policy: sync
     sources: ["ingress", "service"]
     txtOwnerId: main
