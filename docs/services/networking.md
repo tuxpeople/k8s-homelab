@@ -127,7 +127,7 @@ Beide nutzen `external-dns`, aber mit verschiedenen Providern und Filtern.
 # Rule 1: external ingresses
 ingressClassName: external → target: "external.${SECRET_DOMAIN}"
 
-# Rule 2: internal ingresses  
+# Rule 2: internal ingresses
 ingressClassName: internal → target: "192.168.13.64"
 ```
 
