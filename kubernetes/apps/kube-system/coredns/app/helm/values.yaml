@@ -8,6 +8,22 @@ service:
   clusterIP: "10.43.0.10"
 replicaCount: 2
 servers:
+  # Zone for eighty-three.me -> forward directly to k8s_gateway
+  # This provides split-horizon DNS with internal IPs for all *.eighty-three.me domains
+  - zones:
+      - zone: eighty-three.me
+        scheme: dns://
+    port: 53
+    plugins:
+      - name: errors
+      - name: cache
+        parameters: 30
+      - name: forward
+        parameters: . 10.43.203.139  # k8s_gateway ClusterIP
+      - name: log
+        configBlock: |-
+          class error
+  # Default zone for everything else (cluster.local, minio.lab.tdeutsch.ch, etc.)
   - zones:
       - zone: .
         scheme: dns://
