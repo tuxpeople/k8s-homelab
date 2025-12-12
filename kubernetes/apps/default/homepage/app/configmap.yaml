@@ -11,7 +11,7 @@ data:
     ---
   kubernetes.yaml: |
     ---
-    mode: cluster
+    # mode: cluster
 
   services.yaml: |
     ---
@@ -43,12 +43,12 @@ data:
         provider:
           - google
           - duckduckgo
-    - kubernetes:
-        cluster:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
-          label: home-cluster
-        nodes:
-          show: false
+    # - kubernetes:
+    #     cluster:
+    #       show: true
+    #       cpu: true
+    #       memory: true
+    #       showLabel: true
+    #       label: home-cluster
+    #     nodes:
+    #       show: false
