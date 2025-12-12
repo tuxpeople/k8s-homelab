@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.26.1-standalone-strict/configmap-v1.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+data:
+  bookmarks.yaml: |
+    ---
+  docker.yaml: |
+    ---
+  kubernetes.yaml: |
+    ---
+    mode: cluster
+
+  services.yaml: |
+    ---
+
+  settings.yaml: |
+    ---
+    title: My Personal Home Dashboard
+    theme: dark
+    color: slate
+    headerStyle: clean
+    target: _blank
+    layout:
+      Media:
+        style: row
+        columns: 4
+      Network:
+        style: row
+      Favorites:
+        style: row
+        columns: 3
+    quicklaunch:
+      searchDescription: true
+      hideInternetSearch: true
+      hideVisitURL: true
+
+  widgets.yaml: |
+    ---
+    - search:
+        provider:
+          - google
+          - duckduckgo
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: home-cluster
+        nodes:
+          show: false
