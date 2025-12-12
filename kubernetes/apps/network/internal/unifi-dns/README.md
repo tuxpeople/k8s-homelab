@@ -2,95 +2,162 @@
 
 Automatische DNS-Einträge in der UniFi Dream Machine für Kubernetes Ingresses.
 
+> **📖 Vollständige Dokumentation**: Siehe [docs/services/networking.md](../../../../docs/services/networking.md#dns-architektur-split-horizon-setup)
+
 ## Status
 
-✅ **Bereit zum Deployment** - Alle notwendigen Fixes sind gemacht
+✅ **Deployed und aktiv** seit Dezember 2024
 
-## Was wurde gefixt
+## Quick Reference
 
-1. ✅ `ingress` zu sources hinzugefügt (war der Hauptgrund warum es nicht funktionierte)
-2. ✅ Domain Filter auf `eighty-three.me` gesetzt
-3. ✅ Kustomization in `ks.yaml` aktiviert
+### Was macht dieser Service?
 
-## Nächste Schritte zum Deployment
+Erstellt automatisch DNS-Einträge in der UniFi Dream Machine für alle Ingresses mit `ingressClassName: internal`.
 
-### 1. 1Password Secret vorbereiten
+### Wie funktioniert es?
 
-Erstelle in 1Password ein Item mit dem Namen `unifi-dns`:
-- **Benutzername**: Der Admin-Username (z.B. `externaldns`)
-- **Anmeldedaten**: Das Passwort des Admin-Users
-- **Hostname**: `https://10.20.30.1`
+1. Du erstellst einen Ingress mit `ingressClassName: internal`
+2. Kyverno Policy fügt automatisch Annotation hinzu: `external-dns.alpha.kubernetes.io/target: "192.168.13.64"`
+3. external-dns (UniFi webhook) sieht den Ingress und erstellt Host Record in UDM
+4. Service ist im LAN erreichbar über internal ingress (192.168.13.64)
 
-**Hinweis**: Dieses Setup verwendet Username/Password statt API Keys, da ältere UniFi OS Versionen keine API Keys unterstützen.
-
-### 2. Commit & Push
-
-```bash
-cd /Volumes/development/github/tuxpeople/k8s-homelab
-git add .
-git commit -m "feat(network): activate external-dns-unifi-webhook"
-git push
-```
-
-### 3. Deployment überwachen
-
-```bash
-# Flux reconciliation
-flux reconcile kustomization internal-unifi-dns --namespace network
-
-# Pod logs
-kubectl logs -n network -l app.kubernetes.io/name=unifi-dns -f
-
-# Check if it's running
-kubectl get pods -n network -l app.kubernetes.io/name=unifi-dns
-```
-
-### 4. Test mit einem bestehenden Ingress
-
-Füge die Annotation zu einem bestehenden Ingress hinzu:
+### Beispiel Ingress
 
 ```yaml
-annotations:
-  external-dns.alpha.kubernetes.io/target: "192.168.13.64"
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vault
+  namespace: default
+  # Keine Annotations nötig - Kyverno macht das automatisch!
+spec:
+  ingressClassName: internal  # ← Das reicht!
+  rules:
+  - host: vault.eighty-three.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: vault
+            port:
+              number: 8200
 ```
 
-Dann schaue in der UDM nach ob der DNS-Eintrag erstellt wurde.
+## Configuration
 
-### 5. Debugging
+- **Provider**: UniFi Webhook (`kashalls/external-dns-unifi-webhook:v0.7.0`)
+- **UniFi Controller**: `https://10.20.30.1`
+- **Domain Filter**: `eighty-three.me`
+- **IngressClass Filter**: `internal`
+- **Annotation Filter**: `target=192.168.13.64`
+- **TXT Owner ID**: `main`
+- **Secret**: `unifi-dns-secret` (UniFi API Key aus 1Password)
 
-Falls es nicht funktioniert:
+## Debugging
 
 ```bash
-# External-DNS logs
-kubectl logs -n network -l app.kubernetes.io/name=unifi-dns | grep -i error
+# Logs
+kubectl logs -n network -l app.kubernetes.io/name=unifi-dns -f
 
-# Check Secret
-kubectl get secret unifi-dns-secret -n network -o yaml
+# Status
+kubectl get pods -n network -l app.kubernetes.io/name=unifi-dns
 
-# Test Ingress erstellen (siehe test-ingress.yaml.example)
-kubectl apply -f test-ingress.yaml.example
+# Secret prüfen
+kubectl get secret unifi-dns-secret -n network -o jsonpath='{.data.UNIFI_API_KEY}' | base64 -d
+
+# UniFi API Test
+UNIFI_API_KEY="<key>"
+curl -k -H "X-API-KEY: ${UNIFI_API_KEY}" \
+  "https://10.20.30.1/proxy/network/v2/api/site/default/static-dns/"
+
+# DNS Test
+dig vault.eighty-three.me @10.20.30.126  # Pi-hole
+dig vault.eighty-three.me @10.20.30.1    # UDM direkt
 ```
 
-## Wie es funktioniert
+## Troubleshooting
 
-1. external-dns überwacht alle Ingresses mit `ingressClassName: internal`
-2. Wenn ein Ingress die Annotation `external-dns.alpha.kubernetes.io/target` hat:
-   - Hostname aus Ingress: `vault.eighty-three.me`
-   - IP aus Annotation: `192.168.13.64`
-   - → external-dns erstellt in UDM: `host-record=vault.eighty-three.me,192.168.13.64`
-3. Wenn der Ingress gelöscht wird, wird auch der DNS-Eintrag gelöscht
+### DNS-Eintrag wird nicht erstellt
 
-## Nach erfolgreichem Test
+1. Prüfe ob Ingress `ingressClassName: internal` hat
+2. Prüfe ob Kyverno Annotation gesetzt hat: `kubectl get ingress <n> -o yaml`
+3. Prüfe logs: `kubectl logs -n network -l app.kubernetes.io/name=unifi-dns`
+4. Prüfe UniFi UI: Settings → Internet → DNS
 
-1. k8s-gateway kann deprecated werden
-2. Alle Ingresses mit der Annotation versehen
-3. `server=/eighty-three.me/192.168.13.65` aus UDM entfernen
+### 401 Unauthorized Error
 
-## Für zweiten Kubernetes-Cluster
+```bash
+# Secret neu syncen
+kubectl annotate externalsecret unifi-dns-secret -n network force-sync="$(date +%s)" --overwrite
 
-Einfach das gleiche Setup deployen mit:
-- Anderem `txtOwnerId` (z.B. `cluster-2`)
-- Gleicher UDM
-- Gleicher Domain
+# Pod restart
+kubectl rollout restart deployment unifi-dns -n network
+```
 
-Beide Cluster schreiben dann ihre Ingresses in die gleiche UDM → kein Conflict!
+## Dependencies
+
+- **1Password**: Item `unifi-api-externaldns` mit API Key und Hostname
+- **ExternalSecret**: `unifi-dns-secret` (auto-synced aus 1Password)
+- **Kyverno Policy**: `kubernetes/apps/security/kyverno/policies/ingress.yaml` (setzt Annotations)
+
+## Related Services
+
+- **Cloudflare external-dns**: Für `ingressClassName: external` (öffentliche Services)
+- **k8s-gateway**: Legacy DNS, bleibt für Fallback deployed
+- **Pi-hole**: LAN DNS Server (10.20.30.126)
+- **UDM**: Router mit dnsmasq (10.20.30.1)
+
+## Maintenance
+
+### UniFi API Key erneuern
+
+1. UniFi UI → Settings → Integrations
+2. Lösche alten API Key
+3. Erstelle neuen API Key
+4. Update 1Password Item `unifi-api-externaldns`
+5. Force sync: `kubectl annotate externalsecret unifi-dns-secret -n network force-sync="$(date +%s)" --overwrite`
+
+### DNS-Einträge manuell bereinigen
+
+**In UniFi UI:**
+- Settings → Internet → DNS
+- Lösche Host Records die nicht mehr gebraucht werden
+- TXT Records mit `k8s.main.*` kennzeichnen external-dns managed Einträge
+
+**Automatisch:**
+- external-dns löscht Einträge automatisch wenn Ingress gelöscht wird
+
+## Architecture
+
+```
+┌─────────────────┐
+│  Ingress        │
+│  (internal)     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  Kyverno        │ ← Fügt Annotation hinzu
+│  Policy         │   target=192.168.13.64
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  external-dns   │ ← Verarbeitet Ingress
+│  (UniFi)        │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  UniFi API      │ ← Erstellt Host Record
+│  (10.20.30.1)   │   vault.eighty-three.me → 192.168.13.64
+└─────────────────┘
+```
+
+## Links
+
+- **Full Documentation**: [docs/services/networking.md](../../../../docs/services/networking.md#dns-architektur-split-horizon-setup)
+- **UniFi Webhook**: https://github.com/kashalls/external-dns-unifi-webhook
+- **external-dns**: https://kubernetes-sigs.github.io/external-dns/
