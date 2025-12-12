@@ -7,18 +7,274 @@ metadata:
 data:
   bookmarks.yaml: |
     ---
-    - Luca:
+    - Family:
         - Bildergallerie:
             - abbr: BG
               href: https://bildergallerie.${SECRET_DOMAIN}
+        - Paperless Inbox:
+            - abbr: IN
+              href: https://paperless.${SECRET_DOMAIN}/inbox/
+    - Homelab:
+        - Grafana:
+            - abbr: GF
+              href: https://grafana.${SECRET_DOMAIN}
+        - Longhorn:
+            - abbr: LH
+              href: https://longhorn.${SECRET_DOMAIN}
+        - Status:
+            - abbr: ST
+              href: https://status.${SECRET_DOMAIN}
+        - Hajimari:
+            - abbr: HA
+              href: https://hajimari.${SECRET_DOMAIN}
+    - Reference:
+        - Repository:
+            - abbr: GH
+              href: https://github.com/tuxpeople/k8s-homelab
+        - Docs:
+            - abbr: HP
+              href: https://gethomepage.dev
   docker.yaml: |
     ---
+    # Docker integrations are handled through kube workloads.
   kubernetes.yaml: |
     ---
-    # mode: cluster
+    mode: cluster
+    cluster:
+      name: Homelab
+    namespaceSelector:
+      matchNames:
+        - ai
+        - default
+        - media
+        - network
+        - observability
+        - productivity
+        - security
+        - storage
+        - test
+        - tools
+    resources:
+      - name: Core Apps
+        namespace: default
+        kind: Deployment
+      - name: Media Stack
+        namespace: media
+        kind: StatefulSet
+      - name: Productivity
+        namespace: productivity
+        kind: Deployment
+      - name: Automation
+        namespace: ai
+        kind: Deployment
+      - name: Observability
+        namespace: observability
+        kind: Deployment
+      - name: Platform
+        namespace: network
+        kind: Deployment
 
   services.yaml: |
     ---
+    - Media Automation:
+        - Radarr:
+            icon: radarr
+            href: https://radarr.${SECRET_DOMAIN}
+            description: Automated movie downloads
+            siteMonitor: https://radarr.${SECRET_DOMAIN}
+            widget:
+              type: radarr
+              url: https://radarr.${SECRET_DOMAIN}
+              key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
+        - Sonarr:
+            icon: sonarr
+            href: https://sonarr.${SECRET_DOMAIN}
+            description: Series automation
+            siteMonitor: https://sonarr.${SECRET_DOMAIN}
+            widget:
+              type: sonarr
+              url: https://sonarr.${SECRET_DOMAIN}
+              key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
+        - Readarr:
+            icon: mdi:book-open-variant
+            href: https://readarr.${SECRET_DOMAIN}
+            description: Audiobook & eBook automation
+            siteMonitor: https://readarr.${SECRET_DOMAIN}
+        - Bazarr:
+            icon: mdi:subtitles-outline
+            href: https://bazarr.${SECRET_DOMAIN}
+            description: Subtitle management
+            siteMonitor: https://bazarr.${SECRET_DOMAIN}
+        - Prowlarr:
+            icon: mdi:radar
+            href: https://prowlarr.${SECRET_DOMAIN}
+            description: Indexer aggregator
+            siteMonitor: https://prowlarr.${SECRET_DOMAIN}
+            widget:
+              type: prowlarr
+              url: https://prowlarr.${SECRET_DOMAIN}
+              key: "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}"
+        - Sabnzbd:
+            icon: simple-icons:sabnzbd
+            href: https://sabnzbd.${SECRET_DOMAIN}
+            description: Usenet client
+            siteMonitor: https://sabnzbd.${SECRET_DOMAIN}
+            widget:
+              type: sabnzbd
+              url: https://sabnzbd.${SECRET_DOMAIN}
+              key: "{{HOMEPAGE_VAR_SABNZBD_API_KEY}}"
+        - Notifiarr:
+            icon: mdi:bell-ring-outline
+            href: https://notifiarr.${SECRET_DOMAIN}
+            description: Unified ARR notifications
+            siteMonitor: https://notifiarr.${SECRET_DOMAIN}
+        - Gaps:
+            icon: mdi:movie-search-outline
+            href: https://gaps.${SECRET_DOMAIN}
+            description: Discover missing Plex movies
+            siteMonitor: https://gaps.${SECRET_DOMAIN}
+    - Media & Requests:
+        - Overseerr:
+            icon: mdi:movie-filter-outline
+            href: https://requests.${SECRET_DOMAIN}
+            description: Media request workflow
+            siteMonitor: https://requests.${SECRET_DOMAIN}
+            widget:
+              type: overseerr
+              url: https://requests.${SECRET_DOMAIN}
+              key: "{{HOMEPAGE_VAR_OVERSEERR_API_KEY}}"
+        - Tautulli:
+            icon: mdi:chart-timeline-variant
+            href: https://tautulli.${SECRET_DOMAIN}
+            description: Plex insights & notifications
+            siteMonitor: https://tautulli.${SECRET_DOMAIN}
+            widget:
+              type: tautulli
+              url: https://tautulli.${SECRET_DOMAIN}
+              key: "{{HOMEPAGE_VAR_TAUTULLI_API_KEY}}"
+        - Calibre Server:
+            icon: mdi:bookshelf
+            href: https://calibre.${SECRET_DOMAIN}
+            description: Native Calibre content server
+            siteMonitor: https://calibre.${SECRET_DOMAIN}
+        - Bildergallerie:
+            icon: mdi:image-multiple
+            href: https://bildergallerie.${SECRET_DOMAIN}
+            description: Family photo archive
+            siteMonitor: https://bildergallerie.${SECRET_DOMAIN}
+    - Documents & Knowledge:
+        - Paperless:
+            icon: mdi:file-document-multiple-outline
+            href: https://paperless.${SECRET_DOMAIN}
+            description: Scans, tags & OCR
+            siteMonitor: https://paperless.${SECRET_DOMAIN}
+            widget:
+              type: paperlessngx
+              url: https://paperless.${SECRET_DOMAIN}
+              key: "{{HOMEPAGE_VAR_PAPERLESS_API_KEY}}"
+        - Linkding:
+            icon: simple-icons:linkding
+            href: https://linkding.${SECRET_DOMAIN}
+            description: Bookmark archive
+            siteMonitor: https://linkding.${SECRET_DOMAIN}
+        - FreshRSS:
+            icon: simple-icons:freshrss
+            href: https://freshrss.${SECRET_DOMAIN}
+            description: Multi-user RSS reader
+            siteMonitor: https://freshrss.${SECRET_DOMAIN}
+        - Ladder:
+            icon: mdi:format-list-bulleted
+            href: https://ladder.${SECRET_DOMAIN}
+            description: Knowledge base ruleset
+            siteMonitor: https://ladder.${SECRET_DOMAIN}
+        - Calibre Web:
+            icon: mdi:book-open-page-variant
+            href: https://books.${SECRET_DOMAIN}
+            description: Browser library for ebooks
+            siteMonitor: https://books.${SECRET_DOMAIN}
+        - Obsidian:
+            icon: simple-icons:obsidian
+            href: https://obsidian.${SECRET_DOMAIN}
+            description: Remote Obsidian workspace
+            siteMonitor: https://obsidian.${SECRET_DOMAIN}
+    - Automation & Tools:
+        - Open WebUI:
+            icon: mdi:chat-processing
+            href: https://ai.${SECRET_DOMAIN}
+            description: Ollama powered AI assistant
+            siteMonitor: https://ai.${SECRET_DOMAIN}
+        - LibreChat:
+            icon: mdi:message-text-lock
+            href: https://chat.${SECRET_DOMAIN}
+            description: Multi-provider chat interface
+            siteMonitor: https://chat.${SECRET_DOMAIN}
+        - n8n:
+            icon: simple-icons:n8n
+            href: https://n8n.${SECRET_DOMAIN}
+            description: Workflow automation
+            siteMonitor: https://n8n.${SECRET_DOMAIN}
+        - Code Server:
+            icon: mdi:microsoft-visual-studio-code
+            href: https://code-server.${SECRET_DOMAIN}
+            description: Remote VS Code environment
+            siteMonitor: https://code-server.${SECRET_DOMAIN}
+        - Spoolman:
+            icon: mdi:printer-3d
+            href: https://spoolman.${SECRET_DOMAIN}
+            description: Filament inventory & burn rate
+            siteMonitor: https://spoolman.${SECRET_DOMAIN}
+    - Platform & Ops:
+        - Status Page:
+            icon: mdi:pulse
+            href: https://status.${SECRET_DOMAIN}
+            description: External + internal checks via Gatus
+            siteMonitor: https://status.${SECRET_DOMAIN}
+        - Grafana:
+            icon: simple-icons:grafana
+            href: https://grafana.${SECRET_DOMAIN}
+            description: Observability dashboards
+            siteMonitor: https://grafana.${SECRET_DOMAIN}
+        - Longhorn:
+            icon: mdi:cow
+            href: https://longhorn.${SECRET_DOMAIN}
+            description: Storage cluster UI
+            siteMonitor: https://longhorn.${SECRET_DOMAIN}
+        - Hajimari:
+            icon: simple-icons:huggingface
+            href: https://hajimari.${SECRET_DOMAIN}
+            description: Service discovery dashboard
+            siteMonitor: https://hajimari.${SECRET_DOMAIN}
+        - Blackbox Exporter:
+            icon: mdi:radar
+            href: https://blackbox.${SECRET_DOMAIN}
+            description: Probe configuration for Prometheus
+            siteMonitor: https://blackbox.${SECRET_DOMAIN}
+        - Python IPAM:
+            icon: mdi:ip-network-outline
+            href: https://python-ipam.${SECRET_DOMAIN}
+            description: Lightweight IP address manager
+            siteMonitor: https://python-ipam.${SECRET_DOMAIN}
+    - Identity & Security:
+        - Keycloak:
+            icon: mdi:key
+            href: https://keycloak.${SECRET_DOMAIN}
+            description: Central identity provider
+            siteMonitor: https://keycloak.${SECRET_DOMAIN}
+        - OAuth2 Proxy:
+            icon: mdi:shield-lock-outline
+            href: https://oauth2-proxy.${SECRET_DOMAIN}
+            description: Shared OIDC proxy for internal apps
+            siteMonitor: https://oauth2-proxy.${SECRET_DOMAIN}
+        - LLDAP:
+            icon: mdi:account-group-outline
+            href: https://lldap.${SECRET_DOMAIN}
+            description: Lightweight directory service
+            siteMonitor: https://lldap.${SECRET_DOMAIN}
+        - 1Password Connect:
+            icon: simple-icons:1password
+            href: https://onepassword-connect.${SECRET_DOMAIN}
+            description: Secret sync for ExternalSecrets
+            siteMonitor: https://onepassword-connect.${SECRET_DOMAIN}
 
   settings.yaml: |
     ---
@@ -28,12 +284,22 @@ data:
     headerStyle: clean
     target: _blank
     layout:
-      Media:
+      Media Automation:
         style: row
         columns: 4
-      Network:
+      Media & Requests:
         style: row
-      Favorites:
+        columns: 3
+      Documents & Knowledge:
+        style: row
+        columns: 3
+      Automation & Tools:
+        style: row
+        columns: 4
+      Platform & Ops:
+        style: row
+        columns: 3
+      Identity & Security:
         style: row
         columns: 3
     quicklaunch:
@@ -47,12 +313,18 @@ data:
         provider:
           - google
           - duckduckgo
-    # - kubernetes:
-    #     cluster:
-    #       show: true
-    #       cpu: true
-    #       memory: true
-    #       showLabel: true
-    #       label: home-cluster
-    #     nodes:
-    #       show: false
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: Homelab
+        nodes:
+          show: true
+    - resources:
+        backend: kubernetes
+        expanded: true
+        cpu: true
+        memory: true
+        storage: true
