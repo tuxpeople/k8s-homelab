@@ -8,7 +8,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/danny-avila/librechat-dev
-          tag: latest@sha256:bb331809ed47af935833c236af3547396463f34a797f244dc3b6dc7c30e7e39d
+          tag: latest@sha256:43ddef7c999cb3ba7393c26750e37450d9eb24dccbbd8b4152b0f774a0077caf
         env:
           PORT: "3080"
           NODE_ENV: "production"
@@ -75,7 +75,7 @@ controllers:
       meilisearch:
         image:
           repository: getmeili/meilisearch
-          tag: v1.28.2@sha256:71cdfc95cbbe20e99e430f9c955a52f6530833ed25041710fa0b04f8128cfbb3 # DO NOT BLINDLY UPDATE: https://www.meilisearch.com/docs/learn/update_and_migration/updating
+          tag: v1.29.0@sha256:9af2a48719a1afadbe932a35329ecb504d034234319150a8eaad8de85b621754 # DO NOT BLINDLY UPDATE: https://www.meilisearch.com/docs/learn/update_and_migration/updating
         envFrom:
           - secretRef:
               name: librechat2-secret
