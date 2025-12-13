@@ -5,6 +5,12 @@ kind: ConfigMap
 metadata:
   name: homepage-config
 data:
+  proxmox.yaml: |
+    ---
+    home: # must match your actual Proxmox node name
+      url: hhttps://192.168.8.11:8006
+      token: "{{HOMEPAGE_VAR_PROXMOX_API_USER}}"
+      secret: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
   bookmarks.yaml: |
     ---
     - Family:
@@ -193,6 +199,12 @@ data:
             description: Remote Obsidian workspace
             siteMonitor: https://obsidian.${SECRET_DOMAIN}
     - Automation & Tools:
+          - Ollama:
+            href: http://ollama-lxc.lab.tdeutsch.ch:11434
+            description: Ollama AI
+            proxmoxNode: home
+            proxmoxVMID: 100
+            proxmoxType: lxc
         - Open WebUI:
             icon: mdi:chat-processing
             href: https://ai.${SECRET_DOMAIN}
