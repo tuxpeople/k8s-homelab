@@ -199,7 +199,7 @@ data:
             description: Remote Obsidian workspace
             siteMonitor: https://obsidian.${SECRET_DOMAIN}
     - Automation & Tools:
-          - Ollama:
+        - Ollama:
             href: http://ollama-lxc.lab.tdeutsch.ch:11434
             description: Ollama AI
             proxmoxNode: home
