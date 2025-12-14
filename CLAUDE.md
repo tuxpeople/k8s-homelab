@@ -57,8 +57,11 @@ The `docs/` directory contains operational documentation for humans:
 - `flux-dependencies.png` / `flux-dependencies.dot` - Alternative Flux dependency visualization (DOT/Graphviz format)
 - `yaml-checks.md` - YAML validation tools and pre-commit hooks
 - `CHANGELOG.md` - Infrastructure change log
-- `TODO.md` - Known issues and planned improvements
 - `WEITERENTWICKLUNG.md` - Development backlog (DOC-001 through DOC-010)
+
+**Technical Analysis** (root directory):
+- `RESOURCE_ANALYSIS.md` - VPA-based cluster resource analysis with capacity calculations and implementation phases
+- `IMPROVEMENTS.md` - Technical implementation roadmap with prioritized tasks
 
 **Service Documentation** (`docs/services/`):
 - `cluster-foundation.md` - Talos, Kubernetes, node inventory
@@ -71,6 +74,12 @@ The `docs/` directory contains operational documentation for humans:
 - `applications-*.md` - Application-specific documentation (AI, media, productivity)
 
 **Note**: CLAUDE.md serves as guidance for Claude Code AI sessions, while docs/ serves as operational documentation for humans. Both must be kept in sync where information overlaps.
+
+**Language & Spelling**:
+- **CLAUDE.md**: English (for AI guidance)
+- **docs/**: German with **Swiss orthography** (Schweizer Rechtschreibung)
+  - Use "ss" instead of "ß" (e.g., "dass" not "daß", "muss" not "muß")
+  - Examples: "Architekturdiagramm", "Netzwerk-Policies", "Backup-Testprotokoll"
 
 ## Development Commands
 
@@ -447,9 +456,10 @@ When working with operational issues, refer to these docs/ files:
 - Node failures → docs/runbooks.md
 
 **Development & Planning:**
-- Planned improvements → docs/TODO.md
-- Development backlog → docs/WEITERENTWICKLUNG.md
+- Technical improvements → IMPROVEMENTS.md (root directory)
+- Strategic backlog → docs/WEITERENTWICKLUNG.md
 - Change history → docs/CHANGELOG.md
+- Archived plans → archive/ (IMPROVEMENT_PLAN.md.old, TODO.md.old)
 
 ## Architecture Details
 
@@ -572,6 +582,26 @@ When making ANY changes to this repository, you MUST check and update documentat
 - Security/SOPS/secret management changes → Update CLAUDE.md + docs/secrets.md + docs/services/security.md
 - Operational procedures (backup, DR, troubleshooting) → Update docs/runbooks.md, docs/backups.md, docs/dr.md
 - Architecture diagrams changes → Update docs/architecture.png, docs/flux-dependency-graph.md
+
+### Improvement & Planning Documentation:
+
+The repository uses a **two-file system** for tracking improvements and development work:
+
+1. **IMPROVEMENTS.md** (root directory):
+   - **Technical implementation tasks** with priority levels (High/Medium/Low)
+   - Detailed action items, file paths, code snippets, and effort estimates
+   - Completion tracking with dates and details
+   - Update when: Adding/completing technical tasks, fixing bugs, implementing features
+
+2. **docs/WEITERENTWICKLUNG.md**:
+   - **Strategic development backlog** with DOC-XXX numbering
+   - High-level documentation and operational improvements
+   - Cross-team visibility and planning
+   - Update when: Adding documentation tasks, planning strategic initiatives
+
+**Archived Files** (do NOT update):
+- `archive/IMPROVEMENT_PLAN.md.old` - Consolidated into IMPROVEMENTS.md
+- `archive/TODO.md.old` - Consolidated into docs/WEITERENTWICKLUNG.md
 
 This prevents confusion and ensures future Claude Code sessions have accurate guidance. Always prioritize keeping documentation aligned with the actual repository state.
 
