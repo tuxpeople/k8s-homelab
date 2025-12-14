@@ -108,6 +108,46 @@ Regenerates kustomization.yaml files for applications.
 **Purpose:** Rebuilds kustomization manifests with proper resource references
 **Usage:** `./rebuild-kustomizations.sh`
 
+## Documentation and Visualization Scripts
+
+### `generate-flux-dependencies.sh`
+Automated Flux Kustomization dependency graph generator.
+
+**Purpose:** Generates DOT and PNG visualizations of Flux Kustomization dependencies
+**Usage:** `./generate-flux-dependencies.sh`
+**Output:**
+- `docs/flux-dependencies.dot` - Graphviz DOT format
+- `docs/flux-dependencies.png` - PNG visualization (requires Graphviz)
+**Dependencies:** kubectl, Python 3, Graphviz (optional)
+**Features:**
+- Automatic cluster connection verification
+- Generates both DOT and PNG formats
+- Helpful error messages for missing dependencies
+- Shows file sizes after generation
+
+**Note:** This script uses `generate-flux-dot.py` internally.
+
+### `generate-flux-dot.py`
+Core Python script for generating Flux dependency graphs in DOT format.
+
+**Purpose:** Converts Flux Kustomizations to Graphviz DOT format
+**Usage:** `kubectl get kustomizations.kustomize.toolkit.fluxcd.io -A -o yaml | python3 generate-flux-dot.py`
+**Output:** DOT format graph to stdout
+**Dependencies:** Python 3, kubectl
+**Source:** Based on https://gist.github.com/darinc/1c02d567b059b26bc0ab491be60d45da
+
+**Note:** Typically used via the `generate-flux-dependencies.sh` wrapper script.
+
+### `generate-flux-dependency-graph.sh`
+Generates Flux dependency visualization in Mermaid format.
+
+**Purpose:** Creates Mermaid flowchart of Flux dependencies for `docs/flux-dependency-graph.md`
+**Usage:** `./generate-flux-dependency-graph.sh`
+**Output:** Updates `docs/flux-dependency-graph.md` with Mermaid diagram
+**Dependencies:** kubectl, Python 3
+
+**Note:** This generates a different format (Mermaid) compared to `generate-flux-dependencies.sh` (DOT/Graphviz).
+
 ## Maintenance Scripts
 
 ### `ensure-yaml-separator.sh`
