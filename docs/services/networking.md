@@ -9,7 +9,6 @@
     - **Internal (LAN)**: `unifi-dns` (external-dns mit UniFi webhook) → UniFi Dream Machine (für Ingresses mit `ingressClassName: internal`)
   - **Cluster DNS**: CoreDNS forwarded zu Pi-hole (10.20.30.126) → UDM → Public DNS
   - **Automatische DNS-Verwaltung**: Kyverno Policy setzt automatisch `external-dns.alpha.kubernetes.io/target` Annotation basierend auf IngressClass
-  - **k8s-gateway**: Bleibt deployed für Legacy-Support, aber wird nicht mehr aktiv von external-dns verwendet
 - **Tunnels & Remote Access**: Cloudflared (public ingress) + OpenVPN fallback (Status prüfen).
 - **LoadBalancer IPAM**: Cilium LB IPs über `lbipam.cilium.io/ips` Annotation (z.B. Ollama).
 
@@ -18,7 +17,7 @@
 | Service | Pfad | Zweck / Hinweise |
 |---------|------|------------------|
 | Cilium | `kubernetes/apps/kube-system/cilium` | L3/L4 Networking, Hubble optional (derzeit deaktiviert). |
-| CoreDNS | `kubernetes/apps/kube-system/coredns` | Cluster DNS, forwarded via k8s-gateway. |
+| CoreDNS | `kubernetes/apps/kube-system/coredns` | Cluster DNS, forwarded zu Pi-hole (10.20.30.126) und UniFi Gateway (192.168.13.1). |
 | Node Feature Discovery | `kubernetes/apps/kube-system/node-feature-discovery` | Labels für Hardware-Offloading (ARM64, NVMe). |
 | Descheduler | `kubernetes/apps/kube-system/descheduler` | Räumt Pods um bei Hotspots. |
 | Metrics-server / Reloader / Spegel | (siehe Verzeichnisse) | Teil des System Monitorings / Image Cache. |
@@ -35,7 +34,6 @@
 | Service | Zweck | Hinweise |
 |---------|-------|----------|
 | `ingress-nginx` (internal) | LAN-only Services (`internal` class). | Binds auf 192.168.13.64, Authelia Standard. |
-| `k8s-gateway` | DNS Gateway, bedient `*.eighty-three.me` intern. | Upstream: CoreDNS; pflegt ServiceRecords aus K8s. |
 | `python-ipam` | Hilfsservice zur IP-Adressverwaltung/Reservations. | TODO: Doku der API/DB. |
 | `unifi-dns` | external-dns mit UniFi Webhook für automatisches DNS in UDM. | Verarbeitet `ingressClassName: internal`, erstellt Host Records in UniFi. API Key via 1Password (`unifi-api-externaldns`). |
 
@@ -50,7 +48,7 @@
 - Zertifikatsprobleme: siehe `docs/runbooks.md` Abschnitt „Zertifikat erneuern“.
 - Ingress-Triage: `kubectl -n network logs deploy/<ingress> -f | grep <host>`, `kubectl -n network describe ingress <name>`.
 - DNS Debug:
-  - Intern: `dig <host> @192.168.13.65`.
+  - Intern: `dig <host> @192.168.13.1` (UniFi Gateway) oder `dig <host> @10.20.30.126` (Pi-hole).
   - Extern: `dig <host> @1.1.1.1` (Cloudflare).
 - Cloudflared Tunnel Down: `kubectl -n network logs deploy/cloudflared`, check token expiration.
 

@@ -19,7 +19,7 @@ This is an active Kubernetes homelab cluster built on Talos Linux with GitOps us
 - **CNI**: Cilium networking with built-in CNI disabled in Talos
 - **Storage**: Longhorn for distributed block storage, Synology CSI for external NAS storage
 - **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes
-- **DNS**: Split-horizon DNS with k8s_gateway (`192.168.13.65`), dual external-dns (Cloudflare for public, UniFi for internal LAN)
+- **DNS**: Split-horizon DNS with dual external-dns (Cloudflare for public, UniFi for internal LAN)
 - **Security**: SOPS for secret encryption using Age keys, external-secrets with 1Password integration
 - **Monitoring**: Kube-prometheus-stack with Grafana, custom exporters for media applications
 
@@ -290,13 +290,12 @@ This setup prevents the common issue where VS Code formats YAML files in a way t
 - **Load Balancer IPs**:
   - `internal` ingress: 192.168.13.64 - Private network access
   - `external` ingress: 192.168.13.66 - Public internet access via Cloudflare Tunnel
-  - DNS gateway: 192.168.13.65 - Internal DNS resolution via k8s_gateway
 - **Domain**: eighty-three.me
 - **DNS**: Split-horizon DNS architecture
-  - k8s_gateway (`192.168.13.65`) for internal service discovery
   - external-dns (Cloudflare provider) for `external` ingress class → public DNS
-  - external-dns (UniFi webhook) for `internal` ingress class → local LAN DNS
+  - external-dns (UniFi webhook) for `internal` ingress class → local LAN DNS in UniFi Dream Machine
   - Kyverno policy auto-adds `external-dns.alpha.kubernetes.io/target` annotation based on ingress class
+  - CoreDNS forwards to Pi-hole (10.20.30.126) and UniFi Gateway (192.168.13.1) for cluster-internal DNS
   - See docs/services/networking.md for detailed DNS architecture
 
 ## Application Organization
