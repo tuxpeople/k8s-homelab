@@ -27,6 +27,11 @@ spec:
           - resources:
               kinds:
                 - Ingress
+              namespaces:
+                - test
+          - resources:
+              kinds:
+                - Ingress
               annotations:
                 gatus.io/enabled: "false"
       preconditions:

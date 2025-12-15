@@ -9,12 +9,15 @@
 | onepassword-connect | (Deployment unter security) | Aktiv | Backend für ExternalSecrets, benötigt 1Password token. |
 
 ## Kyverno Policies
-- Policies liegen unter `kubernetes/apps/security/kyverno/app/policies/`.
+- Policies liegen unter `kubernetes/apps/security/kyverno/policies/`.
 - Standards (Auszug):
   - `require-resources` – verlangt Requests/Limits.
   - `deny-privileged` – blockt `privileged: true`.
   - `disallow-latest-tag`.
   - `add-required-labels`.
+  - `gatus-internal` / `gatus-external` – generiert automatisch Gatus ConfigMaps für Ingresses.
+    - Ausnahmen: Namespace `test` und Annotation `gatus.io/enabled: "false"`
+    - Siehe `docs/services/observability.md` für Details zu Gatus Annotations
 - Pod Security Standards: Ziel PSModerate/Restricted – noch nicht ausgerollt (TODO).
 - NetworkPolicies: derzeit kaum vorhanden → Backlog DOC-004 (erstellen + verlinken hier).
 

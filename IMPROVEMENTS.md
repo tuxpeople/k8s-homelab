@@ -365,12 +365,7 @@ prometheus:
    - Lines: 1-22
    - Action: Move to `kubernetes/apps/storage/longhorn/ks.dis.prereq` or delete
 
-2. **unifi-dns** (disabled)
-   - File: `kubernetes/apps/network/internal/ks.yaml`
-   - Lines: 3-22
-   - Action: Move to dedicated disabled/ directory or delete
-
-3. **openvpn** (disabled)
+2. **openvpn** (disabled)
    - File: `kubernetes/apps/network/external/ks.yaml`
    - Lines: 74-94
    - Action: Move to dedicated disabled/ directory or delete
@@ -431,24 +426,6 @@ Single HelmRelease → app/helmrelease.yaml
 Multiple components → app/<component>/helmrelease.yaml
 Separate database → db/helmrelease.yaml + app/helmrelease.yaml
 Multiple ingresses → app/ingress-<name>.yaml
-```
-
----
-
-### M-1.2: Add CoreDNS Dependency to k8s-gateway
-**Status**: Not Started
-**Priority**: MEDIUM
-**Risk**: k8s-gateway may start before DNS is ready
-**Effort**: 5 minutes
-
-**File**: `kubernetes/apps/network/k8s-gateway/ks.yaml`
-
-**Change**:
-```yaml
-spec:
-  dependsOn:
-    - name: coredns
-      namespace: kube-system
 ```
 
 ---
@@ -662,6 +639,15 @@ kubectl describe clusterrole <name>
 #### Application Deployments
 - ✅ librechat2 activated (AI namespace)
 - ✅ homepage activated (default namespace)
+
+#### DNS Architecture Migration
+- ✅ k8s-gateway removed (replaced by UniFi external-dns)
+  - Deleted deployment directory `kubernetes/apps/network/internal/k8s-gateway/`
+  - Deleted Helm repository `kubernetes/flux/meta/repositories/helm/k8s-gateway.yaml`
+  - Removed Kustomization entry from `kubernetes/apps/network/internal/ks.yaml`
+  - Updated all documentation references
+  - Freed Load Balancer IP 192.168.13.65
+  - Full migration to dual external-dns setup (Cloudflare for public, UniFi for internal)
 
 ---
 

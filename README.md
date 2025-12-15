@@ -13,8 +13,9 @@ This repository contains the configuration and deployment manifests for my perso
   - [Synology CSI](https://github.com/SynologyOpenSource/synology-csi) for external NAS storage
 - **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes
 - **DNS**:
-  - [k8s_gateway](https://github.com/ori-edge/k8s_gateway) for internal DNS (`192.168.13.65`)
-  - [external-dns](https://github.com/kubernetes-sigs/external-dns) for public DNS via Cloudflare
+  - [external-dns](https://github.com/kubernetes-sigs/external-dns) with dual providers:
+    - Cloudflare for public DNS (`external` ingress class)
+    - UniFi webhook for internal LAN DNS (`internal` ingress class)
 - **Secrets**: [SOPS](https://github.com/getsops/sops) encryption with Age keys + [external-secrets](https://github.com/external-secrets/external-secrets) with 1Password integration
 - **Tunnels**: [Cloudflared](https://github.com/cloudflare/cloudflared) for secure public access
 
@@ -143,9 +144,9 @@ Automated dependency updates for:
 
 ### DNS Configuration
 Split-horizon DNS setup:
-- **Internal**: k8s_gateway provides DNS resolution for cluster services
-- **External**: Cloudflare DNS for public services
-- **Home DNS**: Configure your router/Pi-hole to forward `eighty-three.me` queries to `192.168.13.65`
+- **Internal**: UniFi external-dns creates DNS records in UniFi Dream Machine for `internal` ingress services
+- **External**: Cloudflare external-dns creates public DNS records for `external` ingress services
+- **Cluster DNS**: CoreDNS forwards to Pi-hole (10.20.30.126) and UniFi Gateway (192.168.13.1)
 
 ### Service Access
 - **Internal Services**: Use `internal` ingress class for private network access

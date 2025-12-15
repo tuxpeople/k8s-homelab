@@ -19,7 +19,7 @@ This is an active Kubernetes homelab cluster built on Talos Linux with GitOps us
 - **CNI**: Cilium networking with built-in CNI disabled in Talos
 - **Storage**: Longhorn for distributed block storage, Synology CSI for external NAS storage
 - **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes
-- **DNS**: k8s_gateway for internal DNS (`192.168.13.65`), external-dns for public DNS via Cloudflare
+- **DNS**: Split-horizon DNS with dual external-dns (Cloudflare for public, UniFi for internal LAN)
 - **Security**: SOPS for secret encryption using Age keys, external-secrets with 1Password integration
 - **Monitoring**: Kube-prometheus-stack with Grafana, custom exporters for media applications
 
@@ -35,7 +35,51 @@ talos/
 ├── talconfig.yaml # Main Talos cluster configuration
 scripts/           # Utility scripts for cluster management
 .taskfiles/        # Task runner configuration files
+docs/              # Operational documentation (see below)
 ```
+
+### Documentation Structure
+
+The `docs/` directory contains operational documentation for humans:
+
+**Core Documentation:**
+- `README.md` - Documentation overview and guidelines
+- `automation.md` - Task runner, GitHub Actions, Renovate automation
+- `monitoring.md` - Monitoring stack overview, dashboards, alerting flows
+- `secrets.md` - Secret management workflows (SOPS, Age, External Secrets)
+- `backups.md` - Backup strategy, test procedures, restoration workflows
+- `dr.md` - Disaster recovery scenarios (cold start, namespace restore, full cluster rebuild)
+- `runbooks.md` - Operational procedures (Flux drift, node exchange, volume degraded, etc.)
+
+**Technical Documentation:**
+- `architecture.png` / `architecture.dot` - Cluster architecture diagram
+- `flux-dependency-graph.md` - Flux resource dependencies visualization (Mermaid format)
+- `flux-dependencies.png` / `flux-dependencies.dot` - Alternative Flux dependency visualization (DOT/Graphviz format)
+- `yaml-checks.md` - YAML validation tools and pre-commit hooks
+- `CHANGELOG.md` - Infrastructure change log
+- `WEITERENTWICKLUNG.md` - Development backlog (DOC-001 through DOC-010)
+
+**Technical Analysis** (root directory):
+- `RESOURCE_ANALYSIS.md` - VPA-based cluster resource analysis with capacity calculations and implementation phases
+- `IMPROVEMENTS.md` - Technical implementation roadmap with prioritized tasks
+
+**Service Documentation** (`docs/services/`):
+- `cluster-foundation.md` - Talos, Kubernetes, node inventory
+- `fluxcd.md` - FluxCD configuration and workflows
+- `networking.md` - DNS (k8s_gateway, external-dns dual setup), ingress, Cloudflare
+- `storage.md` - Longhorn, Synology CSI, storage classes
+- `observability.md` - Prometheus, Grafana, exporters, Gatus endpoint management
+- `security.md` - Kyverno policies, External Secrets, Trivy, compliance
+- `platform-support.md` - Supporting services (cert-manager, reloader, etc.)
+- `applications-*.md` - Application-specific documentation (AI, media, productivity)
+
+**Note**: CLAUDE.md serves as guidance for Claude Code AI sessions, while docs/ serves as operational documentation for humans. Both must be kept in sync where information overlaps.
+
+**Language & Spelling**:
+- **CLAUDE.md**: English (for AI guidance)
+- **docs/**: German with **Swiss orthography** (Schweizer Rechtschreibung)
+  - Use "ss" instead of "ß" (e.g., "dass" not "daß", "muss" not "muß")
+  - Examples: "Architekturdiagramm", "Netzwerk-Policies", "Backup-Testprotokoll"
 
 ## Development Commands
 
@@ -255,9 +299,13 @@ This setup prevents the common issue where VS Code formats YAML files in a way t
 - **Load Balancer IPs**:
   - `internal` ingress: 192.168.13.64 - Private network access
   - `external` ingress: 192.168.13.66 - Public internet access via Cloudflare Tunnel
-  - DNS gateway: 192.168.13.65 - Internal DNS resolution via k8s_gateway
 - **Domain**: eighty-three.me
-- **DNS**: Split-horizon DNS with k8s_gateway for internal resolution, Cloudflare for external
+- **DNS**: Split-horizon DNS architecture
+  - external-dns (Cloudflare provider) for `external` ingress class → public DNS
+  - external-dns (UniFi webhook) for `internal` ingress class → local LAN DNS in UniFi Dream Machine
+  - Kyverno policy auto-adds `external-dns.alpha.kubernetes.io/target` annotation based on ingress class
+  - CoreDNS forwards to Pi-hole (10.20.30.126) and UniFi Gateway (192.168.13.1) for cluster-internal DNS
+  - See docs/services/networking.md for detailed DNS architecture
 
 ## Application Organization
 
@@ -355,6 +403,9 @@ kubectl -n <namespace> logs -l app.kubernetes.io/name=<app> -f
 - **HelmRelease**: Primary deployment method via Flux
 - **External Secrets**: Use ExternalSecret resources for secret injection
 - **Ingress**: Use `internal` class for private access, `external` for public
+  - Automatic Gatus monitoring via Kyverno policies for both ingress classes
+  - Exclude from monitoring: Add annotation `gatus.io/enabled: "false"` or deploy in `test` namespace
+  - Customize monitoring: Use `gatus.io/host`, `gatus.io/path`, `gatus.io/name`, `gatus.io/status-code` annotations
 - **Storage**: Longhorn for persistent volumes, use StorageClass annotations
 
 ### Security Considerations
@@ -379,6 +430,37 @@ kubectl -n <namespace> logs -l app.kubernetes.io/name=<app> -f
 - **Secret access failures**: Verify SOPS key and ExternalSecret configuration
 - **Talos node issues**: Use `talhelper` commands and check talosconfig validity
 
+For detailed troubleshooting procedures and operational runbooks, see docs/runbooks.md
+For disaster recovery scenarios, see docs/dr.md
+
+### Quick Links to Operational Documentation
+
+When working with operational issues, refer to these docs/ files:
+
+**Daily Operations:**
+- Cluster monitoring and alerts → docs/monitoring.md
+- Application troubleshooting → docs/runbooks.md
+- Secret rotation and management → docs/secrets.md
+- Backup verification → docs/backups.md
+
+**Infrastructure Changes:**
+- Network/DNS modifications → docs/services/networking.md
+- Storage operations → docs/services/storage.md
+- Security policy updates → docs/services/security.md
+- Application deployments → docs/services/applications-*.md
+
+**Emergency Procedures:**
+- Disaster recovery → docs/dr.md
+- Cluster rebuild → docs/services/cluster-foundation.md
+- Flux recovery → docs/services/fluxcd.md
+- Node failures → docs/runbooks.md
+
+**Development & Planning:**
+- Technical improvements → IMPROVEMENTS.md (root directory)
+- Strategic backlog → docs/WEITERENTWICKLUNG.md
+- Change history → docs/CHANGELOG.md
+- Archived plans → archive/ (IMPROVEMENT_PLAN.md.old, TODO.md.old)
+
 ## Architecture Details
 
 ### Task Runner Architecture
@@ -397,6 +479,9 @@ FluxCD manages the cluster through a hierarchical structure:
 - `components/` - Shared Kubernetes components and cluster-wide resources
 - `apps/` - Application deployments organized by category with Kustomization resources
 
+For Flux dependency visualization, see docs/flux-dependency-graph.md
+For automation and CI/CD details, see docs/automation.md and docs/services/fluxcd.md
+
 ### Secret Management Architecture
 
 Multi-layered secret management:
@@ -406,6 +491,8 @@ Multi-layered secret management:
 - **Cert-manager**: Automated TLS certificate management with Let's Encrypt production issuer
 - **Ingress TLS**: Default wildcard certificate `${SECRET_DOMAIN/./-}-production-tls`
 
+For detailed procedures, see docs/secrets.md and docs/services/security.md
+
 ### Storage Architecture
 
 Distributed storage with multiple backends:
@@ -413,6 +500,8 @@ Distributed storage with multiple backends:
 - **Longhorn**: Primary distributed block storage with automated backups and snapshots
 - **Synology CSI**: External NAS storage for large datasets via DSM integration
 - **Backup Strategy**: K8up (Restic), Velero, and Longhorn's native backup capabilities
+
+For storage operations and backup procedures, see docs/services/storage.md and docs/backups.md
 
 ### Monitoring Architecture
 
@@ -422,6 +511,18 @@ Comprehensive observability stack:
 - **Visualization**: Grafana with pre-configured dashboards for home automation, systems, and applications
 - **Alerting**: Alertmanager with Discord webhook integration
 - **Exporters**: Specialized exporters for media stack (Tautulli, *arr apps), SNMP (Synology), and network services
+- **Gatus**: Automated endpoint monitoring via Kyverno policies
+  - Automatically monitors all Ingresses with `internal` or `external` ingressClassName
+  - Exclusions: Ingresses in `test` namespace or with annotation `gatus.io/enabled: "false"`
+  - Customization annotations:
+    - `gatus.io/host`: Override default host from Ingress spec
+    - `gatus.io/path`: Override default path from Ingress spec
+    - `gatus.io/name`: Override default endpoint name
+    - `gatus.io/status-code`: Override expected HTTP status code (default: 200)
+  - Generates ConfigMaps with Gatus endpoint definitions automatically
+  - Alerts via Discord webhook on endpoint failures
+
+For detailed monitoring setup and troubleshooting, see docs/monitoring.md and docs/services/observability.md
 
 ## Documentation Maintenance Protocol
 
@@ -439,13 +540,22 @@ When making ANY changes to this repository, you MUST check and update documentat
    - New applications or removed applications
    - Security/secret management changes
 
-2. **README.md** - Update for:
+2. **docs/** (operational documentation) - Update for:
+   - New operational procedures or runbooks (docs/runbooks.md)
+   - Service deployments/removals/significant changes (docs/services/*.md)
+   - Infrastructure changes affecting operations (docs/monitoring.md, docs/networking.md, docs/storage.md)
+   - Backup/disaster recovery procedure updates (docs/backups.md, docs/dr.md)
+   - Application configuration changes (docs/services/applications-*.md)
+   - Security policy changes (docs/services/security.md)
+   - Cluster architecture updates (docs/architecture.png, docs/flux-dependency-graph.md)
+
+3. **README.md** - Update for:
    - Major infrastructure changes
    - New core components or removed components
    - Updated network configuration
    - Changed application lists or categories
 
-3. **scripts/README.md** - Update for:
+4. **scripts/README.md** - Update for:
    - New scripts in scripts/ directory
    - Modified script functionality
    - Changed script dependencies
@@ -463,12 +573,36 @@ When making ANY changes to this repository, you MUST check and update documentat
 **If YES to any question → Update relevant documentation files FIRST**
 
 ### Special Cases Requiring Documentation:
-- Adding/removing applications in kubernetes/apps/
-- Modifying Taskfile.yaml or .taskfiles/
-- Changes to networking (IPs, domains, ingress classes)
-- New GitHub Actions workflows
-- Script modifications in scripts/
-- Tool dependency changes in .mise.toml
-- Security/SOPS/secret management changes
+- Adding/removing applications in kubernetes/apps/ → Update CLAUDE.md + docs/services/applications-*.md
+- Modifying Taskfile.yaml or .taskfiles/ → Update CLAUDE.md + docs/automation.md
+- Changes to networking (IPs, domains, ingress classes) → Update CLAUDE.md + docs/networking.md
+- New GitHub Actions workflows → Update CLAUDE.md + docs/automation.md
+- Script modifications in scripts/ → Update scripts/README.md + docs/automation.md
+- Tool dependency changes in .mise.toml → Update CLAUDE.md
+- Security/SOPS/secret management changes → Update CLAUDE.md + docs/secrets.md + docs/services/security.md
+- Operational procedures (backup, DR, troubleshooting) → Update docs/runbooks.md, docs/backups.md, docs/dr.md
+- Architecture diagrams changes → Update docs/architecture.png, docs/flux-dependency-graph.md
+
+### Improvement & Planning Documentation:
+
+The repository uses a **two-file system** for tracking improvements and development work:
+
+1. **IMPROVEMENTS.md** (root directory):
+   - **Technical implementation tasks** with priority levels (High/Medium/Low)
+   - Detailed action items, file paths, code snippets, and effort estimates
+   - Completion tracking with dates and details
+   - Update when: Adding/completing technical tasks, fixing bugs, implementing features
+
+2. **docs/WEITERENTWICKLUNG.md**:
+   - **Strategic development backlog** with DOC-XXX numbering
+   - High-level documentation and operational improvements
+   - Cross-team visibility and planning
+   - Update when: Adding documentation tasks, planning strategic initiatives
+
+**Archived Files** (do NOT update):
+- `archive/IMPROVEMENT_PLAN.md.old` - Consolidated into IMPROVEMENTS.md
+- `archive/TODO.md.old` - Consolidated into docs/WEITERENTWICKLUNG.md
 
 This prevents confusion and ensures future Claude Code sessions have accurate guidance. Always prioritize keeping documentation aligned with the actual repository state.
+
+**Note**: CLAUDE.md serves as guidance for Claude Code sessions, while docs/ serves as operational documentation for humans. Both must be kept in sync where information overlaps.
