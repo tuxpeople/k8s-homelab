@@ -52,7 +52,7 @@ controllers:
       litestream:
         image:
           repository: docker.io/litestream/litestream
-          tag: 0.5.3
+          tag: 0.5.5
         args: ["replicate"]
         env:
           LITESTREAM_ACCESS_KEY_ID:
@@ -86,7 +86,7 @@ controllers:
       01-litestream-restore:
         image:
           repository: docker.io/litestream/litestream
-          tag: 0.5.3
+          tag: 0.5.5
         args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/data/db.sqlite3"]
         env:
           LITESTREAM_ACCESS_KEY_ID:

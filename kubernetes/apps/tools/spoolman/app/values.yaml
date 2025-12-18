@@ -33,7 +33,7 @@ controllers:
       litestream: &ls
         image:
           repository: "docker.io/litestream/litestream"
-          tag: "0.5.3"
+          tag: "0.5.5"
         args: ["replicate"]
         env: &lsenv
           LITESTREAM_ACCESS_KEY_ID:
