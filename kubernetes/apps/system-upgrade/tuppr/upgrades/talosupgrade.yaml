@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/home-operations/tuppr/main/config/crd/bases/tuppr.home-operations.com_talosupgrades.yaml
+apiVersion: tuppr.home-operations.com/v1alpha1
+kind: TalosUpgrade
+metadata:
+  name: talos
+spec:
+  talos:
+    version: ${TALOS_VERSION}
+  policy:
+    debug: true
+    force: false
+    placement: soft
+    rebootMode: powercycle
+    stage: false
+  healthChecks:
+    - apiVersion: v1
+      kind: Node
+      description: Ensure nodes are Ready before proceeding
+      expr: status.conditions.exists(c, c.type == "Ready" && c.status == "True")
+      timeout: 5m
+  talosctl:
+    image:
+      tag: ${TALOS_VERSION}

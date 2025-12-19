@@ -52,8 +52,8 @@ digraph G {
   "synology-csi" -> "external-secrets-secretstores" [color=black];
   "velero" -> "external-secrets-secretstores" [color=black];
   "velero" -> "snapshot-controller" [color=black];
-  "system-upgrade-controller" -> "kyverno-policies" [color=black];
-  "system-upgrade-controller-plans" -> "system-upgrade-controller" [color=black];
+  "tuppr" -> "kyverno-policies" [color=black];
+  "tuppr-upgrades" -> "tuppr" [color=black];
   "keycloak" -> "external-secrets-secretstores" [color=black];
   "oauth2-proxy" -> "external-secrets-secretstores" [color=black];
   "spoolman" -> "external-secrets-secretstores" [color=black];

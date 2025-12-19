@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/home-operations/tuppr/main/charts/tuppr/values.yaml
+
+serviceAccount:
+  create: true
+  name: tuppr
+
+resources:
+  requests:
+    cpu: 15m
+    memory: 100Mi
+  limits:
+    cpu: 18m
+    memory: 120Mi

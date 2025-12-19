@@ -322,7 +322,7 @@ Applications in `kubernetes/apps/` are organized by function:
 - `productivity/` - Productivity tools (Code Server, FreshRSS, Hajimari, Linkding, N8N, Obsidian, Paperless)
 - `security/` - Security-related applications (external-secrets, Kyverno, Trivy)
 - `storage/` - Storage systems and backup (Longhorn, Synology CSI, K8up, Velero)
-- `system-upgrade/` - Talos and Kubernetes upgrade automation
+- `system-upgrade/tuppr/` - Talos and Kubernetes upgrade automation
 - `tools/` - Utility applications (headscale, pod-cleaner, SMTP relay, Spoolman)
 - `vpa/` - Vertical Pod Autoscaler (Goldilocks)
 

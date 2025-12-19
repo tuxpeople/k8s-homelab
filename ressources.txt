@@ -769,8 +769,8 @@ resources:
     memory: 60Mi
 ---
 Namespace: system-upgrade
-Deployment: goldilocks-system-upgrade-controller
-Container: app
+Deployment: goldilocks-tuppr
+Container: manager
 resources:
   requests:
     cpu: 15m

@@ -36,10 +36,10 @@
 
 | Service                   | Namespace      | Pfad                                                       | Notizen                                                                                                                                                         |
 | ------------------------- | -------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| System Upgrade Controller | system-upgrade | `kubernetes/apps/system-upgrade/system-upgrade-controller` | Steuert Talos/Kubernetes Upgrades über Plans unter `kubernetes/apps/system-upgrade/system-upgrade-controller/plans`. Änderung nur nach Review (Talos channel!). |
+| tuppr (Talos Upgrades) | system-upgrade | `kubernetes/apps/system-upgrade/tuppr` | Steuert Talos-/Kubernetes-Upgrades über `TalosUpgrade`/`KubernetesUpgrade` CRs unter `kubernetes/apps/system-upgrade/tuppr/upgrades`. Änderungen nur nach Review (Talos channel!). |
 | Goldilocks (VPA)          | vpa            | `kubernetes/apps/vpa/goldilocks`                           | VPA + dashboard. Ingress? (intern). Ergebnisse in `RESOURCE_ANALYSIS.md`.                                                                                       |
 
--   System Upgrade Plans definieren Node selection, versions. Before edits: run in lab, update docs.
+-   `TalosUpgrade`/`KubernetesUpgrade` CRs definieren Node-Handling + Versionen. Vor Änderungen Lab-Test + Doku-Update einplanen.
 
 ## Tools Namespace
 
@@ -70,9 +70,9 @@
     -   Setup alert for `runner not registered`.
 -   Goldilocks:
     -   Access via `https://goldilocks.${SECRET_DOMAIN}` (falls Ingress). Export recommendations to `RESOURCE_ANALYSIS.md`.
--   System Upgrade Controller:
-    -   Pre-check: `kubectl get plan -n system-upgrade`.
-    -   Runbook: create plan, watch jobs, confirm.
+-   tuppr Controller:
+    -   Pre-check: `kubectl get talosupgrades,kubernetesupgrades`.
+    -   Runbook: Aktualisiere Spec (`talos.version` bzw. `kubernetes.version`), `kubectl apply`, Fortschritt via `status.phase`/Events beobachten.
 
 ## Betriebshinweise
 

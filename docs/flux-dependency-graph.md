@@ -41,8 +41,8 @@ flowchart LR
     storage_snapshot_controller["storage/snapshot-controller"]
     storage_synology_csi["storage/synology-csi"]
     storage_velero["storage/velero"]
-    system_upgrade_system_upgrade_controller["system-upgrade/system-upgrade-controller"]
-    system_upgrade_system_upgrade_controller_plans["system-upgrade/system-upgrade-controller-plans"]
+    system_upgrade_tuppr["system-upgrade/tuppr"]
+    system_upgrade_tuppr_upgrades["system-upgrade/tuppr-upgrades"]
     test_airgapped_tools_updater["test/airgapped-tools-updater"]
     test_keycloak["test/keycloak"]
     test_oauth2_proxy["test/oauth2-proxy"]
@@ -50,7 +50,7 @@ flowchart LR
     vpa_goldilocks["vpa/goldilocks"]
 
     %% Dependencies
-    system_upgrade_system_upgrade_controller --> system_upgrade_system_upgrade_controller_plans
+    system_upgrade_tuppr --> system_upgrade_tuppr_upgrades
     security_external_secrets_secretstores --> media_overseerr
     security_kyverno_policies --> network_python_ipam
     security_kyverno_policies --> productivity_paperless
@@ -84,7 +84,7 @@ flowchart LR
     security_external_secrets_secretstores --> test_keycloak
     security_external_secrets_secretstores --> storage_velero
     security_kyverno_policies --> productivity_hajimari
-    security_kyverno_policies --> system_upgrade_system_upgrade_controller
+    security_kyverno_policies --> system_upgrade_tuppr
     storage_longhorn --> media_overseerr
     security_kyverno_policies --> media_calibre_web
     security_external_secrets_secretstores --> observability_gatus
@@ -123,7 +123,7 @@ The most common dependencies across all Kustomizations:
 | `security/external-secrets-secretstores` | 12 |
 | `storage/longhorn` | 8 |
 | `cert-manager/cert-manager-tls` | 2 |
-| `system-upgrade/system-upgrade-controller` | 1 |
+| `system-upgrade/tuppr` | 1 |
 | `storage/snapshot-controller` | 1 |
 | `security/kyverno` | 1 |
 | `security/external-secrets-operator` | 1 |
