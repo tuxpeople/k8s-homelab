@@ -14,14 +14,12 @@ spec:
         name: home-operations
         namespace: flux-system
   interval: 1h
-  timeout: 30m
+  timeout: 45m
   install:
-    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
     remediation:
       retries: 3
   valuesFrom:
