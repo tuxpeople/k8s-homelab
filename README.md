@@ -179,6 +179,24 @@ Split-horizon DNS setup:
 - **Node Recovery**: Individual node reset and rejoin procedures
 - **Data Recovery**: Volume snapshot restoration and backup recovery
 
+## 📚 Homelab Documentation
+
+**This Kubernetes cluster is PART of a larger homelab infrastructure.**
+
+For complete homelab documentation including cross-system architecture, hardware details, network topology, and decision records, see the Obsidian vault:
+
+**Location:** `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Personal/📚 Wissen/🏠 Persönlich/🎨 Hobbys/Homelab/`
+
+**Key Documents:**
+- `README.md` - Homelab Hub and navigation center
+- `Services/☸️ Kubernetes Cluster - Talos - Turing Pi.md` - This cluster's overview and integration
+- `Infrastructure/` - Cross-system architecture (Proxmox, NAS, networking)
+- `Operations/` - Backup strategy, disaster recovery, maintenance schedules
+- `Decisions/` - Technology choices and architectural decisions
+- `Documentation Strategy.md` - Where information lives (this repo vs. Obsidian)
+
+**Documentation Strategy:** This repository contains technical implementation details (manifests, configs, runbooks). For conceptual architecture, service purposes, and cross-system integration, see the Obsidian vault. Read `docs/documentation_strategy.md` for the complete strategy.
+
 ---
 
 This homelab serves as both a production environment for personal services and a learning platform for Kubernetes, GitOps, and modern infrastructure practices.

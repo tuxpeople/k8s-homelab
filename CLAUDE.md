@@ -605,4 +605,31 @@ The repository uses a **two-file system** for tracking improvements and developm
 
 This prevents confusion and ensures future Claude Code sessions have accurate guidance. Always prioritize keeping documentation aligned with the actual repository state.
 
+## Related Homelab Documentation
+
+**For complete homelab infrastructure documentation**, see Obsidian vault:
+
+**Location:** `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Personal/📚 Wissen/🏠 Persönlich/🎨 Hobbys/Homelab/`
+
+**Key Documents:**
+- `README.md` - Homelab Hub and navigation center
+- `Services/☸️ Kubernetes Cluster - Talos - Turing Pi.md` - This cluster's overview and integration
+- `Infrastructure/` - Cross-system architecture (Proxmox, NAS, networking)
+- `Operations/` - Backup strategy, disaster recovery, maintenance schedules
+- `Decisions/` - Technology choices and architectural decisions (Why Talos? Why FluxCD?)
+- `Documentation Strategy.md` - Complete layered documentation architecture
+
+**What Belongs Where:**
+- **This Repository**: Technical implementation (manifests, configs, commands, runbooks)
+- **Obsidian**: Conceptual architecture, service purposes, cross-system integration, decision records
+
+**When working across systems:**
+1. Start with CLAUDE.md for technical context
+2. Reference Obsidian for "why" questions and cross-system dependencies
+3. Update both when architectural decisions change
+
+**Documentation Strategy:** See `docs/documentation_strategy.md` for complete guidance on what information lives where.
+
+---
+
 **Note**: CLAUDE.md serves as guidance for Claude Code sessions, while docs/ serves as operational documentation for humans. Both must be kept in sync where information overlaps.
