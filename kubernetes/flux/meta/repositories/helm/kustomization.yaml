@@ -17,6 +17,7 @@ resources:
   - ./gitlab.yaml
   - ./grafana.yaml
   - ./hajimari.yaml
+  - ./home-operations.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8up.yaml

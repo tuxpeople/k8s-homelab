@@ -10,8 +10,8 @@ spec:
       chart: tuppr
       version: 0.1.0
       sourceRef:
-        kind: OCIRepository
-        name: home-operations-charts
+        kind: HelmRepository
+        name: home-operations
         namespace: flux-system
   interval: 1h
   timeout: 30m
