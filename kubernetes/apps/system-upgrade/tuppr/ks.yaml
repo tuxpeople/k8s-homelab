@@ -29,11 +29,11 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &upgrades tuppr-upgrades
-  namespace: *namespace
+  namespace: &namespace system-upgrade
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: &app tuppr
   dependsOn:
     - name: *app
       namespace: *namespace
