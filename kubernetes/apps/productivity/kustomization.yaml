@@ -6,9 +6,7 @@ namespace: productivity
 components:
   - ../../components/common
 resources:
-  - ./code-server/ks.yaml
   - ./freshrss/ks.yaml
   - ./hajimari/ks.yaml
   - ./linkding/ks.yaml
-  - ./obsidian/ks.yaml
   - ./paperless/ks.yaml

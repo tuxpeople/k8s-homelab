@@ -6,8 +6,5 @@ namespace: storage
 components:
   - ../../components/common
 resources:
-  - ./k8up/ks.yaml
   - ./longhorn/ks.yaml
   - ./snapshot-controller/ks.yaml
-  - ./synology-csi/ks.yaml
-  - ./velero/ks.yaml
