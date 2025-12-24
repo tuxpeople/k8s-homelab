@@ -47,3 +47,8 @@ ingress:
       - hosts:
           - *host
         secretName: ${SECRET_DOMAIN/./-}-production-tls
+
+persistence:
+  tmp:
+    enabled: true
+    type: emptyDir
