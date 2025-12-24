@@ -255,7 +255,7 @@ persistence:
     type: persistentVolumeClaim
     storageClass: longhorn
     accessMode: ReadWriteOnce
-    size: 5Gi
+    size: 10Gi
     advancedMounts:
       app:
         main:
