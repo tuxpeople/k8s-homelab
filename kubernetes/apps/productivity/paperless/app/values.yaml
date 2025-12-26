@@ -81,7 +81,7 @@ controllers:
             memory: 50Mi
           limits:
             cpu: 500m
-            memory: 128Mi
+            memory: 512Mi
     initContainers:
       01-litestream-restore:
         image:
