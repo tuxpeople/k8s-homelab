@@ -5,24 +5,28 @@ kind: ConfigMap
 metadata:
   name: paperless-litestream-config
 data:
-  # Phase 2: Replicate from Longhorn location
+  # Phase 2: Replicate from Longhorn location to Garage
   #
   # WICHTIG: Litestream retention löscht nur Snapshots INNERHALB einer Generation,
-  # aber NICHT alte Generationen selbst. Das führt zu vollem MinIO Bucket.
+  # aber NICHT alte Generationen selbst. Das führt zu vollem S3 Bucket.
   #
-  # Lösung: MinIO Lifecycle Policy auf Bucket-Ebene konfiguriert:
-  #   mc ilm add --expiry-days 7 minio-lab/litestream
+  # Lösung: Garage Lifecycle Policy auf Bucket-Ebene konfiguriert:
+  #   mc ilm add --expiry-days 7 garage-s3/litestream
   #
   # Dies löscht automatisch alle Objekte älter als 7 Tage auf Storage-Ebene.
   # Siehe: docs/backups.md und docs/services/applications-productivity.md
+  #
+  # Migration von MinIO zu Garage: 2025-12-26
+  # - Backend: Garage (S3-kompatibel, lightweight, geo-distributed)
+  # - Credentials: 1Password garage-s3 (LITESTREAM-HOST, LITESTREAM-ACCESS-KEY, LITESTREAM-ACCESS-SECRET)
   litestream-replicate.yml: |
     dbs:
       - path: /data/db.sqlite3
         replicas:
           - name: minio
             type: s3
-            endpoint: $${MINIO_ENDPOINT}
-            bucket: $${MINIO_BUCKET}
+            endpoint: $${S3_ENDPOINT}
+            bucket: $${S3_BUCKET}
             path: paperless
             force-path-style: true
             retention: 168h
@@ -35,7 +39,7 @@ data:
         replicas:
           - name: minio
             type: s3
-            endpoint: $${MINIO_ENDPOINT}
-            bucket: $${MINIO_BUCKET}
+            endpoint: $${S3_ENDPOINT}
+            bucket: $${S3_BUCKET}
             path: paperless
             force-path-style: true

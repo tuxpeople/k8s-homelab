@@ -105,29 +105,40 @@ Litestream wird für kontinuierliche SQLite-Datenbank-Backups verwendet bei:
 - Alte Generationen (0000, 0001, 0002, ...) bleiben dauerhaft bestehen
 - Manuelle Bucket-Bereinigung wird notwendig
 
-**Lösung**: MinIO Lifecycle Policy auf Bucket-Ebene
+**Lösung**: Kubernetes CronJob für automatisches Cleanup (Garage unterstützt kein ILM)
 
-```bash
-# Lifecycle Policy konfigurieren (einmalig)
-mc ilm add --expiry-days 7 minio-lab/litestream
+Da Garage keine vollständige Lifecycle-Management-Unterstützung hat, verwenden wir einen **Kubernetes CronJob** zum automatischen Cleanup:
+
+```yaml
+# kubernetes/apps/storage/litestream-cleanup/
+# Läuft sonntags um 2 Uhr, bereinigt das gesamte litestream Bucket
 ```
 
-**Ergebnis**: MinIO löscht automatisch alle Objekte älter als 7 Tage auf Storage-Ebene.
+**Konfiguration**:
+- **Schedule**: Sonntags 2 Uhr (`0 2 * * 0`)
+- **Retention**: 7 Tage (konfigurierbar via `RETENTION_DAYS`)
+- **Scope**: Gesamtes `garage/litestream/` Bucket (alle Apps)
+
+**Manuelle Bereinigung** (falls notwendig):
+```bash
+mc rm --recursive --force --older-than 7d garage/litestream/
+```
 
 ### Verifikation & Wartung
 
 ```bash
-# Lifecycle-Regeln anzeigen
-mc ilm ls minio-lab/litestream
-
-# Detaillierte Regel-Informationen
-mc ilm export minio-lab/litestream
-
 # Bucket-Grösse überwachen
-mc du minio-lab/litestream
+mc du garage/litestream
 
-# Manuelle Bereinigung (falls notwendig)
-mc rm --recursive --force --older-than 7d minio-lab/litestream/
+# CronJob Logs anzeigen
+kubectl -n storage logs -l app.kubernetes.io/name=litestream-cleanup --tail=100
+
+# Letzte CronJob-Ausführungen prüfen
+kubectl -n storage get cronjobs litestream-cleanup-main
+kubectl -n storage get jobs -l app.kubernetes.io/name=litestream-cleanup
+
+# CronJob manuell triggern (für Tests)
+kubectl -n storage create job --from=cronjob/litestream-cleanup-main litestream-cleanup-manual-$(date +%s)
 ```
 
 ### Restore-Prozedur
@@ -152,7 +163,8 @@ litestream restore -config /etc/litestream.yml /data/db.sqlite3
 ### Monitoring
 
 - **Alert bei Litestream-Fehlern**: Container-Logs überwachen (`stderr`)
-- **MinIO Bucket-Grösse**: Alert bei >80% Kapazität
+- **Garage Bucket-Grösse**: Alert bei >80% Kapazität (`mc du garage/litestream`)
+- **CronJob-Failures**: Alert bei fehlgeschlagenen Cleanup-Jobs (`kubectl get jobs`)
 - **Generationen-Count**: Periodisch prüfen, dass alte Generationen gelöscht werden
 
 **Prometheus-Metriken** (TODO):
@@ -162,8 +174,9 @@ litestream restore -config /etc/litestream.yml /data/db.sqlite3
 ### Referenzen
 
 - Litestream-Konfiguration: `kubernetes/apps/productivity/*/app/litestream-configmap.yaml`
+- Cleanup CronJob: `kubernetes/apps/storage/litestream-cleanup/`
 - Application-spezifische Docs: `docs/services/applications-productivity.md`
-- MinIO Lifecycle Docs: https://min.io/docs/minio/linux/administration/object-management/object-lifecycle-management.html
+- Garage S3 Compatibility: https://garagehq.deuxfleurs.fr/documentation/reference-manual/s3-compatibility/
 
 ## Offene ToDos
 

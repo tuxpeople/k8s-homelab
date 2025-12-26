@@ -40,22 +40,22 @@ controllers:
             valueFrom:
               secretKeyRef:
                 name: "spoolman-secrets"
-                key: "litestream-minio-id"
+                key: "litestream-s3-access-key-id"
           LITESTREAM_SECRET_ACCESS_KEY:
             valueFrom:
               secretKeyRef:
                 name: "spoolman-secrets"
-                key: "litestream-minio-key"
-          MINIO_ENDPOINT:
+                key: "litestream-s3-secret-access-key"
+          S3_ENDPOINT:
             valueFrom:
               secretKeyRef:
                 name: "spoolman-secrets"
-                key: "litestream-minio-endpoint"
-          MINIO_BUCKET:
+                key: "litestream-s3-endpoint"
+          S3_BUCKET:
             valueFrom:
               secretKeyRef:
                 name: "spoolman-secrets"
-                key: "litestream-minio-bucket"
+                key: "litestream-s3-bucket"
         resources:
           requests:
             cpu: 10m
@@ -108,8 +108,8 @@ configMaps:
             replicas:
               - name: "minio"
                 type: "s3"
-                endpoint: "$${MINIO_ENDPOINT}"
-                bucket: "$${MINIO_BUCKET}"
+                endpoint: "$${S3_ENDPOINT}"
+                bucket: "$${S3_BUCKET}"
                 path: "spoolman"
                 force-path-style: true
                 retention: 168h
@@ -120,8 +120,8 @@ configMaps:
             replicas:
               - name: "minio"
                 type: "s3"
-                endpoint: "$${MINIO_ENDPOINT}"
-                bucket: "$${MINIO_BUCKET}"
+                endpoint: "$${S3_ENDPOINT}"
+                bucket: "$${S3_BUCKET}"
                 path: "spoolman"
                 force-path-style: true
                 retention: 168h

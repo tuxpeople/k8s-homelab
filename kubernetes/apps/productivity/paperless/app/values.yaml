@@ -59,22 +59,22 @@ controllers:
             valueFrom:
               secretKeyRef:
                 name: paperless-secrets
-                key: litestream-minio-id
+                key: litestream-s3-access-key-id
           LITESTREAM_SECRET_ACCESS_KEY:
             valueFrom:
               secretKeyRef:
                 name: paperless-secrets
-                key: litestream-minio-key
-          MINIO_ENDPOINT:
+                key: litestream-s3-secret-access-key
+          S3_ENDPOINT:
             valueFrom:
               secretKeyRef:
                 name: paperless-secrets
-                key: litestream-minio-endpoint
-          MINIO_BUCKET:
+                key: litestream-s3-endpoint
+          S3_BUCKET:
             valueFrom:
               secretKeyRef:
                 name: paperless-secrets
-                key: litestream-minio-bucket
+                key: litestream-s3-bucket
         resources:
           requests:
             cpu: 10m
@@ -93,22 +93,22 @@ controllers:
             valueFrom:
               secretKeyRef:
                 name: paperless-secrets
-                key: litestream-minio-id
+                key: litestream-s3-access-key-id
           LITESTREAM_SECRET_ACCESS_KEY:
             valueFrom:
               secretKeyRef:
                 name: paperless-secrets
-                key: litestream-minio-key
-          MINIO_ENDPOINT:
+                key: litestream-s3-secret-access-key
+          S3_ENDPOINT:
             valueFrom:
               secretKeyRef:
                 name: paperless-secrets
-                key: litestream-minio-endpoint
-          MINIO_BUCKET:
+                key: litestream-s3-endpoint
+          S3_BUCKET:
             valueFrom:
               secretKeyRef:
                 name: paperless-secrets
-                key: litestream-minio-bucket
+                key: litestream-s3-bucket
   redis:
     containers:
       redis:
