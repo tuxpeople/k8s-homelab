@@ -6,14 +6,16 @@
 -   **Velero** (`kubernetes/apps/storage/velero`) – Clusterweite Backups/Restores von Ressourcen & PVCs.
 -   **Longhorn** (`kubernetes/apps/storage/longhorn`) – Native Snapshots/Backups von Volumes.
 -   **Snapshot-Controller** – Kubernetes CSI Snapshots (Synology + Longhorn).
+-   **Litestream** – Kontinuierliche SQLite-Datenbank-Replikation zu S3/MinIO (Paperless, Linkding).
 
 ## Ziele & Abdeckung
 
-| Ebene                | Tool     | Frequenz                               | Speicherort             |
-| -------------------- | -------- | -------------------------------------- | ----------------------- |
-| Namespace / Workload | K8up     | mind. täglich                          | S3-kompatibler Storage  |
-| Cluster-Ressourcen   | Velero   | täglich + vor Upgrades                 | S3-kompatibel           |
-| Block Storage        | Longhorn | stündliche Snapshots, tägliche Backups | Synology / externe Disk |
+| Ebene                | Tool       | Frequenz                               | Speicherort             |
+| -------------------- | ---------- | -------------------------------------- | ----------------------- |
+| Namespace / Workload | K8up       | mind. täglich                          | S3-kompatibler Storage  |
+| Cluster-Ressourcen   | Velero     | täglich + vor Upgrades                 | S3-kompatibel           |
+| Block Storage        | Longhorn   | stündliche Snapshots, tägliche Backups | Synology / externe Disk |
+| SQLite-Datenbanken   | Litestream | kontinuierlich (10s sync)              | MinIO (S3-kompatibel)   |
 
 ## Betriebsablauf
 
@@ -79,8 +81,93 @@ Regelmässige Restore-Tests sind Pflicht, damit RPO/RTO-Ziele eingehalten werden
     - Snapshot/Restic Restore cleanup.
     - Ergebnistabelle oben aktualisieren, Issues → `WEITERENTWICKLUNG.md` / `IMPROVEMENT_PLAN.md`.
 
+## Litestream: SQLite-Replikation & MinIO Lifecycle
+
+### Übersicht
+
+Litestream wird für kontinuierliche SQLite-Datenbank-Backups verwendet bei:
+- **Paperless** (`kubernetes/apps/productivity/paperless`)
+- **Linkding** (`kubernetes/apps/productivity/linkding`)
+
+### Architektur
+
+- **Sidecar-Container**: Litestream läuft neben der Hauptanwendung
+- **Sync-Intervall**: 10 Sekunden
+- **Retention**: 168h (7 Tage) in Litestream-Konfiguration
+- **Ziel**: MinIO Bucket `litestream` (S3-kompatibel)
+
+### Bekanntes Problem: Generation Cleanup
+
+**Problem**: Litestream's `retention: 168h` löscht nur Snapshots **innerhalb** einer Generation, aber **nicht** alte Generationen selbst. Dies führt zu einem kontinuierlich wachsenden MinIO Bucket.
+
+**Symptome**:
+- MinIO Bucket `litestream` füllt sich kontinuierlich
+- Alte Generationen (0000, 0001, 0002, ...) bleiben dauerhaft bestehen
+- Manuelle Bucket-Bereinigung wird notwendig
+
+**Lösung**: MinIO Lifecycle Policy auf Bucket-Ebene
+
+```bash
+# Lifecycle Policy konfigurieren (einmalig)
+mc ilm add --expiry-days 7 minio-lab/litestream
+```
+
+**Ergebnis**: MinIO löscht automatisch alle Objekte älter als 7 Tage auf Storage-Ebene.
+
+### Verifikation & Wartung
+
+```bash
+# Lifecycle-Regeln anzeigen
+mc ilm ls minio-lab/litestream
+
+# Detaillierte Regel-Informationen
+mc ilm export minio-lab/litestream
+
+# Bucket-Grösse überwachen
+mc du minio-lab/litestream
+
+# Manuelle Bereinigung (falls notwendig)
+mc rm --recursive --force --older-than 7d minio-lab/litestream/
+```
+
+### Restore-Prozedur
+
+Litestream-Backups werden automatisch via Init-Container wiederhergestellt:
+
+```yaml
+initContainers:
+  01-litestream-restore:
+    args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/data/db.sqlite3"]
+```
+
+**Manuelle Wiederherstellung**:
+```bash
+# In Pod einsteigen
+kubectl exec -it -n productivity paperless-app-xyz -c litestream -- sh
+
+# Restore durchführen
+litestream restore -config /etc/litestream.yml /data/db.sqlite3
+```
+
+### Monitoring
+
+- **Alert bei Litestream-Fehlern**: Container-Logs überwachen (`stderr`)
+- **MinIO Bucket-Grösse**: Alert bei >80% Kapazität
+- **Generationen-Count**: Periodisch prüfen, dass alte Generationen gelöscht werden
+
+**Prometheus-Metriken** (TODO):
+- `litestream_replication_lag_seconds`
+- `litestream_backup_size_bytes`
+
+### Referenzen
+
+- Litestream-Konfiguration: `kubernetes/apps/productivity/*/app/litestream-configmap.yaml`
+- Application-spezifische Docs: `docs/services/applications-productivity.md`
+- MinIO Lifecycle Docs: https://min.io/docs/minio/linux/administration/object-management/object-lifecycle-management.html
+
 ## Offene ToDos
 
 -   Backup-Test-Runbook detaillieren (`WEITERENTWICKLUNG.md` DOC-003).
 -   Offsite-Backup-Ziel definieren (Cloud Bucket vs. externes NAS).
 -   Automatische Validierung von Velero-Backups (z.B. mittels `velero backup logs <name>` + Alerting).
+-   Litestream Prometheus-Exporter evaluieren und konfigurieren.

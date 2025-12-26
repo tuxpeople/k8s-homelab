@@ -6,6 +6,15 @@ metadata:
   name: paperless-litestream-config
 data:
   # Phase 2: Replicate from Longhorn location
+  #
+  # WICHTIG: Litestream retention löscht nur Snapshots INNERHALB einer Generation,
+  # aber NICHT alte Generationen selbst. Das führt zu vollem MinIO Bucket.
+  #
+  # Lösung: MinIO Lifecycle Policy auf Bucket-Ebene konfiguriert:
+  #   mc ilm add --expiry-days 7 minio-lab/litestream
+  #
+  # Dies löscht automatisch alle Objekte älter als 7 Tage auf Storage-Ebene.
+  # Siehe: docs/backups.md und docs/services/applications-productivity.md
   litestream-replicate.yml: |
     dbs:
       - path: /data/db.sqlite3
