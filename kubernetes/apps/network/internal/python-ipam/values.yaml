@@ -131,10 +131,7 @@ persistence:
             readOnly: true
   database:
     enabled: true
-    type: persistentVolumeClaim
-    storageClass: longhorn
-    accessMode: ReadWriteOnce
-    size: 1Gi
+    type: emptyDir
     advancedMounts:
       python-ipam:
         app:
