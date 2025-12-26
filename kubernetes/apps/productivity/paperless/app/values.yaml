@@ -35,12 +35,18 @@ controllers:
         probes:
           liveness:
             enabled: true
+            spec:
+              failureThreshold: 30
+              periodSeconds: 10
           readiness:
             enabled: true
+            spec:
+              failureThreshold: 30
+              periodSeconds: 10
           startup:
             enabled: true
             spec:
-              failureThreshold: 60
+              failureThreshold: 180
               periodSeconds: 10
         resources:
           requests:
