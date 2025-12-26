@@ -56,6 +56,11 @@ controllers:
               secretKeyRef:
                 name: "spoolman-secrets"
                 key: "litestream-s3-bucket"
+          S3_REGION:
+            valueFrom:
+              secretKeyRef:
+                name: "spoolman-secrets"
+                key: "litestream-s3-region"
         resources:
           requests:
             cpu: 10m
@@ -111,6 +116,7 @@ configMaps:
                 endpoint: "$${S3_ENDPOINT}"
                 bucket: "$${S3_BUCKET}"
                 path: "spoolman"
+                region: "$${S3_REGION}"
                 force-path-style: true
                 retention: 168h
                 validation-interval: 24h
@@ -123,6 +129,7 @@ configMaps:
                 endpoint: "$${S3_ENDPOINT}"
                 bucket: "$${S3_BUCKET}"
                 path: "spoolman"
+                region: "$${S3_REGION}"
                 force-path-style: true
                 retention: 168h
                 validation-interval: 24h

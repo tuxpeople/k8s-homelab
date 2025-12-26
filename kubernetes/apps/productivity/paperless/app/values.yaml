@@ -75,6 +75,11 @@ controllers:
               secretKeyRef:
                 name: paperless-secrets
                 key: litestream-s3-bucket
+          S3_REGION:
+            valueFrom:
+              secretKeyRef:
+                name: paperless-secrets
+                key: litestream-s3-region
         resources:
           requests:
             cpu: 10m
@@ -109,6 +114,11 @@ controllers:
               secretKeyRef:
                 name: paperless-secrets
                 key: litestream-s3-bucket
+          S3_REGION:
+            valueFrom:
+              secretKeyRef:
+                name: paperless-secrets
+                key: litestream-s3-region
   redis:
     containers:
       redis:

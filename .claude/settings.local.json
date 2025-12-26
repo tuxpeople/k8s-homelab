@@ -8,7 +8,19 @@
       "Bash(kubectl logs:*)",
       "Bash(flux suspend:*)",
       "Bash(flux resume:*)",
-      "Bash(jq:*)"
+      "Bash(jq:*)",
+      "Bash(flux get:*)",
+      "Bash(flux reconcile helmrelease:*)",
+      "Bash(mc du:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(flux reconcile source git:*)",
+      "Bash(flux reconcile:*)",
+      "Bash(kubectl:*)",
+      "Bash(cat:*)",
+      "Bash(while read name endpoint)",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

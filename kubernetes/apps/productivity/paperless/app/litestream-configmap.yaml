@@ -28,6 +28,7 @@ data:
             endpoint: $${S3_ENDPOINT}
             bucket: $${S3_BUCKET}
             path: paperless
+            region: $${S3_REGION}
             force-path-style: true
             retention: 168h
             validation-interval: 24h
@@ -42,4 +43,5 @@ data:
             endpoint: $${S3_ENDPOINT}
             bucket: $${S3_BUCKET}
             path: paperless
+            region: $${S3_REGION}
             force-path-style: true
