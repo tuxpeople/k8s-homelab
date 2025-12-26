@@ -50,7 +50,7 @@ controllers:
               periodSeconds: 10
         resources:
           requests:
-            cpu: 500m
+            cpu: 1000m
             memory: 1181Mi
           limits:
             cpu: 2500m
