@@ -23,6 +23,10 @@ spec:
     remediation:
       retries: 3
   values:
+    images:
+      plugin:
+        repository: ghcr.io/zebernst/synology-csi
+        tag: v1.2.0  # Latest version with ARM64 support
     nfs:
       enabled: true
       nodeServerInfo:
