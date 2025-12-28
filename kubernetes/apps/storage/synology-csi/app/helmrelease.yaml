@@ -49,7 +49,7 @@ spec:
         parameters:
           protocol: iscsi
           dsm: "10.20.30.40"
-          location: "/volume2/kubernetes"
+          location: "/volume2"
           fsType: "ext4"
         reclaimPolicy: Delete
       iscsi-retain:
@@ -57,7 +57,7 @@ spec:
         parameters:
           protocol: iscsi
           dsm: "10.20.30.40"
-          location: "/volume2/kubernetes"
+          location: "/volume2"
           fsType: "ext4"
         reclaimPolicy: Retain
       nfs-delete:
@@ -65,7 +65,7 @@ spec:
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
-          location: "/volume2/kubernetes"
+          location: "/volume2"
           mountPermissions: "0755"
         reclaimPolicy: Delete
       nfs-retain:
@@ -73,7 +73,7 @@ spec:
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
-          location: "/volume2/kubernetes"
+          location: "/volume2"
         reclaimPolicy: Retain
     resources:
       limits:
