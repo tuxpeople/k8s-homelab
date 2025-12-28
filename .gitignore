@@ -23,3 +23,4 @@ test*
 !kubernetes/apps/test/
 !kubernetes/apps/test/**
 data/**
+tmp.yaml
