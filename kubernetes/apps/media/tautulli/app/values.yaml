@@ -82,7 +82,7 @@ persistence:
   config:
     enabled: true
     type: persistentVolumeClaim
-    storageClass: synology-csi-iscsi-delete
+    storageClass: iscsi-delete
     accessMode: ReadWriteOnce
     size: 5Gi
   add-ons:
