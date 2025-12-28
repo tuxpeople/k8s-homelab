@@ -9,3 +9,4 @@ resources:
   - ./litestream-cleanup/ks.yaml
   - ./longhorn/ks.yaml
   - ./snapshot-controller/ks.yaml
+  - ./synology-csi/ks.yaml
