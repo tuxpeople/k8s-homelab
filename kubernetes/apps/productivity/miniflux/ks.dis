@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: kyverno-policies
       namespace: security
-    - name: longhorn
+    - name: synology-csi
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/productivity/miniflux/app

@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: longhorn
+    - name: synology-csi
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/media/plex-trakt-sync/app

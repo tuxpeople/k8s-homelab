@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: ollama
       namespace: ai
-    - name: longhorn
+    - name: synology-csi
       namespace: storage
     - name: external-secrets-secretstores
       namespace: security
