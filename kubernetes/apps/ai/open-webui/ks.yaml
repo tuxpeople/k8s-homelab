@@ -16,7 +16,7 @@ spec:
       namespace: security
     # - name: ollama
     #   namespace: ai
-    - name: longhorn
+    - name: synology-csi
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/ai/open-webui/app

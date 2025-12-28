@@ -14,7 +14,7 @@ spec:
       namespace: security
     - name: kyverno-policies
       namespace: security
-    - name: longhorn
+    - name: synology-csi
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/productivity/freshrss/app
