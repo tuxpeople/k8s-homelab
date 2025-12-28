@@ -25,8 +25,8 @@ spec:
   values:
     images:
       plugin:
-        repository: ghcr.io/zebernst/synology-csi
-        tag: v1.2.0  # Latest version with ARM64 support
+        repository: synology/synology-csi  # Official image with ARM64 support
+        tag: v1.2.1  # Latest official release
     nfs:
       enabled: true
       nodeServerInfo:
