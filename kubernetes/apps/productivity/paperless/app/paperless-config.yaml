@@ -6,8 +6,11 @@ metadata:
   name: paperless-config
 data:
   # PAPERLESS_PRE_CONSUME_SCRIPT: /usr/src/paperless/scripts/pre-consume.sh
-  PAPERLESS_WEBSERVER_WORKERS: "1"
-  PAPERLESS_TASK_WORKERS: "1"
+  # Performance optimizations
+  PAPERLESS_WEBSERVER_WORKERS: "4"
+  PAPERLESS_TASK_WORKERS: "2"
+  PAPERLESS_THREADS_PER_WORKER: "2"
+  PAPERLESS_WORKER_TIMEOUT: "1800"
   PAPERLESS_TIKA_ENABLED: "1"
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
   PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
