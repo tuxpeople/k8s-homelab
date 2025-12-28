@@ -42,6 +42,22 @@ spec:
       create: false
       name: dsm-client-info
     storageClasses:
+      iscsi-delete:
+        mountOptions: []
+        parameters:
+          protocol: iscsi
+          dsm: "10.20.30.40"
+          location: "kubernetes"
+          fsType: "ext4"
+        reclaimPolicy: Delete
+      iscsi-retain:
+        mountOptions: []
+        parameters:
+          protocol: iscsi
+          dsm: "10.20.30.40"
+          location: "kubernetes"
+          fsType: "ext4"
+        reclaimPolicy: Retain
       nfs-delete:
         mountOptions: []
         parameters:
