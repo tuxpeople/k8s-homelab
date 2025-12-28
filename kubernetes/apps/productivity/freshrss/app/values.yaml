@@ -64,6 +64,7 @@ persistence:
     annotations:
       k8up.io/backup: "true"
     type: persistentVolumeClaim
+    storageClass: synology-csi-iscsi-delete
     accessMode: ReadWriteOnce
     size: 5Gi
     globalMounts:

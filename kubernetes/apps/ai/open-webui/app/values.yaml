@@ -86,7 +86,7 @@ persistence:
     type: persistentVolumeClaim
     accessMode: ReadWriteOnce
     size: 10Gi
-    storageClass: ${MAIN_SC}
+    storageClass: synology-csi-iscsi-delete
     # type: nfs
     # server: 10.20.30.40
     # path: /volume2/kubernetes/openwebui
