@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: synology-csi
-      version: 0.10.1
+      version: 0.9.4  # Talos-compatible fork
       sourceRef:
         kind: HelmRepository
         name: synology-csi
