@@ -7,6 +7,6 @@ components:
   - ../../components/common
 resources:
   - ./litestream-cleanup/ks.yaml
-  - ./longhorn/ks.yaml
+  # - ./longhorn/ks.yaml  # Disabled - migrating to Synology CSI
   - ./snapshot-controller/ks.yaml
   - ./synology-csi/ks.yaml
