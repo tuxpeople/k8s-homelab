@@ -26,6 +26,15 @@ spec:
     csiDriver:
       name: "org.democratic-csi.iscsi"
 
+    # Talos-specific configuration
+    node:
+      hostPID: true  # Required for iSCSI on Talos
+      driver:
+        # Disable hostPath type checking for Talos compatibility
+        iscsiDirHostPath: /etc/iscsi
+        iscsiDirHostPathType: ""
+        localtimeHostPath: null  # Talos doesn't have /etc/localtime
+
     storageClasses:
       - name: iscsi-delete
         defaultClass: false
