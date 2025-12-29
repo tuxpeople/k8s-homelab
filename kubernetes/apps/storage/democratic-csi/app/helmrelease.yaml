@@ -29,11 +29,11 @@ spec:
     # Talos-specific configuration
     node:
       hostPID: true  # Required for iSCSI on Talos
+      # Disable hostPath type checking for Talos compatibility
+      iscsiDirHostPath: /etc/iscsi
+      iscsiDirHostPathType: ""
+      localtimeHostPath: null  # Talos doesn't have /etc/localtime
       driver:
-        # Disable hostPath type checking for Talos compatibility
-        iscsiDirHostPath: /etc/iscsi
-        iscsiDirHostPathType: ""
-        localtimeHostPath: null  # Talos doesn't have /etc/localtime
 
     storageClasses:
       - name: iscsi-delete
