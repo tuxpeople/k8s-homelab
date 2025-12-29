@@ -1,0 +1,78 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app democratic-csi-iscsi
+spec:
+  chart:
+    spec:
+      chart: democratic-csi
+      version: 0.15.0
+      sourceRef:
+        kind: HelmRepository
+        name: democratic-csi
+        namespace: flux-system
+  interval: 1h
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    csiDriver:
+      name: "org.democratic-csi.iscsi"
+
+    storageClasses:
+      - name: iscsi-delete
+        defaultClass: false
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+        allowVolumeExpansion: true
+        parameters:
+          fsType: ext4
+        mountOptions: []
+      - name: iscsi-retain
+        defaultClass: false
+        reclaimPolicy: Retain
+        volumeBindingMode: Immediate
+        allowVolumeExpansion: true
+        parameters:
+          fsType: ext4
+        mountOptions: []
+
+    driver:
+      config:
+        driver: synology-iscsi
+        httpConnection:
+          protocol: http
+          host: 10.20.30.40
+          port: 5000
+          username: tdeutsch
+          password: Cxfx8g-Cxfx8g
+          allowInsecure: true
+          # Session name should be unique across all installs to the same NAS
+          session: k8s-homelab-iscsi
+        synology:
+          volume: /volume2
+          # Leave empty to let DSM choose
+          datasetProperties: {}
+        iscsi:
+          targetPortal: "10.20.30.40:3260"
+          # For multipathing
+          targetPortals: []
+          # Base IQN - should be unique
+          baseiqn: "iqn.2000-01.com.synology:talos.democratic-csi."
+          # iSCSI interface
+          interface: ""
+          # CHAP auth if required (0 = none, 1 = one-way, 2 = mutual)
+          auth_type: 0
+          # Target naming
+          targetTemplate: |
+            {% raw %}{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}{% endraw %}
+          # LUN naming
+          lunTemplate: |
+            {% raw %}{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}{% endraw %}
