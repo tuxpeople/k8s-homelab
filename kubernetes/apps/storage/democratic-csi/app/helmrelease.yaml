@@ -79,6 +79,8 @@ spec:
           interface: ""
           # CHAP auth if required (0 = none, 1 = one-way, 2 = mutual)
           auth_type: 0
+          # LUN type - BLUN is Block LUN, most common for iSCSI
+          type: "BLUN"
           # Target naming
           targetTemplate: |
             {% raw %}{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}{% endraw %}
