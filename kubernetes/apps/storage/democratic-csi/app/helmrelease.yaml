@@ -26,6 +26,11 @@ spec:
     csiDriver:
       name: org.democratic-csi.synology-iscsi
 
+    driver:
+      existingConfigSecret: democratic-csi-driver-config
+      config:
+        driver: synology-iscsi
+
     node:
       hostPID: true
       driver:
@@ -36,26 +41,21 @@ spec:
             value: /usr/local/sbin/iscsiadm
         iscsiDirHostPath: /usr/local/etc/iscsi
         iscsiDirHostPathType: ""
-
-    driver:
-      config:
-        driver: synology-iscsi
-      existingConfigSecret: synology-iscsi-driver-config
+      # Enable automatic filesystem checks on mount to handle unclean shutdowns
+      # from network-induced iSCSI disconnects
+      mount:
+        checkFilesystem:
+          ext4:
+            enabled: true
 
     storageClasses:
-      - name: iscsi-delete
-        defaultClass: false
+      - name: synology-iscsi
         reclaimPolicy: Delete
-        volumeBindingMode: Immediate
         allowVolumeExpansion: true
         parameters:
           fsType: ext4
-        mountOptions: []
-      - name: iscsi-retain
-        defaultClass: false
-        reclaimPolicy: Retain
-        volumeBindingMode: Immediate
-        allowVolumeExpansion: true
-        parameters:
-          fsType: ext4
-        mountOptions: []
+        mountOptions:
+          - discard
+
+    volumeSnapshotClasses:
+      - name: synology-iscsi-snapshots
