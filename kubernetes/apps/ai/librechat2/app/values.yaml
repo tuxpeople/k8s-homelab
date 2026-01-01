@@ -8,7 +8,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/danny-avila/librechat-dev
-          tag: latest@sha256:51cc54842ab1ba29d6068deddd8edcaaecfcd048e4699d02455dc29373119d8e
+          tag: latest@sha256:fe0252dc002fb2da9e653d97c5304900d0e64814ca225f04580fb44d2b968512
         env:
           PORT: "3080"
           NODE_ENV: "production"
@@ -49,7 +49,7 @@ controllers:
       ragapi:
         image:
           repository: ghcr.io/danny-avila/librechat-rag-api-dev-lite
-          tag: latest@sha256:48415bc40cbe5c57764f053ef7dbaafcf22ebf5558bd16a1b8eb865d76e4aa96
+          tag: latest@sha256:293ebcfdc7118a8e7b67e569ccc278bd07e999e9718ce3c8bfa5bdbcafa40e88
         env:
           RAG_MAX_TOKENS: "8192"
           EMBEDDINGS_PROVIDER: "openai"

@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: kyverno-policies
       namespace: security
-    - name: longhorn
+    - name: democratic-csi-iscsi
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/media/overseerr/app

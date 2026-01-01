@@ -7,4 +7,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://christian-schlichtherle.github.io/synology-csi-chart
+  url: https://zebernst.github.io/synology-csi-talos  # Talos-compatible fork

@@ -82,6 +82,7 @@ persistence:
   config:
     enabled: true
     type: persistentVolumeClaim
+    storageClass: ${MAIN_SC}
     accessMode: ReadWriteOnce
     size: 5Gi
   add-ons:

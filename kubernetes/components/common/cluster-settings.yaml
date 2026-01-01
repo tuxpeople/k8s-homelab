@@ -6,7 +6,7 @@ metadata:
   name: cluster-settings
 data:
   TIMEZONE: Europe/Zurich
-  MAIN_SC: longhorn
+  MAIN_SC: iscsi-delete
 
   # Auth
   AUTH_SUBDOMAIN: auth

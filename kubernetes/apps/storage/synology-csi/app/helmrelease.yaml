@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: synology-csi
-      version: 0.10.1
+      version: 0.9.4  # Talos-compatible fork
       sourceRef:
         kind: HelmRepository
         name: synology-csi
@@ -23,6 +23,12 @@ spec:
     remediation:
       retries: 3
   values:
+    images:
+      plugin:
+        repository: ghcr.io/zebernst/synology-csi
+        tag: main  # Latest build with ARM64 support
+    iscsi:
+      enabled: true
     nfs:
       enabled: true
       nodeServerInfo:
@@ -38,21 +44,36 @@ spec:
       create: false
       name: dsm-client-info
     storageClasses:
+      iscsi-delete:
+        mountOptions: []
+        parameters:
+          protocol: iscsi
+          dsm: "10.20.30.40"
+          location: "/volume2"
+          fsType: "ext4"
+        reclaimPolicy: Delete
+      iscsi-retain:
+        mountOptions: []
+        parameters:
+          protocol: iscsi
+          dsm: "10.20.30.40"
+          location: "/volume2"
+          fsType: "ext4"
+        reclaimPolicy: Retain
       nfs-delete:
         mountOptions: []
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
-          location: "kubernetes"
+          location: "/volume2"
           mountPermissions: "0755"
         reclaimPolicy: Delete
-        test: true
       nfs-retain:
         mountOptions: []
         parameters:
           protocol: nfs
           dsm: "10.20.30.40"
-          location: "kubernetes"
+          location: "/volume2"
         reclaimPolicy: Retain
     resources:
       limits:

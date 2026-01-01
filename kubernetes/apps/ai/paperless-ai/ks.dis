@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: ollama
       namespace: ai
-    - name: longhorn
+    - name: democratic-csi-iscsi
       namespace: storage
     - name: external-secrets-secretstores
       namespace: security

@@ -269,7 +269,7 @@ persistence:
   database:
     enabled: true
     type: persistentVolumeClaim
-    storageClass: longhorn
+    storageClass: ${MAIN_SC}
     accessMode: ReadWriteOnce
     size: 5Gi
     advancedMounts:

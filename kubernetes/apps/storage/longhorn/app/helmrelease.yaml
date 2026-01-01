@@ -73,7 +73,14 @@ spec:
         hajimari.io/group: "storage"
         # hajimari.io/targetBlank: "true"
         # hajimari.io/info: "Storage"
-    # longhornManager:
+    longhornManager:
+      resources:
+        requests:
+          cpu: 627m
+          memory: 476Mi
+        limits:
+          cpu: 1143m
+          memory: 494Mi
     #   tolerations:
     #     - key: node-role.kubernetes.io/master
     #       operator: Equal
