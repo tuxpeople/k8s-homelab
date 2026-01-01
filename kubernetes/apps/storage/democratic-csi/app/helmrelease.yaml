@@ -24,19 +24,23 @@ spec:
       retries: 3
   values:
     csiDriver:
-      name: "org.democratic-csi.iscsi"
+      name: org.democratic-csi.synology-iscsi
 
-    # Talos-specific configuration
     node:
-      hostPID: true # Required for iSCSI on Talos
+      hostPID: true
       driver:
         extraEnv:
           - name: ISCSIADM_HOST_STRATEGY
             value: nsenter
           - name: ISCSIADM_HOST_PATH
             value: /usr/local/sbin/iscsiadm
-        iscsiDirHostPath: /var/iscsi
+        iscsiDirHostPath: /usr/local/etc/iscsi
         iscsiDirHostPathType: ""
+
+    driver:
+      config:
+        driver: synology-iscsi
+      existingConfigSecret: synology-iscsi-driver-config
 
     storageClasses:
       - name: iscsi-delete
@@ -55,37 +59,3 @@ spec:
         parameters:
           fsType: ext4
         mountOptions: []
-
-    driver:
-      config:
-        driver: synology-iscsi
-        httpConnection:
-          protocol: http
-          host: 10.20.30.40
-          port: 5000
-
-          allowInsecure: true
-          # Session name should be unique across all installs to the same NAS
-          session: k8s-homelab-iscsi
-        synology:
-          volume: /volume2
-          # Leave empty to let DSM choose
-          datasetProperties: {}
-        iscsi:
-          targetPortal: "10.20.30.40:3260"
-          # For multipathing
-          targetPortals: []
-          # Base IQN - should be unique
-          baseiqn: "iqn.2000-01.com.synology:talos.democratic-csi."
-          # iSCSI interface
-          interface: ""
-          # CHAP auth if required (0 = none, 1 = one-way, 2 = mutual)
-          auth_type: 0
-          # LUN type - BLUN is Block LUN, most common for iSCSI
-          type: "BLUN"
-          # Target naming
-          targetTemplate: |
-            {% raw %}{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}{% endraw %}
-          # LUN naming
-          lunTemplate: |
-            {% raw %}{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}{% endraw %}
