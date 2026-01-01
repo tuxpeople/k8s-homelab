@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: kyverno-policies
       namespace: security
-    - name: longhorn
+    - name: democratic-csi-iscsi
       namespace: storage
     - name: webtrees-db
       namespace: productivity

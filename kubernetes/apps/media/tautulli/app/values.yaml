@@ -82,7 +82,7 @@ persistence:
   config:
     enabled: true
     type: persistentVolumeClaim
-    storageClass: iscsi-delete
+    storageClass: ${MAIN_SC}
     accessMode: ReadWriteOnce
     size: 5Gi
   add-ons:

@@ -64,7 +64,7 @@ persistence:
     annotations:
       k8up.io/backup: "true"
     type: persistentVolumeClaim
-    storageClass: iscsi-delete
+    storageClass: ${MAIN_SC}
     accessMode: ReadWriteOnce
     size: 5Gi
     globalMounts:

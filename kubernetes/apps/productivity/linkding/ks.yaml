@@ -12,8 +12,6 @@ spec:
   dependsOn:
     - name: kyverno-policies
       namespace: security
-    - name: longhorn
-      namespace: storage
     - name: external-secrets-secretstores
       namespace: security
   interval: 1h
