@@ -49,7 +49,7 @@ spec:
             enabled: true
 
     storageClasses:
-      - name: synology-iscsi
+      - name: iscsi-delete
         reclaimPolicy: Delete
         allowVolumeExpansion: true
         parameters:
