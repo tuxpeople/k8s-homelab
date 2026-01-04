@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-reloader-annotations
+  annotations:
+    policies.kyverno.io/title: Add Reloader Annotations
+    policies.kyverno.io/category: Other
+spec:
+  rules:
+    - name: add-secret-reloader
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+                - StatefulSet
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              +(reloader.stakater.com/auto): "true"
