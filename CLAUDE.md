@@ -304,7 +304,7 @@ This setup prevents the common issue where VS Code formats YAML files in a way t
   - external-dns (Cloudflare provider) for `external` ingress class → public DNS
   - external-dns (UniFi webhook) for `internal` ingress class → local LAN DNS in UniFi Dream Machine
   - Kyverno policy auto-adds `external-dns.alpha.kubernetes.io/target` annotation based on ingress class
-  - CoreDNS forwards to Pi-hole (10.20.30.126) and UniFi Gateway (192.168.13.1) for cluster-internal DNS
+  - CoreDNS forwards to Pi-hole (10.20.30.11) and UniFi Gateway (192.168.13.1) for cluster-internal DNS
   - See docs/services/networking.md for detailed DNS architecture
 
 ## Application Organization

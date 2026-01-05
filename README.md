@@ -146,7 +146,7 @@ Automated dependency updates for:
 Split-horizon DNS setup:
 - **Internal**: UniFi external-dns creates DNS records in UniFi Dream Machine for `internal` ingress services
 - **External**: Cloudflare external-dns creates public DNS records for `external` ingress services
-- **Cluster DNS**: CoreDNS forwards to Pi-hole (10.20.30.126) and UniFi Gateway (192.168.13.1)
+- **Cluster DNS**: CoreDNS forwards to Pi-hole (10.20.30.11) and UniFi Gateway (192.168.13.1)
 
 ### Service Access
 - **Internal Services**: Use `internal` ingress class for private network access

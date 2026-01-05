@@ -73,7 +73,7 @@ curl -k -H "X-API-KEY: ${UNIFI_API_KEY}" \
   "https://10.20.30.1/proxy/network/v2/api/site/default/static-dns/"
 
 # DNS Test
-dig vault.eighty-three.me @10.20.30.126  # Pi-hole
+dig vault.eighty-three.me @10.20.30.11  # Pi-hole
 dig vault.eighty-three.me @10.20.30.1    # UDM direkt
 ```
 
@@ -106,7 +106,7 @@ kubectl rollout restart deployment unifi-dns -n network
 
 - **Cloudflare external-dns**: Für `ingressClassName: external` (öffentliche Services)
 - **k8s-gateway**: Legacy DNS, bleibt für Fallback deployed
-- **Pi-hole**: LAN DNS Server (10.20.30.126)
+- **Pi-hole**: LAN DNS Server (10.20.30.11)
 - **UDM**: Router mit dnsmasq (10.20.30.1)
 
 ## Maintenance

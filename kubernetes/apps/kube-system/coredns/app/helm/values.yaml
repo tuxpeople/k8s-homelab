@@ -27,7 +27,7 @@ servers:
       - name: autopath
         parameters: "@kubernetes"
       - name: forward
-        parameters: . 10.20.30.126 192.168.13.1 /etc/resolv.conf
+        parameters: . 10.20.30.11 192.168.13.1 /etc/resolv.conf
         configBlock: |-
           policy sequential
       - name: cache

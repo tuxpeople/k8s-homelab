@@ -7,7 +7,7 @@
   - **Split-Horizon Architektur** für `eighty-three.me`:
     - **External (Public)**: `external-dns` → Cloudflare (für Ingresses mit `ingressClassName: external`)
     - **Internal (LAN)**: `unifi-dns` (external-dns mit UniFi webhook) → UniFi Dream Machine (für Ingresses mit `ingressClassName: internal`)
-  - **Cluster DNS**: CoreDNS forwarded zu Pi-hole (10.20.30.126) → UDM → Public DNS
+  - **Cluster DNS**: CoreDNS forwarded zu Pi-hole (10.20.30.11) → UDM → Public DNS
   - **Automatische DNS-Verwaltung**: Kyverno Policy setzt automatisch `external-dns.alpha.kubernetes.io/target` Annotation basierend auf IngressClass
 - **Tunnels & Remote Access**: Cloudflared (public ingress) + OpenVPN fallback (Status prüfen).
 - **LoadBalancer IPAM**: Cilium LB IPs über `lbipam.cilium.io/ips` Annotation (z.B. Ollama).
@@ -17,7 +17,7 @@
 | Service | Pfad | Zweck / Hinweise |
 |---------|------|------------------|
 | Cilium | `kubernetes/apps/kube-system/cilium` | L3/L4 Networking, Hubble optional (derzeit deaktiviert). |
-| CoreDNS | `kubernetes/apps/kube-system/coredns` | Cluster DNS, forwarded zu Pi-hole (10.20.30.126) und UniFi Gateway (192.168.13.1). |
+| CoreDNS | `kubernetes/apps/kube-system/coredns` | Cluster DNS, forwarded zu Pi-hole (10.20.30.11) und UniFi Gateway (192.168.13.1). |
 | Node Feature Discovery | `kubernetes/apps/kube-system/node-feature-discovery` | Labels für Hardware-Offloading (ARM64, NVMe). |
 | Descheduler | `kubernetes/apps/kube-system/descheduler` | Räumt Pods um bei Hotspots. |
 | Metrics-server / Reloader / Spegel | (siehe Verzeichnisse) | Teil des System Monitorings / Image Cache. |
@@ -48,7 +48,7 @@
 - Zertifikatsprobleme: siehe `docs/runbooks.md` Abschnitt „Zertifikat erneuern“.
 - Ingress-Triage: `kubectl -n network logs deploy/<ingress> -f | grep <host>`, `kubectl -n network describe ingress <name>`.
 - DNS Debug:
-  - Intern: `dig <host> @192.168.13.1` (UniFi Gateway) oder `dig <host> @10.20.30.126` (Pi-hole).
+  - Intern: `dig <host> @192.168.13.1` (UniFi Gateway) oder `dig <host> @10.20.30.11` (Pi-hole).
   - Extern: `dig <host> @1.1.1.1` (Cloudflare).
 - Cloudflared Tunnel Down: `kubectl -n network logs deploy/cloudflared`, check token expiration.
 
@@ -228,7 +228,7 @@ curl -k -H "X-API-KEY: ${UNIFI_API_KEY}" \
   "https://10.20.30.1/proxy/network/v2/api/site/default/static-dns/"
 
 # DNS Test
-dig vault.eighty-three.me @10.20.30.126  # Pi-hole
+dig vault.eighty-three.me @10.20.30.11  # Pi-hole
 dig vault.eighty-three.me @10.20.30.1    # UDM direkt
 
 # In UniFi UI prüfen
