@@ -17,6 +17,7 @@ data:
             path: python-ipam
             force-path-style: true
             retention: 168h
+            snapshot-interval: 1h
             validation-interval: 24h
             sync-interval: 10s
   # Restore from MinIO to storage

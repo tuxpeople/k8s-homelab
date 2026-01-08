@@ -88,15 +88,49 @@ Regelmässige Restore-Tests sind Pflicht, damit RPO/RTO-Ziele eingehalten werden
 Litestream wird für kontinuierliche SQLite-Datenbank-Backups verwendet bei:
 - **Paperless** (`kubernetes/apps/productivity/paperless`)
 - **Linkding** (`kubernetes/apps/productivity/linkding`)
+- **Spoolman** (`kubernetes/apps/tools/spoolman`)
+- **Python-IPAM** (`kubernetes/apps/network/internal/python-ipam`)
 
 ### Architektur
 
 - **Sidecar-Container**: Litestream läuft neben der Hauptanwendung
 - **Sync-Intervall**: 10 Sekunden
+- **Snapshot-Intervall**: 1 Stunde (verhindert lokale WAL-Akkumulation)
 - **Retention**: 168h (7 Tage) in Litestream-Konfiguration
 - **Ziel**: MinIO Bucket `litestream` (S3-kompatibel)
 
-### Bekanntes Problem: Generation Cleanup
+### Bekanntes Problem: Lokales WAL-Verzeichnis wächst stark
+
+**Problem**: Ohne `snapshot-interval` sammelt Litestream WAL-Dateien (Write-Ahead Log) im lokalen Pod-Verzeichnis `.db.sqlite3-litestream/` an, was zu sehr grossem Speicherverbrauch führt.
+
+**Symptome**:
+- `/data/.db.sqlite3-litestream/` verbraucht 10+ GB lokalen Speicher
+- Lokaler Speicher füllt sich schneller als erwartet
+- PVC wird unerwartet voll
+
+**Lösung**: `snapshot-interval: 1h` in Litestream-Konfiguration hinzufügen
+
+```yaml
+replicas:
+  - name: minio
+    retention: 168h
+    snapshot-interval: 1h  # Regelmässige Snapshots → bereinigt lokale WALs
+    validation-interval: 24h
+    sync-interval: 10s
+```
+
+**Auswirkung**:
+- Litestream erstellt stündlich Snapshots
+- Alte lokale WAL-Dateien werden nach Snapshot-Erstellung aufgeräumt
+- Lokaler Speicherverbrauch bleibt unter 1GB
+
+**Angewandt auf**:
+- Paperless: `kubernetes/apps/productivity/paperless/app/litestream-configmap.yaml`
+- Linkding: `kubernetes/apps/productivity/linkding/app/values.yaml`
+- Spoolman: `kubernetes/apps/tools/spoolman/app/values.yaml`
+- Python-IPAM: `kubernetes/apps/network/internal/python-ipam/litestream-configmap.yaml`
+
+### Bekanntes Problem: Generation Cleanup (S3-Speicher)
 
 **Problem**: Litestream's `retention: 168h` löscht nur Snapshots **innerhalb** einer Generation, aber **nicht** alte Generationen selbst. Dies führt zu einem kontinuierlich wachsenden MinIO Bucket.
 

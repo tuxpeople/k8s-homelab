@@ -119,6 +119,7 @@ configMaps:
                 region: "$${S3_REGION}"
                 force-path-style: true
                 retention: 168h
+                snapshot-interval: 1h
                 validation-interval: 24h
       litestream-restore: |
         dbs:
