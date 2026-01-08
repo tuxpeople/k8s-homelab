@@ -271,7 +271,7 @@ persistence:
     type: persistentVolumeClaim
     storageClass: ${MAIN_SC}
     accessMode: ReadWriteOnce
-    size: 5Gi
+    size: 15Gi
     advancedMounts:
       app:
         main:
