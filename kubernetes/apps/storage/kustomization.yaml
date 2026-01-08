@@ -9,4 +9,3 @@ resources:
   - ./democratic-csi/ks.yaml
   - ./litestream-cleanup/ks.yaml
   - ./snapshot-controller/ks.yaml
-  # - ./synology-csi/ks.yaml  # Disabled - switching to democratic-csi

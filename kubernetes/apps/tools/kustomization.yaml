@@ -7,3 +7,4 @@ components:
   - ../../components/common
 resources:
   - ./pod-cleaner/ks.yaml
+  - ./spoolman/ks.yaml

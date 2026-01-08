@@ -9,4 +9,5 @@ resources:
   - ./freshrss/ks.yaml
   - ./hajimari/ks.yaml
   - ./linkding/ks.yaml
+  - ./obsidian/ks.yaml
   - ./paperless/ks.yaml
