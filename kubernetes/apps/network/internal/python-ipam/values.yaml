@@ -9,7 +9,7 @@ controllers:
       app:
         image:
           repository: registry.eighty-three.me/tuxpeople/python-ipam
-          tag: 1.1.1
+          tag: 1.1.2
         env:
           DATABASE_URL: "sqlite:////data/ipam.db"
         securityContext:
@@ -84,9 +84,9 @@ controllers:
 defaultPodOptions:
   securityContext:
     runAsNonRoot: true
-    runAsUser: 65534
-    runAsGroup: 65534
-    fsGroup: 65534
+    runAsUser: 65532
+    runAsGroup: 65532
+    fsGroup: 65532
     fsGroupChangePolicy: OnRootMismatch
     seccompProfile: { type: RuntimeDefault }
 service:
