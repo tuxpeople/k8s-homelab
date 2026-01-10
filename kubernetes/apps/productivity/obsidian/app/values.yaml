@@ -50,6 +50,7 @@ ingress:
 persistence:
   config:
     enabled: true
+    storageClass: ${MAIN_SC}
     type: persistentVolumeClaim
     accessMode: ReadWriteOnce
     size: 20Gi
