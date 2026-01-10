@@ -178,7 +178,7 @@ spec:
   refreshInterval: 5m
   secretStoreRef:
     kind: ClusterSecretStore
-    name: onepassword-connect
+    name: onepassword
   target:
     name: #{app}#-secret
     template:

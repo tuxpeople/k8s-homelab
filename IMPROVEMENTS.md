@@ -222,7 +222,7 @@ spec:
   refreshInterval: 15m  # ADD THIS LINE
   secretStoreRef:
     kind: ClusterSecretStore
-    name: onepassword-connect
+    name: onepassword
   # ... rest of spec
 ```
 
