@@ -34,6 +34,48 @@ controllers:
           limits:
             cpu: 500m
             memory: 120Mi
+      litestream: &ls
+        image:
+          repository: "docker.io/litestream/litestream"
+          tag: "0.5.6"
+        args: ["replicate"]
+        env: &lsenv
+          LITESTREAM_ACCESS_KEY_ID:
+            valueFrom:
+              secretKeyRef:
+                name: "freshrss-secrets"
+                key: "litestream-s3-access-key-id"
+          LITESTREAM_SECRET_ACCESS_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: "freshrss-secrets"
+                key: "litestream-s3-secret-access-key"
+          S3_ENDPOINT:
+            valueFrom:
+              secretKeyRef:
+                name: "freshrss-secrets"
+                key: "litestream-s3-endpoint"
+          S3_BUCKET:
+            valueFrom:
+              secretKeyRef:
+                name: "freshrss-secrets"
+                key: "litestream-s3-bucket"
+          S3_REGION:
+            valueFrom:
+              secretKeyRef:
+                name: "freshrss-secrets"
+                key: "litestream-s3-region"
+        resources:
+          requests:
+            cpu: 11m
+            memory: 50Mi
+          limits:
+            cpu: 500m
+            memory: 60Mi
+    initContainers:
+      01-litestream-restore:
+        !!merge <<: *ls
+        args: ["restore", "-if-db-not-exists", "-if-replica-exists", &db "/var/www/FreshRSS/data/users/tdeutsch/db.sqlite"]
 service:
   app:
     controller: app
@@ -74,3 +116,34 @@ persistence:
       - path: /var/www/FreshRSS/extensions
         subPath: extensions
         readOnly: false
+configMaps:
+  config:
+    enabled: true
+    data:
+      litestream-replicate: |
+        dbs:
+          - path: *db
+            replicas:
+              - name: "garage-s3"
+                type: "s3"
+                endpoint: "$${S3_ENDPOINT}"
+                bucket: "$${S3_BUCKET}"
+                path: "{{ .Release.Name }}"
+                region: "$${S3_REGION}"
+                force-path-style: true
+                retention: 168h
+                snapshot-interval: 1h
+                validation-interval: 24h
+      litestream-restore: |
+        dbs:
+          - path: *db
+            replicas:
+              - name: "garage-s3"
+                type: "s3"
+                endpoint: "$${S3_ENDPOINT}"
+                bucket: "$${S3_BUCKET}"
+                path: "{{ .Release.Name }}"
+                region: "$${S3_REGION}"
+                force-path-style: true
+                retention: 168h
+                validation-interval: 24h
