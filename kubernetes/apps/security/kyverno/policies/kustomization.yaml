@@ -10,3 +10,5 @@ resources:
   - ./ndots.yaml
   - label-existing-namespaces.yaml
   - reloader.yaml
+  - require-storageclass.yaml
+  - restrict-deprecated-registry.yaml
