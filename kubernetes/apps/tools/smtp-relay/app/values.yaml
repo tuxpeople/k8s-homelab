@@ -12,7 +12,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/foxcpp/maddy
-          tag: 0.8.1
+          tag: 0.8.2
         env:
           SMTP_RELAY_SMTP_PORT: 25
           SMTP_RELAY_METRICS_PORT: 8080
