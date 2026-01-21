@@ -1,0 +1,146 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  simple-cmdb:
+    strategy: RollingUpdate
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      app:
+        image:
+          repository: registry.eighty-three.me/tuxpeople/simple-cmdb
+          tag: 0.1.0
+        env:
+          DATABASE_PATH: "/data/cmdb.db"
+          PORT: "5000"
+          FLASK_ENV: "production"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities: { drop: ["ALL"] }
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            memory: 512Mi
+      litestream:
+        image:
+          repository: docker.io/litestream/litestream
+          tag: 0.5.6
+        args: ["replicate"]
+        env:
+          LITESTREAM_ACCESS_KEY_ID:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: litestream-minio-id
+          LITESTREAM_SECRET_ACCESS_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: litestream-minio-key
+          MINIO_ENDPOINT:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: litestream-minio-endpoint
+          MINIO_BUCKET:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: litestream-minio-bucket
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+    initContainers:
+      01-litestream-restore:
+        image:
+          repository: docker.io/litestream/litestream
+          tag: 0.5.6
+        args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/data/cmdb.db"]
+        env:
+          LITESTREAM_ACCESS_KEY_ID:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: litestream-minio-id
+          LITESTREAM_SECRET_ACCESS_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: litestream-minio-key
+          MINIO_ENDPOINT:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: litestream-minio-endpoint
+          MINIO_BUCKET:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: litestream-minio-bucket
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    fsGroup: 65532
+    fsGroupChangePolicy: OnRootMismatch
+    seccompProfile: { type: RuntimeDefault }
+service:
+  app:
+    controller: simple-cmdb
+    ports:
+      http:
+        port: &port 5000
+ingress:
+  app:
+    enabled: true
+    className: internal
+    annotations:
+      hajimari.io/icon: mdi:database-cog
+    hosts:
+      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: *port
+    tls:
+      - hosts:
+          - *host
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
+
+persistence:
+  tmp:
+    enabled: true
+    type: emptyDir
+  litestream-config:
+    type: configMap
+    name: simple-cmdb-litestream-config
+    advancedMounts:
+      simple-cmdb:
+        litestream:
+          - subPath: litestream-replicate.yml
+            path: /etc/litestream.yml
+            readOnly: true
+        01-litestream-restore:
+          - subPath: litestream-restore.yml
+            path: /etc/litestream.yml
+            readOnly: true
+  database:
+    enabled: true
+    type: emptyDir
+    advancedMounts:
+      simple-cmdb:
+        app:
+          - path: /data
+        litestream:
+          - path: /data
+        01-litestream-restore:
+          - path: /data

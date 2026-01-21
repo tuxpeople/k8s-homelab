@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/configmap_v1.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simple-cmdb-litestream-config
+data:
+  # Replicate from storage to MinIO
+  litestream-replicate.yml: |
+    dbs:
+      - path: /data/cmdb.db
+        replicas:
+          - name: minio
+            type: s3
+            endpoint: $${MINIO_ENDPOINT}
+            bucket: $${MINIO_BUCKET}
+            path: simple-cmdb
+            force-path-style: true
+            retention: 168h
+            snapshot-interval: 1h
+            validation-interval: 24h
+            sync-interval: 10s
+  # Restore from MinIO to storage
+  litestream-restore.yml: |
+    dbs:
+      - path: /data/cmdb.db
+        replicas:
+          - name: minio
+            type: s3
+            endpoint: $${MINIO_ENDPOINT}
+            bucket: $${MINIO_BUCKET}
+            path: simple-cmdb
+            force-path-style: true
