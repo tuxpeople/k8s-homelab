@@ -9,7 +9,7 @@ controllers:
       app:
         image:
           repository: registry.eighty-three.me/tuxpeople/simple-cmdb
-          tag: 0.1.0
+          tag: 0.1.1
         env:
           DATABASE_PATH: "/data/cmdb.db"
           PORT: "5000"
