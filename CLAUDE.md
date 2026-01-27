@@ -342,18 +342,24 @@ This repository uses direct manifest editing:
 4. **GitOps workflow**: Commit changes and let Flux handle deployment
 
 ### Claude Code Integration
-The repository includes automated Claude Code assistance for failed workflows:
+The repository includes automated Claude Code assistance via GitHub Actions integration:
 
 **Automatic Failure Detection:**
-- Failed PRs are automatically labeled with `🤖 needs-claude-fix` and `🔴 workflow-failed`
-- Detailed failure logs and fix suggestions are posted as PR comments
+- When CI workflows fail (Flux Local, Mise, ShellCheck, Validation), Claude Code automatically analyzes the failure
+- Failed PRs are automatically labeled with `🤖 needs-claude-fix`, `🔴 workflow-failed`, and `🤖 claude-requested`
+- Claude analyzes failure logs and suggests or implements fixes directly
+- Successfully fixed issues are marked with `✅ claude-fixed` label
 - Filter PRs needing attention: `is:pr label:needs-claude-fix`
 
 **Manual Claude Assistance:**
-- Comment `@claude-code <request>` on any PR to get analysis
-- Examples: `@claude-code fix shellcheck errors`, `@claude-code analyze flux validation`
-- Provides PR context, workflow status, and exact local command to run
+- Comment `@claude <request>` on any PR/issue to invoke Claude Code
+- Examples: `@claude fix shellcheck errors`, `@claude analyze flux validation`
+- Claude has full access to PR context, workflow results, and CI logs
 - PRs are labeled with `🤖 claude-requested` for tracking
+
+**API Efficiency:**
+- Claude only runs automatically on workflow failures (not on successful PRs)
+- Manual invocation via `@claude` available anytime for specific analysis
 
 ### Secret Management Workflow
 ```bash
@@ -388,8 +394,7 @@ kubectl -n <namespace> logs -l app.kubernetes.io/name=<app> -f
 - **e2e.yaml**: End-to-end testing of template generation
 - **mise.yaml**: Tool dependency management validation
 - **shellcheck.yaml**: Shell script linting
-- **claude-helper.yaml**: Automatically labels failed PRs and provides Claude Code assistance
-- **claude-manual-trigger.yaml**: Manual Claude Code trigger via `@claude-code` PR comments
+- **claude.yml**: Unified Claude Code integration for automatic failure analysis and manual `@claude` invocations
 
 ### Renovate Configuration
 - **Auto-updates**: Container images, Helm charts, GitHub Actions

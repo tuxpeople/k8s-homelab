@@ -43,3 +43,16 @@
   color: "370fb2"
 - name: hold
   color: "ee0701"
+# Claude Code Automation
+- name: 🤖 needs-claude-fix
+  color: "fbca04"
+  description: "Workflow failed - Claude Code assistance recommended"
+- name: 🤖 claude-requested
+  color: "0e8a16"
+  description: "User requested Claude Code analysis"
+- name: 🔴 workflow-failed
+  color: "d73a4a"
+  description: "CI workflow failed"
+- name: ✅ claude-fixed
+  color: "5cb85c"
+  description: "Claude Code successfully fixed the issue"
