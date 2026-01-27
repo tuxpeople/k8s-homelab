@@ -122,23 +122,19 @@ jobs:
           additional_permissions: |
             actions: read
 
-          # Allow Claude to use necessary tools for analysis and fixes
-          # Bash: For gh CLI commands to fetch logs and PR details
-          # WebFetch: To read GitHub Actions run pages
-          # Read/Edit/Write: To analyze and fix code
-          # Grep/Glob: To search codebase
-          allowed_tools: |
-            Bash(gh *)
-            Bash(git *)
-            Bash(kubectl *)
-            Bash(flux *)
-            Bash(yq *)
-            WebFetch
-            Read
-            Edit
-            Write
-            Grep
-            Glob
+          # Allow Claude to use necessary tools for analysis and fixes via claude_args
+          claude_args: >-
+            --allowed-tools 'Bash(gh *)'
+            --allowed-tools 'Bash(git *)'
+            --allowed-tools 'Bash(kubectl *)'
+            --allowed-tools 'Bash(flux *)'
+            --allowed-tools 'Bash(yq *)'
+            --allowed-tools 'WebFetch'
+            --allowed-tools 'Read'
+            --allowed-tools 'Edit'
+            --allowed-tools 'Write'
+            --allowed-tools 'Grep'
+            --allowed-tools 'Glob'
 
           # Use generated prompt for automatic triggers, otherwise Claude will use the user's comment
           prompt: ${{ steps.prompt.outputs.prompt }}
