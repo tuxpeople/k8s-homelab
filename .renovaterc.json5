@@ -99,6 +99,24 @@
       },
     },
     {
+      description: "Ingress NGINX charts",
+      groupName: "Ingress NGINX",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["ingress-nginx"],
+    },
+    {
+      description: "External DNS charts",
+      groupName: "External DNS",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["external-dns"],
+    },
+    {
+      description: "GitLab Runner charts",
+      groupName: "GitLab Runner",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["gitlab-runner"],
+    },
+    {
       description: "Auto-merge GitHub Actions",
       matchManagers: ["github-actions"],
       automerge: true,
