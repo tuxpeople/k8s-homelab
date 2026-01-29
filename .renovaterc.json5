@@ -41,6 +41,12 @@
       pinDigests: false,
     },
     {
+      description: "Pin Python to <3.14 for mise",
+      matchManagers: ["mise"],
+      matchPackageNames: ["python"],
+      allowedVersions: "<3.14.0",
+    },
+    {
       description: "Automerge patch updates",
       matchUpdateTypes: ["patch"],
       automerge: true,
