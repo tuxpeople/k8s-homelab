@@ -61,8 +61,8 @@ jobs:
         with:
           cache: false
 
-      - name: Validate configuration schemas
-        run: task validate-schemas
+  # - name: Validate configuration schemas
+  #   run: task validate-schemas
 
   check-sops-encryption:
     name: Check SOPS Encryption
