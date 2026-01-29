@@ -117,6 +117,24 @@
       matchPackageNames: ["gitlab-runner"],
     },
     {
+      description: "Ingress/DNS edge charts",
+      groupName: "Ingress/DNS",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["ingress-nginx", "external-dns"],
+    },
+    {
+      description: "Observability core charts",
+      groupName: "Observability core",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["kube-prometheus-stack", "grafana"],
+    },
+    {
+      description: "Storage essentials charts",
+      groupName: "Storage essentials",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["longhorn", "snapshot-controller"],
+    },
+    {
       description: "Auto-merge GitHub Actions",
       matchManagers: ["github-actions"],
       automerge: true,
