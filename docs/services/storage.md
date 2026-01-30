@@ -4,8 +4,9 @@
 
 | Service             | Namespace | Pfad                                          | Status | Beschreibung / Hinweise                                                                                          |
 | ------------------- | --------- | --------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- |
-| Longhorn            | storage   | `kubernetes/apps/storage/longhorn`            | Aktiv  | Primärer Distributed Block Storage (default StorageClass `longhorn`). Multi-replica, supports snapshots/backups. |
-| Synology CSI        | storage   | `kubernetes/apps/storage/synology-csi`        | Aktiv  | Bindet NAS-Volumes via iSCSI/NFS ein (`synology-iscsi` SC) für grosse Datenmengen.                               |
+| Longhorn            | storage   | `archive/apps/storage/longhorn`               | Archiviert | Primärer Distributed Block Storage (default StorageClass `longhorn`). Multi-replica, supports snapshots/backups. |
+| Synology CSI        | storage   | `archive/apps/storage/synology-csi`           | Archiviert | Bindet NAS-Volumes via iSCSI/NFS ein (`synology-iscsi` SC) für grosse Datenmengen.                               |
+| Democratic CSI      | storage   | `kubernetes/apps/storage/democratic-csi`      | Aktiv  | iSCSI Driver für Synology. Benötigt `hostPID: true` im Node-Driver (nsenter für iscsiadm).                      |
 | Snapshot Controller | storage   | `kubernetes/apps/storage/snapshot-controller` | Aktiv  | CSI Snapshot CRDs + Controller für Longhorn/Synology Snapshots.                                                  |
 
 -   StorageClasses:
@@ -15,12 +16,14 @@
     -   ggf. `local-path`? (prüfen `kubectl get sc`)
 -   Longhorn UI: https://longhorn.${SECRET_DOMAIN}` (internal). Credentials stored in 1Password? document.
 
+Hinweis: Abschnitte zu Longhorn/K8up/Velero gelten, falls die Komponenten reaktiviert werden.
+
 ## Backup & Protection
 
 | Service | Namespace | Pfad                             | Zweck                                             |
 | ------- | --------- | -------------------------------- | ------------------------------------------------- |
-| K8up    | storage   | `kubernetes/apps/storage/k8up`   | Restic Backup Operator (Schedules per namespace). |
-| Velero  | storage   | `kubernetes/apps/storage/velero` | Cluster resource & PVC backups (S3 backend).      |
+| K8up    | storage   | `archive/apps/storage/k8up`   | Archiviert: Restic Backup Operator (Schedules per namespace). |
+| Velero  | storage   | `archive/apps/storage/velero` | Archiviert: Cluster resource & PVC backups (S3 backend).      |
 
 -   K8up: Each namespace should have `Schedule` CR (check `kubernetes/clusterconfig`?). Document per app in service docs.
 -   Restic Credentials: via ExternalSecret referencing S3 target (MinIO/Wasabi?). Update `docs/backups.md` when changed.

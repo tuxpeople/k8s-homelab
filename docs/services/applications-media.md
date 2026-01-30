@@ -112,6 +112,6 @@
 
 ## Monitoring & TODOs
 
--   Exporter: radarr/sonarr/sabnzbd/tautulli etc. (siehe `kubernetes/apps/observability/*-exporter`). Dokumentation ergänzen.
+-   Exporter: radarr/sonarr/sabnzbd/tautulli etc. (archiviert, siehe `archive/apps/observability/*-exporter`). Dokumentation ergänzen.
 -   Alerts zu Download Queues, Disk Usage, ExternalName Availability.
 -   Runbooks laut `docs/runbooks.md` Punkt „Mediabox Ingress Probleme“ – weitere (Overseerr downtime, Tautulli token refresh) offen → siehe TODO DOC-009.

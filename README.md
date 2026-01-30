@@ -112,7 +112,6 @@ mise trust && pip install pipx && mise install
 
 ### GitHub Actions
 - **flux-local.yaml** - Validates manifests and shows diffs on PRs
-- **e2e.yaml** - End-to-end testing of template generation
 - **mise.yaml** - Tool dependency validation
 - **shellcheck.yaml** - Shell script linting
 

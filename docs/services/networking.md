@@ -9,7 +9,7 @@
     - **Internal (LAN)**: `unifi-dns` (external-dns mit UniFi webhook) → UniFi Dream Machine (für Ingresses mit `ingressClassName: internal`)
   - **Cluster DNS**: CoreDNS forwarded zu Pi-hole (10.20.30.11) → UDM → Public DNS
   - **Automatische DNS-Verwaltung**: Kyverno Policy setzt automatisch `external-dns.alpha.kubernetes.io/target` Annotation basierend auf IngressClass
-- **Tunnels & Remote Access**: Cloudflared (public ingress) + OpenVPN fallback (Status prüfen).
+- **Tunnels & Remote Access**: Cloudflared (public ingress); OpenVPN ist archiviert.
 - **LoadBalancer IPAM**: Cilium LB IPs über `lbipam.cilium.io/ips` Annotation (z.B. Ollama).
 
 ## Kernkomponenten (aktiv, sofern nicht anders vermerkt)
@@ -28,7 +28,7 @@
 | `ingress-nginx` (external) | Public HTTP/S Endpoints (`external` class) – routet nur Cloudflared IPs. | TLS via cert-manager wildcard `${SECRET_DOMAIN}`. Rate Limiting TODO. |
 | `cloudflared` | Tunnel von `external` ingress ins Internet. | Secret `cloudflare-tunnel.json` (SOPS). Reconcile `flux reconcile kustomization cloudflared -n network`. |
 | `external-dns` | Erstellt/aktualisiert Cloudflare Records. | API Token im ExternalSecret `external-dns` (1Password). TTL konfiguriert. |
-| `openvpn` | Legacy Remotezugang fallback (Status unbekannt). | Prüfen, ob Deployment aktiv; falls obsolet → dekommissionieren. |
+| `openvpn` (archiviert) | Legacy Remotezugang fallback. | Manifeste unter `archive/apps/network/external/openvpn`. |
 
 ### Interne Ingress-Schicht (`kubernetes/apps/network/internal`)
 | Service | Zweck | Hinweise |
@@ -53,7 +53,7 @@
 - Cloudflared Tunnel Down: `kubectl -n network logs deploy/cloudflared`, check token expiration.
 
 ## Monitoring & Alerts
-- `blackbox-exporter`, `gatus`, `speedtest-exporter` prüfen Endpunkte/Connectivity.
+- `blackbox-exporter`, `gatus`, `speedtest-exporter` prüfen Endpunkte/Connectivity (falls reaktiviert).
 - Prometheus scrapes ingress-nginx metrics (connection saturation, HTTP errors). Alerts für:
   - Pod `Ready` status,
   - Certificate expiry (<7 d),
@@ -65,7 +65,7 @@
 ## TODOs / Risiken
 - NetworkPolicies flächendeckend definieren (Backlog DOC-004) – aktuell keine Isolation.
 - Rate Limiting + Security Headers standardisieren für `external` ingress (IMPROVEMENT PLAN #12).
-- Dokumentation für `python-ipam`, `openvpn` nachtragen (Status, Secrets, DR).
+- Dokumentation für `python-ipam` nachtragen (Status, Secrets, DR).
 - Evaluate enabling Hubble UI / Cilium NetworkPolicy enforcement.
 
 ## DNS-Architektur (Split-Horizon Setup)
