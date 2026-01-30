@@ -123,15 +123,9 @@ jobs:
             actions: read
 
           # Allow Claude to use necessary tools for analysis and fixes via claude_args
+          # Using 'Bash' without restrictions for full tool access in CI environment
           claude_args: >-
-            --allowed-tools 'Bash(gh *)'
-            --allowed-tools 'Bash(git *)'
-            --allowed-tools 'Bash(kubectl *)'
-            --allowed-tools 'Bash(flux *)'
-            --allowed-tools 'Bash(yq *)'
-            --allowed-tools 'Bash(~/.local/bin/*)'
-            --allowed-tools 'Bash(python *)'
-            --allowed-tools 'Bash(pip *)'
+            --allowed-tools 'Bash'
             --allowed-tools 'WebFetch'
             --allowed-tools 'Read'
             --allowed-tools 'Edit'
