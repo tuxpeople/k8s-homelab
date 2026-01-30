@@ -26,6 +26,7 @@ repos:
       - id: check-yaml
         exclude: |
           (?x)^(
+            archive/.*|
             .*\.sops\.(yaml|yml)$|
             .*templates/.*\.yaml$|
             .*templates/.*\.yml$|
@@ -57,6 +58,7 @@ repos:
         args: [--format, parsable, --strict]
         exclude: |
           (?x)^(
+            archive/.*|
             .*\.sops\.(yaml|yml)$|
             .*templates/.*\.yaml$|
             .*templates/.*\.yml$|
@@ -85,6 +87,7 @@ repos:
         args: [--baseline, .secrets.baseline]
         exclude: |
           (?x)^(
+            archive/.*|
             .*\.sops\.(yaml|yml|json)$|
             .*\.age$|
             tuxpeople_k8s-homelab_.*\.log$
