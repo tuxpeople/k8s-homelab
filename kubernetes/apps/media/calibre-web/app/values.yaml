@@ -16,7 +16,7 @@ controllers:
           TZ: ${TIMEZONE}
           PUID: 1026
           PGID: 100
-          NETWORK_SHARE_MODE: true
+          NETWORK_SHARE_MODE: "true"
         resources:
           limits:
             cpu: 500m
