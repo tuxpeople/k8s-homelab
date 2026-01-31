@@ -14,8 +14,8 @@ controllers:
           tag: V2.1.2
         env:
           TZ: ${TIMEZONE}
-          PUID: 1027
-          PGID: 100
+          PUID: 1000
+          PGID: 1000
         resources:
           limits:
             cpu: 500m
@@ -26,9 +26,9 @@ controllers:
 defaultPodOptions:
   securityContext:
     runAsNonRoot: false
-    runAsUser: 1027
-    runAsGroup: 100
-    fsGroup: 100
+    # runAsUser: 1027
+    # runAsGroup: 100
+    fsGroup: 1000
     fsGroupChangePolicy: Always
 service:
   app:
