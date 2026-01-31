@@ -16,7 +16,10 @@ controllers:
           TZ: ${TIMEZONE}
           PUID: 1026
           PGID: 100
+          CACHE_DIR: /cache
           NETWORK_SHARE_MODE: "true"
+          #          S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: "1"
+          #          S6_READ_ONLY_ROOT: "1"
         resources:
           limits:
             cpu: 500m
