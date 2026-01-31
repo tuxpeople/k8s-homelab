@@ -20,13 +20,34 @@ controllers:
           NETWORK_SHARE_MODE: "true"
           #          S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: "1"
           #          S6_READ_ONLY_ROOT: "1"
+        probes:
+          liveness: &probes
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                port: &port 8083
+                path: /login
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 6
+          readiness: *probes
+          startup:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                port: *port
+                path: /
+              failureThreshold: 90
+              periodSeconds: 5
         resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi
           requests:
             cpu: 100m
-            memory: 128Mi
+            memory: 512Mi
+          limits:
+            memory: 2Gi
 defaultPodOptions:
   securityContext:
     runAsNonRoot: false
@@ -36,10 +57,10 @@ defaultPodOptions:
     fsGroupChangePolicy: OnRootMismatch
 service:
   app:
-    controller: calibre-web
+    controller: *app
     ports:
       http:
-        port: &port 8083
+        port: *port
 ingress:
   app:
     enabled: true
