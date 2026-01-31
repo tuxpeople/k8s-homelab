@@ -91,7 +91,7 @@ controllers:
       mongodb:
         image:
           repository: mongo
-          tag: "8.2.3"
+          tag: "8.2.4"
         command: ["mongod", "--noauth"]
         securityContext:
           allowPrivilegeEscalation: false
