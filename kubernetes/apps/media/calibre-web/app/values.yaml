@@ -10,7 +10,7 @@ controllers:
     containers:
       main:
         image:
-          repository: crocodilestick/calibre-web-automated
+          repository: ghcr.io/crocodilestick/calibre-web-automated
           tag: V2.1.2
         env:
           TZ: ${TIMEZONE}
