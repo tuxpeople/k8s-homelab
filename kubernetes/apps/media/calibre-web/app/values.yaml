@@ -11,7 +11,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/crocodilestick/calibre-web-automated
-          tag: V2.1.2
+          tag: v4.0.2
         env:
           TZ: ${TIMEZONE}
           PUID: 1026
