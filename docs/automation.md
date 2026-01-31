@@ -18,7 +18,7 @@ Diese Datei fasst alle Automatisierungen zusammen, die den Kubernetes-Stack betr
     -   `flux-local.yaml`: Manifest-Validierung, Diff-Preview
     -   `shellcheck.yaml`: Shell-Skripte linten
     -   `mise.yaml`: Tool-Chain-Konsistenz
-    -   `claude-*`: Automatischer Helfer bei fehlgeschlagenen Workflows
+    -   `claude.yml`: Automatische Claude Code Analyse bei Workflow-Failures und manuelle Invocation via `@claude`
 -   Richtlinie: Neue Workflows hier dokumentieren (Zweck, Trigger, Secrets, Outputs).
 
 ## Renovate

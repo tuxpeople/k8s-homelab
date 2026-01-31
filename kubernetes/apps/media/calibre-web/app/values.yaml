@@ -10,14 +10,16 @@ controllers:
     containers:
       main:
         image:
-          repository: crocodilestick/calibre-web-automated
+          repository: ghcr.io/crocodilestick/calibre-web-automated
           tag: V2.1.2
         env:
           TZ: ${TIMEZONE}
-          PUID: 1027
+          PUID: 1026
           PGID: 100
-          DOCKER_MODS: linuxserver/mods:universal-calibre
           CACHE_DIR: /cache
+          NETWORK_SHARE_MODE: "true"
+          #          S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: "1"
+          #          S6_READ_ONLY_ROOT: "1"
         resources:
           limits:
             cpu: 500m
@@ -25,14 +27,13 @@ controllers:
           requests:
             cpu: 100m
             memory: 128Mi
-    initContainers:
-      update-volume-permission:
-        image:
-          repository: busybox
-          tag: 1.37.0
-        command: [sh, -c, 'chown -R 1000:1000 /config']
-        securityContext:
-          runAsUser: 0
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: false
+    # runAsUser: 1027
+    # runAsGroup: 100
+    fsGroup: 100
+    fsGroupChangePolicy: OnRootMismatch
 service:
   app:
     controller: calibre-web

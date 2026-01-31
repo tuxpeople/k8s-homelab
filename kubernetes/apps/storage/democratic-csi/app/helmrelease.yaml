@@ -27,11 +27,12 @@ spec:
       name: org.democratic-csi.synology-iscsi
 
     driver:
-      existingConfigSecret: democratic-csi-driver-config
+      existingConfigSecret: democratic-csi-driver-config # pragma: allowlist secret
       config:
         driver: synology-iscsi
 
     node:
+      # Required for iSCSI nsenter strategy (iscsiadm from host namespace).
       hostPID: true
       driver:
         extraEnv:

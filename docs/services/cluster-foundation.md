@@ -50,7 +50,7 @@
 
 -   **Metriken**: Node Exporter + Talos health metrics → Grafana Dashboard „Cluster / Control Plane“.
 -   **Alerts**: NodeNotReady, Talos Upgrade Pending, Certificate Expiry, Disk/Memory Pressure (Alertmanager → Discord).
--   **Logs**: Talos API logs via `talosctl logs kubelet`; Audit events in `kubernetes/apps/observability/*`.
+-   **Logs**: Talos API logs via `talosctl logs kubelet`; Audit events (falls reaktiviert) unter `archive/apps/observability/*`.
 -   **Capacity Tracking**: Goldilocks (namespace `vpa`) liefert Empfehlung; Ergebnisse in `RESOURCE_ANALYSIS.md`.
 
 ## Backups & Wiederherstellung

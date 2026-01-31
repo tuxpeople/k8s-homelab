@@ -56,7 +56,7 @@
 -   Alerts:
     -   `FluxKustomizationNotReady`, `FluxReconciliationFailed` → Alertmanager Discord.
     -   Drift detection (Flux Alerts) – Dashboard TODO (Grafana panel).
--   GitHub Action `claude-helper` auto-labelt PRs mit Flux-Fehlern → referenzieren.
+-   GitHub Action `claude.yml` analysiert automatisch fehlgeschlagene Workflows (inkl. Flux-Validierung) und schlägt Fixes vor.
 
 ## Runbooks
 

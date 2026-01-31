@@ -1,11 +1,11 @@
 # Monitoring & Observability
 
 ## Stack
-- **Kube-Prometheus-Stack** (`kubernetes/apps/observability/kube-prometheus-stack`): Prometheus, Alertmanager, Grafana, node-exporter, kube-state-metrics.
-- **Grafana** (`kubernetes/apps/observability/grafana`): Dashboards für Infrastruktur, Medien-Stack, Netzwerk, Home-Automation.
-- **Exporters**: blackbox, speedtest, snmp, tautulli, radarr, sonarr, sabnzbd, plex, prowlarr, pushgateway.
+- **Kube-Prometheus-Stack** (`archive/apps/observability/kube-prometheus-stack`): Prometheus, Alertmanager, Grafana, node-exporter, kube-state-metrics (archiviert).
+- **Grafana** (`archive/apps/observability/grafana`): Dashboards für Infrastruktur, Medien-Stack, Netzwerk, Home-Automation (archiviert).
+- **Exporters**: blackbox, speedtest, snmp, tautulli, radarr, sonarr, sabnzbd, plex, prowlarr, pushgateway (archiviert).
 - **Gatus** (`kubernetes/apps/observability/gatus`): Synthetic Checks + Statusseite. Automatische Endpoint-Generierung via Kyverno für alle Ingresses (internal/external). Ausschluss via `gatus.io/enabled: "false"` Annotation oder Namespace `test`.
-- **Alertmanager-Discord**: Alerts → Discord Webhook.
+- **Alertmanager-Discord**: Alerts → Discord Webhook (archiviert).
 
 ## Kennzahlen
 | Bereich | Beispiele | Ziel |

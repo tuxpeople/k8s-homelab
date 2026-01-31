@@ -1,34 +1,116 @@
 name: Claude Code
 
 on:
+  # Automatic trigger on workflow failures
+  workflow_run:
+    workflows: ["Flux Local", "Mise", "ShellCheck", "Validation", "Check talconfig"]
+    types: [completed]
+
+  # Manual trigger via @claude comment
   issue_comment:
     types: [created]
   pull_request_review_comment:
     types: [created]
-  issues:
-    types: [opened, assigned]
   pull_request_review:
     types: [submitted]
+  issues:
+    types: [opened, assigned]
 
 jobs:
   claude:
+    # Run for manual @claude mentions OR automatic workflow failures
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
-      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude'))) ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.event == 'pull_request')
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: read
-      issues: read
+      pull-requests: write
+      issues: write
       id-token: write
-      actions: read # Required for Claude to read CI results on PRs
+      actions: read
+
     steps:
-      - name: Checkout repository
+      - name: Get PR number for workflow failures
+        id: pr
+        if: github.event_name == 'workflow_run'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${context.payload.workflow_run.head_branch}`,
+            });
+
+            if (prs.length > 0) {
+              return prs[0].number;
+            }
+            return null;
+
+      - name: Add failure labels
+        if: github.event_name == 'workflow_run' && steps.pr.outputs.result != 'null'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const prNumber = ${{ steps.pr.outputs.result }};
+            await github.rest.issues.addLabels({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['🤖 needs-claude-fix', '🔴 workflow-failed', '🤖 claude-requested']
+            });
+
+      - name: Build prompt for workflow failures
+        id: prompt
+        if: github.event_name == 'workflow_run'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const workflowName = context.payload.workflow_run.name;
+            const runUrl = context.payload.workflow_run.html_url;
+            const prNumber = ${{ steps.pr.outputs.result }};
+
+            // Get failed job logs
+            const workflowRunId = context.payload.workflow_run.id;
+            const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: workflowRunId,
+            });
+
+            let failedJobsInfo = '';
+            for (const job of jobs.jobs) {
+              if (job.conclusion === 'failure') {
+                failedJobsInfo += `\n\nFailed Job: ${job.name}\nLog URL: ${job.html_url}`;
+              }
+            }
+
+            const prompt = [
+              `Analyze the ${workflowName} workflow failure on PR #${prNumber}.`,
+              ``,
+              `Workflow Run: ${runUrl}`,
+              `${failedJobsInfo}`,
+              ``,
+              `Please:`,
+              `1. Identify the root cause of the failure`,
+              `2. Suggest specific fixes`,
+              `3. If possible, implement the fixes directly`,
+              ``,
+              `Add the label "✅ claude-fixed" when you've successfully resolved the issue.`
+            ].join('\n');
+
+            core.setOutput('prompt', prompt);
+
+      - name: Checkout PR branch
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
-          fetch-depth: 1
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || '' }}
+          fetch-depth: 0
 
       - name: Run Claude Code
         id: claude
@@ -36,15 +118,20 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 
-          # This is an optional setting that allows Claude to read CI results on PRs
+          # This allows Claude to read CI results on PRs
           additional_permissions: |
             actions: read
 
-          # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
-          # prompt: 'Update the pull request description to include a summary of changes.'
+          # Allow Claude to use necessary tools for analysis and fixes via claude_args
+          # Using 'Bash' without restrictions for full tool access in CI environment
+          claude_args: >-
+            --allowed-tools 'Bash'
+            --allowed-tools 'WebFetch'
+            --allowed-tools 'Read'
+            --allowed-tools 'Edit'
+            --allowed-tools 'Write'
+            --allowed-tools 'Grep'
+            --allowed-tools 'Glob'
 
-          # Optional: Add claude_args to customize behavior and configuration
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://code.claude.com/docs/en/cli-reference for available options
-          # claude_args: '--allowed-tools Bash(gh pr:*)'
-
+          # Use generated prompt for automatic triggers, otherwise Claude will use the user's comment
+          prompt: ${{ steps.prompt.outputs.prompt }}

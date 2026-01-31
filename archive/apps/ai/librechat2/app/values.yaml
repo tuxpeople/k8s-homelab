@@ -8,7 +8,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/danny-avila/librechat-dev
-          tag: latest@sha256:b45ae472b0fe3337610e52628f0f98a673e97ca662f01ee30e8f9ec5eb223194
+          tag: latest@sha256:5146154223d71cd8fab80ebd3d34f1705a7e16b54ad31ad0ccad51efdf287a8c
         env:
           PORT: "3080"
           NODE_ENV: "production"
@@ -75,7 +75,7 @@ controllers:
       meilisearch:
         image:
           repository: getmeili/meilisearch
-          tag: v1.33.1@sha256:144439b059f67976878bda75ec6b4919b14c3f740bfc8b55246e7c126c7cd857 # DO NOT BLINDLY UPDATE: https://www.meilisearch.com/docs/learn/update_and_migration/updating
+          tag: v1.34.3@sha256:82767d2afc4fb6c3e4ebadb134ca6ef5687c894ae9e152928619393b1f331681 # DO NOT BLINDLY UPDATE: https://www.meilisearch.com/docs/learn/update_and_migration/updating
         envFrom:
           - secretRef:
               name: librechat2-secret
@@ -91,7 +91,7 @@ controllers:
       mongodb:
         image:
           repository: mongo
-          tag: "8.2.3"
+          tag: "8.2.4"
         command: ["mongod", "--noauth"]
         securityContext:
           allowPrivilegeEscalation: false

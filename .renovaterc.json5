@@ -41,6 +41,12 @@
       pinDigests: false,
     },
     {
+      description: "Pin Python to <3.14 for mise",
+      matchManagers: ["mise"],
+      matchPackageNames: ["python"],
+      allowedVersions: "<3.14.0",
+    },
+    {
       description: "Automerge patch updates",
       matchUpdateTypes: ["patch"],
       automerge: true,
@@ -91,6 +97,42 @@
       group: {
         commitMessageTopic: "app-template in {{packageFileDir}}",
       },
+    },
+    {
+      description: "Ingress NGINX charts",
+      groupName: "Ingress NGINX",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["ingress-nginx"],
+    },
+    {
+      description: "External DNS charts",
+      groupName: "External DNS",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["external-dns"],
+    },
+    {
+      description: "GitLab Runner charts",
+      groupName: "GitLab Runner",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["gitlab-runner"],
+    },
+    {
+      description: "Ingress/DNS edge charts",
+      groupName: "Ingress/DNS",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["ingress-nginx", "external-dns"],
+    },
+    {
+      description: "Observability core charts",
+      groupName: "Observability core",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["kube-prometheus-stack", "grafana"],
+    },
+    {
+      description: "Storage essentials charts",
+      groupName: "Storage essentials",
+      matchDatasources: ["helm"],
+      matchPackageNames: ["longhorn", "snapshot-controller"],
     },
     {
       description: "Auto-merge GitHub Actions",

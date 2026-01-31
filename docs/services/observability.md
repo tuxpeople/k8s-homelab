@@ -2,21 +2,23 @@
 
 ## Komponentenübersicht (alle Namespace `observability`)
 
+Hinweis: Der Observability-Stack ist aktuell weitgehend archiviert; aktiv bleibt nur Gatus. Reaktivierung erfolgt aus `archive/apps/observability`.
+
 | Service                           | Pfad                                                  | Zweck / Besonderheiten                                                                                          |
 | --------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| kube-prometheus-stack (**aktiv**) | `kubernetes/apps/observability/kube-prometheus-stack` | Basis-Stack (Prometheus, Alertmanager, Grafana, node-exporter, kube-state-metrics). Retention 15 d (anpassen?). |
-| Grafana (**aktiv**)               | `kubernetes/apps/observability/grafana`               | UI + alerting rules. Dashboards als configmaps/sidecar. Secret `grafana-admin` (SOPS).                          |
-| Alertmanager Discord Relay        | `kubernetes/apps/observability/alertmanager-discord`  | Sends alert payloads → Discord webhook (secret `alertmanager-config`).                                          |
-| Gatus                             | `kubernetes/apps/observability/gatus`                 | Synthetic HTTP/S/ICMP checks + status page. Automatische Endpoint-Generierung via Kyverno Policies.             |
-| Blackbox Exporter                 | `kubernetes/apps/observability/blackbox-exporter`     | Generic probes (used by Prometheus + Gatus).                                                                    |
-| Pushgateway                       | `kubernetes/apps/observability/pushgateway`           | For ad-hoc metrics (jobs).                                                                                      |
-| Speedtest Exporter                | `kubernetes/apps/observability/speedtest-exporter`    | Schedules Speedtest CLI.                                                                                        |
-| SNMP Exporter                     | `kubernetes/apps/observability/snmp-exporter`         | Scrapes Synology/Networking gear.                                                                               |
-| Media Exporter Suite              | `kubernetes/apps/observability/*-exporter`            | radarr/sonarr/sabnzbd/tautulli/plex/prowlarr metrics consumed by dashboards.                                    |
+| kube-prometheus-stack (archiviert) | `archive/apps/observability/kube-prometheus-stack` | Basis-Stack (Prometheus, Alertmanager, Grafana, node-exporter, kube-state-metrics). Retention 15 d (anpassen?). |
+| Grafana (archiviert)              | `archive/apps/observability/grafana`                  | UI + alerting rules. Dashboards als configmaps/sidecar. Secret `grafana-admin` (SOPS).                          |
+| Alertmanager Discord Relay (archiviert) | `archive/apps/observability/alertmanager-discord` | Sends alert payloads → Discord webhook (secret `alertmanager-config`).                                          |
+| Gatus (aktiv)                     | `kubernetes/apps/observability/gatus`                 | Synthetic HTTP/S/ICMP checks + status page. Automatische Endpoint-Generierung via Kyverno Policies.             |
+| Blackbox Exporter (archiviert)    | `archive/apps/observability/blackbox-exporter`        | Generic probes (used by Prometheus + Gatus).                                                                    |
+| Pushgateway (archiviert)          | `archive/apps/observability/pushgateway`              | For ad-hoc metrics (jobs).                                                                                      |
+| Speedtest Exporter (archiviert)   | `archive/apps/observability/speedtest-exporter`       | Schedules Speedtest CLI.                                                                                        |
+| SNMP Exporter (archiviert)        | `archive/apps/observability/snmp-exporter`            | Scrapes Synology/Networking gear.                                                                               |
+| Media Exporter Suite (archiviert) | `archive/apps/observability/*-exporter`               | radarr/sonarr/sabnzbd/tautulli/plex/prowlarr metrics consumed by dashboards.                                    |
 
 ## Datenquellen & Dashboards
 
--   Haupt-Datasource: Prometheus (from kube-prom-stack). Additional datasources via Helm values (Longhorn, Miniflux, etc.).
+-   Haupt-Datasource: Prometheus (from kube-prom-stack) – aktuell nur relevant, wenn der Stack reaktiviert wird.
 -   Grafana Dashboards (IDs, JSON) liegen aktuell nicht versioniert → TODO: export nach `grafana/dashboards/`.
 -   Kern-Dashboards:
     -   `Kubernetes / Control Plane`
@@ -24,7 +26,7 @@
     -   `Media Stack`
     -   `Automation & GitOps`
     -   `Backups`
--   Login: Grafana admin creds via Secret `grafana-admin` (SOPS) – 2FA empfohlen.
+-   Login: Grafana admin creds via Secret `grafana-admin` (SOPS) – 2FA empfohlen (falls reaktiviert).
 
 ## Alerting & Eskalation
 
@@ -94,7 +96,7 @@ kubectl -n observability port-forward svc/gatus 8080:80
 
 ## Betrieb & Wartung
 
-1. **Upgrades**:
+1. **Upgrades** (bei Reaktivierung):
     - `flux reconcile kustomization kube-prometheus-stack --with-source -n observability`.
     - Vorher `flux diff hr kube-prometheus-stack`.
 2. **Dashboards**: Neue Panels exportieren via Grafana UI → `git add` (noch offen).
@@ -105,6 +107,8 @@ kubectl -n observability port-forward svc/gatus 8080:80
 4. **Secrets**: Grafana/Alertmanager/Discord Webhook in SOPS-Dateien pflegen (`*.sops.yaml`), `sops` rewrap vor Commit.
 
 ## Monitoring der Monitoring-Stack
+
+Hinweis: Gilt bei reaktiviertem Observability-Stack (Prometheus/Grafana/Alertmanager).
 
 -   Prometheus targets → `/-/healthy`, `/-/ready`.
 -   Grafana health check via Gatus.

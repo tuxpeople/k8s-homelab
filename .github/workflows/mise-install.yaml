@@ -1,38 +1,37 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Check Talconfig"
+name: "Mise Install"
 
 on:
-  workflow_dispatch:
   pull_request:
     branches: ["main"]
+    paths:
+      - ".mise.toml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  check:
-    name: Check talconfig
-    runs-on: ubuntu-latest
+  mise-install:
+    name: Mise Install (arm64)
+    runs-on: macos-15
     steps:
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Cache mise tools
         uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ~/.local/share/mise
-          key: mise-${{ runner.os }}-${{ hashFiles('.mise.toml') }}
+          key: mise-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.mise.toml') }}
 
       - name: Setup mise
         uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          cache: false
 
-      - name: Check talconfig
-        id: check
-        run: |
-          export talosVersion=$(yq '.talosVersion'  talos/talenv.yaml)
-          export kubernetesVersion=$(yq '.kubernetesVersion'  talos/talenv.yaml)
-          talhelper validate talconfig talos/talconfig.yaml
+      - name: Install tools
+        run: mise install

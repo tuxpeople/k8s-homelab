@@ -5,7 +5,7 @@
 |---------|------|--------|-------|
 | Kyverno | `kubernetes/apps/security/kyverno` | Aktiv | Admission/Mutation Policies (PodSecurity, labels, blocking `latest`, privilege). |
 | External Secrets | `kubernetes/apps/security/external-secrets` | Aktiv | Synchronisiert Secrets aus 1Password → Namespaces. Nutzt `onepassword-connect`. |
-| Trivy Operator | `kubernetes/apps/security/trivy-operator` | Aktiv | CVE & config scanning (VulnerabilityReports, ConfigAuditReports). |
+| Trivy Operator | `archive/apps/security/trivy-operator` | Archiviert | CVE & config scanning (VulnerabilityReports, ConfigAuditReports). |
 | onepassword-connect | (Deployment unter security) | Aktiv | Backend für ExternalSecrets, benötigt 1Password token. |
 
 ## Kyverno Policies
@@ -23,7 +23,7 @@
 
 ## Secrets & External Secrets
 - Age/SOPS Workflow siehe `docs/secrets.md`.
-- External Secret Vorlage pro Namespace pflegen (`kubernetes/apps/security/external-secrets/app/templates`).
+- ExternalSecret Manifeste liegen bei den jeweiligen Apps (z. B. `app/externalsecret.yaml`), SecretStores unter `kubernetes/apps/security/external-secrets/secretstores`.
 - 1Password Connect Token und Signing Certificate in `onepassword-connect` Secret (SOPS).
 - Health-Check:
   - `kubectl get externalsecret -A`.
@@ -34,6 +34,7 @@
   - Document steps in TODO `Secret-Rotation Runbook`.
 
 ## Vulnerability Management
+- Trivy Operator ist aktuell archiviert; Hinweise gelten bei Reaktivierung.
 - Trivy Operator produziert:
   - `vulnerabilityreports.aquasecurity.github.io`.
   - `configauditreports.aquasecurity.github.io`.

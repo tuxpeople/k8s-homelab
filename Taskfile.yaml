@@ -55,6 +55,7 @@ tasks:
       - validate:yaml
       - validate:kubernetes
       - validate:flux
+      - validate:flux-local
 
   validate:yaml:
     desc: Validate all YAML files
@@ -95,6 +96,15 @@ tasks:
     preconditions:
       - which flux
       - test -f {{.KUBECONFIG}}
+
+  validate:flux-local:
+    desc: Run flux-local test against the full cluster tree
+    cmd: |
+      if command -v mise >/dev/null 2>&1; then
+        mise exec -- flux-local test --enable-helm --all-namespaces --path kubernetes/flux/cluster -v
+      else
+        flux-local test --enable-helm --all-namespaces --path kubernetes/flux/cluster -v
+      fi
 
   cleanup-stuck-pods:
     desc: Clean up ContainerStatusUnknown pods

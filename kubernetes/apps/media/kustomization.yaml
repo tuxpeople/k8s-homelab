@@ -6,5 +6,6 @@ namespace: media
 components:
   - ../../components/common
 resources:
+  - ./calibre-web/ks.yaml
   - ./mediabox/ks.yaml
   - ./tautulli/ks.yaml
