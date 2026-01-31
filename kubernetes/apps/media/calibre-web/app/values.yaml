@@ -27,7 +27,7 @@ controllers:
             memory: 128Mi
 defaultPodOptions:
   securityContext:
-    runAsNonRoot: true
+    runAsNonRoot: false
     runAsUser: 1027
     runAsGroup: 100
     fsGroup: 100
