@@ -29,7 +29,7 @@ defaultPodOptions:
     # runAsUser: 1027
     # runAsGroup: 100
     fsGroup: 100
-    fsGroupChangePolicy: Always
+    fsGroupChangePolicy: OnRootMismatch
 service:
   app:
     controller: calibre-web
