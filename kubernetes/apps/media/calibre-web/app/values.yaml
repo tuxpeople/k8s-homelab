@@ -16,8 +16,6 @@ controllers:
           TZ: ${TIMEZONE}
           PUID: 1027
           PGID: 100
-          DOCKER_MODS: linuxserver/mods:universal-calibre
-          CACHE_DIR: /cache
         resources:
           limits:
             cpu: 500m
@@ -31,8 +29,7 @@ defaultPodOptions:
     runAsUser: 1027
     runAsGroup: 100
     fsGroup: 100
-    fsGroupChangePolicy: OnRootMismatch
-    seccompProfile: { type: RuntimeDefault }
+    fsGroupChangePolicy: Always
 service:
   app:
     controller: calibre-web
