@@ -30,7 +30,15 @@
       "Bash(git stash:*)",
       "Bash(git pull:*)",
       "Bash(gh run list:*)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "Bash(while read name endpoint)",
+      "Bash(done)",
+      "Bash(helm get manifest:*)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "Bash(docker manifest inspect:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(talosctl:*)"
     ],
     "deny": [],
     "ask": []
