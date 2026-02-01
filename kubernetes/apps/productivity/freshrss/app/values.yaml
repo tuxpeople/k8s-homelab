@@ -116,6 +116,21 @@ persistence:
       - path: /var/www/FreshRSS/extensions
         subPath: extensions
         readOnly: false
+  config:
+    enabled: true
+    type: configMap
+    name: "freshrss-config"
+    advancedMounts:
+      app:
+        litestream:
+          - &lsmnt
+            subPath: "litestream-replicate"
+            path: "/etc/litestream.yml"
+            readOnly: true
+        01-litestream-restore:
+          - subPath: "litestream-restore"
+            path: "/etc/litestream.yml"
+            readOnly: true
 configMaps:
   config:
     enabled: true
