@@ -137,7 +137,7 @@ configMaps:
     data:
       litestream-replicate: |
         dbs:
-          - path: *db
+          - path: /var/www/FreshRSS/data/users/tdeutsch/db.sqlite
             replicas:
               - name: "garage-s3"
                 type: "s3"
@@ -151,7 +151,7 @@ configMaps:
                 validation-interval: 24h
       litestream-restore: |
         dbs:
-          - path: *db
+          - path: /var/www/FreshRSS/data/users/tdeutsch/db.sqlite
             replicas:
               - name: "garage-s3"
                 type: "s3"
