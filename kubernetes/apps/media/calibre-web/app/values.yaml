@@ -57,7 +57,7 @@ defaultPodOptions:
     fsGroupChangePolicy: OnRootMismatch
 service:
   app:
-    controller: *app
+    controller: calibre-web
     ports:
       http:
         port: *port
