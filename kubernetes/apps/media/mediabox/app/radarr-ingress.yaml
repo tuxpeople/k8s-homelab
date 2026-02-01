@@ -29,7 +29,7 @@ spec:
               service:
                 name: radarr
                 port:
-                  name: radarr
+                  number: 7878
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
 apiVersion: v1
@@ -37,11 +37,24 @@ kind: Service
 metadata:
   name: radarr
 spec:
-  externalName: radarr.media.tdeutsch.ch
   ports:
     - name: radarr
       port: 7878
       protocol: TCP
       targetPort: 7878
-  sessionAffinity: None
-  type: ExternalName
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: radarr-extern
+  labels:
+    kubernetes.io/service-name: radarr
+addressType: IPv4
+ports:
+  - port: 7878
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 10.100.100.7
+    conditions:
+      ready: true

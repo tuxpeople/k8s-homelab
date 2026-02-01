@@ -22,7 +22,7 @@ spec:
               service:
                 name: notifiarr
                 port:
-                  name: notifiarr
+                  number: 5454
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
 apiVersion: v1
@@ -30,11 +30,24 @@ kind: Service
 metadata:
   name: notifiarr
 spec:
-  externalName: notifiarr.media.tdeutsch.ch
   ports:
     - name: notifiarr
       port: 5454
       protocol: TCP
       targetPort: 5454
-  sessionAffinity: None
-  type: ExternalName
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: notifiarr-extern
+  labels:
+    kubernetes.io/service-name: notifiarr
+addressType: IPv4
+ports:
+  - port: 5454
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 10.100.100.11
+    conditions:
+      ready: true

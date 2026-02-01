@@ -29,7 +29,7 @@ spec:
               service:
                 name: gaps
                 port:
-                  name: gaps
+                  number: 8484
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
 apiVersion: v1
@@ -37,11 +37,24 @@ kind: Service
 metadata:
   name: gaps
 spec:
-  externalName: gaps.media.tdeutsch.ch
   ports:
     - name: gaps
       port: 8484
       protocol: TCP
       targetPort: 8484
-  sessionAffinity: None
-  type: ExternalName
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: gaps-extern
+  labels:
+    kubernetes.io/service-name: gaps
+addressType: IPv4
+ports:
+  - port: 8484
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 10.100.100.6
+    conditions:
+      ready: true

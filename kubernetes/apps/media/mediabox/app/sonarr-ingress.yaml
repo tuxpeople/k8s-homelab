@@ -29,7 +29,7 @@ spec:
               service:
                 name: sonarr
                 port:
-                  name: sonarr
+                  number: 8989
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
 apiVersion: v1
@@ -37,11 +37,24 @@ kind: Service
 metadata:
   name: sonarr
 spec:
-  externalName: sonarr.media.tdeutsch.ch
   ports:
     - name: sonarr
       port: 8989
       protocol: TCP
       targetPort: 8989
-  sessionAffinity: None
-  type: ExternalName
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: sonarr-extern
+  labels:
+    kubernetes.io/service-name: sonarr
+addressType: IPv4
+ports:
+  - port: 8989
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 10.100.100.2
+    conditions:
+      ready: true

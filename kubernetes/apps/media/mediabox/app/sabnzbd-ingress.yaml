@@ -29,7 +29,7 @@ spec:
               service:
                 name: sabnzbd
                 port:
-                  name: sabnzbd
+                  number: 8080
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
 apiVersion: v1
@@ -37,11 +37,24 @@ kind: Service
 metadata:
   name: sabnzbd
 spec:
-  externalName: sabnzbd.media.tdeutsch.ch
   ports:
     - name: sabnzbd
       port: 8080
       protocol: TCP
       targetPort: 8080
-  sessionAffinity: None
-  type: ExternalName
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: sabnzbd-extern
+  labels:
+    kubernetes.io/service-name: sabnzbd
+addressType: IPv4
+ports:
+  - port: 8080
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 10.100.100.3
+    conditions:
+      ready: true

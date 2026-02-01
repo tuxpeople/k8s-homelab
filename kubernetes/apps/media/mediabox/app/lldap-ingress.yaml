@@ -22,7 +22,7 @@ spec:
               service:
                 name: lldap
                 port:
-                  name: lldap
+                  number: 17170
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/service_v1.json
 apiVersion: v1
@@ -30,11 +30,24 @@ kind: Service
 metadata:
   name: lldap
 spec:
-  externalName: thiazi.lan.tdeutsch.ch
   ports:
     - name: lldap
       port: 17170
       protocol: TCP
       targetPort: 17170
-  sessionAffinity: None
-  type: ExternalName
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: lldap-extern
+  labels:
+    kubernetes.io/service-name: lldap
+addressType: IPv4
+ports:
+  - port: 17170
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 10.20.30.40
+    conditions:
+      ready: true
