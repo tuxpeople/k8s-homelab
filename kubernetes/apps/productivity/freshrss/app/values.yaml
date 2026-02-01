@@ -134,6 +134,7 @@ persistence:
 configMaps:
   config:
     enabled: true
+    name: "freshrss-config"
     data:
       litestream-replicate: |
         dbs:
