@@ -81,6 +81,22 @@ controllers:
               secretKeyRef:
                 name: python-ipam-secrets
                 key: litestream-minio-bucket
+      02-alembic-stamp:
+        image:
+          repository: registry.eighty-three.me/tuxpeople/python-ipam
+          tag: 1.1.5
+        command:
+          - /opt/venv/bin/python
+          - -c
+          - |
+            import sqlite3
+            conn = sqlite3.connect("/data/ipam.db")
+            cur = conn.cursor()
+            cur.execute("CREATE TABLE IF NOT EXISTS alembic_version (version_num VARCHAR(32) NOT NULL)")
+            cur.execute("DELETE FROM alembic_version")
+            cur.execute("INSERT INTO alembic_version(version_num) VALUES ('7b4a1d0f9b2a')")
+            conn.commit()
+            print("stamped alembic_version")
 defaultPodOptions:
   securityContext:
     runAsNonRoot: true
@@ -139,4 +155,6 @@ persistence:
         litestream:
           - path: /data
         01-litestream-restore:
+          - path: /data
+        02-alembic-stamp:
           - path: /data
