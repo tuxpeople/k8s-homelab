@@ -20,7 +20,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mediabox
+                name: lldap
                 port:
                   name: lldap
 ---

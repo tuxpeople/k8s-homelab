@@ -27,7 +27,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mediabox
+                name: gaps
                 port:
                   name: gaps
 ---
