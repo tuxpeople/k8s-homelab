@@ -38,7 +38,8 @@
       "WebSearch",
       "Bash(docker manifest inspect:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(talosctl:*)"
+      "Bash(talosctl:*)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []
