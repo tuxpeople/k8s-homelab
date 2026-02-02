@@ -52,8 +52,35 @@ jobs:
             }
             return null;
 
-      - name: Add failure labels
+      - name: Check if Claude already analyzed this PR
+        id: claude-check
         if: github.event_name == 'workflow_run' && steps.pr.outputs.result != 'null'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const prNumber = ${{ steps.pr.outputs.result }};
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              per_page: 100
+            });
+
+            // Check if claude[bot] has already commented in the last 6 hours
+            const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000);
+            const recentClaudeComments = comments.filter(comment =>
+              comment.user.login === 'claude[bot]' &&
+              new Date(comment.created_at) > sixHoursAgo
+            );
+
+            if (recentClaudeComments.length > 0) {
+              console.log(`Claude has already analyzed this PR ${recentClaudeComments.length} times in the last 6 hours. Skipping to prevent loop.`);
+              return 'skip';
+            }
+            return 'run';
+
+      - name: Add failure labels
+        if: github.event_name == 'workflow_run' && steps.pr.outputs.result != 'null' && steps.claude-check.outputs.result != 'skip'
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           script: |
@@ -67,7 +94,7 @@ jobs:
 
       - name: Build prompt for workflow failures
         id: prompt
-        if: github.event_name == 'workflow_run'
+        if: github.event_name == 'workflow_run' && steps.claude-check.outputs.result != 'skip'
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           script: |
@@ -107,12 +134,18 @@ jobs:
             core.setOutput('prompt', prompt);
 
       - name: Checkout PR branch
+        if: |
+          github.event_name != 'workflow_run' ||
+          (github.event_name == 'workflow_run' && steps.claude-check.outputs.result != 'skip')
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || '' }}
           fetch-depth: 0
 
       - name: Run Claude Code
+        if: |
+          github.event_name != 'workflow_run' ||
+          (github.event_name == 'workflow_run' && steps.claude-check.outputs.result != 'skip')
         id: claude
         uses: anthropics/claude-code-action@1b8ee3b94104046d71fde52ec3557651ad8c0d71 # v1
         with:
