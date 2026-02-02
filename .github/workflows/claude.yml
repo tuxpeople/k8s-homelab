@@ -128,7 +128,13 @@ jobs:
               `2. Suggest specific fixes`,
               `3. If possible, implement the fixes directly`,
               ``,
-              `Add the label "✅ claude-fixed" when you've successfully resolved the issue.`
+              `IMPORTANT: When you've successfully resolved the issue:`,
+              `- Add label "✅ claude-fixed": gh pr edit ${prNumber} --add-label "✅ claude-fixed"`,
+              `- Remove old labels: gh pr edit ${prNumber} --remove-label "🤖 needs-claude-fix"`,
+              `  --remove-label "🔴 workflow-failed"`,
+              ``,
+              `Note: You cannot push to Renovate branches. If you fix locally but can't push,`,
+              `explain the fix in a comment for manual application.`
             ].join('\n');
 
             core.setOutput('prompt', prompt);
