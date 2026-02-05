@@ -8,31 +8,42 @@ controllers:
       main:
         image:
           repository: ghcr.io/home-operations/tautulli
-          tag: 2.16.0
+          tag: 2.16.0@sha256:772e1af814159bd7e774273d4f9170b1a0f7129f2ad39be5619a458b7b0fd4b0
         env:
           TZ: ${TIMEZONE}
+          TAUTULLI_HTTP_BASE_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+          TAUTULLI_HTTP_PORT: &port 80
         probes:
-          liveness: &probes
+          liveness:
+            enabled: true
+            spec:
+              periodSeconds: 30
+              timeoutSeconds: 5
+              failureThreshold: 5
+          readiness:
             enabled: true
             custom: true
             spec:
               httpGet:
                 path: &path /status
-                port: &port 8181
-              initialDelaySeconds: 0
+                port: *port
               periodSeconds: 10
-              timeoutSeconds: 1
-              failureThreshold: 3
-          readiness: *probes
+              timeoutSeconds: 5
+              failureThreshold: 5
           startup:
-            enabled: false
+            enabled: true
+            spec:
+              failureThreshold: 30
+              periodSeconds: 10
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
         resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi
           requests:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 10m
+          limits:
+            memory: 1Gi
       jbops:
         image:
           repository: registry.k8s.io/git-sync/git-sync
