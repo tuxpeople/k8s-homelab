@@ -8,7 +8,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/juanfont/headscale
-          tag: v0.27.1
+          tag: v0.28.0
         command: [headscale]
         args: ["serve", "-c", "/etc/headscale/config.yaml"]
         probes:
