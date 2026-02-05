@@ -93,7 +93,7 @@
     -   PVC `config` 5 Gi (Longhorn).
     -   `add-ons` emptyDir (JBOPS repo via git-sync).
 -   **Containers**:
-    -   Main container `ghcr.io/onedr0p/tautulli`.
+    -   Main container `ghcr.io/home-operations/tautulli`.
     -   Sidecar `git-sync` pulling `JBOPS`.
 -   **Backups**: PVC via Restic (daily). JBOPS repo self-heals.
 -   **Monitoring**:
