@@ -8,7 +8,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/home-operations/tautulli
-          tag: 2.15.1@sha256:74468ecce40f44c449675ec7fcb7c86ebff89961572d141ad743b8ccbdde3c98
+          tag: 2.16.0@sha256:772e1af814159bd7e774273d4f9170b1a0f7129f2ad39be5619a458b7b0fd4b0
         env:
           TZ: ${TIMEZONE}
         probes:
