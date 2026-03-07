@@ -9,7 +9,7 @@ controllers:
       api:
         image:
           repository: docker.io/1password/connect-api
-          tag: 1.8.1
+          tag: 1.8.2
         env:
           XDG_DATA_HOME: &configDir /config
           OP_HTTP_PORT: &apiPort 80
