@@ -8,7 +8,7 @@ controllers:
     containers:
       app:
         image:
-          repository: harbor.lab.tdeutsch.ch/private-containers/dorflade-mhd
+          repository: ghcr.io/tuxpeople/dorflade-mhd
           tag: latest
         env:
           TZ: ${TIMEZONE}
@@ -91,7 +91,7 @@ controllers:
 
 defaultPodOptions:
   imagePullSecrets:
-    - name: dorflade-mhd-pullsecret
+    - name: ghcr-pullsecret
   securityContext:
     runAsNonRoot: true
     runAsUser: 65532

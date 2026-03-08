@@ -6,7 +6,6 @@ resources:
   - ./helmrelease.yaml
   - ./litestream-configmap.yaml
   - ./externalsecret-litestream.yaml
-  - ./externalsecret-pullsecret.yaml
 configMapGenerator:
   - name: dorflade-mhd-values
     files:
