@@ -9,7 +9,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/tuxpeople/dorflade-mhd
-          tag: latest
+          tag: 0.6.3
         env:
           TZ: ${TIMEZONE}
           DB_PATH: /app/data/products.db
