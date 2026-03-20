@@ -9,7 +9,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/tuxpeople/dorflade-mhd
-          tag: 0.7.0
+          tag: 0.7.2
         env:
           TZ: ${TIMEZONE}
           DB_PATH: /app/data/products.db
@@ -121,6 +121,32 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
+            service:
+              identifier: app
+              port: *port
+    tls:
+      - hosts:
+          - *host
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
+  # workaround basic-auth for icons
+  manifests-icons:
+    enabled: true
+    className: external
+    hosts:
+      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /apple-touch-icon.png
+            pathType: Exact
+            service:
+              identifier: app
+              port: *port
+          - path: /apple-touch-icon-precomposed.png
+            pathType: Exact
+            service:
+              identifier: app
+              port: *port
+          - path: /static/manifest.json
+            pathType: Exact
             service:
               identifier: app
               port: *port
