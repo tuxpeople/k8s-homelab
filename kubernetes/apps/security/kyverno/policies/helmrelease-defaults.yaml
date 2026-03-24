@@ -22,6 +22,14 @@ spec:
           - resources:
               kinds:
                 - helm.toolkit.fluxcd.io/*/HelmRelease
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - helm.toolkit.fluxcd.io/*/HelmRelease
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       preconditions:
         all:
           - key: "{{ request.object.spec.retryInterval || '' }}"
@@ -37,6 +45,14 @@ spec:
           - resources:
               kinds:
                 - helm.toolkit.fluxcd.io/*/HelmRelease
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - helm.toolkit.fluxcd.io/*/HelmRelease
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       preconditions:
         all:
           - key: "{{ request.object.spec.upgrade.remediation.strategy || '' }}"

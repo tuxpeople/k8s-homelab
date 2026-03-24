@@ -10,9 +10,11 @@ metadata:
     policies.kyverno.io/severity: low
     policies.kyverno.io/subject: Ingress
     policies.kyverno.io/description: >-
-      This policy will automatically add external-dns annotations to Ingresses:
+      This policy will automatically add external-dns annotations to Ingresses
+      if not already set (will not overwrite existing values):
       - ingressClassName: external → external-dns target for Cloudflare
       - ingressClassName: internal → external-dns target for UniFi (192.168.13.64)
+      Skipped for namespaces labeled kyverno.io/exclude: "true".
     pod-policies.kyverno.io/autogen-controllers: none
 spec:
   rules:
@@ -22,6 +24,14 @@ spec:
           - resources:
               kinds:
                 - Ingress
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Ingress
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       preconditions:
         all:
           - key: "{{ request.object.spec.ingressClassName }}"
@@ -31,13 +41,21 @@ spec:
         patchStrategicMerge:
           metadata:
             annotations:
-              external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+              +(external-dns.alpha.kubernetes.io/target): "external.${SECRET_DOMAIN}"
     - name: internal
       match:
         any:
           - resources:
               kinds:
                 - Ingress
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Ingress
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       preconditions:
         all:
           - key: "{{ request.object.spec.ingressClassName }}"
@@ -47,4 +65,4 @@ spec:
         patchStrategicMerge:
           metadata:
             annotations:
-              external-dns.alpha.kubernetes.io/target: "192.168.13.64"
+              +(external-dns.alpha.kubernetes.io/target): "192.168.13.64"

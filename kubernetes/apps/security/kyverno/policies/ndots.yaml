@@ -33,6 +33,12 @@ spec:
                 - Pod
               annotations:
                 kyverno.io/exclude: "true"
+          - resources:
+              kinds:
+                - Pod
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       mutate:
         patchStrategicMerge:
           spec:

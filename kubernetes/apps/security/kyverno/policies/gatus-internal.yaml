@@ -34,6 +34,12 @@ spec:
                 - Ingress
               annotations:
                 gatus.io/enabled: "false"
+          - resources:
+              kinds:
+                - Ingress
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       preconditions:
         all:
           - key: "{{ request.object.spec.ingressClassName }}"

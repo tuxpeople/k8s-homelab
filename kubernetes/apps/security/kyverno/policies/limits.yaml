@@ -10,7 +10,9 @@ metadata:
     policies.kyverno.io/severity: medium
     policies.kyverno.io/subject: Pod
     policies.kyverno.io/description: >-
-      This policy removes CPU limits from all Pods.
+      This policy removes CPU limits from all Pods, except in system namespaces
+      (kube-system, flux-system, security, cert-manager) where authors intentionally
+      set limits. Skipped for namespaces labeled kyverno.io/exclude: "true".
     pod-policies.kyverno.io/autogen-controllers: none
 spec:
   rules:
@@ -20,6 +22,22 @@ spec:
           - resources:
               kinds:
                 - Pod
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - kube-system
+                - flux-system
+                - security
+                - cert-manager
+          - resources:
+              kinds:
+                - Pod
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       mutate:
         foreach:
           - list: request.object.spec.containers
@@ -32,6 +50,22 @@ spec:
           - resources:
               kinds:
                 - Pod
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - kube-system
+                - flux-system
+                - security
+                - cert-manager
+          - resources:
+              kinds:
+                - Pod
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       preconditions:
         all:
           - key: "{{ request.object.spec.initContainers[] || `[]` | length(@) }}"

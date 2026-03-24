@@ -15,6 +15,7 @@ metadata:
       far more common, it is often better to require storage only be provisioned from these
       StorageClasses. This policy requires that PVCs and StatefulSets containing
       volumeClaimTemplates define the storageClassName field with some value.
+      Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
   validationFailureAction: Audit
   background: true
@@ -25,6 +26,14 @@ spec:
           - resources:
               kinds:
                 - PersistentVolumeClaim
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - PersistentVolumeClaim
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       validate:
         message: "PersistentVolumeClaims must define a storageClassName."
         pattern:
@@ -36,6 +45,14 @@ spec:
           - resources:
               kinds:
                 - StatefulSet
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - StatefulSet
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       validate:
         message: "StatefulSets must define a storageClassName."
         pattern:

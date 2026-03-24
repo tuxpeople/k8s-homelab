@@ -16,6 +16,17 @@ spec:
               kinds:
                 - Deployment
                 - StatefulSet
+                - DaemonSet
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+                - StatefulSet
+                - DaemonSet
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
       mutate:
         patchStrategicMerge:
           metadata:
