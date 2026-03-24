@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./gatus-external.yaml
   - ./gatus-internal.yaml
+  - ./helmrelease-defaults.yaml
   # - ./ghcr-pullsecret.yaml  # prepared, not yet active
   - ./ingress.yaml
   - ./limits.yaml
