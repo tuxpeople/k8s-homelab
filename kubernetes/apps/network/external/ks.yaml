@@ -34,6 +34,8 @@ spec:
   dependsOn:
     - name: external-external-dns
       namespace: network
+    - name: kyverno-policies
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/network/external/cloudflared
   prune: true
@@ -59,6 +61,8 @@ spec:
   dependsOn:
     - name: cert-manager-tls
       namespace: cert-manager
+    - name: kyverno-policies
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/network/external/ingress-nginx
   prune: true

@@ -14,6 +14,7 @@ spec:
         name: postgres-operator
         namespace: flux-system
   interval: 1h
+  retryInterval: 5m
   timeout: 30m
   install:
     remediation:
@@ -22,6 +23,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+      strategy: uninstall
   values:
     configGeneral:
       repair_period: 1m
@@ -29,6 +31,7 @@ spec:
       workers: 32
     configMajorVersionUpgrade:
       major_version_upgrade_mode: manual
-    # configKubernetes:
-    #   pod_environment_secret: pod-config
-# Ergänzen siehe https://github.com/geraldwuhoo/homelab-iac/blob/cd2ba8cd221ebcb96f3c78f8ddcee16c9bf411d1/fluxcd/core/production/postgres-operator/secret.yaml#L4
+      # configKubernetes:
+      #   pod_environment_secret: pod-config
+# Ergänzen siehe https://github.com/geraldwuhoo/homelab-iac/blob/cd2ba8cd221ebcb96f3c78f8ddcee16c9bf411d1/ # yamllint disable-line rule:line-length
+# fluxcd/core/production/postgres-operator/secret.yaml#L4

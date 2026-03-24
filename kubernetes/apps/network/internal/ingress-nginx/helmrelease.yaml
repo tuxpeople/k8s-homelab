@@ -14,6 +14,7 @@ spec:
         name: ingress-nginx
         namespace: flux-system
   interval: 1h
+  retryInterval: 5m
   timeout: 30m
   install:
     remediation:
@@ -22,6 +23,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+      strategy: uninstall
   values:
     fullnameOverride: *app
     controller:
@@ -42,7 +44,8 @@ spec:
       config:
         allow-snippet-annotations: true
         annotations-risk-level: Critical
-        block-user-agents: "AdsBot-Google,Amazonbot,anthropic-ai,Applebot-Extended,Bytespider,CCBot,ChatGPT-User,ClaudeBot,Claude-Web,cohere-ai,Diffbot,FacebookBot,FriendlyCrawler,Google-Extended,GoogleOther,GPTBot,img2dataset,omgili,omgilibot,peer39_crawler,peer39_crawler/1.0,PerplexityBot,YouBot," # taken from https://github.com/ai-robots-txt/ai.robots.txt
+        # taken from https://github.com/ai-robots-txt/ai.robots.txt
+        block-user-agents: "AdsBot-Google,Amazonbot,anthropic-ai,Applebot-Extended,Bytespider,CCBot,ChatGPT-User,ClaudeBot,Claude-Web,cohere-ai,Diffbot,FacebookBot,FriendlyCrawler,Google-Extended,GoogleOther,GPTBot,img2dataset,omgili,omgilibot,peer39_crawler,peer39_crawler/1.0,PerplexityBot,YouBot," # yamllint disable-line rule:line-length
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120

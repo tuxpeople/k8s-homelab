@@ -14,6 +14,7 @@ spec:
         name: cilium
         namespace: flux-system
   interval: 1h
+  retryInterval: 5m
   timeout: 30m
   install:
     remediation:
@@ -22,6 +23,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+      strategy: uninstall
   valuesFrom:
     - kind: ConfigMap
       name: cilium-values

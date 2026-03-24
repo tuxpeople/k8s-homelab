@@ -37,6 +37,8 @@ spec:
   dependsOn:
     - name: cert-manager-tls
       namespace: cert-manager
+    - name: kyverno-policies
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/network/internal/ingress-nginx
   prune: true
