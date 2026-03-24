@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: seccomp-default
+  annotations:
+    policies.kyverno.io/title: Add Default Seccomp Profile
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: low
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Automatically sets seccompProfile: RuntimeDefault on Pod securityContext
+      if not already defined. RuntimeDefault restricts kernel syscalls to a
+      safe subset without requiring app-specific profiles. Will not overwrite
+      explicitly configured profiles (e.g. Localhost or Unconfined).
+      Skipped for namespaces labeled kyverno.io/exclude: "true".
+    pod-policies.kyverno.io/autogen-controllers: none
+spec:
+  rules:
+    - name: seccomp-default
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - kube-system
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
+      mutate:
+        patchStrategicMerge:
+          spec:
+            securityContext:
+              +(seccompProfile):
+                type: RuntimeDefault

@@ -1,0 +1,72 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-privileged
+  annotations:
+    policies.kyverno.io/title: Restrict Privileged Containers
+    policies.kyverno.io/category: Pod Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Audits Pods running privileged containers or with hostPID/hostNetwork/hostIPC.
+      The storage namespace is excluded as democratic-csi legitimately requires
+      hostPID for iSCSI nsenter. Mode is Audit to avoid blocking legitimate workloads.
+      Skipped for namespaces labeled kyverno.io/exclude: "true".
+    pod-policies.kyverno.io/autogen-controllers: none
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: restrict-privileged-containers
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - kube-system
+                - storage
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
+      validate:
+        message: "Privileged containers are not allowed outside of kube-system and storage."
+        foreach:
+          - list: "request.object.spec.[initContainers, containers][]"
+            deny:
+              conditions:
+                all:
+                  - key: "{{ element.securityContext.privileged || false }}"
+                    operator: Equals
+                    value: true
+    - name: restrict-host-namespaces
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - kube-system
+                - storage
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
+      validate:
+        message: "hostPID, hostNetwork and hostIPC are not allowed outside of kube-system and storage."
+        pattern:
+          spec:
+            =(hostPID): false
+            =(hostNetwork): false
+            =(hostIPC): false

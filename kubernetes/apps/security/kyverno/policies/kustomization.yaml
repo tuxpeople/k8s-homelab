@@ -14,3 +14,6 @@ resources:
   - reloader.yaml
   - require-storageclass.yaml
   - restrict-deprecated-registry.yaml
+  - restrict-latest-tag.yaml
+  - restrict-privileged.yaml
+  - seccomp-default.yaml
