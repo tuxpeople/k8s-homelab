@@ -14,7 +14,6 @@ spec:
         name: democratic-csi
         namespace: flux-system
   interval: 1h
-  retryInterval: 5m
   timeout: 10m
   install:
     remediation:

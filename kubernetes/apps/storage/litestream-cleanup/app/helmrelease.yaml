@@ -14,7 +14,6 @@ spec:
         name: bjw-s
         namespace: flux-system
   interval: 30m
-  retryInterval: 5m
   timeout: 5m
   install:
     remediation:

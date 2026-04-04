@@ -14,7 +14,6 @@ spec:
         name: longhorn
         namespace: flux-system
   interval: 1h
-  retryInterval: 5m
   timeout: 30m
   install:
     createNamespace: true

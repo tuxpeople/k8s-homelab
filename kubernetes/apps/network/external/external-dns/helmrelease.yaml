@@ -14,7 +14,6 @@ spec:
         name: external-dns
         namespace: flux-system
   interval: 1h
-  retryInterval: 5m
   timeout: 30m
   install:
     disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206

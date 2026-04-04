@@ -13,17 +13,21 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  interval: 1h
-  retryInterval: 5m
-  timeout: 30m
+  interval: 10m
+  # timeout: 30m
+  test:
+    enable: false
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
-    cleanupOnFail: true
     remediation:
-      retries: 3
-      strategy: uninstall
+      retries: 5
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: false
   valuesFrom:
     - kind: ConfigMap
       name: tautulli-exporter-values
