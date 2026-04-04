@@ -33,15 +33,40 @@ spec:
                 matchLabels:
                   kyverno.io/exclude: "true"
       validate:
-        message: "Images must specify a tag other than 'latest'. Use a specific version tag or digest."
+        message: "An image tag is required."
         foreach:
-          - list: "request.object.spec.[initContainers, ephemeralContainers, containers][]"
-            deny:
-              conditions:
-                any:
-                  - key: "{{ element.image }}"
-                    operator: Equals
-                    value: "*:latest"
-                  - key: "{{ element.image }}"
-                    operator: NotRegex
-                    value: ".+:.+"
+          - list: "request.object.spec.containers"
+            pattern:
+              image: "*:*"
+          - list: "request.object.spec.initContainers"
+            pattern:
+              image: "*:*"
+          - list: "request.object.spec.ephemeralContainers"
+            pattern:
+              image: "*:*"
+    - name: validate-image-tag
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaceSelector:
+                matchLabels:
+                  kyverno.io/exclude: "true"
+      validate:
+        message: "Using a mutable image tag e.g. 'latest' is not allowed."
+        foreach:
+          - list: "request.object.spec.containers"
+            pattern:
+              image: "!*:latest"
+          - list: "request.object.spec.initContainers"
+            pattern:
+              image: "!*:latest"
+          - list: "request.object.spec.ephemeralContainers"
+            pattern:
+              image: "!*:latest"

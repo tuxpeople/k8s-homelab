@@ -10,35 +10,12 @@ metadata:
     policies.kyverno.io/severity: medium
     policies.kyverno.io/subject: HelmRelease
     policies.kyverno.io/description: >-
-      Ensures all HelmReleases have retryInterval and upgrade remediation
-      strategy set. If missing, defaults to retryInterval: 5m and
-      upgrade.remediation.strategy: uninstall to prevent permanent stalled
-      releases after transient webhook failures (e.g. Kyverno restarts).
+      Ensures all HelmReleases have an upgrade remediation strategy set.
+      If missing, defaults to upgrade.remediation.strategy: uninstall
+      to prevent permanently stalled releases after transient webhook
+      failures (e.g. Kyverno restarts).
 spec:
   rules:
-    - name: set-retry-interval
-      match:
-        any:
-          - resources:
-              kinds:
-                - helm.toolkit.fluxcd.io/*/HelmRelease
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - helm.toolkit.fluxcd.io/*/HelmRelease
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.retryInterval || '' }}"
-            operator: Equals
-            value: ""
-      mutate:
-        patchStrategicMerge:
-          spec:
-            retryInterval: 5m
     - name: set-upgrade-remediation-strategy
       match:
         any:
