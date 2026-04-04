@@ -48,6 +48,9 @@ spec:
         scrapeInterval: 60s
         scrapeTimeout: 10s
         replicas: 1
+        externalLabels:
+          cluster: turingpi
+          source_prometheus: turingpi-agent
         resources:
           requests:
             cpu: 200m
@@ -57,3 +60,7 @@ spec:
             memory: 1Gi
         remoteWrite:
           - url: http://monitoring-mqtt.lab.tdeutsch.ch:9090/api/v1/write
+
+    kubelet:
+      serviceMonitor:
+        honorTimestamps: false
