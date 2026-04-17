@@ -14,6 +14,11 @@ controllers:
           DATABASE_PATH: "/data/cmdb.db"
           PORT: "5000"
           FLASK_ENV: "production"
+          API_TOKENS:
+            valueFrom:
+              secretKeyRef:
+                name: simple-cmdb-secrets
+                key: API_TOKENS
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
