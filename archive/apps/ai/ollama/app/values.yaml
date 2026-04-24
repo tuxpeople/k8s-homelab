@@ -8,7 +8,7 @@ controllers:
       app:
         image:
           repository: docker.io/ollama/ollama
-          tag: 0.20.5@sha256:662109db8037f17257cfc6e816289c0d4c9ae8a2a4ff760b653d8d410e234ba0
+          tag: 0.21.2@sha256:2038a264392af4d21f7f14e1568e8dd9aa0f2bd0f31d7d9a59a8cca1e9829663
         env:
           - name: OLLAMA_HOST
             value: 0.0.0.0
