@@ -60,6 +60,9 @@ spec:
             memory: 1Gi
         remoteWrite:
           - url: http://monitoring-mqtt.lab.tdeutsch.ch:9090/api/v1/write
+        serviceMonitorSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
 
     kubelet:
       serviceMonitor:
