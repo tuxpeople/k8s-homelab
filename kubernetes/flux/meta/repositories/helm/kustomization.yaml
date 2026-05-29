@@ -21,6 +21,7 @@ resources:
   - ./home-operations.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
+  - ./traefik.yaml
   - ./k8up.yaml
   - ./kubernetes-sigs-nfd-charts.yaml
   - ./kyverno-charts.yaml

@@ -112,9 +112,7 @@ ingress:
     enabled: true
     className: external
     annotations:
-      nginx.ingress.kubernetes.io/auth-type: basic
-      nginx.ingress.kubernetes.io/auth-secret: dorflade-mhd-auth
-      nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
+      traefik.ingress.kubernetes.io/router.middlewares: network-basic-auth-dorflade@kubernetescrd
       hajimari.io/icon: mdi:barcode-scan
     hosts:
       - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

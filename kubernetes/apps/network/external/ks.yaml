@@ -52,7 +52,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app external-ingress-nginx
+  name: &app external-traefik
   namespace: &namespace network
 spec:
   commonMetadata:
@@ -63,8 +63,10 @@ spec:
       namespace: cert-manager
     - name: kyverno-policies
       namespace: security
+    - name: cloudflared
+      namespace: network
   interval: 1h
-  path: ./kubernetes/apps/network/external/ingress-nginx
+  path: ./kubernetes/apps/network/external/traefik
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -74,26 +76,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
----
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: &app openvpn
-#   namespace: &namespace network
-# spec:
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: *app
-#   interval: 1h
-#   path: ./kubernetes/apps/network/external/openvpn
-#   prune: true
-#   retryInterval: 2m
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#     namespace: flux-system
-#   targetNamespace: *namespace
-#   timeout: 5m
-#   wait: false
----
