@@ -42,26 +42,31 @@ spec:
         lbipam.cilium.io/ips: "192.168.13.64"
       externalTrafficPolicy: Cluster
 
-    entryPoints:
+    ports:
       web:
-        address: ":80"
-        http:
-          redirections:
-            entryPoint:
-              to: websecure
-              scheme: https
-              permanent: true
+        port: 8000
+        expose:
+          default: true
+        exposedPort: 80
+        protocol: TCP
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
       websecure:
-        address: ":443"
-        forwardedHeaders:
-          trustedIPs:
-            - "10.0.0.0/8"
-            - "172.16.0.0/12"
-            - "192.168.0.0/16"
-        http2:
-          maxConcurrentStreams: 250
+        port: 8443
+        expose:
+          default: true
+        exposedPort: 443
+        protocol: TCP
+        tls:
+          enabled: true
       metrics:
-        address: ":9100"
+        port: 9100
+        expose:
+          default: false
+        exposedPort: 9100
 
     # Default TLS certificate for all ingresses in this namespace
     tlsStore:
@@ -81,13 +86,12 @@ spec:
           enabled: true
         allowExternalNameServices: true
 
-    globalArguments:
+    additionalArguments:
       - "--global.checknewversion=false"
       - "--global.sendanonymoususage=false"
-
-    additionalArguments:
-      # Allows proxying to backends with self-signed/untrusted TLS certs
       - "--serversTransport.insecureSkipVerify=true"
+      # Real client IP aus X-Forwarded-For fuer interne Anfragen
+      - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 
     logs:
       general:
