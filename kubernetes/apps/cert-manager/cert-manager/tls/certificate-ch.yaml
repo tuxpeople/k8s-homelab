@@ -3,12 +3,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: tdeutsch-ch-production
-  namespace: productivity
+  name: "${SECRET_CH_DOMAIN/./-}-production"
 spec:
-  secretName: tdeutsch-ch-production-tls
+  secretName: "${SECRET_CH_TLS_CERT}"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "tdeutsch.ch"
-  dnsNames: ["tdeutsch.ch", "*.tdeutsch.ch"]
+  commonName: "${SECRET_CH_DOMAIN}"
+  dnsNames: ["${SECRET_CH_DOMAIN}", "*.${SECRET_CH_DOMAIN}"]
