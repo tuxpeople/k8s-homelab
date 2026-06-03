@@ -34,6 +34,6 @@ spec:
         name: "{{request.object.metadata.name}}"
         namespace: network
         synchronize: true
-        clone:
-          namespace: cert-manager
-          name: "{{request.object.metadata.name}}"
+        data:
+          type: "{{request.object.type}}"
+          data: "{{request.object.data}}"
