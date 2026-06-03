@@ -112,7 +112,7 @@ ingress:
     enabled: true
     className: external
     annotations:
-      traefik.ingress.kubernetes.io/router.middlewares: network-basic-auth-dorflade@kubernetescrd
+      traefik.ingress.kubernetes.io/router.middlewares: productivity-basic-auth-dorflade@kubernetescrd
       hajimari.io/icon: mdi:barcode-scan
     hosts:
       - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
