@@ -1,0 +1,24 @@
+---
+# Grants kyverno-background-controller permissions to clone secrets
+# from cert-manager namespace to network namespace for sync-production-tls policy.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kyverno-generate-tls-secrets
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kyverno-generate-tls-secrets
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kyverno-generate-tls-secrets
+subjects:
+  - kind: ServiceAccount
+    name: kyverno-background-controller
+    namespace: security
