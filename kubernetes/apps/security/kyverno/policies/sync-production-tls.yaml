@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: sync-production-tls
+  annotations:
+    policies.kyverno.io/title: Sync Production TLS Secrets to Network Namespace
+    policies.kyverno.io/category: Certificates
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Secret
+    policies.kyverno.io/description: >-
+      Syncs all *-production-tls secrets from cert-manager namespace to the
+      network namespace so both Traefik instances can serve TLS for all managed
+      domains. Eliminates the need for duplicate Certificate resources.
+      Synchronize keeps the copy up to date on certificate renewal.
+    pod-policies.kyverno.io/autogen-controllers: none
+spec:
+  generateExisting: true
+  rules:
+    - name: sync-to-network
+      match:
+        any:
+          - resources:
+              kinds:
+                - Secret
+              namespaces:
+                - cert-manager
+              names:
+                - "*-production-tls"
+      generate:
+        apiVersion: v1
+        kind: Secret
+        name: "{{request.object.metadata.name}}"
+        namespace: network
+        synchronize: true
+        clone:
+          namespace: cert-manager
+          name: "{{request.object.metadata.name}}"
