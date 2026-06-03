@@ -9,6 +9,7 @@ resources:
   - ./helmrelease.yaml
   - ./paperless-config.yaml
   - ./litestream-configmap.yaml
+  - ./certificate.yaml
 configMapGenerator:
   - name: paperless-scripts
     files:
