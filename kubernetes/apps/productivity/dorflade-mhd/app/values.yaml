@@ -27,7 +27,7 @@ controllers:
       litestream:
         image:
           repository: docker.io/litestream/litestream
-          tag: 0.5.11
+          tag: 0.5.12
         args: ["replicate"]
         env:
           LITESTREAM_ACCESS_KEY_ID:
@@ -61,7 +61,7 @@ controllers:
       01-litestream-restore:
         image:
           repository: docker.io/litestream/litestream
-          tag: 0.5.11
+          tag: 0.5.12
         args:
           - restore
           - -if-db-not-exists
@@ -112,9 +112,7 @@ ingress:
     enabled: true
     className: external
     annotations:
-      nginx.ingress.kubernetes.io/auth-type: basic
-      nginx.ingress.kubernetes.io/auth-secret: dorflade-mhd-auth
-      nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
+      traefik.ingress.kubernetes.io/router.middlewares: productivity-basic-auth-dorflade@kubernetescrd
       hajimari.io/icon: mdi:barcode-scan
     hosts:
       - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

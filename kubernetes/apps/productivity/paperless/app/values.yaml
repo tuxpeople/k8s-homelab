@@ -8,7 +8,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/paperless-ngx/paperless-ngx
-          tag: 2.20.13@sha256:4b05bcd28e6923768000b5d247cbf2c66fd49bdc3f3b05955bd4f6790a638b01
+          tag: 2.20.15@sha256:6c86cad803970ea782683a8e80e7403444c5bf3cf70de63b4d3c8e87500db92f
         envFrom:
           - configMapRef:
               name: paperless-config
@@ -58,7 +58,7 @@ controllers:
       litestream:
         image:
           repository: docker.io/litestream/litestream
-          tag: 0.5.11
+          tag: 0.5.12
         args: ["replicate"]
         env:
           LITESTREAM_ACCESS_KEY_ID:
@@ -97,7 +97,7 @@ controllers:
       01-litestream-restore:
         image:
           repository: docker.io/litestream/litestream
-          tag: 0.5.11
+          tag: 0.5.12
         args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/data/db.sqlite3"]
         env:
           LITESTREAM_ACCESS_KEY_ID:
@@ -130,7 +130,7 @@ controllers:
       redis:
         image:
           repository: docker.io/valkey/valkey
-          tag: 9.0.3
+          tag: 9.1.0
         resources:
           requests:
             cpu: 23m
@@ -143,7 +143,7 @@ controllers:
       tika:
         image:
           repository: docker.io/apache/tika
-          tag: 3.3.0.0-full
+          tag: 3.3.1.0-full
         resources:
           requests:
             cpu: 15m
@@ -156,7 +156,7 @@ controllers:
       gotenberg:
         image:
           repository: docker.io/gotenberg/gotenberg
-          tag: 8.30.1@sha256:206a6c708fc6d05257367d9ac902d6c56c50d2e3284d0596ea000814ef97f22c
+          tag: 8.34.0@sha256:67097317623a503ba2a6a7e9ae8db6929a1f7e1bbd88077bacf2d325fbdab923
         env:
           DISABLE_GOOGLE_CHROME: "1"
         resources:
@@ -194,13 +194,7 @@ ingress:
     className: internal
     annotations:
       hajimari.io/icon: material-symbols:scanner-outline
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
-      nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
-      nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
-      nginx.ingress.kubernetes.io/auth-snippet: |
-        proxy_set_header X-Forwarded-Method $request_method;
-        proxy_set_header X-Forwarded-Scheme $scheme;
+      traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
     hosts:
       - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
         paths:

@@ -37,7 +37,7 @@ jobs:
       - name: Get PR number for workflow failures
         id: pr
         if: github.event_name == 'workflow_run'
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const { data: prs } = await github.rest.pulls.list({
@@ -55,7 +55,7 @@ jobs:
       - name: Check if Claude already analyzed this PR
         id: claude-check
         if: github.event_name == 'workflow_run' && steps.pr.outputs.result != 'null'
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const prNumber = ${{ steps.pr.outputs.result }};
@@ -81,7 +81,7 @@ jobs:
 
       - name: Add failure labels
         if: github.event_name == 'workflow_run' && steps.pr.outputs.result != 'null' && steps.claude-check.outputs.result != 'skip'
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const prNumber = ${{ steps.pr.outputs.result }};
@@ -95,7 +95,7 @@ jobs:
       - name: Build prompt for workflow failures
         id: prompt
         if: github.event_name == 'workflow_run' && steps.claude-check.outputs.result != 'skip'
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const workflowName = context.payload.workflow_run.name;

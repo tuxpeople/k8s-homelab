@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 83.4.0
+      version: 86.2.2
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -60,6 +60,9 @@ spec:
             memory: 1Gi
         remoteWrite:
           - url: http://monitoring-mqtt.lab.tdeutsch.ch:9090/api/v1/write
+        serviceMonitorSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
 
     kubelet:
       serviceMonitor:

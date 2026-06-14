@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "${SECRET_CH_DOMAIN/./-}-production"
+spec:
+  secretName: "${SECRET_CH_TLS_CERT}"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "${SECRET_CH_DOMAIN}"
+  dnsNames: ["${SECRET_CH_DOMAIN}", "*.${SECRET_CH_DOMAIN}"]

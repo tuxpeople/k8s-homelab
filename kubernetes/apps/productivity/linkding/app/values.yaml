@@ -28,7 +28,7 @@ controllers:
       litestream: &ls
         image:
           repository: "docker.io/litestream/litestream"
-          tag: "0.5.11"
+          tag: "0.5.12"
         args: ["replicate"]
         env: &lsenv
           LITESTREAM_ACCESS_KEY_ID:
@@ -78,13 +78,7 @@ ingress:
     enabled: true
     className: external
     annotations:
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
-      nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
-      nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
-      nginx.ingress.kubernetes.io/auth-snippet: |
-        proxy_set_header X-Forwarded-Method $request_method;
-        proxy_set_header X-Forwarded-Scheme $scheme;
+      traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
       hajimari.io/icon: "mdi:link-variant"
     hosts:
       - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

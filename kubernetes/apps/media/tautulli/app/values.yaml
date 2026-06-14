@@ -8,7 +8,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/home-operations/tautulli
-          tag: 2.17.0@sha256:b90b30e15d1b6d12fc726fac1ef9778ad92f405ac8f8ccb30a34d7f6673c113d
+          tag: 2.17.1@sha256:2183820d45a1413b4b8868fc18ad5eb9259630ea0151348cdc9cfb4017a0dd33
         env:
           TZ: ${TIMEZONE}
           TAUTULLI_HTTP_BASE_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -47,7 +47,7 @@ controllers:
       jbops:
         image:
           repository: registry.k8s.io/git-sync/git-sync
-          tag: v4.6.0@sha256:228a26d5f55ac5ae9c51635812570ba0073e0b1e0bd8fc3a653a0523b918c092
+          tag: v4.7.0@sha256:d232fd13474ba1b46dba431af2b1411b9d9afacda55ae644d2a32e43975128dd
         env:
           GITSYNC_REPO: https://github.com/blacktwin/JBOPS
           GITSYNC_REF: master

@@ -9,7 +9,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/miniflux/miniflux
-          tag: 2.2.19-distroless@sha256:c752402519127b6eb4081bace4bea3ca89465b2c7e3f354b7be020a822e3d8a3
+          tag: 2.3.1-distroless@sha256:6361b075e6189c10f3ac7d18733e467bd3bbf965de2ad5a64a0fb9809456989e
         env:
           BASE_URL: https://{{ .Release.Name }}.${SECRET_DOMAIN}
           CREATE_ADMIN: "1"

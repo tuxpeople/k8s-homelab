@@ -17,6 +17,7 @@ data:
 
   # TLS
   SECRET_TLS_CERT: "${SECRET_DOMAIN/./-}-production-tls"
+  SECRET_CH_TLS_CERT: "${SECRET_CH_DOMAIN/./-}-production-tls"
 
   # Cert-Manager
   CERT_ISSUER: letsencrypt-production

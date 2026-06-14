@@ -1,0 +1,131 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app external-traefik
+spec:
+  chart:
+    spec:
+      chart: traefik
+      version: 40.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+  interval: 10m
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: 5
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: false
+  dependsOn:
+    - name: cloudflared
+      namespace: network
+  values:
+    fullnameOverride: *app
+
+    deployment:
+      replicas: 1
+
+    ingressClass:
+      enabled: true
+      isDefaultClass: false
+      name: external
+
+    service:
+      enabled: true
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
+        lbipam.cilium.io/ips: "192.168.13.66"
+      externalTrafficPolicy: Cluster
+
+    ports:
+      web:
+        port: 8000
+        expose:
+          default: true
+        exposedPort: 80
+        protocol: TCP
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
+      websecure:
+        port: 8443
+        expose:
+          default: true
+        exposedPort: 443
+        protocol: TCP
+        http:
+          tls:
+            enabled: true
+      metrics:
+        port: 9100
+        expose:
+          default: false
+        exposedPort: 9100
+
+    providers:
+      kubernetesCRD:
+        enabled: true
+        allowCrossNamespace: true
+        allowExternalNameServices: true
+      kubernetesIngress:
+        enabled: true
+        ingressClass: external
+        publishedService:
+          enabled: true
+        allowExternalNameServices: true
+
+    additionalArguments:
+      - "--global.checknewversion=false"
+      - "--global.sendanonymoususage=false"
+      - "--serversTransport.insecureSkipVerify=true"
+      # Cloudflare IPs fuer echte Client-IP aus X-Forwarded-For
+      - "--entrypoints.websecure.forwardedHeaders.trustedIPs=103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,104.16.0.0/13,104.24.0.0/14,108.162.192.0/18,131.0.72.0/22,141.101.64.0/18,162.158.0.0/15,172.64.0.0/13,173.245.48.0/20,188.114.96.0/20,190.93.240.0/20,197.234.240.0/22,198.41.128.0/17"
+
+    logs:
+      general:
+        level: INFO
+        format: json
+      access:
+        enabled: true
+        format: json
+        fields:
+          general:
+            defaultMode: keep
+          headers:
+            defaultMode: drop
+            names:
+              User-Agent: keep
+              Content-Type: keep
+
+    metrics:
+      prometheus:
+        entryPoint: metrics
+        addServicesLabels: true
+        addEntryPointsLabels: true
+        addRoutersLabels: true
+        service:
+          enabled: true
+        serviceMonitor:
+          enabled: true
+          namespaceSelector:
+            any: true
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 300m
+        memory: 200Mi
