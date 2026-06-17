@@ -39,7 +39,12 @@
       "Bash(docker manifest inspect:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(talosctl:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(export KUBECONFIG=/Users/thomas.deutsch/development/github/tuxpeople/k8s-homelab/kubeconfig)",
+      "Bash(KUBECONFIG=/Users/thomas.deutsch/development/github/tuxpeople/k8s-homelab/kubeconfig kubectl get pods -n network)",
+      "Bash(KUBECONFIG=/Users/thomas.deutsch/development/github/tuxpeople/k8s-homelab/kubeconfig kubectl get ingress -A --no-headers)",
+      "Bash(awk '{print $1, $2, $3, $4, $5}')",
+      "Bash(KUBECONFIG=/Users/thomas.deutsch/development/github/tuxpeople/k8s-homelab/kubeconfig kubectl get secret -A)"
     ],
     "deny": [],
     "ask": []

@@ -9,14 +9,14 @@ This repository contains the configuration and deployment manifests for my perso
 - **GitOps**: [FluxCD](https://github.com/fluxcd/flux2) - Continuous deployment from Git
 - **Networking**: [Cilium](https://github.com/cilium/cilium) with CNI disabled in Talos
 - **Storage**:
-  - [Longhorn](https://github.com/longhorn/longhorn) for distributed block storage
-  - [Synology CSI](https://github.com/SynologyOpenSource/synology-csi) for external NAS storage
+  - [democratic-csi](https://github.com/democratic-csi/democratic-csi) for Synology iSCSI/NFS volumes
+  - [Snapshot Controller](https://github.com/kubernetes-csi/external-snapshotter) for CSI VolumeSnapshots
 - **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes
 - **DNS**:
   - [external-dns](https://github.com/kubernetes-sigs/external-dns) with dual providers:
     - Cloudflare for public DNS (`external` ingress class)
     - UniFi webhook for internal LAN DNS (`internal` ingress class)
-- **Secrets**: [SOPS](https://github.com/getsops/sops) encryption with Age keys + [external-secrets](https://github.com/external-secrets/external-secrets) with 1Password integration
+- **Secrets**: [SOPS](https://github.com/getsops/sops) encryption with Age keys + [external-secrets](https://github.com/external-secrets/external-secrets) with 1Password and Doppler integration
 - **Tunnels**: [Cloudflared](https://github.com/cloudflare/cloudflared) for secure public access
 
 ### Network Configuration
@@ -31,21 +31,17 @@ This repository contains the configuration and deployment manifests for my perso
 The cluster runs various applications organized by category:
 
 ### 🤖 AI/ML
-- **LibreChat2** - AI chat interface
 - **Open WebUI** - Web interface for AI models
-- **Ollama** - Local LLM runtime
 
 ### 📊 Media
-- **Overseerr** - Media request management
+- **Calibre-Web** - eBook library management
 - **Tautulli** - Plex statistics and monitoring
-- **Mediabox** - Complete *arr stack with ingress configurations
 
 ### 🛠️ Productivity
-- **Code Server** - VS Code in the browser
+- **dorflade-mhd** - Custom product/inventory tracker
 - **FreshRSS** - RSS feed reader
 - **Hajimari** - Application dashboard
 - **Linkding** - Bookmark manager
-- **N8N** - Workflow automation
 - **Obsidian** - Note-taking application
 - **Paperless** - Document management system
 
@@ -58,13 +54,12 @@ The cluster runs various applications organized by category:
 
 ### 🔒 Security
 - **Kyverno** - Policy engine for Kubernetes
-- **External Secrets** - Secret management integration
-- **Trivy Operator** - Vulnerability scanning
+- **External Secrets** - Secret management (1Password + Doppler)
 
 ### 💾 Storage & Backup
-- **K8up** - Backup operator using Restic
-- **Velero** - Kubernetes backup solution
-- **Snapshot Controller** - Volume snapshot management
+- **democratic-csi** - Synology iSCSI/NFS CSI driver
+- **Snapshot Controller** - CSI VolumeSnapshot management
+- **Litestream Cleanup** - S3 replica housekeeping for Litestream apps
 
 ## 🔧 Management Tools
 
@@ -104,7 +99,7 @@ mise trust && pip install pipx && mise install
 ## 🔐 Security & Secrets
 
 - **Encryption**: All secrets encrypted with SOPS using Age keys
-- **Secret Management**: Integration with 1Password via external-secrets operator
+- **Secret Management**: Integration with 1Password and Doppler via external-secrets operator
 - **Certificate Management**: Let's Encrypt certificates via cert-manager
 - **Network Security**: Split-horizon DNS and internal/external ingress separation
 
@@ -133,11 +128,8 @@ Automated dependency updates for:
 - **Discord Integration** - Alert notifications
 
 ### Application Monitoring
-- **Blackbox Exporter** - External service monitoring
-- **Custom Exporters** - Specialized metrics for:
-  - Media applications (Plex, Tautulli, Sonarr, Radarr, etc.)
-  - Network services (SNMP for Synology)
-  - Speed testing
+- **Gatus** - Endpoint monitoring with Kyverno-generated config
+- **Custom Exporters** - Tautulli exporter, SNMP (Synology)
 
 ## 🏠 Network Integration
 
@@ -155,15 +147,13 @@ Split-horizon DNS setup:
 ## 🗄️ Data Management
 
 ### Storage Classes
-- **Longhorn**: Default distributed storage for most workloads
-- **Synology CSI**: External NAS storage for large datasets
+- **democratic-csi (Synology)**: Primary storage via iSCSI/NFS from Synology NAS
 - **Local Storage**: Direct node storage for specific use cases
 
 ### Backup Strategy
-- **K8up**: Regular backups to external storage
-- **Velero**: Kubernetes-native backup solution
-- **Longhorn**: Built-in backup and snapshot capabilities
-- **Volume Snapshots**: Point-in-time volume recovery
+- **Litestream**: SQLite replication to MinIO S3 for stateful apps (Linkding, dorflade-mhd, simple-cmdb)
+- **Volume Snapshots**: CSI VolumeSnapshot via snapshot-controller for point-in-time recovery
+- **NAS-native**: Synology snapshots/rsync for NFS-mounted data (Paperless, Calibre)
 
 ## 📝 Maintenance
 
@@ -171,7 +161,7 @@ Split-horizon DNS setup:
 - **Updates**: Automated via Renovate on weekends
 - **Monitoring**: Continuous monitoring via Prometheus/Grafana
 - **Backups**: Automated backup schedules with retention policies
-- **Security**: Regular vulnerability scans via Trivy
+- **Security**: Kyverno admission policies enforce resource limits and image standards
 
 ### Emergency Procedures
 - **Cluster Reset**: `task talos:reset` for emergency cluster rebuilding

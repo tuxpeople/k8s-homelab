@@ -17,11 +17,11 @@ This is an active Kubernetes homelab cluster built on Talos Linux with GitOps us
 - **Talos Linux**: Immutable OS for Kubernetes nodes with talhelper for configuration management
 - **FluxCD**: GitOps tool for continuous deployment from Git repository
 - **CNI**: Cilium networking with built-in CNI disabled in Talos
-- **Storage**: Longhorn for distributed block storage, Synology CSI for external NAS storage
-- **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes
-- **DNS**: Split-horizon DNS with dual external-dns (Cloudflare for public, UniFi for internal LAN)
-- **Security**: SOPS for secret encryption using Age keys, external-secrets with 1Password integration
-- **Monitoring**: Kube-prometheus-stack with Grafana, custom exporters for media applications
+- **Storage**: democratic-csi for Synology iSCSI/NFS volumes; Longhorn and Synology CSI are archived
+- **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes; Traefik deployed alongside as alternative ingress
+- **DNS**: Split-horizon DNS with dual external-dns (Cloudflare for public, UniFi webhook for internal LAN)
+- **Security**: SOPS for secret encryption using Age keys, external-secrets with 1Password and Doppler integration
+- **Monitoring**: Kube-prometheus-stack with Grafana, custom exporters (Tautulli, SNMP)
 
 ### Directory Structure
 ```
@@ -66,10 +66,10 @@ The `docs/` directory contains operational documentation for humans:
 **Service Documentation** (`docs/services/`):
 - `cluster-foundation.md` - Talos, Kubernetes, node inventory
 - `fluxcd.md` - FluxCD configuration and workflows
-- `networking.md` - DNS (k8s_gateway, external-dns dual setup), ingress, Cloudflare
-- `storage.md` - Longhorn, Synology CSI, storage classes
+- `networking.md` - DNS (external-dns dual setup, unifi-dns, Traefik), ingress, Cloudflare
+- `storage.md` - democratic-csi (Synology iSCSI), storage classes; Longhorn/K8up/Velero archived
 - `observability.md` - Prometheus, Grafana, exporters, Gatus endpoint management
-- `security.md` - Kyverno policies, External Secrets, Trivy, compliance
+- `security.md` - Kyverno policies, External Secrets (1Password + Doppler), compliance
 - `platform-support.md` - Supporting services (cert-manager, reloader, etc.)
 - `applications-*.md` - Application-specific documentation (AI, media, productivity)
 
@@ -310,20 +310,20 @@ This setup prevents the common issue where VS Code formats YAML files in a way t
 ## Application Organization
 
 Applications in `kubernetes/apps/` are organized by function:
-- `ai/` - AI/ML applications (LibreChat2, Open WebUI, Ollama)
+- `ai/` - AI/ML applications (Open WebUI active; LibreChat2, Ollama, Paperless-AI archived in `archive/apps/ai/`)
 - `cert-manager/` - Certificate management
-- `database/` - Database operators and services
-- `default/` - General applications (echo-server, GitLab runners, homepage)
+- `database/` - Database operators and services (postgres-operator)
+- `default/` - General applications (bildergallerie, echo-server, homepage)
 - `flux-system/` - FluxCD operator and instance configurations
-- `kube-system/` - Core Kubernetes components (Cilium, CoreDNS, metrics-server, reloader, spegel)
-- `media/` - Media server applications (Overseerr, Tautulli, mediabox stack)
-- `network/` - Networking components (ingress-nginx, external-dns, cloudflared, k8s-gateway)
-- `observability/` - Monitoring and logging (Prometheus stack, Grafana, exporters, Gatus)
-- `productivity/` - Productivity tools (Code Server, FreshRSS, Hajimari, Linkding, N8N, Obsidian, Paperless)
-- `security/` - Security-related applications (external-secrets, Kyverno, Trivy)
-- `storage/` - Storage systems and backup (Longhorn, Synology CSI, K8up, Velero)
+- `kube-system/` - Core Kubernetes components (Cilium, CoreDNS, descheduler, metrics-server, node-feature-discovery, reloader, spegel)
+- `media/` - Media server applications (Calibre-Web, Tautulli; Overseerr, Mediabox, Plex Exporter/Trakt Sync archived in `archive/apps/media/`)
+- `network/` - Networking components split into `external/` (ingress-nginx, external-dns, cloudflared, Traefik) and `internal/` (ingress-nginx, python-ipam, Traefik, unifi-dns)
+- `observability/` - Monitoring and logging (kube-prometheus-stack, Gatus)
+- `productivity/` - Productivity tools (dorflade-mhd, FreshRSS, Hajimari, Linkding, Obsidian, Paperless; Code Server, N8N and others archived in `archive/apps/productivity/`)
+- `security/` - Security-related applications (external-secrets with 1Password + Doppler SecretStores, Kyverno; Trivy archived in `archive/apps/security/`)
+- `storage/` - Storage systems (democratic-csi, litestream-cleanup, snapshot-controller; Longhorn, K8up, Velero archived in `archive/apps/storage/`)
 - `system-upgrade/tuppr/` - Talos and Kubernetes upgrade automation
-- `tools/` - Utility applications (headscale, pod-cleaner, SMTP relay, Spoolman)
+- `tools/` - Utility applications (pod-cleaner, simple-cmdb, Spoolman; headscale, SMTP relay archived in `archive/apps/tools/`)
 - `vpa/` - Vertical Pod Autoscaler (Goldilocks)
 
 Each application typically has:
@@ -411,7 +411,7 @@ kubectl -n <namespace> logs -l app.kubernetes.io/name=<app> -f
   - Automatic Gatus monitoring via Kyverno policies for both ingress classes
   - Exclude from monitoring: Add annotation `gatus.io/enabled: "false"` or deploy in `test` namespace
   - Customize monitoring: Use `gatus.io/host`, `gatus.io/path`, `gatus.io/name`, `gatus.io/status-code` annotations
-- **Storage**: Longhorn for persistent volumes, use StorageClass annotations
+- **Storage**: democratic-csi for Synology-backed persistent volumes; use the default StorageClass or `synology-iscsi`
 
 ### Security Considerations
 - **SOPS encryption**: All secrets must be encrypted before commit
@@ -492,7 +492,7 @@ For automation and CI/CD details, see docs/automation.md and docs/services/fluxc
 Multi-layered secret management:
 
 - **SOPS + Age**: Encrypt secrets at rest in Git with `age.key`
-- **External Secrets**: Runtime secret injection from 1Password (vault "Homelab")
+- **External Secrets**: Runtime secret injection from 1Password (vault "Homelab") and Doppler; SecretStores under `kubernetes/apps/security/external-secrets/secretstores/`
 - **Cert-manager**: Automated TLS certificate management with Let's Encrypt production issuer
 - **Ingress TLS**: Default wildcard certificate `${SECRET_DOMAIN/./-}-production-tls`
 
@@ -500,11 +500,13 @@ For detailed procedures, see docs/secrets.md and docs/services/security.md
 
 ### Storage Architecture
 
-Distributed storage with multiple backends:
+Active storage components:
 
-- **Longhorn**: Primary distributed block storage with automated backups and snapshots
-- **Synology CSI**: External NAS storage for large datasets via DSM integration
-- **Backup Strategy**: K8up (Restic), Velero, and Longhorn's native backup capabilities
+- **democratic-csi**: Primary CSI driver for Synology NAS (iSCSI/NFS), requires `hostPID: true` for nsenter/iscsiadm
+- **snapshot-controller**: CSI VolumeSnapshot CRDs and controller
+- **litestream-cleanup**: Housekeeping for Litestream S3 replicas (used by Linkding, dorflade-mhd, simple-cmdb)
+
+Archived (see `archive/apps/storage/`): Longhorn, Synology CSI driver, K8up, Velero
 
 For storage operations and backup procedures, see docs/services/storage.md and docs/backups.md
 
@@ -515,7 +517,7 @@ Comprehensive observability stack:
 - **Metrics**: Prometheus with custom recording rules and federation
 - **Visualization**: Grafana with pre-configured dashboards for home automation, systems, and applications
 - **Alerting**: Alertmanager with Discord webhook integration
-- **Exporters**: Specialized exporters for media stack (Tautulli, *arr apps), SNMP (Synology), and network services
+- **Exporters**: Tautulli exporter in observability namespace; SNMP (Synology); *arr exporters archived
 - **Gatus**: Automated endpoint monitoring via Kyverno policies
   - Automatically monitors all Ingresses with `internal` or `external` ingressClassName
   - Exclusions: Ingresses in `test` namespace or with annotation `gatus.io/enabled: "false"`

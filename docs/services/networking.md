@@ -26,6 +26,7 @@
 | Service | Zweck | Secrets / Hinweise |
 |---------|-------|-------------------|
 | `ingress-nginx` (external) | Public HTTP/S Endpoints (`external` class) – routet nur Cloudflared IPs. | TLS via cert-manager wildcard `${SECRET_DOMAIN}`. Rate Limiting TODO. |
+| `traefik` (external) | Alternativer Ingress Controller für externe Routen. | Parallel zu ingress-nginx deployed; Middlewares unter `kubernetes/apps/network/middlewares/`. |
 | `cloudflared` | Tunnel von `external` ingress ins Internet. | Secret `cloudflare-tunnel.json` (SOPS). Reconcile `flux reconcile kustomization cloudflared -n network`. |
 | `external-dns` | Erstellt/aktualisiert Cloudflare Records. | API Token im ExternalSecret `external-dns` (1Password). TTL konfiguriert. |
 | `openvpn` (archiviert) | Legacy Remotezugang fallback. | Manifeste unter `archive/apps/network/external/openvpn`. |
@@ -34,6 +35,7 @@
 | Service | Zweck | Hinweise |
 |---------|-------|----------|
 | `ingress-nginx` (internal) | LAN-only Services (`internal` class). | Binds auf 192.168.13.64, Authelia Standard. |
+| `traefik` (internal) | Alternativer Ingress Controller für interne Routen. | Parallel zu ingress-nginx deployed. |
 | `python-ipam` | Hilfsservice zur IP-Adressverwaltung/Reservations. | TODO: Doku der API/DB. |
 | `unifi-dns` | external-dns mit UniFi Webhook für automatisches DNS in UDM. | Verarbeitet `ingressClassName: internal`, erstellt Host Records in UniFi. API Key via 1Password (`unifi-api-externaldns`). |
 
@@ -309,13 +311,13 @@ kubectl rollout restart deployment unifi-dns -n network
 
 #### Von k8s-gateway zu external-dns migrieren
 
-Die Migration ist bereits abgeschlossen:
+Die Migration ist abgeschlossen:
 - ✅ `unifi-dns` (external-dns mit UniFi webhook) ist aktiv
 - ✅ Alle internal Ingresses nutzen automatisch UniFi DNS
-- ✅ `k8s-gateway` bleibt deployed für Legacy-Support
-- ✅ UDM forwarding `server=/eighty-three.me/192.168.13.65` bleibt aktiv (Fallback)
+- ✅ `k8s-gateway` ist entfernt; Manifeste archiviert
+- ✅ UDM forwarding `server=/eighty-three.me/192.168.13.64` bleibt aktiv (Fallback)
 
-**Kein Action Item nötig** - beide Systeme koexistieren sauber.
+**Kein Action Item nötig** – Migration vollständig abgeschlossen.
 
 #### Manuelles Cleanup von DNS-Einträgen
 

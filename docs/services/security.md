@@ -4,9 +4,10 @@
 | Service | Pfad | Status | Zweck |
 |---------|------|--------|-------|
 | Kyverno | `kubernetes/apps/security/kyverno` | Aktiv | Admission/Mutation Policies (PodSecurity, labels, blocking `latest`, privilege). |
-| External Secrets | `kubernetes/apps/security/external-secrets` | Aktiv | Synchronisiert Secrets aus 1Password → Namespaces. Nutzt `onepassword-connect`. |
+| External Secrets | `kubernetes/apps/security/external-secrets` | Aktiv | Synchronisiert Secrets aus 1Password und Doppler → Namespaces. |
+| SecretStore 1Password | `kubernetes/apps/security/external-secrets/secretstores/onepassword` | Aktiv | Backend via onepassword-connect; benötigt 1Password Connect Token. |
+| SecretStore Doppler | `kubernetes/apps/security/external-secrets/secretstores/doppler` | Aktiv | Direktintegration mit Doppler Service Token. |
 | Trivy Operator | `archive/apps/security/trivy-operator` | Archiviert | CVE & config scanning (VulnerabilityReports, ConfigAuditReports). |
-| onepassword-connect | (Deployment unter security) | Aktiv | Backend für ExternalSecrets, benötigt 1Password token. |
 
 ## Kyverno Policies
 - Policies liegen unter `kubernetes/apps/security/kyverno/policies/`.
@@ -23,14 +24,16 @@
 
 ## Secrets & External Secrets
 - Age/SOPS Workflow siehe `docs/secrets.md`.
-- ExternalSecret Manifeste liegen bei den jeweiligen Apps (z. B. `app/externalsecret.yaml`), SecretStores unter `kubernetes/apps/security/external-secrets/secretstores`.
-- 1Password Connect Token und Signing Certificate in `onepassword-connect` Secret (SOPS).
+- ExternalSecret Manifeste liegen bei den jeweiligen Apps (z. B. `app/externalsecret.yaml`), SecretStores unter `kubernetes/apps/security/external-secrets/secretstores/`.
+- **1Password**: Connect Token und Signing Certificate in SOPS-Secret `onepassword-connect`.
+- **Doppler**: Service Token direkt als ExternalSecret-Credential konfiguriert.
 - Health-Check:
   - `kubectl get externalsecret -A`.
   - `kubectl -n security logs deploy/external-secrets`.
 - Rotation:
   - Age key / SOPS → `task encrypt-secrets`.
   - 1Password token → Update secret, restart Connect.
+  - Doppler token → ExternalSecret credential aktualisieren.
   - Document steps in TODO `Secret-Rotation Runbook`.
 
 ## Vulnerability Management
