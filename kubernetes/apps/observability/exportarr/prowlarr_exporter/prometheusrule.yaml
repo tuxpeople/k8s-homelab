@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prowlarr
+spec:
+  groups:
+    - name: Prowlarr
+      rules:
+        - alert: ExportarrAbsent
+          annotations:
+            description: |
+              Exportarr instance for Prowlarr has disappeared from Prometheus service discovery.
+            summary: Exportarr instance for Prowlarr is down.
+          expr: absent(up{job=~".*prowlarr-exporter.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
+        - alert: ProwlarrDown
+          annotations:
+            description: |
+              Arr Application prowlarr in namespace {{ $labels.namespace }} is not reporting status check correctly.
+            summary: prowlarr is Down
+          expr: prowlarr_system_status{job=~".*prowlarr-exporter.*"} != 1
+          for: 15m
+          labels:
+            severity: critical
+        - alert: ProwlarrUnhealthy
+          annotations:
+            description: |
+              Arr Application prowlarr is having issues with {{ $labels.source }} health check - {{ $labels.message }}.
+              For more infromation check {{ $labels.wikiurl }}.
+            summary: prowlarr is unhealthy
+          expr: max_over_time(prowlarr_system_health_issues{job=~".*prowlarr-exporter.*",source!="UpdateCheck",source!="IndexerStatusCheck",source!="IndexerLongTermStatusCheck"}[1h]) == 1
+          for: 2h
+          labels:
+            severity: warning
+        - alert: ProwlarIndexerUnhealthy
+          annotations:
+            description: |
+              {{ $labels.message }}.
+              For more infromation check {{ $labels.wikiurl }}.
+            summary: One of Prowlarr Indexers stopped working properly
+          expr: max_over_time(prowlarr_system_health_issues{job=~".*prowlarr-exporter.*",source="IndexerLongTermStatusCheck"}[1h]) == 1
+          for: 7d
+          labels:
+            severity: warning

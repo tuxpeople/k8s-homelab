@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: radarr
+spec:
+  groups:
+    - name: Radarr
+      rules:
+        - alert: ExportarrAbsent
+          annotations:
+            description: |
+              Exportarr instance for Radarr has disappeared from Prometheus service discovery.
+            summary: Exportarr instance for Radarr is down.
+          expr: absent(up{job=~".*radarr-exporter.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
+        - alert: RadarrDown
+          annotations:
+            description: |
+              Arr Application radarr in namespace {{ $labels.namespace }} is not reporting status check correctly.
+            summary: radarr is Down
+          expr: radarr_system_status{job=~".*radarr-exporter.*"} != 1
+          for: 15m
+          labels:
+            severity: critical
+        - alert: RadarrUnhealthy
+          annotations:
+            description: |
+              Arr Application radarr is having issues with {{ $labels.source }} health check - {{ $labels.message }}.
+              For more infromation check {{ $labels.wikiurl }}.
+            summary: radarr is unhealthy
+          expr: max_over_time(radarr_system_health_issues{job=~".*radarr-exporter.*",source!="UpdateCheck",source!="IndexerStatusCheck",source!="IndexerLongTermStatusCheck"}[1h]) == 1
+          for: 2h
+          labels:
+            severity: warning
