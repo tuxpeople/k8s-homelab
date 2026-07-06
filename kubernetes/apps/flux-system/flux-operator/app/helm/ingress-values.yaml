@@ -1,0 +1,17 @@
+web:
+  ingress:
+    enabled: true
+    className: "external"
+    annotations:
+      hajimari.io/appName: Flux Operator
+      hajimari.io/icon: simple-icons:flux
+      traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
+    hosts:
+      - host: flux-operator.${SECRET_DOMAIN}
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: flux-operator-tls
+        hosts:
+          - flux-operator.${SECRET_DOMAIN}
