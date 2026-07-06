@@ -10,7 +10,7 @@ resources:
 web:
   ingress:
     enabled: true
-    className: "internal"
+    className: "external"
     annotations:
       hajimari.io/appName: Flux Operator
       hajimari.io/icon: simple-icons:flux
