@@ -8,3 +8,4 @@ components:
 resources:
   - ./external/ks.yaml
   - ./internal/ks.yaml
+  - ./middlewares/ks.yaml

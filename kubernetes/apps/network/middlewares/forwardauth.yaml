@@ -9,8 +9,9 @@ metadata:
   namespace: network
 spec:
   forwardAuth:
-    address: "https://auth.${SECRET_DOMAIN}/api/verify?rd=https://auth.${SECRET_DOMAIN}"
+    address: "https://auth.${SECRET_DOMAIN}/api/authz/forward-auth"
     trustForwardHeader: true
+    maxResponseBodySize: 8192
     authResponseHeaders:
       - Remote-User
       - Remote-Name

@@ -14,6 +14,8 @@ spec:
       namespace: security
     - name: external-secrets-secretstores
       namespace: security
+    - name: network-middlewares
+      namespace: network
   interval: 1h
   path: ./kubernetes/apps/productivity/linkding/app
   prune: true
