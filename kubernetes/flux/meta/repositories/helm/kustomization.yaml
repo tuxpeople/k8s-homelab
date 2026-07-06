@@ -21,7 +21,6 @@ resources:
   - ./home-operations.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
-  - ./traefik.yaml
   - ./k8up.yaml
   - ./kubernetes-sigs-nfd-charts.yaml
   - ./kyverno-charts.yaml
@@ -38,5 +37,6 @@ resources:
   - ./spegel.yaml
   - ./stakater.yaml
   - ./synology-csi.yaml
+  - ./traefik.yaml
   - ./vmware-tanzu-charts.yaml
   - ./weave-gitops.yaml
