@@ -2,71 +2,65 @@
 
 ## Storage Layer
 
-| Service             | Namespace | Pfad                                          | Status | Beschreibung / Hinweise                                                                                          |
-| ------------------- | --------- | --------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- |
-| Longhorn            | storage   | `archive/apps/storage/longhorn`               | Archiviert | Primärer Distributed Block Storage (default StorageClass `longhorn`). Multi-replica, supports snapshots/backups. |
-| Synology CSI        | storage   | `archive/apps/storage/synology-csi`           | Archiviert | Bindet NAS-Volumes via iSCSI/NFS ein (`synology-iscsi` SC) für grosse Datenmengen.                               |
-| Democratic CSI      | storage   | `kubernetes/apps/storage/democratic-csi`      | Aktiv  | iSCSI Driver für Synology. Benötigt `hostPID: true` im Node-Driver (nsenter für iscsiadm).                      |
-| Snapshot Controller | storage   | `kubernetes/apps/storage/snapshot-controller` | Aktiv  | CSI Snapshot CRDs + Controller für Longhorn/Synology Snapshots.                                                  |
+| Service             | Namespace | Pfad                                          | Status | Beschreibung / Hinweise |
+| ------------------- | --------- | --------------------------------------------- | ------ | ----------------------- |
+| Democratic CSI      | storage   | `kubernetes/apps/storage/democratic-csi`      | Aktiv  | iSCSI Driver fuer Synology. Stellt die StorageClass `iscsi-delete` bereit und nutzt `hostPID: true` fuer `iscsiadm` im Host-Namespace. |
+| Snapshot Controller | storage   | `kubernetes/apps/storage/snapshot-controller` | Aktiv  | CSI Snapshot CRDs + Controller. Die aktuellen Werte enthalten noch Longhorn SnapshotClasses und sollten auf democratic-csi/Synology bereinigt oder deaktiviert werden. |
+| Litestream Cleanup  | storage   | `kubernetes/apps/storage/litestream-cleanup`  | Aktiv  | CronJob fuer Retention/Cleanup des `litestream` Buckets. |
+| Longhorn            | storage   | `archive/apps/storage/longhorn`               | Archiviert | Ehemaliger Distributed Block Storage. Nicht als aktive StorageClass dokumentieren. |
+| Synology CSI        | storage   | `archive/apps/storage/synology-csi`           | Archiviert | Ersetzt durch democratic-csi. |
+| K8up                | storage   | `archive/apps/storage/k8up`                   | Archiviert | Ehemaliger Restic Backup Operator. |
+| Velero              | storage   | `archive/apps/storage/velero`                 | Archiviert | Ehemalige Cluster/PVC Backup-Loesung. |
 
--   StorageClasses:
-    -   `longhorn` (default)
-    -   `longhorn-backup` (höhere Replikation/backup policy)
-    -   `synology-iscsi`
-    -   ggf. `local-path`? (prüfen `kubectl get sc`)
--   Longhorn UI: https://longhorn.${SECRET_DOMAIN}` (internal). Credentials stored in 1Password? document.
+Aktive StorageClass:
 
-Hinweis: Abschnitte zu Longhorn/K8up/Velero gelten, falls die Komponenten reaktiviert werden.
+- `iscsi-delete` aus democratic-csi, global als `${MAIN_SC}` in `kubernetes/components/common/cluster-settings.yaml` gesetzt.
+- Workloads mit PVCs haengen explizit von `storage/democratic-csi-iscsi` ab, wenn sie iSCSI Storage brauchen.
 
 ## Backup & Protection
 
-| Service | Namespace | Pfad                             | Zweck                                             |
-| ------- | --------- | -------------------------------- | ------------------------------------------------- |
-| K8up    | storage   | `archive/apps/storage/k8up`   | Archiviert: Restic Backup Operator (Schedules per namespace). |
-| Velero  | storage   | `archive/apps/storage/velero` | Archiviert: Cluster resource & PVC backups (S3 backend).      |
-
--   K8up: Each namespace should have `Schedule` CR (check `kubernetes/clusterconfig`?). Document per app in service docs.
--   Restic Credentials: via ExternalSecret referencing S3 target (MinIO/Wasabi?). Update `docs/backups.md` when changed.
--   Velero Credentials secret `velero-credentials` (SOPS). Storage location: S3 bucket (document name). Includes `restic` integration for PV snapshots.
+| Ebene | Mechanismus | Hinweise |
+| ----- | ----------- | -------- |
+| Kubernetes-Manifeste | Git + Flux | Git ist Source of Truth. Restore erfolgt durch Bootstrap und Flux-Reconcile. |
+| Secrets | SOPS/Age + 1Password External Secrets | Age Key und 1Password Tokens offsite sichern. |
+| PVC/App-Daten | Synology/democratic-csi | Restore ueber NAS/Synology-Backups oder neu provisionierte PVCs je App. |
+| SQLite-Datenbanken | Litestream | Sidecars replizieren nach S3-kompatiblem `litestream` Bucket. Cleanup via `litestream-cleanup`. |
 
 ## Betrieb
 
-1. **Longhorn**:
-    - Monitor replica health (`kubectl get volumes.longhorn.io -A`).
-    - Snapshots/backups policy per PVC; configure retention.
-    - When nodes drained, ensure volume eviction works.
-2. **Synology CSI**:
-    - Requires on-prem NAS connectivity (10.20.30.40). Document credentials outside repo.
-    - Validate `synology-csi` driver pods before scheduling.
-3. **Backups**:
-    - Ensure `k8up.io/backup: "true"` annotations for PVCs needing backup.
-    - Velero pre-upgrade snapshots: `velero backup create pre-<change>`.
-4. **Restores**:
-    - Longhorn: snapshot → clone volume → attach test pod.
-    - Velero: `velero restore create --from-backup ...`.
-    - K8up: `k8up job run --schedule <name> --restore`.
+1. **democratic-csi pruefen**
+    - `kubectl -n storage get pods -l app.kubernetes.io/instance=democratic-csi-iscsi`
+    - `kubectl get sc iscsi-delete`
+    - Bei Mount-Problemen iSCSI/NAS-Erreichbarkeit und Node-Events pruefen.
+2. **PVC Health**
+    - `kubectl get pvc -A`
+    - `kubectl describe pvc -n <namespace> <name>`
+    - `kubectl get events -A --field-selector involvedObject.kind=PersistentVolumeClaim`
+3. **Litestream**
+    - Sidecar-Logs der betroffenen App pruefen.
+    - `kubectl -n storage get cronjobs litestream-cleanup-main`
+    - Bucket-Groesse und alte Generationen kontrollieren.
+4. **Restore Tests**
+    - App-spezifische Restore-Tests in temporischem Namespace/PVC durchfuehren.
+    - SQLite-Apps per Litestream Restore testen.
+    - Ergebnisse in `docs/backups.md` protokollieren.
 
 ## Monitoring
 
--   Prometheus metrics:
-    -   Longhorn: `longhorn_volume_healthy`, `longhorn_disk_usage`.
-    -   K8up: `k8up_job_success`, `k8up_job_failed`.
-    -   Velero: `velero_backup_success_total`.
--   Alerts:
-    -   `VolumeDegraded`, `VolumeScheduledOnSingleNode`.
-    -   `BackupFailed` (K8up/Velero) – escalate to `#k8s-alerts`.
-    -   `ResticRepoStatus` degrade.
+- PVC-Fuellstand, Node Disk Pressure und Pod-Restarts ueber den Observability-Stack bzw. Gatus pruefen.
+- democratic-csi Controller/Node Pods muessen Ready sein.
+- Litestream Cleanup Jobs duerfen nicht dauerhaft fehlschlagen.
+- Snapshot Controller ist aktiv, aber die Longhorn SnapshotClasses sind ein Cleanup-Gap.
 
 ## Runbooks
 
--   `docs/runbooks.md` → „Longhorn Volume Degraded“, „Backup-Testprotokoll (TODO)“.
--   Additional:
-    -   `Velero restore`: capture command examples.
-    -   `Synology CSI outage`: failover to Longhorn or degrade apps.
+- `docs/runbooks.md` -> `PVC / Storage Degraded`
+- `docs/runbooks.md` -> `Synology / democratic-csi Volume Restore`
+- `docs/backups.md` -> Litestream Restore und Backup-Testprotokoll
 
 ## TODOs / Gaps
 
-1. Storage usage report + data classification pro App (Backlog).
-2. Automatisches Cleanup alter Longhorn snapshots definieren.
-3. Document K8up schedules per namespace (table in `docs/backups.md`).
-4. Validate Velero S3 credentials rotation + multi-region backup.
+1. Snapshot Controller Werte auf democratic-csi/Synology SnapshotClasses bereinigen oder Controller deaktivieren.
+2. Storage usage report + data classification pro App ergaenzen.
+3. Automatische Restore-Validierung fuer Synology/democratic-csi und Litestream definieren.
+4. Offsite-Backup-Ziel fuer nicht-replizierte PVC-Daten dokumentieren.

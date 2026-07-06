@@ -52,13 +52,9 @@
 
 ## Test Namespace
 
-| Service                 | Pfad                                           | Zweck                                   |
-| ----------------------- | ---------------------------------------------- | --------------------------------------- |
-| airgapped_tools_updater | `kubernetes/apps/test/airgapped_tools_updater` | Validates tool upgrades offline.        |
-| Keycloak                | `kubernetes/apps/test/keycloak`                | Identity experiments (nicht produktiv). |
-| oauth2-proxy            | `kubernetes/apps/test/oauth2-proxy`            | Proxy experiments.                      |
+Aktuell gibt es unter `kubernetes/apps/test` keine aktiven Manifeste. Fruehere Experimente wie Keycloak und oauth2-proxy sind entfernt/archiviert und nicht Teil des laufenden Clusters.
 
--   Regeln: Keine produktiven Secrets wiederverwenden; Ressourcen nach Tests entfernen. Setup Cron to delete old namespaces? (TODO).
+-   Regeln fuer neue Tests: Keine produktiven Secrets wiederverwenden; Ressourcen nach Tests entfernen.
 
 ## Betrieb & Runbooks
 

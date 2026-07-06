@@ -16,7 +16,7 @@
 - **Zweck**: RSS Reader mit OIDC Auth.
 - **Ingress**: `freshrss.${SECRET_DOMAIN}` (external).
 - **Secrets**: `freshrss-secrets` (DB creds, admin). OIDC gegen `auth.${SECRET_DOMAIN}`.
-- **Speicher**: PVC `data` 5 Gi (democratic-csi/Synology) + `k8up.io/backup` Annotation aktiv → Restic Job vorhanden. Prüfen RPO 12 h.
+- **Speicher**: PVC `data` 5 Gi (democratic-csi/Synology). Die Werte enthalten noch eine alte `k8up.io/backup` Annotation, aber K8up ist archiviert; Backup-Pfad ist Litestream plus Synology/PVC-Restore.
 - **Monitoring**: Cron env `CRON_MIN` (18,48). Add alert wenn Cron älter >2h.
 - **Runbooks**: Reconcile `flux reconcile kustomization freshrss --with-source -n productivity`. Für DB Migration: export OPML/feeds.
 
@@ -42,7 +42,7 @@
 ## Obsidian (**aktiv**)
 - **Pfad**: `kubernetes/apps/productivity/obsidian`.
 - **Ingress**: `obsidian.${SECRET_DOMAIN}` (external) + Authelia.
-- **Storage**: PVC 20 Gi (democratic-csi/Synology) für Vault. Restic Schedule sicherstellen.
+- **Storage**: PVC 20 Gi (democratic-csi/Synology) für Vault. Backup/Restore über Synology/PVC-Strategie in `docs/backups.md` sicherstellen.
 - **Monitoring**: Add Gatus check; alert für PVC >80 %.
 - **Runbooks**: Reconcile `flux reconcile kustomization obsidian --with-source -n productivity`. Für Vault-Sync-Probleme Container-Logs prüfen.
 
@@ -58,8 +58,8 @@
   - Resource heavy: main container requests 500 mCPU/1.1 Gi, limit 2.5 CPU/2.5 Gi.
 - **Secrets**: `paperless-secret-values`, `paperless-secret-passwords`.
 - **Backups**:
-  - Dateien auf Synology (rsync Snapshots) + Restic Job.
-  - DB in Postgres (prüfe `paperless-config`). RPO ≤24 h dokumentieren.
+  - Dateien auf Synology (rsync/Snapshots).
+  - SQLite-Datenbank via Litestream. RPO ≤24 h dokumentieren.
 - **Monitoring**: Alert on Paperless queue backlog, ingestion errors, Cron `SCAN_INTERVAL` (30 min).
 - **Runbooks**: Bereits `runbooks.md` re: Paperless backlog. Reconcile `flux reconcile kustomization paperless --with-source -n productivity`.
 

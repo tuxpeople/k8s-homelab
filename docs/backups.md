@@ -2,42 +2,46 @@
 
 ## Komponenten
 
--   **K8up** (`kubernetes/apps/storage/k8up`) – CronJob-basierte Restic-Backups Richtung externes Storage.
--   **Velero** (`kubernetes/apps/storage/velero`) – Clusterweite Backups/Restores von Ressourcen & PVCs.
--   **Longhorn** (`kubernetes/apps/storage/longhorn`) – Native Snapshots/Backups von Volumes.
--   **Snapshot-Controller** – Kubernetes CSI Snapshots (Synology + Longhorn).
--   **Litestream** – Kontinuierliche SQLite-Datenbank-Replikation zu S3/MinIO (Paperless, Linkding).
+-   **Git + Flux** – Kubernetes-Manifeste und Cluster-Zielzustand sind im Repository versioniert.
+-   **SOPS/Age + 1Password External Secrets** – Secret-Material liegt verschluesselt im Repo bzw. in 1Password.
+-   **democratic-csi/Synology** (`kubernetes/apps/storage/democratic-csi`) – PVCs werden ueber die StorageClass `iscsi-delete` auf Synology iSCSI bereitgestellt.
+-   **Snapshot-Controller** (`kubernetes/apps/storage/snapshot-controller`) – CSI Snapshot Controller ist aktiv; die aktuellen Longhorn SnapshotClasses sind ein Cleanup-Gap.
+-   **Litestream** – Kontinuierliche SQLite-Datenbank-Replikation zu S3/MinIO bzw. Garage-kompatiblem Storage.
+-   **Litestream Cleanup** (`kubernetes/apps/storage/litestream-cleanup`) – Bucket-Retention fuer alte Litestream-Generationen.
+
+Archiviert und nicht Teil des aktiven Restore-Pfads: K8up, Velero, Longhorn und der alte Synology CSI Driver.
 
 ## Ziele & Abdeckung
 
-| Ebene                | Tool       | Frequenz                               | Speicherort             |
-| -------------------- | ---------- | -------------------------------------- | ----------------------- |
-| Namespace / Workload | K8up       | mind. täglich                          | S3-kompatibler Storage  |
-| Cluster-Ressourcen   | Velero     | täglich + vor Upgrades                 | S3-kompatibel           |
-| Block Storage        | Longhorn   | stündliche Snapshots, tägliche Backups | Synology / externe Disk |
-| SQLite-Datenbanken   | Litestream | kontinuierlich (10s sync)              | MinIO (S3-kompatibel)   |
+| Ebene | Tool | Frequenz | Speicherort |
+| ----- | ---- | -------- | ------------ |
+| Cluster-Manifeste | Git + Flux | kontinuierlich bei Commit | GitHub Repository |
+| Secrets | SOPS/Age + 1Password | bei Aenderung | Repo verschluesselt + 1Password |
+| PVC/App-Daten | Synology/democratic-csi | NAS-/App-spezifisch | Synology iSCSI/NFS |
+| SQLite-Datenbanken | Litestream | kontinuierlich, `sync-interval: 10s` | S3-kompatibler Bucket `litestream` |
+| Litestream Retention | litestream-cleanup CronJob | sonntags 02:00 | Bucket Cleanup |
 
 ## Betriebsablauf
 
-1. **Policies definieren**: Jede App beschreibt in ihrem Service-Dokument, ob PVC gesichert wird (K8up Schedule) oder nur Snapshots reichen.
-2. **Backups überwachen**: `kubectl -n storage get jobs,pods | grep k8up`; Velero Status via `velero backup get` (Task ergänzen?).
-3. **Prä-Upgrade Hook**: Vor Talos/K8s/Helm-Upgrades `velero backup create pre-<topic> --include-namespaces ...`.
+1. **Policies definieren**: Jede App beschreibt Datenklassifizierung, PVCs, Litestream-Nutzung und Restore-Ziel.
+2. **Storage ueberwachen**: `kubectl get pvc -A`, democratic-csi Pods und Synology/NAS-Status pruefen.
+3. **Prae-Upgrade Check**: Vor Talos/K8s/Helm-Upgrades sicherstellen, dass Git sauber ist, Flux synchron ist und kritische SQLite-Apps aktuelle Litestream-Replikation haben.
 4. **Restore Tests**:
-    - PVC: Mit Longhorn Snapshot → Clone → Test-Pod.
-    - Namespace: `velero restore create --from-backup <name> --namespace-mappings old:new`.
-    - Restic: `k8up job run --schedule <name> --restore` (siehe K8up-Doku).
+    - GitOps: Namespace/App aus Git in Test-Umgebung oder temporaeren Namespace wiederherstellen.
+    - PVC: Synology/democratic-csi Volume oder App-Daten in Test-PVC validieren.
+    - SQLite: Litestream Restore in leerem Test-PVC bzw. InitContainer-Pfad ausfuehren.
 
 ## Dokumentationspflicht pro Service
 
 -   Datenklassifizierung (kritisch, wichtig, best-effort).
--   Speicherort (Longhorn, Synology CSI, extern).
+-   Speicherort (democratic-csi/Synology, Litestream Bucket, extern).
 -   RPO/RTO-Ziel.
 -   Letzter Restore-Test (Datum, Ergebnis, Owner).
 
 ## Monitoring & Alerts
 
--   Prometheus sammelt Longhorn/K8up/Velero-Metriken → Grafana Dashboard "Backups" (TODO: Link hinterlegen).
--   Alertmanager meldet fehlgeschlagene Jobs (Label `severity=warning|critical`).
+-   Gatus und der Observability-Stack pruefen App-Verfuegbarkeit, PVC-Fuellstand und Job-Fehler.
+-   Fehlgeschlagene Litestream-Cleanup-Jobs und wachsende Buckets muessen alarmiert werden.
 
 ## Testplan & Protokoll
 
@@ -45,20 +49,20 @@ Regelmässige Restore-Tests sind Pflicht, damit RPO/RTO-Ziele eingehalten werden
 
 ### Testarten
 
-| Test-ID  | Typ                                | Scope                                                  | Frequenz      | Responsible   |
-| -------- | ---------------------------------- | ------------------------------------------------------ | ------------- | ------------- |
-| BT-LH-01 | Longhorn Snapshot Restore          | Kritische PVC (Paperless, N8N, Overseerr)              | Quartalsweise | Storage Lead  |
-| BT-K8-01 | K8up Restic Restore                | Namespace `media` (Restic → temp namespace)            | Halbjährlich  | App Owner     |
-| BT-VL-01 | Velero Cluster Restore (teilweise) | Namespace `productivity` (dry-run + selective restore) | Halbjährlich  | Platform Lead |
-| BT-DR-01 | Vollständige DR-Übung              | Cold Start (Talos bootstrap + Flux + Restore)          | Jährlich      | Homelab Owner |
+| Test-ID | Typ | Scope | Frequenz | Responsible |
+| ------- | --- | ----- | -------- | ----------- |
+| BT-SYN-01 | Synology/democratic-csi Restore | Kritische PVC in temporaeres Test-PVC | Quartalsweise | Storage Lead |
+| BT-LS-01 | Litestream Restore | SQLite Apps wie Paperless, Linkding, Spoolman, Python-IPAM | Quartalsweise | App Owner |
+| BT-GIT-01 | GitOps Namespace Restore | Namespace/App aus Git in Test-Scope | Halbjaehrlich | Platform Lead |
+| BT-DR-01 | Vollstaendige DR-Uebung | Cold Start mit Talos bootstrap, Flux und App-Restore | Jaehrlich | Homelab Owner |
 
 ### Protokoll
 
 | Datum   | Test-ID  | Ergebnis | Issues / Follow-ups       | Owner |
 | ------- | -------- | -------- | ------------------------- | ----- |
-| _offen_ | BT-LH-01 | –        | Nächster Termin festlegen | –     |
-| _offen_ | BT-K8-01 | –        |                           |       |
-| _offen_ | BT-VL-01 | –        |                           |       |
+| _offen_ | BT-SYN-01 | –        | Nächster Termin festlegen | –     |
+| _offen_ | BT-LS-01 | –        |                           |       |
+| _offen_ | BT-GIT-01 | –        |                           |       |
 | _offen_ | BT-DR-01 | –        |                           |       |
 
 > Nach jedem Test Ergebnis + Lessons Learned hier eintragen und ggf. `docs/CHANGELOG.md` ergänzen.
@@ -70,15 +74,15 @@ Regelmässige Restore-Tests sind Pflicht, damit RPO/RTO-Ziele eingehalten werden
     - Test-Namespaces/temporary volumes anlegen (`<name>-restore-test`).
     - Sicherstellen, dass Monitoring-Alerts temporär unterdrückt werden.
 2. **Restore starten**:
-    - Longhorn: Snapshot → Clone → Test Pod (siehe Runbook `Backup-Tests`).
-    - K8up: `k8up job run --schedule <name> --restore --restore-pvc <...>`.
-    - Velero: `velero restore create bt-<date> --from-backup <name> --namespace-mappings <ns>:<ns>-restore`.
+    - Synology/democratic-csi: Volume/PVC in Test-Scope bereitstellen und Datenintegritaet pruefen.
+    - Litestream: Restore in leeres Test-PVC oder ueber den vorhandenen InitContainer-Pfad ausfuehren.
+    - GitOps: Kustomization in temporaerem Scope anwenden und Flux/Gatus-Signale pruefen.
 3. **Validieren**:
     - Anwendungen starten, Smoke Tests durchführen (UI/Login/File integrity).
     - Logs & PodEvents auf Fehler prüfen.
 4. **Abräumen**:
     - Test-Namespace/PVC löschen.
-    - Snapshot/Restic Restore cleanup.
+    - Test-Volumes, Litestream-Testdaten und temporaere Kustomizations bereinigen.
     - Ergebnistabelle oben aktualisieren, Issues → `WEITERENTWICKLUNG.md` / `IMPROVEMENT_PLAN.md`.
 
 ## Litestream: SQLite-Replikation & MinIO Lifecycle
@@ -216,5 +220,5 @@ litestream restore -config /etc/litestream.yml /data/db.sqlite3
 
 -   Backup-Test-Runbook detaillieren (`WEITERENTWICKLUNG.md` DOC-003).
 -   Offsite-Backup-Ziel definieren (Cloud Bucket vs. externes NAS).
--   Automatische Validierung von Velero-Backups (z.B. mittels `velero backup logs <name>` + Alerting).
+-   Automatische Restore-Validierung fuer Synology/democratic-csi und Litestream definieren.
 -   Litestream Prometheus-Exporter evaluieren und konfigurieren.

@@ -22,7 +22,7 @@ Hinweis: Der Observability-Stack ist aktuell weitgehend archiviert; aktiv bleibt
 -   Grafana Dashboards (IDs, JSON) liegen aktuell nicht versioniert → TODO: export nach `grafana/dashboards/`.
 -   Kern-Dashboards:
     -   `Kubernetes / Control Plane`
-    -   `Storage / Longhorn`
+    -   `Storage / Synology / CSI`
     -   `Media Stack`
     -   `Automation & GitOps`
     -   `Backups`
@@ -37,7 +37,7 @@ Hinweis: Der Observability-Stack ist aktuell weitgehend archiviert; aktiv bleibt
 -   Wichtige Rules:
     -   Flux Kustomization degrade
     -   NodeReady / KubeComponentDown
-    -   Backup job failures (K8up/Velero)
+    -   Backup job failures (Litestream cleanup / app-specific restore checks)
     -   Gatus endpoint down
     -   Disk pressure / PVC usage > 80 %
     -   External services (Cloudflared, Speedtest)

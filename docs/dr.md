@@ -10,7 +10,7 @@
 1. **Kompletter Cluster-Ausfall** (Hardware, Storage):
     - Talos-Cluster nach `talos/talconfig.yaml` + `talos/clusterconfig/` neu provisionieren (`task bootstrap:talos`).
     - Flux neu bootstrappen: `task bootstrap:apps` bzw. `flux bootstrap git ...` falls notwendig.
-    - Longhorn/Synology Storage mounten, PVCs per Velero/Restic wiederherstellen.
+    - democratic-csi/Synology Storage mounten, PVCs app-spezifisch wiederherstellen und SQLite-Datenbanken per Litestream zurueckspielen.
 2. **Single Node Fail**:
     - Node taints → workloads evakuiert.
     - Talos `talosctl reset` + Reprovision laut Runbook (siehe `runbooks.md`).
@@ -25,7 +25,8 @@
 
 -   `age.key` Backup im Passwort-Manager + Offline.
 -   Talos `clusterconfig`-Artefakte.
--   S3/Ceph/MinIO Storage für Restic/Velero.
+-   S3-kompatibler Storage fuer Litestream.
+-   Synology/NAS-Backup- und Snapshot-Zugriff fuer PVC-Daten.
 -   DNS / Cloudflare API Token.
 
 ## Wiederherstellungsablauf (Kurzform)
@@ -34,8 +35,8 @@
 2. `task talos:generate-config` (falls Version gewechselt) → `task talos:apply-node`.
 3. Control Plane online → kubeconfig unter `kubeconfig` verifizieren.
 4. Flux bootstrap → Warte auf Sync (`flux get kustomizations -A`).
-5. Storage Schicht prüfen (Longhorn UI, Synology).
-6. Backups / Restores je Namespace.
+5. Storage Schicht prüfen (democratic-csi Pods, StorageClass `iscsi-delete`, Synology/NAS).
+6. Backups / Restores je Namespace und Litestream-Apps.
 7. Gatus / Monitoring / Dashboards checken.
 8. Abschlussbericht in `docs/CHANGELOG.md` + Post Mortem.
 

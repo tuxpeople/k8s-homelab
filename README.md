@@ -11,7 +11,7 @@ This repository contains the configuration and deployment manifests for my perso
 - **Storage**:
   - [democratic-csi](https://github.com/democratic-csi/democratic-csi) for Synology iSCSI/NFS volumes
   - [Snapshot Controller](https://github.com/kubernetes-csi/external-snapshotter) for CSI VolumeSnapshots
-- **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes
+- **Ingress**: Traefik with internal (`192.168.13.64`) and external (`192.168.13.66`) classes
 - **DNS**:
   - [external-dns](https://github.com/kubernetes-sigs/external-dns) with dual providers:
     - Cloudflare for public DNS (`external` ingress class)

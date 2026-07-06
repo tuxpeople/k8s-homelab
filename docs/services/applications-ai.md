@@ -28,4 +28,4 @@ Die folgenden Anwendungen wurden aus dem Cluster entfernt. Manifeste liegen in `
 | Ollama | Lokaler LLM-Server (HTTP 11434) | `archive/apps/ai/ollama` |
 | Paperless-AI | KI-gestützte OCR/Post-Processing für Paperless | `archive/apps/ai/paperless-ai` |
 
-Vor Reaktivierung prüfen: Longhorn-Dependency (war Voraussetzung), Secrets noch vorhanden, Ressourcen verfügbar.
+Vor Reaktivierung prüfen: StorageClass/PVC-Abhängigkeiten, Secrets noch vorhanden, Ressourcen verfügbar.

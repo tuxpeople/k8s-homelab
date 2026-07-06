@@ -45,5 +45,5 @@ Diese Datei fasst alle Automatisierungen zusammen, die den Kubernetes-Stack betr
 ## Automatisierungslücken (siehe Backlog)
 
 -   Pre-Commit Hook für Kubernetes Schema-Validierung erweitert? (Goldilocks/kyverno).
--   Automatisierte Backup-Verifikation (Restic + Velero) fehlt noch.
+-   Automatisierte Backup-/Restore-Verifikation fuer Synology/democratic-csi und Litestream fehlt noch.
 -   Renovate-Metriken in Grafana Dashboard integrieren.

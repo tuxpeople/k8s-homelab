@@ -7,7 +7,7 @@
 -   **Provisioning**: talhelper + `talos/talconfig.yaml`, direkte YAML-Manifeste (keine Templates mehr). Secrets via `talos/talsecret.sops.yaml`.
 -   **GitOps**: FluxCD hält sämtliche Manifeste synchron (siehe `docs/services/fluxcd.md`).
 -   **Netz**: Node-Netz `192.168.13.0/24`, Cluster API `192.168.13.10`, Pod CIDR `10.42.0.0/16`, Service CIDR `10.43.0.0/16`.
--   **Abhängigkeiten**: erfordert funktionierendes Storage (Longhorn/Synology), Git-Zugriff, Age Keys (SOPS), Cloudflare DNS.
+-   **Abhängigkeiten**: erfordert funktionierendes Storage (democratic-csi/Synology), Git-Zugriff, Age Keys (SOPS), Cloudflare DNS.
 
 ## Node-Inventar
 

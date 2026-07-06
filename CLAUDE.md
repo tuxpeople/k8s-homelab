@@ -18,7 +18,7 @@ This is an active Kubernetes homelab cluster built on Talos Linux with GitOps us
 - **FluxCD**: GitOps tool for continuous deployment from Git repository
 - **CNI**: Cilium networking with built-in CNI disabled in Talos
 - **Storage**: democratic-csi for Synology iSCSI/NFS volumes; Longhorn and Synology CSI are archived
-- **Ingress**: nginx-ingress with internal (`192.168.13.64`) and external (`192.168.13.66`) classes; Traefik deployed alongside as alternative ingress
+- **Ingress**: Traefik with internal (`192.168.13.64`) and external (`192.168.13.66`) classes; shared Traefik middlewares live under `kubernetes/apps/network/middlewares`
 - **DNS**: Split-horizon DNS with dual external-dns (Cloudflare for public, UniFi webhook for internal LAN)
 - **Security**: SOPS for secret encryption using Age keys, external-secrets with 1Password and Doppler integration
 - **Monitoring**: Kube-prometheus-stack with Grafana, custom exporters (Tautulli, SNMP)
@@ -317,7 +317,7 @@ Applications in `kubernetes/apps/` are organized by function:
 - `flux-system/` - FluxCD operator and instance configurations
 - `kube-system/` - Core Kubernetes components (Cilium, CoreDNS, descheduler, metrics-server, node-feature-discovery, reloader, spegel)
 - `media/` - Media server applications (Calibre-Web, Tautulli; Overseerr, Mediabox, Plex Exporter/Trakt Sync archived in `archive/apps/media/`)
-- `network/` - Networking components split into `external/` (ingress-nginx, external-dns, cloudflared, Traefik) and `internal/` (ingress-nginx, python-ipam, Traefik, unifi-dns)
+- `network/` - Networking components split into `external/` (Traefik, external-dns, cloudflared), `internal/` (Traefik, python-ipam, unifi-dns), and shared Traefik `middlewares/`
 - `observability/` - Monitoring and logging (kube-prometheus-stack, Gatus)
 - `productivity/` - Productivity tools (dorflade-mhd, FreshRSS, Hajimari, Linkding, Obsidian, Paperless; Code Server, N8N and others archived in `archive/apps/productivity/`)
 - `security/` - Security-related applications (external-secrets with 1Password + Doppler SecretStores, Kyverno; Trivy archived in `archive/apps/security/`)

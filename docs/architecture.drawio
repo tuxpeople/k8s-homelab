@@ -26,21 +26,21 @@
           <mxGeometry x="440" y="60" width="160" height="80" as="geometry" />
         </mxCell>
 
-        <mxCell id="internalIngress" value="Ingress NGINX&#10;class=internal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;" vertex="1" parent="cluster">
+        <mxCell id="internalIngress" value="Traefik Ingress&#10;class=internal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;" vertex="1" parent="cluster">
           <mxGeometry x="440" y="200" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="externalIngress" value="Ingress NGINX&#10;class=external" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;" vertex="1" parent="cluster">
+        <mxCell id="externalIngress" value="Traefik Ingress&#10;class=external" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;" vertex="1" parent="cluster">
           <mxGeometry x="440" y="300" width="160" height="80" as="geometry" />
         </mxCell>
 
-        <mxCell id="longhorn" value="Longhorn&#10;Storage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="cluster">
+        <mxCell id="democraticCsi" value="democratic-csi&#10;Synology" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="cluster">
           <mxGeometry x="220" y="280" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="synology" value="Synology CSI&#10;NAS Volumes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="cluster">
+        <mxCell id="synology" value="Synology NAS&#10;Volumes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="cluster">
           <mxGeometry x="20" y="280" width="160" height="80" as="geometry" />
         </mxCell>
 
-        <mxCell id="k8up" value="K8up / Velero&#10;Backups" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;" vertex="1" parent="cluster">
+        <mxCell id="backups" value="Backups&#10;Synology / Litestream" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;" vertex="1" parent="cluster">
           <mxGeometry x="220" y="370" width="160" height="80" as="geometry" />
         </mxCell>
 
@@ -63,7 +63,7 @@
           <mxGeometry x="1020" y="240" width="180" height="80" as="geometry" />
         </mxCell>
 
-        <mxCell id="dns" value="DNS&#10;Cloudflare + k8s-gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;" vertex="1" parent="1">
+        <mxCell id="dns" value="DNS&#10;Cloudflare + UniFi" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;" vertex="1" parent="1">
           <mxGeometry x="1020" y="360" width="180" height="80" as="geometry" />
         </mxCell>
 
@@ -96,14 +96,14 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="edge7" edge="1" source="longhorn" target="services" style="endArrow=block;strokeColor=#9673A6;" parent="cluster">
+        <mxCell id="edge7" edge="1" source="democraticCsi" target="services" style="endArrow=block;strokeColor=#9673A6;" parent="cluster">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="edge8" edge="1" source="synology" target="services" style="endArrow=block;strokeColor=#9673A6;" parent="cluster">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="edge9" edge="1" source="k8up" target="s3" style="endArrow=block;strokeColor=#9673A6;" parent="1">
+        <mxCell id="edge9" edge="1" source="backups" target="s3" style="endArrow=block;strokeColor=#9673A6;" parent="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 

@@ -12,50 +12,50 @@
 
 ## Talos Node Exchange
 
-1. Backup wichtiger Daten (Longhorn Replizierung sicherstellen).
+1. Backup wichtiger Daten prüfen (Synology Snapshots, Litestream-Replikation, App-spezifische Backups gemäss `docs/backups.md`).
 2. Node in Maintenance: `talosctl cordon <ip>` + `kubectl drain` (mit PodDisruptionBudgets prüfen).
 3. `talosctl reset --graceful`.
 4. Hardware tauschen / OS flashen → `task talos:apply-node IP=<ip>`.
 5. Nach Join: `kubectl get nodes`, Flux Sync abwarten.
 
-## Longhorn Volume Degraded
+## PVC / Storage Degraded
 
-1. Longhorn UI → Volume Details (Replica Health).
-2. Ursache feststellen (Node down? Disk voll?).
-3. Falls Node ok → Replica rebuild via UI.
-4. Falls Disk defekt → Node cordon + Disk entfernen, Replacement.
-5. Alert schliessen, `backups.md` Eintrag aktualisieren falls Restore nötig war.
+1. `kubectl get pvc -A` und Events der betroffenen App prüfen.
+2. Synology/democratic-csi Status prüfen: iSCSI/NFS erreichbar, StorageClass korrekt, Node-Mounts fehlerfrei?
+3. Falls Node betroffen: cordon/drain, App auf anderem Node neu starten lassen.
+4. Falls Volume beschädigt: Restore aus Synology Snapshot oder App-spezifischem Backup gemäss `docs/backups.md`.
+5. Alert schliessen, Ursache und Restore-Schritte in `docs/backups.md` protokollieren.
 
 ## Backup-Tests / Restore-Verifikation
 
-> Siehe `docs/backups.md` Testplan (BT-LH-01, BT-K8-01, BT-VL-01, BT-DR-01).
+> Siehe `docs/backups.md` Testplan und App-spezifische Hinweise.
 
-### Longhorn Snapshot (BT-LH-01)
+### Synology / democratic-csi Volume Restore
 
-1. Snapshot wählen oder neu erstellen (`Volumes → Snapshots → Create`).
-2. Snapshot → Create Backup → über "Backups" als neues Volume (`<volume>-bt`) restoren.
+1. Snapshot oder Backup auf Synology auswählen.
+2. Test-PVC oder temporäres Restore-Ziel anlegen.
 3. Temporären Pod/Deployment mit wiederhergestelltem PVC deployen und fachlichen Smoke-Test ausführen.
 4. Ergebnisse protokollieren, Testartefakte entfernen (Pod, PVC), Snapshot optional behalten.
 
-### K8up Restic (BT-K8-01)
+### Litestream SQLite Restore
 
-1. `kubectl -n storage get schedule` → Schedule auswählen.
-2. `k8up job run --schedule <name> --restore --restore-pvc <target>` ausführen (Namespace `<ns>-restore`).
-3. Anwendung in Testnamespace prüfen, Logs auf Fehler kontrollieren.
-4. Namespace/PVC löschen, Tabelle in `docs/backups.md` aktualisieren.
+1. Betroffene App und Replica-Pfad in `docs/backups.md` bzw. App-Werten prüfen.
+2. Restore in temporäres Verzeichnis oder Testnamespace ausführen, bevor produktive Daten überschrieben werden.
+3. Anwendung gegen wiederhergestellte DB starten und fachlichen Smoke-Test ausführen.
+4. Ergebnisse protokollieren und Testartefakte entfernen.
 
-### Velero Namespace Restore (BT-VL-01)
+### Namespace / GitOps Restore
 
-1. `velero backup get` und geeigneten Backup-Run wählen.
-2. `velero restore create bt-<date> --from-backup <backup> --namespace-mappings <ns>:<ns>-restore`.
-3. Prüfen, ob Ressourcen/Pods sauber starten; `velero restore logs` sichern.
-4. Testnamespace löschen, Ergebnisse dokumentieren.
+1. Zielnamespace in einem Testlauf löschen oder in separatem Cluster simulieren.
+2. `flux reconcile kustomization <app> --with-source -n <namespace>` ausführen.
+3. Secrets, PVCs, Ingress und Gatus Endpoint prüfen.
+4. Fachlichen Smoke-Test durchführen und Ergebnis dokumentieren.
 
 ### Vollständige DR-Übung (BT-DR-01)
 
 1. Szenario definieren (Cold Start/Partial) & Kommunikationskanal festlegen.
 2. Talos bootstrap (Nodes vorbereiten) → `task bootstrap:talos` → `task bootstrap:apps`.
-3. Longhorn/K8up/Velero Restores durchführen, Services testen.
+3. Storage-, Litestream- und App-spezifische Restores durchführen, Services testen.
 4. Lessons Learned in `docs/dr.md` + `docs/backups.md` festhalten.
 
 ## External Secret schlägt fehl
@@ -83,7 +83,7 @@
 ## Mediabox Ingress Probleme
 
 1. `kubectl -n media get ingress` – sind Hosts korrekt?
-2. `kubectl -n network logs deploy/external-ingress-nginx -f | grep <host>`.
+2. `kubectl -n network logs deploy/external-traefik -f | grep <host>`.
 3. DNS: `dig <host> @192.168.13.1` (UniFi Gateway) oder `dig <host> @10.20.30.11` (Pi-hole) für intern bzw. Cloudflare für extern.
 4. Zertifikate? s. Abschnitt oben.
 5. Ggf. `kubectl -n media get httproute` falls Gateway-API genutzt wird.

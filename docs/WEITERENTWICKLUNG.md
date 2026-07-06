@@ -4,7 +4,7 @@
 | ------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------- | --------- | ----- | ---------------------------- |
 | DOC-001 | Service-Steckbriefe vervollständigen | Für alle Apps unter `kubernetes/apps/*` die Detailabschnitte (Zweck, Namespace, Backups, SLO) füllen. | Hoch      | offen | Offen                        |
 | DOC-002 | Architekturdiagramm einbinden        | Netzwerk-, Storage- und GitOps-Fluss visualisieren (z.B. mit Excalidraw).                             | Mittel    | offen | **✅ Erledigt** (2025-11-07) |
-| DOC-003 | Backup-Testprotokoll                 | Regelmässige Restore-Tests dokumentieren (K8up + Velero + Longhorn).                                  | Mittel    | offen | **✅ Erledigt** (2025-11-07) |
+| DOC-003 | Backup-Testprotokoll                 | Regelmässige Restore-Tests dokumentieren (Synology/democratic-csi + Litestream + GitOps).              | Mittel    | offen | **✅ Erledigt** (2025-11-07) |
 | DOC-004 | Netzwerk-Policies                    | Dokument beschreiben + Beispiel-Policies für Multi-Tenancy ergänzen.                                  | Mittel    | offen | Offen                        |
 | DOC-005 | Secret-Rotation-Runbook              | Konkrete Runbooks für 1Password/ExternalSecret-Rotation ausarbeiten.                                  | Mittel    | offen | Offen                        |
 | DOC-006 | Kosten-/Ressourcen-Monitoring        | Ergänzen wie Ressourcen-/Kosten-Trends erfasst werden (Goldilocks, Potential OTel/Cost Exporter).     | Niedrig   | offen | Offen                        |

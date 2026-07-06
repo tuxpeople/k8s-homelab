@@ -13,7 +13,7 @@
     -   `cache` via `emptyDir`.
 -   **Secrets / Env**: Keine sensiblen Variablen ausser `PUID/PGID/TZ`.
 -   **Backups**:
-    -   PVC `config`: Snapshot via snapshot-controller + Restic.
+    -   PVC `config`: Synology/democratic-csi Restore-Strategie gemaess `docs/backups.md`.
     -   NFS-Daten liegen bereits auf Synology → dortige Snapshot/rsync-Strategie referenzieren.
 -   **Monitoring**:
     -   Gatus-Check für `books.${SECRET_DOMAIN}` hinzufügen.
@@ -33,7 +33,7 @@
 -   **Containers**:
     -   Main container `ghcr.io/home-operations/tautulli`.
     -   Sidecar `git-sync` pulling `JBOPS`.
--   **Backups**: PVC via Restic (daily). JBOPS repo self-heals.
+-   **Backups**: PVC via Synology/democratic-csi Restore-Strategie gemaess `docs/backups.md`. JBOPS repo self-heals.
 -   **Monitoring**:
     -   Probes on `/status`.
     -   Exporter `tautulli-exporter` existiert im Observability namespace → verlinken.

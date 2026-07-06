@@ -6,7 +6,7 @@ Dieses Verzeichnis beschreibt den Kubernetes-Teil des Homelabs. Die Struktur fol
 - `services/` – Detailblätter pro Service/Komponente (Cluster-Fundament, Flux, Networking, Storage, Security, Observability, Applikationen)
 - `automation.md` – Task Runner, GitHub Actions, Renovate und Policies
 - `secrets.md` – SOPS-/Age-Fluss, External Secrets, Rotationsprozesse
-- `backups.md` – K8up, Velero, Longhorn-Snapshots, Restore-Tests
+- `backups.md` – democratic-csi/Synology, Litestream, Restore-Tests
 - `monitoring.md` – Observability-Stack, Dashboards, Alerting, SLOs
 - `dr.md` – Disaster-Recovery-Pläne inkl. Talos-Rebuild & DNS
 - `runbooks.md` – Operative Schritt-für-Schritt-Anleitungen

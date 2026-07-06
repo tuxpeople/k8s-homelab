@@ -2,7 +2,7 @@
 
 ## Überblick & Status
 - **CNI**: Cilium (`kubernetes/apps/kube-system/cilium`, aktiv) mit kube-proxy ersetzt. CNI in Talos deaktiviert → Cilium übernimmt IPAM.
-- **Ingress Layer**: Zwei dedizierte nginx-Instanzen (`internal` @ 192.168.13.64, `external` @ 192.168.13.66) inkl. Authelia-Auth-Flow.
+- **Ingress Layer**: Zwei dedizierte Traefik-Instanzen (`internal` @ 192.168.13.64, `external` @ 192.168.13.66) inkl. Authelia ForwardAuth.
 - **DNS**:
   - **Split-Horizon Architektur** für `eighty-three.me`:
     - **External (Public)**: `external-dns` → Cloudflare (für Ingresses mit `ingressClassName: external`)
@@ -25,17 +25,15 @@
 ### Externe Ingress-Schicht (`kubernetes/apps/network/external`)
 | Service | Zweck | Secrets / Hinweise |
 |---------|-------|-------------------|
-| `ingress-nginx` (external) | Public HTTP/S Endpoints (`external` class) – routet nur Cloudflared IPs. | TLS via cert-manager wildcard `${SECRET_DOMAIN}`. Rate Limiting TODO. |
-| `traefik` (external) | Alternativer Ingress Controller für externe Routen. | Parallel zu ingress-nginx deployed; Middlewares unter `kubernetes/apps/network/middlewares/`. |
-| `cloudflared` | Tunnel von `external` ingress ins Internet. | Secret `cloudflare-tunnel.json` (SOPS). Reconcile `flux reconcile kustomization cloudflared -n network`. |
+| `traefik` (external) | Public HTTP/S Endpoints (`external` class) via Cloudflared. | Service-IP 192.168.13.66. TLS via cert-manager wildcard `${SECRET_DOMAIN}`; Middlewares unter `kubernetes/apps/network/middlewares/`. |
+| `cloudflared` | Tunnel von `external-traefik` ins Internet. | Secret `cloudflare-tunnel.json` (SOPS). Reconcile `flux reconcile kustomization cloudflared -n network`. |
 | `external-dns` | Erstellt/aktualisiert Cloudflare Records. | API Token im ExternalSecret `external-dns` (1Password). TTL konfiguriert. |
 | `openvpn` (archiviert) | Legacy Remotezugang fallback. | Manifeste unter `archive/apps/network/external/openvpn`. |
 
 ### Interne Ingress-Schicht (`kubernetes/apps/network/internal`)
 | Service | Zweck | Hinweise |
 |---------|-------|----------|
-| `ingress-nginx` (internal) | LAN-only Services (`internal` class). | Binds auf 192.168.13.64, Authelia Standard. |
-| `traefik` (internal) | Alternativer Ingress Controller für interne Routen. | Parallel zu ingress-nginx deployed. |
+| `traefik` (internal) | LAN-only Services (`internal` class). | Service-IP 192.168.13.64; nutzt dieselben Traefik Middlewares wie externe Routen. |
 | `python-ipam` | Hilfsservice zur IP-Adressverwaltung/Reservations. | TODO: Doku der API/DB. |
 | `unifi-dns` | external-dns mit UniFi Webhook für automatisches DNS in UDM. | Verarbeitet `ingressClassName: internal`, erstellt Host Records in UniFi. API Key via 1Password (`unifi-api-externaldns`). |
 
@@ -43,10 +41,16 @@
 - Kyverno Policies müssen vor Ingress/Cloudflared bereitstehen (`dependsOn` in `ks.yaml`).
 - Cert-Manager (Namespace `cert-manager`) liefert Zertifikate (`${SECRET_DOMAIN/./-}-production-tls`).
 - Cloudflare API Token (external-dns & cloudflared) via ExternalSecret + 1Password vault.
-- Authelia/Authentik (`auth.${SECRET_DOMAIN}`) muss laufen, bevor Ingress mit Auth-Annotations deployed wird.
+- Externe Authelia (`auth.${SECRET_DOMAIN}`) muss laufen, bevor Ingresses mit `network-auth@kubernetescrd` produktiv sind. Die Traefik Middleware nutzt `/api/authz/forward-auth`.
+
+### Traefik Middlewares
+| Middleware | Referenz | Zweck |
+|------------|----------|-------|
+| `network-auth` | `network-auth@kubernetescrd` | Authelia ForwardAuth über `https://auth.${SECRET_DOMAIN}/api/authz/forward-auth`; setzt `Remote-*` Header für Auth-Proxy-fähige Apps. |
+| `network-security-headers` | `network-security-headers@kubernetescrd` | Gemeinsame Security Header für Traefik-Routen. |
 
 ## Betrieb & Runbooks
-- Reconcile Ingress: `flux reconcile kustomization network-external --with-source -n network` bzw. `network-internal`.
+- Reconcile Ingress: `flux reconcile kustomization external-traefik --with-source -n network`, `internal-traefik` bzw. `network-middlewares`.
 - Zertifikatsprobleme: siehe `docs/runbooks.md` Abschnitt „Zertifikat erneuern“.
 - Ingress-Triage: `kubectl -n network logs deploy/<ingress> -f | grep <host>`, `kubectl -n network describe ingress <name>`.
 - DNS Debug:
@@ -56,7 +60,7 @@
 
 ## Monitoring & Alerts
 - `blackbox-exporter`, `gatus`, `speedtest-exporter` prüfen Endpunkte/Connectivity (falls reaktiviert).
-- Prometheus scrapes ingress-nginx metrics (connection saturation, HTTP errors). Alerts für:
+- Prometheus/Gatus prüfen Traefik, Cloudflared und HTTP-Endpunkte. Alerts für:
   - Pod `Ready` status,
   - Certificate expiry (<7 d),
   - Cloudflared disconnections,

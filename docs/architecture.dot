@@ -14,15 +14,14 @@ digraph Homelab {
 
     node [fillcolor="#FFE6CC" color="#D79B00"];
     flux [label="FluxCD\nflux-system"];
-    backups [label="K8up / Velero"];
+    backups [label="Backups\nSynology / Litestream"];
 
     node [fillcolor="#FFFFFF" color="#82B366"];
-    ingress_ext [label="Ingress NGINX\nclass=external"];
-    ingress_int [label="Ingress NGINX\nclass=internal"];
+    ingress_ext [label="Traefik Ingress\nclass=external"];
+    ingress_int [label="Traefik Ingress\nclass=internal"];
 
     node [fillcolor="#E1D5E7" color="#9673A6"];
-    longhorn [label="Longhorn"];
-    synology [label="Synology CSI"];
+    storage [label="democratic-csi\nSynology"];
 
     node [fillcolor="#FFFFFF" color="#000000"];
     apps [label="Applications\n(media/productivity/etc.)"];
@@ -37,14 +36,13 @@ digraph Homelab {
 
   node [fillcolor="#FFFFFF" color="#82B366"];
   cloudflared [label="Cloudflared Tunnel"];
-  dns [label="Cloudflare DNS\n+ k8s-gateway"];
+  dns [label="Cloudflare DNS\n+ UniFi DNS"];
 
   node [fillcolor="#E1D5E7" color="#9673A6"];
   offsite [label="Offsite Storage\n(S3/MinIO)"];
 
   github -> flux -> apps;
-  longhorn -> apps;
-  synology -> apps;
+  storage -> apps;
   apps -> ingress_ext;
   apps -> ingress_int;
   cloudflared -> ingress_ext;

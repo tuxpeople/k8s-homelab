@@ -17,7 +17,7 @@
 
 ## Dashboards
 - `Cluster / Control Plane`
-- `Storage / Longhorn`
+- `Storage / Synology / CSI`
 - `Media Stack`
 - `AI & Productivity`
 - `Backups`
