@@ -10,16 +10,26 @@
 | Trivy Operator | `archive/apps/security/trivy-operator` | Archiviert | CVE & config scanning (VulnerabilityReports, ConfigAuditReports). |
 
 ## Kyverno Policies
-- Policies liegen unter `kubernetes/apps/security/kyverno/policies/`.
-- Standards (Auszug):
-  - `require-resources` – verlangt Requests/Limits.
-  - `deny-privileged` – blockt `privileged: true`.
-  - `disallow-latest-tag`.
-  - `add-required-labels`.
-  - `gatus-internal` / `gatus-external` – generiert automatisch Gatus ConfigMaps für Ingresses.
-    - Ausnahmen: Namespace `test` und Annotation `gatus.io/enabled: "false"`
-    - Siehe `docs/services/observability.md` für Details zu Gatus Annotations
-- Pod Security Standards: Ziel PSModerate/Restricted – noch nicht ausgerollt (TODO).
+- Policies liegen unter `kubernetes/apps/security/kyverno/policies/` und werden über die Flux Kustomization `kyverno-policies` ausgerollt.
+- `kubernetes/apps/security/kyverno/policies/kustomization.yaml` ist die aktive Policy-Liste; `ghcr-pullsecret.yaml` ist vorbereitet, aber aktuell auskommentiert.
+
+| Policy | Typ | Wirkung |
+| ------ | --- | ------- |
+| `sync-production-tls` | Generate | Kopiert `*-production-tls` Secrets aus `cert-manager` nach `network`; RBAC liegt in `sync-production-tls-rbac.yaml`. |
+| `gatus-external` / `gatus-internal` | Generate | Erzeugt Gatus ConfigMaps für Ingresses mit `ingressClassName: external` oder `internal`. Ausnahmen: Namespace `test`, Annotation `gatus.io/enabled: "false"`, Namespace-Label `kyverno.io/exclude: "true"`. |
+| `helmrelease-defaults` | Mutate | Setzt fehlendes `spec.upgrade.remediation.strategy: uninstall` bei HelmReleases. |
+| `ingress` | Mutate | Setzt `external-dns.alpha.kubernetes.io/target` für externe Ingresses auf `external.${SECRET_DOMAIN}` und für interne Ingresses auf `192.168.13.64`, ohne bestehende Werte zu überschreiben. |
+| `limits` | Mutate | Entfernt CPU-Limits aus Pods und Init-Containern; systemnahe oder ausgeschlossene Namespaces bleiben ausgenommen. |
+| `ndots` | Mutate | Setzt DNS `ndots: "1"` für Pods. |
+| `label-existing-namespaces` | Mutate existing | Labelt bestehende Namespaces nach, ausser sie tragen `kyverno.io/exclude: "true"`. |
+| `add-reloader-annotations` | Mutate | Ergänzt Reloader-Annotationen für Secret/ConfigMap-Neustarts. |
+| `require-storageclass` | Validate, Audit | Auditiert PVCs und StatefulSets ohne `storageClassName`. |
+| `restrict-deprecated-registry` | Validate, Enforce | Blockiert Pods mit deprecated Registry-Pfaden. |
+| `restrict-latest-tag` | Validate, Audit | Auditiert fehlende Image-Tags und `:latest`. |
+| `restrict-privileged` | Validate, Audit | Auditiert `privileged: true` sowie Host-Namespace-Nutzung. |
+| `seccomp-default` | Mutate | Setzt `RuntimeDefault` Seccomp-Profil, wenn keines definiert ist. |
+
+- Pod Security Standards: teilweise über `restrict-privileged` und `seccomp-default` abgedeckt; vollständige PSModerate/Restricted-Enforcement ist noch nicht aktiv.
 - NetworkPolicies: derzeit kaum vorhanden → Backlog DOC-004 (erstellen + verlinken hier).
 
 ## Secrets & External Secrets
@@ -50,7 +60,7 @@
   4. Close alert / re-run scan.
 
 ## Compliance Checklist vor Deployments
-1. Ressourcen-Limits gesetzt? (Kyverno enforced, aber validieren).
+1. Ressourcen-Requests gesetzt? CPU-Limits werden durch Kyverno entfernt; Memory-Limits weiterhin bewusst setzen.
 2. Container läuft non-root, readOnly FS wenn möglich.
 3. Secrets: SOPS verschlüsselt + ExternalSecret referenziert; keine Klartext Tokens.
 4. TLS & DNS Einträge dokumentiert (`docs/services/networking.md`).
