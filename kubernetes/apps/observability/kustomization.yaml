@@ -6,7 +6,7 @@ namespace: observability
 components:
   - ../../components/common
 resources:
-  - ./externalsecret.yaml
+  - ./alloy/ks.yaml
   - ./exportarr/ks.yaml
   - ./gatus/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
