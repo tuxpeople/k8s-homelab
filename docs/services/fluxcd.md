@@ -10,6 +10,10 @@
 
 **Git Repo**: `github.com/tuxpeople/k8s-homelab` → Branch `main`. Deploy-Key `github-deploy.key` (SOPS-verschlüsselt) + GitHub token `github-push-token.txt` (für automation) lokal verfügbar.
 
+## Zugriff
+
+-   Flux Operator UI: `https://flux-operator.${SECRET_DOMAIN}` über internen Traefik Ingress, in Hajimari als „Flux Operator“ geführt.
+
 ## Bootstrap / Wiederherstellung
 
 1. Voraussetzungen: `age.key`, Deploy-Key (`github-deploy.key`), Kubeconfig `admin@turingpi`.
