@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app prowlarr_exporter
+  name: &app prowlarr-exporter
   namespace: &namespace observability
 spec:
   commonMetadata:
@@ -15,7 +15,7 @@ spec:
     - name: external-secrets-secretstores
       namespace: security
   interval: 1h
-  path: ./kubernetes/apps/observability/prowlarr_exporter/app
+  path: ./kubernetes/apps/observability/prowlarr-exporter/app
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -30,7 +30,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app sonatrr_exporter
+  name: &app sonatrr-exporter
   namespace: &namespace observability
 spec:
   commonMetadata:
@@ -42,7 +42,7 @@ spec:
     - name: external-secrets-secretstores
       namespace: security
   interval: 1h
-  path: ./kubernetes/apps/observability/sonatrr_exporter/app
+  path: ./kubernetes/apps/observability/sonatrr-exporter/app
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -57,7 +57,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app radarr_exporter
+  name: &app radarr-exporter
   namespace: &namespace observability
 spec:
   commonMetadata:
@@ -69,7 +69,7 @@ spec:
     - name: external-secrets-secretstores
       namespace: security
   interval: 1h
-  path: ./kubernetes/apps/observability/radarr_exporter/app
+  path: ./kubernetes/apps/observability/radarr-exporter/app
   prune: true
   retryInterval: 2m
   sourceRef:
