@@ -4,5 +4,22 @@ serviceMonitor:
 
 resources:
   requests:
-    memory: "200Mi"  # VPA recommends 175Mi, rounded up
-    cpu: "30m"       # VPA recommends 23m, rounded up
+    memory: "200Mi" # VPA recommends 175Mi, rounded up
+    cpu: "30m" # VPA recommends 23m, rounded up
+
+web:
+  ingress:
+    enabled: true
+    className: "internal"
+    annotations:
+      hajimari.io/appName: Flux Operator
+      hajimari.io/icon: simple-icons:flux
+    hosts:
+      - host: flux-operator.${SECRET_DOMAIN}
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: flux-operator-tls
+        hosts:
+          - flux-operator.${SECRET_DOMAIN}
