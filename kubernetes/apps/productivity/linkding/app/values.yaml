@@ -2,8 +2,6 @@
 
 controllers:
   app:
-    annotations:
-      reloader.stakater.com/auto: "true"
     pod:
       enableServiceLinks: false
     containers:

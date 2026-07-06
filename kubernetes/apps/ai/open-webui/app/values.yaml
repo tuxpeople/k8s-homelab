@@ -2,8 +2,6 @@
 
 controllers:
   open-webui:
-    annotations:
-      reloader.stakater.com/auto: "true"
     containers:
       app:
         env:

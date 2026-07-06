@@ -27,8 +27,6 @@ spec:
   values:
     controllers:
       sonarr-exporter:
-        annotations:
-          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:

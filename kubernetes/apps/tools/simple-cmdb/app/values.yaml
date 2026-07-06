@@ -3,8 +3,6 @@
 controllers:
   simple-cmdb:
     strategy: RollingUpdate
-    annotations:
-      reloader.stakater.com/auto: "true"
     containers:
       app:
         image:
@@ -95,7 +93,6 @@ defaultPodOptions:
     runAsGroup: 65532
     fsGroup: 65532
     fsGroupChangePolicy: OnRootMismatch
-    seccompProfile: { type: RuntimeDefault }
 service:
   app:
     controller: simple-cmdb

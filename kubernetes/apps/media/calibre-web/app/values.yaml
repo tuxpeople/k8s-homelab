@@ -5,8 +5,6 @@ global:
 controllers:
   calibre-web: &app
     strategy: Recreate
-    annotations:
-      reloader.stakater.com/auto: "true"
     containers:
       main:
         image:

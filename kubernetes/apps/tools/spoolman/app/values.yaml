@@ -2,8 +2,6 @@
 
 controllers:
   spoolman:
-    annotations:
-      reloader.stakater.com/auto: "true"
     containers:
       spoolman:
         resources:

@@ -26,7 +26,6 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-      strategy: uninstall
   values:
     fullnameOverride: *app
     provider:

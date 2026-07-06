@@ -42,7 +42,6 @@ defaultPodOptions:
     runAsNonRoot: true
     runAsUser: 65534
     runAsGroup: 65534
-    seccompProfile: { type: RuntimeDefault }
 service:
   app:
     controller: echo-server
@@ -65,7 +64,6 @@ ingress:
       hajimari.io/icon: "video-input-antenna"
       hajimari.io/group: Network
       hajimari.io/info: ""
-      external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
     hosts:
       - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
         paths:

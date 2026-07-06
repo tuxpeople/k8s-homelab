@@ -22,7 +22,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: uninstall
   values:
     csiDriver:
       name: org.democratic-csi.synology-iscsi

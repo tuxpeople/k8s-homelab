@@ -2,8 +2,6 @@
 
 controllers:
   gatus:
-    annotations:
-      reloader.stakater.com/auto: "true"
     initContainers:
       init-config:
         image:
