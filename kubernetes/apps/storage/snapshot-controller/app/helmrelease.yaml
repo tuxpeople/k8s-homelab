@@ -29,21 +29,6 @@ spec:
     timeout: 10m
     cleanupOnFail: false
   values:
-    volumeSnapshotClasses:
-      - name: longhorn-backup-vsc
-        driver: driver.longhorn.io
-        annotations:
-          snapshot.storage.kubernetes.io/is-default-class: "false"
-        parameters:
-          type: bak
-        deletionPolicy: Delete
-      - name: longhorn-snapshot-vsc
-        driver: driver.longhorn.io
-        annotations:
-          snapshot.storage.kubernetes.io/is-default-class: "true"
-        parameters:
-          type: snap
-        deletionPolicy: Delete
     controller:
       serviceMonitor:
         create: true

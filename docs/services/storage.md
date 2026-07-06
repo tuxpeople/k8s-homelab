@@ -5,7 +5,7 @@
 | Service             | Namespace | Pfad                                          | Status | Beschreibung / Hinweise |
 | ------------------- | --------- | --------------------------------------------- | ------ | ----------------------- |
 | Democratic CSI      | storage   | `kubernetes/apps/storage/democratic-csi`      | Aktiv  | iSCSI Driver fuer Synology. Stellt die StorageClass `iscsi-delete` bereit und nutzt `hostPID: true` fuer `iscsiadm` im Host-Namespace. |
-| Snapshot Controller | storage   | `kubernetes/apps/storage/snapshot-controller` | Aktiv  | CSI Snapshot CRDs + Controller. Die aktuellen Werte enthalten noch Longhorn SnapshotClasses und sollten auf democratic-csi/Synology bereinigt oder deaktiviert werden. |
+| Snapshot Controller | storage   | `kubernetes/apps/storage/snapshot-controller` | Aktiv  | CSI Snapshot CRDs + Controller. SnapshotClass `synology-iscsi-snapshots` wird durch democratic-csi bereitgestellt. |
 | Litestream Cleanup  | storage   | `kubernetes/apps/storage/litestream-cleanup`  | Aktiv  | CronJob fuer Retention/Cleanup des `litestream` Buckets. |
 | Longhorn            | storage   | `archive/apps/storage/longhorn`               | Archiviert | Ehemaliger Distributed Block Storage. Nicht als aktive StorageClass dokumentieren. |
 | Synology CSI        | storage   | `archive/apps/storage/synology-csi`           | Archiviert | Ersetzt durch democratic-csi. |
@@ -50,7 +50,7 @@ Aktive StorageClass:
 - PVC-Fuellstand, Node Disk Pressure und Pod-Restarts ueber den Observability-Stack bzw. Gatus pruefen.
 - democratic-csi Controller/Node Pods muessen Ready sein.
 - Litestream Cleanup Jobs duerfen nicht dauerhaft fehlschlagen.
-- Snapshot Controller ist aktiv, aber die Longhorn SnapshotClasses sind ein Cleanup-Gap.
+- Snapshot Controller ist aktiv; SnapshotClass `synology-iscsi-snapshots` kommt aus democratic-csi.
 
 ## Runbooks
 
@@ -60,7 +60,6 @@ Aktive StorageClass:
 
 ## TODOs / Gaps
 
-1. Snapshot Controller Werte auf democratic-csi/Synology SnapshotClasses bereinigen oder Controller deaktivieren.
-2. Storage usage report + data classification pro App ergaenzen.
-3. Automatische Restore-Validierung fuer Synology/democratic-csi und Litestream definieren.
-4. Offsite-Backup-Ziel fuer nicht-replizierte PVC-Daten dokumentieren.
+1. Storage usage report + data classification pro App ergaenzen.
+2. Automatische Restore-Validierung fuer Synology/democratic-csi und Litestream definieren.
+3. Offsite-Backup-Ziel fuer nicht-replizierte PVC-Daten dokumentieren.

@@ -16,7 +16,7 @@
 - **Zweck**: RSS Reader mit OIDC Auth.
 - **Ingress**: `freshrss.${SECRET_DOMAIN}` (external).
 - **Secrets**: `freshrss-secrets` (DB creds, admin). OIDC gegen `auth.${SECRET_DOMAIN}`.
-- **Speicher**: PVC `data` 5 Gi (democratic-csi/Synology). Die Werte enthalten noch eine alte `k8up.io/backup` Annotation, aber K8up ist archiviert; Backup-Pfad ist Litestream plus Synology/PVC-Restore.
+- **Speicher**: PVC `data` 5 Gi (democratic-csi/Synology). Backup-Pfad ist Litestream plus Synology/PVC-Restore.
 - **Monitoring**: Cron env `CRON_MIN` (18,48). Add alert wenn Cron älter >2h.
 - **Runbooks**: Reconcile `flux reconcile kustomization freshrss --with-source -n productivity`. Für DB Migration: export OPML/feeds.
 

@@ -5,7 +5,7 @@
 -   **Git + Flux** – Kubernetes-Manifeste und Cluster-Zielzustand sind im Repository versioniert.
 -   **SOPS/Age + 1Password External Secrets** – Secret-Material liegt verschluesselt im Repo bzw. in 1Password.
 -   **democratic-csi/Synology** (`kubernetes/apps/storage/democratic-csi`) – PVCs werden ueber die StorageClass `iscsi-delete` auf Synology iSCSI bereitgestellt.
--   **Snapshot-Controller** (`kubernetes/apps/storage/snapshot-controller`) – CSI Snapshot Controller ist aktiv; die aktuellen Longhorn SnapshotClasses sind ein Cleanup-Gap.
+-   **Snapshot-Controller** (`kubernetes/apps/storage/snapshot-controller`) – CSI Snapshot Controller ist aktiv; democratic-csi stellt `synology-iscsi-snapshots` bereit.
 -   **Litestream** – Kontinuierliche SQLite-Datenbank-Replikation zu S3/MinIO bzw. Garage-kompatiblem Storage.
 -   **Litestream Cleanup** (`kubernetes/apps/storage/litestream-cleanup`) – Bucket-Retention fuer alte Litestream-Generationen.
 
