@@ -42,7 +42,7 @@ spec:
     - name: external-secrets-secretstores
       namespace: security
   interval: 1h
-  path: ./kubernetes/apps/observability/sonatrr-exporter/app
+  path: ./kubernetes/apps/observability/sonarr-exporter/app
   prune: true
   retryInterval: 2m
   sourceRef:
