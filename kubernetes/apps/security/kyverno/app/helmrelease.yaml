@@ -30,7 +30,7 @@ spec:
     cleanupOnFail: false
   values:
     crds:
-      install: true
+      install: false
     grafana:
       enabled: true
     admissionController:
