@@ -13,7 +13,7 @@ controllers:
             memory: 207Mi
         image:
           repository: ghcr.io/donkie/spoolman
-          tag: 0.25.0@sha256:1c4818a467d42946c3f24850aa45686ab67c06cb80e798470b46a33c2c218381
+          tag: 0.26.1@sha256:cf9b41e17b93ce7d4ca584d9809142f8918fd290f2cd7d3b8b12ff76c75482f0
         command:
           - uvicorn
           - spoolman.main:app
