@@ -33,7 +33,7 @@ spec:
     cleanupOnFail: false
   values:
     crds:
-      install: true
+      install: false
       annotations:
         helm.sh/resource-policy: keep
     kyverno-api:
