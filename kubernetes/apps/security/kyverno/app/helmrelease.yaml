@@ -5,6 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app kyverno
 spec:
+  timeout: 15m
   chart:
     spec:
       chart: kyverno
@@ -30,7 +31,7 @@ spec:
     cleanupOnFail: false
   values:
     crds:
-      install: false
+      install: true
     grafana:
       enabled: true
     admissionController:
@@ -54,7 +55,6 @@ spec:
           cpu: 35m
           memory: 100Mi
         limits:
-          cpu: 51m
           memory: 120Mi
     backgroundController:
       rbac:
@@ -65,7 +65,6 @@ spec:
           cpu: 15m
           memory: 100Mi
         limits:
-          cpu: 150m
           memory: 120Mi
       serviceMonitor:
         enabled: true
@@ -80,7 +79,6 @@ spec:
           cpu: 23m
           memory: 100Mi
         limits:
-          cpu: 33m
           memory: 120Mi
     cleanupController:
       serviceMonitor:
@@ -90,5 +88,4 @@ spec:
           cpu: 63m
           memory: 100Mi
         limits:
-          cpu: 116m
           memory: 120Mi

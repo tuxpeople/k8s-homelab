@@ -86,6 +86,12 @@ tasks:
         echo "✅ Basic YAML syntax validation completed"
       fi
 
+  validate:timeouts:
+    desc: Validate Flux Kustomization timeouts against nested HelmReleases
+    cmd: ./scripts/check-flux-timeouts.sh
+    preconditions:
+      - which yq
+
   validate:flux:
     desc: Check Flux resources status and health
     cmd: |
