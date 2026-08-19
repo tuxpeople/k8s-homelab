@@ -57,7 +57,7 @@ spec:
           cpu: 35m
           memory: 100Mi
         limits:
-          memory: 120Mi
+          memory: 256Mi
     backgroundController:
       rbac:
         clusterRole:
@@ -67,7 +67,7 @@ spec:
           cpu: 15m
           memory: 100Mi
         limits:
-          memory: 120Mi
+          memory: 256Mi
       serviceMonitor:
         enabled: true
     reportsController:
@@ -81,7 +81,7 @@ spec:
           cpu: 23m
           memory: 100Mi
         limits:
-          memory: 120Mi
+          memory: 256Mi
     cleanupController:
       serviceMonitor:
         enabled: true
@@ -90,4 +90,4 @@ spec:
           cpu: 63m
           memory: 100Mi
         limits:
-          memory: 120Mi
+          memory: 256Mi
