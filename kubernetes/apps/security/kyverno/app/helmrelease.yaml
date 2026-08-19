@@ -34,6 +34,11 @@ spec:
   values:
     crds:
       install: true
+      annotations:
+        helm.sh/resource-policy: keep
+    kyverno-api:
+      annotations:
+        helm.sh/resource-policy: keep
     grafana:
       enabled: true
     admissionController:
