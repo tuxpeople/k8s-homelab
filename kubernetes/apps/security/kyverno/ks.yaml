@@ -18,7 +18,9 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 5m
+  # Must exceed the HelmRelease timeout so the dependency is not marked
+  # unhealthy while Kyverno is still installing or upgrading.
+  timeout: 20m
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
