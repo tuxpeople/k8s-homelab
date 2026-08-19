@@ -11,6 +11,7 @@
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
+  baseBranches: ["main", "renovate-kyverno-test"],
   suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
   schedule: ["every weekend"],
   vulnerabilityAlerts: {
