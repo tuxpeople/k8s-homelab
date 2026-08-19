@@ -5,7 +5,7 @@ name: "Kyverno CRDs"
 on:
   workflow_dispatch:
   pull_request:
-    branches: ["main", "renovate-kyverno-test"]
+    branches: ["main"]
     paths:
       - "kubernetes/apps/security/kyverno/app/helmrelease.yaml"
       - "kubernetes/apps/security/kyverno/crds/**"
