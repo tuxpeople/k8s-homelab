@@ -25,7 +25,9 @@ spec:
     remediation:
       retries: 5
       remediateLastFailure: true
-    cleanupOnFail: true
+    # Kyverno CRDs are rendered by the chart. Keep them when a controller
+    # rollout fails so the retry does not start without its required APIs.
+    cleanupOnFail: false
   rollback:
     timeout: 10m
     cleanupOnFail: false
