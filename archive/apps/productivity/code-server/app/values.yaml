@@ -10,7 +10,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/linuxserver/code-server
-          tag: 4.130.0@sha256:691c8e0560a807a4affefbcf7e729716b372d1df7c57e18ed3a263044cf45908
+          tag: 4.133.0@sha256:0dc7d8d440cadbd73982a02a3362bbdd3533ec90d1c9dfd02fff9d0f14442885
         env:
           TZ: ${TIMEZONE}
           PUID: 911
