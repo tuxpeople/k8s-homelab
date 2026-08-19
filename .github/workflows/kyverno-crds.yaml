@@ -35,6 +35,7 @@ jobs:
           fetch-depth: 0
           ref: "${{ github.event.pull_request.head.ref }}"
           repository: "${{ github.event.pull_request.head.repo.full_name }}"
+          token: "${{ secrets.KYVERNO_CRD_TOKEN }}"
 
       - name: Cache mise tools
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
