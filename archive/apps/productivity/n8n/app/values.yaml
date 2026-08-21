@@ -8,7 +8,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/n8n-io/n8n
-          tag: 2.33.3@sha256:769d3a624534ff8b5f3316ef71d4653f48794c47e4339436be7a308d6d6a1cc9
+          tag: 2.36.5@sha256:2cf92b86cb9d36def87b6d7abc19f6ec882f397c4f489248f170e3b782a810fc
         env:
           DB_SQLITE_VACUUM_ON_STARTUP: true
           EXECUTIONS_DATA_PRUNE: true
