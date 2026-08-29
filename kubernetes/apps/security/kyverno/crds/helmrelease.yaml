@@ -9,9 +9,10 @@ spec:
   ref:
     tag: v1.8.2
   ignore: |
-    /*
-    !/charts/kyverno/charts/crds/*
     # exclude all
+    /*
+    # include chart
+    !/charts/kyverno/charts/crds
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
