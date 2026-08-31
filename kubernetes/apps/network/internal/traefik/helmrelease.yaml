@@ -95,11 +95,10 @@ spec:
       # Real client IP aus X-Forwarded-For fuer interne Anfragen
       - "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 
-    logs:
-      general:
-        level: INFO
-        format: json
-      access:
+    log:
+      level: INFO
+      format: json
+      accessLog:
         enabled: true
         format: json
         fields:
