@@ -77,7 +77,7 @@ ingress:
     annotations:
       gatus.io/path: *path
       hajimari.io/icon: simple-icons:statuspage
-      hajimari.io/url: https://status.${PUBLIC_DOMAIN}
+      hajimari.io/url: https://status.${SECRET_DOMAIN}
     hosts:
       - host: &host "status.${SECRET_DOMAIN}"
         paths:
