@@ -2,7 +2,7 @@
 
 controllers:
   dorflade-mhd:
-    strategy: RollingUpdate
+    strategy: Recreate
     containers:
       app:
         image:
