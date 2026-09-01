@@ -12,6 +12,7 @@ controllers:
           TZ: ${TIMEZONE}
           DB_PATH: /app/data/products.db
           FLASK_DEBUG: "false"
+          INCLUDE_CURRENT_MONTH: "true"
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
