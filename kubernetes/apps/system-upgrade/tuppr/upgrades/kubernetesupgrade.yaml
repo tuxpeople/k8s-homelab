@@ -10,7 +10,7 @@ spec:
   healthChecks:
     - apiVersion: v1
       kind: Node
-      description: Require Ready nodes before the control plane upgrade
+      description: Require Ready nodes
       expr: status.conditions.exists(c, c.type == "Ready" && c.status == "True")
       timeout: 10m
   talosctl:
