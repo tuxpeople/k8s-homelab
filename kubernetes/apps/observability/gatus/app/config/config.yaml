@@ -16,7 +16,7 @@ connectivity:
     interval: 1m
 remote:
   instances:
-    - url: "http://status.home:8088/api/v1/endpoints/statuses"
+    - url: "https://status1.eighty-three.me/api/v1/endpoints/statuses"
       # endpoint-prefix: "nonkubernetes-"
 alerting:
   discord:
