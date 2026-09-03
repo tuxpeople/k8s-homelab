@@ -129,7 +129,7 @@ ingress:
     enabled: true
     className: external
     hosts:
-      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      - host: &iconsHost "{{ .Release.Name }}.${SECRET_DOMAIN}"
         paths:
           - path: /apple-touch-icon.png
             pathType: Exact
@@ -148,7 +148,7 @@ ingress:
               port: *port
     tls:
       - hosts:
-          - *host
+          - *iconsHost
         secretName: ${SECRET_DOMAIN/./-}-production-tls
 
 persistence:
