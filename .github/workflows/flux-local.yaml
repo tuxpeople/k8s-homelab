@@ -44,7 +44,7 @@ jobs:
       - name: Run flux-local test
         uses: docker://ghcr.io/allenporter/flux-local:v8.1.0
         with:
-          args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/flux/cluster -v
+          args: test --enable-helm --api-versions monitoring.coreos.com/v1 --all-namespaces --path /github/workspace/kubernetes/flux/cluster -v
 
   diff:
     name: Flux Local Diff
@@ -55,7 +55,11 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        resources: ["helmrelease", "kustomization"]
+        include:
+          - resources: helmrelease
+            extra_args: --api-versions monitoring.coreos.com/v1
+          - resources: kustomization
+            extra_args: ""
       max-parallel: 4
       fail-fast: false
     if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
@@ -76,6 +80,7 @@ jobs:
         with:
           args: >-
             diff ${{ matrix.resources }}
+            ${{ matrix.extra_args }}
             --unified 6
             --path /github/workspace/pull/kubernetes/flux/cluster
             --path-orig /github/workspace/default/kubernetes/flux/cluster
