@@ -34,6 +34,13 @@ spec:
     node:
       # Required for iSCSI nsenter strategy (iscsiadm from host namespace).
       hostPID: true
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: DoesNotExist
       driver:
         extraEnv:
           - name: ISCSIADM_HOST_STRATEGY
