@@ -3,7 +3,7 @@ name: Claude Code
 on:
   # Automatic trigger on workflow failures
   workflow_run:
-    workflows: ["Flux Local", "Mise", "ShellCheck", "Validation", "Check talconfig"]
+    workflows: ["Flux Local", "ShellCheck", "Validation", "Check Talconfig"]
     types: [completed]
 
   # Manual trigger via @claude comment
@@ -17,6 +17,111 @@ on:
     types: [opened, assigned]
 
 jobs:
+  cleanup-labels:
+    name: Remove resolved workflow failure labels
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      issues: write
+      pull-requests: read
+
+    steps:
+      - name: Remove labels when all PR workflows pass
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const requiredWorkflows = new Set([
+              'Flux Local',
+              'Validation',
+              'Check Talconfig',
+            ]);
+            const optionalWorkflows = new Set(['ShellCheck']);
+            const monitoredWorkflows = new Set([
+              ...requiredWorkflows,
+              ...optionalWorkflows,
+            ]);
+
+            let prNumber = run.pull_requests?.[0]?.number;
+            if (!prNumber) {
+              const { data: prs } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                head: `${context.repo.owner}:${run.head_branch}`,
+              });
+              prNumber = prs[0]?.number;
+            }
+
+            if (!prNumber) {
+              core.info(`No open PR found for ${run.head_branch}; nothing to clean up.`);
+              return;
+            }
+
+            const workflowRuns = await github.paginate(
+              github.rest.actions.listWorkflowRunsForRepo,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                event: 'pull_request',
+                head_sha: run.head_sha,
+                per_page: 100,
+              },
+            );
+
+            const latestRuns = new Map();
+            for (const candidate of workflowRuns) {
+              if (!monitoredWorkflows.has(candidate.name)) continue;
+
+              const current = latestRuns.get(candidate.name);
+              if (!current || new Date(candidate.created_at) > new Date(current.created_at)) {
+                latestRuns.set(candidate.name, candidate);
+              }
+            }
+
+            const missing = [...requiredWorkflows].filter(name => !latestRuns.has(name));
+            if (missing.length > 0) {
+              core.info(`Required workflows have not started yet: ${missing.join(', ')}`);
+              return;
+            }
+
+            const incomplete = [...latestRuns.values()].filter(candidate => candidate.status !== 'completed');
+            if (incomplete.length > 0) {
+              core.info(`Workflows still running: ${incomplete.map(candidate => candidate.name).join(', ')}`);
+              return;
+            }
+
+            const unsuccessful = [...latestRuns.values()].filter(candidate => candidate.conclusion !== 'success');
+            if (unsuccessful.length > 0) {
+              core.info(`Workflows not successful: ${unsuccessful.map(candidate => `${candidate.name} (${candidate.conclusion})`).join(', ')}`);
+              return;
+            }
+
+            const { data: issue } = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+            const currentLabels = new Set(issue.labels.map(label => typeof label === 'string' ? label : label.name));
+            const labelsToRemove = [
+              '🤖 needs-claude-fix',
+              '🔴 workflow-failed',
+              '🤖 claude-requested',
+            ];
+
+            for (const label of labelsToRemove) {
+              if (!currentLabels.has(label)) continue;
+
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                name: label,
+              });
+              core.info(`Removed label "${label}" from PR #${prNumber}.`);
+            }
+
   claude:
     # Run for manual @claude mentions OR automatic workflow failures
     if: |
