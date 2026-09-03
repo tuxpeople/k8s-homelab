@@ -47,6 +47,15 @@
       allowedVersions: "<3.14.0",
     },
     {
+      description: "Group stable Talos and Kubernetes updates",
+      groupName: "Talos and Kubernetes",
+      matchPackageNames: ["siderolabs/talos", "ghcr.io/siderolabs/kubelet"],
+      ignoreUnstable: true,
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
       description: "Automerge patch updates",
       matchUpdateTypes: ["patch"],
       automerge: true,
