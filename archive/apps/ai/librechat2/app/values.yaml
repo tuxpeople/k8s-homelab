@@ -8,7 +8,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/danny-avila/librechat-dev
-          tag: latest@sha256:e7b1cbd605639496a533b92cf4f04bece0f43755e4e68e1dbc631dae126d3484
+          tag: latest@sha256:f06c25a6dd958de6a38e2b3ca050acd0303e262e953095cb9457944926c77058
         env:
           PORT: "3080"
           NODE_ENV: "production"
