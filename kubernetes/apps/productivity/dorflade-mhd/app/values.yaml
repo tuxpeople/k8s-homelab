@@ -110,7 +110,7 @@ ingress:
     enabled: true
     className: external
     annotations:
-      traefik.ingress.kubernetes.io/router.middlewares: productivity-basic-auth-dorflade@kubernetescrd
+      traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
       hajimari.io/icon: mdi:barcode-scan
     hosts:
       - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -124,33 +124,9 @@ ingress:
       - hosts:
           - *host
         secretName: ${SECRET_DOMAIN/./-}-production-tls
-  # workaround basic-auth for icons
-  manifests-icons:
-    enabled: true
-    className: external
-    hosts:
-      - host: &iconsHost "{{ .Release.Name }}.${SECRET_DOMAIN}"
-        paths:
-          - path: /apple-touch-icon.png
-            pathType: Exact
-            service:
-              identifier: app
-              port: *port
-          - path: /apple-touch-icon-precomposed.png
-            pathType: Exact
-            service:
-              identifier: app
-              port: *port
-          - path: /static/manifest.json
-            pathType: Exact
-            service:
-              identifier: app
-              port: *port
-    tls:
-      - hosts:
-          - *iconsHost
-        secretName: ${SECRET_DOMAIN/./-}-production-tls
 
+# PWA icons/manifest (/apple-touch-icon*.png, /static/manifest.json) are served
+# without auth via the global "public static assets" bypass rule in Authelia.
 persistence:
   tmp:
     enabled: true

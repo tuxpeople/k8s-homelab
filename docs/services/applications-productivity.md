@@ -5,7 +5,7 @@
 ## Dorflade-MHD (**aktiv**)
 - **Pfad**: `kubernetes/apps/productivity/dorflade-mhd`.
 - **Zweck**: Eigene Anwendung zur Produkt-/Inventarverwaltung (MHD = Mindesthaltbarkeitsdatum). Image: `ghcr.io/tuxpeople/dorflade-mhd`.
-- **Ingress**: `dorflade-mhd.${SECRET_DOMAIN}` (external ingress) mit Basic-Auth Middleware.
+- **Ingress**: `dorflade-mhd.${SECRET_DOMAIN}` (external ingress) mit Authelia ForwardAuth (`network-auth@kubernetescrd`). PWA-Icons/Manifest werden über die globale Static-Asset-Bypass-Regel in Authelia ohne Auth ausgeliefert.
 - **Storage**: SQLite-Datenbank unter `/app/data/products.db`; Litestream repliziert zur MinIO S3 Instanz.
 - **Backups**: Litestream-Replikation zu MinIO (S3). Bucket-Konfiguration via `litestream-configmap.yaml`.
 - **Secrets**: `dorflade-mhd-secrets` (Litestream MinIO Credentials via ExternalSecret/Doppler).
