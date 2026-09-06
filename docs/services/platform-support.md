@@ -24,7 +24,7 @@
 
 | Service                 | Pfad                                     | Zweck / Bemerkung                                                         |
 | ----------------------- | ---------------------------------------- | ------------------------------------------------------------------------- |
-| Bildergallerie          | `kubernetes/apps/default/bildergallerie` | Demo-App, testet media ingress.                                           |
+| Bildergallerie          | `kubernetes/apps/default/bildergallerie` | Bildergalerie für Luca. Intern via `bildergallerie.${SECRET_DOMAIN}` (internal), zusätzlich extern via `bildergallerie-ext.${SECRET_DOMAIN}` (external, Authelia ForwardAuth). |
 | Echo-Server             | `kubernetes/apps/default/echo-server`    | HTTP echo for ingress troubleshooting.                                    |
 | GitLab Runner / Runner2 | `kubernetes/apps/default/gitlab-runner*` | Self-hosted GitLab CI runners. Secrets (GitLab token) via ExternalSecret. |
 | Homepage                | `kubernetes/apps/default/homepage`       | Alte Startseite, kann ggf. ersetzt werden durch Hajimari.                 |

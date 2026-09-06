@@ -47,6 +47,23 @@ ingress:
             service:
               identifier: app
               port: http
+  # Public-facing variant, protected by external Authelia (ForwardAuth)
+  ext:
+    className: external
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
+      hajimari.io/enable: "false"
+    hosts:
+      - host: "bildergallerie-ext.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
+    tls:
+      - hosts:
+          - "bildergallerie-ext.${SECRET_DOMAIN}"
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
 persistence:
   pictures:
     enabled: true
