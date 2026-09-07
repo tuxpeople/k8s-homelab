@@ -9,5 +9,8 @@ configMapGenerator:
   - name: calibre-web-values
     files:
       - values.yaml
+  - name: calibre-web-workaround
+    files:
+      - run-workaround.sh
 generatorOptions:
   disableNameSuffixHash: true
