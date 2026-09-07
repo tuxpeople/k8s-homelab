@@ -78,6 +78,7 @@ ingress:
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
       hajimari.io/icon: "mdi:link-variant"
+      gatus.io/status-code: "401"
     hosts:
       - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
         paths:

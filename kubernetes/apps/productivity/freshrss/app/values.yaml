@@ -86,6 +86,7 @@ ingress:
     className: external
     annotations:
       hajimari.io/icon: mdi:rss
+      gatus.io/status-code: "401"
     hosts:
       - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
         paths:

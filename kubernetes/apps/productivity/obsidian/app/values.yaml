@@ -28,6 +28,7 @@ ingress:
       hajimari.io/appName: "Obsidian"
       hajimari.io/group: productivity
       traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
+      gatus.io/status-code: "401"
     enabled: true
     className: external
     hosts:
