@@ -53,6 +53,7 @@ ingress:
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
       hajimari.io/enable: "false"
+      gatus.io/status-code: "401"
     hosts:
       - host: "bildergallerie-ext.${SECRET_DOMAIN}"
         paths:
