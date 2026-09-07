@@ -17,11 +17,11 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/media/calibre-web/app
   prune: true
-  retryInterval: 2m
+  retryInterval: 5m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 15m
+  timeout: 30m
   wait: true
