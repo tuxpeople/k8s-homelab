@@ -105,7 +105,7 @@ persistence:
   workaround:
     enabled: true
     type: configMap
-    name: "workaround"
+    name: "calibre-web-workaround"
     defaultMode: 0744
     globalMounts:
       - subPath: "run-workaround.sh"
