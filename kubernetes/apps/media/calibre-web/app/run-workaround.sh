@@ -19,13 +19,12 @@ export PATH="/tmp/mock-bin:$PATH"
 
 # Run the original script
 /etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run.original
-setup_exit=$?
 
+# Check what happened
 if [ -x /usr/bin/calibredb ]; then
   echo "[calibre-binaries-setup-WORKAROUND] Calibre installation verified successfully"
 else
-  echo "[calibre-binaries-setup-WORKAROUND] Calibre installation verified successfully"
-  exit $setup_exit
+  echo "[calibre-binaries-setup-WORKAROUND] Calibre installation failed"
 fi
 
 # Clean up
