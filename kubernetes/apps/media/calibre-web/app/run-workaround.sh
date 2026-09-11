@@ -8,9 +8,11 @@ echo "[calibre-binaries-setup-WORKAROUND] Starting workaround wrapper script"
 curl -sL https://raw.githubusercontent.com/crocodilestick/Calibre-Web-Automated/refs/heads/main/root/etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run -o /etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run.original
 chmod +x /etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run.original
 
-# Create a fake xdg-desktop-menu command in system space
-echo -e '#!/bin/sh\nexit 0' > /usr/local/bin/xdg-desktop-menu
-chmod +x /usr/local/bin/xdg-desktop-menu
+# Create fake xdg-* commands in system space
+for FAKECOMMAND in xdg-desktop-menu xdg-mime; do
+  echo -e '#!/bin/sh\nexit 0' > /usr/local/bin/${FAKECOMMAND}
+  chmod +x /usr/local/bin/${FAKECOMMAND}
+done
 
 # Run the original script
 /etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run.original
@@ -26,7 +28,9 @@ else
 fi
 
 # Clean up system binary folder
-rm -f /usr/local/bin/xdg-desktop-menu
+for FAKECOMMAND in xdg-desktop-menu xdg-mime; do
+  rm -f /usr/local/bin/x${FAKECOMMAND}
+done
 
 # Important: Exit with 0 if calibredb is ready, so s6 doesn't crash the container
 exit $EXIT_STATUS
