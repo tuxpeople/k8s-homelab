@@ -8,14 +8,15 @@ tasks:
     dir: "{{.TALOS_DIR}}"
     env:
       DOCKER_USERNAME:
-        sh: sops -d {{.TALOS_DIR}}/talsecret.sops.yaml | yq -r '.DOCKER_USERNAME'
+        sh: sops -d {{.TALOS_DIR}}/docker-registry.sops.yaml | yq -r '.DOCKER_USERNAME'
       DOCKER_PASSWORD:
-        sh: sops -d {{.TALOS_DIR}}/talsecret.sops.yaml | yq -r '.DOCKER_PASSWORD'
+        sh: sops -d {{.TALOS_DIR}}/docker-registry.sops.yaml | yq -r '.DOCKER_PASSWORD'
     cmd: talhelper genconfig
     preconditions:
       - test -f {{.TALOS_DIR}}/talconfig.yaml
       - test -f {{.ROOT_DIR}}/.sops.yaml
       - test -f {{.SOPS_AGE_KEY_FILE}}
+      - test -f {{.TALOS_DIR}}/docker-registry.sops.yaml
       - which talhelper
       - which sops yq
 
