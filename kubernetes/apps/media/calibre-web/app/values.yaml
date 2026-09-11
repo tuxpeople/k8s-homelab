@@ -20,7 +20,7 @@ controllers:
           #          S6_READ_ONLY_ROOT: "1"
         probes:
           liveness: &probes
-            enabled: true
+            enabled: false
             custom: true
             spec:
               httpGet:
@@ -32,7 +32,7 @@ controllers:
               failureThreshold: 6
           readiness: *probes
           startup:
-            enabled: true
+            enabled: false
             custom: true
             spec:
               httpGet:
