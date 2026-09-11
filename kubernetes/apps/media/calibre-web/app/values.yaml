@@ -89,6 +89,7 @@ persistence:
     enabled: true
     type: persistentVolumeClaim
     accessMode: ReadWriteOnce
+    storageClass: ${MAIN_SC}
     size: 5Gi
     globalMounts:
       - path: /config
