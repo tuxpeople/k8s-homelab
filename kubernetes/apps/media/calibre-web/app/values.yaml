@@ -20,7 +20,7 @@ controllers:
           #          S6_READ_ONLY_ROOT: "1"
         probes:
           liveness: &probes
-            enabled: false
+            enabled: true
             custom: true
             spec:
               httpGet:
@@ -32,14 +32,15 @@ controllers:
               failureThreshold: 6
           readiness: *probes
           startup:
-            enabled: false
+            enabled: true
             custom: true
             spec:
               httpGet:
                 port: *port
                 path: /
-              failureThreshold: 90
+              failureThreshold: 150
               periodSeconds: 5
+              initialDelaySeconds: 120
         resources:
           requests:
             cpu: 100m
