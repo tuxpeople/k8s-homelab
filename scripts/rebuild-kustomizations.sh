@@ -62,6 +62,14 @@ EOF
     for k in */ks.yaml; do
         kustomize edit add resource "./${k}"
     done
+    # Namespace-level resources that live alongside the app subdirectories
+    # (e.g. a secret shared by multiple ks.yaml in this namespace) instead of
+    # inside one of them.
+    for k in *.yaml; do
+        [[ -f "${k}" ]] || continue
+        [[ "${k}" == "kustomization.yaml" ]] && continue
+        kustomize edit add resource "./${k}"
+    done
     #gawk -i inplace 'NR==1{print "# yaml-language-server: $schema=https://json.schemastore.org/kustomization"}1' kustomization.yaml
     pwd
     yamlfix kustomization.yaml
