@@ -10,7 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    Speed up testing
     - name: kyverno-policies
       namespace: security
     - name: democratic-csi-iscsi
