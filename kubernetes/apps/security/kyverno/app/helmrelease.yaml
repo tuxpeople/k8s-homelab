@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app kyverno
 spec:
-  timeout: 15m
+  timeout: 30m
   chart:
     spec:
       chart: kyverno
@@ -15,7 +15,6 @@ spec:
         name: kyverno-charts
         namespace: flux-system
   interval: 10m
-  # timeout: 30m
   test:
     enable: false
   install:

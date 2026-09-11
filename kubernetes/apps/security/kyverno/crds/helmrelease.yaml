@@ -20,7 +20,7 @@ kind: HelmRelease
 metadata:
   name: &app kyverno-crds
 spec:
-  timeout: 15m
+  timeout: 30m
   chart:
     spec:
       chart: charts/kyverno/charts/crds
@@ -29,7 +29,6 @@ spec:
         name: kyverno-crds-source
         namespace: security
   interval: 10m
-  # timeout: 30m
   test:
     enable: false
   install:

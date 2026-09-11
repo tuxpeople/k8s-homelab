@@ -14,7 +14,7 @@ spec:
         name: coredns
         namespace: flux-system
   interval: 10m
-  # timeout: 30m
+  timeout: 30m
   test:
     enable: false
   install:
