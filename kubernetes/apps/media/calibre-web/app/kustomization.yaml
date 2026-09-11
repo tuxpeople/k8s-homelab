@@ -12,5 +12,8 @@ configMapGenerator:
   - name: calibre-web-workaround
     files:
       - run-workaround.sh
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
 generatorOptions:
   disableNameSuffixHash: true
