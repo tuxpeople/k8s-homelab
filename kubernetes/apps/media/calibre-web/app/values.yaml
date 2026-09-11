@@ -102,12 +102,12 @@ persistence:
     type: emptyDir
     globalMounts:
       - path: /cache
-  workaround:
-    enabled: true
-    type: configMap
-    name: "calibre-web-workaround"
-    defaultMode: 0744
-    globalMounts:
-      - subPath: "run-workaround.sh"
-        path: "/etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run"
-        readOnly: true
+  # workaround:
+  #   enabled: true
+  #   type: configMap
+  #   name: "calibre-web-workaround"
+  #   defaultMode: 0744
+  #   globalMounts:
+  #     - subPath: "run-workaround.sh"
+  #       path: "/etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run"
+  #       readOnly: true
