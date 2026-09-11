@@ -7,8 +7,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: cleanuppolicies.kyverno.io
@@ -32,6 +32,8 @@ spec:
         - jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
+      deprecated: true
+      deprecationWarning: kyverno.io/v2 CleanupPolicy is deprecated and will be removed in a future release; migrate to NamespacedDeletingPolicy (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v2
       schema:
         openAPIV3Schema:
@@ -1259,6 +1261,7 @@ spec:
           name: Age
           type: date
       deprecated: true
+      deprecationWarning: kyverno.io/v2beta1 CleanupPolicy is deprecated and will be removed in a future release; migrate to NamespacedDeletingPolicy (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v2beta1
       schema:
         openAPIV3Schema:
@@ -2488,8 +2491,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: clustercleanuppolicies.kyverno.io
@@ -2513,6 +2516,8 @@ spec:
         - jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
+      deprecated: true
+      deprecationWarning: kyverno.io/v2 ClusterCleanupPolicy is deprecated and will be removed in a future release; migrate to DeletingPolicy (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v2
       schema:
         openAPIV3Schema:
@@ -3740,6 +3745,7 @@ spec:
           name: Age
           type: date
       deprecated: true
+      deprecationWarning: kyverno.io/v2beta1 ClusterCleanupPolicy is deprecated and will be removed in a future release; migrate to DeletingPolicy (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v2beta1
       schema:
         openAPIV3Schema:
@@ -4969,8 +4975,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: clusterpolicies.kyverno.io
@@ -5023,6 +5029,8 @@ spec:
         - jsonPath: .status.conditions[?(@.type == "Ready")].message
           name: MESSAGE
           type: string
+      deprecated: true
+      deprecationWarning: kyverno.io/v1 ClusterPolicy is deprecated and will be removed in a future release; migrate to ValidatingPolicy, MutatingPolicy, GeneratingPolicy or ImageValidatingPolicy (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v1
       schema:
         openAPIV3Schema:
@@ -14330,6 +14338,8 @@ spec:
         - jsonPath: .status.conditions[?(@.type == "Ready")].message
           name: MESSAGE
           type: string
+      deprecated: true
+      deprecationWarning: kyverno.io/v2beta1 ClusterPolicy is deprecated and will be removed in a future release; migrate to ValidatingPolicy, MutatingPolicy, GeneratingPolicy or ImageValidatingPolicy (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v2beta1
       schema:
         openAPIV3Schema:
@@ -23357,8 +23367,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: globalcontextentries.kyverno.io
@@ -23628,6 +23638,7 @@ spec:
           name: LAST REFRESH
           type: date
       deprecated: true
+      deprecationWarning: kyverno.io/v2alpha1 GlobalContextEntry is deprecated; use kyverno.io/v2 GlobalContextEntry
       name: v2alpha1
       schema:
         openAPIV3Schema:
@@ -24118,8 +24129,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: policies.kyverno.io
@@ -24172,6 +24183,8 @@ spec:
         - jsonPath: .status.conditions[?(@.type == "Ready")].message
           name: MESSAGE
           type: string
+      deprecated: true
+      deprecationWarning: kyverno.io/v1 Policy is deprecated and will be removed in a future release; migrate to NamespacedValidatingPolicy and the other namespaced policy types (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v1
       schema:
         openAPIV3Schema:
@@ -33481,6 +33494,8 @@ spec:
         - jsonPath: .status.conditions[?(@.type == "Ready")].message
           name: MESSAGE
           type: string
+      deprecated: true
+      deprecationWarning: kyverno.io/v2beta1 Policy is deprecated and will be removed in a future release; migrate to NamespacedValidatingPolicy and the other namespaced policy types (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v2beta1
       schema:
         openAPIV3Schema:
@@ -42510,8 +42525,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: policyexceptions.kyverno.io
@@ -42528,7 +42543,9 @@ spec:
     singular: policyexception
   scope: Namespaced
   versions:
-    - name: v2
+    - deprecated: true
+      deprecationWarning: kyverno.io/v2 PolicyException is deprecated and will be removed in a future release; migrate to PolicyException (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
+      name: v2
       schema:
         openAPIV3Schema:
           description: PolicyException declares resources to be excluded from specified policies.
@@ -43137,6 +43154,7 @@ spec:
       served: true
       storage: true
     - deprecated: true
+      deprecationWarning: kyverno.io/v2beta1 PolicyException is deprecated and will be removed in a future release; migrate to PolicyException (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
       name: v2beta1
       schema:
         openAPIV3Schema:
@@ -43755,8 +43773,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: updaterequests.kyverno.io
@@ -43799,6 +43817,7 @@ spec:
           name: Age
           type: date
       deprecated: true
+      deprecationWarning: kyverno.io/v1beta1 UpdateRequest is deprecated; use kyverno.io/v2 UpdateRequest
       name: v1beta1
       schema:
         openAPIV3Schema:
@@ -44541,8 +44560,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: clusterephemeralreports.reports.kyverno.io
@@ -44870,8 +44889,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: ephemeralreports.reports.kyverno.io
@@ -45200,8 +45219,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: clusterpolicyreports.wgpolicyk8s.io
@@ -45551,8 +45570,8 @@ metadata:
     app.kubernetes.io/instance: kyverno-crds
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kyverno-crds
-    app.kubernetes.io/version: 3.9.0
-    helm.sh/chart: crds-3.9.0
+    app.kubernetes.io/version: 3.9.1
+    helm.sh/chart: crds-3.9.1
   annotations:
     controller-gen.kubebuilder.io/version: v0.20.0
   name: policyreports.wgpolicyk8s.io
