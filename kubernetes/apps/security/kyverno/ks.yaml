@@ -31,9 +31,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: kyverno-crds
-      namespace: security
+  # kyverno-crds is deliberately not a dependsOn here: its CRDs are large
+  # enough that Flux's dry-run diff can time out, which would otherwise
+  # cascade into blocking most of the cluster. They are pre-seeded during
+  # bootstrap (scripts/bootstrap-apps.sh) instead; kyverno-crds keeps
+  # reconciling independently to pick up chart version bumps.
   interval: 1h
   path: ./kubernetes/apps/security/kyverno/app
   prune: true

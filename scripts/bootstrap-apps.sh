@@ -94,7 +94,13 @@ function apply_crds() {
         https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.22.0/config/crd/standard/dnsendpoints.externaldns.k8s.io.yaml
         # renovate: registryUrl=https://k8up-io.github.io/k8up chart=k8up
         https://github.com/k8up-io/k8up/releases/download/k8up-4.8.3/k8up-crd.yaml
-
+        # Kept out of the kyverno/kyverno-policies dependency chain: these CRDs
+        # are large enough that Flux's dry-run diff can time out, which would
+        # otherwise cascade into blocking most of the cluster. Pre-seeding them
+        # here means kyverno/kyverno-policies never have to wait on kyverno-crds;
+        # the kyverno-crds Kustomization keeps reconciling independently to pick
+        # up chart version bumps.
+        "${ROOT_DIR}/kubernetes/apps/security/kyverno/crds/crds.yaml"
     )
 
     for crd in "${crds[@]}"; do
