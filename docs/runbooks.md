@@ -18,6 +18,14 @@
 4. Hardware tauschen / OS flashen → `task talos:apply-node IP=<ip>`.
 5. Nach Join: `kubectl get nodes`, Flux Sync abwarten.
 
+## Namespace hängt in Terminating
+
+1. `kubectl get namespace <ns> -o json | jq '.status.conditions'` prüfen → oft nennt die Message bereits Kind/Anzahl der blockierenden Objekte.
+2. Umfassende Suche über alle namespaced Resource-Typen (deckt CRDs/Secrets/RBAC ab, die `kubectl get all` verpasst): `task debug:stuck-namespace NS=<ns>`.
+3. Gefundenes Objekt prüfen: `kubectl get <kind>/<name> -n <ns> -o jsonpath='{.metadata.finalizers}'`.
+4. Verantwortlichen Controller/Operator reaktivieren, oder falls das Objekt wirklich weg soll: `kubectl patch <kind>/<name> -n <ns> --type=merge -p '{"metadata":{"finalizers":[]}}'`.
+5. Bleibt nur noch der Namespace selbst in Terminating hängen (Content bereits weg, aber `metadata.finalizers` auf dem Namespace-Objekt gesetzt, z. B. `controller.cattle.io/namespace-auth` von einem entfernten Rancher): `kubectl patch namespace <ns> --type=merge -p '{"metadata":{"finalizers":[]}}'`. Server-Side-Apply reicht hier nicht, da der Finalizer-Eintrag einem fremden Field-Manager gehört.
+
 ## PVC / Storage Degraded
 
 1. `kubectl get pvc -A` und Events der betroffenen App prüfen.

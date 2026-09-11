@@ -20,6 +20,7 @@ env:
 
 includes:
   bootstrap: .taskfiles/bootstrap
+  debug: .taskfiles/debug
   talos: .taskfiles/talos
 
 tasks:

@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  stuck-namespace:
+    desc: Find objects blocking a Terminating namespace from being deleted
+    summary: |
+      Usage: task debug:stuck-namespace NS=<namespace>
+
+      A namespace stuck in "Terminating" is usually caused by objects inside it
+      that still carry a finalizer from a controller/operator that is no longer
+      running. `kubectl get all` misses most of these (CRDs, Secrets, RBAC,
+      PVCs, ...), so this scans every namespaced API resource type known to
+      the cluster instead.
+    requires:
+      vars: [NS]
+    cmd: |
+      echo "Namespace deletion status conditions for '{{.NS}}':"
+      kubectl get namespace "{{.NS}}" -o json | jq '.status.conditions // "namespace not found or not Terminating"'
+      echo
+      echo "Scanning all namespaced resource types for remaining objects in '{{.NS}}'..."
+      for r in $(kubectl api-resources --verbs=list --namespaced -o name); do
+        kubectl get "$r" -n "{{.NS}}" --ignore-not-found -o name 2>/dev/null
+      done
+      echo
+      echo "For any object listed above, inspect its finalizers with:"
+      echo "  kubectl get <kind>/<name> -n {{.NS}} -o jsonpath='{.metadata.finalizers}'"
+    preconditions:
+      - which kubectl jq
+      - test -f {{.KUBECONFIG}}

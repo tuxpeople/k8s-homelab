@@ -385,6 +385,10 @@ flux reconcile kustomization <app-name> --with-source
 
 # Check application logs
 kubectl -n <namespace> logs -l app.kubernetes.io/name=<app> -f
+
+# Find objects blocking a namespace stuck in Terminating (scans all namespaced
+# API resource types, including CRDs/Secrets/RBAC that `kubectl get all` misses)
+task debug:stuck-namespace NS=<namespace>
 ```
 
 ## CI/CD Pipeline
