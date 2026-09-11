@@ -38,9 +38,9 @@ controllers:
               httpGet:
                 port: *port
                 path: /
-              failureThreshold: 150
+              failureThreshold: 160
               periodSeconds: 5
-              initialDelaySeconds: 120
+              initialDelaySeconds: 180
         resources:
           requests:
             cpu: 100m
