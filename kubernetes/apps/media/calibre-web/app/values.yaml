@@ -93,7 +93,9 @@ persistence:
       - path: /config
   data:
     enabled: true
-    type: emptyDir
+    type: nfs
+    server: 10.20.30.40
+    path: /volume2/data/media/books
     globalMounts:
       - path: /calibre-library
   cache:
