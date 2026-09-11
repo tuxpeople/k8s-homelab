@@ -13,8 +13,8 @@ spec:
     # Speed up testing
     # - name: kyverno-policies
     #   namespace: security
-    - name: democratic-csi-iscsi
-      namespace: storage
+    # - name: democratic-csi-iscsi
+    #   namespace: storage
   interval: 1h
   path: ./kubernetes/apps/media/calibre-web/app
   prune: true
