@@ -24,9 +24,6 @@ data:
         - Grafana:
             - abbr: GF
               href: https://grafana.${SECRET_DOMAIN}
-        - Longhorn:
-            - abbr: LH
-              href: https://longhorn.${SECRET_DOMAIN}
         - Status:
             - abbr: ST
               href: https://status.${SECRET_DOMAIN}
