@@ -57,6 +57,7 @@ tasks:
       - validate:kubernetes
       - validate:flux
       - validate:flux-local
+      - validate:timeouts
 
   validate:yaml:
     desc: Validate all YAML files

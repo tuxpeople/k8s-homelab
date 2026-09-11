@@ -119,6 +119,13 @@ repos:
             .*\.sops\.(yaml|yml)$
           )$
 
+      - id: flux-timeouts
+        name: Flux Kustomization/HelmRelease timeout consistency
+        entry: ./scripts/check-flux-timeouts.sh
+        language: system
+        files: ^kubernetes/apps/.*/(ks|helmrelease)\.ya?ml$
+        pass_filenames: false
+
 # Global configuration
 default_stages: [pre-commit]
 fail_fast: false
