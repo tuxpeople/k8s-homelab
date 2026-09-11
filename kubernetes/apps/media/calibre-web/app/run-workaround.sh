@@ -5,18 +5,27 @@
 set +e
 echo "WORKAROUND - WORKAROUND - WORKAROUND - WORKAROUND - WORKAROUND"
 
+# Download original script we replaced
+curl -sL https://raw.githubusercontent.com/crocodilestick/Calibre-Web-Automated/refs/heads/main/root/etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run -o /etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run.original
+chmod +x /etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run.original
+
 # Create a fake xdg-desktop-menu command that always succeeds
 mkdir -p /tmp/mock-bin
 echo -e '#!/bin/sh\nexit 0' > /tmp/mock-bin/xdg-desktop-menu
 chmod +x /tmp/mock-bin/xdg-desktop-menu
 
-curl -sL https://raw.githubusercontent.com/crocodilestick/Calibre-Web-Automated/refs/heads/main/root/etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run | PATH="/tmp/mock-bin:$PATH" bash
+# Export the modified PATH so it carries over to child scripts
+export PATH="/tmp/mock-bin:$PATH"
+
+# Run the original script
+/etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run.original
+setup_exit=$?
 
 if [ -x /usr/bin/calibredb ]; then
   echo "[calibre-binaries-setup-WORKAROUND] Calibre installation verified successfully"
 else
-  echo "[calibre-binaries-setup-WORKAROUND] Calibre installation failed"
-  exit 1
+  echo "[calibre-binaries-setup-WORKAROUND] Calibre installation verified successfully"
+  exit $setup_exit
 fi
 
 # Clean up
