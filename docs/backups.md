@@ -83,7 +83,7 @@ Regelmässige Restore-Tests sind Pflicht, damit RPO/RTO-Ziele eingehalten werden
 4. **Abräumen**:
     - Test-Namespace/PVC löschen.
     - Test-Volumes, Litestream-Testdaten und temporaere Kustomizations bereinigen.
-    - Ergebnistabelle oben aktualisieren, Issues → `WEITERENTWICKLUNG.md` / `IMPROVEMENT_PLAN.md`.
+    - Ergebnistabelle oben aktualisieren, Befunde als GitHub Issue erfassen.
 
 ## Litestream: SQLite-Replikation & MinIO Lifecycle
 
@@ -218,7 +218,6 @@ litestream restore -config /etc/litestream.yml /data/db.sqlite3
 
 ## Offene ToDos
 
--   Backup-Test-Runbook detaillieren (`WEITERENTWICKLUNG.md` DOC-003).
 -   Offsite-Backup-Ziel definieren (Cloud Bucket vs. externes NAS).
 -   Automatische Restore-Validierung fuer Synology/democratic-csi und Litestream definieren.
 -   Litestream Prometheus-Exporter evaluieren und konfigurieren.

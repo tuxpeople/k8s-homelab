@@ -10,7 +10,6 @@ Dieses Verzeichnis beschreibt den Kubernetes-Teil des Homelabs. Die Struktur fol
 - `monitoring.md` – Observability-Stack, Dashboards, Alerting, SLOs
 - `dr.md` – Disaster-Recovery-Pläne inkl. Talos-Rebuild & DNS
 - `runbooks.md` – Operative Schritt-für-Schritt-Anleitungen
-- `WEITERENTWICKLUNG.md` – Backlog/ToDo mit Priorisierung
 - `CHANGELOG.md` – Jede inhaltliche Änderung dokumentieren
 
 ## Arbeitsweise
@@ -26,9 +25,8 @@ Dieses Verzeichnis beschreibt den Kubernetes-Teil des Homelabs. Die Struktur fol
 - [Monitoring & Alerting](monitoring.md)
 - [Disaster Recovery](dr.md)
 - [Runbooks](runbooks.md)
-- [Backlog / Weiterentwicklung](WEITERENTWICKLUNG.md)
 - [Changelog](CHANGELOG.md)
 - [Architekturdiagramm (PNG)](architecture.png) & [Quelle (draw.io)](architecture.drawio)
 
 ## Offenstände
-Alle Lücken oder offenen Fragen gehören nach `WEITERENTWICKLUNG.md`. Service-Dokumente dürfen TODO-Blöcke enthalten, solange klar ist, wer sie bearbeitet oder in welcher Priorität die Ergänzung erfolgt.
+Alle Lücken oder offenen Fragen gehören als GitHub Issue (mit passendem `area/*`-Label) ins Repo. Service-Dokumente dürfen TODO-Blöcke enthalten, solange klar ist, wer sie bearbeitet oder in welcher Priorität die Ergänzung erfolgt.

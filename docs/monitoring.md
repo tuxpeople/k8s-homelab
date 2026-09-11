@@ -30,7 +30,7 @@
 3. Eskalation nach 15 Minuten ohne ACK → persönliche DM.
 
 ## Logging / Tracing
-- Aktuell kein zentrales Loki/OTel-Stack. TODO: Evaluieren, ob Medien- und AI-Dienste zusätzliche Logs brauchen (`WEITERENTWICKLUNG DOC-006`).
+- Aktuell kein zentrales Loki/OTel-Stack. TODO: Evaluieren, ob Medien- und AI-Dienste zusätzliche Logs brauchen (siehe GitHub Issue #4700).
 
 ## Wartung
 - `task observability:sync` (TODO) für Dashboard-Jsonnet? Derzeit manuelle sync via Grafana UI Export.

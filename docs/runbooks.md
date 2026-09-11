@@ -99,5 +99,5 @@
 ## Dokumentations-Review
 
 1. Bei jeder Feature-Änderung `docs/` durchsuchen (`rg -l <service>`), Aktualität prüfen.
-2. Fehlende Infos → `WEITERENTWICKLUNG.md` + Issue/Task.
+2. Fehlende Infos → GitHub Issue erfassen (passendes `area/*`-Label).
 3. Commit erst nach aktualisiertem `CHANGELOG`.

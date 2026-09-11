@@ -40,5 +40,5 @@
 
 ## Offene Punkte
 
--   Automatisierte Secret-Rotation (siehe `WEITERENTWICKLUNG.md` DOC-005).
+-   Automatisierte Secret-Rotation (siehe GitHub Issue #4699).
 -   Dokumentation aller 1Password Vaults/Items pro Namespace steht aus.

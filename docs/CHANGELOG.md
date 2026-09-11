@@ -2,6 +2,9 @@
 
 > Jede inhaltliche Änderung in diesem Verzeichnis benötigt einen Eintrag mit Datum, kurzem Kontext und Referenz auf den Commit/PR.
 
+## 2026-09-11
+- `WEITERENTWICKLUNG.md` entfernt: Backlog-Tracking läuft jetzt über GitHub Issues statt Markdown-Listen. Verbleibende offene DOC-XXX-Punkte als Issues #4699–#4702 migriert, alle Verweise in `docs/` und `CLAUDE.md` entsprechend aktualisiert.
+
 ## 2026-07-06
 - Dokumentation von nginx-ingress auf Traefik umgestellt und die Netzwerkstruktur mit `external/`, `internal/` und gemeinsamen Traefik-Middlewares aktualisiert.
 - Storage- und Backup-Dokumentation auf democratic-csi/Synology, Litestream und GitOps-Restore ausgerichtet; K8up, Velero, Longhorn und alter Synology CSI Driver als archiviert markiert.
