@@ -10,7 +10,7 @@ chmod +x /etc/s6-overlay/s6-rc.d/calibre-binaries-setup/run.original
 setup_exit=$?
 
 if [ -x /usr/bin/calibredb ]; then
-    echo "[calibre-binaries-setup] Calibre installation verified successfully"
+    echo "[calibre-binaries-setup-WORKAROUND] Calibre installation verified successfully"
     exit 0
 fi
 
