@@ -8,7 +8,7 @@
     - **External (Public)**: `external-dns` → Cloudflare (für Ingresses mit `ingressClassName: external`)
     - **Internal (LAN)**: `unifi-dns` (external-dns mit UniFi webhook) → UniFi Dream Machine (für Ingresses mit `ingressClassName: internal`)
   - **Cluster DNS**: CoreDNS forwarded zu Pi-hole (10.20.30.11) → UDM → Public DNS
-  - **Automatische DNS-Verwaltung**: Kyverno Policy setzt automatisch `external-dns.alpha.kubernetes.io/target` Annotation basierend auf IngressClass
+  - **Automatische DNS-Verwaltung**: Kyverno Policy setzt automatisch `external-dns.kubernetes.io/target` Annotation basierend auf IngressClass
 - **Tunnels & Remote Access**: Cloudflared (public ingress); OpenVPN ist archiviert.
 - **LoadBalancer IPAM**: Cilium LB IPs über `lbipam.cilium.io/ips` Annotation (z.B. Ollama).
 
@@ -91,7 +91,7 @@ Beide nutzen `external-dns`, aber mit verschiedenen Providern und Filtern.
 **Config**:
 - Provider: Cloudflare API
 - IngressClass Filter: `--ingress-class=external`
-- Annotation Filter: `--annotation-filter=external-dns.alpha.kubernetes.io/target=external.${SECRET_DOMAIN}`
+- Annotation Filter: `--annotation-filter=external-dns.kubernetes.io/target=external.${SECRET_DOMAIN}`
 - Domain: `${SECRET_DOMAIN}` (eighty-three.me)
 - TXT Owner ID: `default`
 
@@ -107,7 +107,7 @@ Beide nutzen `external-dns`, aber mit verschiedenen Providern und Filtern.
 **Config**:
 - Provider: UniFi Webhook (`kashalls/external-dns-unifi-webhook`)
 - IngressClass Filter: `--ingress-class=internal`
-- Annotation Filter: `--annotation-filter=external-dns.alpha.kubernetes.io/target=192.168.13.64`
+- Annotation Filter: `--annotation-filter=external-dns.kubernetes.io/target=192.168.13.64`
 - Domain: `eighty-three.me`
 - TXT Owner ID: `main`
 - UniFi Controller: `https://10.20.30.1`
@@ -125,7 +125,7 @@ Beide nutzen `external-dns`, aber mit verschiedenen Providern und Filtern.
 #### 3. Kyverno Policy (Automatische Annotation)
 **Pfad**: `kubernetes/apps/security/kyverno/policies/ingress.yaml`
 
-**Funktion**: Setzt automatisch `external-dns.alpha.kubernetes.io/target` Annotation basierend auf IngressClass:
+**Funktion**: Setzt automatisch `external-dns.kubernetes.io/target` Annotation basierend auf IngressClass:
 
 ```yaml
 # Rule 1: external ingresses
@@ -163,7 +163,7 @@ spec:
 ```
 
 **Was passiert**:
-1. Kyverno fügt automatisch hinzu: `external-dns.alpha.kubernetes.io/target: "external.eighty-three.me"`
+1. Kyverno fügt automatisch hinzu: `external-dns.kubernetes.io/target: "external.eighty-three.me"`
 2. Cloudflare external-dns sieht den Ingress und erstellt CNAME in Cloudflare: `app.eighty-three.me → external.eighty-three.me`
 3. Cloudflared Tunnel macht `external.eighty-three.me` öffentlich erreichbar
 
@@ -191,7 +191,7 @@ spec:
 ```
 
 **Was passiert**:
-1. Kyverno fügt automatisch hinzu: `external-dns.alpha.kubernetes.io/target: "192.168.13.64"`
+1. Kyverno fügt automatisch hinzu: `external-dns.kubernetes.io/target: "192.168.13.64"`
 2. UniFi external-dns sieht den Ingress und erstellt Host Record in UDM: `vault.eighty-three.me → 192.168.13.64`
 3. Service ist nur im LAN über internal ingress erreichbar
 
@@ -282,7 +282,7 @@ kubectl get deployment unifi-dns -n network -o yaml | grep -A5 "args:"
 
 # Sollte enthalten:
 # --ingress-class=internal
-# --annotation-filter=external-dns.alpha.kubernetes.io/target=192.168.13.64
+# --annotation-filter=external-dns.kubernetes.io/target=192.168.13.64
 
 # 2. Lösche alte CNAME Records in UniFi UI manuell
 # Settings → Internet → DNS

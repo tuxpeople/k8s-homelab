@@ -18,7 +18,7 @@
 | `sync-production-tls` | Generate | Kopiert `*-production-tls` Secrets aus `cert-manager` nach `network`; RBAC liegt in `sync-production-tls-rbac.yaml`. |
 | `gatus-external` / `gatus-internal` | Generate | Erzeugt Gatus ConfigMaps für Ingresses mit `ingressClassName: external` oder `internal`. Ausnahmen: Namespace `test`, Annotation `gatus.io/enabled: "false"`, Namespace-Label `kyverno.io/exclude: "true"`. |
 | `helmrelease-defaults` | Mutate | Setzt fehlendes `spec.upgrade.remediation.strategy: uninstall` bei HelmReleases. |
-| `ingress` | Mutate | Setzt `external-dns.alpha.kubernetes.io/target` für externe Ingresses auf `external.${SECRET_DOMAIN}` und für interne Ingresses auf `192.168.13.64`, ohne bestehende Werte zu überschreiben. |
+| `ingress` | Mutate | Setzt `external-dns.kubernetes.io/target` für externe Ingresses auf `external.${SECRET_DOMAIN}` und für interne Ingresses auf `192.168.13.64`, ohne bestehende Werte zu überschreiben. |
 | `limits` | Mutate | Entfernt CPU-Limits aus Pods und Init-Containern; systemnahe oder ausgeschlossene Namespaces bleiben ausgenommen. |
 | `ndots` | Mutate | Setzt DNS `ndots: "1"` für Pods. |
 | `label-existing-namespaces` | Mutate existing | Labelt bestehende Namespaces nach, ausser sie tragen `kyverno.io/exclude: "true"`. |

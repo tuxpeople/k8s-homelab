@@ -41,7 +41,7 @@ spec:
         patchStrategicMerge:
           metadata:
             annotations:
-              +(external-dns.alpha.kubernetes.io/target): "external.${SECRET_DOMAIN}"
+              +(external-dns.kubernetes.io/target): "external.${SECRET_DOMAIN}"
     - name: internal
       match:
         any:
@@ -65,4 +65,4 @@ spec:
         patchStrategicMerge:
           metadata:
             annotations:
-              +(external-dns.alpha.kubernetes.io/target): "192.168.13.64"
+              +(external-dns.kubernetes.io/target): "192.168.13.64"

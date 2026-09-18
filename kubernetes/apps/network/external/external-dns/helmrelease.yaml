@@ -44,7 +44,7 @@ spec:
       - --events
       - --ignore-ingress-tls-spec
       - --ingress-class=external
-      - --annotation-filter=external-dns.alpha.kubernetes.io/target=external.${SECRET_DOMAIN}
+      - --annotation-filter=external-dns.kubernetes.io/target=external.${SECRET_DOMAIN}
     policy: sync
     sources: ["crd", "ingress"]
     txtPrefix: k8s.

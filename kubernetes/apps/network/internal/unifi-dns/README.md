@@ -17,7 +17,7 @@ Erstellt automatisch DNS-Einträge in der UniFi Dream Machine für alle Ingresse
 ### Wie funktioniert es?
 
 1. Du erstellst einen Ingress mit `ingressClassName: internal`
-2. Kyverno Policy fügt automatisch Annotation hinzu: `external-dns.alpha.kubernetes.io/target: "192.168.13.64"`
+2. Kyverno Policy fügt automatisch Annotation hinzu: `external-dns.kubernetes.io/target: "192.168.13.64"`
 3. external-dns (UniFi webhook) sieht den Ingress und erstellt Host Record in UDM
 4. Service ist im LAN erreichbar über internal ingress (192.168.13.64)
 
