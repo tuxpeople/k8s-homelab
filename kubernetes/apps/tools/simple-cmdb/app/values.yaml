@@ -7,9 +7,9 @@ controllers:
       app:
         image:
           repository: registry.eighty-three.me/tuxpeople/simple-cmdb
-          tag: 0.1.3
+          tag: 1.0.0
         env:
-          DATABASE_PATH: "/data/cmdb.db"
+          CMDB_DB: "/data/cmdb.db"
           PORT: "5000"
           FLASK_ENV: "production"
           API_TOKENS:
