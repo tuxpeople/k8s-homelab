@@ -1,0 +1,16 @@
+replicaCount: 2
+logLevel: info
+
+ui:
+  color: "#34577c"
+  message: "👋 Greetings, fellow geek!"
+  logo: "https://geek-cookbook.funkypenguin.co.nz/images/site-logo.svg"
+
+ingress:
+  enabled: true
+  className: external
+  hosts:
+    - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific

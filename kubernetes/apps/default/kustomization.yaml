@@ -9,3 +9,4 @@ resources:
   - ./bildergallerie/ks.yaml
   - ./echo-server/ks.yaml
   - ./homepage/ks.yaml
+  - ./podinfo/ks.yaml

@@ -30,6 +30,7 @@ resources:
   - ./neuvector.yaml
   - ./openebs.yaml
   - ./piraeus.yaml
+  - ./podinfo.yaml
   - ./postfinance.yaml
   - ./postgres-operator.yaml
   - ./prometheus-community.yaml
