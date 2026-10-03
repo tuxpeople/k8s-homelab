@@ -10,7 +10,7 @@ SCRIPTS_DIR = "{{config_root}}/scripts"
 TALOS_DIR = "{{config_root}}/talos"
 
 [tools]
-python = "3.14.7"
+python = "3.14.8"
 "pipx:makejinja" = "2.9.1"
 "pipx:yamlfix" = "1.19.1"
 "pipx:pre-commit" = "4.6.2"
