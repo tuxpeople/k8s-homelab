@@ -10,7 +10,7 @@ ingress:
   enabled: true
   className: external
   hosts:
-    - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+    - host: &host "podinfo.${SECRET_DOMAIN}"
       paths:
         - path: /
           pathType: ImplementationSpecific
