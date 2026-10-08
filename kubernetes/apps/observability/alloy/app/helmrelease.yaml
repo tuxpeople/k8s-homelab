@@ -76,7 +76,7 @@ spec:
 
           loki.write "homelab" {
             endpoint {
-              url = "http://syslog.lab.tdeutsch.ch:3100/loki/api/v1/push"
+              url = "http://monitoring-mqtt:3100/loki/api/v1/push"
             }
 
             external_labels = {
