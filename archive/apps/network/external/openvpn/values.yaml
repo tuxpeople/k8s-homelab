@@ -12,7 +12,7 @@ controllers:
       app:
         image:
           repository: docker.io/domrod/openvpn_server
-          tag: 2.6.12
+          tag: 2.7.7
         securityContext:
           capabilities:
             add:
