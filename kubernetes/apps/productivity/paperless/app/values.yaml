@@ -37,6 +37,8 @@ controllers:
                 name: paperless-secret-values
                 key: PAPERLESS_SOCIALACCOUNT_PROVIDERS
           PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+          PAPERLESS_REDIRECT_LOGIN_TO_SSO: true
+          PAPERLESS_DISABLE_REGULAR_LOGIN: true
         probes:
           liveness:
             enabled: true
