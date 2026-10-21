@@ -11,3 +11,4 @@ resources:
   - ./gatus/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./externalsecret.yaml
+  - ./secretstore-openbao.yaml
