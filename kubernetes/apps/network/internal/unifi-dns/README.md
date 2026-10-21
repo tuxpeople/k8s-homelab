@@ -53,7 +53,7 @@ spec:
 - **IngressClass Filter**: `internal`
 - **Annotation Filter**: `target=192.168.13.64`
 - **TXT Owner ID**: `main`
-- **Secret**: `unifi-dns-secret` (UniFi API Key aus 1Password)
+- **Secret**: `unifi-dns-secret` (UniFi API Key aus OpenBao)
 
 ## Debugging
 
@@ -98,8 +98,8 @@ kubectl rollout restart deployment unifi-dns -n network
 
 ## Dependencies
 
-- **1Password**: Item `unifi-api-externaldns` mit API Key und Hostname
-- **ExternalSecret**: `unifi-dns-secret` (auto-synced aus 1Password)
+- **OpenBao**: `kv/k8s/turingpi/network/unifi-dns` mit `UNIFI_API_KEY` und `UNIFI_HOST`
+- **ExternalSecret**: `unifi-dns-secret` (auto-synced aus OpenBao, SecretStore `openbao`)
 - **Kyverno Policy**: `kubernetes/apps/security/kyverno/policies/ingress.yaml` (setzt Annotations)
 
 ## Related Services
@@ -116,7 +116,7 @@ kubectl rollout restart deployment unifi-dns -n network
 1. UniFi UI → Settings → Integrations
 2. Lösche alten API Key
 3. Erstelle neuen API Key
-4. Update 1Password Item `unifi-api-externaldns`
+4. `bao kv patch kv/k8s/turingpi/network/unifi-dns UNIFI_API_KEY=...`
 5. Force sync: `kubectl annotate externalsecret unifi-dns-secret -n network force-sync="$(date +%s)" --overwrite`
 
 ### DNS-Einträge manuell bereinigen

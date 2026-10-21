@@ -35,7 +35,7 @@
 |---------|-------|----------|
 | `traefik` (internal) | LAN-only Services (`internal` class). | Service-IP 192.168.13.64; nutzt dieselben Traefik Middlewares wie externe Routen. |
 | `python-ipam` | Hilfsservice zur IP-Adressverwaltung/Reservations. | TODO: Doku der API/DB. |
-| `unifi-dns` | external-dns mit UniFi Webhook für automatisches DNS in UDM. | Verarbeitet `ingressClassName: internal`, erstellt Host Records in UniFi. API Key via 1Password (`unifi-api-externaldns`). |
+| `unifi-dns` | external-dns mit UniFi Webhook für automatisches DNS in UDM. | Verarbeitet `ingressClassName: internal`, erstellt Host Records in UniFi. API Key via OpenBao (`kv/k8s/turingpi/network/unifi-dns`). |
 
 ## Abhängigkeiten & Secrets
 - Kyverno Policies müssen vor Ingress/Cloudflared bereitstehen (`dependsOn` in `ks.yaml`).
@@ -116,11 +116,11 @@ Beide nutzen `external-dns`, aber mit verschiedenen Providern und Filtern.
 - Nur Ingresses mit `ingressClassName: internal`
 - Nur Ingresses mit Annotation `target=192.168.13.64` (internal ingress VIP)
 
-**Secret**: `unifi-dns-secret` (UniFi API Key aus 1Password Item `unifi-api-externaldns`)
+**Secret**: `unifi-dns-secret` (UniFi API Key aus OpenBao, `kv/k8s/turingpi/network/unifi-dns`)
 
 **Setup**:
 - API Key wurde unter UniFi UI → Settings → Integrations erstellt
-- ExternalSecret holt API Key und Hostname aus 1Password
+- ExternalSecret holt API Key und Hostname aus OpenBao
 
 #### 3. Kyverno Policy (Automatische Annotation)
 **Pfad**: `kubernetes/apps/security/kyverno/policies/ingress.yaml`

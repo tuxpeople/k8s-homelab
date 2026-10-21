@@ -21,7 +21,13 @@ subjects:
     namespace: flux-system
   - kind: ServiceAccount
     name: external-secrets-openbao
+    namespace: network
+  - kind: ServiceAccount
+    name: external-secrets-openbao
     namespace: observability
   - kind: ServiceAccount
     name: external-secrets-openbao
     namespace: productivity
+  - kind: ServiceAccount
+    name: external-secrets-openbao
+    namespace: storage
