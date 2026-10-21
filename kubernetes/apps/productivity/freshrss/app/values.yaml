@@ -4,10 +4,17 @@ controllers:
   app:
     containers:
       main:
-        image:
+        image: &image
           repository: docker.io/freshrss/freshrss
           tag: 1.30.1@sha256:48b63b9bc3d042a1301c32971b01af8841c7f059b452589c5bf77f475ba44c61
         env:
+          # Litestream only backs up the SQLite DB, not data/config.php. Recreate
+          # the system config on start if missing (no-op once installed).
+          FRESHRSS_INSTALL: >-
+            --auth-type http_auth
+            --base-url https://freshrss.${SECRET_DOMAIN}
+            --db-type sqlite
+            --default-user tdeutsch
           CRON_MIN: 18,48
           DOMAIN: "https://{{ .Release.Name }}.${SECRET_DOMAIN}/"
           LISTEN: &port 8080
@@ -74,6 +81,21 @@ controllers:
       01-litestream-restore:
         !!merge <<: *ls
         args: ["restore", "-if-db-not-exists", "-if-replica-exists", &db "/var/www/FreshRSS/data/users/tdeutsch/db.sqlite"]
+      # The user config (data/users/tdeutsch/config.php) is not backed up either.
+      # Without it FreshRSS ignores the restored DB; recreate a minimal one
+      # (preferences fall back to defaults). Skipped on a fresh install without
+      # DB, where http_auth auto-registers the user on first login.
+      # No shell variables: Flux would substitute them.
+      02-user-config:
+        image: *image
+        command: ["sh", "-c"]
+        args:
+          - |
+            cd /var/www/FreshRSS/data/users/tdeutsch 2>/dev/null || exit 0
+            if [ -f db.sqlite ] && [ ! -f config.php ]; then
+              printf '<?php\nreturn [];\n' > config.php
+              echo "created minimal user config.php"
+            fi
 service:
   app:
     controller: app
