@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: default
 components:
   - ../../components/common
+  - ../../components/openbao
 resources:
   - ./bildergallerie/ks.yaml
   - ./echo-server/ks.yaml

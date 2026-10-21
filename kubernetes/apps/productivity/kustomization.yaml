@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: productivity
 components:
   - ../../components/common
+  - ../../components/openbao
 resources:
   - ./dorflade-mhd/ks.yaml
   - ./freshrss/ks.yaml

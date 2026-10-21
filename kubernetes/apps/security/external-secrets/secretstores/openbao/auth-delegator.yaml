@@ -1,0 +1,27 @@
+---
+# OpenBao reviews logins with the client's own JWT (no reviewer token), so the
+# service accounts of the "openbao" component need system:auth-delegator.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: external-secrets-openbao
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: external-secrets-openbao
+    namespace: ai
+  - kind: ServiceAccount
+    name: external-secrets-openbao
+    namespace: default
+  - kind: ServiceAccount
+    name: external-secrets-openbao
+    namespace: flux-system
+  - kind: ServiceAccount
+    name: external-secrets-openbao
+    namespace: observability
+  - kind: ServiceAccount
+    name: external-secrets-openbao
+    namespace: productivity

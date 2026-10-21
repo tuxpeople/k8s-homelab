@@ -5,10 +5,10 @@ kind: Kustomization
 namespace: observability
 components:
   - ../../components/common
+  - ../../components/openbao
 resources:
   - ./alloy/ks.yaml
   - ./exportarr/ks.yaml
   - ./gatus/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./externalsecret.yaml
-  - ./secretstore-openbao.yaml
