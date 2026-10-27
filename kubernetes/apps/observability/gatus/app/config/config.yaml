@@ -18,6 +18,8 @@ remote:
   instances:
     - url: "https://status1.eighty-three.me/api/v1/endpoints/statuses"
       # endpoint-prefix: "nonkubernetes-"
+    # monitoring-mqtt: checks generated from homelab-automation (Ansible inventory)
+    - url: "http://monitoring-mqtt.lab.tdeutsch.ch:8080/api/v1/endpoints/statuses"
 alerting:
   discord:
     webhook-url: $${GATUS_DISCORD_WEBHOOK}
