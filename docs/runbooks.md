@@ -92,7 +92,7 @@
 
 1. `kubectl -n media get ingress` – sind Hosts korrekt?
 2. `kubectl -n network logs deploy/external-traefik -f | grep <host>`.
-3. DNS: `dig <host> @192.168.13.1` (UniFi Gateway) oder `dig <host> @10.20.30.11` (Pi-hole) für intern bzw. Cloudflare für extern.
+3. DNS: `dig <host> @192.168.13.1` (UniFi Gateway) oder `dig <host> @192.168.13.5` (Pi-hole) für intern bzw. Cloudflare für extern.
 4. Zertifikate? s. Abschnitt oben.
 5. Ggf. `kubectl -n media get httproute` falls Gateway-API genutzt wird.
 
