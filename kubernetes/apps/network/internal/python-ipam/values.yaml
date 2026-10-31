@@ -10,6 +10,11 @@ controllers:
           tag: 1.6.1
         env:
           DATABASE_URL: "sqlite:////data/ipam.db"
+          API_TOKENS:
+            valueFrom:
+              secretKeyRef:
+                name: python-ipam-tokens
+                key: API_TOKENS
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false

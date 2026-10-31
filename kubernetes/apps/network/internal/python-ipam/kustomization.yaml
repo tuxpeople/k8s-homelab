@@ -6,6 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./litestream-configmap.yaml
   - ./externalsecret-litestream.yaml
+  - ./externalsecret-token.yaml
 configMapGenerator:
   - name: python-ipam-values
     files:
