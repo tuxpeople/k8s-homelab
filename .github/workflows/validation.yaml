@@ -24,7 +24,7 @@ jobs:
           echo "🔍 Checking for unencrypted secrets..."
 
           # Check for actual Secret resources (not just references)
-          if find kubernetes/ -name "*.yaml" -not -name "*.sops.*" -exec grep -l "^kind: Secret" {} \; | grep -v "/tmp/"; then
+          if find kubernetes/ -name "*.yaml" -not -name "*.sops.*" -exec grep -lE "^kind: Secret[[:space:]]*$" {} \; | grep -v "/tmp/"; then
             echo "❌ Found unencrypted Secret resources. All secrets should use .sops.yaml extension."
             exit 1
           fi
