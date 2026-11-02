@@ -15,6 +15,11 @@ controllers:
               secretKeyRef:
                 name: python-ipam-tokens
                 key: API_TOKENS
+          SECRET_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: python-ipam-tokens
+                key: SECRET_KEY
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
