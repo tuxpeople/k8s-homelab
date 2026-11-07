@@ -6,7 +6,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/paperless-ngx/paperless-ngx
-          tag: 3.4.1@sha256:1a08d8dfc2b51a08de09652dd86ad4d0c611c362382f944533ad38b73125fbc4
+          tag: 3.4.2@sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84
         envFrom:
           - configMapRef:
               name: paperless-config
@@ -65,7 +65,7 @@ controllers:
       litestream:
         image:
           repository: docker.io/litestream/litestream
-          tag: 0.5.17
+          tag: 0.5.18
         args: ["replicate"]
         env:
           LITESTREAM_ACCESS_KEY_ID:
@@ -104,7 +104,7 @@ controllers:
       01-litestream-restore:
         image:
           repository: docker.io/litestream/litestream
-          tag: 0.5.17
+          tag: 0.5.18
         args: ["restore", "-if-db-not-exists", "-if-replica-exists", "/data/db.sqlite3"]
         env:
           LITESTREAM_ACCESS_KEY_ID:
@@ -163,7 +163,7 @@ controllers:
       gotenberg:
         image:
           repository: docker.io/gotenberg/gotenberg
-          tag: 8.39.0@sha256:13672f317b443c793e972b1bd2155ec62a3e7b6891b411e8196442cc053ee5f5
+          tag: 9.1.0@sha256:150c1dec38ccb51905f6bd29442706668f2442fb5d290d9eb234708dc054dd1a
         env:
           DISABLE_GOOGLE_CHROME: "1"
         resources:
