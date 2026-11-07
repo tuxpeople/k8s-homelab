@@ -9,11 +9,11 @@
     ":dependencyDashboard",
     ":disableRateLimiting",
     ":semanticCommits",
+    ":schedule:nonOfficeHours",
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
   suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
-  schedule: ["every weekend"],
   vulnerabilityAlerts: {
     enabled: true,
     addLabels: ["security", "urgent"],
