@@ -9,7 +9,7 @@
     ":dependencyDashboard",
     ":disableRateLimiting",
     ":semanticCommits",
-    ":schedule:nonOfficeHours",
+    "schedule:nonOfficeHours",
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
