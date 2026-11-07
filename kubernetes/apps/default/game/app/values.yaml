@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+controllers:
+  game:
+    strategy: RollingUpdate
+    containers:
+      app:
+        image:
+          repository: ghcr.io/tuxpeople/little-game
+          tag: 1.0.0
+          pullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: { drop: ["ALL"] }
+        resources:
+          requests:
+            cpu: 15m
+            memory: 100Mi
+          limits:
+            cpu: 150m
+            memory: 120Mi
+defaultPodOptions:
+  imagePullSecrets:
+    - name: ghcr-pullsecret
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    runAsGroup: 65534
+service:
+  app:
+    controller: game
+    ports:
+      http:
+        port: 8080
+ingress:
+  app:
+    className: internal
+    annotations:
+      hajimari.io/icon: "video-input-antenna"
+      hajimari.io/group: Network
+      hajimari.io/info: ""
+    hosts:
+      - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
