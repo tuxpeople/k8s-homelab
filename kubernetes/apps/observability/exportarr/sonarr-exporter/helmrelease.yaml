@@ -35,7 +35,8 @@ spec:
               tag: v2.3.0
             args:
               - sonarr
-              - --enable-additional-metrics
+              # No --enable-additional-metrics: it queries every series and episode
+              # file on each scrape (~500 requests), only for episodes by quality
               - --enable-unknown-queue-items
             env:
               PORT: &port 9707
@@ -75,7 +76,5 @@ spec:
           - port: http
             scheme: http
             path: /metrics
-            # The additional metrics query every series and episode file; the
-            # values change slowly. Series go stale after 5m: use last_over_time.
-            interval: 60m
+            interval: 5m
             scrapeTimeout: 1m

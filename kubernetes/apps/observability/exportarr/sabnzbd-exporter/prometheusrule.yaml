@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: sabnzbd
+spec:
+  groups:
+    - name: SABnzbd
+      rules:
+        - alert: ExportarrAbsent
+          annotations:
+            description: |
+              Exportarr instance for SABnzbd has disappeared from Prometheus service discovery.
+            summary: Exportarr instance for SABnzbd is down.
+          expr: absent(up{job=~".*sabnzbd-exporter.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical

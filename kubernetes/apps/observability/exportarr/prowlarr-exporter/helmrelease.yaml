@@ -75,7 +75,5 @@ spec:
           - port: http
             scheme: http
             path: /metrics
-            # The additional metrics query every series and episode file; the
-            # values change slowly. Series go stale after 5m: use last_over_time.
-            interval: 60m
+            interval: 5m
             scrapeTimeout: 1m
