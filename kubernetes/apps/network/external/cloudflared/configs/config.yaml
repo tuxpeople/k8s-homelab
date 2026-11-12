@@ -7,4 +7,7 @@ ingress:
     service: https://external-traefik.network.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN}"
     service: https://external-traefik.network.svc.cluster.local:443
+  # documents.tdeutsch.ch (Paperless share links, ingress paperless-public)
+  - hostname: "*.${SECRET_CH_DOMAIN}"
+    service: https://external-traefik.network.svc.cluster.local:443
   - service: http_status:404
