@@ -21,7 +21,3 @@ data:
 
   # Cert-Manager
   CERT_ISSUER: letsencrypt-production
-
-  # SMTP
-  SMTP_RELAY_HOST: smtp.utils.svc.cluster.local
-  SMTP_RELAY_PORT: "25"
