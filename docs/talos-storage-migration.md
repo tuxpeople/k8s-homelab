@@ -1,8 +1,8 @@
 # Talos: SSD-Nutzung und Wechsel der Control Plane
 
-Stand: 2026-11-13. Planungsdokument; die hier beschriebene Migration wurde
-noch nicht durchgeführt. Destruktive Befehle werden erst nach Validierung
-des konkreten Talos-1.14.6-Ablaufs für den jeweiligen Node festgelegt.
+Stand: 2026-11-13. Der Pilot auf `talos-test01` wird umgesetzt; die weiteren
+Nodes und der Control-Plane-Wechsel bleiben nachgelagerte Etappen.
+Der aktuelle Ausführungsstand steht im Abschnitt „Pilot-Ausführung“.
 
 ## Ausgangslage
 
@@ -188,6 +188,55 @@ Ein zurückzubauender Worker kann mit der gesicherten eMMC-Konfiguration und den
 bestehenden Cluster-Secrets neu provisioniert werden. Lokale Images werden neu
 geladen. iSCSI-PVCs bleiben erhalten; Apps mit lokalen Daten benötigen ihr Backup.
 Die als entbehrlich freigegebenen Longhorn-Daten werden nicht wiederhergestellt.
+
+## Pilot-Ausführung
+
+### Vorbereitung
+
+- Die lokale SATA-SSD auf Node 1 wurde über Modell `P3-1TB`, PCIe-/SATA-Buspfad,
+  Größe und `/dev/disk/by-id/ata-P3-1TB_0009478001268` identifiziert.
+  Die eingebundene iSCSI-LUN ist ein anderes Gerät und darf nicht gelöscht werden.
+- Der neue Patch `talos/patches/worker/ephemeral-sata.yaml` selektiert ausschließlich
+  `/dev/sda` mit SATA-Transport und Modell `P3-1TB`, außerhalb der Systemdisk.
+  `minSize: 100GiB` und `grow: true` nutzen die freiwerdende SSD für `/var`.
+- Der Longhorn-Patch ist nicht mehr global. Er bleibt vorläufig ausschließlich
+  den unveränderten Nodes 2, 3 und 4 zugeordnet. Nur Node 1 erhält das SSD-Layout.
+- Live-MachineConfig, bisherige generierte Konfiguration, Talosconfig, Kubeconfig
+  und verschlüsselte Cluster-Secrets sind unter dem ignorierten Verzeichnis
+  `.private/ssd-migration-20261113/` lokal außerhalb des Clusters gesichert
+  (Verzeichnis 0700, Dateien 0600). Dort liegt auch ein geprüfter etcd-Snapshot.
+  Das Verzeichnis enthält Zugangsdaten und darf nicht veröffentlicht werden.
+- Der Drain-Dry-Run war erfolgreich. Die drei Flux-Controller laufen auf Node 1;
+  sie werden einzeln verschoben und jeweils auf Bereitschaft geprüft.
+- Die gezielte Live-Konfiguration für den Pilot basiert auf der gesicherten
+  MachineConfig. Der Staged-Dry-Run ändert nur Longhorn-Mount und EPHEMERAL-
+  Provisionierung. So werden automatische Konfigurationsformat-Migrationen des
+  Generators nicht gleichzeitig mit dem Storage-Umbau angewendet.
+
+### Validierter Talos-Ablauf
+
+Talos 1.14.6 entfernt beim selektiven Reset die ausgewählte Systempartition
+einschließlich ihres GPT-Eintrags. Mit ausschließlich `EPHEMERAL` als Systemziel
+bleiben die eMMC-Bootpartitionen, `STATE` und `META` erhalten. Das ist wichtig,
+weil ein vorhandenes EPHEMERAL-Label sonst weiterhin auf der eMMC gefunden würde.
+Zusätzlich kann genau die identifizierte frühere Longhorn-SSD gelöscht werden.
+Der geprüfte Ablauf ist:
+
+1. Descheduler pausieren; Node 1 cordonen und Workloads kontrolliert drainen.
+2. Ersatz-Pods sowie Detach der iSCSI-Volumes und VolumeAttachments prüfen.
+3. Die minimale Zielkonfiguration mit `apply-config --mode=staged` hinterlegen.
+   Noch keine laufenden Mounts ändern.
+4. Ausschließlich Node 1 mit `reset --system-labels-to-wipe=EPHEMERAL`
+   und `--user-disks-to-wipe=/dev/disk/by-id/ata-P3-1TB_0009478001268`
+   sowie `--reboot` zurücksetzen. Keine globale Reset-Task verwenden.
+5. Beim Neustart wird die gestagte Konfiguration übernommen und EPHEMERAL auf
+   der nun freien SSD angelegt. Der Node bleibt bis zur Prüfung cordoned.
+6. `/var`, VolumeStatus, Gesamtkapazität, Netzwerk und CSI prüfen; danach einen
+   vorhandenen iSCSI-PVC auf dem Worker testen und erst dann freigeben.
+
+Dieser Ablauf ist nicht unverändert auf die Control Plane anzuwenden.
+Ein Reset von `/var` auf der heutigen Control Plane würde auch die dortigen
+etcd-Daten betreffen.
 
 ## Referenzen
 

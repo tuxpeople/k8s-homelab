@@ -1,0 +1,10 @@
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  diskSelector:
+    # Only the verified local SATA SSD; exclude eMMC and remote iSCSI LUNs.
+    match: disk.dev_path == '/dev/sda' && disk.transport == 'sata' && disk.model == 'P3-1TB' && !system_disk
+  minSize: 100GiB
+  grow: true

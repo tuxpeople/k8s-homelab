@@ -4,6 +4,10 @@
 
 ## 2026-11-13
 
+- SSD-Migration auf `talos-test01` vorbereitet: EPHEMERAL erhält eine selektierte
+  lokale SATA-SSD; der bisher globale Longhorn-Patch bleibt nur auf den noch nicht
+  migrierten Nodes aktiv. Backups, Dry-Run und selektiver Reset-Ablauf im
+  [Migrationsdokument](talos-storage-migration.md#pilot-ausführung) festgehalten.
 - Cluster-Stabilisierung: Kyverno-JSONPatch-Autogen korrigiert (Commit `2a2062799`),
   parallele Image-Pulls auf zwei begrenzt, Descheduler gegen wiederholte Kaltstarts
   abgesichert und Paperless/Tautulli auf `RetryOnFailure` umgestellt.
