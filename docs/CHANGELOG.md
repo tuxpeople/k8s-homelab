@@ -2,6 +2,18 @@
 
 > Jede inhaltliche Änderung in diesem Verzeichnis benötigt einen Eintrag mit Datum, kurzem Kontext und Referenz auf den Commit/PR.
 
+## 2026-11-13
+
+- Cluster-Stabilisierung: Kyverno-JSONPatch-Autogen korrigiert (Commit `2a2062799`),
+  parallele Image-Pulls auf zwei begrenzt, Descheduler gegen wiederholte Kaltstarts
+  abgesichert und Paperless/Tautulli auf `RetryOnFailure` umgestellt.
+  Tautulli-Git-sync vertraut gezielt seinem gemeinsamen `/add-ons`-Verzeichnis.
+  Vorgehen und Validierung in [Runbooks](runbooks.md#cm4-langsame-pod-starts-und-helm-retry-schleifen).
+- [Migrationsplan für Talos-Storage und Control Plane](talos-storage-migration.md)
+  ergänzt: Longhorn-Laufwerke für lokale Laufzeitdaten nutzen, SATA-/PCIe-Grenzen
+  des Turing Pi 2 berücksichtigen und Node 4 als dedizierte Control Plane planen.
+  Planungsstand, noch nicht ausgerollt; Commit/PR nach Übernahme ergänzen.
+
 ## 2026-09-11
 - `WEITERENTWICKLUNG.md` entfernt: Backlog-Tracking läuft jetzt über GitHub Issues statt Markdown-Listen. Verbleibende offene DOC-XXX-Punkte als Issues #4699–#4702 migriert, alle Verweise in `docs/` und `CLAUDE.md` entsprechend aktualisiert.
 

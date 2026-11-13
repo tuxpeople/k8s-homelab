@@ -33,14 +33,36 @@ spec:
     kind: Deployment
     deschedulerPolicyAPIVersion: descheduler/v1alpha2
     deschedulerPolicy:
+      # Avoid concurrent cold starts and iSCSI reattachments on the CM4 nodes.
+      maxNoOfPodsToEvictTotal: 1
+      maxNoOfPodsToEvictPerNode: 1
       profiles:
         - name: Default
           pluginConfig:
             - name: DefaultEvictor
               args:
-                evictFailedBarePods: true
-                evictLocalStoragePods: true
-                evictSystemCriticalPods: false
+                nodeFit: true
+                minPodAge: 1h
+                podProtections:
+                  defaultDisabled:
+                    - FailedBarePods
+                    - PodsWithLocalStorage
+                  extraEnabled:
+                    - PodsWithPVC
+                # Keep admission hooks and cluster infrastructure in place.
+                labelSelector:
+                  matchExpressions:
+                    - key: batch.kubernetes.io/job-name
+                      operator: DoesNotExist
+                namespaceLabelSelector:
+                  matchExpressions:
+                    - key: kubernetes.io/metadata.name
+                      operator: NotIn
+                      values:
+                        - kube-system
+                        - flux-system
+                        - security
+                        - cert-manager
                 priorityThreshold:
                   value: 1000000000
             - name: RemoveFailedPods
@@ -61,22 +83,9 @@ spec:
                 nodeAffinityType:
                   - requiredDuringSchedulingIgnoredDuringExecution
             - name: RemovePodsViolatingNodeTaints
-            - name: RemovePodsViolatingTopologySpreadConstraint
-            - name: LowNodeUtilization
-              args:
-                targetThresholds:
-                  cpu: 50
-                  memory: 50
-                  pods: 50
-                thresholds:
-                  cpu: 35
-                  memory: 35
-                  pods: 35
           plugins:
-            balance:
-              enabled:
-                - RemovePodsViolatingTopologySpreadConstraint
-                - LowNodeUtilization
+            # Request-based balancing caused repeated cold starts on eMMC.
+            # Only repair explicit scheduling violations and failed Pods.
             deschedule:
               enabled:
                 - RemoveFailedPods

@@ -32,6 +32,13 @@
 
 ## Betriebsaufgaben
 
+Kubelet lädt maximal zwei Images gleichzeitig pro Node
+(`maxParallelImagePulls: 2`, `serializeImagePulls: false`), um CPU und eMMC
+bei vielen gleichzeitigen Starts zu entlasten. Die Einstellung liegt in
+`talos/patches/global/machine-kubelet.yaml`; Änderungen werden mit Talos-Dry-Run
+und anschließend nodeweise ohne Reboot angewendet. Ein kurzer Kubelet-Neustart
+ist dabei möglich. Siehe [Stabilisierungs-Runbook](../runbooks.md#cm4-langsame-pod-starts-und-helm-retry-schleifen).
+
 1. **Upgrades**
     - Kubernetes: `task talos:upgrade-k8s` (nutzt Versionen aus `talos/talenv.yaml`).
     - Talos OS: `task talos:upgrade-all-nodes` bzw. `task talos:upgrade-node`.

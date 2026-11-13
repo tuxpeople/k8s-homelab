@@ -31,13 +31,14 @@ spec:
   test:
     enable: false
   install:
-    remediation:
-      retries: -1
+    strategy:
+      name: RetryOnFailure
+      retryInterval: 5m
   upgrade:
-    remediation:
-      retries: 5
-      remediateLastFailure: true
-    cleanupOnFail: true
+    strategy:
+      name: RetryOnFailure
+      retryInterval: 5m
+    cleanupOnFail: false
   rollback:
     timeout: 10m
     cleanupOnFail: false

@@ -51,6 +51,8 @@ controllers:
           GITSYNC_REF: master
           GITSYNC_PERIOD: 24h
           GITSYNC_ROOT: /add-ons
+          # emptyDir is root-owned even with fsGroup; trust only this shared path.
+          GITSYNC_GIT_CONFIG: safe.directory:/add-ons
         resources:
           requests:
             cpu: 10m

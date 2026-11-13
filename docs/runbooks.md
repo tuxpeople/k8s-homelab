@@ -10,6 +10,51 @@
 4. Fix anwenden, `git commit`, `task reconcile`.
 5. Erfolg via `flux get hr -A` validieren, Ergebnis dokumentieren.
 
+## CM4: langsame Pod-Starts und Helm-Retry-Schleifen
+
+Bei vielen gleichzeitigen Pod-Neustarts zuerst Evictions, Image-Pulls, CSI,
+CPU-/I/O-Druck und Temperatur prüfen. Im Vorfall vom 2026-11-13 verursachten
+Kyverno-JSONPatch-Autogen-Regeln Admission-Fehler; Descheduler-Evictions und
+unbegrenzte parallele Image-Pulls verstärkten anschließend die Kaltstarts.
+
+1. Fehlgeschlagene HelmReleases und die Events der betroffenen Pods prüfen.
+   `ContainerCreating` allein benennt noch keine Ursache: Mounts, Image-Pulls
+   und Container-Runtime getrennt untersuchen.
+2. Bei wiederholten `LowNodeUtilization`-Evictions den Descheduler vorübergehend
+   pausieren: `kubectl --context turingpi scale deployment descheduler -n kube-system --replicas=0`.
+   Den Git-Sollzustand beachten; die Pause ist kein dauerhafter Fix.
+3. Talos-Dienste, `/proc/pressure/cpu`, `/proc/pressure/io` und
+   `/sys/class/thermal/thermal_zone0/temp` lesen. Talos `read` jeweils mit
+   genau einem Node aufrufen. Temperaturen werden in Milligrad Celsius geliefert.
+4. Die Kubelet-Konfiguration begrenzt jetzt `maxParallelImagePulls` auf `2`
+   bei `serializeImagePulls: false`. Änderungen gezielt mit Talos-Dry-Run
+   prüfen und nodeweise mit `--mode=no-reboot` anwenden. Dabei kann Kubelet
+   kurz neu starten; danach Ready-Zustand und wirksame Konfiguration prüfen.
+5. Paperless und Tautulli verwenden für Installation und Upgrade
+   `RetryOnFailure` mit fünf Minuten Retry-Intervall und deaktiviertem
+   Upgrade-`cleanupOnFail`. Langsame Starts sollen keine wiederholten
+   Helm-Deinstallationen samt chartverwalteter PVCs auslösen.
+   Der Zustand bleibt bei Fehlern zur Diagnose erhalten; nach einem schlechten
+   Upgrade kann eine manuelle Korrektur oder ein Rollback erforderlich sein.
+6. Vor erneuter Descheduler-Aktivierung die neue Policy mit derselben
+   Descheduler-Version einmalig unter `--dry-run --descheduling-interval=0s`
+   prüfen. Die Policy deaktiviert Last-/Topology-Balancing, schützt PVC-Pods,
+   Jobs und zentrale Infrastruktur-Namespaces, berücksichtigt NodeFit und
+   erlaubt höchstens eine Eviction pro Lauf bei mindestens einer Stunde Pod-Alter.
+7. Abschließend Ready-Zustände von Nodes, HelmReleases, Kustomizations und
+   ExternalSecrets sowie tatsächliche Pod-Bereitschaft prüfen. Neue Events und
+   Neustartzähler während einer Beobachtungsphase vergleichen.
+
+Referenzen: [Image-Pull-Limits](https://kubernetes.io/docs/concepts/containers/images/#maximum-parallel-image-pulls),
+[Flux Retry-Strategien](https://fluxcd.io/flux/components/helm/helmreleases/#install-strategy),
+[Descheduler v0.37](https://github.com/kubernetes-sigs/descheduler/blob/v0.37.0/README.md).
+
+Bei Tautulli zusätzlich den Container `jbops` prüfen. Git-sync läuft mit UID
+568 auf einem über fsGroup beschreibbaren, aber root-eigenen `emptyDir`.
+`GITSYNC_GIT_CONFIG: safe.directory:/add-ons` erlaubt Git gezielt dieses
+gemeinsame Repository-Verzeichnis und verhindert den CrashLoop mit
+`detected dubious ownership`. Kein globales `safe.directory: '*'` verwenden.
+
 ## Talos Node Exchange
 
 1. Backup wichtiger Daten prüfen (Synology Snapshots, Litestream-Replikation, App-spezifische Backups gemäss `docs/backups.md`).

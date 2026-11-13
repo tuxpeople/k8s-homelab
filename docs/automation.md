@@ -36,6 +36,19 @@ Diese Datei fasst alle Automatisierungen zusammen, die den Kubernetes-Stack betr
 
 ## Policies & Reviews
 
+### Descheduler auf den CM4-Nodes
+
+Die Policy in `kubernetes/apps/kube-system/descheduler/app/helmrelease.yaml`
+bereinigt fehlgeschlagene Pods und explizite Scheduling-Verletzungen.
+Automatisches `LowNodeUtilization`- und Topology-Balancing ist deaktiviert,
+um wiederholte Image-Kaltstarts und iSCSI-Reattachments zu vermeiden.
+PVC-Pods, Job-Pods sowie `kube-system`, `flux-system`, `security` und
+`cert-manager` sind geschützt. NodeFit, eine Stunde Mindestalter und maximal
+eine Eviction pro Lauf begrenzen die verbleibenden Eingriffe.
+Der Betriebsablauf steht in [Runbooks](runbooks.md#cm4-langsame-pod-starts-und-helm-retry-schleifen).
+
+### Dokumentationspflicht
+
 1. **Dokumentationspflicht**: Änderungen an Manifeste/Tasks/Skripten → passende Datei unter `docs/` aktualisieren.
 2. **Secrets**: Vor jedem Commit `git status --short | grep sops` prüfen, ungeverschlüsselte Dateien dürfen nicht eingecheckt werden.
 3. **Changelog**: Jede fachliche Ergänzung → Eintrag in `docs/CHANGELOG.md`.

@@ -2,6 +2,8 @@ machine:
   kubelet:
     extraConfig:
       serializeImagePulls: false
+      # Bound decompression and eMMC I/O during simultaneous Pod cold starts.
+      maxParallelImagePulls: 2
     nodeIP:
       validSubnets:
         - 192.168.13.0/24

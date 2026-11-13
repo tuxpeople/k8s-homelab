@@ -25,6 +25,7 @@ Dieses Verzeichnis beschreibt den Kubernetes-Teil des Homelabs. Die Struktur fol
 - [Monitoring & Alerting](monitoring.md)
 - [Disaster Recovery](dr.md)
 - [Runbooks](runbooks.md)
+- [Talos: SSD-Nutzung und Wechsel der Control Plane](talos-storage-migration.md) – geplanter Umbau für das Turing Pi 2 mit vier CM4-Modulen
 - [Changelog](CHANGELOG.md)
 - [Architekturdiagramm (PNG)](architecture.png) & [Quelle (draw.io)](architecture.drawio)
 
