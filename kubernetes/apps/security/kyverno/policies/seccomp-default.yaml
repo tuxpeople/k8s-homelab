@@ -14,6 +14,10 @@ metadata:
       to a safe subset without requiring app-specific profiles. Will not overwrite explicitly configured profiles (e.g. Localhost or Unconfined).
       Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
+  # Keep Pod JSONPatch paths out of generated controller rules.
+  autogen:
+    podControllers:
+      controllers: []
   matchConstraints:
     resourceRules:
       - apiGroups:

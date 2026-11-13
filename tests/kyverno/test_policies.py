@@ -61,6 +61,26 @@ class Policies(unittest.TestCase):
         self.evaluate('seccomp-default', pod, 'skip')
         self.evaluate('seccomp-default', resource(namespace='kube-system'), 'skip')
 
+    def test_pod_jsonpatch_does_not_mutate_controllers(self):
+        # Kyverno autogen does not rewrite JSONPatch expressions or paths.
+        # Exercise real controller shapes: the old limits rule errors and the
+        # old ndots/seccomp rules incorrectly patch the controller's own spec.
+        pod_spec = {'containers': [{'name': 'app', 'image': 'ghcr.io/example/app:v1',
+                    'resources': {'limits': {'cpu': '100m', 'memory': '64Mi'}}}]}
+        for kind, api in [('Deployment', 'apps/v1'), ('StatefulSet', 'apps/v1'),
+                          ('DaemonSet', 'apps/v1'), ('ReplicaSet', 'apps/v1'),
+                          ('ReplicationController', 'v1'), ('Job', 'batch/v1'),
+                          ('CronJob', 'batch/v1')]:
+            spec = {'template': {'spec': pod_spec}}
+            if kind == 'CronJob':
+                spec = {'jobTemplate': {'spec': spec}}
+            obj = resource(kind, spec)
+            obj['apiVersion'] = api
+            for policy in ['limits', 'ndots', 'seccomp-default', 'ghcr-pullsecret']:
+                with self.subTest(kind=kind, policy=policy):
+                    out = self.evaluate(policy, obj, 'skip', labels={'kyverno.io/ndots': 'true'})
+                    self.assertTrue(out is None or out == obj, out)
+
     def test_annotations(self):
         for kind in ['Deployment', 'StatefulSet', 'DaemonSet']:
             obj = resource(kind=kind)

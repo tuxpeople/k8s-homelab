@@ -25,6 +25,19 @@ Namespace-Ausnahmen, Validierungen sowie Gatus- und TLS-Generierung ohne
 Clusterzugriff. Synchronisation, Hintergrundverarbeitung und die Übernahme
 bestehender generierter Ressourcen müssen zusätzlich im Cluster geprüft werden.
 
+### JSONPatch und Controller-Autogen
+
+Bei `limits`, `ndots`, `seccomp-default` und der vorbereiteten GHCR-Policy ist
+`spec.autogen.podControllers.controllers: []` explizit gesetzt. Kyverno schreibt
+JSONPatch-Ausdrücke und Patch-Pfade bei Autogen nicht auf Pod-Templates um
+([Upstream #18518](https://github.com/kyverno/kyverno/issues/18518)). Andernfalls
+blockiert `limits` Deployments und Jobs mit `no such key: containers`; andere
+Patches können am falschen Spec ansetzen. Die Mutationen greifen stattdessen
+bei Admission der tatsächlichen Pods, auch wenn Controller sie erzeugen.
+Pod-Templates bleiben unverändert. Die Regressionstests prüfen deshalb neben
+Pods auch Deployment, StatefulSet, DaemonSet, ReplicaSet, ReplicationController,
+Job und CronJob.
+
 Der lokale Aqua-Eintrag `.config/mise/aqua-kyverno.yaml` korrigiert für
 Kyverno >=1.20 die Signer-Identität von `release.yaml` auf
 `release-publish.yaml`. SHA256 und Sigstore werden weiterhin geprüft.

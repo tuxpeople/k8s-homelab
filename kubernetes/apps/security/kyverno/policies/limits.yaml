@@ -13,6 +13,11 @@ metadata:
       This policy removes CPU limits from all Pods, except in system namespaces (kube-system, flux-system, security, cert-manager) where authors
       intentionally set limits. Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
+  # JSONPatch expressions and paths are not rewritten by controller autogen.
+  # Apply to Pods at admission, including Pods created by controllers.
+  autogen:
+    podControllers:
+      controllers: []
   matchConstraints:
     resourceRules:
       - apiGroups:

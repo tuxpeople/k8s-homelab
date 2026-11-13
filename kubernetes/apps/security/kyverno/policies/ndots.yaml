@@ -13,6 +13,10 @@ metadata:
       The ndots value controls where DNS lookups are first performed in a cluster and needs to be set to a lower value than the default of 5 in
       some cases. This policy mutates all Pods to add the ndots option with a value of 1.
 spec:
+  # Keep Pod JSONPatch paths out of generated controller rules.
+  autogen:
+    podControllers:
+      controllers: []
   matchConstraints:
     resourceRules:
       - apiGroups:
