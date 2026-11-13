@@ -33,8 +33,9 @@ spec:
       - --kubelet-insecure-tls
       - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
       - --kubelet-use-node-status-port
-      - --metric-resolution=10s
-      - --kubelet-request-timeout=2s
+      # CM4 kubelet responses can exceed 2s under load.
+      - --metric-resolution=30s
+      - --kubelet-request-timeout=10s
     metrics:
       enabled: true
     serviceMonitor:

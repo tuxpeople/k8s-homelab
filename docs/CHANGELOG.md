@@ -8,6 +8,7 @@
   parallele Image-Pulls auf zwei begrenzt, Descheduler gegen wiederholte Kaltstarts
   abgesichert und Paperless/Tautulli auf `RetryOnFailure` umgestellt.
   Tautulli-Git-sync vertraut gezielt seinem gemeinsamen `/add-ons`-Verzeichnis.
+  Metrics Server fragt langsame Kubelets mit 10 Sekunden Timeout alle 30 Sekunden ab.
   Vorgehen und Validierung in [Runbooks](runbooks.md#cm4-langsame-pod-starts-und-helm-retry-schleifen).
 - [Migrationsplan für Talos-Storage und Control Plane](talos-storage-migration.md)
   ergänzt: Longhorn-Laufwerke für lokale Laufzeitdaten nutzen, SATA-/PCIe-Grenzen

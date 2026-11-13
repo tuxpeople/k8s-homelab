@@ -45,6 +45,11 @@ unbegrenzte parallele Image-Pulls verstärkten anschließend die Kaltstarts.
    ExternalSecrets sowie tatsächliche Pod-Bereitschaft prüfen. Neue Events und
    Neustartzähler während einer Beobachtungsphase vergleichen.
 
+Metrics Server fragt Kubelets alle 30 Sekunden ab und erlaubt zehn Sekunden
+Antwortzeit. Der vorherige Zwei-Sekunden-Timeout führte auf den belasteten CM4
+zu fehlenden Node-Metriken trotz bereiter Pods. Nach Änderungen an diesen
+Werten `kubectl --context turingpi top nodes` und die Scraper-Logs prüfen.
+
 Referenzen: [Image-Pull-Limits](https://kubernetes.io/docs/concepts/containers/images/#maximum-parallel-image-pulls),
 [Flux Retry-Strategien](https://fluxcd.io/flux/components/helm/helmreleases/#install-strategy),
 [Descheduler v0.37](https://github.com/kubernetes-sigs/descheduler/blob/v0.37.0/README.md).
@@ -54,6 +59,28 @@ Bei Tautulli zusätzlich den Container `jbops` prüfen. Git-sync läuft mit UID
 `GITSYNC_GIT_CONFIG: safe.directory:/add-ons` erlaubt Git gezielt dieses
 gemeinsame Repository-Verzeichnis und verhindert den CrashLoop mit
 `detected dubious ownership`. Kein globales `safe.directory: '*'` verwenden.
+
+### Ergebnis der Stabilisierung am 2026-11-13
+
+Die Korrekturen wurden mit `2a2062799` (Kyverno) und `0f6ecea4c`
+(Kaltstarts, Descheduler, Helm-Retries und Tautulli-Git-sync) nach `main`
+übernommen und durch Flux ausgerollt. Das Image-Pull-Limit wurde zusätzlich
+auf allen vier Nodes per Talos-Patch ohne Reboot angewendet und anhand der
+wirksamen Kubelet-Konfiguration bestätigt. Lokale MachineConfigs wurden neu generiert.
+
+Abschlussprüfung: 50/50 HelmReleases, 58/58 Kustomizations und alle 96 aktiven
+Pods bereit; keine Kustomization suspendiert. Alle Nodes sind Ready,
+für Scheduling freigegeben und ohne Disk-, Memory- oder PID-Druck.
+Zwischen den Pod-Aufnahmen um 18:47 und 19:31 UTC gab es keine zusätzlichen
+Container-Neustarts. Zwei Descheduler-Läufe um 19:24 und 19:29 UTC meldeten
+jeweils null Evictions. Tautulli-Git-sync hat JBOPS erfolgreich synchronisiert;
+ExternalSecrets meldeten keine Fehler. Temporäre Dry-Run-Ressourcen wurden entfernt.
+
+Verbleibende Beobachtungen: Die Audit-Policy `restrict-privileged` meldet
+die Host-Zugriffe des Prometheus-Node-Exporters; sie blockiert den Betrieb nicht.
+Während der Lastspitze wurden auf Node 2 etwa 86 °C und auf Node 4 etwa
+90 °C gemessen. Die physische Kühlung ist vor einem größeren Umbau zu prüfen.
+Storage-Layout und Node-Rollen wurden nicht geändert.
 
 ## Talos Node Exchange
 
