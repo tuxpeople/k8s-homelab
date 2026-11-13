@@ -4,6 +4,9 @@
 
 ## 2026-11-13
 
+- SSD-Pilot auf `talos-test01` erfolgreich: `/var` liegt auf der 1-TB-SATA-SSD.
+  Alter Longhorn-GPT-Eintrag nach dem selektiven Reset explizit entfernt;
+  CSI-Schreiben/Lesen, persistentes Wiederlesen und Cluster-DNS erfolgreich geprüft.
 - Tautulli-Memory-Requests anhand VPA auf 384 MiB (App) und 50 MiB (Git-sync)
   gesetzt, damit der Pod beim SSD-Pilot-Drain auf die übrigen Worker passt.
   Das App-Limit bleibt 1 GiB.

@@ -1,6 +1,6 @@
 # Talos: SSD-Nutzung und Wechsel der Control Plane
 
-Stand: 2026-11-13. Der Pilot auf `talos-test01` wird umgesetzt; die weiteren
+Stand: 2026-11-13. Der SSD-Pilot auf `talos-test01` ist technisch erfolgreich; die weiteren
 Nodes und der Control-Plane-Wechsel bleiben nachgelagerte Etappen.
 Der aktuelle Ausführungsstand steht im Abschnitt „Pilot-Ausführung“.
 
@@ -235,16 +235,51 @@ Der geprüfte Ablauf ist:
 3. Die minimale Zielkonfiguration mit `apply-config --mode=staged` hinterlegen.
    Noch keine laufenden Mounts ändern.
 4. Ausschließlich Node 1 mit `reset --system-labels-to-wipe=EPHEMERAL`
-   und `--user-disks-to-wipe=/dev/disk/by-id/ata-P3-1TB_0009478001268`
+   und `--user-disks-to-wipe=/dev/sda`
    sowie `--reboot` zurücksetzen. Keine globale Reset-Task verwenden.
-5. Beim Neustart wird die gestagte Konfiguration übernommen und EPHEMERAL auf
-   der nun freien SSD angelegt. Der Node bleibt bis zur Prüfung cordoned.
+5. Beim Neustart wird die gestagte Konfiguration übernommen. Beim Pilot bestand
+   die alte Longhorn-Partition danach jedoch weiterhin. Talos meldete
+   `no disks matched ... not enough space`. Nach erneuter Identitätsprüfung und
+   Bestätigung, dass `/dev/sda1` ungemountet und ungenutzt war, wurde sie gezielt
+   mit `wipe disk sda1 --drop-partition` entfernt. Anschließend provisionierte
+   Talos EPHEMERAL automatisch auf der SSD, ohne weiteren Reboot.
+   Den erfolgreichen Reset-Aufruf daher nicht als Beleg einer geleerten SSD
+   behandeln; DiscoveredVolumes und MountStatus anschließend prüfen.
 6. `/var`, VolumeStatus, Gesamtkapazität, Netzwerk und CSI prüfen; danach einen
    vorhandenen iSCSI-PVC auf dem Worker testen und erst dann freigeben.
 
 Dieser Ablauf ist nicht unverändert auf die Control Plane anzuwenden.
 Ein Reset von `/var` auf der heutigen Control Plane würde auch die dortigen
 etcd-Daten betreffen.
+
+Die Reset-API von Talos 1.14.6 akzeptiert für User-Disks nur den erkannten
+`dev_path`, hier `/dev/sda`. Der by-id-Alias dient der zusätzlichen
+Identitätsprüfung unmittelbar vor dem Aufruf; als Reset-Argument wird er von
+der API bereits vor Beginn der Operation abgelehnt.
+
+### Ergebnis von Node 1
+
+- `EPHEMERAL` liegt auf `/dev/sda1`, als XFS unter `/var` gemountet.
+  Gemessene Dateisystemkapazität: 1.023,71 GB; unmittelbar nach Provisionierung
+  waren rund 1.004 GB verfügbar.
+- eMMC-Boot, `STATE` und `META` sind erhalten. Netzwerk- und Cluster-Identität
+  blieben erhalten; Talos, Kubelet und Cilium meldeten den Worker wieder bereit.
+- CSI-Node-Pod: vier von vier Containern bereit. Auch die übrigen DaemonSets
+  starteten wieder auf dem Worker.
+- Ein eigener temporärer 1-GiB-PVC mit `iscsi-delete` wurde direkt auf dem noch
+  cordonierten Worker eingebunden. Schreiben, `sync` und Lesen waren erfolgreich
+  (`CSI_WRITE_READ_OK`). Ein zweiter Pod las dieselben Daten und prüfte Cluster-DNS
+  (`DNS_AND_PERSISTENT_READ_OK`). Kein produktiver PVC wurde für den Test umgehängt.
+- Die beiden Test-Pods, der Test-PVC und die zugehörige iSCSI-LUN wurden entfernt;
+  anschließend wurde der Worker uncordoned.
+- Weave GitOps wurde während der Wartung zusätzlich vorübergehend pausiert,
+  um CPU auf den übrigen Workern freizugeben. Weave und Descheduler sind nach
+  Testbereinigung und Freigabe wieder mit je einer bereiten Replika aktiv.
+
+Für den nächsten Worker vor dem Reset ausreichend Scheduling-Reserve prüfen,
+benötigte Controller-Images vorladen und die alte Longhorn-Partition explizit
+entfernen, sobald sie sicher ungemountet ist. Der Control-Plane-Wechsel ist
+weiterhin nicht durchgeführt.
 
 ## Referenzen
 

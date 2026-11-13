@@ -39,6 +39,11 @@ bei vielen gleichzeitigen Starts zu entlasten. Die Einstellung liegt in
 und anschließend nodeweise ohne Reboot angewendet. Ein kurzer Kubelet-Neustart
 ist dabei möglich. Siehe [Stabilisierungs-Runbook](../runbooks.md#cm4-langsame-pod-starts-und-helm-retry-schleifen).
 
+SSD-Pilot vom 2026-11-13: `talos-test01` bootet weiterhin von eMMC, verwendet
+für `EPHEMERAL` beziehungsweise `/var` aber die lokale 1-TB-SATA-SSD (`/dev/sda1`).
+Die übrigen Nodes wurden noch nicht auf dieses Layout umgestellt.
+Durchführung und iSCSI-/DNS-Tests stehen im [Migrationsprotokoll](../talos-storage-migration.md#ergebnis-von-node-1).
+
 1. **Upgrades**
     - Kubernetes: `task talos:upgrade-k8s` (nutzt Versionen aus `talos/talenv.yaml`).
     - Talos OS: `task talos:upgrade-all-nodes` bzw. `task talos:upgrade-node`.
