@@ -4,6 +4,9 @@
 
 ## 2026-11-13
 
+- Tautulli-Memory-Requests anhand VPA auf 384 MiB (App) und 50 MiB (Git-sync)
+  gesetzt, damit der Pod beim SSD-Pilot-Drain auf die übrigen Worker passt.
+  Das App-Limit bleibt 1 GiB.
 - SSD-Migration auf `talos-test01` vorbereitet: EPHEMERAL erhält eine selektierte
   lokale SATA-SSD; der bisher globale Longhorn-Patch bleibt nur auf den noch nicht
   migrierten Nodes aktiv. Backups, Dry-Run und selektiver Reset-Ablauf im

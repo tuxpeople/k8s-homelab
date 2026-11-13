@@ -215,6 +215,14 @@ Die als entbehrlich freigegebenen Longhorn-Daten werden nicht wiederhergestellt.
 
 ### Validierter Talos-Ablauf
 
+Beim Drain war Tautulli zunächst wegen `Insufficient memory` nicht platzierbar:
+Der fehlende Memory-Request des Hauptcontainers wurde auf dessen 1-GiB-Limit
+gesetzt. Goldilocks/VPA empfahl rund 105 MiB, mit einer oberen Grenze von rund
+319 MiB. Für den Pilot wurde der Request daher explizit auf 384 MiB gesetzt;
+das Limit bleibt 1 GiB. Der Git-sync-Request wurde entsprechend VPA auf 50 MiB
+angehoben. Damit ist der Pod auf den verbleibenden Workern platzierbar, ohne
+das Memory-Limit oder die Control-Plane-Isolation zu verändern.
+
 Talos 1.14.6 entfernt beim selektiven Reset die ausgewählte Systempartition
 einschließlich ihres GPT-Eintrags. Mit ausschließlich `EPHEMERAL` als Systemziel
 bleiben die eMMC-Bootpartitionen, `STATE` und `META` erhalten. Das ist wichtig,

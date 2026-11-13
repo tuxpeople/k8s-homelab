@@ -40,6 +40,8 @@ controllers:
         resources:
           requests:
             cpu: 10m
+            # VPA target ~105 MiB, upper bound ~319 MiB during the pilot.
+            memory: 384Mi
           limits:
             memory: 1Gi
       jbops:
@@ -56,7 +58,7 @@ controllers:
         resources:
           requests:
             cpu: 10m
-            memory: 10M
+            memory: 50Mi
           limits:
             memory: 128M
     pod:
