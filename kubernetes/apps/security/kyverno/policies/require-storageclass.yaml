@@ -1,7 +1,7 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/validatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
 metadata:
   name: require-storageclass
   annotations:
@@ -10,53 +10,47 @@ metadata:
     policies.kyverno.io/severity: medium
     policies.kyverno.io/subject: PersistentVolumeClaim, StatefulSet
     policies.kyverno.io/description: >-
-      PersistentVolumeClaims (PVCs) and StatefulSets may optionally define a StorageClass
-      to dynamically provision storage. In a multi-tenancy environment where StorageClasses are
-      far more common, it is often better to require storage only be provisioned from these
-      StorageClasses. This policy requires that PVCs and StatefulSets containing
-      volumeClaimTemplates define the storageClassName field with some value.
-      Skipped for namespaces labeled kyverno.io/exclude: "true".
+      PersistentVolumeClaims (PVCs) and StatefulSets may optionally define a StorageClass to dynamically provision storage. In a multi-tenancy
+      environment where StorageClasses are far more common, it is often better to require storage only be provisioned from these StorageClasses.
+      This policy requires that PVCs and StatefulSets containing volumeClaimTemplates define the storageClassName field with some value. Skipped
+      for namespaces labeled kyverno.io/exclude: "true".
 spec:
-  validationFailureAction: Audit
-  background: true
-  rules:
-    - name: pvc-storageclass
-      match:
-        any:
-          - resources:
-              kinds:
-                - PersistentVolumeClaim
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - PersistentVolumeClaim
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      validate:
-        message: "PersistentVolumeClaims must define a storageClassName."
-        pattern:
-          spec:
-            storageClassName: "?*"
-    - name: ss-storageclass
-      match:
-        any:
-          - resources:
-              kinds:
-                - StatefulSet
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - StatefulSet
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      validate:
-        message: "StatefulSets must define a storageClassName."
-        pattern:
-          spec:
-            =(volumeClaimTemplates):
-              - spec:
-                  storageClassName: "?*"
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - persistentvolumeclaims
+      - apiGroups:
+          - apps
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - statefulsets
+    namespaceSelector:
+      matchExpressions:
+        - key: kyverno.io/exclude
+          operator: NotIn
+          values:
+            - "true"
+  validationActions:
+    - Audit
+  evaluation:
+    background:
+      enabled: true
+  validations:
+    - expression: |-
+        object.kind != "PersistentVolumeClaim" || object.spec.?storageClassName.orValue("") != ""
+      message: PersistentVolumeClaims must define a storageClassName.
+    - expression: |-
+        object.kind != "StatefulSet" || object.spec.?volumeClaimTemplates.orValue([]).all(v, v.spec.?storageClassName.orValue("")
+        != "")
+      message: StatefulSet volumeClaimTemplates must define a storageClassName.

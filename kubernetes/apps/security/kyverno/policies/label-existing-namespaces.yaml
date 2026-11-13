@@ -1,7 +1,7 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/mutatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
   name: label-existing-namespaces
   annotations:
@@ -9,28 +9,27 @@ metadata:
     policies.kyverno.io/category: Other
     policies.kyverno.io/severity: medium
     policies.kyverno.io/subject: Namespace
-    kyverno.io/kyverno-version: 1.7.0
-    policies.kyverno.io/minversion: 1.7.0
-    kyverno.io/kubernetes-version: "1.23"
     policies.kyverno.io/description: >-
-      Automatically labels all Namespaces with goldilocks.fairwinds.com/enabled: "true"
-      to enable Goldilocks VPA recommendations for all namespaces. Triggers on any
-      Namespace admission review and applies retroactively on policy updates.
-      Skipped for namespaces labeled kyverno.io/exclude: "true".
+      Automatically labels all Namespaces with goldilocks.fairwinds.com/enabled: "true" to enable Goldilocks VPA recommendations for all
+      namespaces. Triggers on Namespace admission reviews and applies to existing namespaces in the background.
 spec:
-  mutateExistingOnPolicyUpdate: true
-  rules:
-    - name: label-existing-namespaces
-      match:
-        any:
-          - resources:
-              kinds:
-                - Namespace
-      mutate:
-        targets:
-          - apiVersion: v1
-            kind: Namespace
-        patchStrategicMerge:
-          metadata:
-            labels:
-              goldilocks.fairwinds.com/enabled: "true"
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - namespaces
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: |-
+          !has(object.metadata.labels) ? [JSONPatch{op: "add", path: "/metadata/labels", value: {"goldilocks.fairwinds.com/enabled":
+          "true"}}] : [JSONPatch{op: "add", path: "/metadata/labels/goldilocks.fairwinds.com~1enabled", value: "true"}]
+  evaluation:
+    mutateExisting:
+      enabled: true

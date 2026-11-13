@@ -1,7 +1,7 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/generatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: GeneratingPolicy
 metadata:
   name: sync-production-tls
   annotations:
@@ -10,30 +10,30 @@ metadata:
     policies.kyverno.io/severity: medium
     policies.kyverno.io/subject: Secret
     policies.kyverno.io/description: >-
-      Syncs all *-production-tls secrets from cert-manager namespace to the
-      network namespace so both Traefik instances can serve TLS for all managed
-      domains. Eliminates the need for duplicate Certificate resources.
-      Synchronize keeps the copy up to date on certificate renewal.
-    pod-policies.kyverno.io/autogen-controllers: none
+      Syncs all *-production-tls secrets from cert-manager namespace to the network namespace so both Traefik instances can serve TLS for all
+      managed domains. Eliminates the need for duplicate Certificate resources. Synchronize keeps the copy up to date on certificate renewal.
 spec:
-  generateExisting: true
-  rules:
-    - name: sync-to-network
-      match:
-        any:
-          - resources:
-              kinds:
-                - Secret
-              namespaces:
-                - cert-manager
-              names:
-                - "*-production-tls"
-      generate:
-        apiVersion: v1
-        kind: Secret
-        name: "{{request.object.metadata.name}}"
-        namespace: network
-        synchronize: true
-        data:
-          type: "{{request.object.type}}"
-          data: "{{request.object.data}}"
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - secrets
+  evaluation:
+    generateExisting:
+      enabled: true
+    synchronize:
+      enabled: true
+  matchConditions:
+    - name: eligible
+      expression: |-
+        object.metadata.namespace == "cert-manager" && object.metadata.name.endsWith("-production-tls")
+  generate:
+    - expression: |-
+        generator.Apply("network", [{"apiVersion": dyn("v1"), "kind": dyn("Secret"), "metadata": dyn({"name":
+        object.metadata.name}), "type": dyn(object.type), "data": dyn(object.data)}])

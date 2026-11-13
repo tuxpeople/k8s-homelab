@@ -1,7 +1,7 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/mutatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
   name: helmrelease-defaults
   annotations:
@@ -10,34 +10,35 @@ metadata:
     policies.kyverno.io/severity: medium
     policies.kyverno.io/subject: HelmRelease
     policies.kyverno.io/description: >-
-      Ensures all HelmReleases have an upgrade remediation strategy set.
-      If missing, defaults to upgrade.remediation.strategy: uninstall
-      to prevent permanently stalled releases after transient webhook
-      failures (e.g. Kyverno restarts).
+      Ensures all HelmReleases have an upgrade remediation strategy set. If missing, defaults to upgrade.remediation.strategy: uninstall to
+      prevent permanently stalled releases after transient webhook failures (e.g. Kyverno restarts).
 spec:
-  rules:
-    - name: set-upgrade-remediation-strategy
-      match:
-        any:
-          - resources:
-              kinds:
-                - helm.toolkit.fluxcd.io/*/HelmRelease
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - helm.toolkit.fluxcd.io/*/HelmRelease
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.upgrade.remediation.strategy || '' }}"
-            operator: Equals
-            value: ""
-      mutate:
-        patchStrategicMerge:
-          spec:
-            upgrade:
-              remediation:
-                strategy: uninstall
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - helm.toolkit.fluxcd.io
+        apiVersions:
+          - '*'
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - helmreleases
+    namespaceSelector:
+      matchExpressions:
+        - key: kyverno.io/exclude
+          operator: NotIn
+          values:
+            - "true"
+  matchConditions:
+    - name: condition-0
+      expression: |-
+        object.spec.?upgrade.remediation.strategy.orValue("") == ""
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: |-
+          !has(object.spec.upgrade) ? [JSONPatch{op: "add", path: "/spec/upgrade", value: {"remediation": {"strategy":
+          "uninstall"}}}] : !has(object.spec.upgrade.remediation) ? [JSONPatch{op: "add", path: "/spec/upgrade/remediation",
+          value: {"strategy": "uninstall"}}] : [JSONPatch{op: "add", path: "/spec/upgrade/remediation/strategy",
+          value: "uninstall"}]

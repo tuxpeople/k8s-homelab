@@ -1,68 +1,46 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/mutatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
-  name: &name ingress
+  name: ingress
   annotations:
     policies.kyverno.io/title: Add Ingress annotations
     policies.kyverno.io/category: Ingress
     policies.kyverno.io/severity: low
     policies.kyverno.io/subject: Ingress
     policies.kyverno.io/description: >-
-      This policy will automatically add external-dns annotations to Ingresses
-      if not already set (will not overwrite existing values):
-      - ingressClassName: external → external-dns target for Cloudflare
-      - ingressClassName: internal → external-dns target for UniFi (192.168.13.64)
-      Skipped for namespaces labeled kyverno.io/exclude: "true".
-    pod-policies.kyverno.io/autogen-controllers: none
+      This policy will automatically add external-dns annotations to Ingresses if not already set (will not overwrite existing values): -
+      ingressClassName: external → external-dns target for Cloudflare - ingressClassName: internal → external-dns target for UniFi
+      (192.168.13.64) Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
-  rules:
-    - name: external
-      match:
-        any:
-          - resources:
-              kinds:
-                - Ingress
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - Ingress
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.ingressClassName }}"
-            operator: Equals
-            value: external
-      mutate:
-        patchStrategicMerge:
-          metadata:
-            annotations:
-              +(external-dns.kubernetes.io/target): "external.${SECRET_DOMAIN}"
-    - name: internal
-      match:
-        any:
-          - resources:
-              kinds:
-                - Ingress
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - Ingress
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.ingressClassName }}"
-            operator: Equals
-            value: internal
-      mutate:
-        patchStrategicMerge:
-          metadata:
-            annotations:
-              +(external-dns.kubernetes.io/target): "192.168.13.64"
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - networking.k8s.io
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - ingresses
+    namespaceSelector:
+      matchExpressions:
+        - key: kyverno.io/exclude
+          operator: NotIn
+          values:
+            - "true"
+  matchConditions:
+    - name: condition-0
+      expression: |-
+        object.spec.?ingressClassName.orValue("") in ["external", "internal"]
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: |-
+          !has(object.metadata.annotations) ? [JSONPatch{op: "add", path: "/metadata/annotations", value: {"external-dns.kubernetes.io/target":
+          object.spec.ingressClassName == "external" ? "external.${SECRET_DOMAIN}" : "192.168.13.64"}}] : !("external-dns.kubernetes.io/target"
+          in object.metadata.annotations) ? [JSONPatch{op: "add", path: "/metadata/annotations/external-dns.kubernetes.io~1target",
+          value: object.spec.ingressClassName == "external" ? "external.${SECRET_DOMAIN}" : "192.168.13.64"}] :
+          []

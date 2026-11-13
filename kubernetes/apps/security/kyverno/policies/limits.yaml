@@ -1,7 +1,7 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/mutatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
   name: limits
   annotations:
@@ -10,70 +10,36 @@ metadata:
     policies.kyverno.io/severity: medium
     policies.kyverno.io/subject: Pod
     policies.kyverno.io/description: >-
-      This policy removes CPU limits from all Pods, except in system namespaces
-      (kube-system, flux-system, security, cert-manager) where authors intentionally
-      set limits. Skipped for namespaces labeled kyverno.io/exclude: "true".
-    pod-policies.kyverno.io/autogen-controllers: none
+      This policy removes CPU limits from all Pods, except in system namespaces (kube-system, flux-system, security, cert-manager) where authors
+      intentionally set limits. Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
-  rules:
-    - name: remove-containers-cpu-limits
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaces:
-                - kube-system
-                - flux-system
-                - security
-                - cert-manager
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      mutate:
-        foreach:
-          - list: request.object.spec.containers
-            patchesJson6902: |-
-              - path: /spec/containers/{{elementIndex}}/resources/limits/cpu
-                op: remove
-    - name: delete-initcontainers-cpu-limits
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaces:
-                - kube-system
-                - flux-system
-                - security
-                - cert-manager
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      preconditions:
-        all:
-          - key: "{{ request.object.spec.initContainers[] || `[]` | length(@) }}"
-            operator: GreaterThanOrEquals
-            value: 1
-      mutate:
-        foreach:
-          - list: request.object.spec.initContainers
-            patchesJson6902: |-
-              - path: /spec/initContainers/{{elementIndex}}/resources/limits/cpu
-                op: remove
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - pods
+    namespaceSelector:
+      matchExpressions:
+        - key: kyverno.io/exclude
+          operator: NotIn
+          values:
+            - "true"
+  matchConditions:
+    - name: condition-0
+      expression: |-
+        !(object.metadata.namespace in ["kube-system", "flux-system", "security", "cert-manager"])
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: |-
+          object.spec.containers.map(c, object.spec.containers.indexOf(c))
+          .filter(i, object.spec.containers[i].?resources.limits["cpu"].hasValue()).map(i,
+          JSONPatch{op: "remove", path: "/spec/containers/" + string(i) + "/resources/limits/cpu"}) + object.spec.?initContainers.orValue([]).map(c,
+          object.spec.initContainers.indexOf(c)).filter(i, object.spec.initContainers[i].?resources.limits["cpu"].hasValue()).map(i,
+          JSONPatch{op: "remove", path: "/spec/initContainers/" + string(i) + "/resources/limits/cpu"})

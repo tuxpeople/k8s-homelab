@@ -1,48 +1,46 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/mutatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
-  name: &name ndots
+  name: ndots
   annotations:
     policies.kyverno.io/title: Add ndots
     policies.kyverno.io/category: DNS Optimization
     policies.kyverno.io/severity: low
     policies.kyverno.io/subject: Pod
     policies.kyverno.io/description: >-
-      The ndots value controls where DNS lookups are first performed in a cluster
-      and needs to be set to a lower value than the default of 5 in some cases.
-      This policy mutates all Pods to add the ndots option with a value of 1.
-    pod-policies.kyverno.io/autogen-controllers: none
+      The ndots value controls where DNS lookups are first performed in a cluster and needs to be set to a lower value than the default of 5 in
+      some cases. This policy mutates all Pods to add the ndots option with a value of 1.
 spec:
-  rules:
-    - name: *name
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchExpressions:
-                  - key: kyverno.io/ndots
-                    operator: Exists
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              annotations:
-                kyverno.io/exclude: "true"
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      mutate:
-        patchStrategicMerge:
-          spec:
-            dnsConfig:
-              options:
-                - name: ndots
-                  value: "1"
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - pods
+    namespaceSelector:
+      matchExpressions:
+        - key: kyverno.io/exclude
+          operator: NotIn
+          values:
+            - "true"
+        - key: kyverno.io/ndots
+          operator: Exists
+  matchConditions:
+    - name: condition-0
+      expression: |-
+        object.metadata.?annotations["kyverno.io/exclude"].orValue("") != "true"
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: |-
+          !has(object.spec.dnsConfig) ? [JSONPatch{op: "add", path: "/spec/dnsConfig", value: {"options": [{"name":
+          "ndots", "value": "1"}]}}] : !has(object.spec.dnsConfig.options) ? [JSONPatch{op: "add", path: "/spec/dnsConfig/options",
+          value: [{"name": "ndots", "value": "1"}]}] : [JSONPatch{op: "add", path: "/spec/dnsConfig/options", value:
+          object.spec.dnsConfig.options.filter(o, o.name != "ndots") + [{"name": "ndots", "value": "1"}]}]

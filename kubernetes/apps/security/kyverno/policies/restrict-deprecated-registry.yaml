@@ -1,46 +1,52 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/validatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
 metadata:
   name: restrict-deprecated-registry
   annotations:
     policies.kyverno.io/title: Restrict Deprecated Registry
     policies.kyverno.io/category: Best Practices, EKS Best Practices
     policies.kyverno.io/severity: high
-    policies.kyverno.io/minversion: 1.9.0
     policies.kyverno.io/subject: Pod
     policies.kyverno.io/description: >-
-      The k8s.gcr.io image registry was frozen on April 3rd, 2023.
-      Images must use registry.k8s.io instead.
-      See https://kubernetes.io/blog/2023/02/06/k8s-gcr-io-freeze-announcement/
-      Skipped for namespaces labeled kyverno.io/exclude: "true".
+      The k8s.gcr.io image registry was frozen on April 3rd, 2023. Images must use registry.k8s.io instead. See
+      https://kubernetes.io/blog/2023/02/06/k8s-gcr-io-freeze-announcement/ Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
-  validationFailureAction: Enforce
-  # validationFailureAction: Audit
-  background: true
-  rules:
-    - name: restrict-deprecated-registry
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      validate:
-        message: 'The "k8s.gcr.io" image registry is deprecated. "registry.k8s.io" should now be used.'
-        foreach:
-          - list: "request.object.spec.[initContainers, ephemeralContainers, containers][]"
-            deny:
-              conditions:
-                all:
-                  - key: "{{ element.image }}"
-                    operator: Equals
-                    value: "k8s.gcr.io/*"
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - pods
+    namespaceSelector:
+      matchExpressions:
+        - key: kyverno.io/exclude
+          operator: NotIn
+          values:
+            - "true"
+  validationActions:
+    - Deny
+  evaluation:
+    background:
+      enabled: true
+  validations:
+    - expression: |-
+        (object.spec.containers + object.spec.?initContainers.orValue([]) + object.spec.?ephemeralContainers.orValue([])).all(c,
+        !c.image.startsWith("k8s.gcr.io/"))
+      message: Use registry.k8s.io instead of the deprecated k8s.gcr.io registry.
+  autogen:
+    podControllers:
+      controllers:
+        - deployments
+        - daemonsets
+        - statefulsets
+        - replicasets
+        - replicationcontrollers
+        - jobs
+        - cronjobs

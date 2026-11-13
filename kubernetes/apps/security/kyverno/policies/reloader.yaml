@@ -1,34 +1,36 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/mutatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
   name: add-reloader-annotations
   annotations:
     policies.kyverno.io/title: Add Reloader Annotations
     policies.kyverno.io/category: Other
 spec:
-  rules:
-    - name: add-secret-reloader
-      match:
-        any:
-          - resources:
-              kinds:
-                - Deployment
-                - StatefulSet
-                - DaemonSet
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - Deployment
-                - StatefulSet
-                - DaemonSet
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      mutate:
-        patchStrategicMerge:
-          metadata:
-            annotations:
-              +(reloader.stakater.com/auto): "true"
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - apps
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - deployments
+          - statefulsets
+          - daemonsets
+    namespaceSelector:
+      matchExpressions:
+        - key: kyverno.io/exclude
+          operator: NotIn
+          values:
+            - "true"
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: |-
+          !has(object.metadata.annotations) ? [JSONPatch{op: "add", path: "/metadata/annotations", value: {"reloader.stakater.com/auto":
+          "true"}}] : !("reloader.stakater.com/auto" in object.metadata.annotations) ? [JSONPatch{op: "add", path:
+          "/metadata/annotations/reloader.stakater.com~1auto", value: "true"}] : []

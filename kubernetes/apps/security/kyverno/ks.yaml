@@ -60,7 +60,9 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: kyverno
+    # Policies must reconcile while the 1.20 Helm upgrade is blocked by legacy
+    # ClusterPolicies. CEL APIs are installed separately and supported by 1.19.
+    - name: kyverno-crds
       namespace: security
   interval: 1h
   path: ./kubernetes/apps/security/kyverno/policies

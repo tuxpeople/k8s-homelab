@@ -11,6 +11,9 @@
 
 ## Kyverno Policies
 - Policies liegen unter `kubernetes/apps/security/kyverno/policies/` und werden über die Flux Kustomization `kyverno-policies` ausgerollt.
+- Seit der CEL-Migration verwenden sie `policies.kyverno.io/v1` (`GeneratingPolicy`, `MutatingPolicy`, `ValidatingPolicy`).
+- Die einmalige Umstellung bestehender ClusterPolicies vor dem Upgrade auf Kyverno 1.20 ist im [Migrationsablauf](../kyverno-cel-migration.md) beschrieben. Vor dem ersten Reconcile müssen die alten Generate-Policies ihre erzeugten Ressourcen beim Löschen behalten.
+- Regressionstests: `python tests/kyverno/test_policies.py` mit den über mise installierten Werkzeugen `kyverno` und `yq`.
 - `kubernetes/apps/security/kyverno/policies/kustomization.yaml` ist die aktive Policy-Liste; `ghcr-pullsecret.yaml` ist vorbereitet, aber aktuell auskommentiert.
 
 | Policy | Typ | Wirkung |
@@ -21,7 +24,7 @@
 | `ingress` | Mutate | Setzt `external-dns.kubernetes.io/target` für externe Ingresses auf `external.${SECRET_DOMAIN}` und für interne Ingresses auf `192.168.13.64`, ohne bestehende Werte zu überschreiben. |
 | `limits` | Mutate | Entfernt CPU-Limits aus Pods und Init-Containern; systemnahe oder ausgeschlossene Namespaces bleiben ausgenommen. |
 | `ndots` | Mutate | Setzt DNS `ndots: "1"` für Pods. |
-| `label-existing-namespaces` | Mutate existing | Labelt bestehende Namespaces nach, ausser sie tragen `kyverno.io/exclude: "true"`. |
+| `label-existing-namespaces` | Mutate existing | Labelt alle bestehenden Namespaces für Goldilocks nach. |
 | `add-reloader-annotations` | Mutate | Ergänzt Reloader-Annotationen für Secret/ConfigMap-Neustarts. |
 | `require-storageclass` | Validate, Audit | Auditiert PVCs und StatefulSets ohne `storageClassName`. |
 | `restrict-deprecated-registry` | Validate, Enforce | Blockiert Pods mit deprecated Registry-Pfaden. |

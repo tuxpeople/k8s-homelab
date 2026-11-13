@@ -1,7 +1,7 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kyverno.io/clusterpolicy_v1.json
-apiVersion: kyverno.io/v1
-kind: ClusterPolicy
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/policies.kyverno.io/mutatingpolicy_v1.json
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
 metadata:
   name: seccomp-default
   annotations:
@@ -10,33 +10,38 @@ metadata:
     policies.kyverno.io/severity: low
     policies.kyverno.io/subject: Pod
     policies.kyverno.io/description: >-
-      Automatically sets seccompProfile: RuntimeDefault on Pod securityContext
-      if not already defined. RuntimeDefault restricts kernel syscalls to a
-      safe subset without requiring app-specific profiles. Will not overwrite
-      explicitly configured profiles (e.g. Localhost or Unconfined).
+      Automatically sets seccompProfile: RuntimeDefault on Pod securityContext if not already defined. RuntimeDefault restricts kernel syscalls
+      to a safe subset without requiring app-specific profiles. Will not overwrite explicitly configured profiles (e.g. Localhost or Unconfined).
       Skipped for namespaces labeled kyverno.io/exclude: "true".
-    pod-policies.kyverno.io/autogen-controllers: none
 spec:
-  rules:
-    - name: seccomp-default
-      match:
-        any:
-          - resources:
-              kinds:
-                - Pod
-      exclude:
-        any:
-          - resources:
-              kinds:
-                - Pod
-              namespaces:
-                - kube-system
-              namespaceSelector:
-                matchLabels:
-                  kyverno.io/exclude: "true"
-      mutate:
-        patchStrategicMerge:
-          spec:
-            securityContext:
-              +(seccompProfile):
-                type: RuntimeDefault
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - pods
+    namespaceSelector:
+      matchExpressions:
+        - key: kyverno.io/exclude
+          operator: NotIn
+          values:
+            - "true"
+  matchConditions:
+    - name: condition-0
+      expression: |-
+        !object.spec.?securityContext.seccompProfile.hasValue()
+    - name: condition-1
+      expression: |-
+        object.metadata.namespace != "kube-system"
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: |-
+          !has(object.spec.securityContext) ? [JSONPatch{op: "add", path: "/spec/securityContext", value: {"seccompProfile":
+          {"type": "RuntimeDefault"}}}] : [JSONPatch{op: "add", path: "/spec/securityContext/seccompProfile", value:
+          {"type": "RuntimeDefault"}}]
