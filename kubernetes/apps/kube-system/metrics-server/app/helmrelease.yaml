@@ -36,6 +36,15 @@ spec:
       # CM4 kubelet responses can exceed 2s under load.
       - --metric-resolution=30s
       - --kubelet-request-timeout=10s
+      # Health checks must not depend on a slow API authorization round trip.
+      - --authorization-always-allow-paths=/metrics,/livez,/readyz,/healthz
+    livenessProbe:
+      initialDelaySeconds: 60
+      timeoutSeconds: 5
+      failureThreshold: 6
+    readinessProbe:
+      initialDelaySeconds: 30
+      timeoutSeconds: 5
     metrics:
       enabled: true
     serviceMonitor:

@@ -49,6 +49,10 @@ Metrics Server fragt Kubelets alle 30 Sekunden ab und erlaubt zehn Sekunden
 Antwortzeit. Der vorherige Zwei-Sekunden-Timeout führte auf den belasteten CM4
 zu fehlenden Node-Metriken trotz bereiter Pods. Nach Änderungen an diesen
 Werten `kubectl --context turingpi top nodes` und die Scraper-Logs prüfen.
+Die Health-Endpunkte sind explizit von der API-Autorisierung ausgenommen;
+Probes erlauben fünf Sekunden Antwortzeit und die Liveness-Probe startet erst
+nach einer Minute. Damit lösen kurze API-Verzögerungen und die erste
+Messwertsammlung keine unnötigen Neustarts aus.
 
 Referenzen: [Image-Pull-Limits](https://kubernetes.io/docs/concepts/containers/images/#maximum-parallel-image-pulls),
 [Flux Retry-Strategien](https://fluxcd.io/flux/components/helm/helmreleases/#install-strategy),
@@ -79,7 +83,11 @@ ExternalSecrets meldeten keine Fehler. Temporäre Dry-Run-Ressourcen wurden entf
 Verbleibende Beobachtungen: Die Audit-Policy `restrict-privileged` meldet
 die Host-Zugriffe des Prometheus-Node-Exporters; sie blockiert den Betrieb nicht.
 Während der Lastspitze wurden auf Node 2 etwa 86 °C und auf Node 4 etwa
-90 °C gemessen. Die physische Kühlung ist vor einem größeren Umbau zu prüfen.
+90 °C gemessen. Auch nach der Erholung lagen mehrere Module noch um 86 °C.
+Die physische Kühlung ist vor einem größeren Umbau zu prüfen.
+Mit dem korrigierten Metrics-Server-Timeout wurden wieder Werte aller vier Nodes
+geliefert. Beim Rollout zeigten sich zusätzlich zu kurze Health-Probes;
+deren Wartezeiten und Autorisierung wurden entsprechend angepasst.
 Storage-Layout und Node-Rollen wurden nicht geändert.
 
 ## Talos Node Exchange
