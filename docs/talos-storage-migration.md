@@ -4,6 +4,12 @@ Stand: 2026-11-13. Der SSD-Pilot auf `talos-test01` ist technisch erfolgreich; d
 Nodes und der Control-Plane-Wechsel bleiben nachgelagerte Etappen.
 Der aktuelle Ausführungsstand steht im Abschnitt „Pilot-Ausführung“.
 
+Nach erfolgreichem Pilot wird `talos-test02` mit demselben Ziel-Layout vorbereitet.
+Seine SSD ist über `/dev/disk/by-id/ata-P3-1TB_0009478001526` eindeutig identifiziert.
+Bei dieser Etappe soll der alte Longhorn-Mount nach dem Drain zunächst live
+entfernt und die ungenutzte Partition explizit gelöscht werden. Erst anschließend
+folgen Staging und der Reset ausschließlich der eMMC-EPHEMERAL-Partition.
+
 ## Ausgangslage
 
 Vier CM4-Module laufen auf einem Turing Pi 2 mit Talos 1.14.6. Auf allen

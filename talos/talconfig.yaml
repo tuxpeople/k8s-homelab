@@ -48,7 +48,7 @@ nodes:
     ipAddress: "192.168.13.12"
     installDisk: "/dev/mmcblk0"
     patches:
-      - "@./patches/global/machine-longhorn.yaml"
+      - "@./patches/worker/ephemeral-sata.yaml"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
