@@ -4,6 +4,12 @@
 
 ## 2026-11-14
 
+- Node 4 ist als zusätzliche Control Plane bereit und übernimmt die gemeinsame
+  API-VIP. etcd-Synchronisation, API-Readiness und DNS-Umzug erfolgreich geprüft;
+  zweiter externer Snapshot erstellt. Node 3 ist für den anschließenden Rückbau
+  zum SSD-Worker konfiguriert; Ausführung siehe
+  [Migrationsprotokoll](talos-storage-migration.md#node-4-übernommen-rückbau-von-node-3-vorbereitet).
+
 - Control-Plane-Wechsel auf Node 4 vorbereitet: externer etcd-Snapshot,
   minimale Live-basierte Zielkonfiguration erfolgreich validiert, VIP und
   dediziertes Scheduling im Repository vorbereitet. Node 3 bleibt aktiv;

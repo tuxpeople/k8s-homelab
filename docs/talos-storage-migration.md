@@ -1,7 +1,8 @@
 # Talos: SSD-Nutzung und Wechsel der Control Plane
 
-Stand: 2026-11-14. `talos-test01` und `talos-test02` verwenden `/var` erfolgreich
-auf SATA-SSD. Nodes 3 und 4 sowie der Control-Plane-Wechsel bleiben nachgelagerte Etappen.
+Stand: 2026-11-14. Nodes 1 und 2 verwenden `/var` auf SATA-SSD. Node 4 ist als
+zusätzliche Control Plane bereit und hat die API-VIP übernommen. Node 3 ist noch
+etcd-Mitglied; sein Rückbau zum SSD-Worker ist vorbereitet, aber noch nicht ausgeführt.
 Der aktuelle Ausführungsstand steht im Abschnitt „Pilot-Ausführung“.
 
 Nach erfolgreichem Pilot wird `talos-test02` mit demselben Ziel-Layout vorbereitet.
@@ -374,6 +375,37 @@ alle System-DaemonSets sind bereit.
   synchronisiert, API/VIP geprüft und das reguläre Verlassen des alten Mitglieds
   vorbereitet ist. Ein zusätzlich umgewandelter SSD-Worker würde weitere Rollen-
   und Speicherwechsel verursachen und wird für diesen kurzen Übergang nicht vorgesehen.
+
+### Node 4 übernommen, Rückbau von Node 3 vorbereitet
+
+- Node 4 wurde regulär geleert; alle iSCSI-VolumeAttachments wurden getrennt.
+  Nur die eMMC-EPHEMERAL-Partition wurde selektiv zurückgesetzt. Boot, STATE,
+  META und die USB-HDD blieben erhalten. Der alte Longhorn-Mount wurde nicht
+  vorher live entfernt, sondern entfiel mit der gestagten Konfiguration beim Boot.
+- Node 4 startete als Control Plane und trat etcd zunächst als Learner bei;
+  danach wurde er automatisch stimmberechtigtes Mitglied. Beide Mitglieder
+  zeigten denselben Raft-Stand ohne Fehler. Node und alle Control-Plane-Pods sind
+  bereit; direkter API-Zugriff einschließlich TLS und aller Readiness-Prüfungen erfolgreich.
+- Zweiter externer Snapshot direkt von Node 4: 330.555.424 Bytes, SHA-256
+  `88940747ede0a18b358affb59a67a65e935c9dc9a880faf3c3c2033410e002e1`.
+- Die VIP wurde auf Node 3 gezielt ohne Reboot aus der Live-Konfiguration entfernt.
+  Node 4 übernahm `192.168.13.10/32` exklusiv; API-Readiness über die VIP wurde
+  wiederholt geprüft. Node 3 blieb dabei als etcd-Mitglied online.
+- Beide ursprünglich auf Node 3 laufenden CoreDNS-Replikas wurden einzeln evicted,
+  jeweils erst nach Bereitschaft des Ersatzes die nächste. Beide sind auf Node 4
+  bereit. Ein eigener temporärer Pod auf Worker 2 bestätigte die Cluster-DNS-Auflösung
+  (`DNS_AFTER_CONTROL_PLANE_HANDOVER_OK`) und wurde danach gelöscht.
+- Die übrigen Infrastruktur-Pods wurden regulär von Node 3 geleert. CoreDNS,
+  Cilium-Operator und Node Feature Discovery sind bereit. Descheduler, Weave und
+  Tuppr sind mit ihren gesicherten ursprünglichen Replikazahlen vorübergehend pausiert.
+- Der endgültige Repository-Zielzustand setzt Node 3 als Worker mit SATA-EPHEMERAL,
+  Node 4 als einzige dedizierte Control Plane. Beide generierten Konfigurationen
+  und die minimale Node-3-Worker-Konfiguration sind validiert; der erneute Staging-
+  Dry-Run auf Node 3 war erfolgreich. Der Talos-Client verwendet bereits Node 4.
+- Beim Generieren wurde der Age-Schlüssel einmal über 1Password gelesen und nur
+  im Prozessspeicher übergeben. `SOPS_AGE_KEY_CMD` muss dabei vollständig aus der
+  Kindprozess-Umgebung entfernt werden; ein leerer Wert verursachte mit SOPS 3.13.3
+  einen Parser-Absturz. Es wurde keine Age-Schlüsseldatei angelegt.
 
 ## Referenzen
 
