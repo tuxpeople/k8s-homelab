@@ -341,6 +341,40 @@ alle System-DaemonSets sind bereit.
   Node 4 ein Worker. Der Control-Plane-Wechsel und die anschließende SSD-Nutzung
   von Node 3 sind weiterhin eine eigene, noch nicht ausgeführte Etappe.
 
+## Control-Plane-Wechsel: Vorbereitung am 2026-11-14
+
+- Frischer externer etcd-Snapshot auf dem Verwaltungsrechner: 330.555.424 Bytes,
+  SHA-256 `d7617955e806cd0fe3796091b86fceb5529f2358480c0dccf5cd07dc18493002`.
+  Snapshot, Live-Konfigurationen beider Nodes, Client-Konfiguration und aktuelle
+  Deployment-/StatefulSet-Replikazahlen liegen geschützt und Git-ignoriert unter
+  `.private/control-plane-migration-20261114/`.
+- Ausgangspunkt: ein gesundes etcd-Mitglied auf Node 3. Node 4 ist noch Worker.
+- Die minimale Node-4-Zielkonfiguration übernimmt die bestehende Cluster-Identität
+  und Control-Plane-Konfiguration von Node 3, aber Hostname, MAC, statische IP und
+  Installationskonfiguration von Node 4. VIP `192.168.13.10` kommt hinzu;
+  alte Longhorn-Disk- und Bind-Mount-Felder entfallen erst beim Neustart.
+  Lokale Validierung und Talos-Staging-Dry-Run sind erfolgreich.
+- Live ist `allowSchedulingOnControlPlanes` auf Node 3 noch `true`; dessen
+  NoSchedule-Taint schützt ihn aktuell. Node 4 erhält ausdrücklich `false`,
+  entsprechend der bereits vorhandenen Controller-Konfiguration im Repository.
+- Die vollständige Generierung mit `task talos:generate-config` war nach erneuter
+  Freigabe von 1Password erfolgreich. Generierte und minimale Konfiguration bestehen
+  die lokale Validierung; Cluster-ID, PKI und der in `KubeEtcdEncryptionConfig`
+  ausgelagerte Verschlüsselungsschlüssel stimmen überein. Die generierten neuen
+  Dokumenttypen werden bei diesem Rollenwechsel nicht zusätzlich live migriert.
+  Am laufenden Cluster wurde zu diesem Vorbereitungsstand noch keine Rolle geändert.
+- Die Ressourcenanforderungen von Node 4 passen mit geringer Reserve auf Nodes 1
+  und 2. Infrastruktur-Images werden vorab auf Node 1 geladen. Descheduler und
+  Weave sollen während des Umzugs mit gesicherter Replikazahl pausieren.
+- Talos 1.14.6 nimmt neue etcd-Mitglieder zuerst als Learner auf und befördert sie
+  nach Synchronisierung automatisch. Geprüft im
+  [passenden Talos-Quellcode](https://github.com/siderolabs/talos/blob/v1.14.6/internal/app/machined/pkg/system/services/etcd.go).
+- Der Übergang verwendet vorübergehend zwei erreichbare stimmberechtigte etcd-Mitglieder; das
+  bringt keine Ausfalltoleranz. Node 3 bleibt aktiv, bis Node 4 vollständig
+  synchronisiert, API/VIP geprüft und das reguläre Verlassen des alten Mitglieds
+  vorbereitet ist. Ein zusätzlich umgewandelter SSD-Worker würde weitere Rollen-
+  und Speicherwechsel verursachen und wird für diesen kurzen Übergang nicht vorgesehen.
+
 ## Referenzen
 
 - [Talos 1.14: Release Notes und dedizierte System-Volumes](https://github.com/siderolabs/talos/discussions/14230)

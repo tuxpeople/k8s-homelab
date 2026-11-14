@@ -4,6 +4,12 @@
 
 ## 2026-11-14
 
+- Control-Plane-Wechsel auf Node 4 vorbereitet: externer etcd-Snapshot,
+  minimale Live-basierte Zielkonfiguration erfolgreich validiert, VIP und
+  dediziertes Scheduling im Repository vorbereitet. Node 3 bleibt aktiv;
+  Generierung nach Freigabe von 1Password erfolgreich; Einzelheiten im
+  [Migrationsprotokoll](talos-storage-migration.md#control-plane-wechsel-vorbereitung-am-2026-11-14).
+
 - SSD-Migration auf `talos-test02`: `/var` auf 1-TB-SATA-SSD, eigener iSCSI-
   Schreib-/Lesetest, persistentes Wiederlesen und DNS erfolgreich. Legacy-Mount-
   Finalizer-Wartezustand und kontrollierte Wiederholung des selektiven Resets im

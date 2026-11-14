@@ -99,12 +99,10 @@ nodes:
   - hostname: "talos-test04"
     ipAddress: "192.168.13.14"
     installDisk: "/dev/mmcblk0"
-    patches:
-      - "@./patches/global/machine-longhorn.yaml"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/f8a903f101ce10f686476024898734bb6b36353cc4d41f348514db9004ec0a9d
-    controlPlane: false
+    controlPlane: true
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "e4:5f:01:ec:17:f8"
@@ -115,6 +113,8 @@ nodes:
           - network: "0.0.0.0/0"
             gateway: "192.168.13.1"
         mtu: 1500
+        vip:
+          ip: "192.168.13.10"
     # userVolumes:
     #   - name: longhorn
     #     provisioning:
