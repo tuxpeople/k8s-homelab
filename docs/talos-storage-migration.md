@@ -1,18 +1,33 @@
 # Talos: SSD-Nutzung und Wechsel der Control Plane
 
-Stand: 2026-11-14. Nodes 1 und 2 verwenden `/var` auf SATA-SSD. Node 4 ist als
-zusätzliche Control Plane bereit und hat die API-VIP übernommen. Node 3 ist noch
-etcd-Mitglied; sein Rückbau zum SSD-Worker ist vorbereitet, aber noch nicht ausgeführt.
-Der aktuelle Ausführungsstand steht im Abschnitt „Pilot-Ausführung“.
+Stand: 2026-11-14. Die Migration ist abgeschlossen. Nodes 1, 2 und 3 sind
+SSD-Worker; Node 4 ist die einzige dedizierte Control Plane.
 
-Nach erfolgreichem Pilot wird `talos-test02` mit demselben Ziel-Layout vorbereitet.
+## Endgültiges Layout
+
+Alle Nodes booten weiterhin von eMMC. Die App-PVCs bleiben auf Synology-iSCSI.
+
+| Node | Rolle | EPHEMERAL / `/var` |
+| --- | --- | --- |
+| talos-test01 | Worker | SATA-SSD, `/dev/sda1`, 1 TB |
+| talos-test02 | Worker | SATA-SSD, `/dev/sda1`, 1 TB |
+| talos-test03 | Worker | SATA-SSD, `/dev/sda1`, 1 TB |
+| talos-test04 | dedizierte Control Plane | eMMC, `/dev/mmcblk0p6`, 29 GB |
+
+Node 4 trägt den Control-Plane-`NoSchedule`-Taint und hält exklusiv die API-VIP
+`192.168.13.10`. Der Talos-Client verwendet `192.168.13.14:50000`.
+Der [Abschluss der Gesamtmigration](#abschluss-der-gesamtmigration) enthält die
+Tests und Sicherungen. Die folgenden Abschnitte dokumentieren Ausgangslage und Ablauf.
+Die einzelnen Ausführungsetappen stehen ab „Pilot-Ausführung“.
+
+Nach erfolgreichem Pilot wurde `talos-test02` mit demselben Ziel-Layout vorbereitet.
 Seine SSD ist über `/dev/disk/by-id/ata-P3-1TB_0009478001526` eindeutig identifiziert.
 Die alte Longhorn-Partition wird erst nach dem Neustart und nachgewiesenem
 Aushängen gezielt gelöscht. Die Legacy-Disk-Konfiguration nicht vor dem Reset
 live entfernen: Auf Node 2 führte dies zu einem gegenseitigen Finalizer-Wartezustand
 der Talos-Volume-Controller. Ein erzwungener Neustart des bereits geleerten und
-gestoppten Workers löst diesen Zustand; anschließend Layout erneut prüfen und
-den selektiven EPHEMERAL-Reset bei Bedarf wiederholen.
+gestoppten Workers löste diesen Zustand; anschließend wurden Layout und selektiver
+EPHEMERAL-Reset erneut geprüft.
 
 ## Ausgangslage
 
@@ -338,9 +353,9 @@ alle System-DaemonSets sind bereit.
   erfolgreich, und der Webserver ist lokal erreichbar und Kubernetes-ready.
 - Alle vier Nodes sind Ready und uncordoned. CSI-Controller: 6/6 Container;
   CSI-Node-Pods der drei Worker: jeweils 4/4 Container.
-- Die Rollen sind unverändert: Node 3 bleibt die einzige dedizierte Control Plane,
-  Node 4 ein Worker. Der Control-Plane-Wechsel und die anschließende SSD-Nutzung
-  von Node 3 sind weiterhin eine eigene, noch nicht ausgeführte Etappe.
+- Zum Abschluss dieser Etappe waren die Rollen noch unverändert: Node 3 war die
+  einzige dedizierte Control Plane, Node 4 ein Worker. Der anschließende Rollenwechsel
+  ist im folgenden Abschnitt protokolliert.
 
 ## Control-Plane-Wechsel: Vorbereitung am 2026-11-14
 
@@ -406,6 +421,41 @@ alle System-DaemonSets sind bereit.
   im Prozessspeicher übergeben. `SOPS_AGE_KEY_CMD` muss dabei vollständig aus der
   Kindprozess-Umgebung entfernt werden; ein leerer Wert verursachte mit SOPS 3.13.3
   einen Parser-Absturz. Es wurde keine Age-Schlüsseldatei angelegt.
+
+## Abschluss der Gesamtmigration
+
+- Die etcd-Führung wurde vor dem Rückbau ausdrücklich von Node 3 an Node 4
+  übergeben. Anschließend verließ Node 3 etcd regulär als Follower; Node 4 blieb
+  als einziges stimmberechtigtes Mitglied gesund. Controller Manager und Scheduler
+  halten ihre Leader-Leases jetzt ebenfalls auf Node 4.
+- Node 3 behielt Boot, STATE und META. Sein etcd-Verzeichnis lag nachweislich
+  innerhalb der eMMC-EPHEMERAL-Partition; diese wurde selektiv zurückgesetzt.
+  Erst nach dem Worker-Boot und bestätigtem Unmount wurde die eindeutig identifizierte
+  alte Longhorn-Partition auf der SATA-SSD gelöscht. EPHEMERAL wurde danach automatisch
+  als XFS auf `/dev/sda1` provisioniert: 1.023.708.041.216 Bytes Kapazität,
+  921.068.800.113 Bytes für Pods einplanbar.
+- Die alten Control-Plane- und Load-Balancer-Ausschlusslabels sowie der alte
+  Control-Plane-Taint wurden auf Node 3 entfernt. Alle vier Nodes sind Ready und
+  uncordoned; nur Node 4 bleibt durch seinen regulären Control-Plane-Taint geschützt.
+- Ein eigener temporärer 1-GiB-PVC auf dem zunächst noch cordonierten Worker 3
+  bestätigte Schreiben, `sync` und Lesen (`CSI_WRITE_READ_OK`). Ein zweiter Pod
+  bestätigte persistentes Wiederlesen und Cluster-DNS (`DNS_AND_PERSISTENT_READ_OK`).
+  Beide Test-Pods, PVC, PV und Test-LUN wurden anschließend bereinigt.
+- Weave, Descheduler und Tuppr sind wieder mit ihren gesicherten ursprünglichen
+  Replikazahlen verfügbar. Zusätzlich wurden sämtliche Deployment- und StatefulSet-
+  Replikazahlen gegen die Baseline vor diesem Rollenwechsel verglichen: keine Abweichung.
+- Abschlussprüfung: alle aktiven Pods und DaemonSets bereit, alle Deployments und
+  StatefulSets verfügbar; 50/50 HelmReleases, 58/58 Kustomizations, 31/31 ExternalSecrets
+  und 7/7 SecretStores Ready. Alle drei Worker-CSI-Pods haben 4/4, der CSI-Controller
+  6/6 bereite Container.
+- Endgültiger externer etcd-Snapshot nach Wiederherstellung aller Replikazahlen:
+  330555424 Bytes; SHA-256
+  `d3ffe37c2bc75b4805d1265d262a39fb6b81d4b6396c250b183769baedbfb73b`. Snapshot, aktuelle Live-Konfigurationen aller vier Nodes,
+  endgültiger Talos-/Kubernetes-Clientzugang, Storage-Layout und Testnachweise liegen
+  geschützt auf dem Verwaltungsrechner unter `.private/control-plane-migration-20261114/`.
+- Das Zielbild bleibt eine einzelne Control Plane. Der Rollenwechsel schafft
+  Platz auf den Workern und nutzt die vorhandenen SATA-SSDs; er fügt keine
+  Control-Plane-Ausfalltoleranz hinzu. Große Image-Kaltstarts bleiben CPU-intensiv.
 
 ## Referenzen
 

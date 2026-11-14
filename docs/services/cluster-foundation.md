@@ -3,7 +3,7 @@
 ## Status & Überblick
 
 -   **Status**: Aktiv – Produktion (`admin@turingpi` kubeconfig-Kontext).
--   **OS / Nodes**: Talos Linux (ARM64) auf 4 Nodes (`talos-test01`–`04`) mit einer dedizierten Control Plane auf `talos-test03` und drei Workern.
+-   **OS / Nodes**: Talos Linux (ARM64) auf 4 Nodes (`talos-test01`–`04`) mit einer dedizierten Control Plane auf `talos-test04` und drei Workern.
 -   **Provisioning**: talhelper + `talos/talconfig.yaml`, direkte YAML-Manifeste (keine Templates mehr). Secrets via `talos/talsecret.sops.yaml`.
 -   **GitOps**: FluxCD hält sämtliche Manifeste synchron (siehe `docs/services/fluxcd.md`).
 -   **Netz**: Node-Netz `192.168.13.0/24`, Cluster API `192.168.13.10`, Pod CIDR `10.42.0.0/16`, Service CIDR `10.43.0.0/16`.
@@ -15,8 +15,8 @@
 | ------------ | ---------- | ------ | --------- | ----------------------------------- |
 | talos-test01 | 3.95 cores | 7.1 GB | Worker | `/var` auf lokaler SATA-SSD. |
 | talos-test02 | 3.95 cores | 7.1 GB | Worker | `/var` auf lokaler SATA-SSD. |
-| talos-test03 | 3.95 cores | 7.0 GB | Control Plane | Mit `NoSchedule`-Taint. |
-| talos-test04 | 3.95 cores | 7.1 GB | Worker | Kein SATA-/PCIe-SSD-Anschluss verfügbar. |
+| talos-test03 | 3.95 cores | 7.0 GB | Worker | `/var` auf lokaler SATA-SSD. |
+| talos-test04 | 3.95 cores | 7.1 GB | Control Plane | `/var` auf eMMC, `NoSchedule`-Taint; API-VIP und etcd. |
 
 > Siehe `RESOURCE_ANALYSIS.md` für VPA-Empfehlungen; Node-spezifische Labels/taints bitte hier ergänzen.
 
@@ -39,9 +39,11 @@ bei vielen gleichzeitigen Starts zu entlasten. Die Einstellung liegt in
 und anschließend nodeweise ohne Reboot angewendet. Ein kurzer Kubelet-Neustart
 ist dabei möglich. Siehe [Stabilisierungs-Runbook](../runbooks.md#cm4-langsame-pod-starts-und-helm-retry-schleifen).
 
-SSD-Migration vom 2026-11-13/14: `talos-test01` und `talos-test02` booten weiterhin
-von eMMC, verwenden für `EPHEMERAL` beziehungsweise `/var` aber jeweils die lokale
-1-TB-SATA-SSD (`/dev/sda1`). Nodes 3 und 4 wurden noch nicht auf dieses Layout umgestellt.
+SSD-Migration vom 2026-11-13/14: `talos-test01`, `talos-test02` und `talos-test03`
+booten weiterhin von eMMC und verwenden für `EPHEMERAL` beziehungsweise `/var`
+jeweils die lokale 1-TB-SATA-SSD (`/dev/sda1`). `talos-test04` ist die einzige
+dedizierte Control Plane und nutzt eMMC. Talos-Endpunkt: `192.168.13.14:50000`;
+die Kubernetes-API bleibt unter der VIP `192.168.13.10:6443`.
 Durchführung und iSCSI-/DNS-Tests stehen im [Migrationsprotokoll](../talos-storage-migration.md#ergebnis-von-node-1).
 
 1. **Upgrades**

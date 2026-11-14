@@ -4,6 +4,13 @@
 
 ## 2026-11-14
 
+- Gesamtmigration abgeschlossen: drei SSD-Worker, Node 4 als einzige dedizierte
+  Control Plane mit API-VIP. Node 3 regulär aus etcd entfernt und auf SATA-EPHEMERAL
+  umgestellt. iSCSI-/DNS-Tests, Wiederherstellung aller pausierten Replikazahlen und
+  abschließender externer Snapshot erfolgreich; alle GitOps- und Secret-Ressourcen bereit.
+  Node-Inventar und Architekturdiagramme aktualisiert; siehe
+  [Abschlussprotokoll](talos-storage-migration.md#abschluss-der-gesamtmigration).
+
 - Node 4 ist als zusätzliche Control Plane bereit und übernimmt die gemeinsame
   API-VIP. etcd-Synchronisation, API-Readiness und DNS-Umzug erfolgreich geprüft;
   zweiter externer Snapshot erstellt. Node 3 ist für den anschließenden Rückbau

@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2025-11-07T00:00:00.000Z" agent="7.0" version="21.8.6">
+<mxfile host="app.diagrams.net" modified="2026-11-14T11:06:10.894Z" agent="7.0" version="21.8.6">
   <diagram id="architecture" name="Homelab">
     <mxGraphModel dx="1440" dy="835" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
       <root>
@@ -9,16 +9,16 @@
           <mxGeometry x="520" y="200" width="640" height="360" as="geometry" />
         </mxCell>
 
-        <mxCell id="node1" value="talos-test01&#10;CP + Worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6C8EBF;" vertex="1" parent="cluster">
+        <mxCell id="node1" value="talos-test01&#10;Worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6C8EBF;" vertex="1" parent="cluster">
           <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="node2" value="talos-test02&#10;CP + Worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6C8EBF;" vertex="1" parent="cluster">
+        <mxCell id="node2" value="talos-test02&#10;Worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6C8EBF;" vertex="1" parent="cluster">
           <mxGeometry x="240" y="40" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="node3" value="talos-test03&#10;Worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6C8EBF;" vertex="1" parent="cluster">
           <mxGeometry x="40" y="160" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="node4" value="talos-test04&#10;Worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6C8EBF;" vertex="1" parent="cluster">
+        <mxCell id="node4" value="talos-test04&#10;Control Plane" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6C8EBF;" vertex="1" parent="cluster">
           <mxGeometry x="240" y="160" width="160" height="80" as="geometry" />
         </mxCell>
 

@@ -7,10 +7,10 @@ digraph Homelab {
     color="#6C8EBF";
     style="rounded";
     node [fillcolor="#DAE8FC" color="#6C8EBF"];
-    talos1 [label="talos-test01\nCP + Worker"];
-    talos2 [label="talos-test02\nCP + Worker"];
+    talos1 [label="talos-test01\nWorker"];
+    talos2 [label="talos-test02\nWorker"];
     talos3 [label="talos-test03\nWorker"];
-    talos4 [label="talos-test04\nWorker"];
+    talos4 [label="talos-test04\nControl Plane"];
 
     node [fillcolor="#FFE6CC" color="#D79B00"];
     flux [label="FluxCD\nflux-system"];
