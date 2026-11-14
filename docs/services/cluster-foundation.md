@@ -3,7 +3,7 @@
 ## Status & Überblick
 
 -   **Status**: Aktiv – Produktion (`admin@turingpi` kubeconfig-Kontext).
--   **OS / Nodes**: Talos Linux (ARM64) auf 4 Nodes (`talos-test01`–`04`) mit kombiniertem Control-Plane-/Worker-Rollenmodell.
+-   **OS / Nodes**: Talos Linux (ARM64) auf 4 Nodes (`talos-test01`–`04`) mit einer dedizierten Control Plane auf `talos-test03` und drei Workern.
 -   **Provisioning**: talhelper + `talos/talconfig.yaml`, direkte YAML-Manifeste (keine Templates mehr). Secrets via `talos/talsecret.sops.yaml`.
 -   **GitOps**: FluxCD hält sämtliche Manifeste synchron (siehe `docs/services/fluxcd.md`).
 -   **Netz**: Node-Netz `192.168.13.0/24`, Cluster API `192.168.13.10`, Pod CIDR `10.42.0.0/16`, Service CIDR `10.43.0.0/16`.
@@ -13,10 +13,10 @@
 
 | Node         | CPU        | RAM    | Rolle     | Besonderheiten                      |
 | ------------ | ---------- | ------ | --------- | ----------------------------------- |
-| talos-test01 | 3.95 cores | 7.1 GB | CP/Worker | Führt Talos API + Flux Controllers. |
-| talos-test02 | 3.95 cores | 7.1 GB | CP/Worker | Siehe RESOURCE_ANALYSIS.            |
-| talos-test03 | 3.95 cores | 7.0 GB | Worker    | Für stateful workloads bevorzugt.   |
-| talos-test04 | 3.95 cores | 7.1 GB | Worker    | Reserve/AZ-Balancing.               |
+| talos-test01 | 3.95 cores | 7.1 GB | Worker | `/var` auf lokaler SATA-SSD. |
+| talos-test02 | 3.95 cores | 7.1 GB | Worker | `/var` auf lokaler SATA-SSD. |
+| talos-test03 | 3.95 cores | 7.0 GB | Control Plane | Mit `NoSchedule`-Taint. |
+| talos-test04 | 3.95 cores | 7.1 GB | Worker | Kein SATA-/PCIe-SSD-Anschluss verfügbar. |
 
 > Siehe `RESOURCE_ANALYSIS.md` für VPA-Empfehlungen; Node-spezifische Labels/taints bitte hier ergänzen.
 
@@ -39,9 +39,9 @@ bei vielen gleichzeitigen Starts zu entlasten. Die Einstellung liegt in
 und anschließend nodeweise ohne Reboot angewendet. Ein kurzer Kubelet-Neustart
 ist dabei möglich. Siehe [Stabilisierungs-Runbook](../runbooks.md#cm4-langsame-pod-starts-und-helm-retry-schleifen).
 
-SSD-Pilot vom 2026-11-13: `talos-test01` bootet weiterhin von eMMC, verwendet
-für `EPHEMERAL` beziehungsweise `/var` aber die lokale 1-TB-SATA-SSD (`/dev/sda1`).
-Die übrigen Nodes wurden noch nicht auf dieses Layout umgestellt.
+SSD-Migration vom 2026-11-13/14: `talos-test01` und `talos-test02` booten weiterhin
+von eMMC, verwenden für `EPHEMERAL` beziehungsweise `/var` aber jeweils die lokale
+1-TB-SATA-SSD (`/dev/sda1`). Nodes 3 und 4 wurden noch nicht auf dieses Layout umgestellt.
 Durchführung und iSCSI-/DNS-Tests stehen im [Migrationsprotokoll](../talos-storage-migration.md#ergebnis-von-node-1).
 
 1. **Upgrades**

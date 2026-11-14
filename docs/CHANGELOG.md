@@ -2,6 +2,17 @@
 
 > Jede inhaltliche Änderung in diesem Verzeichnis benötigt einen Eintrag mit Datum, kurzem Kontext und Referenz auf den Commit/PR.
 
+## 2026-11-14
+
+- SSD-Migration auf `talos-test02`: `/var` auf 1-TB-SATA-SSD, eigener iSCSI-
+  Schreib-/Lesetest, persistentes Wiederlesen und DNS erfolgreich. Legacy-Mount-
+  Finalizer-Wartezustand und kontrollierte Wiederholung des selektiven Resets im
+  [Migrationsprotokoll](talos-storage-migration.md#zweiter-worker-ausführung) dokumentiert.
+  Alle elf vorübergehend pausierten Deployments auf ihre gesicherten ursprünglichen
+  Replikazahlen zurückgesetzt und wieder verfügbar.
+- Node-Inventar auf die tatsächlichen Rollen korrigiert: Node 3 ist die einzige
+  dedizierte Control Plane; Nodes 1, 2 und 4 sind Worker.
+
 ## 2026-11-13
 
 - SSD-Pilot auf `talos-test01` erfolgreich: `/var` liegt auf der 1-TB-SATA-SSD.

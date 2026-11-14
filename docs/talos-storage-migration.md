@@ -1,14 +1,17 @@
 # Talos: SSD-Nutzung und Wechsel der Control Plane
 
-Stand: 2026-11-13. Der SSD-Pilot auf `talos-test01` ist technisch erfolgreich; die weiteren
-Nodes und der Control-Plane-Wechsel bleiben nachgelagerte Etappen.
+Stand: 2026-11-14. `talos-test01` und `talos-test02` verwenden `/var` erfolgreich
+auf SATA-SSD. Nodes 3 und 4 sowie der Control-Plane-Wechsel bleiben nachgelagerte Etappen.
 Der aktuelle Ausführungsstand steht im Abschnitt „Pilot-Ausführung“.
 
 Nach erfolgreichem Pilot wird `talos-test02` mit demselben Ziel-Layout vorbereitet.
 Seine SSD ist über `/dev/disk/by-id/ata-P3-1TB_0009478001526` eindeutig identifiziert.
-Bei dieser Etappe soll der alte Longhorn-Mount nach dem Drain zunächst live
-entfernt und die ungenutzte Partition explizit gelöscht werden. Erst anschließend
-folgen Staging und der Reset ausschließlich der eMMC-EPHEMERAL-Partition.
+Die alte Longhorn-Partition wird erst nach dem Neustart und nachgewiesenem
+Aushängen gezielt gelöscht. Die Legacy-Disk-Konfiguration nicht vor dem Reset
+live entfernen: Auf Node 2 führte dies zu einem gegenseitigen Finalizer-Wartezustand
+der Talos-Volume-Controller. Ein erzwungener Neustart des bereits geleerten und
+gestoppten Workers löst diesen Zustand; anschließend Layout erneut prüfen und
+den selektiven EPHEMERAL-Reset bei Bedarf wiederholen.
 
 ## Ausgangslage
 
@@ -130,12 +133,15 @@ werden; dieses Dokument ist dafür noch keine ausführbare Befehlsfolge.
 1. Prüfen, dass die übrigen Nodes die zu verschiebenden Workloads aufnehmen können.
 2. Node cordonen und kontrolliert drainen; PDBs und lokale Daten berücksichtigen.
 3. Vollständiges Unmount und Detach seiner iSCSI-Volumes abwarten.
-4. Den alten Longhorn-Mount gemäß validiertem Talos-Ablauf außer Betrieb nehmen.
-5. Ausschließlich die eindeutig identifizierte ehemalige Longhorn-SSD bereinigen.
-6. Den Worker mit der vorbereiteten Storage-Konfiguration neu provisionieren.
-   Bestehende Cluster-Secrets verwenden; kein neues Cluster bootstrappen.
+4. Die minimale SSD-Zielkonfiguration ohne Legacy-Longhorn-Felder staged hinterlegen.
+   Laufende Legacy-Mounts nicht vorher durch einen Live-Patch entfernen.
+5. Ausschließlich die alte eMMC-EPHEMERAL-Partition selektiv zurücksetzen und
+   neu starten. Boot, STATE und META erhalten; bestehende Cluster-Secrets verwenden.
+6. Nach dem Neustart die identifizierte alte Longhorn-Partition erst bei bestätigtem
+   Unmount und fehlender Nutzung gezielt löschen. Talos provisioniert danach die SSD.
 7. Prüfen, dass `/var` auf der SSD liegt und die gewünschte Kapazität nutzbar ist.
-8. CSI, DNS, Netzwerk, Image-Pulls und einen App-Start mit bestehendem iSCSI-PVC testen.
+8. CSI, DNS, Netzwerk, Image-Pulls und persistentes Lesen mit einem eigenen temporären
+   iSCSI-Test-PVC prüfen; anschließend Test-Pods, PVC, PV und Test-LUN bereinigen.
 9. Erst nach erfolgreicher Prüfung uncordonen und eine Beobachtungsphase einhalten.
 
 Vor dem nächsten Node müssen Pod-Starts zuverlässig funktionieren und neue
@@ -252,7 +258,7 @@ Der geprüfte Ablauf ist:
    Den erfolgreichen Reset-Aufruf daher nicht als Beleg einer geleerten SSD
    behandeln; DiscoveredVolumes und MountStatus anschließend prüfen.
 6. `/var`, VolumeStatus, Gesamtkapazität, Netzwerk und CSI prüfen; danach einen
-   vorhandenen iSCSI-PVC auf dem Worker testen und erst dann freigeben.
+   eigenen temporären iSCSI-PVC auf dem Worker testen und erst dann freigeben.
 
 Dieser Ablauf ist nicht unverändert auf die Control Plane anzuwenden.
 Ein Reset von `/var` auf der heutigen Control Plane würde auch die dortigen
@@ -286,6 +292,54 @@ Für den nächsten Worker vor dem Reset ausreichend Scheduling-Reserve prüfen,
 benötigte Controller-Images vorladen und die alte Longhorn-Partition explizit
 entfernen, sobald sie sicher ungemountet ist. Der Control-Plane-Wechsel ist
 weiterhin nicht durchgeführt.
+
+## Zweiter Worker: Ausführung
+
+Für `talos-test02` wurden die ursprünglichen Replikazahlen vor jeder Änderung
+privat gesichert. Vorübergehend auf 0 standen Paperless einschließlich Gotenberg,
+Redis und Tika, Calibre-Web, Tautulli, Obsidian, FreshRSS, Spoolman, Weave GitOps
+und Descheduler. Nach Speichertest und Freigabe wurden alle elf Deployments
+auf die gesicherten Replikazahlen zurückgesetzt und ihre Verfügbarkeit geprüft.
+Die Paperless-Abhängigkeiten starteten vor der Hauptanwendung, Descheduler zuletzt.
+
+Die drei Flux-Kerncontroller wurden einzeln auf Node 1 verschoben und jeweils
+auf Bereitschaft geprüft. Anschließend wurde Node 2 regulär unter Beachtung der
+PodDisruptionBudgets geleert. Ein auf Node 4 wiederholt ausfallender CSI-Controller
+wurde ebenfalls auf Node 1 verschoben; Node 4 danach wieder uncordoned.
+
+Das Live-Entfernen der alten Longhorn-Konfiguration verursachte beim Reset einen
+Wartezyklus zwischen `UserDiskConfigController`, VolumeConfig und Mount-Status.
+Der bereits geleerte und gestoppte Node wurde mit `reboot --mode=force` neu gestartet.
+Danach war die eMMC-EPHEMERAL noch vorhanden und die SSD sicher ungemountet.
+Die alte Partition `/dev/sda1` wurde nach erneuter Identitäts- und Nutzungsprüfung
+mit `wipe disk sda1 --drop-partition` entfernt. Der selektive EPHEMERAL-Reset
+wurde nach erneutem Staging erfolgreich wiederholt. Keine Finalizer wurden manuell entfernt.
+
+Talos meldet EPHEMERAL anschließend auf `/dev/sda1` bereit, als XFS unter `/var`
+gemountet. Kubernetes erkennt 1.023.708.041.216 Bytes lokalen Speicher und
+921.068.800.113 Bytes allocatable. Der erste isolierte iSCSI-Test bestätigt
+Schreiben, `sync` und Lesen (`CSI_WRITE_READ_OK`). Ein zweiter Pod bestätigt
+persistentes Wiederlesen und Cluster-DNS (`DNS_AND_PERSISTENT_READ_OK`). Beide
+Test-Pods, der eigene 1-GiB-PVC und sein PV beziehungsweise seine Test-LUN wurden
+anschließend bereinigt. Der Worker ist wieder uncordoned; Talos, Kubelet und
+alle System-DaemonSets sind bereit.
+
+### Abschluss von Node 2
+
+- Alle elf pausierten Deployments sind wieder mit ihrer ursprünglichen einen
+  Replika verfügbar. Die Baseline und das Verifikationsergebnis liegen privat
+  bei den Migrations-Backups; UID und Sollzahlen wurden erneut verglichen.
+- Der erste Kaltstart großer Images auf den CM4-CPUs dauerte teilweise lange:
+  Paperless benötigte rund 10 Minuten aktiven Pull und 14,5 Minuten einschließlich
+  Warteschlange. Der SSD-Wechsel beseitigt den CPU-Engpass nicht.
+- Paperless meldete während gleichzeitiger Worker-Initialisierung Starttimeouts;
+  nach erfolgreichem Anlauf traten keine weiteren auf. Ein Hintergrundtask lief
+  erfolgreich, und der Webserver ist lokal erreichbar und Kubernetes-ready.
+- Alle vier Nodes sind Ready und uncordoned. CSI-Controller: 6/6 Container;
+  CSI-Node-Pods der drei Worker: jeweils 4/4 Container.
+- Die Rollen sind unverändert: Node 3 bleibt die einzige dedizierte Control Plane,
+  Node 4 ein Worker. Der Control-Plane-Wechsel und die anschließende SSD-Nutzung
+  von Node 3 sind weiterhin eine eigene, noch nicht ausgeführte Etappe.
 
 ## Referenzen
 
