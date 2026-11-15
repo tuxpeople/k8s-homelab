@@ -32,3 +32,8 @@ spec:
     vpa:
       # vpa.enabled -- If true, the vpa will be installed as a sub-chart
       enabled: true
+      recommender:
+        extraArgs:
+          # Goldilocks is advisory (all VPAs are Off): trade 1m sampling for
+          # 5m sampling to reduce recommendation/checkpoint API writes.
+          recommender-interval: 5m

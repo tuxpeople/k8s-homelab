@@ -111,6 +111,26 @@ Für die Darstellung genügt ein kompaktes Talos-Dashboard auf der vorhandenen G
 Nodes und Temperaturen, `/var` je Medium, SSD-/eMMC-Gesundheit, etcd und Backup-Frische.
 Ein vollständiger zusätzlicher Prometheus-/Grafana-Stack auf den CM4 ist dafür nicht nötig.
 
+## Control-Plane-Last: VPA
+
+Goldilocks/VPA läuft ausschliesslich im Empfehlungsmodus (`updateMode: Off`).
+Am 2026-11-15 waren 96 VPA-Checkpoints vorhanden. Die 15-Minuten-Baseline zeigte
+ungefähr 1,38 Checkpoint-Schreibzugriffe und 0,53 VPA-Schreibzugriffe pro Sekunde.
+
+Der [Goldilocks-HelmRelease](../kubernetes/apps/vpa/goldilocks/app/helmrelease.yaml)
+setzt deshalb `vpa.recommender.extraArgs.recommender-interval: 5m` statt des
+Standardwerts von einer Minute. VPA 1.7.1 koppelt Metrikabfrage, Empfehlungen und
+Checkpoint-Schreiben an denselben Zyklus; ein eigenes Checkpoint-Schreibintervall
+steht dort nicht zur Verfügung. Erwartet werden rund 80 % weniger periodische
+Checkpoint-Schreibzugriffe. Der Kompromiss: Empfehlungen aktualisieren sich nur
+alle fünf Minuten, und kurze Lastspitzen können eher unbemerkt bleiben.
+Checkpoint-Historie und Empfehlungskomponenten bleiben erhalten.
+
+Der Parameter wurde mit dem tatsächlich von Flux verwendeten Goldilocks-Chart
+11.2.1 lokal gerendert. Die Wirkung muss über API-Schreibzähler und etcd-Latenzen
+verglichen werden; eine geringere Schreibrate garantiert noch keine geringere
+Latenz bei weiterhin hoher Temperatur oder CPU-Auslastung.
+
 ## Ressourcenbedarf der Logsammlung
 
 Alloy läuft derzeit als DaemonSet, während seine Kubernetes-Discovery jeweils alle

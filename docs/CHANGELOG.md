@@ -4,6 +4,11 @@
 
 ## 2026-11-15
 
+- Goldilocks/VPA-Recommender im reinen Empfehlungsmodus auf fünf Minuten gestellt,
+  um periodische Checkpoint-/Status-Schreiblast zu reduzieren. Metrikabtastung und
+  Empfehlungen erfolgen ebenfalls seltener; Versionsflags und Rendering des
+  tatsächlichen Charts geprüft. Baseline und Kompromiss in [Monitoring](monitoring.md).
+
 - Shutdown-Tasks repariert: Task-Schleifen statt ungültigem String-`range`, explizites
   Talos-Clientprofil und Warten pro Node statt fixer 30-Sekunden-Pause. Reihenfolge
   Worker 1–3 vor Control Plane 4 und Fehlerabbruch mit isoliertem Stub getestet;
