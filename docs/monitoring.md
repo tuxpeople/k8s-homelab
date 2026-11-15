@@ -133,13 +133,18 @@ Latenz bei weiterhin hoher Temperatur oder CPU-Auslastung.
 
 ## Ressourcenbedarf der Logsammlung
 
-Alloy läuft derzeit als DaemonSet, während seine Kubernetes-Discovery jeweils alle
-Pods und Events betrachtet. Die Konfiguration enthält weder einen Filter auf den
-lokalen Node noch Clustering. Dadurch wird dieselbe Logsammlung mehrfach ausgeführt.
-Da der Collector über die Kubernetes-API liest, wäre ein einzelnes Deployment eine
-passende Vereinfachung; alternativ müssten Discovery und Event-Sammlung gezielt
-aufgeteilt werden. Talos-Hostlogs sollten über einen eigenen, getesteten Eingang
-auf der VM angebunden werden.
+Alloy wurde am 2026-11-15 von einem DaemonSet mit drei Instanzen auf ein
+Deployment mit einer Replik umgestellt. Alle drei Instanzen lasen zuvor dieselben
+clusterweiten Podlogs und Events über die Kubernetes-API, ohne Node-Filter oder
+Clustering. Die Zusammenlegung entfernt zwei redundante Sammlungen und deren
+API-Verbindungen. Die Quelle und die Loki-Labels bleiben erhalten.
+
+Für den API-basierten Collector genügt ein Deployment; siehe
+[Grafana-Dokumentation](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.kubernetes/).
+Eine einzelne Replik bedeutet, dass bei deren Ausfall bis zum Neustart keine
+aktive Sammlung stattfindet. Podlogs bleiben zunächst bei den Kubelets vorhanden;
+eine vollständige Nachlieferung über Rotation oder längere Ausfälle hinweg ist
+nicht garantiert. Talos-Hostlogs benötigen weiterhin einen eigenen Eingang auf der VM.
 
 ## Betrieb
 

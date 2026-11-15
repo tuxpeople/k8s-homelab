@@ -26,9 +26,19 @@ spec:
       retries: 3
   values:
     controller:
-      type: daemonset
+      # API-based sources already collect the entire cluster; avoid one
+      # identical set of log streams and event watches per worker.
+      type: deployment
+      replicas: 1
 
     alloy:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 768Mi
       configMap:
         create: true
         content: |

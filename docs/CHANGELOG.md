@@ -4,6 +4,10 @@
 
 ## 2026-11-15
 
+- Redundante Alloy-Logsammlung von drei clusterweit lesenden DaemonSet-Instanzen
+  auf ein Deployment mit einer Replik zusammengelegt; Ressourcenbudget gesetzt.
+  Die API-basierten Podlog-/Event-Quellen bleiben erhalten. Siehe [Monitoring](monitoring.md).
+
 - Goldilocks/VPA-Recommender im reinen Empfehlungsmodus auf fünf Minuten gestellt,
   um periodische Checkpoint-/Status-Schreiblast zu reduzieren. Metrikabtastung und
   Empfehlungen erfolgen ebenfalls seltener; Versionsflags und Rendering des
