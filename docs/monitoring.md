@@ -1,6 +1,6 @@
 # Monitoring & Observability
 
-Stand: 2026-11-14, nach SSD-Migration und Wechsel der Control Plane auf Node 4.
+Stand: 2026-11-15, nach SSD-Migration und Ergänzung der Talos-Basisalarme.
 
 ## Aktiver Aufbau
 
@@ -22,7 +22,40 @@ werden durch Remote Write nicht automatisch auf den VM-Prometheus übertragen.
 Die dort tatsächlich ausgewerteten Regeln stehen im
 [VM-Regeltemplate](https://github.com/tuxpeople/homelab-automation/blob/main/ansible/proxmox/roles/monitoring_mqtt/templates/prometheus-alert-rules.yml.j2).
 
-## Geprüfter Istzustand
+## Umsetzung am 2026-11-15
+
+- [ScrapeConfig talos-etcd](../kubernetes/apps/observability/kube-prometheus-stack/app/talos-etcd.yaml)
+  entdeckt Nodes mit `node-role.kubernetes.io/control-plane` und liest ihre interne
+  IP auf Port 2381 aus. Der aktuelle Target ist Node 4; eine spätere Rollenänderung
+  benötigt keine statische IP-Anpassung. `job="talos-etcd"`, `host` und das externe
+  Cluster-Label identifizieren die Metriken auf der VM.
+- Der node-exporter-ServiceMonitor erhält ebenfalls das Kubernetes-Node-Label `host`,
+  damit bestehende Temperatur-/Unterspannungsalarme einen Hostnamen anzeigen können.
+- Die VM lädt zusätzlich die Gruppe `talos-turingpi` mit **16 Regeln**: fehlender
+  Cluster-Datenstrom, unvollständiges Node-/Exporter-/Dateisysteminventar,
+  NodeNotReady, Exporter-Ausfall, `/var`-Platz/Inodes/Readonly und etcd-Ausfall,
+  fehlender Leader, WAL-/Backend-Latenzen sowie fehlgeschlagene Proposals.
+- Warnung unter 15 % freiem `/var`-Platz beziehungsweise 10 % freien Inodes;
+  kritisch unter 5 % beziehungsweise 3 %. Latenzwarnungen prüfen das 99. Perzentil
+  über fünf Minuten: WAL-fsync über 10 ms, Backend-Commit über 25 ms, jeweils
+  zehn Minuten anhaltend. Diese Werte sind in der Ansible-Rolle konfigurierbar.
+- Deployment über das eigene Playbook `monitoring-prometheus-rules.yml` in
+  `homelab-automation`: promtool validiert vor dem Ersetzen der Datei, eine Sicherung
+  bleibt erhalten, nur Prometheus wird bei Änderungen neu gestartet. Der anschliessende
+  Check war unverändert. Acht promtool-Verhaltenstests und ansible-lint bestanden.
+
+Live bestätigt: etcd-Target auf Node 4 erreichbar, `etcd_server_has_leader = 1`
+und WAL-/Backend-Metriken kommen auf der VM an. Alle vier Nodes liefern `host`-Labels.
+HelmRelease und Flux-Kustomization sind Ready. Alle 30 VM-Prometheus-Regeln
+(14 bestehende und 16 neue) werden ohne Auswertungsfehler geladen.
+Bei der Erstprüfung waren die Latenzwarnungen vorgemerkt: ungefähr 26 ms WAL-fsync
+und 51 ms Backend-Commit am 99. Perzentil während der Reconciliation. Die Regeln
+benötigen zehn Minuten anhaltende Überschreitung; dies ist kein Leader-Ausfall.
+
+Neue Hardware-Collector, Talos-Hostlog-Eingänge oder Backup-Jobs gehören nicht zu
+dieser Umsetzung.
+
+## Bestandsaufnahme vom 2026-11-14
 
 Die folgenden Befunde stammen aus der laufenden Agent-Target-API und dem VM-Prometheus,
 nicht nur aus den Manifesten. Neue Collector- oder Alarmkonfigurationen wurden bei
@@ -46,15 +79,15 @@ Bei der Prüfung lagen die CM4 bei ungefähr 82–86 °C. Die vorhandene Regel
 `host` in ihrer Beschreibung; den Remote-Write-Metriken der Talos-Nodes fehlt dieses
 Label bislang. Ein einheitliches Hostnamen-Label würde die Meldungen verständlicher machen.
 
-## Empfohlene Ergänzungen
+## Ausbau und verbleibende Ergänzungen
 
-1. **Vorhandene Daten nutzen und alarmieren.** Auf der VM Regeln für `/var`-Platz,
+1. **Vorhandene Daten nutzen und alarmieren (Basis umgesetzt am 2026-11-15).** Auf der VM Regeln für `/var`-Platz,
    Inodes, unerwartet schreibgeschützte Laufzeit-Dateisysteme, NodeNotReady,
    fehlende Cluster-Metriken beziehungsweise Remote-Write-Ausfall ergänzen.
    Bei Talos muss ein Readonly-Alarm gezielt `/var` prüfen; das unveränderliche
    Betriebssystem-Root ist absichtlich schreibgeschützt. Bestehende Temperatur-
    und Unterspannungsalarme beibehalten und Hostnamen-Labels vereinheitlichen.
-2. **etcd anbinden.** Den bereits verfügbaren Metrics-Port über die Control-Plane-Rolle
+2. **etcd anbinden (umgesetzt am 2026-11-15).** Den bereits verfügbaren Metrics-Port über die Control-Plane-Rolle
    entdecken, statt die alte oder neue Node-IP dauerhaft in Alarmregeln einzubauen.
    Leader-Status, WAL-fsync-/Backend-Latenz und fehlgeschlagene Proposals überwachen.
    Die beabsichtigte einzelne Control Plane berücksichtigen; eine Mindestzahl von

@@ -2,6 +2,13 @@
 
 > Jede inhaltliche Änderung in diesem Verzeichnis benötigt einen Eintrag mit Datum, kurzem Kontext und Referenz auf den Commit/PR.
 
+## 2026-11-15
+
+- Talos-etcd per Control-Plane-Rolle auf Port 2381 angebunden und Hostnamen-Labels
+  für node-exporter ergänzt. Auf der Monitoring-VM 16 Talos-Regeln für fehlende
+  Metriken, Nodes, `/var` und etcd ausgerollt; promtool-Verhaltenstests,
+  ansible-lint und idempotenter Ansible-Check bestanden. Siehe [Monitoring](monitoring.md).
+
 ## 2026-11-14
 
 - Monitoring-Dokumentation auf den tatsächlichen Aufbau korrigiert: aktiver

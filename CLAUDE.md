@@ -22,7 +22,7 @@ This is an active Kubernetes homelab cluster built on Talos Linux with GitOps us
 - **DNS**: Split-horizon DNS with dual external-dns (Cloudflare for public, UniFi webhook for internal LAN)
 - **Security**: SOPS for secret encryption using Age keys, external-secrets with 1Password and Doppler integration
 - **Kyverno**: CEL policies use `policies.kyverno.io/v1`; the policy Kustomization depends on the separately managed CRDs. Follow `docs/kyverno-cel-migration.md` for the one-time legacy policy handover before upgrading to 1.20. Kyverno CLI 1.20.0 is managed by mise; `.config/mise/aqua-kyverno.yaml` preserves signature verification with the new release workflow. Run `python tests/kyverno/test_policies.py` for behavioural regression tests.
-- **Monitoring**: Kube-prometheus-stack with Grafana, custom exporters (Tautulli, SNMP)
+- **Monitoring**: kube-prometheus-stack in agent mode remote-writes to the monitoring VM; Prometheus/Grafana/Alertmanager/Loki are managed in `homelab-automation`. Talos etcd is discovered by control-plane role. See `docs/monitoring.md`.
 
 ### Directory Structure
 ```

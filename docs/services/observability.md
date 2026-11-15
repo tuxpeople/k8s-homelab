@@ -29,8 +29,8 @@ auf der VM aus dem Ansible-Template `prometheus-alert-rules.yml.j2` geladen;
 Alertmanager ist dort aktiv.
 
 Die [Monitoring-Übersicht](../monitoring.md) hält die Live-Prüfung nach der
-SSD-/Control-Plane-Migration und die noch fehlende etcd-, Storage- und
-Hardware-Alarmabdeckung fest. Die vorhandene Temperaturüberwachung erfasst bereits
+SSD-/Control-Plane-Migration, die am 2026-11-15 ergänzte etcd-/Storage-Alarmierung
+und die noch fehlenden Hardware-Gesundheitsmetriken fest. Die vorhandene Temperaturüberwachung erfasst bereits
 alle vier CM4. Talos-Hostdienst- und Kernel-Logs benötigen zusätzlich eine eigene
 Anbindung; die bestehende Kubernetes-Logsammlung deckt diese nicht ab.
 
