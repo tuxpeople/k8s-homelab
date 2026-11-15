@@ -1,47 +1,38 @@
 # Observability Services
 
-## Komponentenübersicht (alle Namespace `observability`)
+## Aktiver Aufbau
 
-Hinweis: Der Observability-Stack ist aktuell weitgehend archiviert; aktiv bleibt nur Gatus. Reaktivierung erfolgt aus `archive/apps/observability`.
+Im Cluster laufen Prometheus-Agent, Prometheus Operator, node-exporter,
+kube-state-metrics, Alloy, Gatus und die aktiven Exportarr-Exporter.
+Prometheus-Server, Grafana, Alertmanager und Loki laufen auf der VM `monitoring-mqtt`.
+Deren Deployment wird durch die
+[Ansible-Rolle monitoring_mqtt](https://github.com/tuxpeople/homelab-automation/tree/main/ansible/proxmox/roles/monitoring_mqtt)
+im Repo `homelab-automation` verwaltet.
 
-| Service                           | Pfad                                                  | Zweck / Besonderheiten                                                                                          |
-| --------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| kube-prometheus-stack (archiviert) | `archive/apps/observability/kube-prometheus-stack` | Basis-Stack (Prometheus, Alertmanager, Grafana, node-exporter, kube-state-metrics). Retention 15 d (anpassen?). |
-| Grafana (archiviert)              | `archive/apps/observability/grafana`                  | UI + alerting rules. Dashboards als configmaps/sidecar. Secret `grafana-admin` (SOPS).                          |
-| Alertmanager Discord Relay (archiviert) | `archive/apps/observability/alertmanager-discord` | Sends alert payloads → Discord webhook (secret `alertmanager-config`).                                          |
-| Gatus (aktiv)                     | `kubernetes/apps/observability/gatus`                 | Synthetic HTTP/S/ICMP checks + status page. Automatische Endpoint-Generierung via Kyverno Policies.             |
-| Blackbox Exporter (archiviert)    | `archive/apps/observability/blackbox-exporter`        | Generic probes (used by Prometheus + Gatus).                                                                    |
-| Pushgateway (archiviert)          | `archive/apps/observability/pushgateway`              | For ad-hoc metrics (jobs).                                                                                      |
-| Speedtest Exporter (archiviert)   | `archive/apps/observability/speedtest-exporter`       | Schedules Speedtest CLI.                                                                                        |
-| SNMP Exporter (archiviert)        | `archive/apps/observability/snmp-exporter`            | Scrapes Synology/Networking gear.                                                                               |
-| Media Exporter Suite (archiviert) | `archive/apps/observability/*-exporter`               | radarr/sonarr/sabnzbd/tautulli/plex/prowlarr metrics consumed by dashboards.                                    |
+| Komponente | Quelle | Aufgabe |
+| --- | --- | --- |
+| Prometheus-Agent und Basis-Exporter | `kubernetes/apps/observability/kube-prometheus-stack` | Metriken einsammeln und an die VM übertragen |
+| Prometheus / Grafana / Alertmanager / Loki | externe VM, Rolle `monitoring_mqtt` | Speicherung, Regeln, Benachrichtigungen, Dashboards und Logs |
+| Alloy | `kubernetes/apps/observability/alloy` | Kubernetes-Podlogs und Events an Loki übertragen |
+| Gatus | `kubernetes/apps/observability/gatus` | Synthetische Ingress-Checks und Statusseite |
+| Exportarr | `kubernetes/apps/observability/exportarr` | Sonarr-, Radarr-, Prowlarr- und SABnzbd-Metriken |
 
-## Datenquellen & Dashboards
+Die Konfigurationen unter `archive/apps/observability` beschreiben frühere
+Cluster-Deployments und sind nicht der aktuelle Laufzeitstand.
 
--   Haupt-Datasource: Prometheus (from kube-prom-stack) – aktuell nur relevant, wenn der Stack reaktiviert wird.
--   Grafana Dashboards (IDs, JSON) liegen aktuell nicht versioniert → TODO: export nach `grafana/dashboards/`.
--   Kern-Dashboards:
-    -   `Kubernetes / Control Plane`
-    -   `Storage / Synology / CSI`
-    -   `Media Stack`
-    -   `Automation & GitOps`
-    -   `Backups`
--   Login: Grafana admin creds via Secret `grafana-admin` (SOPS) – 2FA empfohlen (falls reaktiviert).
+## Metriken und Alarme
 
-## Alerting & Eskalation
+Der Agent schreibt nach `http://monitoring-mqtt.lab.tdeutsch.ch:9090/api/v1/write`;
+seine externen Labels identifizieren den Cluster als `turingpi`.
+Er wertet selbst keine Alarmregeln aus. Die tatsächlichen Prometheus-Regeln werden
+auf der VM aus dem Ansible-Template `prometheus-alert-rules.yml.j2` geladen;
+Alertmanager ist dort aktiv.
 
--   Alertmanager config (SOPS) sendet:
-    -   `critical` → Discord #k8s-alerts + push notification.
-    -   `warning` → Discord message.
-    -   Silences pflegen via Grafana or `alertmanager` UI.
--   Wichtige Rules:
-    -   Flux Kustomization degrade
-    -   NodeReady / KubeComponentDown
-    -   Backup job failures (Litestream cleanup / app-specific restore checks)
-    -   Gatus endpoint down
-    -   Disk pressure / PVC usage > 80 %
-    -   External services (Cloudflared, Speedtest)
--   SLO/Ticket-Flow: definieren in `docs/monitoring.md` (TODO #4).
+Die [Monitoring-Übersicht](../monitoring.md) hält die Live-Prüfung nach der
+SSD-/Control-Plane-Migration und die noch fehlende etcd-, Storage- und
+Hardware-Alarmabdeckung fest. Die vorhandene Temperaturüberwachung erfasst bereits
+alle vier CM4. Talos-Hostdienst- und Kernel-Logs benötigen zusätzlich eine eigene
+Anbindung; die bestehende Kubernetes-Logsammlung deckt diese nicht ab.
 
 ## Gatus Endpoint Management
 
@@ -96,28 +87,11 @@ kubectl -n observability port-forward svc/gatus 8080:80
 
 ## Betrieb & Wartung
 
-1. **Upgrades** (bei Reaktivierung):
-    - `flux reconcile kustomization kube-prometheus-stack --with-source -n observability`.
-    - Vorher `flux diff hr kube-prometheus-stack`.
-2. **Dashboards**: Neue Panels exportieren via Grafana UI → `git add` (noch offen).
-3. **Exporter hinzufügen**:
-    - HelmRelease / Deployment im Namespace `observability`.
-    - Service + `ServiceMonitor`.
-    - Dashboard & alerts anlegen.
-4. **Secrets**: Grafana/Alertmanager/Discord Webhook in SOPS-Dateien pflegen (`*.sops.yaml`), `sops` rewrap vor Commit.
-
-## Monitoring der Monitoring-Stack
-
-Hinweis: Gilt bei reaktiviertem Observability-Stack (Prometheus/Grafana/Alertmanager).
-
--   Prometheus targets → `/-/healthy`, `/-/ready`.
--   Grafana health check via Gatus.
--   Alertmanager route status `http://alertmanager.observability.svc:9093/#/status`.
--   Ensure `pushgateway` cleaned up (job TTL). Cron to delete stale metrics? (TODO).
-
-## TODOs / Verbesserungen
-
--   Versionierte Grafana Dashboards + automated sync (e.g., `grafana-dashboard-loader`).
--   Logging/Tracing Stack (Loki / Tempo / OpenSearch) evaluieren (Backlog DOC-006).
--   Define Service Level Objectives + error budget policies (Backlog DOC-001).
--   Add alert coverage for `speedtest-exporter` job failures + SNMP target loss.
+- Cluster-Konfigurationen über Flux und die aktiven HelmReleases pflegen.
+- VM-seitige Scrapes, Regeln, Benachrichtigungen und Dashboard-Provisionierung
+  in `homelab-automation` ändern; dafür die dortigen Betriebs- und Ansible-Regeln beachten.
+- Nach Änderungen die aktiven Targets im Agenten und den Eingang auf dem
+  VM-Prometheus prüfen. Geladene Alarmregeln separat auf der VM kontrollieren.
+- Für neue Exporter ServiceMonitor, sinnvolle Alarmbedingungen und die Grafana-
+  Darstellung gemeinsam berücksichtigen; PrometheusRule-Objekte werden durch
+  Remote Write nicht auf den VM-Prometheus übertragen.

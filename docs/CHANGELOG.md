@@ -4,6 +4,12 @@
 
 ## 2026-11-14
 
+- Monitoring-Dokumentation auf den tatsächlichen Aufbau korrigiert: aktiver
+  Prometheus-Agent im Cluster, Prometheus/Grafana/Alertmanager/Loki auf der VM
+  aus `homelab-automation`. Live-Prüfung bestätigt 64 gesunde Targets und korrekte
+  Control-Plane-Erfassung auf Node 4. Fehlende etcd-/Hardware-Metriken und
+  Storage-/Kubernetes-Alarme sowie Ausbauvorschlag in [Monitoring](monitoring.md).
+
 - Gesamtmigration abgeschlossen: drei SSD-Worker, Node 4 als einzige dedizierte
   Control Plane mit API-VIP. Node 3 regulär aus etcd entfernt und auf SATA-EPHEMERAL
   umgestellt. iSCSI-/DNS-Tests, Wiederherstellung aller pausierten Replikazahlen und

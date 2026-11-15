@@ -1,0 +1,26 @@
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: talos-etcd
+  namespace: observability
+  labels:
+    release: kube-prometheus-stack
+spec:
+  scheme: HTTP
+  scrapeInterval: 60s
+  scrapeTimeout: 10s
+  kubernetesSDConfigs:
+    - role: Node
+      selectors:
+        - role: Node
+          label: node-role.kubernetes.io/control-plane
+  relabelings:
+    - sourceLabels: [__meta_kubernetes_node_address_InternalIP]
+      regex: (.+)
+      replacement: '$1:2381'
+      targetLabel: __address__
+    - sourceLabels: [__meta_kubernetes_node_name]
+      targetLabel: host
+    - targetLabel: job
+      replacement: talos-etcd
