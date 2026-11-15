@@ -4,6 +4,11 @@
 
 ## 2026-11-15
 
+- Shutdown-Tasks repariert: Task-Schleifen statt ungültigem String-`range`, explizites
+  Talos-Clientprofil und Warten pro Node statt fixer 30-Sekunden-Pause. Reihenfolge
+  Worker 1–3 vor Control Plane 4 und Fehlerabbruch mit isoliertem Stub getestet;
+  kein Shutdown ausgeführt. Siehe [Cluster Foundation](services/cluster-foundation.md).
+
 - Talos-etcd per Control-Plane-Rolle auf Port 2381 angebunden und Hostnamen-Labels
   für node-exporter ergänzt. Auf der Monitoring-VM 16 Talos-Regeln für fehlende
   Metriken, Nodes, `/var` und etcd ausgerollt; promtool-Verhaltenstests,

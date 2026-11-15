@@ -60,6 +60,29 @@ Durchführung und iSCSI-/DNS-Tests stehen im [Migrationsprotokoll](../talos-stor
     - Komplettausfall: `task bootstrap:talos` → `task bootstrap:apps` (siehe `docs/dr.md`).
     - Talos API erreichbar unter `https://<node-ip>:50000`.
 
+## Geplantes Abschalten des TuringPi
+
+- Vorschau ohne Abschalten: `task --dry --yes talos:shutdown-cluster`.
+- Ausführen: `task talos:shutdown-cluster`. Der Task wartet sequenziell auf die
+  Worker 1, 2 und 3; erst danach wird die Control Plane auf Node 4 heruntergefahren.
+  Rollen und IPs stammen aus `talos/talconfig.yaml`, das Clientprofil wird explizit
+  aus `talos/clusterconfig/talosconfig` geladen.
+- `talos:shutdown-workers` und `talos:shutdown-control-plane` bleiben separat
+  verfügbar. Standard-Timeout pro Node: 30 Minuten, optional
+  `SHUTDOWN_TIMEOUT=10m`. Bei einem Fehler bricht der Ablauf ab; es erfolgt kein
+  erzwungenes Abschalten und die Control Plane bleibt bei einem Worker-Fehler an.
+- Vor dem Trennen der Stromversorgung prüfen, dass alle Module tatsächlich
+  gestoppt sind. NAS/iSCSI-Ziel und Netzwerk während des Herunterfahrens erreichbar
+  lassen. Manuelles Herunterskalieren der Apps ist für diesen Task nicht vorgesehen.
+- Beim Start zuerst Node 4 und dessen API/etcd bereit werden lassen, danach die
+  Worker starten. Kein erneutes Bootstrap durchführen. Nach vollständigem Start
+  Node-/Flux-Zustand und OpenBao-Seal-Status prüfen; bei Bedarf OpenBao unsealen.
+
+Die Prüfung am 2026-11-15 verwendete nur Task-Dry-Runs und einen isolierten
+Talosctl-Stub (`python3 tests/talos/test_shutdown_tasks.py`). Es wurde kein Node
+heruntergefahren. Das bisherige `range` über Zeichenketten war nicht ausführbar;
+die feste 30-Sekunden-Pause wurde durch Talosctl-Warten auf jeden Node ersetzt.
+
 ## Monitoring & Observability
 
 -   **Metriken**: Node Exporter + Talos health metrics → Grafana Dashboard „Cluster / Control Plane“.
