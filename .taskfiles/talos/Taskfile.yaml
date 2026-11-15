@@ -15,7 +15,6 @@ tasks:
     preconditions:
       - test -f {{.TALOS_DIR}}/talconfig.yaml
       - test -f {{.ROOT_DIR}}/.sops.yaml
-      - test -f {{.SOPS_AGE_KEY_FILE}}
       - test -f {{.TALOS_DIR}}/docker-registry.sops.yaml
       - which talhelper
       - which sops yq

@@ -1,0 +1,32 @@
+---
+# Kyverno >=1.20 signs releases with release-publish.yaml. The bundled Aqua
+# recipe still expects release.yaml. Keep checksum and Sigstore verification.
+packages:
+  - type: github_release
+    repo_owner: kyverno
+    repo_name: kyverno
+    version_constraint: semver(">= 1.20.0")
+    asset: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+      cosign:
+        bundle:
+          type: github_release
+          asset: checksums.txt.sigstore.json
+        opts:
+          - --certificate-identity
+          - https://github.com/kyverno/kyverno/.github/workflows/release-publish.yaml@refs/tags/{{.Version}}
+          - --certificate-oidc-issuer
+          - https://token.actions.githubusercontent.com
+          - --certificate-github-workflow-repository
+          - kyverno/kyverno
+          - --certificate-github-workflow-ref
+          - refs/tags/{{.Version}}
+    overrides:
+      - goos: windows
+        format: zip
