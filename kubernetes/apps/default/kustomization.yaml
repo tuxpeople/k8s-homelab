@@ -11,4 +11,3 @@ resources:
   - ./echo-server/ks.yaml
   - ./game/ks.yaml
   - ./homepage/ks.yaml
-  - ./podinfo/ks.yaml
