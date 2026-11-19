@@ -5,7 +5,7 @@ kind: ConfigMap
 metadata:
   name: dorflade-mhd-litestream-config
 data:
-  # Replicate from storage to MinIO
+  # Replicate to SeaweedFS (MINIO_* names are historical)
   litestream-replicate.yml: |
     dbs:
       - path: /app/data/products.db
@@ -20,7 +20,7 @@ data:
             snapshot-interval: 1h
             validation-interval: 24h
             sync-interval: 10s
-  # Restore from MinIO to storage
+  # Restore from SeaweedFS to storage
   litestream-restore.yml: |
     dbs:
       - path: /app/data/products.db

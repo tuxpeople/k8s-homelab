@@ -6,8 +6,7 @@
 -   **SOPS/Age + 1Password External Secrets** – Secret-Material liegt verschluesselt im Repo bzw. in 1Password.
 -   **democratic-csi/Synology** (`kubernetes/apps/storage/democratic-csi`) – PVCs werden ueber die StorageClass `iscsi-delete` auf Synology iSCSI bereitgestellt.
 -   **Snapshot-Controller** (`kubernetes/apps/storage/snapshot-controller`) – CSI Snapshot Controller ist aktiv; democratic-csi stellt `synology-iscsi-snapshots` bereit.
--   **Litestream** – Kontinuierliche SQLite-Datenbank-Replikation zu S3/MinIO bzw. Garage-kompatiblem Storage.
--   **Litestream Cleanup** (`kubernetes/apps/storage/litestream-cleanup`) – Bucket-Retention fuer alte Litestream-Generationen.
+-   **Litestream** – Kontinuierliche SQLite-Datenbank-Replikation in den Bucket `litestream` auf SeaweedFS (`core1`).
 
 Archiviert und nicht Teil des aktiven Restore-Pfads: K8up, Velero, Longhorn und der alte Synology CSI Driver.
 
@@ -19,7 +18,6 @@ Archiviert und nicht Teil des aktiven Restore-Pfads: K8up, Velero, Longhorn und 
 | Secrets | SOPS/Age + 1Password | bei Aenderung | Repo verschluesselt + 1Password |
 | PVC/App-Daten | Synology/democratic-csi | NAS-/App-spezifisch | Synology iSCSI/NFS |
 | SQLite-Datenbanken | Litestream | kontinuierlich, `sync-interval: 10s` | S3-kompatibler Bucket `litestream` |
-| Litestream Retention | litestream-cleanup CronJob | sonntags 02:00 | Bucket Cleanup |
 
 ## Betriebsablauf
 
@@ -41,7 +39,7 @@ Archiviert und nicht Teil des aktiven Restore-Pfads: K8up, Velero, Longhorn und 
 ## Monitoring & Alerts
 
 -   Gatus und der Observability-Stack pruefen App-Verfuegbarkeit, PVC-Fuellstand und Job-Fehler.
--   Fehlgeschlagene Litestream-Cleanup-Jobs und wachsende Buckets muessen alarmiert werden.
+-   Litestream-Fehler (Sidecar-Logs) und wachsende Buckets muessen alarmiert werden.
 
 ## Testplan & Protokoll
 
@@ -85,99 +83,34 @@ Regelmässige Restore-Tests sind Pflicht, damit RPO/RTO-Ziele eingehalten werden
     - Test-Volumes, Litestream-Testdaten und temporaere Kustomizations bereinigen.
     - Ergebnistabelle oben aktualisieren, Befunde als GitHub Issue erfassen.
 
-## Litestream: SQLite-Replikation & MinIO Lifecycle
+## Litestream: SQLite-Replikation
 
 ### Übersicht
 
-Litestream wird für kontinuierliche SQLite-Datenbank-Backups verwendet bei:
-- **Paperless** (`kubernetes/apps/productivity/paperless`)
-- **Linkding** (`kubernetes/apps/productivity/linkding`)
-- **Spoolman** (`kubernetes/apps/tools/spoolman`)
-- **Python-IPAM** (`kubernetes/apps/network/internal/python-ipam`)
+Litestream läuft als Sidecar bei Paperless, Linkding, FreshRSS, Spoolman,
+Python-IPAM, simple-cmdb und dorflade-mhd. Ziel ist der Bucket `litestream`
+auf SeaweedFS (`http://core1.server.tdeutsch.ch:8333`, verwaltet in
+`homelab-automation`, Rolle `seaweedfs`), ein Pfad pro App. Endpoint und
+Zugangsdaten (S3-User `litestream`, darf nur diesen Bucket) kommen für alle
+Apps aus dem OpenBao-Secret `k8s/turingpi/_shared/seaweedfs-litestream`
+(`LITESTREAM-HOST`, `LITESTREAM-REGION`, `LITESTREAM-ACCESS-KEY`,
+`LITESTREAM-ACCESS-SECRET`) über den ClusterSecretStore `openbao-shared`.
 
-### Architektur
+Bis 2026-11 lagen die Replicas auf Garage (`thiazi`) bzw. MinIO (`core2`).
+Beim Wechsel wurde nichts kopiert: Die Datenbanken liegen auf den PVCs, und
+Litestream legt im neuen Bucket beim Start einen frischen Snapshot an.
 
-- **Sidecar-Container**: Litestream läuft neben der Hauptanwendung
-- **Sync-Intervall**: 10 Sekunden
-- **Snapshot-Intervall**: 1 Stunde (verhindert lokale WAL-Akkumulation)
-- **Retention**: 168h (7 Tage) in Litestream-Konfiguration
-- **Ziel**: MinIO Bucket `litestream` (S3-kompatibel)
+### Retention
 
-### Bekanntes Problem: Lokales WAL-Verzeichnis wächst stark
+Litestream 0.5 räumt den Bucket selbst auf: Es löscht Snapshots, die älter als
+die Snapshot-Retention sind, und danach alle älteren Dateien der unteren
+Stufen. Ein externer Cleanup-Job ist nicht nötig (der frühere
+`litestream-cleanup`-CronJob wurde entfernt).
 
-**Problem**: Ohne `snapshot-interval` sammelt Litestream WAL-Dateien (Write-Ahead Log) im lokalen Pod-Verzeichnis `.db.sqlite3-litestream/` an, was zu sehr grossem Speicherverbrauch führt.
-
-**Symptome**:
-- `/data/.db.sqlite3-litestream/` verbraucht 10+ GB lokalen Speicher
-- Lokaler Speicher füllt sich schneller als erwartet
-- PVC wird unerwartet voll
-
-**Lösung**: `snapshot-interval: 1h` in Litestream-Konfiguration hinzufügen
-
-```yaml
-replicas:
-  - name: minio
-    retention: 168h
-    snapshot-interval: 1h  # Regelmässige Snapshots → bereinigt lokale WALs
-    validation-interval: 24h
-    sync-interval: 10s
-```
-
-**Auswirkung**:
-- Litestream erstellt stündlich Snapshots
-- Alte lokale WAL-Dateien werden nach Snapshot-Erstellung aufgeräumt
-- Lokaler Speicherverbrauch bleibt unter 1GB
-
-**Angewandt auf**:
-- Paperless: `kubernetes/apps/productivity/paperless/app/litestream-configmap.yaml`
-- Linkding: `kubernetes/apps/productivity/linkding/app/values.yaml`
-- Spoolman: `kubernetes/apps/tools/spoolman/app/values.yaml`
-- Python-IPAM: `kubernetes/apps/network/internal/python-ipam/litestream-configmap.yaml`
-
-### Bekanntes Problem: Generation Cleanup (S3-Speicher)
-
-**Problem**: Litestream's `retention: 168h` löscht nur Snapshots **innerhalb** einer Generation, aber **nicht** alte Generationen selbst. Dies führt zu einem kontinuierlich wachsenden MinIO Bucket.
-
-**Symptome**:
-- MinIO Bucket `litestream` füllt sich kontinuierlich
-- Alte Generationen (0000, 0001, 0002, ...) bleiben dauerhaft bestehen
-- Manuelle Bucket-Bereinigung wird notwendig
-
-**Lösung**: Kubernetes CronJob für automatisches Cleanup (Garage unterstützt kein ILM)
-
-Da Garage keine vollständige Lifecycle-Management-Unterstützung hat, verwenden wir einen **Kubernetes CronJob** zum automatischen Cleanup:
-
-```yaml
-# kubernetes/apps/storage/litestream-cleanup/
-# Läuft sonntags um 2 Uhr, bereinigt das gesamte litestream Bucket
-```
-
-**Konfiguration**:
-- **Schedule**: Sonntags 2 Uhr (`0 2 * * 0`)
-- **Retention**: 7 Tage (konfigurierbar via `RETENTION_DAYS`)
-- **Scope**: Gesamtes `garage/litestream/` Bucket (alle Apps)
-
-**Manuelle Bereinigung** (falls notwendig):
-```bash
-mc rm --recursive --force --older-than 7d garage/litestream/
-```
-
-### Verifikation & Wartung
-
-```bash
-# Bucket-Grösse überwachen
-mc du garage/litestream
-
-# CronJob Logs anzeigen
-kubectl -n storage logs -l app.kubernetes.io/name=litestream-cleanup --tail=100
-
-# Letzte CronJob-Ausführungen prüfen
-kubectl -n storage get cronjobs litestream-cleanup-main
-kubectl -n storage get jobs -l app.kubernetes.io/name=litestream-cleanup
-
-# CronJob manuell triggern (für Tests)
-kubectl -n storage create job --from=cronjob/litestream-cleanup-main litestream-cleanup-manual-$(date +%s)
-```
+Die Felder `retention` und `snapshot-interval` pro Replica stammen aus
+Litestream 0.3 und wirken in 0.5 nicht. Es gelten die globalen Defaults
+(`snapshot.interval` und `snapshot.retention` je 24h), also etwa ein Tag
+Point-in-Time-Historie.
 
 ### Restore-Prozedur
 
@@ -201,20 +134,12 @@ litestream restore -config /etc/litestream.yml /data/db.sqlite3
 ### Monitoring
 
 - **Alert bei Litestream-Fehlern**: Container-Logs überwachen (`stderr`)
-- **Garage Bucket-Grösse**: Alert bei >80% Kapazität (`mc du garage/litestream`)
-- **CronJob-Failures**: Alert bei fehlgeschlagenen Cleanup-Jobs (`kubectl get jobs`)
-- **Generationen-Count**: Periodisch prüfen, dass alte Generationen gelöscht werden
-
-**Prometheus-Metriken** (TODO):
-- `litestream_replication_lag_seconds`
-- `litestream_backup_size_bytes`
+- **Bucket-Grösse**: Platz auf `core1` (Alert `NodeFilesystemSpaceLow` in `homelab-automation`)
 
 ### Referenzen
 
-- Litestream-Konfiguration: `kubernetes/apps/productivity/*/app/litestream-configmap.yaml`
-- Cleanup CronJob: `kubernetes/apps/storage/litestream-cleanup/`
+- Litestream-Konfiguration: `litestream-configmap.yaml` bzw. `values.yaml` der jeweiligen App
 - Application-spezifische Docs: `docs/services/applications-productivity.md`
-- Garage S3 Compatibility: https://garagehq.deuxfleurs.fr/documentation/reference-manual/s3-compatibility/
 
 ## Offene ToDos
 

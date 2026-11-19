@@ -151,7 +151,7 @@ Split-horizon DNS setup:
 - **Local Storage**: Direct node storage for specific use cases
 
 ### Backup Strategy
-- **Litestream**: SQLite replication to MinIO S3 for stateful apps (Linkding, dorflade-mhd, simple-cmdb)
+- **Litestream**: SQLite replication to SeaweedFS S3 on `core1` for stateful apps (Paperless, Linkding, FreshRSS, Spoolman, Python-IPAM, simple-cmdb, dorflade-mhd)
 - **Volume Snapshots**: CSI VolumeSnapshot via snapshot-controller for point-in-time recovery
 - **NAS-native**: Synology snapshots/rsync for NFS-mounted data (Paperless, Calibre)
 

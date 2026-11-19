@@ -321,7 +321,7 @@ Applications in `kubernetes/apps/` are organized by function:
 - `observability/` - Monitoring and logging (kube-prometheus-stack, Gatus)
 - `productivity/` - Productivity tools (dorflade-mhd, FreshRSS, Hajimari, Linkding, Obsidian, Paperless; Code Server, N8N and others archived in `archive/apps/productivity/`)
 - `security/` - Security-related applications (external-secrets with 1Password + Doppler SecretStores, Kyverno; Trivy archived in `archive/apps/security/`)
-- `storage/` - Storage systems (democratic-csi, litestream-cleanup, snapshot-controller; Longhorn, K8up, Velero archived in `archive/apps/storage/`)
+- `storage/` - Storage systems (democratic-csi, snapshot-controller; Longhorn, K8up, Velero archived in `archive/apps/storage/`)
 - `system-upgrade/tuppr/` - Talos and Kubernetes upgrade automation
 - `tools/` - Utility applications (pod-cleaner, simple-cmdb, Spoolman; headscale, SMTP relay archived in `archive/apps/tools/`)
 - `vpa/` - Vertical Pod Autoscaler (Goldilocks)
@@ -508,7 +508,6 @@ Active storage components:
 
 - **democratic-csi**: Primary CSI driver for Synology NAS (iSCSI/NFS), requires `hostPID: true` for nsenter/iscsiadm
 - **snapshot-controller**: CSI VolumeSnapshot CRDs and controller
-- **litestream-cleanup**: Housekeeping for Litestream S3 replicas (used by Linkding, dorflade-mhd, simple-cmdb)
 
 Archived (see `archive/apps/storage/`): Longhorn, Synology CSI driver, K8up, Velero
 

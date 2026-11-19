@@ -8,5 +8,4 @@ components:
   - ../../components/openbao
 resources:
   - ./democratic-csi/ks.yaml
-  - ./litestream-cleanup/ks.yaml
   - ./snapshot-controller/ks.yaml

@@ -6,7 +6,6 @@
 | ------------------- | --------- | --------------------------------------------- | ------ | ----------------------- |
 | Democratic CSI      | storage   | `kubernetes/apps/storage/democratic-csi`      | Aktiv  | iSCSI Driver fuer Synology. Stellt die StorageClass `iscsi-delete` bereit und nutzt `hostPID: true` fuer `iscsiadm` im Host-Namespace. |
 | Snapshot Controller | storage   | `kubernetes/apps/storage/snapshot-controller` | Aktiv  | CSI Snapshot CRDs + Controller. SnapshotClass `synology-iscsi-snapshots` wird durch democratic-csi bereitgestellt. |
-| Litestream Cleanup  | storage   | `kubernetes/apps/storage/litestream-cleanup`  | Aktiv  | CronJob fuer Retention/Cleanup des `litestream` Buckets. |
 | Longhorn            | storage   | `archive/apps/storage/longhorn`               | Archiviert | Ehemaliger Distributed Block Storage. Nicht als aktive StorageClass dokumentieren. |
 | Synology CSI        | storage   | `archive/apps/storage/synology-csi`           | Archiviert | Ersetzt durch democratic-csi. |
 | K8up                | storage   | `archive/apps/storage/k8up`                   | Archiviert | Ehemaliger Restic Backup Operator. |
@@ -24,7 +23,7 @@ Aktive StorageClass:
 | Kubernetes-Manifeste | Git + Flux | Git ist Source of Truth. Restore erfolgt durch Bootstrap und Flux-Reconcile. |
 | Secrets | SOPS/Age + 1Password External Secrets | Age Key und 1Password Tokens offsite sichern. |
 | PVC/App-Daten | Synology/democratic-csi | Restore ueber NAS/Synology-Backups oder neu provisionierte PVCs je App. |
-| SQLite-Datenbanken | Litestream | Sidecars replizieren nach S3-kompatiblem `litestream` Bucket. Cleanup via `litestream-cleanup`. |
+| SQLite-Datenbanken | Litestream | Sidecars replizieren in den Bucket `litestream` auf SeaweedFS (`core1`); Retention macht Litestream selbst (`docs/backups.md`). |
 
 ## Betrieb
 
@@ -38,8 +37,7 @@ Aktive StorageClass:
     - `kubectl get events -A --field-selector involvedObject.kind=PersistentVolumeClaim`
 3. **Litestream**
     - Sidecar-Logs der betroffenen App pruefen.
-    - `kubectl -n storage get cronjobs litestream-cleanup-main`
-    - Bucket-Groesse und alte Generationen kontrollieren.
+    - Bucket-Groesse auf SeaweedFS kontrollieren.
 4. **Restore Tests**
     - App-spezifische Restore-Tests in temporischem Namespace/PVC durchfuehren.
     - SQLite-Apps per Litestream Restore testen.
