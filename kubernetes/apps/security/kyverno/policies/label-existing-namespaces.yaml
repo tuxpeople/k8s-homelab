@@ -13,6 +13,9 @@ metadata:
       Automatically labels all Namespaces with goldilocks.fairwinds.com/enabled: "true" to enable Goldilocks VPA recommendations for all
       namespaces. Triggers on Namespace admission reviews and applies to existing namespaces in the background.
 spec:
+  # Kyverno down must not block the cluster: this policy is a convenience
+  # or audit only (seccomp-default stays Fail)
+  failurePolicy: Ignore
   matchConstraints:
     resourceRules:
       - apiGroups:

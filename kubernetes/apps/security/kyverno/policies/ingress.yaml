@@ -14,6 +14,9 @@ metadata:
       ingressClassName: external → external-dns target for Cloudflare - ingressClassName: internal → external-dns target for UniFi
       (192.168.13.64) Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
+  # Kyverno down must not block the cluster: this policy is a convenience
+  # or audit only (seccomp-default stays Fail)
+  failurePolicy: Ignore
   matchConstraints:
     resourceRules:
       - apiGroups:

@@ -13,6 +13,9 @@ metadata:
       Images using the "latest" tag or no tag at all cannot be tracked or updated by Renovate. This policy audits Pods using unversioned images.
       Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
+  # Kyverno down must not block the cluster: this policy is a convenience
+  # or audit only (seccomp-default stays Fail)
+  failurePolicy: Ignore
   matchConstraints:
     resourceRules:
       - apiGroups:
