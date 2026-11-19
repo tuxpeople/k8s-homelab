@@ -9,7 +9,7 @@ metadata:
     policies.kyverno.io/category: Other
 spec:
   # Kyverno down must not block the cluster: this policy is a convenience
-  # or audit only (seccomp-default stays Fail)
+  # or audit only (ingress and seccomp-default stay Fail)
   failurePolicy: Ignore
   matchConstraints:
     resourceRules:

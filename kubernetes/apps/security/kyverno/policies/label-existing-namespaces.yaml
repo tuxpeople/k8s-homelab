@@ -14,7 +14,7 @@ metadata:
       namespaces. Triggers on Namespace admission reviews and applies to existing namespaces in the background.
 spec:
   # Kyverno down must not block the cluster: this policy is a convenience
-  # or audit only (seccomp-default stays Fail)
+  # or audit only (ingress and seccomp-default stay Fail)
   failurePolicy: Ignore
   matchConstraints:
     resourceRules:

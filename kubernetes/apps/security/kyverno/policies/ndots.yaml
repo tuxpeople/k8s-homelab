@@ -14,7 +14,7 @@ metadata:
       some cases. This policy mutates all Pods to add the ndots option with a value of 1.
 spec:
   # Kyverno down must not block the cluster: this policy is a convenience
-  # or audit only (seccomp-default stays Fail)
+  # or audit only (ingress and seccomp-default stay Fail)
   failurePolicy: Ignore
   # Keep Pod JSONPatch paths out of generated controller rules.
   autogen:

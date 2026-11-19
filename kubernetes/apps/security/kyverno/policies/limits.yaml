@@ -14,7 +14,7 @@ metadata:
       intentionally set limits. Skipped for namespaces labeled kyverno.io/exclude: "true".
 spec:
   # Kyverno down must not block the cluster: this policy is a convenience
-  # or audit only (seccomp-default stays Fail)
+  # or audit only (ingress and seccomp-default stay Fail)
   failurePolicy: Ignore
   # JSONPatch expressions and paths are not rewritten by controller autogen.
   # Apply to Pods at admission, including Pods created by controllers.
