@@ -64,6 +64,9 @@ spec:
           fsType: ext4
         mountOptions:
           - discard
+        secrets:
+          node-stage-secret:
+            node-db.node.session.timeo.replacement_timeout: "600"
 
     volumeSnapshotClasses:
       - name: synology-iscsi-snapshots
