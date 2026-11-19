@@ -6,9 +6,9 @@
 - **Pfad**: `kubernetes/apps/productivity/dorflade-mhd`.
 - **Zweck**: Eigene Anwendung zur Produkt-/Inventarverwaltung (MHD = Mindesthaltbarkeitsdatum). Image: `ghcr.io/tuxpeople/dorflade-mhd`.
 - **Ingress**: `dorflade-mhd.${SECRET_DOMAIN}` (external ingress) mit Authelia ForwardAuth (`network-auth@kubernetescrd`). PWA-Icons/Manifest werden über die globale Static-Asset-Bypass-Regel in Authelia ohne Auth ausgeliefert.
-- **Storage**: SQLite-Datenbank unter `/app/data/products.db`; Litestream repliziert zur MinIO S3 Instanz.
-- **Backups**: Litestream-Replikation zu MinIO (S3). Bucket-Konfiguration via `litestream-configmap.yaml`.
-- **Secrets**: `dorflade-mhd-secrets` (Litestream MinIO Credentials via ExternalSecret/Doppler).
+- **Storage**: SQLite-Datenbank unter `/app/data/products.db`; Litestream repliziert nach SeaweedFS (`docs/backups.md`).
+- **Backups**: Litestream-Replikation nach SeaweedFS (S3). Bucket-Konfiguration via `litestream-configmap.yaml`.
+- **Secrets**: `dorflade-mhd-secrets` (Litestream-Zugangsdaten via ExternalSecret aus OpenBao).
 - **Runbooks**: Reconcile `flux reconcile kustomization dorflade-mhd --with-source -n productivity`. Für DB-Restore Litestream restore-Workflow nutzen.
 
 ## FreshRSS (**aktiv**)
@@ -32,8 +32,8 @@
 - **Pfad**: `kubernetes/apps/productivity/linkding`.
 - **Zweck**: Bookmark Manager mit Authelia Auth.
 - **Secrets**: `linkding-secrets` (Litestream S3 creds + Age keys). ConfigMap `linkding-config` steuert Litestream replicate/restore.
-- **Storage**: `emptyDir` für DB; Litestream repliziert zu MinIO S3 (Retention 168 h, verschlüsselt via Age).
-- **Backups**: Litestream-Replikation zu MinIO. Bucket-Standort in `docs/backups.md` dokumentieren.
+- **Storage**: `emptyDir` für DB; Litestream repliziert nach SeaweedFS (verschlüsselt via Age).
+- **Backups**: Litestream-Replikation nach SeaweedFS (`docs/backups.md`).
 - **Monitoring**: Alerts für Litestream-Fehler (stderr). HTTP check auf `linkding.${SECRET_DOMAIN}`.
 - **Runbooks**:
   - Disaster Recovery: `litestream restore ...` per initContainer-Beispiel in `litestream-configmap.yaml`.
@@ -81,7 +81,7 @@ Die folgenden Anwendungen wurden aus dem Cluster entfernt. Manifeste liegen in `
 ## Allgemeine Backups & Monitoring
 
 - **Backups**:
-  - Litestream-Apps (dorflade-mhd, Linkding): Sicherstellen dass MinIO-Retention und Offsite-Kopien konfiguriert sind.
+  - Litestream-Apps (dorflade-mhd, Linkding): Sicherstellen dass Offsite-Kopien des SeaweedFS-Buckets existieren.
   - NFS-Mount-Punkte (Paperless, Calibre, Obsidian) in `docs/backups.md` dokumentieren.
 - **Monitoring**:
   - Gatus targets für alle externen URLs (FreshRSS, Obsidian, Paperless share, Linkding, Hajimari).
