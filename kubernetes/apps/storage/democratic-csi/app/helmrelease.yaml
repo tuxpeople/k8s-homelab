@@ -22,6 +22,9 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+      # Not the Kyverno default "uninstall": uninstalling the CSI driver
+      # deletes its StorageClass and node plugins (2026-11-19)
+      strategy: rollback
   values:
     csiDriver:
       name: org.democratic-csi.synology-iscsi
@@ -70,3 +73,8 @@ spec:
 
     volumeSnapshotClasses:
       - name: synology-iscsi-snapshots
+        # Without an entry the chart renders "parameters: null", which
+        # server-side apply rejects. "{}" is the driver default: the
+        # lunSnapshotTemplate of the driver config applies unchanged.
+        parameters:
+          lunSnapshotTemplate: "{}"
