@@ -95,10 +95,7 @@ persistence:
   config:
     enabled: true
     type: persistentVolumeClaim
-    # Keep the PVC (and its data) if the release is ever uninstalled
-    retain: true
-    storageClass: ${MAIN_SC}
-    accessMode: ReadWriteOnce
-    size: 5Gi
+    # Not chart-managed (pvc.yaml), so a helm uninstall cannot delete it
+    existingClaim: tautulli-config-v2
   add-ons:
     type: emptyDir
