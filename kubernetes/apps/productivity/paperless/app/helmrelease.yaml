@@ -14,7 +14,9 @@ spec:
         name: bjw-s
         namespace: flux-system
   interval: 10m
-  timeout: 30m
+  # Longer than the startup probe and progressDeadlineSeconds (30 min each),
+  # so a slow but successful start does not fail the upgrade
+  timeout: 45m
   postRenderers:
     - kustomize:
         patches:

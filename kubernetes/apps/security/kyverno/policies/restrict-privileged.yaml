@@ -14,6 +14,9 @@ metadata:
       legitimately requires hostPID for iSCSI nsenter. Mode is Audit to avoid blocking legitimate workloads. Skipped for namespaces labeled
       kyverno.io/exclude: "true".
 spec:
+  # Kyverno down must not block the cluster: this policy is a convenience
+  # or audit only (seccomp-default stays Fail)
+  failurePolicy: Ignore
   matchConstraints:
     resourceRules:
       - apiGroups:

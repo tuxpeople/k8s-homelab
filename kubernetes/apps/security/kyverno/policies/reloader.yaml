@@ -8,6 +8,9 @@ metadata:
     policies.kyverno.io/title: Add Reloader Annotations
     policies.kyverno.io/category: Other
 spec:
+  # Kyverno down must not block the cluster: this policy is a convenience
+  # or audit only (seccomp-default stays Fail)
+  failurePolicy: Ignore
   matchConstraints:
     resourceRules:
       - apiGroups:

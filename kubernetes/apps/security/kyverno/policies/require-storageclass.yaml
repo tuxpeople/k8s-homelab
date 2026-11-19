@@ -15,6 +15,9 @@ metadata:
       This policy requires that PVCs and StatefulSets containing volumeClaimTemplates define the storageClassName field with some value. Skipped
       for namespaces labeled kyverno.io/exclude: "true".
 spec:
+  # Kyverno down must not block the cluster: this policy is a convenience
+  # or audit only (seccomp-default stays Fail)
+  failurePolicy: Ignore
   matchConstraints:
     resourceRules:
       - apiGroups:
