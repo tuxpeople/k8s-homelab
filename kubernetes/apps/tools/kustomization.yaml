@@ -8,4 +8,5 @@ components:
 resources:
   - ./pod-cleaner/ks.yaml
   - ./simple-cmdb/ks.yaml
+  - ./security-watch/ks.yaml
   - ./spoolman/ks.yaml

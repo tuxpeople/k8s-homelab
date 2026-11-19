@@ -1,0 +1,185 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+# Security Watch (tuxpeople/security-watch, private): web UI and the collector
+# share one SQLite database in an emptyDir, replicated to MinIO by Litestream
+# (same pattern as dorflade-mhd). The collector runs as a second container
+# instead of a CronJob, because an emptyDir cannot be shared between pods.
+
+controllers:
+  security-watch:
+    strategy: Recreate
+    containers:
+      app:
+        image: &image
+          repository: ghcr.io/tuxpeople/security-watch
+          tag: 1.1.0
+        env:
+          TZ: ${TIMEZONE}
+          DATA_DIR: /data
+        probes:
+          liveness: &probes
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: &port 8080
+              initialDelaySeconds: 5
+              periodSeconds: 30
+              timeoutSeconds: 5
+              failureThreshold: 3
+          readiness: *probes
+        securityContext: &securityContext
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            memory: 256Mi
+      collector:
+        image: *image
+        command: ["/opt/venv/bin/flask"]
+        args: ["--app", "security_watch", "collect", "--interval", "3600"]
+        env:
+          TZ: ${TIMEZONE}
+          DATA_DIR: /data
+          INVENTORY_PATH: /config/inventory.yaml
+          GITHUB_TOKEN_FILE: /secrets/github-token
+        securityContext: *securityContext
+        resources:
+          requests:
+            cpu: 10m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+      litestream:
+        image: &litestream
+          repository: docker.io/litestream/litestream
+          tag: 0.5.18
+        args: ["replicate"]
+        env: &litestreamEnv
+          LITESTREAM_ACCESS_KEY_ID:
+            valueFrom:
+              secretKeyRef:
+                name: security-watch-secrets
+                key: litestream-minio-id
+          LITESTREAM_SECRET_ACCESS_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: security-watch-secrets
+                key: litestream-minio-key
+          MINIO_ENDPOINT:
+            valueFrom:
+              secretKeyRef:
+                name: security-watch-secrets
+                key: litestream-minio-endpoint
+          MINIO_BUCKET:
+            valueFrom:
+              secretKeyRef:
+                name: security-watch-secrets
+                key: litestream-minio-bucket
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            cpu: 500m
+            memory: 128Mi
+    initContainers:
+      01-litestream-restore:
+        image: *litestream
+        args:
+          - restore
+          - -if-db-not-exists
+          - -if-replica-exists
+          - /data/security-watch.sqlite
+        env: *litestreamEnv
+
+defaultPodOptions:
+  imagePullSecrets:
+    - name: ghcr-pullsecret
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    fsGroup: 65532
+    fsGroupChangePolicy: OnRootMismatch
+
+service:
+  app:
+    controller: security-watch
+    ports:
+      http:
+        port: *port
+
+# The app has no login of its own: internal only, and behind Authelia
+ingress:
+  app:
+    enabled: true
+    className: internal
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
+      hajimari.io/icon: mdi:shield-search
+      gatus.io/status-code: "401"
+    hosts:
+      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: *port
+    tls:
+      - hosts:
+          - *host
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
+
+persistence:
+  tmp:
+    enabled: true
+    type: emptyDir
+  database:
+    enabled: true
+    type: emptyDir
+    advancedMounts:
+      security-watch:
+        app:
+          - path: /data
+        collector:
+          - path: /data
+        litestream:
+          - path: /data
+        01-litestream-restore:
+          - path: /data
+  inventory:
+    type: configMap
+    name: security-watch-inventory
+    advancedMounts:
+      security-watch:
+        collector:
+          - path: /config
+            readOnly: true
+  secrets:
+    type: secret
+    name: security-watch-secrets
+    advancedMounts:
+      security-watch:
+        collector:
+          - path: /secrets
+            readOnly: true
+  litestream-config:
+    type: configMap
+    name: security-watch-litestream-config
+    advancedMounts:
+      security-watch:
+        litestream:
+          - subPath: litestream-replicate.yml
+            path: /etc/litestream.yml
+            readOnly: true
+        01-litestream-restore:
+          - subPath: litestream-restore.yml
+            path: /etc/litestream.yml
+            readOnly: true
