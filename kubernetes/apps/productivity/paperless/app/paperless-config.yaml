@@ -14,10 +14,9 @@ data:
   PAPERLESS_TIKA_ENABLED: "1"
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
   PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
-  PAPERLESS_FILENAME_FORMAT: "{{created_year}}/{{correspondent}}/{{created_year}}-{{created_month}}-{{created_day}}
-    {{title}}"
+  PAPERLESS_FILENAME_FORMAT: "{{created_year}}/{{correspondent}}/{{created_year}}-{{created_month}}-{{created_day}} {{title}}"
   # Configure Remote User auth
-  PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
+  # PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
   # Configure folders
   PAPERLESS_CONSUMPTION_DIR: /nfs/consume
   PAPERLESS_DATA_DIR: /data
