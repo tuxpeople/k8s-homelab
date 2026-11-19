@@ -22,9 +22,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-      # Not the Kyverno default "uninstall": uninstalling the CSI driver
-      # deletes its StorageClass and node plugins (2026-11-19)
-      strategy: rollback
   values:
     csiDriver:
       name: org.democratic-csi.synology-iscsi
