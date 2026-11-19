@@ -1,0 +1,41 @@
+# Manual inventory (version 1). Later the collector script delivers this.
+# Mount it and set INVENTORY_PATH. Keys under `components` are slugs from
+# config.yaml; values are the running APP versions (not chart versions).
+# Versions as of 2026-11-19 from k8s-homelab and homelab-automation.
+
+environments:
+  - slug: homelab
+    name: Homelab
+    description: k8s-homelab (Talos) und homelab-automation (Proxmox, Docker-Hosts)
+    components:
+      talos: v1.14.6
+      kubernetes: v1.37.2
+      cilium: 1.20.5
+      cert-manager: v1.21.3
+      openbao: 2.7.2
+      harbor: 2.16.0
+      traefik: v3.7.17
+      cloudflared: 2026.11.1
+      open-webui: v0.13.4
+      freshrss: 1.30.4
+      paperless-ngx: 3.4.2
+      linkding: 1.47.0
+      gatus: v5.38.0
+      portainer: 2.45.3
+      seaweedfs: "4.53"
+      semaphore: 2.19.17
+      atlantis: v0.49.0
+      grafana: 13.3.1
+      loki: 3.7.10
+      prometheus: v3.16.0
+      # Not yet: Kyverno, Flux, External Secrets (only chart versions known),
+      # Authelia/LLDAP (floating tags), Pi-hole (Docker tag is not the core version)
+
+  - slug: rancher-lab
+    name: Rancher-Lab
+    description: RKE2/Rancher-Cluster aus homelab-automation
+    components:
+      rancher: 2.15.3
+      rke2: v1.36.6+rke2r1
+      kubernetes: v1.36.6
+      cert-manager: v1.19.3

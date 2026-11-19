@@ -48,6 +48,7 @@
 | Headscale   | `kubernetes/apps/tools/headscale`   | TailScale-compatible control plane. Secrets via ExternalSecret (`headscale-secret`). Ingress? Check values.    |
 | Pod Cleaner | `kubernetes/apps/tools/pod-cleaner` | CronJob cleaning old pods (evicts Completed/Failed). Ensure it ignores critical namespaces.                    |
 | SMTP Relay  | `kubernetes/apps/tools/smtp-relay`  | Provides SMTP endpoint for alerts/emails. Secrets (SMTP creds) per ExternalSecret. Document upstream provider. |
+| Security Watch | `kubernetes/apps/tools/security-watch` | Sicherheitsmeldungen zu den eigenen Komponenten (privates Image `ghcr.io/tuxpeople/security-watch`). Web-UI und Sammellauf (`collect --interval 3600`) im selben Pod, SQLite im emptyDir mit Litestream nach MinIO (`security-watch`). Inventar als ConfigMap (`app/inventory.yaml`), GitHub-Token aus 1Password-Item `security-watch` (Feld `GITHUB_TOKEN`). Ingress internal hinter Authelia. |
 | Spoolman    | `kubernetes/apps/tools/spoolman`    | Filament inventory for 3D printing. Ingress internal. Ensure PVC/backups exist.                                |
 
 ## Test Namespace
