@@ -88,7 +88,7 @@ Regelmässige Restore-Tests sind Pflicht, damit RPO/RTO-Ziele eingehalten werden
 ### Übersicht
 
 Litestream läuft als Sidecar bei Paperless, Linkding, FreshRSS, Spoolman,
-Python-IPAM, simple-cmdb und dorflade-mhd. Ziel ist der Bucket `litestream`
+Python-IPAM, simple-cmdb, dorflade-mhd und security-watch. Ziel ist der Bucket `litestream`
 auf SeaweedFS (`http://core1.server.tdeutsch.ch:8333`, verwaltet in
 `homelab-automation`, Rolle `seaweedfs`), ein Pfad pro App. Endpoint und
 Zugangsdaten (S3-User `litestream`, darf nur diesen Bucket) kommen für alle

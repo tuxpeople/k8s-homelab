@@ -5,7 +5,7 @@ kind: ConfigMap
 metadata:
   name: security-watch-litestream-config
 data:
-  # Replicate from storage to MinIO
+  # Replicate from storage to SeaweedFS
   litestream-replicate.yml: |
     dbs:
       - path: /data/security-watch.sqlite
@@ -20,7 +20,7 @@ data:
             snapshot-interval: 1h
             validation-interval: 24h
             sync-interval: 10s
-  # Restore from MinIO to storage
+  # Restore from SeaweedFS to storage
   litestream-restore.yml: |
     dbs:
       - path: /data/security-watch.sqlite

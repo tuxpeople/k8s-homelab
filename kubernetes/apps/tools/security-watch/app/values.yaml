@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
 
 # Security Watch (tuxpeople/security-watch, private): web UI and the collector
-# share one SQLite database in an emptyDir, replicated to MinIO by Litestream
+# share one SQLite database in an emptyDir, replicated to SeaweedFS by Litestream
 # (same pattern as dorflade-mhd). The collector runs as a second container
 # instead of a CronJob, because an emptyDir cannot be shared between pods.
 # The inventory CronJob is different: it only reads the cluster and pushes a
