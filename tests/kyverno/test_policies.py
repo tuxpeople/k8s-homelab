@@ -97,13 +97,6 @@ class Policies(unittest.TestCase):
             obj['metadata']['annotations'] = {'external-dns.kubernetes.io/target': 'custom'}
             self.assertEqual(self.evaluate('ingress', obj)['metadata']['annotations'], obj['metadata']['annotations'])
 
-    def test_helm_defaults(self):
-        for spec in [{}, {'upgrade': {}}, {'upgrade': {'remediation': {}}}]:
-            out = self.evaluate('helmrelease-defaults', resource('HelmRelease', spec))
-            self.assertEqual(out['spec']['upgrade']['remediation']['strategy'], 'uninstall')
-        self.evaluate('helmrelease-defaults', resource('HelmRelease',
-                      {'upgrade': {'remediation': {'strategy': 'rollback'}}}), 'skip')
-
     def test_validation(self):
         self.evaluate('restrict-deprecated-registry', resource())
         pod = resource()

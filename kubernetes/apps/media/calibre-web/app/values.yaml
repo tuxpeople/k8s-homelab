@@ -88,6 +88,8 @@ persistence:
   config:
     enabled: true
     type: persistentVolumeClaim
+    # Keep the PVC (and its data) if the release is ever uninstalled
+    retain: true
     accessMode: ReadWriteOnce
     storageClass: ${MAIN_SC}
     size: 5Gi
