@@ -1,35 +1,25 @@
-# Manual inventory (version 1). Later the collector script delivers this.
-# Mount it and set INVENTORY_PATH. Keys under `components` are slugs from
-# config.yaml; values are the running APP versions (not chart versions).
-# Versions as of 2026-11-19 from k8s-homelab and homelab-automation.
+# Manual inventory, only for what the collector cannot see. What runs in this
+# cluster (Talos, Kubernetes, Cilium, cert-manager, Traefik, apps) comes from
+# the inventory CronJob (sw-inventory.sh → POST /api/inventory/homelab).
+# A manual entry here wins over a collected one for the same component.
+# Keys under `components` are slugs from config.yaml; values are APP versions.
 
 environments:
   - slug: homelab
     name: Homelab
     description: k8s-homelab (Talos) und homelab-automation (Proxmox, Docker-Hosts)
     components:
-      talos: v1.14.6
-      kubernetes: v1.37.2
-      cilium: 1.20.5
-      cert-manager: v1.21.3
+      # Proxmox VMs and Docker hosts (homelab-automation), as of 2026-11-19
       openbao: 2.7.2
       harbor: 2.16.0
-      traefik: v3.7.17
-      cloudflared: 2026.11.1
-      open-webui: v0.13.4
-      freshrss: 1.30.4
-      paperless-ngx: 3.4.2
-      linkding: 1.47.0
-      gatus: v5.38.0
       portainer: 2.45.3
       seaweedfs: "4.53"
       semaphore: 2.19.17
       atlantis: v0.49.0
       grafana: 13.3.1
       loki: 3.7.10
-      prometheus: v3.16.0
-      # Not yet: Kyverno, Flux, External Secrets (only chart versions known),
-      # Authelia/LLDAP (floating tags), Pi-hole (Docker tag is not the core version)
+      prometheus: v3.16.0  # monitoring VM; wins over the agent in this cluster
+      # Not covered: Flux (no detect rule yet), Pi-hole (Docker tag is not the core version)
 
   - slug: rancher-lab
     name: Rancher-Lab

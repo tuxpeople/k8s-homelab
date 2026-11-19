@@ -4,6 +4,8 @@
 # share one SQLite database in an emptyDir, replicated to MinIO by Litestream
 # (same pattern as dorflade-mhd). The collector runs as a second container
 # instead of a CronJob, because an emptyDir cannot be shared between pods.
+# The inventory CronJob is different: it only reads the cluster and pushes a
+# report to the app's API (collector/sw-inventory.sh in security-watch).
 
 controllers:
   security-watch:
@@ -12,10 +14,11 @@ controllers:
       app:
         image: &image
           repository: ghcr.io/tuxpeople/security-watch
-          tag: 1.2.0
+          tag: 1.3.0
         env:
           TZ: ${TIMEZONE}
           DATA_DIR: /data
+          INGEST_TOKEN_FILE: /secrets/ingest-token
         probes:
           liveness: &probes
             enabled: true
@@ -98,6 +101,41 @@ controllers:
           - /data/security-watch.sqlite
         env: *litestreamEnv
 
+  # Reads what runs in the cluster (versions only, no Secrets) and pushes it to
+  # POST /api/inventory/homelab. The script comes from the app itself, so it
+  # always matches the app version.
+  inventory:
+    type: cronjob
+    cronjob:
+      schedule: "23 * * * *"
+      concurrencyPolicy: Forbid
+      successfulJobsHistory: 1
+      failedJobsHistory: 1
+    serviceAccount:
+      identifier: inventory
+    containers:
+      app:
+        image:
+          repository: docker.io/alpine/k8s
+          tag: 1.37.2
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            set -euo pipefail
+            base=http://security-watch.tools.svc.cluster.local:8080
+            curl -fsS --retry 5 --retry-all-errors -o /tmp/sw-inventory.sh "$base/collector/sw-inventory.sh"
+            bash /tmp/sw-inventory.sh --cluster k8s-homelab --push "$base/api/inventory/homelab?name=Homelab"
+        env:
+          HOME: /tmp
+          SW_INGEST_TOKEN_FILE: /secrets/ingest-token
+        securityContext: *securityContext
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
+
 defaultPodOptions:
   imagePullSecrets:
     - name: ghcr-pullsecret
@@ -107,6 +145,35 @@ defaultPodOptions:
     runAsGroup: 65532
     fsGroup: 65532
     fsGroupChangePolicy: OnRootMismatch
+
+serviceAccount:
+  extraServiceAccounts:
+    inventory:
+      create: true
+
+# Read-only, and only what sw-inventory.sh needs: no Secrets, no ConfigMaps
+rbac:
+  roles:
+    inventory:
+      type: ClusterRole
+      rules:
+        - apiGroups: [""]
+          resources: ["nodes", "pods"]
+          verbs: ["list"]
+        - apiGroups: ["apiextensions.k8s.io"]
+          resources: ["customresourcedefinitions"]
+          resourceNames: ["helmreleases.helm.toolkit.fluxcd.io"]
+          verbs: ["get"]
+        - apiGroups: ["helm.toolkit.fluxcd.io"]
+          resources: ["helmreleases"]
+          verbs: ["list"]
+  bindings:
+    inventory:
+      type: ClusterRoleBinding
+      roleRef:
+        identifier: inventory
+      subjects:
+        - identifier: inventory
 
 service:
   app:
@@ -167,7 +234,14 @@ persistence:
     name: security-watch-secrets
     advancedMounts:
       security-watch:
+        app:
+          - path: /secrets
+            readOnly: true
         collector:
+          - path: /secrets
+            readOnly: true
+      inventory:
+        app:
           - path: /secrets
             readOnly: true
   litestream-config:

@@ -10,7 +10,7 @@ configMapGenerator:
   - name: security-watch-values
     files:
       - values.yaml
-  # Manual inventory until the collector script delivers it (plan, stage 4)
+  # Manual inventory for what the inventory CronJob cannot see (VMs, Docker hosts)
   - name: security-watch-inventory
     files:
       - inventory.yaml
