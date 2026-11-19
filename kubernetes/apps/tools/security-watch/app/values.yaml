@@ -12,7 +12,7 @@ controllers:
       app:
         image: &image
           repository: ghcr.io/tuxpeople/security-watch
-          tag: 1.1.0
+          tag: 1.2.0
         env:
           TZ: ${TIMEZONE}
           DATA_DIR: /data
