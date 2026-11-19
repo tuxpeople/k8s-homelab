@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/persistentvolumeclaim_v1.json
+# Clone of the chart-created obsidian-config: provisioned through the current
+# StorageClass, so it gets the node-stage secret with the 600s iSCSI
+# replacement_timeout (PVs created before 2026-11-19 keep 120s).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: obsidian-config-v2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ${MAIN_SC}
+  resources:
+    requests:
+      storage: 20Gi
+  dataSource:
+    kind: PersistentVolumeClaim
+    name: obsidian-config

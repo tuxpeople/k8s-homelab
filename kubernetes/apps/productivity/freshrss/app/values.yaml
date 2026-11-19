@@ -125,11 +125,8 @@ persistence:
   data:
     enabled: true
     type: persistentVolumeClaim
-    # Keep the PVC (and its data) if the release is ever uninstalled
-    retain: true
-    storageClass: ${MAIN_SC}
-    accessMode: ReadWriteOnce
-    size: 5Gi
+    # Not chart-managed (pvc.yaml), so a helm uninstall cannot delete it
+    existingClaim: freshrss-data-v2
     globalMounts:
       - path: /var/www/FreshRSS/data
         subPath: data

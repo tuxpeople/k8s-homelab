@@ -88,11 +88,8 @@ persistence:
   config:
     enabled: true
     type: persistentVolumeClaim
-    # Keep the PVC (and its data) if the release is ever uninstalled
-    retain: true
-    accessMode: ReadWriteOnce
-    storageClass: ${MAIN_SC}
-    size: 5Gi
+    # Not chart-managed (pvc.yaml), so a helm uninstall cannot delete it
+    existingClaim: calibre-web-config-v2
     globalMounts:
       - path: /config
   data:

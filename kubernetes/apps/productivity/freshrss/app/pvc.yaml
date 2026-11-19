@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/v1/persistentvolumeclaim_v1.json
+# Clone of the chart-created freshrss-data: provisioned through the current
+# StorageClass, so it gets the node-stage secret with the 600s iSCSI
+# replacement_timeout (PVs created before 2026-11-19 keep 120s).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: freshrss-data-v2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ${MAIN_SC}
+  resources:
+    requests:
+      storage: 5Gi
+  dataSource:
+    kind: PersistentVolumeClaim
+    name: freshrss-data

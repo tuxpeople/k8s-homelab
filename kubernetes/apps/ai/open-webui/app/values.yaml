@@ -82,11 +82,8 @@ persistence:
   data:
     enabled: true
     type: persistentVolumeClaim
-    # Keep the PVC (and its data) if the release is ever uninstalled
-    retain: true
-    accessMode: ReadWriteOnce
-    size: 10Gi
-    storageClass: ${MAIN_SC}
+    # Not chart-managed (pvc.yaml), so a helm uninstall cannot delete it
+    existingClaim: open-webui-data-v2
     # type: nfs
     # server: 10.20.30.40
     # path: /volume2/kubernetes/openwebui
