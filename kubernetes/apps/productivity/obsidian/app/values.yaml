@@ -45,9 +45,6 @@ ingress:
 persistence:
   config:
     enabled: true
-    storageClass: ${MAIN_SC}
     type: persistentVolumeClaim
-    # Keep the PVC (and its data) if the release is ever uninstalled
-    retain: true
-    accessMode: ReadWriteOnce
-    size: 20Gi
+    # Not chart-managed (pvc.yaml), so a helm uninstall cannot delete it
+    existingClaim: obsidian-config-v2
