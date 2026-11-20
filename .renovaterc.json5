@@ -1,254 +1,388 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  assignees: ["tuxpeople"],
-  extends: [
-    "config:recommended",
-    "docker:enableMajor",
-    "helpers:pinGitHubActionDigests",
-    ":automergeBranch",
-    ":dependencyDashboard",
-    ":disableRateLimiting",
-    ":semanticCommits",
-    "schedule:nonOfficeHours",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  assignees: [
+    'tuxpeople',
   ],
-  dependencyDashboard: true,
-  dependencyDashboardTitle: "Renovate Dashboard 🤖",
-  suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
+  extends: [
+    'config:recommended',
+    'docker:enableMajor',
+    'helpers:pinGitHubActionDigests',
+    ':automergeBranch',
+    ':dependencyDashboard',
+    ':disableRateLimiting',
+    ':semanticCommits',
+    'schedule:nonOfficeHours',
+  ],
+  dependencyDashboard: {
+    enabled: true,
+    title: 'Renovate Dashboard 🤖',
+  },
+  suppressNotifications: [
+    'prEditedNotification',
+    'prIgnoreNotification',
+  ],
   vulnerabilityAlerts: {
     enabled: true,
-    addLabels: ["security", "urgent"],
-    schedule: "at any time",
+    addLabels: [
+      'security',
+      'urgent',
+    ],
+    schedule: 'at any time',
   },
-  ignorePaths: ["**/*.sops.*"],
+  ignorePaths: [
+    '**/*.sops.*',
+  ],
   flux: {
-    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"],
+    managerFilePatterns: [
+      '/(^|/)kubernetes/.+\\.ya?ml$/',
+    ],
   },
-  "helm-values": {
-    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"],
+  'helm-values': {
+    managerFilePatterns: [
+      '/(^|/)kubernetes/.+\\.ya?ml$/',
+    ],
   },
   helmfile: {
-    managerFilePatterns: ["/(^|/)helmfile\\.ya?ml$/"],
+    managerFilePatterns: [
+      '/(^|/)helmfile\\.ya?ml$/',
+    ],
   },
   kubernetes: {
-    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"],
+    managerFilePatterns: [
+      '/(^|/)kubernetes/.+\\.ya?ml$/',
+    ],
   },
   kustomize: {
-    managerFilePatterns: ["/(^|/)kustomization\\.ya?ml$/"],
+    managerFilePatterns: [
+      '/(^|/)kustomization\\.ya?ml$/',
+    ],
   },
   packageRules: [
     {
-      description: "Disable digest pinning globally",
-      matchDatasources: ["docker"],
+      description: 'Disable digest pinning globally',
+      matchDatasources: [
+        'docker',
+      ],
       pinDigests: false,
     },
     {
-      description: "Pin Python to <3.14 for mise",
-      matchManagers: ["mise"],
-      matchPackageNames: ["python"],
-      allowedVersions: "<3.14.0",
+      description: 'Pin Python to <3.14 for mise',
+      matchManagers: [
+        'mise',
+      ],
+      matchPackageNames: [
+        'python',
+      ],
+      allowedVersions: '<3.14.0',
     },
     {
-      description: "Group stable Talos and Kubernetes updates",
-      groupName: "Talos and Kubernetes",
-      matchPackageNames: ["siderolabs/talos", "ghcr.io/siderolabs/kubelet"],
+      description: 'Group stable Talos and Kubernetes updates',
+      groupName: 'Talos and Kubernetes',
+      matchPackageNames: [
+        'siderolabs/talos',
+        'ghcr.io/siderolabs/kubelet',
+      ],
       ignoreUnstable: true,
       group: {
-        commitMessageTopic: "{{{groupName}}} group",
+        commitMessageTopic: '{{{groupName}}} group',
       },
     },
     {
-      description: "Automerge patch updates",
-      matchUpdateTypes: ["patch"],
+      description: 'Automerge patch updates',
+      matchUpdateTypes: [
+        'patch',
+      ],
       automerge: true,
-      automergeType: "pr",
+      automergeType: 'pr',
       ignoreTests: false,
     },
     {
-      description: "Cert-Manager Group",
-      groupName: "Cert-Manager",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/cert-manager/"],
+      description: 'Cert-Manager Group',
+      groupName: 'Cert-Manager',
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        '/cert-manager/',
+      ],
       group: {
-        commitMessageTopic: "{{{groupName}}} group",
+        commitMessageTopic: '{{{groupName}}} group',
       },
     },
     {
-      description: "CoreDNS Group",
-      groupName: "CoreDNS",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/coredns/"],
+      description: 'CoreDNS Group',
+      groupName: 'CoreDNS',
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        '/coredns/',
+      ],
       group: {
-        commitMessageTopic: "{{{groupName}}} group",
+        commitMessageTopic: '{{{groupName}}} group',
       },
     },
     {
-      description: "Flux Operator Group",
-      groupName: "Flux Operator",
-      matchPackageNames: ["/flux-operator/", "/flux-instance/"],
-      matchDatasources: ["docker"],
+      description: 'Flux Operator Group',
+      groupName: 'Flux Operator',
+      matchPackageNames: [
+        '/flux-operator/',
+        '/flux-instance/',
+      ],
+      matchDatasources: [
+        'docker',
+      ],
       group: {
-        commitMessageTopic: "{{{groupName}}} group",
+        commitMessageTopic: '{{{groupName}}} group',
       },
     },
     {
-      description: "Spegel Group",
-      groupName: "Spegel",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/spegel/"],
+      description: 'Spegel Group',
+      groupName: 'Spegel',
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        '/spegel/',
+      ],
       group: {
-        commitMessageTopic: "{{{groupName}}} group",
+        commitMessageTopic: '{{{groupName}}} group',
       },
     },
     {
-      description: "Group app-template updates per application",
-      groupName: "app-template-{{packageFileDir}}",
-      matchPackageNames: ["bjw-s-labs/helm-charts"],
-      matchDatasources: ["helm", "github-releases"],
+      description: 'Group app-template updates per application',
+      groupName: 'app-template-{{packageFileDir}}',
+      matchPackageNames: [
+        'bjw-s-labs/helm-charts',
+      ],
+      matchDatasources: [
+        'helm',
+        'github-releases',
+      ],
       group: {
-        commitMessageTopic: "app-template in {{packageFileDir}}",
+        commitMessageTopic: 'app-template in {{packageFileDir}}',
       },
     },
     {
-      description: "Ingress NGINX charts",
-      groupName: "Ingress NGINX",
-      matchDatasources: ["helm"],
-      matchPackageNames: ["ingress-nginx"],
+      description: 'Ingress NGINX charts',
+      groupName: 'Ingress NGINX',
+      matchDatasources: [
+        'helm',
+      ],
+      matchPackageNames: [
+        'ingress-nginx',
+      ],
     },
     {
-      description: "External DNS charts",
-      groupName: "External DNS",
-      matchDatasources: ["helm"],
-      matchPackageNames: ["external-dns"],
+      description: 'External DNS charts',
+      groupName: 'External DNS',
+      matchDatasources: [
+        'helm',
+      ],
+      matchPackageNames: [
+        'external-dns',
+      ],
     },
     {
-      description: "GitLab Runner charts",
-      groupName: "GitLab Runner",
-      matchDatasources: ["helm"],
-      matchPackageNames: ["gitlab-runner"],
+      description: 'GitLab Runner charts',
+      groupName: 'GitLab Runner',
+      matchDatasources: [
+        'helm',
+      ],
+      matchPackageNames: [
+        'gitlab-runner',
+      ],
     },
     {
-      description: "Ingress/DNS edge charts",
-      groupName: "Ingress/DNS",
-      matchDatasources: ["helm"],
-      matchPackageNames: ["ingress-nginx", "external-dns"],
+      description: 'Ingress/DNS edge charts',
+      groupName: 'Ingress/DNS',
+      matchDatasources: [
+        'helm',
+      ],
+      matchPackageNames: [
+        'ingress-nginx',
+        'external-dns',
+      ],
     },
     {
-      description: "Observability core charts",
-      groupName: "Observability core",
-      matchDatasources: ["helm"],
-      matchPackageNames: ["kube-prometheus-stack", "grafana"],
+      description: 'Observability core charts',
+      groupName: 'Observability core',
+      matchDatasources: [
+        'helm',
+      ],
+      matchPackageNames: [
+        'kube-prometheus-stack',
+        'grafana',
+      ],
     },
     {
-      description: "Storage essentials charts",
-      groupName: "Storage essentials",
-      matchDatasources: ["helm"],
-      matchPackageNames: ["longhorn", "snapshot-controller"],
+      description: 'Storage essentials charts',
+      groupName: 'Storage essentials',
+      matchDatasources: [
+        'helm',
+      ],
+      matchPackageNames: [
+        'longhorn',
+        'snapshot-controller',
+      ],
     },
     {
-      description: "Auto-merge GitHub Actions",
-      matchManagers: ["github-actions"],
+      description: 'Auto-merge GitHub Actions',
+      matchManagers: [
+        'github-actions',
+      ],
       automerge: true,
-      automergeType: "branch",
-      matchUpdateTypes: ["minor", "patch", "digest"],
-      minimumReleaseAge: "3 days",
+      automergeType: 'branch',
+      matchUpdateTypes: [
+        'minor',
+        'patch',
+        'digest',
+      ],
+      minimumReleaseAge: '3 days',
       ignoreTests: false,
     },
     {
-      matchUpdateTypes: ["major"],
-      semanticCommitType: "feat",
-      commitMessagePrefix: "{{semanticCommitType}}({{semanticCommitScope}})!:",
-      commitMessageExtra: "( {{currentVersion}} → {{newVersion}} )",
+      matchUpdateTypes: [
+        'major',
+      ],
+      semanticCommitType: 'feat',
+      commitMessagePrefix: '{{semanticCommitType}}({{semanticCommitScope}})!:',
+      commitMessageExtra: '( {{currentVersion}} → {{newVersion}} )',
     },
     {
-      matchUpdateTypes: ["minor"],
-      semanticCommitType: "feat",
-      commitMessageExtra: "( {{currentVersion}} → {{newVersion}} )",
+      matchUpdateTypes: [
+        'minor',
+      ],
+      semanticCommitType: 'feat',
+      commitMessageExtra: '( {{currentVersion}} → {{newVersion}} )',
     },
     {
-      matchUpdateTypes: ["patch"],
-      semanticCommitType: "fix",
-      commitMessageExtra: "( {{currentVersion}} → {{newVersion}} )",
+      matchUpdateTypes: [
+        'patch',
+      ],
+      semanticCommitType: 'fix',
+      commitMessageExtra: '( {{currentVersion}} → {{newVersion}} )',
     },
     {
-      matchUpdateTypes: ["digest"],
-      semanticCommitType: "chore",
-      commitMessageExtra: "( {{currentDigestShort}} → {{newDigestShort}} )",
+      matchUpdateTypes: [
+        'digest',
+      ],
+      semanticCommitType: 'chore',
+      commitMessageExtra: '( {{currentDigestShort}} → {{newDigestShort}} )',
     },
     {
-      matchDatasources: ["docker"],
-      semanticCommitScope: "container",
-      commitMessageTopic: "image {{depName}}",
+      matchDatasources: [
+        'docker',
+      ],
+      semanticCommitScope: 'container',
+      commitMessageTopic: 'image {{depName}}',
     },
     {
-      matchDatasources: ["helm"],
-      semanticCommitScope: "helm",
-      commitMessageTopic: "chart {{depName}}",
+      matchDatasources: [
+        'helm',
+      ],
+      semanticCommitScope: 'helm',
+      commitMessageTopic: 'chart {{depName}}',
     },
     {
-      matchManagers: ["github-actions"],
-      semanticCommitType: "ci",
-      semanticCommitScope: "github-action",
-      commitMessageTopic: "action {{depName}}",
+      matchManagers: [
+        'github-actions',
+      ],
+      semanticCommitType: 'ci',
+      semanticCommitScope: 'github-action',
+      commitMessageTopic: 'action {{depName}}',
     },
     {
-      matchDatasources: ["github-releases"],
-      semanticCommitScope: "github-release",
-      commitMessageTopic: "release {{depName}}",
+      matchDatasources: [
+        'github-releases',
+      ],
+      semanticCommitScope: 'github-release',
+      commitMessageTopic: 'release {{depName}}',
     },
     {
-      matchUpdateTypes: ["major"],
-      labels: ["type/major"],
+      matchUpdateTypes: [
+        'major',
+      ],
+      labels: [
+        'type/major',
+      ],
     },
     {
-      matchUpdateTypes: ["minor"],
-      labels: ["type/minor"],
+      matchUpdateTypes: [
+        'minor',
+      ],
+      labels: [
+        'type/minor',
+      ],
     },
     {
-      matchUpdateTypes: ["patch"],
-      labels: ["type/patch"],
+      matchUpdateTypes: [
+        'patch',
+      ],
+      labels: [
+        'type/patch',
+      ],
     },
     {
-      matchDatasources: ["docker"],
-      addLabels: ["renovate/container"],
+      matchDatasources: [
+        'docker',
+      ],
+      addLabels: [
+        'renovate/container',
+      ],
     },
     {
-      matchDatasources: ["helm"],
-      addLabels: ["renovate/helm"],
+      matchDatasources: [
+        'helm',
+      ],
+      addLabels: [
+        'renovate/helm',
+      ],
     },
     {
-      matchManagers: ["github-actions"],
-      addLabels: ["renovate/github-action"],
+      matchManagers: [
+        'github-actions',
+      ],
+      addLabels: [
+        'renovate/github-action',
+      ],
     },
     {
-      matchDatasources: ["github-releases"],
-      addLabels: ["renovate/github-release"],
+      matchDatasources: [
+        'github-releases',
+      ],
+      addLabels: [
+        'renovate/github-release',
+      ],
     },
   ],
   customManagers: [
     {
-      description: "Process annotated dependencies",
-      customType: "regex",
+      description: 'Process annotated dependencies',
+      customType: 'regex',
       managerFilePatterns: [
-        "/(^|/).+\\.env(?:\\.j2)?$/",
-        "/(^|/).+\\.sh(?:\\.j2)?$/",
-        "/(^|/).+\\.ya?ml(?:\\.j2)?$/",
+        '/(^|/).+\\.env(?:\\.j2)?$/',
+        '/(^|/).+\\.sh(?:\\.j2)?$/',
+        '/(^|/).+\\.ya?ml(?:\\.j2)?$/',
       ],
       matchStrings: [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)",
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)",
+        'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)',
+        'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)',
       ],
-      datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+      datasourceTemplate: '{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}',
     },
     {
-      description: "Update app-template schema URLs in values files",
-      customType: "regex",
-      managerFilePatterns: ["/(^|/)kubernetes/.+/values\\.ya?ml$/"],
-      matchStrings: [
-        "# yaml-language-server: \\$schema=https://raw\\.githubusercontent\\.com/bjw-s-labs/helm-charts/app-template-(?<currentValue>[^/]+)/charts/other/app-template/values\\.schema\\.json"
+      description: 'Update app-template schema URLs in values files',
+      customType: 'regex',
+      managerFilePatterns: [
+        '/(^|/)kubernetes/.+/values\\.ya?ml$/',
       ],
-      datasourceTemplate: "github-releases",
-      depNameTemplate: "bjw-s-labs/helm-charts",
-      extractVersionTemplate: "app-template-{{version}}",
+      matchStrings: [
+        '# yaml-language-server: \\$schema=https://raw\\.githubusercontent\\.com/bjw-s-labs/helm-charts/app-template-(?<currentValue>[^/]+)/charts/other/app-template/values\\.schema\\.json',
+      ],
+      datasourceTemplate: 'github-releases',
+      depNameTemplate: 'bjw-s-labs/helm-charts',
+      extractVersionTemplate: 'app-template-{{version}}',
     },
   ],
 }
