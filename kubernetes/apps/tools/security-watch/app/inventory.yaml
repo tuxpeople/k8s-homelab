@@ -18,7 +18,7 @@ environments:
       atlantis: v0.49.0
       grafana: 13.3.1
       loki: 3.7.10
-      prometheus: v3.16.0  # monitoring VM; wins over the agent in this cluster
+      prometheus: v3.16.0 # monitoring VM; wins over the agent in this cluster
       # Not covered: Flux (no detect rule yet), Pi-hole (Docker tag is not the core version)
 
   - slug: rancher-lab
@@ -29,3 +29,13 @@ environments:
       rke2: v1.36.6+rke2r1
       kubernetes: v1.36.6
       cert-manager: v1.19.3
+
+  - slug: rancher-test
+    name: Rancher Testinventar
+    description: RKE2/Rancher-Cluster
+    components:
+      rancher: 2.13.5
+      rke2: v1.34.5+rke2r1
+      kubernetes: v1.34.5
+      cert-manager: v1.20.2
+      longhorn: 108.3.0-up1.11.1
