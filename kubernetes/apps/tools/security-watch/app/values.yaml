@@ -204,6 +204,27 @@ ingress:
           - *host
         secretName: ${SECRET_DOMAIN/./-}-production-tls
 
+  # Inventory API for scripts in the LAN or tailnet (homelab-automation's
+  # `task software-versions:push`): internal only, no Authelia; the app
+  # checks the ingest token. Only /api/inventory/ is routed.
+  api:
+    enabled: true
+    className: internal
+    annotations:
+      gatus.io/enabled: "false"
+    hosts:
+      - host: &apihost "{{ .Release.Name }}-api.${SECRET_DOMAIN}"
+        paths:
+          - path: /api/inventory/
+            pathType: Prefix
+            service:
+              identifier: app
+              port: *port
+    tls:
+      - hosts:
+          - *apihost
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
+
 persistence:
   tmp:
     enabled: true

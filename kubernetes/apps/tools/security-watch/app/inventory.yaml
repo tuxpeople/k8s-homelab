@@ -1,25 +1,15 @@
-# Manual inventory, only for what the collector cannot see. What runs in this
-# cluster (Talos, Kubernetes, Cilium, cert-manager, Traefik, apps) comes from
-# the inventory CronJob (sw-inventory.sh → POST /api/inventory/homelab).
-# A manual entry here wins over a collected one for the same component.
+# Manual inventory. A manual entry wins over collected versions for the same
+# component, so only list what no source reports. Homelab versions come from
+# two sources (POST /api/inventory/homelab):
+#   - cluster: the inventory CronJob (sw-inventory.sh) for this cluster
+#   - homelab-automation: `task software-versions:push` for VMs and Docker hosts
 # Keys under `components` are slugs from config.yaml; values are APP versions.
 
 environments:
   - slug: homelab
     name: Homelab
     description: k8s-homelab (Talos) und homelab-automation (Proxmox, Docker-Hosts)
-    components:
-      # Proxmox VMs and Docker hosts (homelab-automation), as of 2026-11-19
-      openbao: 2.7.2
-      harbor: 2.16.0
-      portainer: 2.45.3
-      seaweedfs: "4.53"
-      semaphore: 2.19.17
-      atlantis: v0.49.0
-      grafana: 13.3.1
-      loki: 3.7.10
-      prometheus: v3.16.0 # monitoring VM; wins over the agent in this cluster
-      # Not covered: Flux (no detect rule yet), Pi-hole (Docker tag is not the core version)
+    components: {}
 
   - slug: rancher-lab
     name: Rancher-Lab
