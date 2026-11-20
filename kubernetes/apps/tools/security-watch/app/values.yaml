@@ -186,7 +186,7 @@ service:
 ingress:
   app:
     enabled: true
-    className: internal
+    className: external
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
       hajimari.io/icon: mdi:shield-search
