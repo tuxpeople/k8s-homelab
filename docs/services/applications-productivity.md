@@ -50,7 +50,7 @@
 - **Pfad**: `kubernetes/apps/productivity/paperless`.
 - **Zweck**: Dokumenten-DMS inklusive Redis, Tika, Gotenberg Side-Controller + Public Share Ingress.
 - **Ingress**:
-  - Internal: `paperless.${SECRET_DOMAIN}` (internal, Authelia).
+  - Internal: `paperless.${SECRET_DOMAIN}` (internal, Login via OIDC direkt in Paperless; Gatus erwartet `200` auf der Login-Seite).
   - Public share: `documents.${SECRET_CH_DOMAIN}` (external, share-only).
 - **Storage**:
   - NFS Mount `/volume2/scanner` (Synology).

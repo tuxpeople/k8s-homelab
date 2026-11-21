@@ -6,6 +6,7 @@ web:
       hajimari.io/appName: Flux Operator
       hajimari.io/icon: simple-icons:flux
       traefik.ingress.kubernetes.io/router.middlewares: network-auth@kubernetescrd
+      gatus.io/status-code: "401"
     hosts:
       - host: flux-operator.${SECRET_DOMAIN}
         paths:
