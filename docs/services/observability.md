@@ -44,6 +44,26 @@ Gatus-Endpoints werden automatisch für alle Ingresses via Kyverno Policies gene
 -   **Policies**: `kubernetes/apps/security/kyverno/policies/gatus-internal.yaml` und `gatus-external.yaml`
 -   **Ergebnis**: ConfigMap `<ingress-name>-gatus-ep` mit Label `gatus.io/enabled: "true"`
 
+### Veraltete Endpoint-ConfigMaps
+
+Die ConfigMap trägt im Label `generate.kyverno.io/trigger-uid` die UID des Ingress, aus dem sie erzeugt wurde.
+Wird ein Ingress gelöscht und neu erstellt, ohne dass Kyverno das Löschen mitbekommt, bleibt die alte
+ConfigMap stehen und wird nicht mehr aktualisiert. Gatus prüft dann weiter, aber Änderungen an den
+`gatus.io/*`-Annotations kommen nicht mehr an.
+
+Der CronJob `kubernetes/apps/tools/gatus-ep-reconciler` prüft das stündlich:
+
+-   **Stale** (Ingress existiert mit anderer UID): ConfigMap löschen, Ingress kurz mit
+    `gatus-ep-reconciler/retrigger` annotieren, bis Kyverno neu erzeugt hat, Annotation wieder entfernen.
+-   **Orphan** (Ingress existiert nicht mehr): ConfigMap löschen.
+-   Wird eine ConfigMap nicht innerhalb von 60 s neu erzeugt, schlägt der Job fehl.
+
+```bash
+# Manuell auslösen und Log ansehen
+kubectl -n tools create job --from=cronjob/gatus-ep-reconciler gatus-ep-reconciler-manual
+kubectl -n tools logs job/gatus-ep-reconciler-manual
+```
+
 ### Ausschluss von Monitoring
 
 Ingresses vom Gatus-Monitoring ausschliessen:

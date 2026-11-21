@@ -323,7 +323,7 @@ Applications in `kubernetes/apps/` are organized by function:
 - `security/` - Security-related applications (external-secrets with 1Password + Doppler SecretStores, Kyverno; Trivy archived in `archive/apps/security/`)
 - `storage/` - Storage systems (democratic-csi, snapshot-controller; Longhorn, K8up, Velero archived in `archive/apps/storage/`)
 - `system-upgrade/tuppr/` - Talos and Kubernetes upgrade automation
-- `tools/` - Utility applications (pod-cleaner, security-watch, simple-cmdb, Spoolman; headscale, SMTP relay archived in `archive/apps/tools/`)
+- `tools/` - Utility applications (gatus-ep-reconciler, pod-cleaner, security-watch, simple-cmdb, Spoolman; headscale, SMTP relay archived in `archive/apps/tools/`)
 - `vpa/` - Vertical Pod Autoscaler (Goldilocks)
 
 Each application typically has:
@@ -530,6 +530,8 @@ Comprehensive observability stack:
     - `gatus.io/name`: Override default endpoint name
     - `gatus.io/status-code`: Override expected HTTP status code (default: 200)
   - Generates ConfigMaps with Gatus endpoint definitions automatically
+  - If an Ingress is recreated (new UID) or deleted, Kyverno stops updating its ConfigMap; the hourly
+    CronJob `tools/gatus-ep-reconciler` deletes stale/orphaned ConfigMaps and retriggers generation
   - Alerts via Discord webhook on endpoint failures
 
 For detailed monitoring setup and troubleshooting, see docs/monitoring.md and docs/services/observability.md

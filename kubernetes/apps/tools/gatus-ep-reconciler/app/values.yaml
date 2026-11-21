@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-3.7.3/charts/other/app-template/values.schema.json
+
+controllers:
+  main:
+    type: cronjob
+
+    cronjob:
+      schedule: "17 * * * *"
+      concurrencyPolicy: Forbid
+      backoffLimit: 0
+      successfulJobsHistory: 1
+      failedJobsHistory: 3
+
+    containers:
+      main:
+        image:
+          repository: registry.eighty-three.me/tuxpeople/debugcontainer
+          tag: 4.1.4
+        command:
+          - /bin/sh
+          - /scripts/reconcile.sh
+        env:
+          DRY_RUN: "false"
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
+
+serviceAccount:
+  create: true
+  name: gatus-ep-reconciler-sa
+
+rbac:
+  roles:
+    role:
+      type: ClusterRole
+      rules:
+        - apiGroups: [""]
+          resources: ["configmaps"]
+          verbs: ["list", "get", "delete"]
+        - apiGroups: ["networking.k8s.io"]
+          resources: ["ingresses"]
+          verbs: ["list", "get", "patch"]
+  bindings:
+    binding:
+      type: ClusterRoleBinding
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: gatus-ep-reconciler-role
+      subjects:
+        - kind: ServiceAccount
+          name: gatus-ep-reconciler-sa
+          namespace: tools
+
+persistence:
+  scripts:
+    type: configMap
+    name: gatus-ep-reconciler-scripts
+    defaultMode: 0755
+    globalMounts:
+      - path: /scripts

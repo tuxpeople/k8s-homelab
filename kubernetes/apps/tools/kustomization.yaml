@@ -7,6 +7,7 @@ components:
   - ../../components/common
 resources:
   - ./pod-cleaner/ks.yaml
+  - ./gatus-ep-reconciler/ks.yaml
   - ./simple-cmdb/ks.yaml
   - ./security-watch/ks.yaml
   - ./spoolman/ks.yaml

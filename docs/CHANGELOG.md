@@ -2,6 +2,13 @@
 
 > Jede inhaltliche Änderung in diesem Verzeichnis benötigt einen Eintrag mit Datum, kurzem Kontext und Referenz auf den Commit/PR.
 
+## 2026-11-21
+
+- Gatus-Checks für `paperless-app` (OIDC statt Authelia, erwartet `200`) und `flux-operator`
+  (Authelia antwortet Gatus ohne `Accept`-Header mit `401`) korrigiert.
+- Neuer CronJob `tools/gatus-ep-reconciler`: repariert Gatus-Endpoint-ConfigMaps, deren Ingress
+  neu erstellt oder gelöscht wurde. Siehe [Observability](services/observability.md#veraltete-endpoint-configmaps).
+
 ## 2026-11-15
 
 - Redundante Alloy-Logsammlung von drei clusterweit lesenden DaemonSet-Instanzen
