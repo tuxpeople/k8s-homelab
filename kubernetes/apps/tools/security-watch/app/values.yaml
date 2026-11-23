@@ -19,6 +19,8 @@ controllers:
           TZ: ${TIMEZONE}
           DATA_DIR: /data
           INGEST_TOKEN_FILE: /secrets/ingest-token
+          # Every /feeds/ URL needs ?token= (needs security-watch >= the release with /feeds/)
+          FEED_TOKEN_FILE: /secrets/feed-token
         probes:
           liveness: &probes
             enabled: true
@@ -223,6 +225,28 @@ ingress:
     tls:
       - hosts:
           - *apihost
+        secretName: ${SECRET_DOMAIN/./-}-production-tls
+
+  # Product feeds for feed readers outside the cluster: external, without
+  # Authelia, only /feeds/produkt/. The app requires FEED_TOKEN (?token=).
+  # Environment feeds (/feeds/umgebung/) stay behind Authelia; FreshRSS reads
+  # them through the service inside the cluster.
+  feeds:
+    enabled: true
+    className: external
+    annotations:
+      gatus.io/enabled: "false"
+    hosts:
+      - host: *host
+        paths:
+          - path: /feeds/produkt/
+            pathType: Prefix
+            service:
+              identifier: app
+              port: *port
+    tls:
+      - hosts:
+          - *host
         secretName: ${SECRET_DOMAIN/./-}-production-tls
 
 persistence:
