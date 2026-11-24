@@ -14,11 +14,7 @@ environments:
   - slug: rancher-lab
     name: Rancher-Lab
     description: RKE2/Rancher-Cluster aus homelab-automation
-    components:
-      rancher: 2.15.3
-      rke2: v1.36.6+rke2r1
-      kubernetes: v1.36.6
-      cert-manager: v1.19.3
+    components: {}
 
   - slug: rancher-test
     name: Rancher Testinventar
