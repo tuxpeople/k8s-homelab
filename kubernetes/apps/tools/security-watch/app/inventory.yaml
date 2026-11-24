@@ -17,7 +17,7 @@ environments:
     components: {}
 
   - slug: rancher-test
-    name: Rancher Testinventar
+    name: Rancher (S)
     description: RKE2/Rancher-Cluster
     components:
       rancher: 2.13.5
