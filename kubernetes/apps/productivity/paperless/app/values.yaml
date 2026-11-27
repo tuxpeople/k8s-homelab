@@ -137,7 +137,7 @@ controllers:
       redis:
         image:
           repository: docker.io/valkey/valkey
-          tag: 9.2.0
+          tag: 9.2.1
         resources:
           requests:
             cpu: 23m
